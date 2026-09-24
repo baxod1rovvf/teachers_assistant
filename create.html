@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create — Teacher's Assistant</title>
+<!-- Shared by every page: accounts must load first (it scopes this browser's storage to the signed-in teacher). -->
+<script src="js/accounts.js"></script>
+<script src="js/lottie.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="welcome-splash" id="welcomeSplashOverlay">
+  <div class="welcome-splash-anim" id="welcomeSplashAnim">👋</div>
+  <div class="login-center">
+    <div class="login-stage">
+      <div class="login-stage-visual">
+        <div class="login-stage-anim" id="loginStageAnim">🔐</div>
+      </div>
+      <div class="login-stage-form">
+        <form class="login-card" id="taLoginForm" onsubmit="taSubmitLogin(event)" novalidate>
+          <h2>Sign in</h2>
+          <p class="login-sub">Your students, results and exercises stay in your own account.</p>
+          <label class="login-field"><span>Login</span>
+            <input type="text" id="taLoginUser" autocomplete="username" autocapitalize="characters" spellcheck="false" required>
+          </label>
+          <label class="login-field"><span>Password</span>
+            <input type="password" id="taLoginPass" autocomplete="current-password" required>
+          </label>
+          <label class="login-remember"><input type="checkbox" id="taLoginRemember"> Keep me signed in on this device</label>
+          <div class="login-error" id="taLoginError" role="alert"></div>
+          <button class="login-submit" type="submit" id="taLoginBtn">Sign in</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="sidebar-toggle-btn" id="sidebarToggleBtn" type="button" onclick="toggleSidebar()" title="Show/hide menu">
+  <div class="sidebar-hamburger-anim" id="sidebarHamburgerAnim">☰</div>
+</button>
+<div class="app-shell">
+  <aside class="sidebar collapsed" id="mainSidebar">
+    <div class="sidebar-brand"><div class="sidebar-brand-anim" id="brandArcAnim">🎓</div> Teacher's Assistant</div>
+    <a class="side-btn sidebar-cta" href="create.html" data-tab="createpicker">➕ Create New Exercise</a>
+    <nav style="display:flex; flex-direction:column; gap:4px;">
+      <a class="side-btn" href="index.html" data-tab="main">🎓 Main</a>
+      <a class="side-btn" href="create.html" data-tab="createpicker"><span class="side-icon-anim" id="createIconAnim">➕</span> Create</a>
+      <a class="side-btn" href="statistics.html" data-tab="dashboard"><span class="side-icon-anim" id="statsIconAnim">📊</span> Statistics</a>
+      <div style="height:8px;"></div>
+      <a class="side-btn" href="my-exercises.html" data-tab="myexercises">📁 My Exercises</a>
+      <a class="side-btn" href="students.html" data-tab="students">👥 Students</a>
+      <a class="side-btn" href="results.html" data-tab="results"><img class="side-icon-img" src="data:image/png;base64,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" alt=""> Results</a>
+      <a class="side-btn" href="points.html" data-tab="points"><img class="side-icon-img" src="data:image/png;base64,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" alt=""> Points &amp; Rewards</a>
+      <a class="side-btn" href="settings.html" data-tab="settings">⚙️ Settings</a>
+    </nav>
+    <div class="sidebar-spacer"></div>
+    <div class="sidebar-profile" onclick="location.href='settings.html'">
+      <img class="avatar-img" id="sidebarAvatarImg" style="display:none;">
+      <div class="avatar-fallback" id="sidebarAvatarFallback">T</div>
+      <div>
+        <div class="sidebar-profile-name" id="sidebarProfileName">Toxirjon</div>
+        <div class="sidebar-profile-role" id="sidebarProfileLogin">Teacher</div>
+      </div>
+      <button class="sidebar-logout-btn" type="button" onclick="event.stopPropagation(); taLogout();" title="Log out">⎋ Log out</button>
+    </div>
+  </aside>
+
+  <div class="main-content">
+<div class="wrap">
+  <div class="masthead">
+    <div class="masthead-text">
+      <h1 id="mastheadTitle">Build exercises in minutes</h1>
+      <p id="mastheadSubtitle">Type your content, hit create, and a ready-to-use interactive exercise downloads straight to your computer — no coding required.</p>
+    </div>
+  </div>
+
+  <div class="tab-row-wrap" id="subTabRow" style="display:none;">
+    <button class="back-to-picker-btn" type="button" onclick="switchTo('createpicker')">← Back to Create</button>
+    <div class="tab-row" id="readyTabRow">
+      <button class="tab-btn" data-tab="flashcard"><span class="exercise-badge" style="background:var(--category-amber);">🎴</span> Flashcard</button>
+      <button class="tab-btn" data-tab="wordorder"><span class="exercise-badge" style="background:var(--category-blue);">🧩</span> Word Order</button>
+      <button class="tab-btn" data-tab="makeaword"><span class="exercise-badge" style="background:var(--category-teal);">🧱</span> Make a Word</button>
+      <button class="tab-btn" data-tab="spelling"><span class="exercise-badge" style="background:var(--category-violet);">🔤</span> Spelling</button>
+      <button class="tab-btn" data-tab="sentences"><span class="exercise-badge" style="background:var(--category-orange);">✍️</span> Sentences</button>
+      <button class="tab-btn" data-tab="bilingual"><span class="exercise-badge" style="background:var(--category-violet);">📖</span> Bidirectional Language</button>
+      <button class="tab-btn" data-tab="engcontent"><span class="exercise-badge" style="background:var(--category-orange);">🎬</span> English Content</button>
+      <button class="tab-btn" data-tab="dictation"><span class="exercise-badge" style="background:var(--category-teal);">🎧</span> Dictation</button>
+    </div>
+    <div class="tab-row" id="inprocessTabRow">
+      <button class="tab-btn" data-tab="presentation"><span class="exercise-badge" style="background:var(--category-rose);">🖥️</span> Presentation</button>
+      <button class="tab-btn" data-tab="pronunciation"><span class="exercise-badge" style="background:var(--category-green);">🎙️</span> Pronunciation</button>
+      <button class="tab-btn" data-tab="test"><span class="exercise-badge" style="background:var(--category-cyan);">✅</span> Test</button>
+    </div>
+  </div>
+
+  <!-- ================= CREATE PICKER ================= -->
+  <div class="panel" id="panel-createpicker">
+    <div class="card-head">
+      <h2><span class="section-heading-anim" id="createHeadingAnim">➕</span> Create</h2>
+      <p>Pick an exercise type to get started, or merge a few together below.</p>
+    </div>
+
+    <div class="picker-section">
+      <div class="picker-section-title">✅ Ready to use</div>
+      <div class="picker-grid">
+        <button class="picker-card" type="button" onclick="switchTo('flashcard')">
+          <span class="exercise-badge" style="background:var(--category-amber);">🎴</span>
+          <div><div class="picker-card-title">Flashcard</div><div class="picker-card-sub">Flip cards, then a quick quiz</div></div>
+        </button>
+        <button class="picker-card" type="button" onclick="switchTo('wordorder')">
+          <span class="exercise-badge" style="background:var(--category-blue);">🧩</span>
+          <div><div class="picker-card-title">Word Order</div><div class="picker-card-sub">Drag words into the right order</div></div>
+        </button>
+        <button class="picker-card" type="button" onclick="switchTo('makeaword')">
+          <span class="exercise-badge" style="background:var(--category-teal);">🧱</span>
+          <div><div class="picker-card-title">Make a Word</div><div class="picker-card-sub">Drag letters to spell each word</div></div>
+        </button>
+        <button class="picker-card" type="button" onclick="switchTo('spelling')">
+          <span class="exercise-badge" style="background:var(--category-violet);">🔤</span>
+          <div><div class="picker-card-title">Spelling</div><div class="picker-card-sub">Pick the correct spelling</div></div>
+        </button>
+        <button class="picker-card" type="button" onclick="switchTo('sentences')">
+          <span class="exercise-badge" style="background:var(--category-orange);">✍️</span>
+          <div><div class="picker-card-title">Sentences</div><div class="picker-card-sub">Students write their own sentences</div></div>
+        </button>
+        <button class="picker-card" type="button" onclick="switchTo('bilingual')">
+          <span class="exercise-badge" style="background:var(--category-violet);">📖</span>
+          <div><div class="picker-card-title">Bidirectional Language</div><div class="picker-card-sub">Side-by-side reading with translation</div></div>
+        </button>
+        <button class="picker-card" type="button" onclick="switchTo('engcontent')">
+          <span class="exercise-badge" style="background:var(--category-orange);">🎬</span>
+          <div><div class="picker-card-title">English Content</div><div class="picker-card-sub">Watch a YouTube video and take notes</div></div>
+        </button>
+        <button class="picker-card" type="button" onclick="switchTo('dictation')">
+          <span class="exercise-badge" style="background:var(--category-teal);">🎧</span>
+          <div><div class="picker-card-title">Dictation</div><div class="picker-card-sub">Listen and write what you hear</div></div>
+        </button>
+      </div>
+    </div>
+
+    <div class="picker-section">
+      <div class="picker-section-title">🚧 In process...</div>
+      <div class="picker-grid">
+        <button class="picker-card" type="button" onclick="switchTo('presentation')">
+          <span class="exercise-badge" style="background:var(--category-rose);">🖥️</span>
+          <div><div class="picker-card-title">Presentation</div><div class="picker-card-sub">Build a slideshow</div></div>
+        </button>
+        <button class="picker-card" type="button" onclick="switchTo('pronunciation')">
+          <span class="exercise-badge" style="background:var(--category-green);">🎙️</span>
+          <div><div class="picker-card-title">Pronunciation</div><div class="picker-card-sub">Students speak, mic checks them</div></div>
+        </button>
+        <button class="picker-card" type="button" onclick="switchTo('test')">
+          <span class="exercise-badge" style="background:var(--category-cyan);">✅</span>
+          <div><div class="picker-card-title">Test</div><div class="picker-card-sub">Fill-the-gap sentences</div></div>
+        </button>
+      </div>
+    </div>
+
+    <div class="picker-section">
+      <div class="picker-section-title">📚 Homework &amp; Class</div>
+      <p class="picker-section-sub">Combine exercises you've already created into one file students work through in order, entering their ID and code only once. Selected exercises move here from My Exercises — they don't stay listed separately.</p>
+      <div class="picker-grid">
+        <button class="picker-card" type="button" onclick="openHwcBuilder('homework')">
+          <span class="exercise-badge" style="background:var(--category-amber);">🏠</span>
+          <div><div class="picker-card-title">Homework</div><div class="picker-card-sub">A set students work through on their own</div></div>
+        </button>
+        <button class="picker-card" type="button" onclick="openHwcBuilder('class')">
+          <span class="exercise-badge" style="background:var(--category-blue);">🏫</span>
+          <div><div class="picker-card-title">Class</div><div class="picker-card-sub">A set for use together in a lesson</div></div>
+        </button>
+      </div>
+    </div>
+
+    <div class="picker-section">
+      <div class="picker-section-title">🎓 IELTS</div>
+      <p class="picker-section-sub">Full IELTS-style tests — Listening, Reading, Writing, and Speaking. These are separate from your other exercises: they don't affect Statistics or Points, and their results are tracked on their own.</p>
+      <div class="picker-grid">
+        <button class="picker-card" type="button" onclick="switchTo('ielts-listening')">
+          <span class="exercise-badge" style="background:var(--category-blue);">🎧</span>
+          <div><div class="picker-card-title">Listening</div><div class="picker-card-sub">Audio + Parts 1–4, multiple question types</div></div>
+        </button>
+        <button class="picker-card" type="button" onclick="switchTo('ielts-reading')">
+          <span class="exercise-badge" style="background:var(--category-teal);">📖</span>
+          <div><div class="picker-card-title">Reading</div><div class="picker-card-sub">Passage + questions, multiple question types</div></div>
+        </button>
+        <button class="picker-card" type="button" onclick="switchTo('ielts-writing')">
+          <span class="exercise-badge" style="background:var(--category-amber);">✍️</span>
+          <div><div class="picker-card-title">Writing</div><div class="picker-card-sub">Task 1 &amp; Task 2, checked by AI</div></div>
+        </button>
+        <button class="picker-card" type="button" onclick="switchTo('ielts-speaking')">
+          <span class="exercise-badge" style="background:var(--category-violet);">🗣️</span>
+          <div><div class="picker-card-title">Speaking</div><div class="picker-card-sub">Coming soon</div></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= IELTS: LISTENING ================= -->
+  <div class="panel" id="panel-ielts-listening">
+    <div class="card-head" style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+      <div>
+        <h2>🎧 IELTS Listening</h2>
+        <p>Build any of the 4 parts — students only go through the ones you've built, in order. Doesn't affect Statistics or Points; this has its own results.</p>
+      </div>
+      <button class="mini-btn" type="button" onclick="switchTo('createpicker')">← Back to Create</button>
+    </div>
+
+    <div class="title-field">
+      <label class="field-label">Exercise Title</label>
+      <input type="text" id="il-title" placeholder="e.g. Listening Practice Test 3">
+    </div>
+    <div class="title-field">
+      <label class="field-label">4-digit class code (optional — leave blank for none)</label>
+      <input type="text" id="il-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+    </div>
+    <div class="title-field">
+      <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
+      <input type="number" id="il-timer" placeholder="Leave blank for no limit" min="1" max="180">
+    </div>
+
+    <div id="il-parts-wrap">
+      <!-- Part sections are rendered by JS (renderIeltsListeningParts) -->
+    </div>
+
+    <div class="builder-actions">
+      <button class="reset-btn" type="button" onclick="resetIeltsListeningForm()">🔄 Reset All</button>
+      <button class="create-btn" onclick="createIeltsListening()">Create "IELTS Listening" ⬇</button>
+    </div>
+  </div>
+
+  <!-- ================= IELTS: READING ================= -->
+  <div class="panel" id="panel-ielts-reading">
+    <div class="card-head" style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+      <div>
+        <h2>📖 IELTS Reading</h2>
+        <p>Build any of the 3 parts — students only go through the ones you've built, in order. Doesn't affect Statistics or Points; this has its own results.</p>
+      </div>
+      <button class="mini-btn" type="button" onclick="switchTo('createpicker')">← Back to Create</button>
+    </div>
+
+    <div class="title-field">
+      <label class="field-label">Exercise Title</label>
+      <input type="text" id="ir-title" placeholder="e.g. Reading Practice Test 3">
+    </div>
+    <div class="title-field">
+      <label class="field-label">4-digit class code (optional — leave blank for none)</label>
+      <input type="text" id="ir-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+    </div>
+    <div class="title-field">
+      <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
+      <input type="number" id="ir-timer" placeholder="Leave blank for no limit" min="1" max="180">
+    </div>
+
+    <div id="ir-parts-wrap">
+      <!-- Part sections are rendered by JS (renderIeltsReadingParts) -->
+    </div>
+
+    <div class="builder-actions">
+      <button class="reset-btn" type="button" onclick="resetIeltsReadingForm()">🔄 Reset All</button>
+      <button class="create-btn" onclick="createIeltsReading()">Create "IELTS Reading" ⬇</button>
+    </div>
+  </div>
+
+  <!-- ================= IELTS: WRITING ================= -->
+  <div class="panel" id="panel-ielts-writing">
+    <div class="card-head" style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+      <div>
+        <h2>✍️ IELTS Writing</h2>
+        <p>Task 1 and Task 2 prompts, checked by AI once the student submits. Doesn't affect Statistics or Points — this has its own results.</p>
+      </div>
+      <button class="mini-btn" type="button" onclick="switchTo('createpicker')">← Back to Create</button>
+    </div>
+
+    <div class="title-field">
+      <label class="field-label">Exercise Title</label>
+      <input type="text" id="iw-title" placeholder="e.g. Writing Practice Test 3">
+    </div>
+    <div class="title-field">
+      <label class="field-label">4-digit class code (optional — leave blank for none)</label>
+      <input type="text" id="iw-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+    </div>
+    <div class="title-field">
+      <label class="field-label">Time limit (optional, in minutes, for both tasks combined) — auto-submits when time runs out</label>
+      <input type="number" id="iw-timer" placeholder="Leave blank for no limit" min="1" max="180">
+    </div>
+
+    <div class="title-field">
+      <label class="field-label">Task 1 prompt</label>
+      <textarea id="iw-task1-prompt" style="min-height:110px;" placeholder="e.g. The chart below shows... Summarise the information by selecting and reporting the main features."></textarea>
+    </div>
+    <div class="title-field">
+      <label class="field-label">Task 1 minimum word count (guidance shown to students)</label>
+      <input type="number" id="iw-task1-minwords" min="50" max="500" value="150">
+    </div>
+
+    <div class="title-field">
+      <label class="field-label">Task 2 prompt</label>
+      <textarea id="iw-task2-prompt" style="min-height:110px;" placeholder="e.g. Some people believe that... Discuss both views and give your own opinion."></textarea>
+    </div>
+    <div class="title-field">
+      <label class="field-label">Task 2 minimum word count (guidance shown to students)</label>
+      <input type="number" id="iw-task2-minwords" min="100" max="600" value="250">
+    </div>
+
+    <div class="title-field" style="background:rgba(163,78,29,0.08); border-radius:12px; padding:14px 16px;">
+      <label class="field-label" style="margin-bottom:6px;">Show the AI's band scores and highlighted corrections to students?</label>
+      <select id="iw-show-feedback">
+        <option value="on" selected>Yes — students see their bands, comments, and highlighted issues right after submitting</option>
+        <option value="off">No — students just see "Submitted!"; you review everything yourself in Results</option>
+      </select>
+      <p style="font-size:0.8rem; color:var(--ink-soft); margin-top:8px; margin-bottom:0;">Either way, the full AI assessment — all four band scores, the summary, and every highlighted issue — is always saved to Results for you to review.</p>
+    </div>
+
+    <div class="builder-actions">
+      <button class="reset-btn" type="button" onclick="resetIeltsWritingForm()">🔄 Reset All</button>
+      <button class="create-btn" onclick="createIeltsWriting()">Create "IELTS Writing" ⬇</button>
+    </div>
+  </div>
+
+  <!-- ================= IELTS: SPEAKING ================= -->
+  <div class="panel" id="panel-ielts-speaking">
+    <div class="card-head" style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+      <div>
+        <h2>🗣️ IELTS Speaking</h2>
+        <p>Not designed yet — let me know what you'd like this to do.</p>
+      </div>
+      <button class="mini-btn" type="button" onclick="switchTo('createpicker')">← Back to Create</button>
+    </div>
+    <div class="ielts-coming-soon">
+      <div style="font-size:2rem;">🚧</div>
+      <h3>Still to be designed</h3>
+    </div>
+  </div>
+
+  <!-- ================= HOMEWORK / CLASS BUILDER ================= -->
+  <div class="panel" id="panel-hwcbuilder">
+    <div class="card-head" style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+      <div>
+        <h2 id="hwcBuilderTitle">📚 Homework</h2>
+        <p id="hwcBuilderSub">Choose the exercise type for round <span id="hwcRoundNum">1</span>. Once it's ready, you can either finish here or add another exercise to make a multi-part set.</p>
+      </div>
+      <button class="mini-btn" type="button" onclick="cancelHwcBuilder()">← Back to Create</button>
+    </div>
+    <div id="hwcRoundsBanner" style="display:none;"></div>
+    <div class="picker-grid" id="hwcTypeGrid"></div>
+  </div>
+
+  <div class="panel" id="panel-hwcround">
+    <div class="card-head" style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+      <div>
+        <h2>📚 Round <span id="hwcRoundHostNum">1</span></h2>
+        <p>Fill this exercise in below, then choose what happens next.</p>
+      </div>
+      <button class="mini-btn" type="button" onclick="cancelHwcBuilder()">← Back to Create</button>
+    </div>
+    <div id="hwcRoundHost"></div>
+    <div class="builder-actions">
+      <button class="reset-btn" type="button" onclick="hwcBackToTypePicker()">← Choose a Different Type</button>
+      <button class="mini-btn" type="button" onclick="hwcAddExercise()">➕ Add Another Exercise</button>
+      <button class="create-btn" onclick="hwcFinishAndCreate()">Create ⬇</button>
+    </div>
+  </div>
+
+  <!-- ================= WORD ORDER ================= -->
+  <div class="panel" id="panel-wordorder">
+    <div class="card">
+      <div class="card-head">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🔤 Word Order</h2></div>
+        <p>Students drag scrambled words into the correct sentence order. Each sentence must be completed before the exercise can finish.</p>
+        <div class="deco-chips">
+          <span class="deco-chip" style="background:#4f7df3; --tilt:-4deg;">I</span>
+          <span class="deco-chip" style="background:#8b7bf7; --tilt:3deg;">love</span>
+          <span class="deco-chip" style="background:#fb923c; --tilt:-2deg;">English</span>
+          <span class="deco-spark">🧩✨</span>
+        </div>
+      </div>
+
+      <div class="builder-grid">
+        <div class="builder-left">
+          <div class="title-field">
+            <label class="field-label">Exercise Title</label>
+            <input type="text" id="wo-title" placeholder="e.g. Word Order — Present Perfect">
+          </div>
+
+          <div class="title-field" id="wo-points-block">
+            <label class="field-label">Points awarded on completion (Points tab tracks this per student ID)</label>
+            <select id="wo-points">
+              <option value="0">0 — no points</option>
+              <option value="5">5 points</option>
+              <option value="10" selected>10 points</option>
+              <option value="15">15 points</option>
+              <option value="20">20 points</option>
+              <option value="25">25 points</option>
+              <option value="50">50 points</option>
+              <option value="100">100 points</option>
+            </select>
+          </div>
+          <div class="title-field">
+            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
+            <input type="text" id="wo-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+          </div>
+          <div class="title-field">
+            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
+            <input type="number" id="wo-timer" placeholder="Leave blank for no limit" min="1" max="180">
+          </div>
+
+
+          <div class="title-field">
+            <label class="field-label">Instructions for Students (optional)</label>
+            <textarea id="wo-instructions" placeholder="e.g. Put the words in the correct order to make a complete sentence. 🙂"></textarea>
+          </div>
+        </div>
+
+        <div class="builder-right">
+          <div class="rows-label-row">
+            <label class="field-label">Sentences</label>
+            <span class="rows-count"><span id="wo-count">0</span> sentences</span>
+          </div>
+          <div class="compose-row">
+            <textarea id="wo-compose" class="compose-box" rows="1" placeholder="Type a sentence..." onkeydown="handleComposeKeydown(event, 'wo-compose', 'sentence', addWordOrderRowFilled)"></textarea>
+            <button class="compose-enter-btn" type="button" onclick="commitComposeBox('wo-compose', 'sentence', addWordOrderRowFilled)">⏎ Enter</button>
+          </div>
+          <div class="rows" id="wo-rows"></div>
+        </div>
+      </div>
+
+      <div class="builder-actions">
+        <button class="reset-btn" type="button" onclick="resetWordOrderForm()">🔄 Reset All</button>
+        <button class="create-btn" onclick="createWordOrder()">Create "Word Order" ⬇</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MAKE A WORD ================= -->
+  <div class="panel" id="panel-makeaword">
+    <div class="card">
+      <div class="card-head">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🧩 Make a Word</h2></div>
+        <p>Students drag scrambled letters into slots to spell each word correctly.</p>
+        <div class="deco-chips">
+          <span class="deco-chip" style="background:#2dd4bf; --tilt:-3deg;">C</span>
+          <span class="deco-chip" style="background:#fb923c; --tilt:4deg;">A</span>
+          <span class="deco-chip" style="background:#4f7df3; --tilt:-2deg;">T</span>
+          <span class="deco-spark">🧱🐱</span>
+        </div>
+      </div>
+
+      <div class="builder-grid">
+        <div class="builder-left">
+          <div class="title-field">
+            <label class="field-label">Exercise Title</label>
+            <input type="text" id="maw-title" placeholder="e.g. Make a Word — Around the House">
+          </div>
+
+          <div class="title-field" id="maw-points-block">
+            <label class="field-label">Points awarded on completion (Points tab tracks this per student ID)</label>
+            <select id="maw-points">
+              <option value="0">0 — no points</option>
+              <option value="5">5 points</option>
+              <option value="10" selected>10 points</option>
+              <option value="15">15 points</option>
+              <option value="20">20 points</option>
+              <option value="25">25 points</option>
+              <option value="50">50 points</option>
+              <option value="100">100 points</option>
+            </select>
+          </div>
+          <div class="title-field">
+            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
+            <input type="text" id="maw-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+          </div>
+          <div class="title-field">
+            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
+            <input type="number" id="maw-timer" placeholder="Leave blank for no limit" min="1" max="180">
+          </div>
+
+
+          <div class="title-field">
+            <label class="field-label">Instructions for Students (optional)</label>
+            <textarea id="maw-instructions" placeholder="e.g. Drag the letters into the boxes to spell each word. 🙂"></textarea>
+          </div>
+        </div>
+
+        <div class="builder-right">
+          <div class="rows-label-row">
+            <label class="field-label">Words</label>
+            <span class="rows-count"><span id="maw-count">0</span> words</span>
+          </div>
+          <div class="compose-row">
+            <textarea id="maw-compose" class="compose-box" rows="1" placeholder="Type a word..." onkeydown="handleComposeKeydown(event, 'maw-compose', 'word', addMakeAWordRowFilled)"></textarea>
+            <button class="compose-enter-btn" type="button" onclick="commitComposeBox('maw-compose', 'word', addMakeAWordRowFilled)">⏎ Enter</button>
+          </div>
+          <div class="rows" id="maw-rows"></div>
+        </div>
+      </div>
+
+      <div class="builder-actions">
+        <button class="reset-btn" type="button" onclick="resetMakeAWordForm()">🔄 Reset All</button>
+        <button class="create-btn" onclick="createMakeAWord()">Create "Make a Word" ⬇</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FLASHCARD ================= -->
+  <div class="panel" id="panel-flashcard">
+    <div class="card">
+      <div class="card-head">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🗂️ Flashcard</h2></div>
+        <p>Students flip through flashcards for each group, then take a short multiple-choice check before moving to the next group.</p>
+        <div class="deco-chips">
+          <span class="deco-chip" style="background:#fb923c; --tilt:-3deg;">🎴 Flip</span>
+          <span class="deco-chip" style="background:#8b7bf7; --tilt:3deg;">Match!</span>
+          <span class="deco-spark">✨</span>
+        </div>
+      </div>
+
+      <div class="builder-grid">
+        <div class="builder-left">
+          <div class="title-field">
+            <label class="field-label">Exercise Title</label>
+            <input type="text" id="fc-title" placeholder="e.g. Around the House">
+          </div>
+
+          <div class="title-field" id="fc-points-block">
+            <label class="field-label">Points awarded on completion (Points tab tracks this per student ID)</label>
+            <select id="fc-points">
+              <option value="0">0 — no points</option>
+              <option value="5">5 points</option>
+              <option value="10" selected>10 points</option>
+              <option value="15">15 points</option>
+              <option value="20">20 points</option>
+              <option value="25">25 points</option>
+              <option value="50">50 points</option>
+              <option value="100">100 points</option>
+            </select>
+          </div>
+          <div class="title-field">
+            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
+            <input type="text" id="fc-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+          </div>
+          <div class="title-field">
+            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
+            <input type="number" id="fc-timer" placeholder="Leave blank for no limit" min="1" max="180">
+          </div>
+
+
+          <div class="title-field">
+            <label class="field-label">Instructions for Students (optional)</label>
+            <textarea id="fc-instructions" placeholder="e.g. Flip through the cards, then answer the quiz. 🙂"></textarea>
+          </div>
+
+          <button class="mini-btn" type="button" onclick="openSettingsModal('fc')">⚙️ Additional Settings</button>
+
+          <div id="fc-extra-settings" style="display:none;">
+          <div class="group-select-row">
+            <div>
+              <label class="field-label">Split into groups</label>
+              <select id="fc-groups">
+                <option value="1">1 group</option>
+                <option value="2">2 groups</option>
+                <option value="3" selected>3 groups</option>
+                <option value="4">4 groups</option>
+                <option value="5">5 groups</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="group-select-row">
+            <div>
+              <label class="field-label">Design</label>
+              <select id="fc-design" onchange="onFlashcardDesignChange()">
+                <option value="cards" selected>1 — Usual flashcards (learn + exercise)</option>
+                <option value="runner">2 — Car game (dodge the traffic)</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="fc-runner-settings" style="display:none;">
+            <div class="group-select-row">
+              <div>
+                <label class="field-label">Seconds to answer</label>
+                <select id="fc-seconds">
+                  <option value="2">2 seconds — very fast</option>
+                  <option value="3">3 seconds</option>
+                  <option value="4" selected>4 seconds</option>
+                  <option value="5">5 seconds</option>
+                  <option value="6">6 seconds — relaxed</option>
+                </select>
+              </div>
+              <div>
+                <label class="field-label">Driving speed</label>
+                <select id="fc-speed">
+                  <option value="auto" selected>Automatic — matched to the answer time</option>
+                  <option value="slow">Slow</option>
+                  <option value="normal">Normal</option>
+                  <option value="fast">Fast</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div id="fc-card-settings">
+          <div class="group-select-row">
+            <div>
+              <label class="field-label">Exercise type</label>
+              <select id="fc-quiz-mode" onchange="onQuizModeChange()">
+                <option value="choice" selected>Choose the correct answer</option>
+                <option value="write">Write the answer</option>
+                <option value="both">Both — choose, then write</option>
+              </select>
+            </div>
+            <input type="hidden" id="fc-direction" value="uz2en">
+          </div>
+
+          <input type="hidden" id="fc-lose-progress" value="true">
+          <input type="hidden" id="fc-keep-progress-on-back" value="false">
+
+          </div>
+          </div>
+        </div>
+
+        <div class="builder-right">
+          <div class="rows-label-row">
+            <label class="field-label">Vocabulary (word + translation)</label>
+            <span class="rows-count"><span id="fc-count">0</span> words</span>
+          </div>
+          <div class="compose-row">
+            <textarea id="fc-compose" class="compose-box" rows="1" placeholder="Type: word - translation..." onkeydown="handleComposeKeydown(event, 'fc-compose', 'line', addFlashcardRowFilled)"></textarea>
+            <button class="compose-enter-btn" type="button" onclick="commitComposeBox('fc-compose', 'line', addFlashcardRowFilled)">⏎ Enter</button>
+          </div>
+          <div class="rows" id="fc-rows"></div>
+        </div>
+      </div>
+
+      <div class="builder-actions">
+        <button class="reset-btn" type="button" onclick="resetFlashcardForm()">🔄 Reset All</button>
+        <button class="create-btn" onclick="createFlashcard()">Create "Flashcard" ⬇</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PRESENTATION ================= -->
+  <div class="panel" id="panel-presentation">
+    <div class="card">
+      <div class="card-head">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🎬 Presentation</h2></div>
+        <p>Every slide is its own separate section — open a slide, add as many text blocks as you want, drag them wherever you like, and colour each one on its own. Nothing you do on one slide touches another.</p>
+        <div class="deco-chips">
+          <span class="deco-chip" style="background:#f0729c; --tilt:-3deg;">🖥️ Slide 1</span>
+          <span class="deco-chip" style="background:#4f7df3; --tilt:3deg;">▶ Play</span>
+          <span class="deco-spark">🎬</span>
+        </div>
+      </div>
+
+      <div class="title-field">
+        <label class="field-label">Presentation Title</label>
+        <input type="text" id="pres-title" placeholder="e.g. Speaking — Daily Life Questions">
+      </div>
+
+      <div class="title-field">
+        <label class="field-label">Instructions for Students (optional)</label>
+        <textarea id="pres-instructions" placeholder="e.g. Read through the slides, then we'll discuss them together. 🙂"></textarea>
+      </div>
+
+      <div class="group-select-row">
+        <div>
+          <label class="field-label">Number of slides</label>
+          <select id="pres-slide-count" onchange="onPresSlideCountChange()">
+            <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+            <option value="4">4</option><option value="5" selected>5</option><option value="6">6</option>
+            <option value="7">7</option><option value="8">8</option><option value="9">9</option>
+            <option value="10">10</option><option value="12">12</option><option value="14">14</option>
+            <option value="16">16</option><option value="18">18</option><option value="20">20</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label">Default font</label>
+          <select id="pres-font" onchange="renderPresCanvas()"></select>
+        </div>
+        <div>
+          <label class="field-label">Deck background</label>
+          <input type="color" id="pres-color-bg" value="#141d2b">
+        </div>
+      </div>
+
+      <label class="field-label">Slides — click one to open it</label>
+      <div class="slide-tabs" id="pres-slide-tabs"></div>
+      <div class="slide-tab-actions">
+        <button class="mini-btn solid" type="button" onclick="addPresSlide()">+ Add slide</button>
+        <button class="mini-btn" type="button" onclick="duplicatePresSlide()">⧉ Duplicate this slide</button>
+        <button class="mini-btn" type="button" onclick="movePresSlide(-1)">← Move left</button>
+        <button class="mini-btn" type="button" onclick="movePresSlide(1)">Move right →</button>
+        <button class="mini-btn danger" type="button" onclick="deletePresSlide()">🗑 Delete this slide</button>
+      </div>
+
+      <div class="pres-editor">
+        <div class="pres-canvas-col">
+          <div class="canvas-toolbar">
+            <button class="mini-btn solid" type="button" onclick="addPresElement('text')">+ Text box</button>
+            <button class="mini-btn" type="button" onclick="addPresElement('icon')">+ Icon</button>
+            <button class="mini-btn" type="button" onclick="addPresElement('box')">+ Shape</button>
+            <button class="mini-btn" type="button" onclick="document.getElementById('pres-image-input').click()">+ Image</button>
+            <input type="file" id="pres-image-input" accept="image/*" style="display:none;">
+          </div>
+
+          <div class="pres-canvas-outer" id="pres-canvas-outer">
+            <div class="pres-stage" id="pres-canvas"></div>
+          </div>
+
+          <p class="canvas-hint">Drag any item to move it. Click an item to select it, then edit only that item on the right — its own colour, size and font. Arrow keys nudge the selected item (hold Shift for bigger steps). What you see here is exactly what downloads.</p>
+        </div>
+
+        <div class="pres-props-col" id="pres-props"></div>
+      </div>
+
+      <button class="mini-btn" type="button" style="margin-top:16px;" onclick="previewPresentation()">👁 Open full preview in a new tab</button>
+
+      <div class="builder-actions">
+        <button class="reset-btn" type="button" onclick="resetPresentationForm()">🔄 Reset All</button>
+        <button class="create-btn" onclick="createPresentation()">Create "Presentation" ⬇</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PRONUNCIATION ================= -->
+  <div class="panel" id="panel-pronunciation">
+    <div class="card">
+      <div class="card-head">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🗣️ Pronunciation</h2></div>
+        <p>Type only the words — the app works out the pronunciation itself. Students say each word out loud, and they instantly see a percentage plus exactly which sounds were right (green) and wrong (red).</p>
+        <div class="deco-chips">
+          <span class="deco-chip" style="background:#34d399; --tilt:-3deg;">🎙️ Say it!</span>
+          <span class="deco-chip" style="background:#8b7bf7; --tilt:3deg;">🔊 98%</span>
+          <span class="deco-spark">👏</span>
+        </div>
+      </div>
+
+      <div class="builder-grid">
+        <div class="builder-left">
+          <div class="title-field">
+            <label class="field-label">Exercise Title</label>
+            <input type="text" id="pr-title" placeholder="e.g. Unit 3 — Tricky Sounds">
+          </div>
+          <div class="title-field">
+            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
+            <input type="text" id="pr-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+          </div>
+          <div class="title-field">
+            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
+            <input type="number" id="pr-timer" placeholder="Leave blank for no limit" min="1" max="180">
+          </div>
+
+
+          <div class="title-field">
+            <label class="field-label">Instructions for Students (optional)</label>
+            <textarea id="pr-instructions" placeholder="e.g. Say each word out loud when you hear the beep. 🙂"></textarea>
+          </div>
+
+          <button class="mini-btn" type="button" onclick="openSettingsModal('pr')">⚙️ Additional Settings</button>
+
+          <div id="pr-extra-settings" style="display:none;">
+          <div class="group-select-row">
+            <div>
+              <label class="field-label">Design</label>
+              <select id="pr-design" onchange="onPronDesignChange()">
+                <option value="flash" selected>1 — Usual design (word by word)</option>
+                <option value="game">2 — Rocket game (words block the way)</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">Pass score (rocket game gate)</label>
+              <select id="pr-pass">
+                <option value="50">50% or more</option>
+                <option value="60">60% or more</option>
+                <option value="70" selected>70% or more</option>
+                <option value="80">80% or more</option>
+                <option value="90">90% or more</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="group-select-row">
+            <div>
+              <label class="field-label">Accent to listen for</label>
+              <select id="pr-lang">
+                <option value="en-US" selected>English (US)</option>
+                <option value="en-GB">English (UK)</option>
+                <option value="en-AU">English (Australia)</option>
+                <option value="en-IN">English (India)</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">Learning slide (usual design)</label>
+              <select id="pr-learn">
+                <option value="on" selected>Show — listen before speaking</option>
+                <option value="off">Skip — go straight to speaking</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">Model voice</label>
+              <select id="pr-voice">
+                <option value="female" selected>👩 Woman</option>
+                <option value="male">👨 Man</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="group-select-row">
+            <div>
+              <label class="field-label">Marking strictness</label>
+              <select id="pr-strict">
+                <option value="lenient">Lenient — beginners</option>
+                <option value="normal" selected>Normal</option>
+                <option value="strict">Strict — exam practice</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">Tries per word (rocket game)</label>
+              <select id="pr-tries">
+                <option value="2">2 tries</option>
+                <option value="3" selected>3 tries</option>
+                <option value="5">5 tries</option>
+                <option value="99">Unlimited (must pass)</option>
+              </select>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <div class="builder-right">
+          <div class="rows-label-row">
+            <label class="field-label">Words</label>
+            <span class="rows-count"><span id="pr-count">0</span> words</span>
+          </div>
+          <div class="compose-row">
+            <textarea id="pr-compose" class="compose-box" rows="1" placeholder="Type a word..." onkeydown="handleComposeKeydown(event, 'pr-compose', 'word', addPronRowFilled)"></textarea>
+            <button class="compose-enter-btn" type="button" onclick="commitComposeBox('pr-compose', 'word', addPronRowFilled)">⏎ Enter</button>
+          </div>
+          <div class="pron-head-row">
+            <span>Word (you type this)</span><span>Pronunciation — filled in for you, editable</span><span>Icon</span>
+          </div>
+          <div class="rows" id="pr-rows"></div>
+
+          <button class="mini-btn solid" type="button" style="margin-top:12px;" onclick="autoFillPronunciation()">🔎 Look up real pronunciations online</button>
+        </div>
+      </div>
+
+      <div class="builder-actions">
+        <button class="reset-btn" type="button" onclick="resetPronunciationForm()">🔄 Reset All</button>
+        <button class="create-btn" onclick="createPronunciation()">Create "Pronunciation" ⬇</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SPELLING ================= -->
+  <div class="panel" id="panel-spelling">
+    <div class="card">
+      <div class="card-head">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🔤 Spelling</h2></div>
+        <p>Type a word and three convincing misspellings are written for you. Students see all four, shuffled, and pick the right one — with a voice that can read the word aloud first.</p>
+        <div class="deco-chips">
+          <span class="deco-chip" style="background:#8b7bf7; --tilt:-3deg;">S-P-E-L-L</span>
+          <span class="deco-chip" style="background:#34d399; --tilt:3deg;">✓ Correct</span>
+          <span class="deco-spark">🔤</span>
+        </div>
+      </div>
+
+      <div class="builder-grid">
+        <div class="builder-left">
+          <div class="title-field">
+            <label class="field-label">Exercise Title</label>
+            <input type="text" id="sp-title" placeholder="e.g. Unit 5 — Tricky Spellings">
+          </div>
+
+          <div class="title-field" id="sp-points-block">
+            <label class="field-label">Points awarded on completion (Points tab tracks this per student ID)</label>
+            <select id="sp-points">
+              <option value="0">0 — no points</option>
+              <option value="5">5 points</option>
+              <option value="10" selected>10 points</option>
+              <option value="15">15 points</option>
+              <option value="20">20 points</option>
+              <option value="25">25 points</option>
+              <option value="50">50 points</option>
+              <option value="100">100 points</option>
+            </select>
+          </div>
+          <div class="title-field">
+            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
+            <input type="text" id="sp-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+          </div>
+          <div class="title-field">
+            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
+            <input type="number" id="sp-timer" placeholder="Leave blank for no limit" min="1" max="180">
+          </div>
+
+
+          <div class="title-field">
+            <label class="field-label">Instructions for Students (optional)</label>
+            <textarea id="sp-instructions" placeholder="e.g. Pick the spelling that looks correct. 🙂"></textarea>
+          </div>
+
+          <input type="hidden" id="sp-voice" value="female">
+          <input type="hidden" id="sp-lang" value="en-US">
+        </div>
+
+        <div class="builder-right">
+          <div class="rows-label-row">
+            <label class="field-label">Words</label>
+            <span class="rows-count"><span id="sp-count">0</span> words</span>
+          </div>
+          <div class="compose-row">
+            <textarea id="sp-compose" class="compose-box" rows="1" placeholder="Type a word..." onkeydown="handleComposeKeydown(event, 'sp-compose', 'word', addSpellingRowFilled)"></textarea>
+            <button class="compose-enter-btn" type="button" onclick="commitComposeBox('sp-compose', 'word', addSpellingRowFilled)">⏎ Enter</button>
+          </div>
+          <div class="sp-head-row">
+            <span>Correct word (you type this)</span><span>Three wrong spellings — written for you, editable</span>
+          </div>
+          <div class="rows" id="sp-rows"></div>
+        </div>
+      </div>
+
+      <div class="builder-actions">
+        <button class="reset-btn" type="button" onclick="resetSpellingForm()">🔄 Reset All</button>
+        <button class="create-btn" onclick="createSpelling()">Create "Spelling" ⬇</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TEST ================= -->
+  <div class="panel" id="panel-test">
+    <div class="card">
+      <div class="card-head">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>📝 Test</h2></div>
+        <p>Write the whole sentence, then click the word that should be hidden. The wrong options are written for you — grammatically wrong versions of the same word.</p>
+        <div class="deco-chips">
+          <span class="deco-chip" style="background:#ef5f74; --tilt:-3deg;">✅ Quiz</span>
+          <span class="deco-chip" style="background:#fb923c; --tilt:3deg;">💯 100%</span>
+          <span class="deco-spark">📝</span>
+        </div>
+      </div>
+
+      <div class="builder-grid">
+        <div class="builder-left">
+          <div class="title-field">
+            <label class="field-label">Test Title</label>
+            <input type="text" id="ts-title" placeholder="e.g. Present Simple — Quick Check">
+          </div>
+
+          <div class="title-field" id="ts-points-block">
+            <label class="field-label">Points awarded on completion (Points tab tracks this per student ID)</label>
+            <select id="ts-points">
+              <option value="0">0 — no points</option>
+              <option value="5">5 points</option>
+              <option value="10" selected>10 points</option>
+              <option value="15">15 points</option>
+              <option value="20">20 points</option>
+              <option value="25">25 points</option>
+              <option value="50">50 points</option>
+              <option value="100">100 points</option>
+            </select>
+          </div>
+          <div class="title-field">
+            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
+            <input type="text" id="ts-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+          </div>
+          <div class="title-field">
+            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
+            <input type="number" id="ts-timer" placeholder="Leave blank for no limit" min="1" max="180">
+          </div>
+
+
+          <div class="title-field">
+            <label class="field-label">Instructions for Students (optional)</label>
+            <textarea id="ts-instructions" placeholder="e.g. Pick the word that correctly fills the gap. 🙂"></textarea>
+          </div>
+
+          <button class="mini-btn" type="button" onclick="openSettingsModal('ts')">⚙️ Additional Settings</button>
+
+          <div id="ts-extra-settings" style="display:none;">
+          <div class="group-select-row">
+            <div>
+              <label class="field-label">Options per question</label>
+              <select id="ts-options" onchange="onTestOptionCountChange()">
+                <option value="3" selected>3 (A, B, C)</option>
+                <option value="4">4 (A, B, C, D)</option>
+              </select>
+            </div>
+          </div>
+          <div class="title-field" style="margin-top:10px;">
+            <label class="field-label" style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+              <input type="checkbox" id="ts-matching-round" style="width:auto;"> Add a Round 2: Matching (same words, after the multiple-choice round)
+            </label>
+            <p style="font-size:0.8rem; color:var(--ink-soft); margin-top:6px; margin-bottom:0;">Students first answer the multiple-choice round, then match every word to its sentence in a second round. Needs at least 3 sentences.</p>
+          </div>
+          </div>
+        </div>
+
+        <div class="builder-right">
+          <div class="rows-label-row">
+            <label class="field-label">Sentences</label>
+            <span class="rows-count"><span id="ts-count">0</span> sentences</span>
+          </div>
+          <div class="compose-row">
+            <textarea id="ts-compose" class="compose-box" rows="1" placeholder="Type a sentence..." onkeydown="handleComposeKeydown(event, 'ts-compose', 'sentence', addTestRowFilled)"></textarea>
+            <button class="compose-enter-btn" type="button" onclick="commitComposeBox('ts-compose', 'sentence', addTestRowFilled)">⏎ Enter</button>
+          </div>
+          <div class="rows" id="ts-rows"></div>
+        </div>
+      </div>
+
+      <div class="builder-actions">
+        <button class="reset-btn" type="button" onclick="resetTestForm()">🔄 Reset All</button>
+        <button class="create-btn" onclick="createTest()">Create "Test" ⬇</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SENTENCES ================= -->
+  <div class="panel" id="panel-sentences">
+    <div class="card">
+      <div class="card-head">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>✍️ Sentences</h2></div>
+        <p>Students write their own sentences. Give specific words to build sentences around, or leave the words blank and just say how many sentences to write and about what.</p>
+        <div class="deco-chips">
+          <span class="deco-chip" style="background:#4f9de0; --tilt:-3deg;">✍️ Write</span>
+          <span class="deco-chip" style="background:#8b7bf7; --tilt:3deg;">💬 Sentences</span>
+          <span class="deco-spark">📝</span>
+        </div>
+      </div>
+
+      <div class="builder-grid">
+        <div class="builder-left">
+          <div class="title-field">
+            <label class="field-label">Exercise Title</label>
+            <input type="text" id="sn-title" placeholder="e.g. Practice with Past Simple">
+          </div>
+
+          <div class="title-field" id="sn-points-block">
+            <label class="field-label">Points awarded on completion (Points tab tracks this per student ID)</label>
+            <select id="sn-points">
+              <option value="0">0 — no points</option>
+              <option value="5">5 points</option>
+              <option value="10" selected>10 points</option>
+              <option value="15">15 points</option>
+              <option value="20">20 points</option>
+              <option value="25">25 points</option>
+              <option value="50">50 points</option>
+              <option value="100">100 points</option>
+            </select>
+          </div>
+          <div class="title-field">
+            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
+            <input type="text" id="sn-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+          </div>
+          <div class="title-field">
+            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
+            <input type="number" id="sn-timer" placeholder="Leave blank for no limit" min="1" max="180">
+          </div>
+
+
+          <div class="title-field">
+            <label class="field-label">Instructions for students (used only if you don't give specific words below)</label>
+            <textarea id="sn-instructions" placeholder="e.g. Write sentences using Past Simple."></textarea>
+          </div>
+
+          <div class="title-field" id="sn-count-block">
+            <label class="field-label">Number of sentences (used only if you don't give specific words below)</label>
+            <input type="number" id="sn-count" min="1" max="30" value="5">
+          </div>
+        </div>
+
+        <div class="builder-right">
+          <div class="rows-label-row">
+            <label class="field-label">Words (optional — one sentence-space is created per word, and each must be used in its sentence)</label>
+            <span class="rows-count"><span id="sn-count-display">0</span> words</span>
+          </div>
+          <div class="compose-box-row">
+            <textarea id="sn-compose" class="compose-box" placeholder="Type words separated by commas or new lines, e.g. water, happy, school" onkeydown="handleComposeKeydown(event, 'sn-compose', 'word', addSnWordFilled)"></textarea>
+            <button class="mini-btn" type="button" onclick="commitComposeBox('sn-compose', 'word', addSnWordFilled)">⏎ Enter</button>
+          </div>
+          <div id="sn-rows" class="rows-list"></div>
+        </div>
+      </div>
+
+      <div class="builder-actions">
+        <button class="reset-btn" type="button" onclick="resetSentencesForm()">🔄 Reset All</button>
+        <button class="create-btn" onclick="createSentences()">Create "Sentences" ⬇</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= BILINGUAL READER ================= -->
+  <div class="panel" id="panel-bilingual">
+    <div class="card">
+      <div class="card-head">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>📖 Bidirectional Language</h2></div>
+        <p>Paste an English reading text, choose a language, and translate it (automatically, or by hand). Students see both side by side — hovering or tapping a sentence highlights it in both columns, and clicking any English word looks it up.</p>
+        <div class="deco-chips">
+          <span class="deco-chip" style="background:#2f6fd6; --tilt:-3deg;">📖 Read</span>
+          <span class="deco-chip" style="background:#4f9de0; --tilt:3deg;">🌍 Translate</span>
+          <span class="deco-spark">🔤</span>
+        </div>
+        <div class="title-field" style="margin-top:12px; background:rgba(79,157,224,0.08); border-radius:12px; padding:12px 14px;">
+          <p style="font-size:0.8rem; color:var(--ink-soft); margin:0;">⚠️ Auto-translation uses a free, unofficial service and isn't guaranteed to always work. You can always edit or type any translation by hand before creating the file.</p>
+        </div>
+      </div>
+
+      <div class="builder-grid">
+        <div class="builder-left">
+          <div class="title-field">
+            <label class="field-label">Exercise Title</label>
+            <input type="text" id="br-title" placeholder="e.g. Do Animals Dream?">
+          </div>
+          <div class="title-field">
+            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
+            <input type="text" id="br-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+          </div>
+          <div class="title-field">
+            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
+            <input type="number" id="br-timer" placeholder="Leave blank for no limit" min="1" max="180">
+          </div>
+
+
+          <div class="title-field">
+            <label class="field-label">Translate into</label>
+            <select id="br-lang">
+              <option value="uz" selected>uz — Uzbek</option>
+              <option value="ru">ru — Russian</option>
+              <option value="es">es — Spanish</option>
+              <option value="fr">fr — French</option>
+              <option value="de">de — German</option>
+              <option value="tr">tr — Turkish</option>
+              <option value="ar">ar — Arabic</option>
+              <option value="zh-CN">zh-CN — Chinese</option>
+            </select>
+          </div>
+
+          <div class="title-field">
+            <label class="field-label">English reading text (separate paragraphs with a blank line)</label>
+            <textarea id="br-text" style="min-height:180px;" placeholder="Paste or type the reading passage here. Leave a blank line between paragraphs."></textarea>
+          </div>
+
+          <button class="mini-btn" type="button" onclick="parseBilingualText()">✂️ Split into sentences</button>
+        </div>
+
+        <div class="builder-right">
+          <div class="rows-label-row">
+            <label class="field-label">Sentence-by-sentence translation</label>
+            <span class="rows-count"><span id="br-sentence-count">0</span> sentences</span>
+          </div>
+          <button class="mini-btn" type="button" style="margin-bottom:10px;" onclick="autoTranslateBilingual()">🌍 Auto-translate all</button>
+          <div id="br-sentence-rows" style="display:flex; flex-direction:column; gap:10px; max-height:420px; overflow-y:auto;"></div>
+        </div>
+      </div>
+
+      <div class="builder-actions">
+        <button class="reset-btn" type="button" onclick="resetBilingualForm()">🔄 Reset All</button>
+        <button class="create-btn" onclick="createBilingualReader()">Create "Bidirectional Language" ⬇</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= ENGLISH CONTENT ================= -->
+  <div class="panel" id="panel-engcontent">
+    <div class="card">
+      <div class="card-head">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🎬 English Content</h2></div>
+        <p>Paste a YouTube video link. Students watch it on one side and take notes on the other, downloaded as a PDF when they finish.</p>
+        <div class="deco-chips">
+          <span class="deco-chip" style="background:#e14e4e; --tilt:-3deg;">🎬 Watch</span>
+          <span class="deco-chip" style="background:#f2c14e; --tilt:3deg;">📝 Notes</span>
+          <span class="deco-spark">🎥</span>
+        </div>
+      </div>
+
+      <div class="builder-grid">
+        <div class="builder-left">
+          <div class="title-field">
+            <label class="field-label">Exercise Title</label>
+            <input type="text" id="ec-title" placeholder="e.g. Learning English with Videos">
+          </div>
+          <div class="title-field">
+            <label class="field-label">Video link</label>
+            <input type="text" id="ec-youtube" placeholder="YouTube, Vimeo, Google Drive, or a direct video link...">
+            <p style="font-size:0.8rem; color:var(--ink-soft); margin-top:6px;">Works with YouTube, Vimeo, Google Drive share links, or a direct link to a video file (e.g. from a video-hosting/upload service).</p>
+          </div>
+        </div>
+
+        <div class="builder-right">
+          <div class="title-field">
+            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
+            <input type="text" id="ec-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+            <p style="font-size:0.8rem; color:var(--ink-soft); margin-top:6px;">If you set a code, students must enter it before their name/ID. If left blank, no code is needed.</p>
+          </div>
+          <div class="title-field">
+            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
+            <input type="number" id="ec-timer" placeholder="Leave blank for no limit" min="1" max="180">
+          </div>
+        </div>
+      </div>
+
+      <div class="builder-actions">
+        <button class="reset-btn" type="button" onclick="resetEnglishContentForm()">🔄 Reset All</button>
+        <button class="create-btn" onclick="createEnglishContent()">Create "English Content" ⬇</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= DICTATION ================= -->
+  <div class="panel" id="panel-dictation">
+    <div class="card">
+      <div class="card-head">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🎧 Dictation</h2></div>
+        <p>Students listen to audio and write what they hear — either freely, or by filling in blanks in a transcript.</p>
+        <div class="deco-chips">
+          <span class="deco-chip" style="background:#8b5cf6; --tilt:-3deg;">🎧 Listen</span>
+          <span class="deco-chip" style="background:#4f9de0; --tilt:3deg;">✍️ Write</span>
+          <span class="deco-spark">🎵</span>
+        </div>
+      </div>
+
+      <div class="builder-grid">
+        <div class="builder-left">
+          <div class="title-field">
+            <label class="field-label">Exercise Title</label>
+            <input type="text" id="dc-title" placeholder="e.g. Daily Routine Dictation">
+          </div>
+          <div class="title-field">
+            <label class="field-label">Audio link (direct link to an audio file)</label>
+            <input type="text" id="dc-audio" placeholder="https://example.com/audio.mp3">
+                      </div>
+          <div class="title-field">
+            <label class="field-label">Mode</label>
+            <select id="dc-mode" onchange="onDictationModeChange()">
+              <option value="free" selected>Free dictation — student types everything</option>
+              <option value="cloze">Fill in the blanks — some words are already shown</option>
+            </select>
+          </div>
+          <div class="title-field" id="dc-free-field">
+            <label class="field-label">Reference text (the correct transcript, for grading — students never see this)</label>
+            <button class="mini-btn" type="button" style="margin-bottom:8px;" onclick="autoTranscribeDictation('dc-reference', this)">🤖 Auto-transcribe with AI</button>
+            <textarea id="dc-reference" placeholder="Type the exact words spoken in the audio, or use Auto-transcribe above..." style="min-height:140px;"></textarea>
+          </div>
+          <div class="title-field" id="dc-cloze-field" style="display:none;">
+            <label class="field-label">Transcript with blanks marked using *asterisks*</label>
+            <button class="mini-btn" type="button" style="margin-bottom:8px;" onclick="autoTranscribeDictation('dc-cloze-text', this)">🤖 Auto-transcribe with AI</button>
+            <textarea id="dc-cloze-text" placeholder="e.g. The cat sat on the *mat* and looked at the *bird*." style="min-height:140px;"></textarea>
+            <p style="font-size:0.8rem; color:var(--ink-soft); margin-top:6px;">Wrap each word students must fill in with asterisks, like *this*, after auto-transcribing (or typing it yourself).</p>
+          </div>
+        </div>
+
+        <div class="builder-right">
+          <div class="title-field">
+            <label class="field-label">Points awarded on completion</label>
+            <select id="dc-points">
+              <option value="0">0 — no points</option>
+              <option value="5">5 points</option>
+              <option value="10" selected>10 points</option>
+              <option value="15">15 points</option>
+              <option value="20">20 points</option>
+              <option value="25">25 points</option>
+              <option value="50">50 points</option>
+              <option value="100">100 points</option>
+            </select>
+          </div>
+          <div class="title-field">
+            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
+            <input type="text" id="dc-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+          </div>
+          <div class="title-field">
+            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
+            <input type="number" id="dc-timer" placeholder="Leave blank for no limit" min="1" max="180">
+          </div>
+        </div>
+      </div>
+
+      <div class="builder-actions">
+        <button class="reset-btn" type="button" onclick="resetDictationForm()">🔄 Reset All</button>
+        <button class="create-btn" onclick="createDictation()">Create "Dictation" ⬇</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="ai-robot-widget" id="aiRobotWidget" title="Ask the assistant">
+  <div class="ai-robot-anim" id="aiRobotAnim">🤖</div>
+  <div class="ai-robot-bubble" id="aiRobotBubble">
+    <div class="ai-robot-bubble-tail"></div>
+    <div class="ai-robot-bubble-head">
+      <div class="ai-robot-bubble-title">🤖 Ask me something</div>
+      <button type="button" class="ai-robot-bubble-close" onclick="closeAiRobotBubble()">✕</button>
+    </div>
+    <div class="ai-robot-bubble-body" id="aiRobotBubbleBody"></div>
+  </div>
+</div>
+
+<div class="wheel-winner-modal" id="sentenceViewModal">
+  <div class="wheel-winner-card" style="max-width:560px; width:92vw; text-align:left;">
+    <div id="sentenceViewTitle" style="font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:1.1rem; margin-bottom:14px;"></div>
+    <div id="sentenceViewBody" style="max-height:56vh; overflow-y:auto; display:flex; flex-direction:column; gap:10px;"></div>
+    <div style="display:flex; justify-content:flex-end; margin-top:14px;">
+      <button class="mini-btn" type="button" onclick="closeSentenceViewModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="points-modal-backdrop" id="settingsModalBackdrop" onclick="if(event.target===this) closeSettingsModal();">
+  <div class="points-modal">
+    <button class="points-modal-close" type="button" onclick="closeSettingsModal()">✕</button>
+    <div class="points-modal-title">⚙️ Additional Settings</div>
+    <div id="settingsModalBody"></div>
+  </div>
+</div>
+
+<div class="points-modal-backdrop" id="lessonPlanModalBackdrop" onclick="if(event.target===this) closeLessonPlanModal();">
+  <div class="points-modal" style="max-width:560px;">
+    <button class="points-modal-close" type="button" onclick="closeLessonPlanModal()">✕</button>
+    <div class="points-modal-title" id="lessonPlanModalTitle">📝 Lesson Plan</div>
+    <div id="lessonPlanModalBody"></div>
+  </div>
+</div>
+
+<script src="js/animations.js"></script>
+<script src="js/common.js"></script>
+<script src="js/exercise-templates.js"></script>
+<script src="js/pages/create.js"></script>
+<script type="module" src="js/firebase.js"></script>
+</body>
+</html>
