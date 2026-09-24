@@ -104,7 +104,7 @@ function deleteRecentExercise(idx) {
 function viewRecentExerciseResults(idx) {
   const item = getRecentExercises()[idx];
   if (!item) return;
-  location.href = 'results.html?exercise=' + encodeURIComponent(item.uid);
+  taNavigate('results.html?exercise=' + encodeURIComponent(item.uid));
 }
 function separateHomeworkOrClass(idx) {
   const item = getRecentExercises()[idx];
@@ -138,11 +138,9 @@ async function disableRecentExercisePoints(idx) {
 }
 
 /* ================= PAGE START ================= */
-taOnTab('myexercises', renderRecentExercises);
-taStartPage('myexercises');
-
-// Opened from a lesson plan: my-exercises.html?highlight=<uid>
-(function () {
+taOnTab('myexercises', function () {
+  renderRecentExercises();
+  // Opened from a lesson plan: my-exercises.html?highlight=<uid>
   const uid = new URLSearchParams(location.search).get('highlight');
   if (!uid) return;
   setTimeout(function () {
@@ -153,4 +151,5 @@ taStartPage('myexercises');
       setTimeout(function () { row.classList.remove('flash-highlight'); }, 1600);
     }
   }, 150);
-})();
+});
+taStartPage('myexercises');

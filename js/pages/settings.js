@@ -53,7 +53,7 @@ window.renderWeeklyScheduleSettings = renderWeeklyScheduleSettings;
    colleague signs in with their own account (made in the Control Panel),
    so their data stays separate from yours. */
 function shareTeachersAssistant() {
-  const link = new URL('index.html', location.href).href;
+  const link = new URL(taAddressFor('index.html'), location.href).href;
   const done = () => showToast('App link copied — send it to your colleague.', 'ok');
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(link).then(done, () => prompt('Copy this link and send it to your colleague:', link));
@@ -63,12 +63,14 @@ function shareTeachersAssistant() {
 }
 
 /* ================= PAGE START ================= */
-taOnTab('settings', renderWeeklyScheduleSettings);
+taOnTab('settings', function () {
+  renderWeeklyScheduleSettings();
+  if (location.hash === '#schedule') scrollToScheduleSettings();
+});
 taStartPage('settings');
 (function () {
   const nameEl = document.getElementById('settings-teacher-name');
   if (nameEl) nameEl.value = getTeacherName();
   const loginEl = document.getElementById('settingsAccountLogin');
   if (loginEl) loginEl.textContent = taCurrentLogin() || '—';
-  if (location.hash === '#schedule') setTimeout(goToScheduleSettings, 80);
 })();

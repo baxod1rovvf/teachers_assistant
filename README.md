@@ -22,9 +22,9 @@ Every page also loads these shared files:
 - `js/common.js`: shared code (page switching, toasts, sounds, students/groups data, exercises list, results storage, lesson schedule and reminders, lesson plans, theme, profile picture, login screen, assistant robot)
 - `js/firebase.js`: live results, points and account sync
 
-You stay signed in and keep all your data when you move between pages, because every page is served from the same site.
+Switching sections in the sidebar doesn't reload the app. The first time you open a section, its panels and script are added to the page you're on (`taNavigate()` in `js/common.js`). After that, switching is instant, just like the old single file. Once the app has loaded, the other sections are downloaded in the background. Opening or refreshing any section's address directly still works.
 
-A builder can be opened directly with a link like `create.html#flashcard` or `create.html#wordorder`.
+On GitHub Pages the address bar shows clean names without `.html`: `…/teachers_assistant/index`, `…/students`, `…/create`, and so on. A builder can be opened directly with a link like `…/create#flashcard`.
 
 ## Getting a link to the app (GitHub Pages)
 
@@ -34,4 +34,4 @@ A builder can be opened directly with a link like `create.html#flashcard` or `cr
 4. Wait 1–2 minutes and refresh the page. The link appears at the top:
    `https://<your-username>.github.io/teachers_assistant/`
 
-That link opens `index.html` (Main). The Control Panel is at `.../teachers_assistant/CP.html`.
+That link opens Main (shown as `…/teachers_assistant/index`). The Control Panel is at `…/teachers_assistant/CP.html`.

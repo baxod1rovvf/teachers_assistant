@@ -184,6 +184,7 @@ body:not(.light-theme) .sidebar-hamburger-anim svg { filter: invert(1); }
   transition: background 0.15s ease, color 0.15s ease;
 }
 a.side-btn { text-decoration: none; }
+body.ta-page-loading, body.ta-page-loading * { cursor: progress !important; }
 .side-btn:hover { background: rgba(244,241,234,0.06); color: var(--ink); }
 .side-btn.active { background: var(--brand); color: var(--on-brand); box-shadow: var(--shadow-sm); }
 .sidebar-cta {

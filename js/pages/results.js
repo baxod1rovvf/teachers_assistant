@@ -559,9 +559,10 @@ function clearResultsForActiveCode() {
 
 /* ================= PAGE START ================= */
 renderActiveCodeBox();
-taOnTab('results', function () { try { renderResultsTable(); } catch (e) { /* ignore */ } });
-taStartPage('results');
-(function () {
+taOnTab('results', function () {
+  // Opened from My Exercises ("View Results"): results.html?exercise=<uid>
   const uid = new URLSearchParams(location.search).get('exercise');
-  if (uid) showExerciseResults(uid);
-})();
+  if (uid) { showExerciseResults(uid); return; }
+  try { renderResultsTable(); } catch (e) { /* ignore */ }
+});
+taStartPage('results');

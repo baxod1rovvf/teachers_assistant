@@ -1,8 +1,9 @@
 /* ================= PAGES & TAB SWITCHING =================
-   Every sidebar section is its own HTML page. A "tab" is one panel; the Create
-   page holds several (the picker plus every exercise builder). switchTo() shows
-   a panel when it lives on the current page, otherwise it opens the page that
-   has it (e.g. create.html#flashcard). */
+   Every sidebar section is its own HTML file. A "tab" is one panel; the Create
+   page holds several (the picker plus every exercise builder). Moving between
+   sections doesn't reload the app: taNavigate() fetches the other section's
+   file once, adds its panels and scripts to this page, and switches to it
+   (see PAGE NAVIGATION below). Opening any file directly still works too. */
 const TA_PAGES = {
   main: 'index.html',
   createpicker: 'create.html',
@@ -153,12 +154,15 @@ function switchTo(tab) {
   const panel = document.getElementById('panel-' + tab);
   if (!panel) {
     const page = pageForTab(tab);
-    const here = location.pathname.split('/').pop() || 'index.html';
-    if (page === here) return; // never reload the page we're already on
-    location.href = page + (TA_PAGES[tab] === page ? '' : '#' + tab);
+    if (page === taCurrentPageFile()) return; // it isn't on this page either
+    taNavigate(page + (TA_PAGES[tab] === page ? '' : '#' + tab));
     return;
   }
   currentActiveTab = tab;
+  // Keep the address bar and tab title on the section being shown.
+  const page = pageForTab(tab);
+  if (taStarted && page !== taCurrentPageFile()) history.pushState(null, '', taAddressFor(page));
+  if (TA_PAGE_TITLES[page]) document.title = TA_PAGE_TITLES[page];
   document.body.classList.toggle('main-hero-active', tab === 'main');
   if (tab === 'main') {
     const sidebar = document.getElementById('mainSidebar');
@@ -196,11 +200,122 @@ function switchTo(tab) {
   if (typeof aiRobotBubbleOpen !== 'undefined' && aiRobotBubbleOpen) renderAiRobotQuestionList();
 }
 
-// Sidebar entries are real links to the other pages; the builder tabs on the
-// Create page are buttons that switch panels in place.
-document.querySelectorAll('button.tab-btn, button.side-btn').forEach(btn => {
-  btn.addEventListener('click', () => switchTo(btn.dataset.tab));
+// Builder tabs on the Create page are buttons that switch panels; sidebar
+// entries are links to the other sections, opened in place by taNavigate().
+// Listening on the document also covers sections added later.
+document.addEventListener('click', function (e) {
+  const btn = e.target.closest('button.tab-btn[data-tab], button.side-btn[data-tab]');
+  if (btn) { switchTo(btn.dataset.tab); return; }
+  const link = e.target.closest('a.side-btn[href]');
+  if (!link || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+  e.preventDefault();
+  taNavigate(link.getAttribute('href'));
 });
+
+/* ================= PAGE NAVIGATION (no reloads) ================= */
+// On GitHub Pages the address bar shows clean names (…/students instead of
+// …/students.html); GitHub serves students.html for both. Other hosts (and
+// files opened from disk) keep the .html names so refreshing still works.
+const TA_CLEAN_URLS = /\.github\.io$/.test(location.hostname);
+
+// "students", "students.html" or "" (the site root) -> "students.html"
+function taPageFileFromPath(pathname) {
+  const last = decodeURIComponent(pathname.split('/').pop() || '');
+  if (!last) return 'index.html';
+  return /\.html$/.test(last) ? last : last + '.html';
+}
+function taCurrentPageFile() { return taPageFileFromPath(location.pathname); }
+
+function taAddressFor(file, search, hash) {
+  const name = TA_CLEAN_URLS ? file.replace(/\.html$/, '') : file;
+  return name + (search || '') + (hash || '');
+}
+
+// Sections whose panels and scripts are already on this page.
+const TA_LOADED_PAGES = new Set();
+const TA_PAGE_TITLES = {};
+const TA_PAGE_HTML = {};
+function taFetchPage(file) {
+  if (!TA_PAGE_HTML[file]) {
+    TA_PAGE_HTML[file] = fetch(file).then(r => {
+      if (!r.ok) throw new Error(file + ': ' + r.status);
+      return r.text();
+    });
+    TA_PAGE_HTML[file].catch(() => { delete TA_PAGE_HTML[file]; });
+  }
+  return TA_PAGE_HTML[file];
+}
+
+function taLoadScript(src) {
+  return new Promise((resolve, reject) => {
+    const el = document.createElement('script');
+    el.src = src;
+    el.async = false;
+    el.onload = resolve;
+    el.onerror = () => reject(new Error('Could not load ' + src));
+    document.body.appendChild(el);
+  });
+}
+
+// Adds another section's panels, pop-ups and scripts to this page.
+async function taLoadPage(file) {
+  const doc = new DOMParser().parseFromString(await taFetchPage(file), 'text/html');
+  const wrap = document.querySelector('.main-content .wrap');
+  doc.querySelectorAll('.main-content .wrap > *:not(.masthead)').forEach(el => {
+    if (!el.id || !document.getElementById(el.id)) wrap.appendChild(document.importNode(el, true));
+  });
+  Array.from(doc.body.children).forEach(el => {
+    if (el.id && el.tagName !== 'SCRIPT' && !document.getElementById(el.id)) document.body.appendChild(document.importNode(el, true));
+  });
+  const have = new Set(Array.from(document.scripts).map(sc => sc.src));
+  for (const sc of doc.querySelectorAll('script[src]:not([type="module"])')) {
+    const src = new URL(sc.getAttribute('src'), location.href).href;
+    if (!have.has(src)) await taLoadScript(src);
+  }
+  TA_PAGE_TITLES[file] = doc.title;
+  TA_LOADED_PAGES.add(file);
+}
+
+let taNavigateBusy = null;
+async function taNavigate(url, fromHistory) {
+  const target = new URL(url, location.href);
+  const file = taPageFileFromPath(target.pathname);
+  if (!TA_PAGES_FILES.has(file)) { location.href = target.href; return; }
+  const myTurn = taNavigateBusy = {};
+  if (!TA_LOADED_PAGES.has(file)) {
+    document.body.classList.add('ta-page-loading');
+    try { await taLoadPage(file); }
+    catch (e) { location.href = target.href; return; } // fall back to a normal page load
+    finally { document.body.classList.remove('ta-page-loading'); }
+  }
+  if (myTurn !== taNavigateBusy) return; // the teacher already clicked somewhere else
+  if (!fromHistory) history.pushState(null, '', taAddressFor(file, target.search, target.hash));
+  const hashTab = decodeURIComponent(target.hash.slice(1));
+  const defaultTab = Object.keys(TA_PAGES).find(t => TA_PAGES[t] === file);
+  switchTo(hashTab && document.getElementById('panel-' + hashTab) ? hashTab : defaultTab);
+  if (!fromHistory) window.scrollTo(0, 0);
+}
+const TA_PAGES_FILES = new Set(Object.values(TA_PAGES));
+
+window.addEventListener('popstate', function () { taNavigate(location.href, true); });
+
+// Once the app is idle, quietly download the other sections so opening them is instant.
+function taPrefetchPages() {
+  const scripts = new Set(Array.from(document.scripts).map(sc => sc.src));
+  TA_PAGES_FILES.forEach(file => {
+    if (TA_LOADED_PAGES.has(file)) return;
+    taFetchPage(file).then(html => {
+      new DOMParser().parseFromString(html, 'text/html').querySelectorAll('script[src]:not([type="module"])').forEach(sc => {
+        const src = new URL(sc.getAttribute('src'), location.href).href;
+        if (scripts.has(src)) return;
+        scripts.add(src);
+        const link = document.createElement('link');
+        link.rel = 'prefetch'; link.as = 'script'; link.href = src;
+        document.head.appendChild(link);
+      });
+    }).catch(() => { /* it'll load normally when opened */ });
+  });
+}
 
 /* ================= TOAST ================= */
 let toastTimeout = null;
@@ -1046,15 +1161,19 @@ window.saveLessonPlan = saveLessonPlan;
 // My Exercises is its own page; it highlights the row named in ?highlight=
 function jumpToExerciseInMyExercises(uid) {
   closeLessonPlanModal();
-  location.href = 'my-exercises.html?highlight=' + encodeURIComponent(uid);
+  taNavigate('my-exercises.html?highlight=' + encodeURIComponent(uid));
 }
 window.jumpToExerciseInMyExercises = jumpToExerciseInMyExercises;
 
-// Opens Settings and scrolls to the weekly schedule (Settings is its own page).
+// Opens Settings and scrolls to the weekly schedule.
 function goToScheduleSettings() {
-  const el = document.getElementById('settingsScheduleSection');
-  if (!el) { location.href = 'settings.html#schedule'; return; }
-  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  taNavigate('settings.html#schedule');
+}
+function scrollToScheduleSettings() {
+  setTimeout(function () {
+    const el = document.getElementById('settingsScheduleSection');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
 }
 
 /* ================= LOTTIE ANIMATIONS ================= */
@@ -1641,7 +1760,17 @@ window.initPercentStatAnims = initPercentStatAnims;
 
 /* ================= PAGE START =================
    Each page script calls this last, once all of its own functions exist. */
+let taStarted = false;
 function taStartPage(defaultTab) {
+  // A section added later by taNavigate() only needs its own panels; the app
+  // around it is already running.
+  if (taStarted) return;
+  taStarted = true;
+  TA_LOADED_PAGES.add(taCurrentPageFile());
+  TA_PAGE_TITLES[taCurrentPageFile()] = document.title;
+  if (TA_CLEAN_URLS && /\.html$/.test(location.pathname)) {
+    history.replaceState(null, '', taAddressFor(taCurrentPageFile(), location.search, location.hash));
+  }
   applyTheme();
   updateSoundToggleUI();
   applyAvatar();
@@ -1667,4 +1796,7 @@ function taStartPage(defaultTab) {
     showReminderToastIfDue();
     if (currentActiveTab === 'main') renderNextLessons();
   }, 5 * 60 * 1000);
+
+  const idle = window.requestIdleCallback || function (fn) { setTimeout(fn, 1500); };
+  idle(taPrefetchPages);
 }
