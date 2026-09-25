@@ -475,6 +475,28 @@ body:not(.light-theme) .dash-card-icon-img.icon-mono { filter: invert(1); }
 .picker-card:active { transform: scale(0.98) translateY(-1px); }
 .picker-card .exercise-badge { width: 46px; height: 46px; font-size: 1.4rem; border-radius: var(--radius-md); }
 .picker-card-title { font-weight: 800; font-size: 1rem; }
+/* Custom icons for the Create picker cards (night variant by default, day variant under .light-theme) */
+.picker-card .exercise-badge.picker-icon { background-color: transparent !important; background-size: contain; background-repeat: no-repeat; background-position: center; box-shadow: none; }
+.picker-icon-flashcard { background-image: url(../images/icons/create/flashcard-night.png); }
+body.light-theme .picker-icon-flashcard { background-image: url(../images/icons/create/flashcard.png); }
+.picker-icon-wordorder { background-image: url(../images/icons/create/wordorder-night.png); }
+body.light-theme .picker-icon-wordorder { background-image: url(../images/icons/create/wordorder.png); }
+.picker-icon-makeaword { background-image: url(../images/icons/create/makeaword-night.png); }
+body.light-theme .picker-icon-makeaword { background-image: url(../images/icons/create/makeaword.png); }
+.picker-icon-spelling { background-image: url(../images/icons/create/spelling-night.png); }
+body.light-theme .picker-icon-spelling { background-image: url(../images/icons/create/spelling.png); }
+.picker-icon-sentences { background-image: url(../images/icons/create/sentences-night.png); }
+body.light-theme .picker-icon-sentences { background-image: url(../images/icons/create/sentences.png); }
+.picker-icon-bilingual { background-image: url(../images/icons/create/bilingual-night.png); }
+body.light-theme .picker-icon-bilingual { background-image: url(../images/icons/create/bilingual.png); }
+.picker-icon-engcontent { background-image: url(../images/icons/create/engcontent-night.png); }
+body.light-theme .picker-icon-engcontent { background-image: url(../images/icons/create/engcontent.png); }
+.picker-icon-listening { background-image: url(../images/icons/create/listening-night.png); }
+body.light-theme .picker-icon-listening { background-image: url(../images/icons/create/listening.png); }
+.picker-icon-homework { background-image: url(../images/icons/create/homework-night.png); }
+body.light-theme .picker-icon-homework { background-image: url(../images/icons/create/homework.png); }
+.picker-icon-class { background-image: url(../images/icons/create/class-night.png); }
+body.light-theme .picker-icon-class { background-image: url(../images/icons/create/class.png); }
 .picker-card-sub { font-size: 0.78rem; color: var(--ink-faint); margin-top: 2px; }
 .hwc-avail-row {
   display: flex; justify-content: space-between; align-items: center; gap: 10px;
