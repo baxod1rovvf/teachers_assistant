@@ -333,7 +333,13 @@ function showToast(message, kind) {
 }
 
 /* ================= DOWNLOAD HELPER ================= */
+// Exercise files load their login animation from this site, so every
+// downloaded file gets the site's address (e.g. https://…github.io/teachers_assistant/).
+// Opened from disk the app has no web address, and the files keep the 🔐 instead.
+const TA_APP_URL = /^https?:$/.test(location.protocol) ? new URL('.', location.href).href : '';
+
 function downloadFile(filename, content) {
+  content = content.split('__TA_APP_URL__').join(TA_APP_URL);
   const blob = new Blob([content], { type: 'text/html' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');

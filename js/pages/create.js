@@ -398,6 +398,7 @@ html,body{margin:0;padding:0;height:100%;background:#101116;font-family:'Inter',
     <path d="M500 40C420 60 460 120 380 140C300 160 340 220 260 240C180 260 220 300 140 300" stroke="#233252" stroke-width="34" stroke-linecap="round"/>
     <path d="M500 40C420 60 460 120 380 140C300 160 340 220 260 240C180 260 220 300 140 300" stroke="#ef7d2e" stroke-width="4" stroke-dasharray="10 10" stroke-linecap="round"/>
   </svg>
+  <div class="ta-login-stage"><div class="ta-login-anim" id="taLoginAnim" aria-hidden="true">🔐</div><div class="ta-login-form">
   <div class="welcome-icon-badge">${hwcKind === 'class' ? '\ud83c\udfeb' : '\ud83d\udcda'}</div>
   <h1>${hwcKind === 'class' ? 'Class' : 'Homework'} <span class="ta-accent">${escapeForHtml(title)}</span></h1>
   <div class="ta-underline"></div>
@@ -408,6 +409,7 @@ html,body{margin:0;padding:0;height:100%;background:#101116;font-family:'Inter',
     <button class="ta-btn" onclick="hwcBegin()">Start <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     <div class="ta-footer"><span class="ta-dash"></span><span>Get ready. Your next step is here.</span><span class="ta-dash"></span></div>
   </div>
+  </div></div>
 </div>
 <div class="ta-screen" id="hwcNextScreen">
   <div class="ta-blob ta-blob1"></div>
@@ -536,6 +538,53 @@ window.addEventListener("message", function (e) {
   document.getElementById("hwcNextSub").textContent = "Exercise " + (hwcIdx + 2) + " of " + HWC_ROUNDS.length + " \u2014 press start when you're ready.";
   hwcShow("hwcNextScreen");
 });
+<\/script>
+<!-- ================= LOGIN ANIMATION =================
+     Start screen layout: animation on the left, ID / password on the right.
+     In a narrow start card they stack, and in a very thin one the animation hides. The animation and its player load from the
+     Teacher's Assistant site this file was made on; offline, the 🔐 stays. -->
+<style>
+.ta-login-card { max-width: 880px !important; width: min(880px, 94vw) !important; }
+.ta-login-stage { position: relative; z-index: 2; display: flex; align-items: center; gap: 32px; width: 100%; max-width: 880px; margin: 0 auto; }
+.ta-login-anim { flex: 0 0 min(320px, 40%); aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; font-size: 4.5rem; }
+.ta-login-anim svg { width: 100% !important; height: 100% !important; }
+.ta-login-form { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.ta-login-form > * { max-width: 100%; }
+.ta-login-form > input, .ta-login-form > .ta-input-wrap, .ta-login-form > .ta-card { width: 100%; }
+.ta-login-stage.ta-login-narrow { flex-direction: column; gap: 4px; }
+.ta-login-stage.ta-login-narrow .ta-login-anim { flex: 0 0 auto; width: 150px; font-size: 3rem; }
+.ta-login-stage.ta-login-tiny .ta-login-anim { display: none; }
+</style>
+<script>
+(function () {
+  var APP_URL = "__TA_APP_URL__";
+  var box = document.getElementById('taLoginAnim');
+  if (!box) return;
+  var stage = box.parentNode;
+  function fit() {
+    var w = stage.parentNode.clientWidth;
+    stage.classList.toggle('ta-login-narrow', w < 540);
+    stage.classList.toggle('ta-login-tiny', w < 300);
+  }
+  fit();
+  window.addEventListener('resize', fit);
+  if (!/^https?:/.test(APP_URL)) return;
+  function play(data) {
+    try {
+      box.textContent = '';
+      lottie.loadAnimation({ container: box, renderer: 'svg', loop: true, autoplay: true, animationData: data });
+    } catch (e) { box.textContent = '🔐'; }
+  }
+  var lib = document.createElement('script');
+  lib.src = APP_URL + 'js/lottie.min.js';
+  lib.onload = function () {
+    fetch(APP_URL + 'animations/profile-password-unlock.json')
+      .then(function (r) { return r.json(); })
+      .then(play)
+      .catch(function () { /* keep the 🔐 */ });
+  };
+  document.head.appendChild(lib);
+})();
 <\/script>
 </body>
 </html>`;
