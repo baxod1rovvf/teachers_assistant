@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Main — Teacher's Assistant</title>
+<title>Dashboard — Teacher's Assistant</title>
 <!-- Shared by every page: accounts must load first (it scopes this browser's storage to the signed-in teacher). -->
 <script src="js/accounts.js"></script>
 <script src="js/lottie.min.js"></script>
@@ -45,7 +45,7 @@
     <div class="sidebar-brand"><div class="sidebar-brand-anim" id="brandArcAnim">🎓</div> Teacher's Assistant</div>
     <a class="side-btn sidebar-cta" href="create.html" data-tab="createpicker">➕ Create New Exercise</a>
     <nav style="display:flex; flex-direction:column; gap:4px;">
-      <a class="side-btn" href="index.html" data-tab="main">🎓 Main</a>
+      <a class="side-btn" href="index.html" data-tab="main">🎓 Dashboard</a>
       <a class="side-btn" href="create.html" data-tab="createpicker"><span class="side-icon-anim" id="createIconAnim">➕</span> Create</a>
       <a class="side-btn" href="statistics.html" data-tab="dashboard"><span class="side-icon-anim" id="statsIconAnim">📊</span> Statistics</a>
       <div style="height:8px;"></div>
@@ -98,6 +98,37 @@
       </div>
     </div>
 
+    <div class="results-stats-grid dash-stats-grid">
+      <div class="results-stat-card">
+        <div class="results-stat-icon" style="background:rgba(79,126,227,0.14);">👥</div>
+        <div>
+          <div class="results-stat-value" id="dashStatStudents">—</div>
+          <div class="results-stat-label">Students</div>
+        </div>
+      </div>
+      <div class="results-stat-card">
+        <div class="results-stat-icon" style="background:rgba(69,175,110,0.14);">📅</div>
+        <div>
+          <div class="results-stat-value" id="dashStatLessons">—</div>
+          <div class="results-stat-label">Lessons this week</div>
+        </div>
+      </div>
+      <div class="results-stat-card">
+        <div class="results-stat-icon" style="background:rgba(229,129,77,0.16);">📚</div>
+        <div>
+          <div class="results-stat-value" id="dashStatExercises">—</div>
+          <div class="results-stat-label">Exercises created</div>
+        </div>
+      </div>
+      <div class="results-stat-card">
+        <div class="results-stat-icon" style="background:rgba(245,179,1,0.16);">📈</div>
+        <div>
+          <div class="results-stat-value" id="dashStatResults">—</div>
+          <div class="results-stat-label">Students' overall results</div>
+        </div>
+      </div>
+    </div>
+
     <div class="main-dashboard-row">
       <div class="main-block-lessons">
         <div class="dash-card" style="height:auto;">
@@ -115,7 +146,16 @@
           </div>
           <div id="mainTopStudentsList"><div class="empty-results">No scored results yet.</div></div>
         </div>
-        <div class="main-block-bottom-placeholder"></div>
+        <div class="dash-card main-block-quick">
+          <div class="dash-card-head">
+            <div class="dash-card-title">⚡ Quick actions</div>
+          </div>
+          <div class="quick-actions">
+            <button class="quick-action-btn" type="button" onclick="switchTo('createpicker')">➕ Create Exercise</button>
+            <button class="quick-action-btn" type="button" onclick="switchTo('students')">👥 Add Students</button>
+            <a class="quick-action-btn" href="https://edunest-academy.github.io/PAYMENT/teacher" target="_blank" rel="noopener">🎓 Edunest system <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -84,7 +84,7 @@ function setSoundEnabled(on) {
   updateSoundToggleUI();
   if (on) taBeep(880, 0.08, 'triangle', 0.14);
 }
-// The speaker button at the top of Main.
+// The speaker button at the top of the Dashboard.
 function updateSoundToggleUI() {
   const btn = document.getElementById('soundToggleBtn');
   if (!btn) return;
@@ -148,7 +148,7 @@ function taConfettiBurst(x, y, count) {
 
 let currentActiveTab = 'main';
 function toggleSidebar() {
-  if (currentActiveTab === 'main') return; // sidebar always stays visible on the Main section
+  if (currentActiveTab === 'main') return; // sidebar always stays visible on the Dashboard
   const sidebar = document.getElementById('mainSidebar');
   if (sidebar) sidebar.classList.toggle('collapsed');
   if (typeof syncSidebarHamburgerIcon === 'function') syncSidebarHamburgerIcon(true);

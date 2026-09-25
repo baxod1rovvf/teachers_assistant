@@ -4,7 +4,7 @@ The app is split into one HTML page per sidebar section. The pages link to each 
 
 | Page | Sidebar section | Page script |
 | --- | --- | --- |
-| `index.html` | 🎓 Main (start page) | `js/pages/main.js` |
+| `index.html` | 🎓 Dashboard (start page) | `js/pages/main.js` |
 | `create.html` | ➕ Create (picker, every exercise builder, Homework & Class, IELTS) | `js/pages/create.js` + `js/exercise-templates.js` |
 | `statistics.html` | 📊 Statistics | `js/pages/statistics.js` |
 | `my-exercises.html` | 📁 My Exercises | `js/pages/my-exercises.js` |
@@ -34,4 +34,4 @@ On GitHub Pages the address bar shows clean names without `.html`: `…/teachers
 4. Wait 1–2 minutes and refresh the page. The link appears at the top:
    `https://<your-username>.github.io/teachers_assistant/`
 
-That link opens Main (shown as `…/teachers_assistant/index`). The Control Panel is at `…/teachers_assistant/CP.html`.
+That link opens the Dashboard (shown as `…/teachers_assistant/index`). The Control Panel is at `…/teachers_assistant/CP.html`.
