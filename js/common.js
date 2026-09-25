@@ -36,7 +36,7 @@ const MASTHEAD_COPY = {
   main: { eyebrow: "🎓 Teacher's Assistant", title: "Welcome back", sub: "Everything you need to build, share, and track classroom exercises." },
   dashboard: { eyebrow: "📊 Statistics", title: "Your classroom at a glance", sub: "See which exercise types get used the most, updated live from your Points Board." },
   myexercises: { eyebrow: "📁 My Exercises", title: "Everything you've built", sub: "Every exercise you've created in this browser — jump to its results, turn off its points, or remove it for good." },
-  students: { eyebrow: "👥 Students", title: "Your class roster", sub: "Give each student a unique ID so they can earn points without typing a name or code." },
+  students: { eyebrow: "Students", title: "Your class roster", sub: "Give each student a unique ID so they can earn points without typing a name or code." },
   results: { eyebrow: "📊 Results", title: "Student Results", sub: "Track your students' progress, view results and help them achieve their goals." },
   points: { eyebrow: "🏆 Points & Rewards", title: "Track and reward progress", sub: "A live leaderboard for every student, plus the ability to give or take bonus points yourself." },
   settings: { eyebrow: "⚙️ Settings", title: "Make it yours", sub: "Set your name, add a profile picture, and manage your weekly lesson schedule." }
@@ -1041,7 +1041,7 @@ function renderLessonRow(o) {
   return '<div class="lesson-row">' +
     '<div class="lesson-accent" style="background:' + palette.color + ';"></div>' +
     '<div class="lesson-time-col"><div class="lesson-time-val">' + formatTimeDisplay(o.entry.time) + '</div><div class="lesson-day-val">' + SCHEDULE_DAY_SHORT[o.date.getDay()] + '</div>' + soonBadge + '</div>' +
-    '<div class="lesson-group-col"><span class="lesson-group-icon">👥</span><b>' + escapeForHtml(o.entry.group || 'Untitled group') + '</b></div>' +
+    '<div class="lesson-group-col"><img class="lesson-group-icon icon-mono" src="images/icons/students.png" alt=""><b>' + escapeForHtml(o.entry.group || 'Untitled group') + '</b></div>' +
     '<div class="lesson-level-col">' + levelPill + '</div>' +
     '<button class="lesson-plan-btn" type="button" onclick="openLessonPlanModal(' + jsAttr(o.entry.id) + ')">📝 Plan</button>' +
   '</div>';

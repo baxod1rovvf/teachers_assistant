@@ -60,7 +60,7 @@ function renderHwcResultsList() {
   const completed = docs.filter(d => d.completedCount === d.totalCount && d.totalCount > 0).length;
   const inProgress = docs.filter(d => d.completedCount > 0 && d.completedCount < d.totalCount).length;
   const avgProgressPct = total ? Math.round(docs.reduce((a, d) => a + (d.totalCount ? d.completedCount / d.totalCount : 0), 0) / total * 100) : null;
-  setResultsStatCard(1, '\ud83d\udc65', 'rgba(232,115,15,0.14)', 'var(--brand)', String(total), 'Total Students');
+  setResultsStatCard(1, null, 'rgba(232,115,15,0.14)', 'var(--brand)', String(total), 'Total Students');
   setResultsStatCard(2, '\u2705', 'var(--success-surface)', 'var(--success)', String(completed), 'Completed');
   setResultsStatCard(3, '\u23f3', 'rgba(79,126,227,0.14)', 'var(--category-blue)', String(inProgress), 'In Progress');
   setResultsStatCard(4, '\ud83d\udcc8', 'rgba(245,179,1,0.16)', 'var(--celebrate)', avgProgressPct !== null ? avgProgressPct + '%' : '\u2014', 'Average Progress');
@@ -336,7 +336,7 @@ function setResultsStatCard(n, icon, bg, color, value, label) {
   if (labelEl) labelEl.textContent = label;
 }
 function setResultsStatsForCode() {
-  setResultsStatCard(1, '👥', 'rgba(232,115,15,0.14)', 'var(--brand)', '—', 'Submissions');
+  setResultsStatCard(1, null, 'rgba(232,115,15,0.14)', 'var(--brand)', '—', 'Submissions');
   setResultsStatCard(2, null, '#145C4E', 'var(--success)', '—', 'Average Score');
   setResultsStatCard(3, '⏱️', 'rgba(79,126,227,0.14)', 'var(--category-blue)', '—', 'Average Time');
   setResultsStatCard(4, null, '#5C4108', 'var(--celebrate)', '—', 'Highest Score');
@@ -380,7 +380,7 @@ function renderResultsTable(codeOverride) {
   const avgTime = timed.length ? Math.round(timed.reduce((a, r) => a + r.timeSeconds, 0) / timed.length) : null;
   const avgTimeDisplay = avgTime !== null ? (String(Math.floor(avgTime / 60)).padStart(2, '0') + ':' + String(avgTime % 60).padStart(2, '0')) : '—';
 
-  setResultsStatCard(1, '👥', 'rgba(232,115,15,0.14)', 'var(--brand)', String(idMatches.length), 'Your students (with ID)');
+  setResultsStatCard(1, null, 'rgba(232,115,15,0.14)', 'var(--brand)', String(idMatches.length), 'Your students (with ID)');
   setResultsStatCard(2, null, '#145C4E', 'var(--success)', avgScore !== null ? avgScore + '%' : '—', 'Average Score');
   setResultsStatCard(3, '⏱️', 'rgba(79,126,227,0.14)', 'var(--category-blue)', avgTimeDisplay, 'Average Time');
   setResultsStatCard(4, null, '#5C4108', 'var(--celebrate)', highScore !== null ? highScore + '%' : '—', 'Highest Score');
