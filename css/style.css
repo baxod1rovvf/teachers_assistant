@@ -220,17 +220,14 @@ body.main-hero-active .masthead { display: none; }
   width: 68px; height: 37px; flex-shrink: 0; cursor: pointer; display: flex; align-items: center;
   justify-content: center; font-size: 1.1rem; border-radius: 999px; overflow: hidden;
 }
-.hero-bell-btn {
+.hero-sound-btn {
   position: relative; width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--border);
   background: var(--surface); display: flex; align-items: center; justify-content: center;
   font-size: 1.05rem; cursor: pointer; color: var(--ink-soft); flex-shrink: 0;
   transition: border-color 0.15s ease, color 0.15s ease;
 }
-.hero-bell-btn:hover { border-color: var(--brand); color: var(--brand); }
-.hero-bell-dot {
-  position: absolute; top: 8px; right: 9px; width: 8px; height: 8px; border-radius: 50%;
-  background: var(--danger); border: 1.5px solid var(--surface);
-}
+.hero-sound-btn:hover { border-color: var(--brand); color: var(--brand); }
+.hero-sound-btn.muted { opacity: 0.6; }
 .hero-account-chip {
   display: flex; align-items: center; gap: 10px; padding: 6px 12px 6px 6px; border-radius: 999px;
   border: 1.5px solid var(--border); background: var(--surface); cursor: pointer; flex-shrink: 0;

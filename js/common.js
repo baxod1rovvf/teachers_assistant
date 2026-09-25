@@ -84,12 +84,16 @@ function setSoundEnabled(on) {
   updateSoundToggleUI();
   if (on) taBeep(880, 0.08, 'triangle', 0.14);
 }
+// The speaker button at the top of Main.
 function updateSoundToggleUI() {
   const btn = document.getElementById('soundToggleBtn');
   if (!btn) return;
   const on = taSoundEnabled();
-  btn.textContent = on ? '🔊 Sound effects: On' : '🔇 Sound effects: Off';
-  btn.classList.toggle('active-choice', on);
+  const label = on ? 'Sound effects: On' : 'Sound effects: Off';
+  btn.textContent = on ? '🔊' : '🔇';
+  btn.title = label;
+  btn.setAttribute('aria-label', label);
+  btn.classList.toggle('muted', !on);
 }
 function taSuccessChime() {
   if (!taSoundEnabled()) return;
@@ -1006,12 +1010,6 @@ function markReminderShown(key) {
     }
   } catch (e) { /* ignore */ }
 }
-function updateReminderBell() {
-  const dot = document.getElementById('heroBellDot');
-  if (!dot) return;
-  dot.style.display = getUpcomingReminders().length ? '' : 'none';
-}
-window.updateReminderBell = updateReminderBell;
 function showReminderToastIfDue() {
   const reminders = getUpcomingReminders();
   if (!reminders.length) return;
@@ -1026,18 +1024,6 @@ function showReminderToastIfDue() {
   due.forEach(r => markReminderShown(r.entry.id + '_' + r.date.toISOString()));
 }
 window.showReminderToastIfDue = showReminderToastIfDue;
-function openReminderBell() {
-  const reminders = getUpcomingReminders();
-  if (!reminders.length) { showToast('No lessons in the next 24 hours.'); return; }
-  if (reminders.length === 1) {
-    const r = reminders[0];
-    showToast('⏰ ' + (r.entry.group || 'Lesson') + ' starts ' + formatTimeUntil(r.date) + ', ' + formatTimeDisplay(r.entry.time));
-  } else {
-    const names = reminders.map(r => (r.entry.group || 'Lesson') + ' ' + formatTimeUntil(r.date)).join(' • ');
-    showToast('⏰ ' + reminders.length + ' lesson' + (reminders.length > 1 ? 's' : '') + ' in the next 24h: ' + names);
-  }
-}
-window.openReminderBell = openReminderBell;
 
 function renderLessonRow(o) {
   const palette = lessonColorForId(o.entry.id);
@@ -1061,7 +1047,6 @@ function renderNextLessons() {
   const grouped = getNextLessonOccurrencesGrouped();
   if (!grouped.thisWeek.length && !grouped.nextWeek.length) {
     wrap.innerHTML = '<div class="empty-results">No lessons scheduled yet. <button class="mini-btn" type="button" style="margin-top:8px;" onclick="goToScheduleSettings()">➕ Add your weekly schedule</button></div>';
-    updateReminderBell();
     return;
   }
   let html = '';
@@ -1074,7 +1059,6 @@ function renderNextLessons() {
     ? grouped.nextWeek.map(renderLessonRow).join('')
     : '<div class="lesson-week-empty">No lessons scheduled next week.</div>';
   wrap.innerHTML = html;
-  updateReminderBell();
   showReminderToastIfDue();
 }
 window.renderNextLessons = renderNextLessons;
@@ -1416,8 +1400,9 @@ const AI_ROBOT_FAQ_BY_TAB = {
   main: aiFaq([
     { q: "What is Teacher's Assistant?", a: "It's your all-in-one classroom toolkit — build interactive exercises, plan your weekly lessons, track results, and reward your students, all without any coding." },
     { q: 'How do I set up my weekly lesson schedule?', a: 'Go to Settings → Weekly Lesson Schedule and add each class once with its day and time. It repeats automatically every week and shows up here under Upcoming Lessons.' },
-    { q: 'Will I get reminded before a lesson?', a: "Yes — within 24 hours of a lesson you'll get a reminder toast, and the bell icon here lights up. Tap the bell any time to see what's coming next." },
-    { q: 'Can I switch between day and night mode?', a: 'Yes — tap the toggle switch at the top of this page to flip between light and dark themes any time.' }
+    { q: 'Will I get reminded before a lesson?', a: "Yes — within 24 hours of a lesson you'll get a reminder pop-up, and the lesson shows a 'starts soon' badge in Upcoming Lessons." },
+    { q: 'Can I switch between day and night mode?', a: 'Yes — tap the toggle switch at the top of this page to flip between light and dark themes any time.' },
+    { q: 'How do I turn sounds off?', a: 'Tap the speaker button at the top of this page. 🔇 means sounds are off; tap it again to turn them back on.' }
   ]),
   createpicker: aiFaq([
     { q: 'How do I create a new exercise?', a: 'Pick a type below — Flashcards, Word Order, Test, Dictation, and more. Fill in your content and a ready-to-use file downloads straight to your computer.' },
@@ -1789,10 +1774,9 @@ function taStartPage(defaultTab) {
   initSidebarHamburgerAnim();
   initPercentStatAnims();
 
-  /* Re-check lesson reminders periodically so the bell + "starts soon" badges
-     stay accurate even if the app is left open across the 24h boundary. */
+  /* Re-check lesson reminders periodically so the reminder pop-ups and "starts
+     soon" badges stay accurate even if the app is left open across the 24h boundary. */
   setInterval(function () {
-    updateReminderBell();
     showReminderToastIfDue();
     if (currentActiveTab === 'main') renderNextLessons();
   }, 5 * 60 * 1000);

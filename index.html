@@ -85,10 +85,7 @@
       </div>
       <div class="hero-topbar-actions">
         <div class="hero-theme-toggle" id="themeToggleAnim" onclick="toggleThemeAnimated()" title="Switch day/night mode">🌙</div>
-        <button class="hero-bell-btn" type="button" onclick="openReminderBell()" title="Lesson reminders">
-          🔔
-          <span class="hero-bell-dot" id="heroBellDot" style="display:none;"></span>
-        </button>
+        <button class="hero-sound-btn" id="soundToggleBtn" type="button" onclick="setSoundEnabled(!taSoundEnabled())" title="Sound effects: On" aria-label="Sound effects: On">🔊</button>
         <div class="hero-account-chip" onclick="switchTo('settings')">
           <img class="avatar-img" id="heroAvatarImg" style="display:none;">
           <div class="avatar-fallback" id="heroAvatarFallback">T</div>
