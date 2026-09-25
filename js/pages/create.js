@@ -399,7 +399,6 @@ html,body{margin:0;padding:0;height:100%;background:#101116;font-family:'Inter',
     <path d="M500 40C420 60 460 120 380 140C300 160 340 220 260 240C180 260 220 300 140 300" stroke="#ef7d2e" stroke-width="4" stroke-dasharray="10 10" stroke-linecap="round"/>
   </svg>
   <div class="ta-login-stage"><div class="ta-login-anim" id="taLoginAnim" aria-hidden="true">🔐</div><div class="ta-login-form">
-  <div class="welcome-icon-badge">${hwcKind === 'class' ? '\ud83c\udfeb' : '\ud83d\udcda'}</div>
   <h1>${hwcKind === 'class' ? 'Class' : 'Homework'} <span class="ta-accent">${escapeForHtml(title)}</span></h1>
   <div class="ta-underline"></div>
   <p>This has ${rounds.length} exercises: ${rounds.map(r => escapeForHtml(r.label)).join(' \u2014 ')}. Enter your ID once \u2014 if you have started this before, you will pick up right where you left off.</p>
@@ -544,13 +543,15 @@ window.addEventListener("message", function (e) {
      In a narrow start card they stack, and in a very thin one the animation hides. The animation and its player load from the
      Teacher's Assistant site this file was made on; offline, the 🔐 stays. -->
 <style>
-.ta-login-card { max-width: 880px !important; width: min(880px, 94vw) !important; }
-.ta-login-stage { position: relative; z-index: 2; display: flex; align-items: center; gap: 32px; width: 100%; max-width: 880px; margin: 0 auto; }
-.ta-login-anim { flex: 0 0 min(320px, 40%); aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; font-size: 4.5rem; }
+.ta-login-card { max-width: 1100px !important; width: min(1100px, 94vw) !important; }
+.deck-container:has(> #slide-welcome.active) { max-width: min(1100px, 94vw) !important; }
+.ta-login-stage { position: relative; z-index: 2; display: flex; align-items: center; gap: 40px; width: 100%; max-width: 1100px; margin: 0 auto; }
+.ta-login-anim { flex: 0 0 min(440px, 42%); aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; font-size: 4.5rem; }
 .ta-login-anim svg { width: 100% !important; height: 100% !important; }
 .ta-login-form { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; text-align: center; }
 .ta-login-form > * { max-width: 100%; }
 .ta-login-form > input, .ta-login-form > .ta-input-wrap, .ta-login-form > .ta-card { width: 100%; }
+.ta-login-type { display: inline-block; margin: 6px 0 12px; padding: 5px 14px; border-radius: 999px; background: rgba(99, 102, 241, 0.14); color: #6366F1; font-size: 0.82rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
 .ta-login-stage.ta-login-narrow { flex-direction: column; gap: 4px; }
 .ta-login-stage.ta-login-narrow .ta-login-anim { flex: 0 0 auto; width: 150px; font-size: 3rem; }
 .ta-login-stage.ta-login-tiny .ta-login-anim { display: none; }
