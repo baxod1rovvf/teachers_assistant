@@ -247,14 +247,18 @@ body.main-hero-active .masthead { display: none; }
 .main-block-top-students { flex: 7 1 0; }
 .dash-card.main-block-quick { flex: 0 0 auto; height: auto; }
 .dash-stats-grid { margin-bottom: 20px; }
-.quick-actions { display: flex; flex-direction: column; gap: 10px; }
+.quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.quick-action-wide { grid-column: 1 / -1; }
+.quick-action-icon { width: 22px; height: 22px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; object-fit: contain; }
+.dash-stat-img { width: 28px; height: 28px; object-fit: contain; }
+body:not(.light-theme) .dash-stat-img.icon-mono, body:not(.light-theme) .quick-action-icon.icon-mono { filter: invert(1); }
 .quick-action-btn {
   display: flex; align-items: center; gap: 10px; width: 100%; padding: 12px 14px; border-radius: var(--radius-md);
   border: 1.5px solid var(--border); background: var(--surface-sunken); color: var(--ink); font: inherit; font-weight: 700;
   font-size: 0.92rem; text-align: left; text-decoration: none; cursor: pointer; transition: border-color 0.15s ease, color 0.15s ease;
 }
 .quick-action-btn:hover { border-color: var(--brand); color: var(--brand); }
-.quick-action-btn span { margin-left: auto; }
+.quick-action-arrow { margin-left: auto; }
 
 .dash-card {
   background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius-lg);
@@ -1373,3 +1377,29 @@ button:active:not(:disabled) { transform: scale(0.97); }
   *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
   .picker-grid .picker-card, .folders-grid .folder-card { animation: none; }
 }
+
+/* ================= HOVER LIFT =================
+   Blocks rise a little with a shadow under the cursor: dashboard tiles,
+   upcoming lessons, quick actions, Create's exercise cards, Students' groups
+   and students, and Points' groups and students. */
+.dash-stats-grid .results-stat-card, .lesson-row, .quick-action-btn, .picker-card,
+.group-block, .roster-row, .points-table-row {
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+.dash-stats-grid .results-stat-card:hover, .lesson-row:hover, .quick-action-btn:hover, .picker-card:hover,
+.group-block:hover, .roster-row:hover, .points-table-row:hover {
+  transform: translateY(-3px); box-shadow: var(--shadow-md);
+}
+.lesson-row { border-radius: var(--radius-md); }
+.lesson-row:hover { background: var(--surface-sunken); }
+@media (prefers-reduced-motion: reduce) {
+  .dash-stats-grid .results-stat-card:hover, .lesson-row:hover, .quick-action-btn:hover, .picker-card:hover,
+  .group-block:hover, .roster-row:hover, .points-table-row:hover { transform: none; }
+}
+
+/* Points: every student is its own block (instead of rows in one table). */
+.points-table { border: none; border-radius: 0; overflow: visible; display: flex; flex-direction: column; gap: 8px; }
+.points-table-head { border-bottom: none; background: none; padding-bottom: 0; }
+.points-table-row { border: 1.5px solid var(--border); border-radius: 12px; background: var(--surface); }
+.points-table-row:last-of-type { border-bottom: 1.5px solid var(--border); }
+.points-table-row:hover { border-color: var(--brand); background: var(--surface); }

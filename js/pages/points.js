@@ -22,6 +22,10 @@ async function deleteAllPointsEntirely() {
   }
 }
 let __pointsBoardList = [];
+// The leaderboard shows each group as a block; tapping one shows that group's students.
+let pointsOpenGroup = null;
+function openPointsGroup(groupId) { pointsOpenGroup = groupId; renderPointsBoard(); }
+function closePointsGroup() { pointsOpenGroup = null; renderPointsBoard(); }
 
 function renderPointsBoard() {
   const codeDisplay = document.getElementById('pointsBoardCodeDisplay');
@@ -56,23 +60,28 @@ function renderPointsBoard() {
       };
     });
     list.sort((a, c) => c.total - a.total || a.displayName.localeCompare(c.displayName));
-    return { name: b.name, list: list };
+    return { id: b.id, name: b.name, list: list };
   });
   sections.forEach(sec => sec.list.forEach(st => { st.__idx = flat.length; flat.push(st); }));
   __pointsBoardList = flat;
 
   if (!flat.length) { wrap.innerHTML = '<div class="empty-results">No students added yet.</div>'; return; }
 
-  let html = '';
-  sections.forEach(sec => {
-    if (!sec.list.length && sections.length > 1) {
-      html += '<div class="points-group-block"><div class="points-group-label"><h3>' + escapeForHtml(sec.name) + '</h3><span>0 students</span></div>' +
-        '<div class="empty-results">No students in this group yet.</div></div>';
+  if (pointsOpenGroup !== null && !sections.some(sec => sec.id === pointsOpenGroup)) pointsOpenGroup = null;
+
+  /* ---------- one group opened: its students' points ---------- */
+  if (pointsOpenGroup !== null) {
+    const sec = sections.find(x => x.id === pointsOpenGroup);
+    const groupTotal = sec.list.reduce((a, st) => a + st.total, 0);
+    let html = '<div class="group-detail-head"><div class="gd-left">' +
+      '<button class="mini-btn" type="button" onclick="closePointsGroup()">← All groups</button>' +
+      '<h3>' + escapeForHtml(sec.name) + '</h3>' +
+      '<span class="student-group-count">' + sec.list.length + ' student' + (sec.list.length === 1 ? '' : 's') + ' · 🪙 ' + groupTotal + '</span>' +
+    '</div></div>';
+    if (!sec.list.length) {
+      wrap.innerHTML = html + '<div class="empty-results">No students in this group yet.</div>';
       return;
     }
-    const groupTotal = sec.list.reduce((a, st) => a + st.total, 0);
-    html += '<div class="points-group-block"><div class="points-group-label"><h3>' + escapeForHtml(sec.name) + '</h3>' +
-      '<span>' + sec.list.length + ' student' + (sec.list.length === 1 ? '' : 's') + ' · 🪙 ' + groupTotal + '</span></div>';
     html += '<div class="points-table">';
     html += '<div class="points-table-head"><span>Student</span><span>Points</span></div>';
     sec.list.forEach(st => {
@@ -86,8 +95,31 @@ function renderPointsBoard() {
         '</span>' +
         '</div>';
     });
-    html += '</div></div>';
+    html += '</div>';
+    wrap.innerHTML = html;
+    return;
+  }
+
+  /* ---------- all groups as blocks ---------- */
+  let html = '<div class="group-block-list">';
+  sections.forEach(sec => {
+    const groupTotal = sec.list.reduce((a, st) => a + st.total, 0);
+    const leader = sec.list[0];
+    const sub = sec.list.length + ' student' + (sec.list.length === 1 ? '' : 's') +
+      (leader && leader.total > 0 ? ' · 🥇 ' + leader.displayName : '');
+    html += '<div class="group-block' + (sec.id === '' ? ' unassigned' : '') + '" role="button" tabindex="0" ' +
+        'onclick="openPointsGroup(' + jsAttr(sec.id) + ')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();openPointsGroup(' + jsAttr(sec.id) + ');}">' +
+      '<div class="group-block-main">' +
+        '<div class="group-block-title"><b>' + escapeForHtml(sec.name) + '</b></div>' +
+        '<div class="group-block-sub">' + escapeForHtml(sub) + '</div>' +
+      '</div>' +
+      '<div class="group-block-side">' +
+        '<span class="group-block-pts">🪙 ' + groupTotal + '</span>' +
+        '<span class="group-block-chevron" aria-hidden="true">›</span>' +
+      '</div>' +
+    '</div>';
   });
+  html += '</div>';
   wrap.innerHTML = html;
 }
 
@@ -417,6 +449,7 @@ function downloadPointsBoard() {
 
 /* ================= PAGE START ================= */
 taOnTab('points', function () {
+  pointsOpenGroup = null;
   renderPointsBoard();
   if (window.startPointsSync) window.startPointsSync(getPointsBoardCode());
 });

@@ -91,10 +91,22 @@ function renderDashboardStats() {
   set('dashStatResults', scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) + '%' : '—');
 }
 
+// Same animation as the sidebar's Create entry.
+function initQuickCreateAnim() {
+  const el = document.getElementById('quickCreateAnim');
+  if (!el || el.dataset.ready || typeof lottie === 'undefined') return;
+  try {
+    el.innerHTML = '';
+    lottie.loadAnimation({ container: el, renderer: 'svg', loop: true, autoplay: true, animationData: REPORT_GEN_ANIM });
+    el.dataset.ready = '1';
+  } catch (e) { /* decorative — fail silently */ }
+}
+
 /* ================= PAGE START ================= */
 taOnTab('main', function () {
   renderMainGreeting();
   renderDashboardStats();
+  initQuickCreateAnim();
   renderNextLessons();
   renderTopActiveStudents();
   initRobotHiAnim();
