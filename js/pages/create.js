@@ -182,17 +182,17 @@ function onQuizModeChange() {
 
 /* ================= HOMEWORK / CLASS (build inline, round by round) ================= */
 const HWC_TYPES = [
-  { key: 'wordorder', label: 'Word Order', icon: '\ud83e\udde9', color: '#4f7df3', createFn: 'createWordOrder' },
-  { key: 'makeaword', label: 'Make a Word', icon: '\ud83e\uddf1', color: '#2dd4bf', createFn: 'createMakeAWord' },
-  { key: 'flashcard', label: 'Flashcard', icon: '\ud83c\udfb4', color: '#fb923c', createFn: 'createFlashcard' },
+  { key: 'wordorder', label: 'Word Order', icon: '\ud83e\udde9', color: '#4f7df3', img: 'wordorder', createFn: 'createWordOrder' },
+  { key: 'makeaword', label: 'Make a Word', icon: '\ud83e\uddf1', color: '#2dd4bf', img: 'makeaword', createFn: 'createMakeAWord' },
+  { key: 'flashcard', label: 'Flashcard', icon: '\ud83c\udfb4', color: '#fb923c', img: 'flashcard', createFn: 'createFlashcard' },
   { key: 'pronunciation', label: 'Pronunciation', icon: '\ud83c\udf99\ufe0f', color: '#34d399', createFn: 'createPronunciation' },
-  { key: 'spelling', label: 'Spelling', icon: '\ud83d\udd24', color: '#8b7bf7', createFn: 'createSpelling' },
+  { key: 'spelling', label: 'Spelling', icon: '\ud83d\udd24', color: '#8b7bf7', img: 'spelling', createFn: 'createSpelling' },
   { key: 'test', label: 'Test', icon: '\u2705', color: '#ef5f74', createFn: 'createTest' },
-  { key: 'sentences', label: 'Sentences', icon: '\u270d\ufe0f', color: '#4f9de0', createFn: 'createSentences' },
-  { key: 'bilingual', label: 'Bidirectional Language', icon: '\ud83d\udcd6', color: '#2f6fd6', createFn: 'createBilingualReader' },
-  { key: 'engcontent', label: 'English Content', icon: '\ud83c\udfac', color: '#e14e4e', createFn: 'createEnglishContent' },
-  { key: 'dictation', label: 'Dictation', icon: '\ud83c\udfa7', color: '#8b5cf6', createFn: 'createDictation' },
-  { key: 'ielts-listening', label: 'IELTS Listening', icon: '\ud83c\udfa7', color: '#0ea5e9', createFn: 'createIeltsListening' },
+  { key: 'sentences', label: 'Sentences', icon: '\u270d\ufe0f', color: '#4f9de0', img: 'sentences', createFn: 'createSentences' },
+  { key: 'bilingual', label: 'Bidirectional Language', icon: '\ud83d\udcd6', color: '#2f6fd6', img: 'bilingual', createFn: 'createBilingualReader' },
+  { key: 'engcontent', label: 'English Content', icon: '\ud83c\udfac', color: '#e14e4e', img: 'engcontent', createFn: 'createEnglishContent' },
+  { key: 'dictation', label: 'Dictation', icon: '\ud83c\udfa7', color: '#8b5cf6', img: 'listening', createFn: 'createDictation' },
+  { key: 'ielts-listening', label: 'IELTS Listening', icon: '\ud83c\udfa7', color: '#0ea5e9', img: 'listening', createFn: 'createIeltsListening' },
   { key: 'ielts-reading', label: 'IELTS Reading', icon: '\ud83d\udcd7', color: '#0ea5e9', createFn: 'createIeltsReading' }
 ];
 
@@ -229,7 +229,9 @@ function renderHwcTypeGrid() {
   if (!grid) return;
   grid.innerHTML = HWC_TYPES.map(t =>
     '<button class="picker-card" type="button" onclick="selectHwcType(' + jsAttr(t.key) + ')">' +
-      '<span class="exercise-badge" style="background:' + t.color + ';">' + t.icon + '</span>' +
+      (t.img
+        ? '<span class="exercise-badge picker-icon picker-icon-' + t.img + '" aria-hidden="true"></span>'
+        : '<span class="exercise-badge" style="background:' + t.color + ';">' + t.icon + '</span>') +
       '<div><div class="picker-card-title">' + t.label + '</div></div>' +
     '</button>'
   ).join('');
