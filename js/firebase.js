@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getFirestore, collection, query, where, onSnapshot, getDocs, deleteDoc, updateDoc, doc, addDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, collection, query, where, onSnapshot, getDocs, deleteDoc, updateDoc, doc, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCefg2YghdSneABh0ZOUu3-snO4soVw0lA",
@@ -17,6 +17,16 @@ try {
   db = getFirestore(app);
 } catch (e) {
   console.error("Firebase init failed:", e);
+}
+
+// Cloud sync (js/sync.js): one record per synced item, updated in place.
+if (db) {
+  window.taSyncBackend = {
+    listen: (code, onData, onErr) => onSnapshot(query(collection(db, 'results'), where('code', '==', code)),
+      snap => onData(snap.docs.map(d => d.data())), onErr),
+    put: (id, data) => setDoc(doc(db, 'results', id), data),
+    remove: id => deleteDoc(doc(db, 'results', id))
+  };
 }
 
 window.taFetchAccounts = async function () {

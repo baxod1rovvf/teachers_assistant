@@ -132,11 +132,30 @@ async function taVerifyAccount(login, password) {
   if (rec.status === 'disabled') return { ok: false, msg: 'This account is turned off. Ask the administrator to turn it on.' };
   return { ok: true, login: login, name: rec.name || login, hash: hash };
 }
+/* The cloud-sync key (see js/sync.js), made from the teacher's password at
+   sign-in and kept only in the sign-in session. */
+async function taDeriveSyncKey(login, password) {
+  try {
+    var enc = new TextEncoder();
+    var base = await crypto.subtle.importKey('raw', enc.encode(String(password)), 'PBKDF2', false, ['deriveKey']);
+    var k = await crypto.subtle.deriveKey(
+      { name: 'PBKDF2', salt: enc.encode('TA-SYNC-v1|' + String(login).trim().toUpperCase()), iterations: 150000, hash: 'SHA-256' },
+      base, { name: 'AES-GCM', length: 256 }, true, ['encrypt', 'decrypt']);
+    var bytes = new Uint8Array(await crypto.subtle.exportKey('raw', k)), s = '';
+    for (var i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
+    return btoa(s);
+  } catch (e) { console.error('Sync key failed:', e); return ''; }
+}
 function taLogout(skipConfirm) {
   if (!skipConfirm && !confirm('Log out of Teacher\'s Assistant?')) return;
-  window.taRaw.sessionRemove(TA_SESSION_KEY);
-  window.taRaw.remove(TA_REMEMBER_KEY);
-  location.reload();
+  function out() {
+    window.taRaw.sessionRemove(TA_SESSION_KEY);
+    window.taRaw.remove(TA_REMEMBER_KEY);
+    location.reload();
+  }
+  // send any change that's still waiting to be synced first (at most a few seconds)
+  if (window.taSync) Promise.race([window.taSync.flush(), new Promise(function (r) { setTimeout(r, 4000); })]).then(out, out);
+  else out();
 }
 function taCurrentLogin() { return window.__TA_USER ? String(window.__TA_USER.login).toUpperCase() : ''; }
 function taDefaultTeacherName() {

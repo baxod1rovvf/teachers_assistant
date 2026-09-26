@@ -1319,7 +1319,9 @@ async function taSubmitLogin(ev) {
     passEl.select();
     return;
   }
-  const session = JSON.stringify({ login: res.login, name: res.name, hash: res.hash, at: new Date().toISOString() });
+  btn.textContent = 'Signing in…';
+  const sk = await taDeriveSyncKey(res.login, pass);
+  const session = JSON.stringify({ login: res.login, name: res.name, hash: res.hash, sk: sk, at: new Date().toISOString() });
   window.taRaw.sessionSet(TA_SESSION_KEY, session);
   if (remember && remember.checked) window.taRaw.set(TA_REMEMBER_KEY, session); else window.taRaw.remove(TA_REMEMBER_KEY);
   window.taRaw.set('ta_last_login', res.login);

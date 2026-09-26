@@ -629,6 +629,14 @@ body.light-theme .picker-icon-class { background-image: url(../images/icons/crea
 .deco-spark { font-size: 1.05rem; }
 
 .sidebar-spacer { flex: 1; }
+.sync-status {
+  display: block; width: 100%; margin: 0 0 8px; padding: 7px 10px; border-radius: 10px; border: 1.5px solid var(--border);
+  background: transparent; color: var(--ink-faint); font: 600 0.76rem 'Inter', sans-serif; text-align: left; cursor: default;
+}
+.sync-status.ok { color: var(--success); }
+.sync-status.busy { color: var(--ink-soft); }
+.sync-status.bad, .sync-status.off { color: var(--warning, #F0B429); cursor: pointer; }
+.sync-status.bad:hover, .sync-status.off:hover { border-color: var(--brand); }
 .sidebar-profile {
   display: flex; align-items: center; gap: 10px; padding: 12px 10px; border-radius: 12px;
   border: 1.5px solid var(--border); cursor: pointer; margin-top: 8px;
