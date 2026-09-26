@@ -53,7 +53,7 @@
     el.id = 'taSyncStatus';
     el.title = 'Your data is kept in step across your devices';
     el.addEventListener('click', function () {
-      if (status.cls === 'off' && typeof taLogout === 'function') taLogout(true);
+      if (status.cls === 'off') askPasswordAndStart();
       else if (status.cls === 'bad') syncNow();
     });
     profile.parentNode.insertBefore(el, profile);
@@ -63,11 +63,51 @@
 
   /* ---------- key ---------- */
   var key = null;
-  if (!user.sk) { setStatus('☁️ Sync is off — tap to sign in again and turn it on', 'off'); return; }
+  var keyReady = null, started = false;
+  function useKey(sk) {
+    keyReady = crypto.subtle.importKey('raw', b64decode(sk), 'AES-GCM', false, ['encrypt', 'decrypt'])
+      .then(function (k) { key = k; })
+      .catch(function (e) { console.error('Sync key failed:', e); setStatus('☁️ Sync is off — tap to turn it on', 'off'); });
+    keyReady.then(function () { if (key && !started) { started = true; start(); } });
+  }
+
+  /* Devices signed in before sync existed have no key yet: ask for the
+     password once, right here, instead of making the teacher sign out. */
+  function askPasswordAndStart() {
+    if (document.getElementById('taSyncUnlock')) return;
+    var wrap = document.createElement('div');
+    wrap.id = 'taSyncUnlock';
+    wrap.className = 'sync-unlock-back';
+    wrap.innerHTML = '<form class="sync-unlock-card" novalidate>' +
+      '<h3>☁️ Turn on sync</h3>' +
+      '<p>Enter your password to keep this device\'s students, lessons and exercises in step with your other devices.</p>' +
+      '<input type="password" autocomplete="current-password" placeholder="Your password">' +
+      '<div class="sync-unlock-err" role="alert"></div>' +
+      '<div class="sync-unlock-btns"><button type="button" class="sync-unlock-cancel">Not now</button><button type="submit" class="sync-unlock-ok">Turn on</button></div>' +
+      '</form>';
+    document.body.appendChild(wrap);
+    var form = wrap.querySelector('form'), input = wrap.querySelector('input'), err = wrap.querySelector('.sync-unlock-err');
+    setTimeout(function () { input.focus(); }, 30);
+    wrap.querySelector('.sync-unlock-cancel').onclick = function () { wrap.remove(); };
+    form.onsubmit = async function (e) {
+      e.preventDefault();
+      if (typeof taHashPassword !== 'function' || typeof taDeriveSyncKey !== 'function') { err.textContent = 'Please reload the page and try again.'; return; }
+      if (taHashPassword(login, input.value) !== user.hash) { err.textContent = 'That password is incorrect.'; input.select(); return; }
+      form.querySelector('.sync-unlock-ok').disabled = true;
+      var sk = await taDeriveSyncKey(login, input.value);
+      if (!sk) { err.textContent = 'This browser could not turn on sync. Open the site from its https:// address.'; return; }
+      // save the key into this sign-in (and the remembered one, if any)
+      user.sk = sk;
+      var s = JSON.stringify(user);
+      raw.sessionSet('ta_session_v1', s);
+      if (raw.get('ta_remember_v1')) raw.set('ta_remember_v1', s);
+      wrap.remove();
+      useKey(sk);
+    };
+  }
+
   if (!window.crypto || !crypto.subtle) { setStatus('☁️ Sync needs the https:// address of this site', 'bad'); return; }
-  var keyReady = crypto.subtle.importKey('raw', b64decode(user.sk), 'AES-GCM', false, ['encrypt', 'decrypt'])
-    .then(function (k) { key = k; })
-    .catch(function (e) { console.error('Sync key failed:', e); setStatus('⚠️ Sync could not start — sign in again', 'off'); });
+  if (!user.sk) setStatus('☁️ Sync is off — tap to turn it on', 'off');
 
   /* ---------- encoding ---------- */
   function b64encode(bytes) {
@@ -220,7 +260,6 @@
 
   // Returns true if anything on this device changed.
   async function merge(docs, first) {
-    await keyReady;
     if (!key) return false;
     var cloud = readCloud(docs);
     var changed = false;
@@ -285,6 +324,6 @@
   }
   function syncNow() { SYNC_KEYS.forEach(function (k) { if (getLocal(k) !== null) dirty[k] = true; }); flush(); }
 
-  window.taSync = { flush: flush, now: syncNow, status: function () { return status; } };
-  keyReady.then(start);
+  window.taSync = { flush: flush, now: syncNow, turnOn: askPasswordAndStart, status: function () { return status; } };
+  if (user.sk) useKey(user.sk);
 })();

@@ -195,8 +195,12 @@ function taConfettiBurst(x, y, count) {
 }
 
 let currentActiveTab = 'main';
-// The sidebar is a slide-over panel on every screen size: closed by default,
-// opened over the page by the menu button, closed by the backdrop or a section.
+// Computers: the sidebar sits beside the page and starts open on every page;
+// the menu button closes it and the page takes the room.
+// Phones (860px and narrower): it slides in over the page, starts closed, and
+// the backdrop or picking a section closes it.
+const TA_PHONE_MQ = window.matchMedia ? window.matchMedia('(max-width: 860px)') : { matches: false };
+function taIsPhone() { return TA_PHONE_MQ.matches; }
 function taCloseSidebar() {
   const sidebar = document.getElementById('mainSidebar');
   if (!sidebar || sidebar.classList.contains('collapsed')) return;
@@ -211,7 +215,15 @@ function taSetupSidebar() {
   back.id = 'sidebarBackdrop';
   back.addEventListener('click', taCloseSidebar);
   sidebar.after(back);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') taCloseSidebar(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && taIsPhone()) taCloseSidebar(); });
+  const applyMode = () => {
+    if (taIsPhone()) taCloseSidebar();
+    else sidebar.classList.remove('collapsed');
+    if (typeof syncSidebarHamburgerIcon === 'function') syncSidebarHamburgerIcon(false);
+  };
+  applyMode();
+  if (TA_PHONE_MQ.addEventListener) TA_PHONE_MQ.addEventListener('change', applyMode);
+  else if (TA_PHONE_MQ.addListener) TA_PHONE_MQ.addListener(applyMode);
 }
 function toggleSidebar() {
   const sidebar = document.getElementById('mainSidebar');
@@ -235,7 +247,7 @@ function switchTo(tab) {
   document.body.classList.toggle('main-hero-active', tab === 'main');
   const toggleBtn = document.getElementById('sidebarToggleBtn');
   if (toggleBtn) toggleBtn.style.visibility = 'visible';
-  taCloseSidebar();
+  if (taIsPhone()) taCloseSidebar(); // phones: picking a section closes the panel
   document.querySelectorAll('.tab-btn, .side-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
 

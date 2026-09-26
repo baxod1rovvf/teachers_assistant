@@ -98,24 +98,33 @@ body.light-theme {
 .app-shell { display: flex; min-height: 100vh; align-items: stretch; }
 
 .sidebar {
-  width: min(300px, 84vw); background: var(--surface); border-right: 1.5px solid var(--border);
+  width: 280px; flex-shrink: 0; background: var(--surface); border-right: 1.5px solid var(--border);
   padding: 72px 16px 24px; display: flex; flex-direction: column; gap: 4px;
-  overflow-y: auto; overscroll-behavior: contain;
+  position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 5;
+  transition: width 0.22s ease, padding 0.22s ease, opacity 0.15s ease;
 }
-/* The sidebar is a slide-over panel on every screen size: it starts closed,
-   opens over the page without moving anything, and a dimmed backdrop (or
-   picking a section) closes it. */
-.sidebar {
-  position: fixed; top: 0; left: 0; bottom: 0; height: 100vh; height: 100dvh;
-  z-index: 10000; transform: none; box-shadow: 0 30px 70px -20px rgba(0,0,0,0.65);
-  transition: transform 0.26s cubic-bezier(.2,.8,.2,1);
+/* computers: the sidebar sits beside the page, open by default; closing it gives the page the room */
+.sidebar.collapsed { width: 0; padding: 72px 0 24px; overflow: hidden; opacity: 0; border-right: none; }
+.sidebar-backdrop { display: none; }
+/* phones and small tablets: it slides in over the page instead, starts closed,
+   and the dimmed backdrop (or picking a section) closes it */
+@media (max-width: 860px) {
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; height: 100vh; height: 100dvh; width: min(300px, 84vw);
+    z-index: 10000; transform: none; overscroll-behavior: contain; box-shadow: 0 30px 70px -20px rgba(0,0,0,0.65);
+    transition: transform 0.26s cubic-bezier(.2,.8,.2,1);
+  }
+  .sidebar.collapsed {
+    width: min(300px, 84vw); padding: 72px 16px 24px; opacity: 1; overflow-y: auto; border-right: 1.5px solid var(--border);
+    transform: translateX(-105%); box-shadow: none; visibility: hidden;
+    transition: transform 0.26s cubic-bezier(.2,.8,.2,1), visibility 0s 0.26s;
+  }
+  .sidebar-backdrop {
+    display: block; position: fixed; inset: 0; z-index: 9999; background: rgba(5,6,10,0.5);
+    opacity: 0; pointer-events: none; transition: opacity 0.26s ease;
+  }
+  .sidebar:not(.collapsed) + .sidebar-backdrop { opacity: 1; pointer-events: auto; }
 }
-.sidebar.collapsed { transform: translateX(-105%); box-shadow: none; visibility: hidden; transition: transform 0.26s cubic-bezier(.2,.8,.2,1), visibility 0s 0.26s; }
-.sidebar-backdrop {
-  position: fixed; inset: 0; z-index: 9999; background: rgba(5,6,10,0.5);
-  opacity: 0; pointer-events: none; transition: opacity 0.26s ease;
-}
-.sidebar:not(.collapsed) + .sidebar-backdrop { opacity: 1; pointer-events: auto; }
 .sidebar-toggle-btn {
   position: fixed; top: 16px; left: 16px; z-index: 10001;
   width: 42px; height: 42px; border-radius: var(--radius-md); border: 1.5px solid var(--border);
@@ -637,6 +646,17 @@ body.light-theme .picker-icon-class { background-image: url(../images/icons/crea
 .sync-status.busy { color: var(--ink-soft); }
 .sync-status.bad, .sync-status.off { color: var(--warning, #F0B429); cursor: pointer; }
 .sync-status.bad:hover, .sync-status.off:hover { border-color: var(--brand); }
+.sync-unlock-back { position: fixed; inset: 0; z-index: 100000; background: rgba(5,6,10,0.6); display: flex; align-items: center; justify-content: center; padding: 20px; }
+.sync-unlock-card { width: min(380px, 100%); background: var(--surface); border: 1.5px solid var(--border); border-radius: 18px; padding: 22px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow-lg); }
+.sync-unlock-card h3 { font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 1.15rem; color: var(--ink); }
+.sync-unlock-card p { font-size: 0.86rem; color: var(--ink-soft); line-height: 1.5; }
+.sync-unlock-card input { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--border); background: var(--surface-sunken); color: var(--ink); font-size: 1rem; font-family: inherit; }
+.sync-unlock-card input:focus { outline: none; border-color: var(--brand); }
+.sync-unlock-err { font-size: 0.84rem; font-weight: 700; color: var(--danger); }
+.sync-unlock-err:empty { display: none; }
+.sync-unlock-btns { display: flex; justify-content: flex-end; gap: 8px; }
+.sync-unlock-btns button { padding: 10px 16px; border-radius: 11px; font-weight: 800; font-size: 0.9rem; cursor: pointer; border: 1.5px solid var(--border); background: transparent; color: var(--ink-soft); }
+.sync-unlock-btns .sync-unlock-ok { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
 .sidebar-profile {
   display: flex; align-items: center; gap: 10px; padding: 12px 10px; border-radius: 12px;
   border: 1.5px solid var(--border); cursor: pointer; margin-top: 8px;
@@ -1453,3 +1473,9 @@ button:active:not(:disabled) { transform: scale(0.97); }
 .points-table-row { border: 1.5px solid var(--border); border-radius: 12px; background: var(--surface); }
 .points-table-row:last-of-type { border-bottom: 1.5px solid var(--border); }
 .points-table-row:hover { border-color: var(--brand); background: var(--surface); }
+
+/* Statistics: two charts of five exercise types each, side by side on computers, stacked on phones */
+.stats-chart-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.stats-chart-title { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; font-size: 1rem; color: var(--ink); margin-bottom: 8px; }
+@media (max-width: 1100px) { .stats-chart-grid { grid-template-columns: 1fr; } }
+.chart-wrap.stats-chart { display: block; padding: 16px 16px 8px; border: 1.5px solid var(--border); border-radius: var(--radius-lg, 16px); background: var(--surface); }
