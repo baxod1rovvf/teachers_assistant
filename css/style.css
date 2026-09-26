@@ -185,7 +185,7 @@ body:not(.light-theme) .sidebar-hamburger-anim svg { filter: invert(1); }
 .ai-robot-answer-q { font-size: 0.82rem; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
 .ai-robot-answer-a { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.55; }
 @media (max-width: 640px) {
-  .ai-robot-widget { width: 110px; height: 110px; }
+  .ai-robot-widget { width: 84px; height: 84px; }
   .ai-robot-bubble { width: 240px; margin-left: -120px; }
 }
 .side-icon-img { width: 20px; height: 20px; object-fit: contain; flex-shrink: 0; }

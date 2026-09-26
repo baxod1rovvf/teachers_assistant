@@ -4,6 +4,54 @@
    sections doesn't reload the app: taNavigate() fetches the other section's
    file once, adds its panels and scripts to this page, and switches to it
    (see PAGE NAVIGATION below). Opening any file directly still works too. */
+/* ================= ANIMATION BUDGET =================
+   Every looping Lottie animation pauses while it can't be seen (scrolled
+   away, inside the closed sidebar, or the tab is in the background) and
+   resumes when it comes back. Phones also draw them at lower quality. This
+   keeps the app smooth on phones and saves battery. */
+const TA_LOW_POWER = (window.matchMedia && window.matchMedia('(max-width: 860px), (pointer: coarse)').matches) ||
+  !!(navigator.connection && navigator.connection.saveData);
+(function () {
+  if (typeof lottie === 'undefined' || lottie.__taManaged) return;
+  lottie.__taManaged = true;
+  if (TA_LOW_POWER && lottie.setQuality) lottie.setQuality('low');
+  const managed = new Map(); // container -> { anim, visible }
+  const sync = entry => {
+    const { anim, visible } = entry;
+    const shouldRun = visible && !document.hidden;
+    if (!shouldRun && !anim.isPaused) { anim.__taAutoPaused = true; anim.pause(); }
+    else if (shouldRun && anim.__taAutoPaused) { anim.__taAutoPaused = false; anim.play(); }
+  };
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const entry = managed.get(e.target);
+      if (!entry) return;
+      // off-screen or hidden (visibility:hidden, e.g. the closed sidebar) counts as not visible
+      entry.visible = e.isIntersecting && getComputedStyle(e.target).visibility !== 'hidden';
+      sync(entry);
+    });
+  }) : null;
+  document.addEventListener('visibilitychange', () => managed.forEach(sync));
+  // the sidebar hides with visibility, which IntersectionObserver doesn't report: re-check when it opens/closes
+  document.addEventListener('transitionend', e => {
+    if (!e.target.classList || !e.target.classList.contains('sidebar')) return;
+    managed.forEach((entry, el) => { if (e.target.contains(el)) { entry.visible = getComputedStyle(el).visibility !== 'hidden'; sync(entry); } });
+  });
+  const load = lottie.loadAnimation.bind(lottie);
+  lottie.loadAnimation = function (params) {
+    const anim = load(params);
+    const el = params && params.container;
+    if (io && el && params.loop !== false && params.autoplay !== false) {
+      const old = managed.get(el);
+      if (old) managed.delete(el);
+      managed.set(el, { anim: anim, visible: true });
+      io.observe(el);
+      anim.addEventListener('destroy', () => { managed.delete(el); io.unobserve(el); });
+    }
+    return anim;
+  };
+})();
+
 const TA_PAGES = {
   main: 'index.html',
   createpicker: 'create.html',
@@ -329,6 +377,7 @@ function taPrefetchPages() {
   TA_PAGES_FILES.forEach(file => {
     if (TA_LOADED_PAGES.has(file)) return;
     taFetchPage(file).then(html => {
+      if (TA_LOW_POWER) return; // phones: skip ~2 MB of scripts until a section is actually opened
       new DOMParser().parseFromString(html, 'text/html').querySelectorAll('script[src]:not([type="module"])').forEach(sc => {
         const src = new URL(sc.getAttribute('src'), location.href).href;
         if (scripts.has(src)) return;
@@ -1540,7 +1589,8 @@ function aiRobotBounds() {
 }
 function aiRobotScheduleWander() {
   clearTimeout(aiRobotWanderTimer);
-  if (aiRobotWanderPaused) return;
+  // Phones: the robot stays put (wandering moves it with left/top, which re-lays out the page every frame).
+  if (aiRobotWanderPaused || TA_LOW_POWER) return;
   const pause = 2500 + Math.random() * 5000;
   aiRobotWanderTimer = setTimeout(aiRobotWanderStep, pause);
 }
@@ -1713,8 +1763,9 @@ function initAiRobotWidget() {
   if (!widget) return;
   const b = aiRobotBounds();
   widget.classList.add('no-transition');
-  widget.style.left = Math.min(60, b.maxX) + 'px';
-  widget.style.top = Math.min(170, b.maxY) + 'px';
+  // phones: park it in the bottom-right corner, out of the way of the content
+  widget.style.left = (TA_LOW_POWER ? b.maxX : Math.min(60, b.maxX)) + 'px';
+  widget.style.top = (TA_LOW_POWER ? Math.max(b.minY, b.maxY - 70) : Math.min(170, b.maxY)) + 'px';
   initAiRobotAnimPlayer();
   aiRobotInitDrag();
   aiRobotScheduleWander();
