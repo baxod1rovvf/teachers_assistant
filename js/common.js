@@ -278,6 +278,16 @@ async function taLoadPage(file) {
   }
   TA_PAGE_TITLES[file] = doc.title;
   TA_LOADED_PAGES.add(file);
+  taInitSectionAnims();
+}
+
+// Animations that live inside one section's panels (not the shared sidebar).
+// taStartPage() only sees the first section's panels, so this runs again each
+// time taLoadPage() adds another section; each init skips a spot already playing.
+function taInitSectionAnims() {
+  initThemeToggleAnim();
+  initCreateHeadingAnim();
+  initPercentStatAnims();
 }
 
 let taNavigateBusy = null;
@@ -1382,9 +1392,10 @@ window.initCreateIconAnim = initCreateIconAnim;
 
 function initCreateHeadingAnim() {
   const el = document.getElementById('createHeadingAnim');
-  if (!el || typeof lottie === 'undefined') return;
+  if (!el || el.dataset.ready || typeof lottie === 'undefined') return;
   try {
     el.innerHTML = '';
+    el.dataset.ready = '1';
     lottie.loadAnimation({
       container: el,
       renderer: 'svg',
@@ -1734,9 +1745,10 @@ window.syncSidebarHamburgerIcon = syncSidebarHamburgerIcon;
 /* ================= RESULTS PERCENTAGE STAT ANIMATIONS ================= */
 function initPercentStatAnim(containerId) {
   const el = document.getElementById(containerId);
-  if (!el || typeof lottie === 'undefined') return;
+  if (!el || el.dataset.ready || typeof lottie === 'undefined') return;
   try {
     el.innerHTML = '';
+    el.dataset.ready = '1';
     lottie.loadAnimation({
       container: el, renderer: 'svg', loop: true, autoplay: true, animationData: PERCENT_LOADING_ANIM
     });
@@ -1771,14 +1783,12 @@ function taStartPage(defaultTab) {
   const hashTab = decodeURIComponent(location.hash.slice(1));
   switchTo(hashTab && document.getElementById('panel-' + hashTab) ? hashTab : defaultTab);
   initWelcomeSplash();
-  initThemeToggleAnim();
   initBrandArcAnim();
   initStatsIconAnim();
   initCreateIconAnim();
-  initCreateHeadingAnim();
+  taInitSectionAnims();
   initAiRobotWidget();
   initSidebarHamburgerAnim();
-  initPercentStatAnims();
 
   /* Re-check lesson reminders periodically so the reminder pop-ups and "starts
      soon" badges stay accurate even if the app is left open across the 24h boundary. */
