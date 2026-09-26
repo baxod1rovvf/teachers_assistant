@@ -84,6 +84,10 @@ input:focus { border-color: var(--brand); background: rgba(244,241,234,0.08); }
 .pw-val.masked { color: var(--ink-faint); letter-spacing: 0.18em; user-select: none; }
 .pw-line .mini { padding: 4px 9px; font-size: 0.74rem; }
 .pw-missing { color: var(--ink-faint); font-style: italic; }
+.unlock-back { position: fixed; inset: 0; z-index: 50; background: rgba(5,6,10,0.6); display: flex; align-items: center; justify-content: center; padding: 20px; }
+.unlock-back .card { width: min(380px, 100%); display: flex; flex-direction: column; gap: 12px; }
+.unlock-back h2 { font-size: 1.1rem; }
+.unlock-btns { display: flex; justify-content: flex-end; gap: 8px; }
 .empty { color: var(--ink-soft); font-size: 0.88rem; padding: 14px; text-align: center; border: 1.5px dashed var(--border); border-radius: 12px; }
 .howto { font-size: 0.86rem; color: var(--ink-soft); line-height: 1.6; padding-left: 18px; margin-top: 8px; }
 .toast {
@@ -166,7 +170,7 @@ async function ctrlRestoreKey() {
   } catch (e) { ctrlPwKey = null; }
 }
 async function ctrlEncryptPw(password) {
-  if (!ctrlPwKey) return '';
+  if (!ctrlPwKey) throw new Error('locked');
   const iv = crypto.getRandomValues(new Uint8Array(12));
   const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, ctrlPwKey, new TextEncoder().encode(password));
   return 'v1:' + b64(iv) + ':' + b64(ct);
@@ -229,6 +233,17 @@ async function ctrlDecryptPw(sealed) {
     </ol>
     <p class="sub" style="margin-top:10px;">Turning an account off, deleting it, or changing its password signs that teacher out the next time they open the app with internet.</p>
   </div>
+</div>
+
+<!-- asks for the admin password when the password key isn't in memory (e.g. still signed in from an older version) -->
+<div class="unlock-back hidden" id="unlockBack">
+  <form class="card" id="unlockForm" novalidate>
+    <h2>🔓 Unlock teacher passwords</h2>
+    <p class="sub" id="unlockWhy">Enter your Control Panel password to save and view teacher passwords.</p>
+    <label class="field"><span>Your password</span><input type="password" id="unlockPass" autocomplete="current-password"></label>
+    <div class="error" id="unlockError" role="alert"></div>
+    <div class="unlock-btns"><button class="mini" type="button" id="unlockCancel">Cancel</button><button class="btn" type="submit">Unlock</button></div>
+  </form>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -348,7 +363,7 @@ async function ctrlDecryptPw(sealed) {
   const shownPw = {}; // login -> decrypted password, while it is shown
   function pwLineHtml(a) {
     if (!a.pw) return 'Password: <span class="pw-missing">not saved yet — set one with 🔑 Change password to see it here</span>';
-    if (!ctrlPwKey) return 'Password: <span class="pw-missing">log out and sign in again to see it</span>';
+    if (!ctrlPwKey) return 'Password: <span class="pw-val masked">••••••</span><button class="mini" type="button" data-act="showpw" data-login="' + esc(a.login) + '">🔓 Unlock</button>';
     const shown = Object.prototype.hasOwnProperty.call(shownPw, a.login);
     return 'Password: <span class="pw-val' + (shown ? '' : ' masked') + '">' + (shown ? esc(shownPw[a.login]) : '••••••') + '</span>' +
       '<button class="mini" type="button" data-act="showpw" data-login="' + esc(a.login) + '">' + (shown ? '🙈 Hide' : '👁 Show') + '</button>' +
@@ -358,7 +373,30 @@ async function ctrlDecryptPw(sealed) {
     const line = document.querySelector('.pw-line[data-login="' + CSS.escape(login) + '"]');
     if (line && accounts[login]) line.innerHTML = pwLineHtml(accounts[login]);
   }
+  // Makes sure the password key is ready, asking for the admin password if needed. Resolves true/false.
+  function ctrlEnsureKey(why) {
+    if (ctrlPwKey) return Promise.resolve(true);
+    return new Promise(resolve => {
+      const back = $('unlockBack'), form = $('unlockForm'), input = $('unlockPass'), err = $('unlockError');
+      $('unlockWhy').textContent = why || 'Enter your Control Panel password to save and view teacher passwords.';
+      err.textContent = ''; input.value = '';
+      back.classList.remove('hidden');
+      setTimeout(() => input.focus(), 30);
+      const done = ok => { back.classList.add('hidden'); form.onsubmit = null; $('unlockCancel').onclick = null; resolve(ok); };
+      $('unlockCancel').onclick = () => done(false);
+      form.onsubmit = async e => {
+        e.preventDefault();
+        if (taHashPassword(ADMIN_LOGIN, input.value) !== ADMIN_HASH) { err.textContent = 'That password is incorrect.'; input.select(); return; }
+        try { await ctrlRememberKey(await ctrlDeriveKey(input.value)); }
+        catch (ex) { console.error(ex); err.textContent = 'This browser could not unlock passwords. Open the Control Panel over https (its github.io link).'; return; }
+        render();
+        done(true);
+      };
+    });
+  }
+
   async function revealPw(a) {
+    if (!(await ctrlEnsureKey('Enter your Control Panel password to see ' + a.login + '\'s password.'))) return null;
     const pw = await ctrlDecryptPw(a.pw);
     if (pw === null) { toast('Could not read this password. Set a new one with 🔑 Change password.', true); return null; }
     return pw;
@@ -376,6 +414,7 @@ async function ctrlDecryptPw(sealed) {
     if (login === ADMIN_LOGIN) { err.textContent = 'That login is the administrator\'s.'; $('addLogin').focus(); return; }
     if (accounts[login] && accounts[login].status !== 'deleted') { err.textContent = 'A teacher with the login ' + login + ' already exists.'; $('addLogin').focus(); return; }
     if (pass.length < 4) { err.textContent = 'Password must be at least 4 characters.'; $('addPass').focus(); return; }
+    if (!(await ctrlEnsureKey('Enter your Control Panel password so ' + login + '\'s password is saved where you can see it later.'))) return;
     const btn = $('addBtn');
     btn.disabled = true;
     try {
@@ -414,6 +453,7 @@ async function ctrlDecryptPw(sealed) {
         const p = prompt('New password for ' + a.login + ' (at least 4 characters):');
         if (p === null) return;
         if (p.length < 4) { toast('Password must be at least 4 characters.', true); return; }
+        if (!(await ctrlEnsureKey('Enter your Control Panel password so ' + a.login + '\'s new password is saved where you can see it.'))) return;
         await writeRecord(a.login, taHashPassword(a.login, p), a.status, a.name, await ctrlEncryptPw(p));
         delete shownPw[a.login];
         toast('🔑 Password changed for ' + a.login);
