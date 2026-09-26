@@ -75,6 +75,15 @@ input:focus { border-color: var(--brand); background: rgba(244,241,234,0.08); }
 .pill.disabled { background: var(--warning-surface); color: var(--warning); }
 .pill.admin { background: rgba(139,135,255,0.14); color: var(--brand); }
 .user-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.pw-line { flex-basis: 100%; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-top: 10px; border-top: 1px dashed var(--border); font-size: 0.8rem; color: var(--ink-soft); }
+.pw-val {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 0.86rem; color: var(--ink);
+  background: var(--surface-sunken); border: 1.5px solid var(--border); border-radius: 8px; padding: 3px 9px; letter-spacing: 0.04em;
+  user-select: all;
+}
+.pw-val.masked { color: var(--ink-faint); letter-spacing: 0.18em; user-select: none; }
+.pw-line .mini { padding: 4px 9px; font-size: 0.74rem; }
+.pw-missing { color: var(--ink-faint); font-style: italic; }
 .empty { color: var(--ink-soft); font-size: 0.88rem; padding: 14px; text-align: center; border: 1.5px dashed var(--border); border-radius: 12px; }
 .howto { font-size: 0.86rem; color: var(--ink-soft); line-height: 1.6; padding-left: 18px; margin-top: 8px; }
 .toast {
@@ -130,6 +139,46 @@ const ADMIN_LOGIN = 'TOXIRJON';
 const ADMIN_HASH = '417c7342809abaa8e5858c58274e5fe464a9cdee7198772a775e24872b9d610c';
 const ACCOUNTS_CODE = 'TAUSER';
 const SEP = '\u241F';
+
+/* Teacher passwords are kept so the administrator can look them up here. They
+   are stored encrypted (AES-GCM) with a key made from the administrator's own
+   password, which is never stored anywhere, so only someone signed in to this
+   Control Panel can read them. The Teacher's Assistant app itself only ever
+   checks the separate one-way hash. */
+const PW_KEY_STORE = 'ta_ctrl_pwkey';
+let ctrlPwKey = null;
+const b64 = buf => btoa(String.fromCharCode.apply(null, new Uint8Array(buf)));
+const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function ctrlDeriveKey(adminPassword) {
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(adminPassword), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt: new TextEncoder().encode('TA-CP-PW-v1|' + ADMIN_LOGIN), iterations: 200000, hash: 'SHA-256' },
+    base, { name: 'AES-GCM', length: 256 }, true, ['encrypt', 'decrypt']);
+}
+async function ctrlRememberKey(key) {
+  ctrlPwKey = key;
+  try { sessionStorage.setItem(PW_KEY_STORE, b64(await crypto.subtle.exportKey('raw', key))); } catch (e) { /* ignore */ }
+}
+async function ctrlRestoreKey() {
+  try {
+    const raw = sessionStorage.getItem(PW_KEY_STORE);
+    if (raw) ctrlPwKey = await crypto.subtle.importKey('raw', unb64(raw), 'AES-GCM', false, ['encrypt', 'decrypt']);
+  } catch (e) { ctrlPwKey = null; }
+}
+async function ctrlEncryptPw(password) {
+  if (!ctrlPwKey) return '';
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, ctrlPwKey, new TextEncoder().encode(password));
+  return 'v1:' + b64(iv) + ':' + b64(ct);
+}
+async function ctrlDecryptPw(sealed) {
+  if (!ctrlPwKey || !sealed || sealed.indexOf('v1:') !== 0) return null;
+  try {
+    const p = sealed.split(':');
+    const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64(p[1]) }, ctrlPwKey, unb64(p[2]));
+    return new TextDecoder().decode(pt);
+  } catch (e) { return null; }
+}
 </script>
 </head>
 <body>
@@ -212,14 +261,14 @@ const SEP = '\u241F';
     const pass = $('gatePass').value;
     if (login === ADMIN_LOGIN && taHashPassword(login, pass) === ADMIN_HASH) {
       try { sessionStorage.setItem('ta_ctrl_session', '1'); } catch (err) { /* ignore */ }
-      showPanel();
+      ctrlDeriveKey(pass).then(ctrlRememberKey).catch(err => console.error('Password key failed:', err)).then(showPanel);
     } else {
       $('gateError').textContent = 'Login or password is incorrect.';
       $('gatePass').select();
     }
   });
   $('logoutBtn').addEventListener('click', () => {
-    try { sessionStorage.removeItem('ta_ctrl_session'); } catch (err) { /* ignore */ }
+    try { sessionStorage.removeItem('ta_ctrl_session'); sessionStorage.removeItem(PW_KEY_STORE); } catch (err) { /* ignore */ }
     location.reload();
   });
 
@@ -231,18 +280,19 @@ const SEP = '\u241F';
       const p = v.title.split(SEP);
       const login = String(p[0] || '').trim().toUpperCase();
       if (!login || login === ADMIN_LOGIN) return;
-      const rec = { login, hash: p[1] || '', status: p[2] || 'active', name: p[3] || v.name || login, date: v.date || '' };
+      const rec = { login, hash: p[1] || '', status: p[2] || 'active', name: p[3] || v.name || login, date: v.date || '', pw: typeof v.pw === 'string' ? v.pw : '' };
       if (!latest[login] || String(rec.date) >= String(latest[login].date)) latest[login] = rec;
     });
     return latest;
   }
 
-  async function writeRecord(login, hash, status, name) {
+  // pw: the encrypted password (see ctrlEncryptPw); every later record for the login carries it forward.
+  async function writeRecord(login, hash, status, name, pw) {
     if (!window.ctrlFirebase) throw new Error('offline');
     await window.ctrlFirebase.write({
       v: 1, code: ACCOUNTS_CODE, builtAt: '', type: 'TA_ACCOUNT',
       title: login + SEP + hash + SEP + status + SEP + name,
-      name: name, score: 0, warnings: 0, timeSeconds: 0, timeDisplay: '00:00',
+      name: name, pw: pw || '', score: 0, warnings: 0, timeSeconds: 0, timeDisplay: '00:00',
       date: new Date().toISOString()
     });
   }
@@ -287,10 +337,31 @@ const SEP = '\u241F';
             '<button class="mini" type="button" data-act="toggle" data-login="' + esc(a.login) + '">' + (on ? '⏸ Turn off' : '▶ Turn on') + '</button>' +
             '<button class="mini danger" type="button" data-act="delete" data-login="' + esc(a.login) + '">🗑 Delete</button>' +
           '</div>' +
+          '<div class="pw-line" data-login="' + esc(a.login) + '">' + pwLineHtml(a) + '</div>' +
         '</div>';
       });
     }
     wrap.innerHTML = html;
+  }
+
+  /* ---------- password look-up ---------- */
+  const shownPw = {}; // login -> decrypted password, while it is shown
+  function pwLineHtml(a) {
+    if (!a.pw) return 'Password: <span class="pw-missing">not saved yet — set one with 🔑 Change password to see it here</span>';
+    if (!ctrlPwKey) return 'Password: <span class="pw-missing">log out and sign in again to see it</span>';
+    const shown = Object.prototype.hasOwnProperty.call(shownPw, a.login);
+    return 'Password: <span class="pw-val' + (shown ? '' : ' masked') + '">' + (shown ? esc(shownPw[a.login]) : '••••••') + '</span>' +
+      '<button class="mini" type="button" data-act="showpw" data-login="' + esc(a.login) + '">' + (shown ? '🙈 Hide' : '👁 Show') + '</button>' +
+      '<button class="mini" type="button" data-act="copypw" data-login="' + esc(a.login) + '">📋 Copy</button>';
+  }
+  function refreshPwLine(login) {
+    const line = document.querySelector('.pw-line[data-login="' + CSS.escape(login) + '"]');
+    if (line && accounts[login]) line.innerHTML = pwLineHtml(accounts[login]);
+  }
+  async function revealPw(a) {
+    const pw = await ctrlDecryptPw(a.pw);
+    if (pw === null) { toast('Could not read this password. Set a new one with 🔑 Change password.', true); return null; }
+    return pw;
   }
 
   /* ---------- add ---------- */
@@ -308,7 +379,7 @@ const SEP = '\u241F';
     const btn = $('addBtn');
     btn.disabled = true;
     try {
-      await writeRecord(login, taHashPassword(login, pass), 'active', name);
+      await writeRecord(login, taHashPassword(login, pass), 'active', name, await ctrlEncryptPw(pass));
       toast('✅ Added ' + name + ' — login ' + login);
       $('addLogin').value = ''; $('addName').value = ''; $('addPass').value = '';
       $('addLogin').focus();
@@ -325,25 +396,39 @@ const SEP = '\u241F';
     if (!b) return;
     const a = accounts[b.dataset.login];
     if (!a) return;
+    if (b.dataset.act === 'showpw') {
+      if (Object.prototype.hasOwnProperty.call(shownPw, a.login)) delete shownPw[a.login];
+      else { const pw = await revealPw(a); if (pw === null) return; shownPw[a.login] = pw; }
+      refreshPwLine(a.login);
+      return;
+    }
+    if (b.dataset.act === 'copypw') {
+      const pw = await revealPw(a);
+      if (pw === null) return;
+      try { await navigator.clipboard.writeText(pw); toast('📋 Copied ' + a.login + '\'s password'); }
+      catch (err) { shownPw[a.login] = pw; refreshPwLine(a.login); toast('Could not copy — the password is shown instead.', true); }
+      return;
+    }
     try {
       if (b.dataset.act === 'pass') {
         const p = prompt('New password for ' + a.login + ' (at least 4 characters):');
         if (p === null) return;
         if (p.length < 4) { toast('Password must be at least 4 characters.', true); return; }
-        await writeRecord(a.login, taHashPassword(a.login, p), a.status, a.name);
+        await writeRecord(a.login, taHashPassword(a.login, p), a.status, a.name, await ctrlEncryptPw(p));
+        delete shownPw[a.login];
         toast('🔑 Password changed for ' + a.login);
       } else if (b.dataset.act === 'name') {
         const n = prompt('Teacher\'s name for ' + a.login + ':', a.name);
         if (n === null || !n.trim()) return;
-        await writeRecord(a.login, a.hash, a.status, n.trim());
+        await writeRecord(a.login, a.hash, a.status, n.trim(), a.pw);
         toast('✏️ Renamed');
       } else if (b.dataset.act === 'toggle') {
         const next = a.status === 'active' ? 'disabled' : 'active';
-        await writeRecord(a.login, a.hash, next, a.name);
+        await writeRecord(a.login, a.hash, next, a.name, a.pw);
         toast(next === 'active' ? '▶ ' + a.login + ' can sign in again' : '⏸ ' + a.login + ' is turned off');
       } else if (b.dataset.act === 'delete') {
         if (!confirm('Delete the account ' + a.login + '?\n\nThey can no longer sign in. Their data stays on their own device; if you add the same login again later, they will see it again.')) return;
-        await writeRecord(a.login, a.hash, 'deleted', a.name);
+        await writeRecord(a.login, a.hash, 'deleted', a.name, a.pw);
         toast('🗑 Deleted ' + a.login);
       }
     } catch (ex) {
@@ -355,7 +440,7 @@ const SEP = '\u241F';
   /* stay signed in for this tab */
   let signedIn = false;
   try { signedIn = sessionStorage.getItem('ta_ctrl_session') === '1'; } catch (err) { /* ignore */ }
-  if (signedIn) showPanel(); else $('gateUser').focus();
+  if (signedIn) ctrlRestoreKey().then(showPanel); else $('gateUser').focus();
 </script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
