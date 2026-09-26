@@ -185,24 +185,36 @@
       })();
     });
   }
-  var cloudCount = {}; // key -> number of records it currently uses in the cloud
+  /* Firebase's rules for this project only accept new records with the
+     account code (TAUSER) and don't allow editing a record, only creating and
+     deleting. So every change is saved as a new version (its own records),
+     and the older versions of that item are deleted once it's saved. */
+  var SYNC_CODE = 'TAUSER';
+  var SYNC_TYPE = 'TA_SYNC:' + login;
+  var cloudVersions = {}; // key -> { ver: { ts, ids: [record ids] } } from the latest cloud read
 
-  var uploading = null;
+  var uploading = null, failures = 0, retryTimer = null;
   async function flush() {
     clearTimeout(uploadTimer);
     if (!backend || !key) return;
     if (uploading) { await uploading; }
     var keys = Object.keys(dirty);
-    if (!keys.length) { if (ready) setStatus('☁️ Synced', 'ok'); return; }
+    if (!keys.length) { if (ready && !failures) setStatus('☁️ Synced', 'ok'); return; }
     dirty = {};
     uploading = (async function () {
       try {
         for (var i = 0; i < keys.length; i++) await upload(keys[i]);
+        failures = 0;
         setStatus('☁️ Synced', 'ok');
       } catch (e) {
         console.error('Sync upload failed:', e);
         keys.forEach(function (k) { dirty[k] = true; });
-        setStatus('⚠️ Not synced — tap to retry', 'bad');
+        failures++;
+        var code = (e && (e.code || e.name)) ? ' (' + String(e.code || e.name).replace('permission-denied', 'not allowed by Firebase rules') + ')' : '';
+        setStatus('⚠️ Not synced' + code + ' — tap to retry', 'bad');
+        // wait longer after each failure instead of retrying on every cloud update
+        clearTimeout(retryTimer);
+        retryTimer = setTimeout(flush, Math.min(5 * 60000, 15000 * Math.pow(2, failures - 1)));
       }
     })();
     await uploading;
@@ -216,43 +228,54 @@
     var parts = [];
     for (var i = 0; i < sealed.length; i += CHUNK) parts.push(sealed.slice(i, i + CHUNK));
     if (!parts.length) parts.push('');
+    var ids = [];
     for (var j = 0; j < parts.length; j++) {
-      await backend.put(docId(k, j), {
-        v: 1, code: 'TASYNC:' + login, builtAt: '', type: 'TA_SYNC',
+      var id = docId(k, ver, j);
+      await backend.put(id, {
+        v: 1, code: SYNC_CODE, builtAt: '', type: SYNC_TYPE,
         title: [k, ver, j, parts.length, ts, value === null ? 'x' : ''].join(SEP),
         name: '', data: parts[j], score: 0, warnings: 0, timeSeconds: 0, timeDisplay: '00:00',
         date: new Date().toISOString()
       });
+      ids.push(id);
     }
-    for (var n = parts.length; n < (cloudCount[k] || 0); n++) { try { await backend.remove(docId(k, n)); } catch (e) { /* leftover part, ignored by readers */ } }
-    cloudCount[k] = parts.length;
     seen[k] = ver;
     saveSeen();
+    // the new version is complete: remove this item's older versions (never a newer one from another device)
+    var old = cloudVersions[k] || {};
+    Object.keys(old).forEach(function (v) {
+      if (v === ver || old[v].ts > ts) return;
+      old[v].ids.forEach(function (oid) { backend.remove(oid).catch(function () { /* already gone */ }); });
+    });
+    cloudVersions[k] = {}; cloudVersions[k][ver] = { ts: ts, ids: ids };
   }
-  function docId(k, i) { return ('tasync_' + login + '_' + k + '_' + i).replace(/[^A-Za-z0-9_.-]/g, '-'); }
+  function docId(k, ver, i) { return ('tasync_' + login + '_' + k + '_' + ver + '_' + i).replace(/[^A-Za-z0-9_.-]/g, '-'); }
 
   // Picks, per item, the newest version whose parts are all present.
   function readCloud(docs) {
     var byKey = {};
     docs.forEach(function (d) {
-      if (!d || d.type !== 'TA_SYNC' || typeof d.title !== 'string') return;
+      if (!d || d.type !== SYNC_TYPE || typeof d.title !== 'string') return;
       var p = d.title.split(SEP);
       var k = p[0], ver = p[1], idx = +p[2], n = +p[3], ts = +p[4] || 0;
       if (!SYNC_SET[k]) return;
       var versions = byKey[k] || (byKey[k] = {});
-      var v = versions[ver] || (versions[ver] = { ver: ver, n: n, ts: ts, parts: [] });
+      var v = versions[ver] || (versions[ver] = { ver: ver, n: n, ts: ts, parts: [], ids: [] });
       v.parts[idx] = typeof d.data === 'string' ? d.data : '';
+      if (d.__id) v.ids.push(d.__id);
     });
     var out = {};
+    cloudVersions = {};
     Object.keys(byKey).forEach(function (k) {
-      var best = null, count = 0;
+      var best = null;
+      cloudVersions[k] = {};
       Object.keys(byKey[k]).forEach(function (ver) {
         var v = byKey[k][ver];
-        count = Math.max(count, v.parts.length);
+        cloudVersions[k][ver] = { ts: v.ts, ids: v.ids };
         var complete = v.parts.length === v.n && v.parts.every(function (x) { return typeof x === 'string'; });
-        if (complete && (!best || v.ts > best.ts)) best = v;
+        // newest wins; equal times are settled by version id so every device picks the same one
+        if (complete && (!best || v.ts > best.ts || (v.ts === best.ts && v.ver > best.ver))) best = v;
       });
-      cloudCount[k] = count;
       if (best) out[k] = best;
     });
     return out;
@@ -273,8 +296,12 @@
       catch (e) { if (local !== null) dirty[k] = true; continue; } // made with an older password: replace it with this device's copy
       seen[k] = c.ver;
       if (value === local) { if (c.ts > localTs) meta[k] = c.ts; continue; }
+      // Newer change wins. Old data from before sync (no change time on either side): the fuller
+      // copy wins, and for equal sizes the same one is picked on every device, so two devices
+      // never keep overwriting each other.
+      var lv = String(local), cv = String(value);
       var takeCloud = c.ts > localTs ||
-        (c.ts === localTs && (local === null || (value !== null && String(value).length > String(local).length)));
+        (c.ts === localTs && (local === null || (value !== null && (cv.length > lv.length || (cv.length === lv.length && cv > lv)))));
       if (takeCloud) { setLocal(k, value); meta[k] = c.ts; changed = true; }
       else dirty[k] = true;
     }
@@ -297,7 +324,7 @@
     backend = await waitBackend();
     if (!backend) { ready = true; setStatus('☁️ Offline — will sync when connected', 'bad'); return; }
     var first = true;
-    backend.listen('TASYNC:' + login, async function (docs) {
+    backend.listen(SYNC_CODE, SYNC_TYPE, async function (docs) {
       var wasFirst = first; first = false;
       var changed = await merge(docs, wasFirst);
       if (wasFirst) {
@@ -315,14 +342,14 @@
         refreshScreen();
         if (typeof showToast === 'function') showToast('☁️ Updated from your other device', 'ok');
       }
-      if (Object.keys(dirty).length) flush(); else setStatus('☁️ Synced', 'ok');
+      if (Object.keys(dirty).length) { if (!failures) flush(); } else if (!failures) setStatus('☁️ Synced', 'ok');
     }, function (err) {
       console.error('Sync listen failed:', err);
       ready = true;
       setStatus('⚠️ Not synced — tap to retry', 'bad');
     });
   }
-  function syncNow() { SYNC_KEYS.forEach(function (k) { if (getLocal(k) !== null) dirty[k] = true; }); flush(); }
+  function syncNow() { failures = 0; clearTimeout(retryTimer); setStatus('☁️ Syncing…', 'busy'); SYNC_KEYS.forEach(function (k) { if (getLocal(k) !== null) dirty[k] = true; }); flush(); }
 
   window.taSync = { flush: flush, now: syncNow, turnOn: askPasswordAndStart, status: function () { return status; } };
   if (user.sk) useKey(user.sk);

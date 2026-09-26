@@ -498,7 +498,8 @@ async function ctrlDecryptPw(sealed) {
     const db = getFirestore(initializeApp(firebaseConfig));
     window.ctrlFirebase = {
       write: data => addDoc(collection(db, 'results'), data),
-      listen: (onData, onErr) => onSnapshot(query(collection(db, 'results'), where('code', '==', ACCOUNTS_CODE)),
+      // account records only: teachers' synced data shares the TAUSER code with its own type
+      listen: (onData, onErr) => onSnapshot(query(collection(db, 'results'), where('code', '==', ACCOUNTS_CODE), where('type', '==', 'TA_ACCOUNT')),
         snap => onData(snap.docs.map(d => d.data())), onErr)
     };
   } catch (e) { console.error('Firebase init failed:', e); }

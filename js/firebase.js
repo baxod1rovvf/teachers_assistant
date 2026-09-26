@@ -22,8 +22,9 @@ try {
 // Cloud sync (js/sync.js): one record per synced item, updated in place.
 if (db) {
   window.taSyncBackend = {
-    listen: (code, onData, onErr) => onSnapshot(query(collection(db, 'results'), where('code', '==', code)),
-      snap => onData(snap.docs.map(d => d.data())), onErr),
+    // only this teacher's sync records; changes still on their way to the server are skipped
+    listen: (code, type, onData, onErr) => onSnapshot(query(collection(db, 'results'), where('code', '==', code), where('type', '==', type)),
+      snap => { if (!snap.metadata.hasPendingWrites) onData(snap.docs.map(d => Object.assign({ __id: d.id }, d.data()))); }, onErr),
     put: (id, data) => setDoc(doc(db, 'results', id), data),
     remove: id => deleteDoc(doc(db, 'results', id))
   };
@@ -32,7 +33,8 @@ if (db) {
 window.taFetchAccounts = async function () {
   if (!db) return null;
   try {
-    const snap = await getDocs(query(collection(db, 'results'), where('code', '==', TA_ACCOUNTS_CODE)));
+    // account records only (sync records share the TAUSER code but have their own type)
+    const snap = await getDocs(query(collection(db, 'results'), where('code', '==', TA_ACCOUNTS_CODE), where('type', '==', 'TA_ACCOUNT')));
     return snap.docs.map(d => d.data());
   } catch (e) { console.error('Account check failed:', e); return null; }
 };
