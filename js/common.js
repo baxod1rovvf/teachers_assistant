@@ -147,8 +147,32 @@ function taConfettiBurst(x, y, count) {
 }
 
 let currentActiveTab = 'main';
+// On phones the sidebar is a slide-over panel: closed by default, on every section.
+const TA_PHONE_MQ = window.matchMedia ? window.matchMedia('(max-width: 860px)') : { matches: false };
+function taIsPhone() { return TA_PHONE_MQ.matches; }
+function taCloseSidebar() {
+  const sidebar = document.getElementById('mainSidebar');
+  if (!sidebar || sidebar.classList.contains('collapsed')) return;
+  sidebar.classList.add('collapsed');
+  if (typeof syncSidebarHamburgerIcon === 'function') syncSidebarHamburgerIcon(true);
+}
+function taSetupPhoneSidebar() {
+  const sidebar = document.getElementById('mainSidebar');
+  if (!sidebar || document.getElementById('sidebarBackdrop')) return;
+  const back = document.createElement('div');
+  back.className = 'sidebar-backdrop';
+  back.id = 'sidebarBackdrop';
+  back.addEventListener('click', taCloseSidebar);
+  sidebar.after(back);
+  const onChange = () => {
+    if (taIsPhone()) taCloseSidebar();
+    switchTo(currentActiveTab); // re-apply the Dashboard's desktop rule (sidebar always open) when widening
+  };
+  if (TA_PHONE_MQ.addEventListener) TA_PHONE_MQ.addEventListener('change', onChange);
+  else if (TA_PHONE_MQ.addListener) TA_PHONE_MQ.addListener(onChange);
+}
 function toggleSidebar() {
-  if (currentActiveTab === 'main') return; // sidebar always stays visible on the Dashboard
+  if (currentActiveTab === 'main' && !taIsPhone()) return; // on a computer the sidebar always stays visible on the Dashboard
   const sidebar = document.getElementById('mainSidebar');
   if (sidebar) sidebar.classList.toggle('collapsed');
   if (typeof syncSidebarHamburgerIcon === 'function') syncSidebarHamburgerIcon(true);
@@ -168,7 +192,12 @@ function switchTo(tab) {
   if (taStarted && page !== taCurrentPageFile()) history.pushState(null, '', taAddressFor(page));
   if (TA_PAGE_TITLES[page]) document.title = TA_PAGE_TITLES[page];
   document.body.classList.toggle('main-hero-active', tab === 'main');
-  if (tab === 'main') {
+  if (taIsPhone()) {
+    // phones: the menu button is always there, and picking a section closes the panel
+    const toggleBtn = document.getElementById('sidebarToggleBtn');
+    if (toggleBtn) toggleBtn.style.visibility = 'visible';
+    taCloseSidebar();
+  } else if (tab === 'main') {
     const sidebar = document.getElementById('mainSidebar');
     if (sidebar) sidebar.classList.remove('collapsed');
     const toggleBtn = document.getElementById('sidebarToggleBtn');
@@ -1774,6 +1803,7 @@ function taStartPage(defaultTab) {
   if (TA_CLEAN_URLS && /\.html$/.test(location.pathname)) {
     history.replaceState(null, '', taAddressFor(taCurrentPageFile(), location.search, location.hash));
   }
+  taSetupPhoneSidebar();
   applyTheme();
   updateSoundToggleUI();
   applyAvatar();
