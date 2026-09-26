@@ -98,31 +98,24 @@ body.light-theme {
 .app-shell { display: flex; min-height: 100vh; align-items: stretch; }
 
 .sidebar {
-  width: 280px; flex-shrink: 0; background: var(--surface); border-right: 1.5px solid var(--border);
+  width: min(300px, 84vw); background: var(--surface); border-right: 1.5px solid var(--border);
   padding: 72px 16px 24px; display: flex; flex-direction: column; gap: 4px;
-  position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 5;
-  transition: width 0.22s ease, padding 0.22s ease, opacity 0.15s ease;
+  overflow-y: auto; overscroll-behavior: contain;
 }
-.sidebar.collapsed { width: 0; padding: 72px 0 24px; overflow: hidden; opacity: 0; border-right: none; }
-/* Phones and small tablets: the sidebar slides in over the page instead of
-   taking space beside it, starts closed, and a dimmed backdrop closes it. */
-.sidebar-backdrop { display: none; }
-@media (max-width: 860px) {
-  .sidebar {
-    position: fixed; top: 0; left: 0; bottom: 0; height: 100vh; height: 100dvh; width: min(300px, 84vw);
-    z-index: 10000; transform: none; box-shadow: 0 30px 70px -20px rgba(0,0,0,0.65);
-    transition: transform 0.26s cubic-bezier(.2,.8,.2,1);
-  }
-  .sidebar.collapsed {
-    width: min(300px, 84vw); padding: 72px 16px 24px; opacity: 1; overflow-y: auto;
-    border-right: 1.5px solid var(--border); transform: translateX(-105%); box-shadow: none;
-  }
-  .sidebar-backdrop {
-    display: block; position: fixed; inset: 0; z-index: 9999; background: rgba(5,6,10,0.5);
-    opacity: 0; pointer-events: none; transition: opacity 0.26s ease;
-  }
-  .sidebar:not(.collapsed) + .sidebar-backdrop { opacity: 1; pointer-events: auto; }
+/* The sidebar is a slide-over panel on every screen size: it starts closed,
+   opens over the page without moving anything, and a dimmed backdrop (or
+   picking a section) closes it. */
+.sidebar {
+  position: fixed; top: 0; left: 0; bottom: 0; height: 100vh; height: 100dvh;
+  z-index: 10000; transform: none; box-shadow: 0 30px 70px -20px rgba(0,0,0,0.65);
+  transition: transform 0.26s cubic-bezier(.2,.8,.2,1);
 }
+.sidebar.collapsed { transform: translateX(-105%); box-shadow: none; visibility: hidden; transition: transform 0.26s cubic-bezier(.2,.8,.2,1), visibility 0s 0.26s; }
+.sidebar-backdrop {
+  position: fixed; inset: 0; z-index: 9999; background: rgba(5,6,10,0.5);
+  opacity: 0; pointer-events: none; transition: opacity 0.26s ease;
+}
+.sidebar:not(.collapsed) + .sidebar-backdrop { opacity: 1; pointer-events: auto; }
 .sidebar-toggle-btn {
   position: fixed; top: 16px; left: 16px; z-index: 10001;
   width: 42px; height: 42px; border-radius: var(--radius-md); border: 1.5px solid var(--border);
