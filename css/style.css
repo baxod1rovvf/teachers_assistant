@@ -161,6 +161,8 @@ body:not(.light-theme) .sidebar-hamburger-anim svg { filter: invert(1); }
   filter: drop-shadow(0 10px 18px rgba(0,0,0,0.35)); transform: scaleX(1); transition: transform 0.25s ease;
 }
 .ai-robot-anim.flip { transform: scaleX(-1); }
+.ai-robot-widget.bowling { cursor: grabbing; will-change: left, top, transform; }
+.ai-robot-widget.settling { transition: transform 0.45s cubic-bezier(.3,1.6,.5,1) !important; }
 .ai-robot-bubble {
   position: absolute; width: 300px; max-height: 340px; overflow-y: auto; background: var(--surface);
   border: 1.5px solid var(--border); border-radius: 16px; box-shadow: var(--shadow-lg); padding: 12px;

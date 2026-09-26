@@ -1658,6 +1658,7 @@ function aiRobotInitDrag() {
   if (!widget) return;
   widget.addEventListener('pointerdown', function (e) {
     if (e.target && e.target.closest && e.target.closest('.ai-robot-bubble')) return;
+    aiRobotStopBowling(); // grabbing it mid-roll catches it
     const rect = widget.getBoundingClientRect();
     aiRobotDragState = { startX: e.clientX, startY: e.clientY, origLeft: rect.left, origTop: rect.top, moved: false, pointerId: e.pointerId };
     aiRobotPauseWander();
@@ -1691,8 +1692,15 @@ function aiRobotInitDrag() {
     widget.classList.remove('no-transition');
     try { widget.releasePointerCapture(aiRobotDragState.pointerId); } catch (err) { /* ignore */ }
     aiRobotDragState = null;
-    if (wasDrag) aiRobotResumeWander();
-    else toggleAiRobotBubble();
+    if (wasDrag) { aiRobotResumeWander(); return; }
+    // One tap opens the questions; a second tap right after sends it rolling instead.
+    if (aiRobotTapTimer) {
+      clearTimeout(aiRobotTapTimer);
+      aiRobotTapTimer = null;
+      aiRobotBowl();
+    } else {
+      aiRobotTapTimer = setTimeout(function () { aiRobotTapTimer = null; toggleAiRobotBubble(); }, AI_ROBOT_DOUBLE_TAP_MS);
+    }
   });
   widget.addEventListener('pointercancel', function () {
     aiRobotDragState = null;
@@ -1700,6 +1708,70 @@ function aiRobotInitDrag() {
     widget.classList.remove('no-transition');
     aiRobotResumeWander();
   });
+}
+
+/* ---- double tap: roll away like a bowling ball ----
+   It shoots off in a random direction, spinning as it rolls, bounces off the
+   screen edges, slows down and stops somewhere new. */
+const AI_ROBOT_DOUBLE_TAP_MS = 280;
+let aiRobotTapTimer = null;
+let aiRobotBowlFrame = null;
+function aiRobotStopBowling() {
+  if (!aiRobotBowlFrame) return;
+  cancelAnimationFrame(aiRobotBowlFrame);
+  aiRobotBowlFrame = null;
+  const widget = document.getElementById('aiRobotWidget');
+  if (widget) { widget.classList.remove('bowling'); widget.style.transform = ''; }
+}
+function aiRobotBowl() {
+  const widget = document.getElementById('aiRobotWidget');
+  if (!widget) return;
+  aiRobotStopBowling();
+  closeAiRobotBubble();
+  aiRobotPauseWander();
+  playAiRobotOnce('alert');
+  const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const radius = widget.offsetWidth / 2;
+  let x = parseFloat(widget.style.left) || 0;
+  let y = parseFloat(widget.style.top) || 0;
+  const angle = Math.random() * Math.PI * 2;
+  const speed = 1500 + Math.random() * 700; // px per second at launch
+  let vx = Math.cos(angle) * speed, vy = Math.sin(angle) * speed;
+  let spin = 0; // degrees rolled so far
+  let last = performance.now();
+  widget.classList.add('no-transition', 'bowling');
+  function step(now) {
+    const dt = Math.min(0.05, (now - last) / 1000);
+    last = now;
+    const b = aiRobotBounds();
+    x += vx * dt; y += vy * dt;
+    // bounce off the edges, losing a little speed each time
+    if (x < b.minX) { x = b.minX; vx = Math.abs(vx) * 0.8; }
+    if (x > b.maxX) { x = b.maxX; vx = -Math.abs(vx) * 0.8; }
+    if (y < b.minY) { y = b.minY; vy = Math.abs(vy) * 0.8; }
+    if (y > b.maxY) { y = b.maxY; vy = -Math.abs(vy) * 0.8; }
+    const friction = Math.pow(0.28, dt); // slows smoothly, like a ball on a lane
+    vx *= friction; vy *= friction;
+    const v = Math.hypot(vx, vy);
+    // a rolling ball turns one full circle for every 2πr it travels
+    if (!reduced) spin += (v * dt / radius) * (180 / Math.PI) * (vx >= 0 ? 1 : -1);
+    widget.style.left = x + 'px';
+    widget.style.top = y + 'px';
+    widget.style.transform = spin ? 'rotate(' + spin.toFixed(1) + 'deg)' : '';
+    if (v > 25) { aiRobotBowlFrame = requestAnimationFrame(step); return; }
+    // stopped: turn upright again and do a little jump
+    aiRobotBowlFrame = null;
+    const rest = ((spin % 360) + 540) % 360 - 180; // same angle, but the shortest way back to upright
+    widget.style.transform = 'rotate(' + rest + 'deg)';
+    void widget.offsetWidth;
+    widget.classList.remove('no-transition', 'bowling');
+    widget.classList.add('settling');
+    widget.style.transform = 'rotate(0deg)';
+    setTimeout(function () { widget.classList.remove('settling'); widget.style.transform = ''; }, 450);
+    playAiRobotOnce('jump');
+    aiRobotResumeWander();
+  }
+  aiRobotBowlFrame = requestAnimationFrame(step);
 }
 
 /* ---- FAQ thought bubble ---- */
