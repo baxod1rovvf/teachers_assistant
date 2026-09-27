@@ -117,6 +117,7 @@ function renderRecentExercises() {
         '<div class="recent-exercise-actions">' +
           againBtn +
           openBtn +
+          (worksheetFor(item) ? '<button class="mini-btn" type="button" onclick="printRecentExercise(' + idx + ')" title="A paper version for lessons without devices, with an answer key">🖨 Worksheet</button>' : '') +
           '<button class="mini-btn" type="button" onclick="shareRecentExercise(' + idx + ')" title="Message and file to send to students, or show the code on the board">📤 Share</button>' +
           answersBtn +
           separateBtn +
@@ -331,6 +332,141 @@ function showCodeOnScreen(item) {
   document.addEventListener('keydown', onKey);
   document.body.appendChild(el);
   if (el.requestFullscreen) el.requestFullscreen().then(() => document.addEventListener('fullscreenchange', onFs)).catch(() => { /* fine without full screen */ });
+}
+
+/* ---------- Printable worksheet ----------
+   Word-list exercises turn into a paper version: matching, spelling
+   choice, unscrambling, word order, gap-fill… with the answer key on its
+   own page. It opens in a new tab ready to print (or save as PDF). */
+function wsShuffle(list) {
+  const a = list.slice();
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+// shuffled, but never left in the original order when that's possible
+function wsMix(list) {
+  if (list.length < 2 || list.every(x => x === list[0])) return list.slice();
+  let a;
+  do { a = wsShuffle(list); } while (a.join('\u0001') === list.join('\u0001'));
+  return a;
+}
+const WS_LETTERS = 'abcdefghijklmnopqrstuvwxyz';
+function wsEsc(t) { return escapeForHtml(String(t == null ? '' : t)).replace(/"/g, '&quot;'); }
+
+function worksheetFor(item) {
+  const load = exerciseLoadFor(item);
+  if (!load || load.set || !WS_BUILDERS[load.tab]) return null;
+  const rows = (load.state.rows || []).filter(r => {
+    const w = typeof r === 'string' ? r : Array.isArray(r) ? r[0] : r.s;
+    return String(w || '').trim();
+  });
+  return rows.length ? { tab: load.tab, rows: rows } : null;
+}
+
+const WS_BUILDERS = {
+  flashcard: rows => {
+    const pairs = rows.map(r => ({ w: r[0].trim(), tr: String(r[1] || '').trim() }));
+    const withTr = pairs.filter(p => p.tr);
+    if (!withTr.length) return WS_BUILDERS.sentences(pairs.map(p => p.w));
+    const mixed = wsMix(withTr.map(p => p.tr));
+    const letterOf = tr => WS_LETTERS[mixed.indexOf(tr)] || '?';
+    return {
+      parts: [
+        { h: 'Match each word with its translation', note: 'Write the letter next to the number.',
+          body: '<div class="ws-match"><ol class="ws-list">' + withTr.map(p => '<li>' + wsEsc(p.w) + ' <span class="ws-blank short"></span></li>').join('') + '</ol>' +
+            '<ol class="ws-list" type="a">' + mixed.map(tr => '<li>' + wsEsc(tr) + '</li>').join('') + '</ol></div>' },
+        { h: 'Write the English word', body: '<ol class="ws-list">' + wsShuffle(withTr).map(p => '<li>' + wsEsc(p.tr) + ' → <span class="ws-blank"></span></li>').join('') + '</ol>' }
+      ],
+      key: withTr.map((p, i) => (i + 1) + '-' + letterOf(p.tr)).join(', ')
+    };
+  },
+  spelling: rows => ({
+    parts: [{ h: 'Circle the correct spelling',
+      body: '<ol class="ws-list">' + rows.map(r => '<li class="ws-options">' + wsShuffle([r[0]].concat((r[1] || []).filter(Boolean))).map(o => '<span>' + wsEsc(o) + '</span>').join('') + '</li>').join('') + '</ol>' }],
+    key: rows.map((r, i) => (i + 1) + '. ' + r[0]).join(' · ')
+  }),
+  makeaword: rows => ({
+    parts: [{ h: 'Put the letters in order to make a word',
+      body: '<ol class="ws-list">' + rows.map(w => '<li><span class="ws-letters">' + wsEsc(wsMix(Array.from(String(w).replace(/\s+/g, ''))).join(' ')) + '</span> <span class="ws-blank"></span></li>').join('') + '</ol>' }],
+    key: rows.map((w, i) => (i + 1) + '. ' + w).join(' · ')
+  }),
+  pronunciation: rows => ({
+    parts: [{ h: 'Read each word aloud, then write it twice',
+      body: '<ol class="ws-list">' + rows.map(r => '<li>' + (r[2] ? wsEsc(r[2]) + ' ' : '') + '<b>' + wsEsc(r[0]) + '</b>' + (r[1] ? ' <span class="ws-ipa">/' + wsEsc(String(r[1]).replace(/^\/|\/$/g, '')) + '/</span>' : '') +
+        ' <span class="ws-blank"></span> <span class="ws-blank"></span></li>').join('') + '</ol>' }],
+    key: ''
+  }),
+  sentences: rows => ({
+    parts: [{ h: 'Write a sentence with each word',
+      body: '<ol class="ws-list ws-roomy">' + rows.map(w => '<li><b>' + wsEsc(w) + '</b><span class="ws-line"></span></li>').join('') + '</ol>' }],
+    key: ''
+  }),
+  wordorder: rows => ({
+    parts: [{ h: 'Put the words in the right order',
+      body: '<ol class="ws-list ws-roomy">' + rows.map(sn => '<li><span class="ws-letters">' + wsEsc(wsMix(String(sn).trim().split(/\s+/)).join('  /  ')) + '</span><span class="ws-line"></span></li>').join('') + '</ol>' }],
+    key: rows.map((sn, i) => (i + 1) + '. ' + sn).join('<br>')
+  }),
+  test: rows => {
+    const items = rows.map(r => {
+      const words = String(r.s).trim().split(/\s+/);
+      let gap = r.gap >= 0 && r.gap < words.length ? r.gap : words.reduce((best, w, i) => w.replace(/\W/g, '').length > words[best].replace(/\W/g, '').length ? i : best, 0);
+      const answer = words[gap].replace(/^[^\w']+|[^\w']+$/g, '');
+      const shown = words.map((w, i) => i === gap ? w.replace(answer, '_______') : w).join(' ');
+      const opts = (r.wrongs || []).filter(Boolean);
+      return { shown: shown, answer: answer, opts: opts.length ? wsShuffle([answer].concat(opts)) : null };
+    });
+    const bank = items.every(it => !it.opts) ? wsShuffle(items.map(it => it.answer)) : null;
+    return {
+      parts: [{ h: 'Fill in the gaps', note: bank ? 'Use these words: ' + bank.map(wsEsc).join(' · ') : 'Circle the right answer.',
+        body: '<ol class="ws-list ws-roomy">' + items.map(it => '<li>' + wsEsc(it.shown) +
+          (it.opts ? '<div class="ws-options">' + it.opts.map((o, i) => '<span>' + WS_LETTERS[i] + ') ' + wsEsc(o) + '</span>').join('') + '</div>' : '') + '</li>').join('') + '</ol>' }],
+      key: items.map((it, i) => (i + 1) + '. ' + wsEsc(it.answer)).join(' · ')
+    };
+  }
+};
+
+function buildWorksheetHtml(item) {
+  const ws = worksheetFor(item);
+  const sheet = WS_BUILDERS[ws.tab](ws.rows);
+  const gName = groupNameFor(item.groupId);
+  const partsHtml = sheet.parts.map((p, i) =>
+    '<section><h2>' + (sheet.parts.length > 1 ? (i + 1) + '. ' : '') + wsEsc(p.h) + '</h2>' + (p.note ? '<p class="ws-note">' + p.note + '</p>' : '') + p.body + '</section>').join('');
+  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' +
+    '<title>' + wsEsc(item.title) + ' — worksheet</title><style>' +
+    'body{font-family:Georgia,"Times New Roman",serif;color:#111;background:#fff;margin:0;padding:28px;max-width:760px;margin:0 auto;line-height:1.5;font-size:15px}' +
+    'h1{font-size:24px;margin:0 0 4px}h2{font-size:17px;margin:22px 0 6px}.ws-sub{color:#555;font-size:13px;margin:0 0 14px}' +
+    '.ws-head{display:flex;gap:24px;flex-wrap:wrap;border-bottom:2px solid #111;padding-bottom:10px;margin-bottom:6px;font-size:14px}.ws-head span{flex:1;min-width:180px;border-bottom:1px solid #999;padding-bottom:2px}' +
+    '.ws-list{padding-left:26px;margin:6px 0}.ws-list li{margin:0 0 9px}.ws-roomy li{margin-bottom:16px}' +
+    '.ws-match{display:flex;gap:40px;flex-wrap:wrap}.ws-match .ws-list{flex:1;min-width:200px}' +
+    '.ws-blank{display:inline-block;min-width:150px;border-bottom:1px solid #333;height:1em;vertical-align:bottom}.ws-blank.short{min-width:40px}' +
+    '.ws-line{display:block;border-bottom:1px solid #333;height:1.9em}.ws-letters{letter-spacing:.06em;font-family:"Courier New",monospace}.ws-ipa{color:#555}' +
+    '.ws-options span{display:inline-block;margin:2px 22px 2px 0}.ws-note{margin:0 0 6px;color:#333;font-style:italic}' +
+    '.ws-key{page-break-before:always;break-before:page;padding-top:10px}.ws-key p{font-size:14px}' +
+    '.ws-bar{position:sticky;top:0;background:#fff;padding:8px 0 12px;display:flex;gap:10px;align-items:center;font-family:system-ui,sans-serif;font-size:13px;color:#555}' +
+    '.ws-bar button{font:inherit;font-weight:700;padding:8px 16px;border-radius:8px;border:1.5px solid #111;background:#111;color:#fff;cursor:pointer}' +
+    '@media print{.ws-bar{display:none}body{padding:0}}' +
+    '</style></head><body>' +
+    '<div class="ws-bar"><button type="button" onclick="print()">🖨 Print</button><span>Or save it as PDF from the print window.' + (sheet.key ? ' The answer key prints on its own page.' : '') + '</span></div>' +
+    '<h1>' + wsEsc(item.title) + '</h1><p class="ws-sub">' + wsEsc(item.typeLabel) + (gName ? ' · ' + wsEsc(gName) : '') + '</p>' +
+    '<div class="ws-head"><span>Name:</span><span>Date:</span></div>' + partsHtml +
+    (sheet.key ? '<div class="ws-key"><h2>Answer key — ' + wsEsc(item.title) + '</h2><p>' + sheet.key + '</p></div>' : '') +
+    '</body></html>';
+}
+
+function printRecentExercise(idx) {
+  const item = getRecentExercises()[idx];
+  if (!item || !worksheetFor(item)) return;
+  const html = buildWorksheetHtml(item);
+  const win = window.open('', '_blank');
+  if (win && win.document) {
+    win.document.open();
+    win.document.write(html);
+    win.document.close();
+    return;
+  }
+  // pop-up blocked: download it instead
+  downloadFile((item.title.replace(/[^a-z0-9\-_ ]/gi, '').trim().replace(/\s+/g, '_') || 'worksheet') + '_worksheet.html', html);
+  showToast('Worksheet downloaded — open it and print.', 'ok');
 }
 
 // Results is its own page; it loads this exercise from ?exercise=<uid>.
