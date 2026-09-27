@@ -4269,7 +4269,7 @@ function taFillGroupSelect(tab) {
   if (!sel) return;
   const keep = sel.value;
   sel.innerHTML = '<option value="">— Any group —</option>' +
-    getStudentGroups().map(g => '<option value="' + escapeForHtml(g.id) + '">' + escapeForHtml(g.name) + '</option>').join('');
+    getStudentGroups().map(g => '<option value="' + escapeForHtml(g.id) + '" translate="no">' + escapeForHtml(g.name) + '</option>').join('');
   if (Array.from(sel.options).some(o => o.value === keep)) sel.value = keep;
 }
 function taBuilderGroup(tab) {

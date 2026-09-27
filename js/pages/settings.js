@@ -189,8 +189,14 @@ taOnTab('settings', function () {
   if (location.hash === '#schedule') scrollToScheduleSettings();
   renderBackupInfo();
   renderInstallSection();
+  const langPick = document.getElementById('settingsLangPick');
+  if (langPick) langPick.innerHTML = taLangPickerHtml();
   if (location.hash === '#install') setTimeout(function () {
     const el = document.getElementById('settingsInstallSection');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+  if (location.hash === '#language') setTimeout(function () {
+    const el = document.getElementById('settingsLanguageSection');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 80);
   if (location.hash === '#backup') setTimeout(function () {

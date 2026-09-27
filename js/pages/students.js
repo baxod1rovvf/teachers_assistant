@@ -147,7 +147,7 @@ function renderStudentsList() {
       (b.unassigned ? '<option value="" selected>Not in a group</option>' : '');
     let html = '<div class="group-detail-head">' +
       '<div class="gd-left"><button class="mini-btn" type="button" onclick="closeStudentGroup()">← All groups</button>' +
-      '<h3>' + escapeForHtml(b.name) + '</h3>' +
+      '<h3' + (b.unassigned ? '' : ' translate="no"') + '>' + escapeForHtml(b.name) + '</h3>' +
       '<span class="student-group-count">' + b.students.length + ' student' + (b.students.length === 1 ? '' : 's') + '</span></div>';
     if (!b.unassigned) {
       const exCount = getRecentExercises().filter(e => e.groupId === b.id).length;
@@ -170,7 +170,7 @@ function renderStudentsList() {
     html += b.students.length
       ? b.students.map(s =>
           '<div class="roster-row" data-student-id="' + escapeForHtml(String(s.id)) + '">' +
-            '<span><strong>' + escapeForHtml(s.name) + '</strong> — ID ' + escapeForHtml(s.id) + '</span>' +
+            '<span><strong translate="no">' + escapeForHtml(s.name) + '</strong> — ID ' + escapeForHtml(s.id) + '</span>' +
             '<span class="roster-pts">🪙 ' + pointsTotalFor(s.id) + ' pts</span>' +
             '<div class="roster-actions">' +
               '<select class="group-select" aria-label="Move ' + escapeForHtml(s.name) + ' to another group" title="Move to another group" onchange="moveStudentToGroup(' + jsAttr(s.id) + ', this.value)">' + moveOptions + '</select>' +
@@ -210,7 +210,7 @@ function renderStudentsList() {
     html += '<div class="group-block' + (b.unassigned ? ' unassigned' : '') + '" role="button" tabindex="0" ' +
         'onclick="openStudentGroup(' + jsAttr(b.id) + ')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();openStudentGroup(' + jsAttr(b.id) + ');}">' +
       '<div class="group-block-main">' +
-        '<div class="group-block-title"><b>' + escapeForHtml(b.name) + '</b>' + pill + '</div>' +
+        '<div class="group-block-title"><b' + (b.unassigned ? '' : ' translate="no"') + '>' + escapeForHtml(b.name) + '</b>' + pill + '</div>' +
         '<div class="group-block-sub">' + subParts.map(escapeForHtml).join(' · ') + '</div>' +
       '</div>' +
       '<div class="group-block-side">' +

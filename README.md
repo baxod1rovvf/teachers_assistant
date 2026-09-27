@@ -62,3 +62,12 @@ The code is in the "SAVED WORK" and "USE THE SAME WORDS" sections of `js/pages/c
 ## Installing as an app
 
 `manifest.webmanifest`, the icons in `images/app/` and the service worker `sw.js` let teachers install the app (Settings → 📲 Install on this device, or the browser's own install option; on iPhone/iPad: Safari → Share → Add to Home Screen). Installed or not, pages the browser has loaded open without a connection: pages are fetched from the network first and saved for offline use; styles, scripts and images are served from the saved copy and refreshed in the background. Because file addresses carry `?v=…`, bumping the version is still what makes browsers pick up new code. The service worker only handles this site's own files, never Firebase.
+
+## Interface language
+
+Teachers can switch the app between **English, Oʻzbekcha and Русский** (Settings → 🌐 Language, or the buttons on the sign-in card). The choice is per device.
+
+- `js/i18n.js` (loaded right after `accounts.js`) translates the interface as it's drawn: text, placeholders, tooltips, pop-up messages and the browser's OK/Cancel boxes, including text added later.
+- `js/i18n-strings.js` holds the words as `[English, Uzbek, Russian]` rows. It's only downloaded when a language other than English is picked. Text is matched whole, ignoring emoji/symbols at either end and a final `.`, so one row covers "🎓 Dashboard" and "Dashboard". Messages with names or numbers in them are handled by the `PATTERNS` list in `js/i18n.js`.
+- To translate something new, add a row. To keep something as typed (titles, names), put it in an element with `translate="no"`.
+- Exercise files for students stay in English (they're English lessons), and so do the example placeholders ("e.g. Around the House").

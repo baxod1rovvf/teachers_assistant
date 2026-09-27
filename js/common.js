@@ -2181,14 +2181,15 @@ function taQuickSearchItems() {
   items.push({ icon: '📚', label: 'Homework', kind: 'New set', go: () => taRunOnPage('create.html', () => openHwcBuilder('homework')) });
   items.push({ icon: '📚', label: 'Class', kind: 'New set', go: () => taRunOnPage('create.html', () => openHwcBuilder('class')) });
   items.push({ icon: '💾', label: 'Backup my data', kind: 'Settings', extra: 'download restore export import file', go: () => taNavigate('settings.html#backup') });
+  items.push({ icon: '🌐', label: 'Language', kind: 'Settings', extra: 'til язык uzbek russian english oʻzbekcha русский', go: () => taNavigate('settings.html#language') });
   items.push({ icon: '📲', label: 'Install the app', kind: 'Settings', extra: 'home screen phone desktop offline pwa', go: () => taNavigate('settings.html#install') });
   items.push({ icon: '📅', label: 'Weekly lesson schedule', kind: 'Settings', extra: 'lessons timetable', go: () => taNavigate('settings.html#schedule') });
   getStudentGroups().forEach(g => {
-    items.push({ icon: '👥', label: g.name, kind: 'Group', go: () => taRunOnPage('students.html', () => openStudentGroup(g.id)) });
+    items.push({ icon: '👥', label: g.name, kind: 'Group', mine: true, go: () => taRunOnPage('students.html', () => openStudentGroup(g.id)) });
   });
   getPointsRoster().forEach(s => {
     const gName = groupNameFor(s.group);
-    items.push({ icon: '🧑‍🎓', label: s.name, kind: 'Student · ID ' + s.id + (gName ? ' · ' + gName : ''), extra: String(s.id),
+    items.push({ icon: '🧑‍🎓', label: s.name, mine: true, kind: 'Student · ID ' + s.id + (gName ? ' · ' + gName : ''), extra: String(s.id),
       go: () => taRunOnPage('students.html', () => {
         openStudentGroup(getRosterByGroup().some(b => b.id === s.group) ? s.group : '');
         const row = document.querySelector('.roster-row[data-student-id="' + CSS.escape(String(s.id)) + '"]');
@@ -2200,7 +2201,7 @@ function taQuickSearchItems() {
   });
   getRecentExercises().forEach(e => {
     const gName = groupNameFor(e.groupId);
-    items.push({ icon: '📁', label: e.title, kind: e.typeLabel + (gName ? ' · ' + gName : '') + (e.requiredCode ? ' · code ' + e.requiredCode : ''),
+    items.push({ icon: '📁', label: e.title, mine: true, kind: e.typeLabel + (gName ? ' · ' + gName : '') + (e.requiredCode ? ' · code ' + e.requiredCode : ''),
       extra: (e.requiredCode || '') + ' ' + (e.contentSummary || '').slice(0, 2000),
       go: () => taNavigate('my-exercises.html?highlight=' + encodeURIComponent(e.uid)) });
   });
@@ -2216,8 +2217,9 @@ async function taRunOnPage(file, fn) {
 }
 
 function taScoreItem(item, words) {
-  const label = item.label.toLowerCase();
-  const hay = label + ' ' + item.kind.toLowerCase() + ' ' + (item.extra || '').toLowerCase();
+  const shown = (!item.mine && window.taT) ? taT(item.label) : item.label;
+  const label = shown.toLowerCase();
+  const hay = label + ' ' + item.label.toLowerCase() + ' ' + item.kind.toLowerCase() + ' ' + (window.taT ? taT(item.kind).toLowerCase() : '') + ' ' + (item.extra || '').toLowerCase();
   let score = 0;
   for (const w of words) {
     if (hay.indexOf(w) === -1) return -1;
@@ -2246,7 +2248,7 @@ function openQuickSearch() {
     listEl.innerHTML = shown.length
       ? shown.map((it, k) => '<button type="button" class="qs-item' + (k === sel ? ' sel' : '') + '" data-k="' + k + '" role="option">' +
           '<span class="qs-icon" aria-hidden="true">' + it.icon + '</span>' +
-          '<span class="qs-label">' + escapeForHtml(it.label) + '</span>' +
+          '<span class="qs-label"' + (it.mine ? ' translate="no"' : '') + '>' + escapeForHtml(it.label) + '</span>' +
           '<span class="qs-kind">' + escapeForHtml(it.kind) + '</span></button>').join('')
       : '<div class="empty-results">Nothing found.</div>';
     const cur = listEl.querySelector('.qs-item.sel');
