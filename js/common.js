@@ -863,7 +863,7 @@ function saveRecentExercises(list) {
 
 function pushRecentExercise(entry) {
   const list = getRecentExercises();
-  const snap = window.taSnapshotForMyExercises ? window.taSnapshotForMyExercises() : null;
+  const snap = (window.taSnapshotForMyExercises && !entry.mergedItems) ? window.taSnapshotForMyExercises() : null;
   list.unshift({
     title: entry.title,
     typeLabel: entry.typeLabel,

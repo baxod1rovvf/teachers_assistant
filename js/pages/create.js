@@ -272,9 +272,13 @@ function captureHwcRoundBuild() {
   if (!hwcCurrentType) return null;
   let captured = null;
   const original = window.downloadFile;
+  const originalPush = window.pushRecentExercise;
   window.downloadFile = function (filename, content) { captured = content; };
+  // a round belongs to the set, not to My Exercises on its own (the finished set is listed there)
+  window.pushRecentExercise = function () {};
   try { window[hwcCurrentType.createFn](); } catch (e) { /* validation toast already shown by the builder itself */ }
   window.downloadFile = original;
+  window.pushRecentExercise = originalPush;
   return captured;
 }
 
@@ -4166,7 +4170,8 @@ function taWireSavedTab(tab) {
 
 /* A new exercise keeps its form for "Use again", and its draft is done with. */
 window.taSnapshotForMyExercises = function () {
-  const tab = taActiveSavedTab();
+  const tab = taActiveSavedTab() ||
+    (currentActiveTab === 'hwcround' && hwcCurrentType && TA_BUILDER_ROWS[hwcCurrentType.key] ? hwcCurrentType.key : null);
   if (!tab) return null;
   const state = taCaptureBuilder(tab);
   const json = JSON.stringify(state);
@@ -4230,7 +4235,8 @@ function taJumpItems(tab) {
 }
 
 function taJumpTo(from, to) {
-  if (currentActiveTab !== from) { showToast('Finish this Homework/Class round first.'); return; }
+  if (currentActiveTab === 'hwcround' && hwcCurrentType && hwcCurrentType.key === from) { taHwcJumpTo(from, to); return; }
+  if (currentActiveTab !== from) return;
   const items = taJumpItems(from);
   if (!items.length) { showToast('Add some ' + TA_JUMP[from].noun + ' first.'); return; }
   const target = TA_JUMP[to];
@@ -4268,6 +4274,43 @@ function taJumpTo(from, to) {
   if (firstNew && firstNew.scrollIntoView) firstNew.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
+/* In a Homework/Class set the same bar adds this round to the set and
+   starts the next round in the other exercise type, with the same words
+   (and title) in place of whatever that builder held before. */
+function taHwcJumpTo(from, to) {
+  const items = taJumpItems(from);
+  if (!items.length) { showToast('Add some ' + TA_JUMP[from].noun + ' first.'); return; }
+  const fromTitleEl = document.getElementById(TA_JUMP[from].p + '-title');
+  const title = fromTitleEl ? fromTitleEl.value.trim() : '';
+  if (!hwcCaptureCurrentRound()) { showToast('Please finish filling in this exercise first — then its ' + TA_JUMP[from].noun + ' carry over.'); return; }
+  const roundNum = hwcRounds.length;
+  hwcRestoreCard();
+  const before = taCaptureBuilder(to);
+  selectHwcType(to);
+
+  const target = TA_JUMP[to];
+  const key = s => s.toLowerCase().replace(/\s+/g, ' ');
+  const seen = new Set();
+  const unique = items.filter(it => !seen.has(key(it.w)) && seen.add(key(it.w)));
+  TA_BUILDER_ROWS[to].set(unique.map(target.row));
+  const titleEl = document.getElementById(target.p + '-title');
+  if (titleEl && title) titleEl.value = title;
+
+  const label = TA_TAB_LABELS[to][1];
+  let msg = 'Round ' + roundNum + ' added. Round ' + (roundNum + 1) + ': ' + label + ' with the same ' + unique.length + ' ' +
+    (unique.length === 1 ? target.noun.slice(0, -1) : target.noun) + '.';
+  if (to === 'flashcard' && unique.some(it => !it.tr)) msg += ' Type the translations next to them.';
+  showUndoToast(msg, function () {
+    // back to the round that was just added, as it was
+    hwcRestoreCard();
+    taRestoreBuilder(to, before);
+    hwcRounds.pop();
+    selectHwcType(from);
+    showToast('Back to round ' + roundNum + '.', 'ok');
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function taMountJumpBars() {
   Object.keys(TA_JUMP).forEach(from => {
     const compose = document.getElementById(TA_JUMP[from].p + '-compose');
@@ -4277,7 +4320,8 @@ function taMountJumpBars() {
     const bar = document.createElement('div');
     bar.className = 'jump-bar';
     bar.id = 'jumpBar-' + from;
-    bar.innerHTML = '<span class="jump-bar-label">↪ Use these ' + TA_JUMP[from].noun + ' in</span>' +
+    bar.innerHTML = '<span class="jump-bar-label jump-solo">↪ Use these ' + TA_JUMP[from].noun + ' in</span>' +
+      '<span class="jump-bar-label jump-hwc">↪ Next round with the same ' + TA_JUMP[from].noun + '</span>' +
       targets.map(t => '<button type="button" class="jump-chip" data-to="' + t + '">' + TA_TAB_LABELS[t][0] + ' ' + escapeForHtml(TA_TAB_LABELS[t][1]) + '</button>').join('');
     bar.addEventListener('click', e => {
       const b = e.target.closest('.jump-chip');

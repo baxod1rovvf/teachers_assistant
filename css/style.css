@@ -1649,4 +1649,8 @@ body.light-theme[data-design="burntorange"] { --surface-page: #FFF4D6; --surface
   color: var(--ink-soft); font: inherit; font-size: 0.76rem; font-weight: 700; cursor: pointer; white-space: nowrap;
 }
 .jump-chip:hover { border-style: solid; border-color: var(--brand); color: var(--brand); }
-#panel-hwcround .jump-bar { display: none; } /* a Homework/Class round builds one exercise at a time */
+/* in a Homework/Class round the bar starts the next round instead */
+.jump-hwc { display: none; }
+#panel-hwcround .jump-solo { display: none; }
+#panel-hwcround .jump-hwc { display: inline; }
+#panel-hwcround .jump-bar { padding: 8px 10px; border-radius: 12px; border: 1.5px dashed var(--brand); }
