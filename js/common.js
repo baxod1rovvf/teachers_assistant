@@ -627,18 +627,41 @@ function applyTheme() {
 }
 
 /* ================= DESIGNS =================
-   Six colour designs (css/style.css, "DESIGNS"), each with a day and a night
-   version, picked from the 🎨 button next to the day/night switch. */
-const LS_DESIGN = 'ta_design';
-const TA_DESIGNS = [{"key": "signal", "name": "Signal Blue", "accent": "#0057FF", "base": "#F8F7F4"}, {"key": "emerald", "name": "Emerald Ink", "accent": "#064E3B", "base": "#F8E7C9"}, {"key": "dragonfruit", "name": "Dragon Fruit", "accent": "#FF4696", "base": "#1E1033"}, {"key": "lime", "name": "Lime Spark", "accent": "#B6FF2E", "base": "#23262F"}, {"key": "ultraviolet", "name": "Ultra Violet", "accent": "#6A00F4", "base": "#FFD6A5"}, {"key": "burntorange", "name": "Burnt Orange", "accent": "#FC6C26", "base": "#FFF4D6"}];
+   Six colour designs (css/style.css, "DESIGNS"), picked from the 🎨 button
+   next to the day/night switch. Four are day designs and two (Dragon Fruit,
+   Lime Spark) are night designs: picking one switches to its mode. The last
+   day design and the last night design are remembered separately, so the
+   day/night switch brings each back (Burnt Orange / Dragon Fruit at first). */
+const LS_DESIGN_DAY = 'ta_design_day';
+const LS_DESIGN_NIGHT = 'ta_design_night';
+const TA_DESIGNS = [{"key": "signal", "name": "Signal Blue", "accent": "#0057FF", "base": "#F8F7F4", "mode": "day"}, {"key": "emerald", "name": "Emerald Ink", "accent": "#064E3B", "base": "#F8E7C9", "mode": "day"}, {"key": "dragonfruit", "name": "Dragon Fruit", "accent": "#FF4696", "base": "#1E1033", "mode": "night"}, {"key": "lime", "name": "Lime Spark", "accent": "#B6FF2E", "base": "#23262F", "mode": "night"}, {"key": "ultraviolet", "name": "Ultra Violet", "accent": "#6A00F4", "base": "#FFD6A5", "mode": "day"}, {"key": "burntorange", "name": "Burnt Orange", "accent": "#FC6C26", "base": "#FFF4D6", "mode": "day"}];
+const TA_DEFAULT_DESIGN = { day: 'burntorange', night: 'dragonfruit' };
+function taDesignByKey(key) { return TA_DESIGNS.find(x => x.key === key) || null; }
 function getDesign() {
-  let d = '';
-  try { d = localStorage.getItem(LS_DESIGN) || ''; } catch (e) { /* ignore */ }
-  return TA_DESIGNS.some(x => x.key === d) ? d : 'burntorange';
+  const mode = getTheme() === 'light' ? 'day' : 'night';
+  let key = '';
+  try {
+    // one-time move of the earlier single choice into its mode's slot
+    const old = localStorage.getItem('ta_design');
+    if (old) {
+      const d = taDesignByKey(old);
+      if (d) localStorage.setItem(d.mode === 'day' ? LS_DESIGN_DAY : LS_DESIGN_NIGHT, old);
+      localStorage.removeItem('ta_design');
+    }
+    key = localStorage.getItem(mode === 'day' ? LS_DESIGN_DAY : LS_DESIGN_NIGHT) || '';
+  } catch (e) { /* ignore */ }
+  const d = taDesignByKey(key);
+  return d && d.mode === mode ? key : TA_DEFAULT_DESIGN[mode];
 }
 function setDesign(key) {
-  try { localStorage.setItem(LS_DESIGN, key); } catch (e) { /* ignore */ }
-  applyTheme();
+  const d = taDesignByKey(key);
+  if (!d) return;
+  try { localStorage.setItem(d.mode === 'day' ? LS_DESIGN_DAY : LS_DESIGN_NIGHT, key); } catch (e) { /* ignore */ }
+  const wantLight = d.mode === 'day';
+  if ((getTheme() === 'light') !== wantLight) {
+    // switch mode the same way the day/night switch does (with its animation)
+    if (typeof toggleThemeAnimated === 'function') toggleThemeAnimated(); else setTheme(wantLight ? 'light' : 'dark');
+  } else applyTheme();
   renderDesignPicker();
 }
 function renderDesignPicker() {
@@ -647,7 +670,8 @@ function renderDesignPicker() {
   const cur = getDesign();
   box.innerHTML = '<div class="design-picker-title">🎨 Design</div>' + TA_DESIGNS.map(d =>
     '<button type="button" class="design-option' + (d.key === cur ? ' active' : '') + '" onclick="setDesign(\'' + d.key + '\')" aria-pressed="' + (d.key === cur) + '">' +
-      '<span class="design-swatch" style="background:conic-gradient(' + d.accent + ' 0 50%, ' + d.base + ' 50% 100%)"></span>' + escapeForHtml(d.name) +
+      '<span class="design-swatch" style="background:conic-gradient(' + d.accent + ' 0 50%, ' + d.base + ' 50% 100%)"></span>' +
+      '<span>' + escapeForHtml(d.name) + '<small class="design-mode">' + (d.mode === 'day' ? '☀️ Day' : '🌙 Night') + '</small></span>' +
     '</button>').join('');
 }
 function toggleDesignPicker(ev) {
