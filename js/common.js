@@ -876,9 +876,11 @@ function pushRecentExercise(entry) {
     disabled: false,
     mergedItems: entry.mergedItems || null,
     // The builder's form as it was, so "Use again" can reopen it filled in (set by the Create page).
-    builderTab: snap && snap.state ? snap.tab : null,
-    builderState: snap ? snap.state : null,
-    groupId: entry.groupId || (snap && snap.groupId) || ''
+    builderTab: entry.builderState ? entry.builderTab : (snap && snap.state ? snap.tab : null),
+    builderState: entry.builderState || (snap ? snap.state : null),
+    groupId: entry.groupId || (snap && snap.groupId) || '',
+    setKind: entry.setKind || null,          // Homework/Class sets: 'homework' | 'class'
+    builderRounds: entry.builderRounds || null // … and each round's form
   });
   saveRecentExercises(list.slice(0, 200));
   if (entry.html) cacheExerciseHtml(entry.uid, entry.html);

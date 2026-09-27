@@ -1669,3 +1669,7 @@ body.light-theme[data-design="burntorange"] { --surface-page: #FFF4D6; --surface
 .myex-group-btn.none { color: var(--ink-faint); border-style: dashed; }
 .myex-group-btn:hover { border-color: var(--brand); color: var(--brand); }
 .group-pick-list { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.hwc-round-badge { margin: 0 6px 6px 0; display: inline-flex; align-items: center; gap: 6px; }
+.hwc-round-remove { border: none; background: transparent; color: inherit; opacity: 0.6; cursor: pointer; font-size: 0.7rem; padding: 0 2px; }
+.hwc-round-remove:hover { opacity: 1; }

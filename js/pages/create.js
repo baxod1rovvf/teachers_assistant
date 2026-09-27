@@ -251,8 +251,20 @@ function renderHwcRoundsBanner() {
   if (!hwcRounds.length) { banner.style.display = 'none'; return; }
   banner.style.display = '';
   banner.innerHTML = '<div class="title-field"><label class="field-label">Added so far</label><div>' +
-    hwcRounds.map((r, i) => '<span class="badge-type" style="margin:0 6px 6px 0; display:inline-block;">' + (i + 1) + '. ' + escapeForHtml(r.label) + '</span>').join('') +
+    hwcRounds.map((r, i) => '<span class="badge-type hwc-round-badge">' + (i + 1) + '. ' + escapeForHtml(r.label) +
+      '<button type="button" class="hwc-round-remove" onclick="hwcRemoveRound(' + i + ')" title="Take this exercise out of the set" aria-label="Remove round ' + (i + 1) + '">✕</button></span>').join('') +
     '</div></div>';
+}
+
+function hwcRemoveRound(i) {
+  const r = hwcRounds[i];
+  if (!r) return;
+  hwcRounds.splice(i, 1);
+  renderHwcRoundsBanner();
+  showUndoToast('Took "' + r.label + '" out of the set.', function () {
+    hwcRounds.splice(Math.min(i, hwcRounds.length), 0, r);
+    renderHwcRoundsBanner();
+  });
 }
 
 function renderHwcTypeGrid() {
@@ -326,7 +338,12 @@ function hwcCaptureCurrentRound() {
   if (typeof taRememberSettings === 'function') taRememberSettings(hwcCurrentType.key);
   const codeMatch = html.match(/const REQUIRED_CODE = "([^"]*)"/);
   const titleMatch = html.match(/<title>([^<]*)<\/title>/);
+  // the round's form, so the whole set can be reopened later with "Use again"
+  let state = typeof taCaptureBuilder === 'function' ? taCaptureBuilder(hwcCurrentType.key) : null;
+  if (state && JSON.stringify(state).length > 300000) state = null;
   hwcRounds.push({
+    tab: hwcCurrentType.key,
+    state: state,
     groupId: typeof taBuilderGroup === 'function' ? taBuilderGroup(hwcCurrentType.key) : '',
     label: titleMatch ? titleMatch[1] : hwcCurrentType.label,
     html: html,
@@ -644,7 +661,9 @@ window.addEventListener("message", function (e) {
     requiredCode: requiredCode,
     contentSummary: summary,
     mergedItems: mergedItems,
-    groupId: (hwcRounds.find(r => r.groupId) || {}).groupId || ''
+    groupId: (hwcRounds.find(r => r.groupId) || {}).groupId || '',
+    setKind: hwcKind,
+    builderRounds: hwcRounds.every(r => r.state) ? hwcRounds.map(r => ({ tab: r.tab, state: r.state })) : null
   });
 
   hwcRounds = [];
@@ -4269,6 +4288,45 @@ function taWireSavedTab(tab) {
     taOnBuilderOpened(tab);
   });
 }
+
+/* "Use again" on a Homework/Class set: every round is rebuilt from its
+   saved form, and the last one is left open to check or change, then add
+   more or create. Builders used by the earlier rounds get their own work
+   back afterwards. */
+function taLoadSet(pending) {
+  const rounds = (pending.rounds || []).filter(r => HWC_TYPES.some(t => t.key === r.tab));
+  if (!rounds.length) return;
+  openHwcBuilder(pending.kind === 'class' ? 'class' : 'homework');
+  const previous = {};
+  for (let i = 0; i < rounds.length; i++) {
+    const r = rounds[i];
+    if (!(r.tab in previous)) previous[r.tab] = taCaptureBuilder(r.tab);
+    selectHwcType(r.tab);
+    taRestoreBuilder(r.tab, r.state);
+    if (i === rounds.length - 1) break;
+    if (!hwcCaptureCurrentRound()) {
+      showToast('Round ' + (i + 1) + ' needs a look before it can be added — check it, then press ➕ Add Another Exercise.');
+      return;
+    }
+    hwcRestoreCard();
+  }
+  const last = rounds[rounds.length - 1].tab;
+  Object.keys(previous).forEach(tab => { if (tab !== last) taRestoreBuilder(tab, previous[tab]); });
+  showToast('📚 "' + (pending.title || 'Set') + '" reopened: ' + (rounds.length - 1) + ' round' + (rounds.length === 2 ? '' : 's') +
+    ' added, the last one is open to check. Then add more or press Create.', 'ok');
+}
+
+(function () {
+  const before = TA_TAB_HOOKS.createpicker;
+  taOnTab('createpicker', function () {
+    if (before) before();
+    let pending = null;
+    try { pending = JSON.parse(sessionStorage.getItem(SS_BUILDER_LOAD) || 'null'); } catch (e) { pending = null; }
+    if (!pending || !pending.set) return;
+    try { sessionStorage.removeItem(SS_BUILDER_LOAD); } catch (e) { /* ignore */ }
+    taLoadSet(pending);
+  });
+})();
 
 /* A new exercise keeps its form for "Use again", and its draft is done with. */
 window.taSnapshotForMyExercises = function () {

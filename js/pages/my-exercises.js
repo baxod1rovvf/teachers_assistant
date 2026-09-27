@@ -191,6 +191,9 @@ const MYEX_SUMMARY_BUILDERS = {
 
 function exerciseLoadFor(item) {
   if (!item) return null;
+  if (item.builderRounds && item.builderRounds.length) {
+    return { set: true, kind: item.setKind || (item.typeLabel === 'Class' ? 'class' : 'homework'), rounds: item.builderRounds };
+  }
   if (item.builderTab && item.builderState) return { tab: item.builderTab, state: item.builderState };
   const b = MYEX_SUMMARY_BUILDERS[item.typeLabel];
   const lines = String(item.contentSummary || '').split('\n').map(s => s.trim()).filter(Boolean);
@@ -206,9 +209,9 @@ function useRecentExerciseAgain(idx) {
   const load = exerciseLoadFor(item);
   if (!load) { showToast('This exercise can\'t be reopened in its builder.'); return; }
   try {
-    sessionStorage.setItem('ta_builder_load', JSON.stringify({ tab: load.tab, state: load.state, title: item.title }));
+    sessionStorage.setItem('ta_builder_load', JSON.stringify(Object.assign({ title: item.title }, load)));
   } catch (e) { showToast('Your browser blocked this — try again.'); return; }
-  taNavigate('create.html#' + load.tab);
+  taNavigate(load.set ? 'create.html' : 'create.html#' + load.tab); // a set opens from the Create page
 }
 
 window.renderRecentExercises = renderRecentExercises;
@@ -340,12 +343,14 @@ function separateHomeworkOrClass(idx) {
   const item = getRecentExercises()[idx];
   if (!item || !item.mergedItems || !item.mergedItems.length) return;
   if (!confirm('Separate "' + item.title + '" back into its ' + item.mergedItems.length + ' original exercises?')) return;
-  item.mergedItems.forEach(orig => {
+  item.mergedItems.forEach((orig, i) => {
+    const round = item.builderRounds && item.builderRounds[i];
     const codeMatch = orig.html.match(/const REQUIRED_CODE = "([^"]*)"/);
     pushRecentExercise({
       title: orig.title, typeLabel: orig.typeLabel,
       code: generateClassCode(), uid: generateExerciseUid(),
-      html: orig.html, requiredCode: codeMatch ? codeMatch[1] : '', groupId: item.groupId || ''
+      html: orig.html, requiredCode: codeMatch ? codeMatch[1] : '', groupId: item.groupId || '',
+      builderTab: round ? round.tab : null, builderState: round ? round.state : null
     });
   });
   removeRecentExercise(item.uid);
