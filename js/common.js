@@ -676,6 +676,10 @@ function applyTheme() {
   const t = getTheme();
   document.body.classList.toggle('light-theme', t === 'light');
   document.body.dataset.design = getDesign();
+  // the phone's status bar (installed app) takes the design's page colour
+  const d = taDesignByKey(getDesign());
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta && d) meta.setAttribute('content', d.base);
 }
 
 /* ================= DESIGNS =================
@@ -2086,6 +2090,40 @@ function initPercentStatAnims() {
 window.initPercentStatAnims = initPercentStatAnims;
 
 
+/* ================= INSTALL AS AN APP =================
+   sw.js lets the app be installed (home screen / desktop) and open without
+   a connection from what it has already loaded. Chrome, Edge and Android
+   offer an install prompt, kept here for the Install button in Settings;
+   iPhone and iPad install from Safari's Share menu instead. */
+let taInstallPrompt = null;
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').catch(function () { /* the app works the same without it */ });
+  });
+}
+window.addEventListener('beforeinstallprompt', function (e) {
+  e.preventDefault();
+  taInstallPrompt = e;
+  if (window.renderInstallSection) window.renderInstallSection();
+});
+window.addEventListener('appinstalled', function () {
+  taInstallPrompt = null;
+  if (window.renderInstallSection) window.renderInstallSection();
+  showToast('📲 Installed! Open Teacher\'s Assistant from your home screen or apps.', 'ok');
+});
+function taIsInstalled() {
+  return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+}
+async function taInstallApp() {
+  if (!taInstallPrompt) return false;
+  const p = taInstallPrompt;
+  taInstallPrompt = null;
+  p.prompt();
+  try { await p.userChoice; } catch (e) { /* ignore */ }
+  if (window.renderInstallSection) window.renderInstallSection();
+  return true;
+}
+
 /* ================= POP-UP WINDOW =================
    taModal(title, bodyHtml, { wide }) opens a pop-up built on the page's
    existing pop-up look, and returns { el, body, close }. Closes with ✕,
@@ -2143,6 +2181,7 @@ function taQuickSearchItems() {
   items.push({ icon: '📚', label: 'Homework', kind: 'New set', go: () => taRunOnPage('create.html', () => openHwcBuilder('homework')) });
   items.push({ icon: '📚', label: 'Class', kind: 'New set', go: () => taRunOnPage('create.html', () => openHwcBuilder('class')) });
   items.push({ icon: '💾', label: 'Backup my data', kind: 'Settings', extra: 'download restore export import file', go: () => taNavigate('settings.html#backup') });
+  items.push({ icon: '📲', label: 'Install the app', kind: 'Settings', extra: 'home screen phone desktop offline pwa', go: () => taNavigate('settings.html#install') });
   items.push({ icon: '📅', label: 'Weekly lesson schedule', kind: 'Settings', extra: 'lessons timetable', go: () => taNavigate('settings.html#schedule') });
   getStudentGroups().forEach(g => {
     items.push({ icon: '👥', label: g.name, kind: 'Group', go: () => taRunOnPage('students.html', () => openStudentGroup(g.id)) });

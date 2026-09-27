@@ -64,6 +64,25 @@ function shareTeachersAssistant() {
   }
 }
 
+/* ================= INSTALL ================= */
+function renderInstallSection() {
+  const el = document.getElementById('installSectionBody');
+  if (!el) return;
+  const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const p = t => '<p style="font-size:0.85rem; color:var(--ink-soft); margin-bottom:10px;">' + t + '</p>';
+  if (taIsInstalled()) {
+    el.innerHTML = p('✅ You\'re using the installed app.');
+  } else if (taInstallPrompt) {
+    el.innerHTML = p('Add Teacher\'s Assistant to your home screen or desktop. It opens in its own window, starts faster, and still opens without internet (sync catches up once you\'re back online).') +
+      '<button class="mini-btn solid" type="button" onclick="taInstallApp()">📲 Install the app</button>';
+  } else if (ios) {
+    el.innerHTML = p('On iPhone or iPad: open this site in <b>Safari</b>, tap the <b>Share</b> button (the square with an arrow), then <b>Add to Home Screen</b>.');
+  } else {
+    el.innerHTML = p('In Chrome or Edge, use the install icon at the right end of the address bar, or the browser menu → <b>Install Teacher\'s Assistant</b> (on Android: menu → <b>Add to Home screen</b>). The button appears here when your browser is ready to install.');
+  }
+}
+window.renderInstallSection = renderInstallSection;
+
 /* ================= BACKUP =================
    One file with everything that belongs to this account. Restoring writes
    it back (cloud sync then sends it to your other devices). The current
@@ -169,6 +188,11 @@ taOnTab('settings', function () {
   renderWeeklyScheduleSettings();
   if (location.hash === '#schedule') scrollToScheduleSettings();
   renderBackupInfo();
+  renderInstallSection();
+  if (location.hash === '#install') setTimeout(function () {
+    const el = document.getElementById('settingsInstallSection');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
   if (location.hash === '#backup') setTimeout(function () {
     const el = document.getElementById('settingsBackupSection');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });

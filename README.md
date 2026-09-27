@@ -58,3 +58,7 @@ The code is in the "SAVED WORK" and "USE THE SAME WORDS" sections of `js/pages/c
 - **Backup:** Settings → 💾 Backup downloads one `.json` file with the account's data. **Restore from file** downloads the current data first (`…_before-restore.json`), then replaces it and reloads.
 - **Worksheet:** My Exercises → **🖨 Worksheet** turns a word-list exercise (Flashcard, Spelling, Make a Word, Pronunciation, Sentences, Word Order, Test) into a printable page: matching, circle the spelling, unscramble, gap-fill… with the answer key on its own page.
 - **Share:** My Exercises → **📤 Share** gives a ready message for the class chat, sends the exercise file through the phone's share sheet (or downloads it on a computer), and can show the class code in big numbers for the classroom screen.
+
+## Installing as an app
+
+`manifest.webmanifest`, the icons in `images/app/` and the service worker `sw.js` let teachers install the app (Settings → 📲 Install on this device, or the browser's own install option; on iPhone/iPad: Safari → Share → Add to Home Screen). Installed or not, pages the browser has loaded open without a connection: pages are fetched from the network first and saved for offline use; styles, scripts and images are served from the saved copy and refreshed in the background. Because file addresses carry `?v=…`, bumping the version is still what makes browsers pick up new code. The service worker only handles this site's own files, never Firebase.
