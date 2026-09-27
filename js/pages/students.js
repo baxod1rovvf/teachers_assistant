@@ -161,12 +161,13 @@ function renderStudentsList() {
         '<input type="text" id="pt-student-name" placeholder="Student name" style="flex:1; min-width:140px;">' +
         '<input type="text" id="pt-student-id" placeholder="Unique ID (e.g. 101)" style="flex:1; min-width:120px;" onkeydown="if(event.key===\'Enter\') addPointsStudent()">' +
         '<button class="mini-btn" type="button" onclick="addPointsStudent()">➕ Add Student</button>' +
+        '<button class="mini-btn solid" type="button" onclick="openBulkAddStudents()" title="Paste a whole class list, or choose a CSV/Excel-saved file">📋 Add many</button>' +
       '</div></div>';
     }
     html += '<div class="title-field"><label class="field-label">All students</label>';
     html += b.students.length
       ? b.students.map(s =>
-          '<div class="roster-row">' +
+          '<div class="roster-row" data-student-id="' + escapeForHtml(String(s.id)) + '">' +
             '<span><strong>' + escapeForHtml(s.name) + '</strong> — ID ' + escapeForHtml(s.id) + '</span>' +
             '<span class="roster-pts">🪙 ' + pointsTotalFor(s.id) + ' pts</span>' +
             '<div class="roster-actions">' +
@@ -219,6 +220,111 @@ function renderStudentsList() {
   });
   html += '</div>';
   wrap.innerHTML = html;
+}
+
+/* ================= ADD MANY STUDENTS =================
+   Paste a class list (one student per line, "Name, ID" or copied straight
+   from Excel/Google Sheets) or choose a CSV file. A student without an ID
+   gets the next free number. Everyone goes into the open group. */
+function parseStudentLines(text) {
+  const looksLikeId = v => /^[A-Za-z0-9_\-.]{1,20}$/.test(v) && /\d/.test(v);
+  const out = [];
+  String(text || '').split(/\r?\n/).forEach(line => {
+    const raw = line.replace(/^﻿/, '').trim();
+    if (!raw) return;
+    let parts = raw.split(/\t|;|,/).map(p => p.trim().replace(/^"(.*)"$/, '$1').trim()).filter(Boolean);
+    const HEADER = /^(name|names|student|students|full ?name|first ?name|last ?name|surname|id|student ?id|ism|familiya|f\.?i\.?o\.?|no\.?|№|#)$/i;
+    if (parts.every(p => HEADER.test(p))) return; // a header row like "Name, ID"
+    if (parts.length === 1) {
+      // "Ali Valiyev 101" or "101 Ali Valiyev"
+      const words = parts[0].split(/\s+/);
+      if (words.length > 1 && looksLikeId(words[words.length - 1])) parts = [words.slice(0, -1).join(' '), words[words.length - 1]];
+      else if (words.length > 1 && looksLikeId(words[0])) parts = [words.slice(1).join(' '), words[0]];
+    }
+    let idAt = parts.findIndex(looksLikeId);
+    if (idAt === -1 && parts.length > 1 && /^\d+$/.test(parts[parts.length - 1])) idAt = parts.length - 1;
+    const id = idAt === -1 ? '' : parts[idAt];
+    const name = parts.filter((p, i) => i !== idAt).join(' ').replace(/\s+/g, ' ').trim();
+    if (!name) return;
+    out.push({ name: name, id: id });
+  });
+  return out;
+}
+
+// Works out what adding these lines would do, without adding anything.
+function planBulkStudents(lines) {
+  const roster = getPointsRoster();
+  const taken = new Set(roster.map(s => String(s.id).trim().toLowerCase()));
+  let next = 101;
+  roster.forEach(s => { const n = parseInt(s.id, 10); if (String(n) === String(s.id).trim() && n >= next) next = n + 1; });
+  lines.forEach(l => { const n = parseInt(l.id, 10); if (String(n) === l.id && n >= next) next = n + 1; });
+  return lines.map(l => {
+    if (l.id) {
+      const key = l.id.toLowerCase();
+      if (taken.has(key)) {
+        const who = roster.find(s => String(s.id).trim().toLowerCase() === key);
+        return { name: l.name, id: l.id, skip: who ? 'ID already used by ' + who.name : 'ID repeated in this list' };
+      }
+      taken.add(key);
+      return { name: l.name, id: l.id };
+    }
+    while (taken.has(String(next))) next++;
+    const id = String(next++);
+    taken.add(id);
+    return { name: l.name, id: id, auto: true };
+  });
+}
+
+function openBulkAddStudents() {
+  const groupId = studentsOpenGroup;
+  const gName = groupNameFor(groupId) || 'this group';
+  const m = taModal('📋 Add many students to ' + gName,
+    '<p class="ta-modal-text">One student per line: <b>Name, ID</b>. You can paste two columns straight from Excel or Google Sheets. Students without an ID get the next free number.</p>' +
+    '<textarea class="bulk-students-input" rows="8" placeholder="Ali Valiyev, 101&#10;Madina Karimova, 102&#10;Jasur Toshmatov"></textarea>' +
+    '<label class="mini-btn bulk-file-btn">📄 Or choose a CSV file<input type="file" accept=".csv,.txt,text/csv,text/plain" style="display:none;"></label>' +
+    '<div class="bulk-preview"></div>' +
+    '<div class="ta-modal-btns"><button type="button" class="mini-btn" data-act="cancel">Cancel</button><button type="button" class="mini-btn solid" data-act="ok" disabled>Add students</button></div>',
+    { wide: true });
+  const ta = m.body.querySelector('textarea');
+  const prev = m.body.querySelector('.bulk-preview');
+  const ok = m.body.querySelector('[data-act="ok"]');
+  let plan = [];
+  const render = () => {
+    plan = planBulkStudents(parseStudentLines(ta.value));
+    const adding = plan.filter(p => !p.skip);
+    ok.disabled = !adding.length;
+    ok.textContent = adding.length ? 'Add ' + adding.length + ' student' + (adding.length === 1 ? '' : 's') : 'Add students';
+    prev.innerHTML = plan.length
+      ? plan.map(p => '<div class="bulk-row' + (p.skip ? ' skip' : '') + '"><span>' + escapeForHtml(p.name) + '</span>' +
+          '<span class="bulk-id">ID ' + escapeForHtml(p.id) + (p.auto ? ' <em>new</em>' : '') + '</span>' +
+          (p.skip ? '<span class="bulk-note">⚠️ ' + escapeForHtml(p.skip) + ' — skipped</span>' : '') + '</div>').join('')
+      : '';
+  };
+  ta.addEventListener('input', render);
+  m.body.querySelector('input[type="file"]').addEventListener('change', e => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+    const r = new FileReader();
+    r.onload = () => { ta.value = String(r.result || ''); render(); };
+    r.readAsText(file);
+  });
+  m.body.querySelector('[data-act="cancel"]').onclick = m.close;
+  ok.onclick = () => {
+    const adding = plan.filter(p => !p.skip).map(p => ({ name: p.name, id: p.id, group: groupId || '' }));
+    if (!adding.length) return;
+    savePointsRoster(getPointsRoster().concat(adding));
+    m.close();
+    refreshRosterViews();
+    const ids = new Set(adding.map(a => a.id));
+    showUndoToast('Added ' + adding.length + ' student' + (adding.length === 1 ? '' : 's') + ' to ' + gName + '.', function () {
+      savePointsRoster(getPointsRoster().filter(s => !ids.has(s.id)));
+      refreshRosterViews();
+      showToast('Those students were taken off again.', 'ok');
+    });
+    taConfettiBurst(window.innerWidth / 2, 80, 24);
+  };
+  setTimeout(() => ta.focus(), 30);
 }
 
 /* ================= PAGE START ================= */

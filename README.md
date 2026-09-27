@@ -43,3 +43,10 @@ That link opens the Dashboard (shown as `…/teachers_assistant/index`). The Con
 - **Undo:** deleting an exercise, removing a student, deleting a group, discarding a draft and **Reset All** happen straight away and can be undone from the message at the top (or with Ctrl+Z) for a few seconds.
 
 The code is in the "SAVED WORK" section of `js/pages/create.js` (`taCaptureBuilder` / `taRestoreBuilder`).
+
+## Getting around and sharing
+
+- **Search (Ctrl+K, ⌘K on a Mac, or `/`):** jump to any section, builder, group, student (by name or ID) or exercise (by title, code or a word in it). There's also a 🔍 Search button in the sidebar.
+- **Add many students:** in an open group, **📋 Add many** takes a pasted class list (`Name, ID` per line, or two columns copied from Excel/Google Sheets) or a CSV file. A preview shows what will be added; students without an ID get the next free number, and IDs already in use are skipped.
+- **Backup:** Settings → 💾 Backup downloads one `.json` file with the account's data. **Restore from file** downloads the current data first (`…_before-restore.json`), then replaces it and reloads.
+- **Share:** My Exercises → **📤 Share** gives a ready message for the class chat, sends the exercise file through the phone's share sheet (or downloads it on a computer), and can show the class code in big numbers for the classroom screen.

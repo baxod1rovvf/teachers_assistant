@@ -1570,3 +1570,73 @@ body.light-theme[data-design="burntorange"] { --surface-page: #FFF4D6; --surface
 .design-option.active { border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand) inset; }
 .design-mode { display: block; font-size: 0.68rem; font-weight: 600; color: var(--ink-faint); margin-top: 1px; }
 .design-swatch { width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 0 1.5px rgba(0,0,0,0.12); }
+
+/* ---------- pop-up window (taModal) ---------- */
+.ta-modal-body { margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+.ta-modal-body textarea {
+  width: 100%; padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--border);
+  background: var(--surface); color: var(--ink); font: inherit; font-size: 0.88rem; resize: vertical;
+}
+.ta-modal-body textarea:focus { outline: none; border-color: var(--brand); }
+.ta-modal-text { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.5; margin: 0; }
+.ta-modal-text.warn { color: var(--danger); }
+.ta-modal-btns { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.mini-btn:disabled { opacity: 0.45; cursor: default; }
+.backup-last { font-size: 0.78rem; color: var(--ink-faint); margin-top: 8px; }
+
+/* ---------- quick search ---------- */
+.quick-search-btn {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
+  margin: 10px 0 6px; padding: 9px 12px; border-radius: 10px; border: 1.5px solid var(--border);
+  background: var(--surface-sunken); color: var(--ink-soft); font: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+}
+.quick-search-btn:hover { border-color: var(--brand); color: var(--brand); }
+.quick-search-btn kbd {
+  font-family: inherit; font-size: 0.7rem; font-weight: 700; padding: 2px 6px; border-radius: 6px;
+  border: 1px solid var(--border); color: var(--ink-faint);
+}
+.qs-modal { align-items: flex-start; padding-top: 10vh; }
+.qs-input {
+  width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--brand);
+  background: var(--surface); color: var(--ink); font: inherit; font-size: 1rem;
+}
+.qs-input:focus { outline: none; }
+.qs-list { display: flex; flex-direction: column; gap: 2px; max-height: 50vh; overflow-y: auto; }
+.qs-item {
+  display: flex; align-items: center; gap: 10px; width: 100%; padding: 9px 10px; border-radius: 10px;
+  border: none; background: transparent; color: var(--ink); font: inherit; font-size: 0.9rem; text-align: left; cursor: pointer;
+}
+.qs-item.sel, .qs-item:hover { background: var(--surface-sunken); }
+.qs-item.sel { box-shadow: inset 3px 0 0 var(--brand); }
+.qs-icon { width: 22px; text-align: center; flex-shrink: 0; }
+.qs-label { flex: 1; min-width: 0; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.qs-kind { font-size: 0.74rem; color: var(--ink-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 45%; }
+.qs-hint { font-size: 0.72rem; color: var(--ink-faint); text-align: center; }
+@media (pointer: coarse) { .qs-hint, .quick-search-btn kbd { display: none; } }
+.roster-row.flash-highlight { animation: flashHighlight 1.6s ease; }
+
+/* ---------- add many students ---------- */
+.bulk-file-btn { align-self: flex-start; display: inline-flex; align-items: center; }
+.bulk-preview { display: flex; flex-direction: column; gap: 4px; max-height: 30vh; overflow-y: auto; }
+.bulk-row {
+  display: flex; flex-wrap: wrap; gap: 4px 12px; justify-content: space-between; padding: 7px 10px;
+  border-radius: 8px; background: var(--surface-sunken); font-size: 0.85rem; color: var(--ink);
+}
+.bulk-row.skip { opacity: 0.75; }
+.bulk-id { color: var(--ink-faint); font-weight: 700; }
+.bulk-id em { font-style: normal; color: var(--success); margin-left: 4px; }
+.bulk-note { width: 100%; color: var(--danger); font-size: 0.78rem; }
+
+/* ---------- share ---------- */
+.share-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.code-screen {
+  position: fixed; inset: 0; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; padding: 24px; background: var(--surface-page); color: var(--ink); text-align: center; cursor: pointer;
+}
+.code-screen-title { font-size: clamp(1.2rem, 4vw, 2.4rem); font-weight: 800; overflow-wrap: anywhere; }
+.code-screen-label { font-size: clamp(0.9rem, 2vw, 1.3rem); color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.2em; }
+.code-screen-code {
+  font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: clamp(5rem, 24vw, 18rem); line-height: 1;
+  letter-spacing: 0.08em; color: var(--brand);
+}
+.code-screen-hint { position: absolute; bottom: 24px; font-size: 0.85rem; color: var(--ink-faint); }

@@ -2083,6 +2083,174 @@ function initPercentStatAnims() {
 window.initPercentStatAnims = initPercentStatAnims;
 
 
+/* ================= POP-UP WINDOW =================
+   taModal(title, bodyHtml, { wide }) opens a pop-up built on the page's
+   existing pop-up look, and returns { el, body, close }. Closes with ✕,
+   Escape, or a tap outside it. */
+function taModal(title, bodyHtml, opts) {
+  opts = opts || {};
+  const back = document.createElement('div');
+  back.className = 'points-modal-backdrop show ta-modal';
+  back.innerHTML = '<div class="points-modal" role="dialog" aria-modal="true"' + (opts.wide ? ' style="max-width:560px;"' : '') + '>' +
+    '<button class="points-modal-close" type="button" aria-label="Close">✕</button>' +
+    '<div class="points-modal-title"></div>' +
+    '<div class="ta-modal-body"></div>' +
+  '</div>';
+  back.querySelector('.points-modal-title').textContent = title;
+  const body = back.querySelector('.ta-modal-body');
+  body.innerHTML = bodyHtml;
+  const onKey = e => { if (e.key === 'Escape') close(); };
+  function close() {
+    back.remove();
+    document.removeEventListener('keydown', onKey);
+    if (opts.onClose) opts.onClose();
+  }
+  back.addEventListener('click', e => { if (e.target === back) close(); });
+  back.querySelector('.points-modal-close').onclick = close;
+  document.addEventListener('keydown', onKey);
+  document.body.appendChild(back);
+  return { el: back, body: body, close: close };
+}
+
+/* ================= QUICK SEARCH (Ctrl+K) =================
+   One box to jump anywhere: a section, an exercise builder, a group, a
+   student, or an exercise in My Exercises. Opens with Ctrl+K (⌘K on a Mac),
+   "/" when not typing, or the 🔍 Search button in the sidebar. */
+const TA_TAB_LABELS = {
+  main: ['🎓', 'Dashboard'], createpicker: ['➕', 'Create'], dashboard: ['📊', 'Statistics'],
+  myexercises: ['📁', 'My Exercises'], students: ['👥', 'Students'], results: ['📋', 'Results'],
+  points: ['🏆', 'Points & Rewards'], settings: ['⚙️', 'Settings'],
+  flashcard: ['🎴', 'Flashcard'], wordorder: ['🧩', 'Word Order'], makeaword: ['🧱', 'Make a Word'],
+  spelling: ['🔤', 'Spelling'], sentences: ['✍️', 'Sentences'], bilingual: ['📖', 'Bidirectional Language'],
+  engcontent: ['🎬', 'English Content'], dictation: ['🎧', 'Dictation'], presentation: ['🖥️', 'Presentation'],
+  pronunciation: ['🎙️', 'Pronunciation'], test: ['✅', 'Test'], 'ielts-listening': ['🎧', 'IELTS Listening'],
+  'ielts-reading': ['📗', 'IELTS Reading'], 'ielts-writing': ['✍️', 'IELTS Writing']
+};
+
+function taQuickSearchItems() {
+  const items = [];
+  Object.keys(TA_PAGES).forEach(tab => {
+    const l = TA_TAB_LABELS[tab];
+    items.push({ icon: l[0], label: l[1], kind: 'Section', go: () => switchTo(tab) });
+  });
+  BUILDER_TABS.forEach(tab => {
+    const l = TA_TAB_LABELS[tab];
+    if (l) items.push({ icon: l[0], label: l[1], kind: 'New exercise', extra: 'create build make', go: () => switchTo(tab) });
+  });
+  items.push({ icon: '📚', label: 'Homework', kind: 'New set', go: () => taRunOnPage('create.html', () => openHwcBuilder('homework')) });
+  items.push({ icon: '📚', label: 'Class', kind: 'New set', go: () => taRunOnPage('create.html', () => openHwcBuilder('class')) });
+  items.push({ icon: '💾', label: 'Backup my data', kind: 'Settings', extra: 'download restore export import file', go: () => taNavigate('settings.html#backup') });
+  items.push({ icon: '📅', label: 'Weekly lesson schedule', kind: 'Settings', extra: 'lessons timetable', go: () => taNavigate('settings.html#schedule') });
+  getStudentGroups().forEach(g => {
+    items.push({ icon: '👥', label: g.name, kind: 'Group', go: () => taRunOnPage('students.html', () => openStudentGroup(g.id)) });
+  });
+  getPointsRoster().forEach(s => {
+    const gName = groupNameFor(s.group);
+    items.push({ icon: '🧑‍🎓', label: s.name, kind: 'Student · ID ' + s.id + (gName ? ' · ' + gName : ''), extra: String(s.id),
+      go: () => taRunOnPage('students.html', () => {
+        openStudentGroup(getRosterByGroup().some(b => b.id === s.group) ? s.group : '');
+        const row = document.querySelector('.roster-row[data-student-id="' + CSS.escape(String(s.id)) + '"]');
+        if (!row) return;
+        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        row.classList.add('flash-highlight');
+        setTimeout(() => row.classList.remove('flash-highlight'), 1600);
+      }) });
+  });
+  getRecentExercises().forEach(e => {
+    items.push({ icon: '📁', label: e.title, kind: e.typeLabel + (e.requiredCode ? ' · code ' + e.requiredCode : ''),
+      extra: (e.requiredCode || '') + ' ' + (e.contentSummary || '').slice(0, 2000),
+      go: () => taNavigate('my-exercises.html?highlight=' + encodeURIComponent(e.uid)) });
+  });
+  return items;
+}
+
+// Opens a section, then runs something that needs that section's script.
+async function taRunOnPage(file, fn) {
+  const tab = Object.keys(TA_PAGES).find(t => TA_PAGES[t] === file);
+  if (document.getElementById('panel-' + tab)) switchTo(tab);
+  else await taNavigate(file);
+  try { fn(); } catch (e) { /* that section couldn't load: it's already showing */ }
+}
+
+function taScoreItem(item, words) {
+  const label = item.label.toLowerCase();
+  const hay = label + ' ' + item.kind.toLowerCase() + ' ' + (item.extra || '').toLowerCase();
+  let score = 0;
+  for (const w of words) {
+    if (hay.indexOf(w) === -1) return -1;
+    score += label.indexOf(w) === 0 ? 3 : label.indexOf(w) !== -1 ? 2 : 1;
+  }
+  return score;
+}
+
+let taQuickSearchOpen = null;
+function openQuickSearch() {
+  if (taQuickSearchOpen) { taQuickSearchOpen.input.focus(); return; }
+  const all = taQuickSearchItems();
+  const m = taModal('🔍 Search', '<input type="search" class="qs-input" placeholder="Type a section, exercise, student or group…" autocomplete="off" spellcheck="false" aria-label="Search">' +
+    '<div class="qs-list" role="listbox"></div><div class="qs-hint">↑ ↓ to move · Enter to open · Esc to close</div>',
+    { wide: true, onClose: () => { taQuickSearchOpen = null; } });
+  m.el.classList.add('qs-modal');
+  const input = m.body.querySelector('.qs-input');
+  const listEl = m.body.querySelector('.qs-list');
+  let shown = [], sel = 0;
+  const render = () => {
+    const words = input.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    if (!words.length) shown = all.filter(i => i.kind === 'Section' || i.kind === 'New exercise').slice(0, 30);
+    else shown = all.map(i => ({ i: i, s: taScoreItem(i, words) })).filter(x => x.s >= 0)
+      .sort((a, b) => b.s - a.s).slice(0, 40).map(x => x.i);
+    sel = Math.min(sel, Math.max(0, shown.length - 1));
+    listEl.innerHTML = shown.length
+      ? shown.map((it, k) => '<button type="button" class="qs-item' + (k === sel ? ' sel' : '') + '" data-k="' + k + '" role="option">' +
+          '<span class="qs-icon" aria-hidden="true">' + it.icon + '</span>' +
+          '<span class="qs-label">' + escapeForHtml(it.label) + '</span>' +
+          '<span class="qs-kind">' + escapeForHtml(it.kind) + '</span></button>').join('')
+      : '<div class="empty-results">Nothing found.</div>';
+    const cur = listEl.querySelector('.qs-item.sel');
+    if (cur) cur.scrollIntoView({ block: 'nearest' });
+  };
+  const choose = k => {
+    const it = shown[k];
+    if (!it) return;
+    m.close();
+    if (taIsPhone()) taCloseSidebar();
+    it.go();
+  };
+  input.addEventListener('input', () => { sel = 0; render(); });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') { sel = Math.min(sel + 1, shown.length - 1); render(); e.preventDefault(); }
+    else if (e.key === 'ArrowUp') { sel = Math.max(sel - 1, 0); render(); e.preventDefault(); }
+    else if (e.key === 'Enter') { choose(sel); e.preventDefault(); }
+  });
+  listEl.addEventListener('click', e => { const b = e.target.closest('.qs-item'); if (b) choose(+b.dataset.k); });
+  render();
+  setTimeout(() => input.focus(), 20);
+  taQuickSearchOpen = { input: input };
+}
+
+document.addEventListener('keydown', function (e) {
+  const tag = (e.target.tagName || '').toLowerCase();
+  const typing = tag === 'input' || tag === 'textarea' || tag === 'select' || e.target.isContentEditable;
+  if (((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 'k') || (e.key === '/' && !typing && !e.ctrlKey && !e.metaKey)) {
+    if (!window.__TA_USER) return; // not signed in yet
+    e.preventDefault();
+    openQuickSearch();
+  }
+});
+
+function taMountQuickSearch() {
+  const nav = document.querySelector('#mainSidebar nav');
+  if (!nav || document.getElementById('quickSearchBtn')) return;
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.id = 'quickSearchBtn';
+  btn.className = 'quick-search-btn';
+  const mac = /Mac|iPhone|iPad/.test(navigator.platform || '');
+  btn.innerHTML = '<span>🔍 Search</span><kbd>' + (mac ? '⌘' : 'Ctrl') + ' K</kbd>';
+  btn.onclick = openQuickSearch;
+  nav.parentNode.insertBefore(btn, nav);
+}
+
 /* ================= PAGE START =================
    Each page script calls this last, once all of its own functions exist. */
 let taStarted = false;
@@ -2097,6 +2265,7 @@ function taStartPage(defaultTab) {
     history.replaceState(null, '', taAddressFor(taCurrentPageFile(), location.search, location.hash));
   }
   taSetupSidebar();
+  taMountQuickSearch();
   applyTheme();
   updateSoundToggleUI();
   applyAvatar();

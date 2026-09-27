@@ -95,6 +95,7 @@ function renderRecentExercises() {
         '<div class="recent-exercise-actions">' +
           againBtn +
           openBtn +
+          '<button class="mini-btn" type="button" onclick="shareRecentExercise(' + idx + ')" title="Message and file to send to students, or show the code on the board">📤 Share</button>' +
           answersBtn +
           separateBtn +
           '<button class="mini-btn" type="button" onclick="viewRecentExerciseResults(' + idx + ')">📊 View Results</button>' +
@@ -198,6 +199,84 @@ function deleteRecentExercise(idx) {
     renderRecentExercises();
     showToast('"' + item.title + '" is back.', 'ok');
   });
+}
+
+/* ---------- Share ----------
+   A ready message for Telegram/WhatsApp, the exercise file itself (the
+   phone's share sheet where it can send files, otherwise a download), and
+   the class code in big numbers for the classroom screen. */
+function shareMessageFor(item) {
+  const lines = ['📘 ' + item.title + ' (' + item.typeLabel + ')'];
+  if (item.requiredCode) lines.push('🔑 Code: ' + item.requiredCode);
+  lines.push('Open the file, type your student ID' + (item.requiredCode ? ' and the code' : '') + ', and start. Good luck! 🍀');
+  return lines.join('\n');
+}
+
+function taCopyText(text, doneMsg) {
+  const done = () => showToast(doneMsg, 'ok');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text).then(done, () => { prompt('Copy this:', text); });
+  }
+  prompt('Copy this:', text);
+  return Promise.resolve();
+}
+
+function shareRecentExercise(idx) {
+  const item = getRecentExercises()[idx];
+  if (!item) return;
+  const html = getCachedExerciseHtml(item.uid);
+  const m = taModal('📤 Share "' + item.title + '"',
+    '<label class="field-label">Message for your students</label>' +
+    '<textarea class="share-msg" rows="4"></textarea>' +
+    '<div class="share-actions">' +
+      '<button type="button" class="mini-btn solid" data-act="copy">📋 Copy message</button>' +
+      (html ? '<button type="button" class="mini-btn" data-act="file">📎 Send the file</button>' : '') +
+      (item.requiredCode ? '<button type="button" class="mini-btn" data-act="code">🔢 Show code on screen</button>' : '') +
+    '</div>' +
+    '<p class="ta-modal-text">' + (html
+      ? 'On a phone, <b>Send the file</b> opens Telegram, WhatsApp and the rest with the file and message attached. On a computer it downloads the file for you to attach.'
+      : 'This file isn\'t saved in this browser any more, so only the message can be shared. Send the file you downloaded when you made it.') + '</p>',
+    { wide: true });
+  const msgEl = m.body.querySelector('.share-msg');
+  msgEl.value = shareMessageFor(item);
+  m.body.querySelector('[data-act="copy"]').onclick = () => taCopyText(msgEl.value, 'Message copied — paste it into your class chat.');
+  const fileBtn = m.body.querySelector('[data-act="file"]');
+  if (fileBtn) fileBtn.onclick = async () => {
+    const filename = item.title.replace(/[^a-z0-9\-_ ]/gi, '').trim().replace(/\s+/g, '_') + '.html';
+    const content = html.split('__TA_APP_URL__').join(TA_APP_URL);
+    let file = null;
+    try { file = new File([content], filename || 'exercise.html', { type: 'text/html' }); } catch (e) { file = null; }
+    if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+      try { await navigator.share({ files: [file], text: msgEl.value, title: item.title }); return; }
+      catch (e) { if (e && e.name === 'AbortError') return; } // closed the share sheet
+    }
+    downloadFile(filename || 'exercise.html', html);
+    taCopyText(msgEl.value, 'File downloaded and message copied — attach the file in your class chat.');
+  };
+  const codeBtn = m.body.querySelector('[data-act="code"]');
+  if (codeBtn) codeBtn.onclick = () => { m.close(); showCodeOnScreen(item); };
+}
+
+function showCodeOnScreen(item) {
+  const el = document.createElement('div');
+  el.className = 'code-screen';
+  el.setAttribute('role', 'dialog');
+  el.innerHTML = '<div class="code-screen-title"></div><div class="code-screen-label">Code</div><div class="code-screen-code"></div>' +
+    '<div class="code-screen-hint">Tap anywhere or press Esc to close</div>';
+  el.querySelector('.code-screen-title').textContent = item.title;
+  el.querySelector('.code-screen-code').textContent = item.requiredCode;
+  const close = () => {
+    el.remove();
+    document.removeEventListener('keydown', onKey);
+    document.removeEventListener('fullscreenchange', onFs);
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  };
+  const onKey = e => { if (e.key === 'Escape') close(); };
+  const onFs = () => { if (!document.fullscreenElement) close(); }; // Esc in full screen only leaves full screen
+  el.addEventListener('click', close);
+  document.addEventListener('keydown', onKey);
+  document.body.appendChild(el);
+  if (el.requestFullscreen) el.requestFullscreen().then(() => document.addEventListener('fullscreenchange', onFs)).catch(() => { /* fine without full screen */ });
 }
 
 // Results is its own page; it loads this exercise from ?exercise=<uid>.
