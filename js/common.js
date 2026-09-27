@@ -996,6 +996,44 @@ function getWeeklySchedule() {
 function saveWeeklySchedule(list) {
   try { localStorage.setItem(LS_WEEKLY_SCHEDULE, JSON.stringify(list)); } catch (e) { /* ignore */ }
 }
+
+/* ---- Lessons taught (all time) ----
+   Every weekly lesson counts each time its day and start time have passed,
+   starting from when it was added to the schedule (its id holds that
+   moment). Lessons removed from the schedule keep what they had counted in
+   LS_LESSONS_ARCHIVED, so the total never goes down. */
+const LS_LESSONS_ARCHIVED = 'ta_lessons_archived';
+function lessonAddedAt(entry) {
+  const m = /^sch_(\d{12,})_/.exec(entry && entry.id || '');
+  return m ? Number(m[1]) : Date.now();
+}
+function lessonsTaughtFor(entry, now) {
+  now = now || Date.now();
+  const added = new Date(lessonAddedAt(entry));
+  const parts = String(entry.time || '00:00').split(':');
+  const first = new Date(added);
+  first.setHours(parseInt(parts[0], 10) || 0, parseInt(parts[1], 10) || 0, 0, 0);
+  first.setDate(first.getDate() + ((Number(entry.day) - first.getDay() + 7) % 7));
+  if (first < added) first.setDate(first.getDate() + 7);
+  if (first.getTime() > now) return 0;
+  // count by calendar days so summer/winter clock changes don't skip a week
+  const days = Math.floor((Date.UTC(new Date(now).getFullYear(), new Date(now).getMonth(), new Date(now).getDate()) -
+    Date.UTC(first.getFullYear(), first.getMonth(), first.getDate())) / 86400000);
+  let count = Math.floor(days / 7) + 1;
+  const lastDay = new Date(first); lastDay.setDate(first.getDate() + (count - 1) * 7);
+  if (lastDay.getTime() > now) count--; // today's lesson hasn't started yet
+  return Math.max(0, count);
+}
+function getLessonsArchived() {
+  try { return Number(localStorage.getItem(LS_LESSONS_ARCHIVED)) || 0; } catch (e) { return 0; }
+}
+function archiveLessonsTaught(entry) {
+  try { localStorage.setItem(LS_LESSONS_ARCHIVED, String(getLessonsArchived() + lessonsTaughtFor(entry))); } catch (e) { /* ignore */ }
+}
+function getLessonsTaughtTotal() {
+  const now = Date.now();
+  return getLessonsArchived() + getWeeklySchedule().reduce((sum, e) => sum + lessonsTaughtFor(e, now), 0);
+}
 function formatTimeDisplay(t) {
   if (!t) return '';
   const parts = t.split(':');

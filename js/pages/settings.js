@@ -22,6 +22,8 @@ function addWeeklyScheduleEntry() {
   showToast('Lesson added to your weekly schedule.', 'ok');
 }
 function deleteWeeklyScheduleEntry(id) {
+  const removed = getWeeklySchedule().find(e => e.id === id);
+  if (removed) archiveLessonsTaught(removed); // its past lessons still count
   saveWeeklySchedule(getWeeklySchedule().filter(e => e.id !== id));
   renderWeeklyScheduleSettings();
   renderNextLessons();

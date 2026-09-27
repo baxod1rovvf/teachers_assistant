@@ -80,8 +80,8 @@ window.renderTopActiveStudents = renderTopActiveStudents;
 function renderDashboardStats() {
   const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
   set('dashStatStudents', String(getPointsRoster().length));
-  // Every weekly schedule entry happens once a week.
-  set('dashStatLessons', String(getWeeklySchedule().length));
+  // Every lesson taught so far, since each weekly lesson was added to the schedule.
+  set('dashStatLessons', String(getLessonsTaughtTotal()));
   set('dashStatExercises', String(getRecentExercises().length));
   // Average score of results from students on the Students list (same rule as Top Active Students).
   const rosterIdx = taRosterIndex();
