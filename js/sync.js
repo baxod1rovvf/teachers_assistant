@@ -16,7 +16,7 @@
 (function () {
   var SYNC_KEYS = ['ta_student_groups', 'ta_points_roster', 'ta_weekly_schedule', 'ta_recent_exercises',
     'ta_exercise_html_cache', 'ta_results', 'ta_code_resets', 'ta_active_code', 'ta_points_code',
-    'ta_teacher_name', 'ta_avatar', 'ta_lessons_archived'];
+    'ta_teacher_name', 'ta_avatar', 'ta_lessons_archived', 'ta_design'];
   var SYNC_SET = {};
   SYNC_KEYS.forEach(function (k) { SYNC_SET[k] = true; });
   var SEP = '␟';
@@ -311,6 +311,7 @@
 
   function refreshScreen() {
     try {
+      if (typeof applyTheme === 'function') applyTheme(); // a design chosen on another device
       if (typeof applyAvatar === 'function') applyAvatar();
       var nameEl = document.getElementById('sidebarProfileName');
       if (nameEl && typeof getTeacherName === 'function') nameEl.textContent = getTeacherName();

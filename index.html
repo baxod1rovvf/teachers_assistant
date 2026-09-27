@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard — Teacher's Assistant</title>
 <!-- Shared by every page: accounts must load first (it scopes this browser's storage to the signed-in teacher). -->
-<script src="js/accounts.js?v=20260928a"></script>
-<script src="js/sync.js?v=20260928a"></script>
-<script src="js/lottie.min.js?v=20260928a"></script>
-<link rel="stylesheet" href="css/style.css?v=20260928a">
+<script src="js/accounts.js?v=20260928c"></script>
+<script src="js/sync.js?v=20260928c"></script>
+<script src="js/lottie.min.js?v=20260928c"></script>
+<link rel="stylesheet" href="css/style.css?v=20260928c">
 </head>
 <body>
 
@@ -86,6 +86,10 @@
       </div>
       <div class="hero-topbar-actions">
         <div class="hero-theme-toggle" id="themeToggleAnim" onclick="toggleThemeAnimated()" title="Switch day/night mode">🌙</div>
+        <div class="hero-design-wrap">
+          <button class="hero-sound-btn hero-design-btn" id="designPickerBtn" type="button" onclick="toggleDesignPicker(event)" title="Change design" aria-label="Change design" aria-expanded="false"><span class="design-dot"></span></button>
+          <div class="design-picker" id="designPicker" hidden></div>
+        </div>
         <button class="hero-sound-btn" id="soundToggleBtn" type="button" onclick="setSoundEnabled(!taSoundEnabled())" title="Sound effects: On" aria-label="Sound effects: On">🔊</button>
         <div class="hero-account-chip" onclick="switchTo('settings')">
           <img class="avatar-img" id="heroAvatarImg" style="display:none;">
@@ -205,9 +209,9 @@
   </div>
 </div>
 
-<script src="js/animations.js?v=20260928a"></script>
-<script src="js/common.js?v=20260928a"></script>
-<script src="js/pages/main.js?v=20260928a"></script>
-<script type="module" src="js/firebase.js?v=20260928a"></script>
+<script src="js/animations.js?v=20260928c"></script>
+<script src="js/common.js?v=20260928c"></script>
+<script src="js/pages/main.js?v=20260928c"></script>
+<script type="module" src="js/firebase.js?v=20260928c"></script>
 </body>
 </html>

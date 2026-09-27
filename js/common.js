@@ -623,7 +623,62 @@ function setTheme(t) {
 function applyTheme() {
   const t = getTheme();
   document.body.classList.toggle('light-theme', t === 'light');
+  document.body.dataset.design = getDesign();
 }
+
+/* ================= DESIGNS =================
+   Six colour designs (css/style.css, "DESIGNS"), each with a day and a night
+   version, picked from the 🎨 button next to the day/night switch. */
+const LS_DESIGN = 'ta_design';
+const TA_DESIGNS = [{"key": "signal", "name": "Signal Blue", "accent": "#0057FF", "base": "#F8F7F4"}, {"key": "emerald", "name": "Emerald Ink", "accent": "#064E3B", "base": "#F8E7C9"}, {"key": "dragonfruit", "name": "Dragon Fruit", "accent": "#FF4696", "base": "#1E1033"}, {"key": "lime", "name": "Lime Spark", "accent": "#B6FF2E", "base": "#23262F"}, {"key": "ultraviolet", "name": "Ultra Violet", "accent": "#6A00F4", "base": "#FFD6A5"}, {"key": "burntorange", "name": "Burnt Orange", "accent": "#FC6C26", "base": "#FFF4D6"}];
+function getDesign() {
+  let d = '';
+  try { d = localStorage.getItem(LS_DESIGN) || ''; } catch (e) { /* ignore */ }
+  return TA_DESIGNS.some(x => x.key === d) ? d : 'burntorange';
+}
+function setDesign(key) {
+  try { localStorage.setItem(LS_DESIGN, key); } catch (e) { /* ignore */ }
+  applyTheme();
+  renderDesignPicker();
+}
+function renderDesignPicker() {
+  const box = document.getElementById('designPicker');
+  if (!box) return;
+  const cur = getDesign();
+  box.innerHTML = '<div class="design-picker-title">🎨 Design</div>' + TA_DESIGNS.map(d =>
+    '<button type="button" class="design-option' + (d.key === cur ? ' active' : '') + '" onclick="setDesign(\'' + d.key + '\')" aria-pressed="' + (d.key === cur) + '">' +
+      '<span class="design-swatch" style="background:conic-gradient(' + d.accent + ' 0 50%, ' + d.base + ' 50% 100%)"></span>' + escapeForHtml(d.name) +
+    '</button>').join('');
+}
+function toggleDesignPicker(ev) {
+  if (ev) ev.stopPropagation();
+  const box = document.getElementById('designPicker');
+  const btn = document.getElementById('designPickerBtn');
+  if (!box) return;
+  const open = box.hasAttribute('hidden');
+  if (open) {
+    renderDesignPicker();
+    box.removeAttribute('hidden');
+    const r = btn.getBoundingClientRect(), w = box.offsetWidth;
+    box.style.top = (r.bottom + 10) + 'px';
+    box.style.left = Math.max(8, Math.min(window.innerWidth - w - 8, r.right - w)) + 'px';
+  } else box.setAttribute('hidden', '');
+  if (btn) btn.setAttribute('aria-expanded', String(open));
+}
+document.addEventListener('click', e => {
+  const box = document.getElementById('designPicker');
+  if (box && !box.hasAttribute('hidden') && !e.target.closest('.hero-design-wrap')) box.setAttribute('hidden', '');
+});
+document.addEventListener('keydown', e => {
+  const box = document.getElementById('designPicker');
+  if (e.key === 'Escape' && box && !box.hasAttribute('hidden')) box.setAttribute('hidden', '');
+});
+['scroll', 'resize'].forEach(ev => window.addEventListener(ev, () => {
+  const box = document.getElementById('designPicker');
+  if (box && !box.hasAttribute('hidden')) box.setAttribute('hidden', '');
+}, { passive: true }));
+window.setDesign = setDesign;
+window.toggleDesignPicker = toggleDesignPicker;
 
 /* ================= PROFILE PICTURE ================= */
 const LS_AVATAR = 'ta_avatar';
