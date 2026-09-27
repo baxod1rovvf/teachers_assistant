@@ -106,14 +106,12 @@ function addWordOrderRowFilled(text) {
 }
 
 function resetWordOrderForm() {
-  if (!confirm('Reset the Word Order form? This clears the title, instructions, and all sentences.')) return;
   document.getElementById('wo-title').value = '';
   const woIns = document.getElementById('wo-instructions'); if (woIns) woIns.value = '';
   const woPts = document.getElementById('wo-points'); if (woPts) woPts.value = '10';
   const woCompose = document.getElementById('wo-compose'); if (woCompose) woCompose.value = '';
   woRows.innerHTML = '';
   renumberRows(woRows);
-  showToast('Word Order form reset.', 'ok');
 }
 
 /* ================= MAKE A WORD ROWS ================= */
@@ -125,14 +123,12 @@ function addMakeAWordRowFilled(text) {
 }
 
 function resetMakeAWordForm() {
-  if (!confirm('Reset the Make a Word form? This clears the title, instructions, and all words.')) return;
   document.getElementById('maw-title').value = '';
   const mawIns = document.getElementById('maw-instructions'); if (mawIns) mawIns.value = '';
   const mawPts = document.getElementById('maw-points'); if (mawPts) mawPts.value = '10';
   const mawCompose = document.getElementById('maw-compose'); if (mawCompose) mawCompose.value = '';
   mawRows.innerHTML = '';
   renumberRows(mawRows);
-  showToast('Make a Word form reset.', 'ok');
 }
 
 /* ================= FLASHCARD ROWS ================= */
@@ -146,7 +142,6 @@ function addFlashcardRowFilled(line) {
 }
 
 function resetFlashcardForm() {
-  if (!confirm('Reset the Flashcard form? This clears the title, instructions, settings, and all words.')) return;
   document.getElementById('fc-title').value = '';
   const fcIns = document.getElementById('fc-instructions'); if (fcIns) fcIns.value = '';
   document.getElementById('fc-points').value = '10';
@@ -163,7 +158,6 @@ function resetFlashcardForm() {
   if (window.onQuizModeChange) onQuizModeChange();
   fcRows.innerHTML = '';
   renumberRows(fcRows);
-  showToast('Flashcard form reset.', 'ok');
 }
 
 /* ================= FLASHCARD MODE HINT ================= */
@@ -1401,7 +1395,6 @@ function initPresBuilder() {
 }
 
 function resetPresentationForm() {
-  if (!confirm('Reset the Presentation form? This clears the title, instructions, and every slide.')) return;
   document.getElementById('pres-title').value = '';
   const presIns = document.getElementById('pres-instructions'); if (presIns) presIns.value = '';
   document.getElementById('pres-slide-count').value = '5';
@@ -1414,7 +1407,6 @@ function resetPresentationForm() {
   renderPresTabs();
   renderPresCanvas();
   renderPresProps();
-  showToast('Presentation form reset.', 'ok');
 }
 
 /* ================= PRONUNCIATION ENGINE (shared) ================= */
@@ -2129,7 +2121,6 @@ function createPronunciation() {
 onPronDesignChange();
 
 function resetPronunciationForm() {
-  if (!confirm('Reset the Pronunciation form? This clears the title, instructions, settings, and all words.')) return;
   document.getElementById('pr-title').value = '';
   const prIns = document.getElementById('pr-instructions'); if (prIns) prIns.value = '';
   document.getElementById('pr-design').value = 'flash';
@@ -2144,7 +2135,6 @@ function resetPronunciationForm() {
   prRows.innerHTML = '';
   renumberRows(prRows);
   updatePronCount();
-  showToast('Pronunciation form reset.', 'ok');
 }
 
 /* ================= SPELLING + TEST BUILDERS ================= */
@@ -2769,7 +2759,6 @@ function addSnWordFilled(text) {
 }
 
 function resetSentencesForm() {
-  if (!confirm('Reset the Sentences form? This clears the title, instructions, and all words.')) return;
   document.getElementById('sn-title').value = '';
   const snIns = document.getElementById('sn-instructions'); if (snIns) snIns.value = '';
   const snPts = document.getElementById('sn-points'); if (snPts) snPts.value = '10';
@@ -2777,7 +2766,6 @@ function resetSentencesForm() {
   const snCompose = document.getElementById('sn-compose'); if (snCompose) snCompose.value = '';
   snRows.innerHTML = '';
   renumberRows(snRows);
-  showToast('Sentences form reset.', 'ok');
 }
 
 function createSentences() {
@@ -2913,13 +2901,11 @@ async function autoTranslateBilingual() {
 }
 
 function resetBilingualForm() {
-  if (!confirm('Reset the Bidirectional Language form? This clears the title, text, and all translations.')) return;
   document.getElementById('br-title').value = '';
   document.getElementById('br-lang').value = 'uz';
   document.getElementById('br-text').value = '';
   brParagraphs = [];
   renderBilingualRows();
-  showToast('Bidirectional Language form reset.', 'ok');
 }
 
 function createBilingualReader() {
@@ -2964,12 +2950,10 @@ function createBilingualReader() {
 }
 
 function resetEnglishContentForm() {
-  if (!confirm('Reset the English Content form? This clears the title, video link, and settings.')) return;
   document.getElementById('ec-title').value = '';
   document.getElementById('ec-youtube').value = '';
   clearMediaFile('ec');
   document.getElementById('ec-code').value = '';
-  showToast('English Content form reset.', 'ok');
 }
 
 /* ================= MEDIA FILES PACKED INTO AN EXERCISE =================
@@ -3295,7 +3279,6 @@ function parseTableCompletion(raw) {
 }
 
 function resetDictationForm() {
-  if (!confirm('Reset the Dictation form? This clears the title, audio link, and text.')) return;
   document.getElementById('dc-title').value = '';
   document.getElementById('dc-audio').value = '';
   clearMediaFile('dc');
@@ -3304,7 +3287,6 @@ function resetDictationForm() {
   document.getElementById('dc-cloze-text').value = '';
   document.getElementById('dc-code').value = '';
   onDictationModeChange();
-  showToast('Dictation form reset.', 'ok');
 }
 
 function createDictation() {
@@ -3496,7 +3478,6 @@ function onIeltsListeningPartToggle(n) {
 }
 
 function resetIeltsListeningForm() {
-  if (!confirm('Reset the IELTS Listening form? This clears the title and all 4 parts.')) return;
   document.getElementById('il-title').value = '';
   document.getElementById('il-code').value = '';
   [1, 2, 3, 4].forEach(n => {
@@ -3506,7 +3487,6 @@ function resetIeltsListeningForm() {
     document.getElementById('il-part' + n + '-groups').innerHTML = '';
     addIeltsGroup('il', n);
   });
-  showToast('IELTS Listening form reset.', 'ok');
 }
 
 function createIeltsListening() {
@@ -3586,7 +3566,6 @@ function onIeltsReadingPartToggle(n) {
 }
 
 function resetIeltsReadingForm() {
-  if (!confirm('Reset the IELTS Reading form? This clears the title and all 3 parts.')) return;
   document.getElementById('ir-title').value = '';
   document.getElementById('ir-code').value = '';
   [1, 2, 3].forEach(n => {
@@ -3596,7 +3575,6 @@ function resetIeltsReadingForm() {
     document.getElementById('ir-part' + n + '-groups').innerHTML = '';
     addIeltsGroup('ir', n);
   });
-  showToast('IELTS Reading form reset.', 'ok');
 }
 
 /* Splits a pasted passage into paragraphs on blank lines, same rule as
@@ -3651,7 +3629,6 @@ function createIeltsReading() {
 }
 
 function resetIeltsWritingForm() {
-  if (!confirm('Reset the IELTS Writing form? This clears the title, both prompts, and settings.')) return;
   document.getElementById('iw-title').value = '';
   document.getElementById('iw-code').value = '';
   document.getElementById('iw-task1-prompt').value = '';
@@ -3659,7 +3636,6 @@ function resetIeltsWritingForm() {
   document.getElementById('iw-task2-prompt').value = '';
   document.getElementById('iw-task2-minwords').value = '250';
   document.getElementById('iw-show-feedback').value = 'on';
-  showToast('IELTS Writing form reset.', 'ok');
 }
 
 function createIeltsWriting() {
@@ -3701,7 +3677,6 @@ function createIeltsWriting() {
 }
 
 function resetSpellingForm() {
-  if (!confirm('Reset the Spelling form? This clears the title, instructions, settings, and all words.')) return;
   document.getElementById('sp-title').value = '';
   const spIns = document.getElementById('sp-instructions'); if (spIns) spIns.value = '';
   document.getElementById('sp-points').value = '10';
@@ -3711,11 +3686,9 @@ function resetSpellingForm() {
   spRows.innerHTML = '';
   renumberRows(spRows);
   updateSpCount();
-  showToast('Spelling form reset.', 'ok');
 }
 
 function resetTestForm() {
-  if (!confirm('Reset the Test form? This clears the title, instructions, settings, and all sentences.')) return;
   document.getElementById('ts-title').value = '';
   const tsIns = document.getElementById('ts-instructions'); if (tsIns) tsIns.value = '';
   document.getElementById('ts-points').value = '10';
@@ -3726,7 +3699,6 @@ function resetTestForm() {
   tsRows.innerHTML = '';
   renumberRows(tsRows);
   updateTsCount();
-  showToast('Test form reset.', 'ok');
 }
 
 /* ================= BULK PASTE — one box, many rows =================
@@ -3843,8 +3815,400 @@ function splitTestRows() {
 }
 
 
+/* ================= SAVED WORK: drafts, "Use again", Undo for Reset =================
+   taCaptureBuilder(tab) reads a builder's whole form (its fields and its
+   rows) into plain data, and taRestoreBuilder(tab, state) puts it back.
+   That powers three things:
+   - Drafts: while a builder is open its form is saved every few seconds, so
+     a closed tab or a locked phone never loses work. Opening the builder
+     again offers to bring it back.
+   - "Use again" in My Exercises: each exercise keeps its form, and the
+     builder reopens filled in.
+   - Reset All clears the form straight away, with Undo. */
+function taRowInputs(container, selector) {
+  return Array.from(container.querySelectorAll(selector));
+}
+function taSingleRows(container) {
+  return taRowInputs(container, '.row-item input').map(i => i.value);
+}
+function taSetSingleRows(container, list, addFilled) {
+  container.innerHTML = '';
+  (list || []).forEach(v => addFilled(String(v)));
+  renumberRows(container);
+}
+// Spelling / Pronunciation: typing the word fills the other boxes; keep saved values over the automatic ones.
+function taFillAfterWord(input, rowSelector, extraSelectors, values) {
+  input.value = values[0] || '';
+  input.dispatchEvent(new Event('input'));
+  const row = input.closest(rowSelector);
+  extraSelectors.forEach((sel, i) => {
+    const boxes = row.querySelectorAll(sel);
+    (Array.isArray(values[i + 1]) ? values[i + 1] : [values[i + 1]]).forEach((v, j) => {
+      if (boxes[j] && v) boxes[j].value = v;
+    });
+  });
+}
+
+const TA_BUILDER_ROWS = {
+  wordorder: {
+    get: () => taSingleRows(woRows),
+    set: v => taSetSingleRows(woRows, v, addWordOrderRowFilled)
+  },
+  makeaword: {
+    get: () => taSingleRows(mawRows),
+    set: v => taSetSingleRows(mawRows, v, addMakeAWordRowFilled)
+  },
+  sentences: {
+    get: () => taSingleRows(snRows),
+    set: v => taSetSingleRows(snRows, v, addSnWordFilled)
+  },
+  flashcard: {
+    get: () => taRowInputs(fcRows, '.row-item').map(r => Array.from(r.querySelectorAll('input')).map(i => i.value)),
+    set: v => {
+      fcRows.innerHTML = '';
+      (v || []).forEach(pair => {
+        const inputs = makePairRow(fcRows, 'Word (e.g. kitchen)', 'Translation (e.g. oshxona)');
+        inputs[0].value = pair[0] || '';
+        inputs[1].value = pair[1] || '';
+      });
+      renumberRows(fcRows);
+    }
+  },
+  spelling: {
+    get: () => taRowInputs(spRows, '.sp-row').map(r => [r.querySelector('.sp-word').value, taRowInputs(r, '.sp-wrong').map(i => i.value)]),
+    set: v => {
+      spRows.innerHTML = '';
+      (v || []).forEach(r => taFillAfterWord(makeSpellingRow(spRows), '.sp-row', ['.sp-wrong'], r));
+      renumberRows(spRows);
+      updateSpCount();
+    }
+  },
+  pronunciation: {
+    get: () => taRowInputs(prRows, '.pron-row').map(r => [r.querySelector('.pr-word').value, r.querySelector('.pr-ipa').value, r.querySelector('.pr-icon').value]),
+    set: v => {
+      prRows.innerHTML = '';
+      (v || []).forEach(r => taFillAfterWord(makePronRow(prRows), '.pron-row', ['.pr-ipa', '.pr-icon'], r));
+      renumberRows(prRows);
+      updatePronCount();
+    }
+  },
+  test: {
+    get: () => taRowInputs(tsRows, '.test-row').map(r => ({
+      s: r.querySelector('.ts-sentence').value,
+      gap: parseInt(r.dataset.gap, 10),
+      wrongs: taRowInputs(r, '.ts-wrong').map(i => i.value)
+    })),
+    set: v => {
+      tsRows.innerHTML = '';
+      (v || []).forEach(item => {
+        const input = makeTestRow(tsRows);
+        input.value = item.s || '';
+        input.dispatchEvent(new Event('input')); // draws the word chips
+        const row = input.closest('.test-row');
+        if (item.gap >= 0) {
+          row.dataset.gap = String(item.gap);
+          const chip = row.querySelectorAll('.word-chips .chip')[item.gap];
+          if (chip) chip.classList.add('picked');
+        }
+        const boxes = row.querySelectorAll('.ts-wrong');
+        (item.wrongs || []).forEach((w, j) => { if (boxes[j]) boxes[j].value = w; });
+      });
+      renumberRows(tsRows);
+      updateTsCount();
+    }
+  },
+  bilingual: {
+    get: () => JSON.parse(JSON.stringify(brParagraphs)),
+    set: v => { brParagraphs = JSON.parse(JSON.stringify(v || [])); renderBilingualRows(); }
+  },
+  presentation: {
+    get: () => ({ slides: JSON.parse(JSON.stringify(presSlides)), current: presCurrent }),
+    set: v => {
+      if (!v || !v.slides || !v.slides.length) return;
+      presSlides = JSON.parse(JSON.stringify(v.slides));
+      let top = 0;
+      presSlides.forEach(sl => sl.els.forEach(el => { top = Math.max(top, parseInt(String(el.id).slice(1), 10) || 0); }));
+      presElSeq = Math.max(presElSeq, top + 1);
+      selectPresSlide(v.current || 0);
+    }
+  },
+  'ielts-listening': taIeltsGroupRows('il', 4),
+  'ielts-reading': taIeltsGroupRows('ir', 3),
+  'ielts-writing': { get: () => null, set: () => {} },
+  engcontent: { get: () => null, set: () => {} },
+  dictation: { get: () => null, set: () => {} }
+};
+function taIeltsGroupRows(prefix, parts) {
+  const nums = Array.from({ length: parts }, (_, i) => i + 1);
+  return {
+    get: () => nums.map(n => {
+      const wrap = document.getElementById(prefix + '-part' + n + '-groups');
+      return wrap ? taRowInputs(wrap, '.ielts-group-block').map(b => [b.querySelector('.ielts-group-type').value, b.querySelector('.ielts-group-textarea').value]) : [];
+    }),
+    set: v => {
+      nums.forEach((n, i) => {
+        const wrap = document.getElementById(prefix + '-part' + n + '-groups');
+        if (!wrap) return;
+        const groups = (v && v[i] && v[i].length) ? v[i] : [['gap', '']];
+        wrap.innerHTML = '';
+        groups.forEach(g => {
+          addIeltsGroup(prefix, n);
+          const block = wrap.lastElementChild;
+          const sel = block.querySelector('.ielts-group-type');
+          sel.value = g[0];
+          onIeltsGroupTypeChange(sel);
+          block.querySelector('.ielts-group-textarea').value = g[1] || '';
+        });
+        const box = document.getElementById(prefix + '-part' + n + '-include');
+        const body = document.getElementById(prefix + '-part' + n + '-body');
+        if (box && body) body.classList.toggle('show', box.checked);
+      });
+    }
+  };
+}
+const TA_SAVED_TABS = Object.keys(TA_BUILDER_ROWS);
+const TA_MEDIA_PREFIX = { engcontent: 'ec', dictation: 'dc' };
+
+// The builder's form, wherever it is right now (Homework/Class borrows it into its own panel).
+function taBuilderRoot(tab) {
+  const panel = document.getElementById('panel-' + tab);
+  if (panel && panel.querySelector('.card')) return panel;
+  return document.getElementById('panel-hwcround') || panel;
+}
+function taBuilderFields(tab) {
+  const root = taBuilderRoot(tab);
+  if (!root) return [];
+  return Array.from(root.querySelectorAll('input[id], select[id], textarea[id]')).filter(el => el.type !== 'file');
+}
+
+function taCaptureBuilder(tab) {
+  if (!TA_BUILDER_ROWS[tab]) return null;
+  const fields = {};
+  taBuilderFields(tab).forEach(el => { fields[el.id] = el.type === 'checkbox' ? el.checked : el.value; });
+  return { v: 1, fields: fields, rows: TA_BUILDER_ROWS[tab].get() };
+}
+
+function taRestoreBuilder(tab, state) {
+  if (!state || !TA_BUILDER_ROWS[tab]) return;
+  const fields = state.fields || {};
+  const changed = [];
+  Object.keys(fields).forEach(id => {
+    const el = document.getElementById(id);
+    if (!el || el.type === 'file') return;
+    if (el.type === 'checkbox') el.checked = !!fields[id];
+    else if (el.tagName === 'SELECT') {
+      if (Array.from(el.options).some(o => o.value === String(fields[id]))) { el.value = fields[id]; changed.push(el); }
+    } else el.value = fields[id];
+  });
+  // Selects that show or hide other settings (design, quiz mode, number of options…)
+  changed.forEach(el => el.dispatchEvent(new Event('change')));
+  TA_BUILDER_ROWS[tab].set(state.rows);
+}
+
+/* What counts as "work": typed text and rows. Settings left on their
+   defaults don't, so an untouched builder never makes a draft. */
+function taBuilderSignature(tab, state) {
+  if (!state) return '';
+  const texts = {};
+  taBuilderFields(tab).forEach(el => {
+    if (el.type === 'hidden' || el.type === 'checkbox' || el.tagName === 'SELECT') return;
+    const v = String(state.fields[el.id] == null ? '' : state.fields[el.id]).trim();
+    if (v) texts[el.id] = v;
+  });
+  // presentation elements get new ids each time; they aren't content
+  return JSON.stringify(texts) + JSON.stringify(state.rows).replace(/"id":"e\d+",?/g, '');
+}
+
+function taDescribeState(tab, state) {
+  const titleId = Object.keys(state.fields || {}).find(id => /-title$/.test(id) && state.fields[id]);
+  const rows = state.rows;
+  let count = 0, noun = 'item';
+  if (tab === 'presentation' && rows) { count = rows.slides.length; noun = 'slide'; }
+  else if (tab === 'bilingual') { count = (rows || []).reduce((n, p) => n + p.sentences.length, 0); noun = 'sentence'; }
+  else if (/ielts-/.test(tab)) { count = (rows || []).reduce((n, part) => n + part.filter(g => g[1].trim()).length, 0); noun = 'question group'; }
+  else if (Array.isArray(rows)) {
+    count = rows.length;
+    noun = (tab === 'wordorder' || tab === 'test') ? 'sentence' : 'word';
+  }
+  const bits = [];
+  if (titleId) bits.push('“' + state.fields[titleId] + '”');
+  if (count) bits.push(count + ' ' + noun + (count === 1 ? '' : 's'));
+  return bits.join(' · ');
+}
+
+function taTimeAgo(ms) {
+  const min = Math.round((Date.now() - ms) / 60000);
+  if (min < 1) return 'just now';
+  if (min < 60) return min + ' min ago';
+  const h = Math.round(min / 60);
+  if (h < 24) return h + ' hour' + (h === 1 ? '' : 's') + ' ago';
+  const d = Math.round(h / 24);
+  return d + ' day' + (d === 1 ? '' : 's') + ' ago';
+}
+
+/* ---------- drafts ---------- */
+const LS_BUILDER_DRAFTS = 'ta_builder_drafts'; // { tab: { state, at } }
+const taPristine = {};      // tab -> signature of the empty form
+const taLastSaved = {};     // tab -> JSON last written as a draft (or turned into an exercise)
+const taDraftMine = {};     // tab -> this visit wrote the tab's draft
+
+function taGetDrafts() {
+  try { return JSON.parse(localStorage.getItem(LS_BUILDER_DRAFTS) || '{}') || {}; } catch (e) { return {}; }
+}
+function taSetDraft(tab, state) {
+  const drafts = taGetDrafts();
+  if (state) drafts[tab] = { state: state, at: Date.now() }; else delete drafts[tab];
+  try { localStorage.setItem(LS_BUILDER_DRAFTS, JSON.stringify(drafts)); return true; }
+  catch (e) { return false; } // too big for the browser's storage (large pictures): nothing else breaks
+}
+
+function taIsEmptyBuilder(tab, state) {
+  return taBuilderSignature(tab, state) === taPristine[tab];
+}
+
+function taAutosaveBuilder(tab) {
+  if (!TA_BUILDER_ROWS[tab] || taPristine[tab] === undefined) return;
+  const state = taCaptureBuilder(tab);
+  if (taIsEmptyBuilder(tab, state)) {
+    // emptied by hand: the old draft is no longer wanted (unless it's waiting in the banner)
+    if (taDraftMine[tab]) { taSetDraft(tab, null); taDraftMine[tab] = false; taLastSaved[tab] = null; }
+    return;
+  }
+  const json = JSON.stringify(state);
+  if (json === taLastSaved[tab]) return;
+  taHideDraftBanner(tab); // new work replaces the offered draft
+  if (taSetDraft(tab, state)) { taLastSaved[tab] = json; taDraftMine[tab] = true; }
+}
+
+function taActiveSavedTab() {
+  return TA_BUILDER_ROWS[currentActiveTab] ? currentActiveTab : null;
+}
+setInterval(function () { const t = taActiveSavedTab(); if (t) taAutosaveBuilder(t); }, 2500);
+function taFlushDraft() { const t = taActiveSavedTab(); if (t) taAutosaveBuilder(t); }
+document.addEventListener('visibilitychange', function () { if (document.hidden) taFlushDraft(); });
+window.addEventListener('pagehide', taFlushDraft);
+
+function taHideDraftBanner(tab) {
+  const el = document.getElementById('draftBanner-' + tab);
+  if (el) el.remove();
+}
+function taShowDraftBanner(tab, draft) {
+  taHideDraftBanner(tab);
+  const panel = document.getElementById('panel-' + tab);
+  if (!panel) return;
+  const bar = document.createElement('div');
+  bar.className = 'draft-banner';
+  bar.id = 'draftBanner-' + tab;
+  const what = taDescribeState(tab, draft.state);
+  bar.innerHTML = '<span class="draft-banner-icon" aria-hidden="true">📝</span>' +
+    '<div class="draft-banner-text"><b>You have unfinished work here</b>' +
+    '<span>' + escapeForHtml((what ? what + ' · ' : '') + 'saved ' + taTimeAgo(draft.at)) + '</span></div>' +
+    '<div class="draft-banner-btns">' +
+      '<button type="button" class="mini-btn solid">Restore</button>' +
+      '<button type="button" class="mini-btn">Discard</button>' +
+    '</div>';
+  const btns = bar.querySelectorAll('button');
+  btns[0].onclick = function () {
+    taRestoreBuilder(tab, draft.state);
+    taLastSaved[tab] = JSON.stringify(taCaptureBuilder(tab));
+    taDraftMine[tab] = true;
+    bar.remove();
+    showToast('✅ Your unfinished work is back.' + (TA_MEDIA_PREFIX[tab] ? ' Choose the audio/video file again.' : ''), 'ok');
+  };
+  btns[1].onclick = function () {
+    taSetDraft(tab, null);
+    bar.remove();
+    showUndoToast('Draft discarded.', function () { taSetDraft(tab, draft.state); taShowDraftBanner(tab, draft); });
+  };
+  panel.insertBefore(bar, panel.firstChild);
+}
+
+/* ---------- "Use again" from My Exercises ---------- */
+const SS_BUILDER_LOAD = 'ta_builder_load'; // { tab, state, title } waiting for its builder to open
+
+function taLoadIntoBuilder(tab, state, label) {
+  const before = taCaptureBuilder(tab);
+  const hadWork = !taIsEmptyBuilder(tab, before);
+  taRestoreBuilder(tab, state);
+  taHideDraftBanner(tab);
+  const msg = '✏️ "' + label + '" is ready to edit.' + (TA_MEDIA_PREFIX[tab] ? ' Choose the audio/video file again.' : '');
+  if (hadWork) showUndoToast(msg, function () { taRestoreBuilder(tab, before); });
+  else showToast(msg, 'ok');
+}
+
+function taOnBuilderOpened(tab) {
+  if (taPristine[tab] === undefined) taPristine[tab] = taBuilderSignature(tab, taCaptureBuilder(tab));
+  let pending = null;
+  try { pending = JSON.parse(sessionStorage.getItem(SS_BUILDER_LOAD) || 'null'); } catch (e) { pending = null; }
+  if (pending && pending.tab === tab) {
+    try { sessionStorage.removeItem(SS_BUILDER_LOAD); } catch (e) { /* ignore */ }
+    taLoadIntoBuilder(tab, pending.state, pending.title || 'Exercise');
+    return;
+  }
+  const draft = taGetDrafts()[tab];
+  if (!draft || document.getElementById('draftBanner-' + tab)) return;
+  const now = taCaptureBuilder(tab);
+  // Only offer it when the builder is empty; work already on screen is newer.
+  if (taIsEmptyBuilder(tab, now) && !taIsEmptyBuilder(tab, draft.state)) taShowDraftBanner(tab, draft);
+}
+
+// Called at page start, after the builders' own tab hooks are registered.
+function taWireSavedWork() {
+  TA_SAVED_TABS.forEach(taWireSavedTab);
+}
+function taWireSavedTab(tab) {
+  const before = TA_TAB_HOOKS[tab];
+  taOnTab(tab, function () {
+    if (before) before();
+    taOnBuilderOpened(tab);
+  });
+}
+
+/* A new exercise keeps its form for "Use again", and its draft is done with. */
+window.taSnapshotForMyExercises = function () {
+  const tab = taActiveSavedTab();
+  if (!tab) return null;
+  const state = taCaptureBuilder(tab);
+  const json = JSON.stringify(state);
+  if (json.length > 300000) return null; // big pictures in a presentation: too large to keep in the list
+  taSetDraft(tab, null);
+  taDraftMine[tab] = false;
+  taLastSaved[tab] = json; // the same form isn't saved again as a draft
+  return { tab: tab, state: state };
+};
+
+/* ---------- Reset All: straight away, with Undo ---------- */
+[
+  ['wordorder', 'resetWordOrderForm'], ['makeaword', 'resetMakeAWordForm'], ['flashcard', 'resetFlashcardForm'],
+  ['presentation', 'resetPresentationForm'], ['pronunciation', 'resetPronunciationForm'], ['sentences', 'resetSentencesForm'],
+  ['bilingual', 'resetBilingualForm'], ['engcontent', 'resetEnglishContentForm'], ['dictation', 'resetDictationForm'],
+  ['ielts-listening', 'resetIeltsListeningForm'], ['ielts-reading', 'resetIeltsReadingForm'], ['ielts-writing', 'resetIeltsWritingForm'],
+  ['spelling', 'resetSpellingForm'], ['test', 'resetTestForm']
+].forEach(function (pair) {
+  const tab = pair[0], reset = window[pair[1]];
+  window[pair[1]] = function () {
+    const before = taCaptureBuilder(tab);
+    const media = TA_MEDIA_PREFIX[tab];
+    const file = media ? TA_MEDIA_FILES[media] : null, b64 = media ? TA_MEDIA_B64[media] : null;
+    reset();
+    showUndoToast('Form cleared.', function () {
+      taRestoreBuilder(tab, before);
+      if (file) {
+        TA_MEDIA_FILES[media] = file;
+        if (b64) TA_MEDIA_B64[media] = b64;
+        const linkInput = document.getElementById(media === 'ec' ? 'ec-youtube' : 'dc-audio');
+        if (linkInput) { linkInput.value = ''; linkInput.disabled = true; linkInput.placeholder = 'Using the file you chose'; }
+        renderMediaFileName(media);
+      }
+      showToast('Everything is back.', 'ok');
+    });
+  };
+});
+
+
 /* ================= PAGE START ================= */
 initPresBuilder();
 taOnTab('ielts-listening', renderIeltsListeningParts);
 taOnTab('ielts-reading', renderIeltsReadingParts);
+taWireSavedWork();
 taStartPage('createpicker');

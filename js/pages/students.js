@@ -32,15 +32,27 @@ function deleteStudentGroup(groupId) {
   const groups = getStudentGroups();
   const g = groups.find(x => x.id === groupId);
   if (!g) return;
-  const members = getPointsRoster().filter(s => s.group === groupId);
-  const msg = members.length
-    ? 'Delete the group "' + g.name + '"? Its ' + members.length + ' student' + (members.length === 1 ? '' : 's') + ' will move to ' + ((groups.filter(x => x.id !== groupId)[0] || {}).name ? '"' + groups.filter(x => x.id !== groupId)[0].name + '"' : '"Not in a group"') + ', with their points kept.'
-    : 'Delete the empty group "' + g.name + '"?';
-  if (!confirm(msg)) return;
+  const rosterBefore = getPointsRoster();
+  const moved = rosterBefore.filter(s => s.group === groupId).length;
   saveStudentGroups(groups.filter(x => x.id !== groupId));
-  savePointsRoster(getPointsRoster().map(s => s.group === groupId ? Object.assign({}, s, { group: '' }) : s));
+  savePointsRoster(rosterBefore.map(s => s.group === groupId ? Object.assign({}, s, { group: '' }) : s));
   if (studentsOpenGroup === groupId) studentsOpenGroup = null;
   refreshRosterViews();
+  // Students left without a group are placed in the first remaining one; note where each went.
+  const movedTo = {};
+  getPointsRoster().forEach(s => { if (rosterBefore.some(b => b.id === s.id && b.group === groupId)) movedTo[s.id] = s.group; });
+  const dest = (getStudentGroups()[0] || {}).name;
+  showUndoToast('Deleted "' + g.name + '"' + (moved ? ' — its ' + moved + ' student' + (moved === 1 ? '' : 's') + ' moved to ' + (dest ? '"' + dest + '"' : '"Not in a group"') + ' with their points.' : '.'), function () {
+    const now = getStudentGroups();
+    if (!now.some(x => x.id === groupId)) {
+      now.splice(Math.min(groups.indexOf(g), now.length), 0, g);
+      saveStudentGroups(now);
+    }
+    // put back the students that are still where the delete put them (anyone moved since stays put)
+    savePointsRoster(getPointsRoster().map(s => (s.id in movedTo && s.group === movedTo[s.id]) ? Object.assign({}, s, { group: groupId }) : s));
+    refreshRosterViews();
+    showToast('"' + g.name + '" is back.', 'ok');
+  });
 }
 
 function moveStudentToGroup(studentId, groupId) {

@@ -83,7 +83,7 @@ const MASTHEAD_COPY = {
   hwcbuilder: { eyebrow: "📚 Homework & Class", title: "Build your set", sub: "Pick exercises from My Exercises, put them in order, then generate one combined file." },
   main: { eyebrow: "🎓 Teacher's Assistant", title: "Welcome back", sub: "Everything you need to build, share, and track classroom exercises." },
   dashboard: { eyebrow: "📊 Statistics", title: "Your classroom at a glance", sub: "See which exercise types get used the most, updated live from your Points Board." },
-  myexercises: { eyebrow: "📁 My Exercises", title: "Everything you've built", sub: "Every exercise you've created in this browser — jump to its results, turn off its points, or remove it for good." },
+  myexercises: { eyebrow: "📁 My Exercises", title: "Everything you've built", sub: "Every exercise you've created — reopen it to make a new version, jump to its results, or turn off its points." },
   students: { eyebrow: "Students", title: "Your class roster", sub: "Give each student a unique ID so they can earn points without typing a name or code." },
   results: { eyebrow: "📊 Results", title: "Student Results", sub: "Track your students' progress, view results and help them achieve their goals." },
   points: { eyebrow: "🏆 Points & Rewards", title: "Track and reward progress", sub: "A live leaderboard for every student, plus the ability to give or take bonus points yourself." },
@@ -407,11 +407,50 @@ let toastTimeout = null;
 function showToast(message, kind) {
   const toast = document.getElementById('toast');
   toast.innerText = message;
+  taUndoAction = null; // a newer message replaces any Undo button
   toast.className = 'toast show' + (kind === 'ok' ? ' ok' : '');
   if (kind === 'ok') taSuccessChime(); else taErrorBuzz();
   clearTimeout(toastTimeout);
   toastTimeout = setTimeout(() => toast.classList.remove('show'), 2800);
 }
+
+/* A toast with an Undo button, used instead of "Are you sure?" pop-ups:
+   the change happens straight away and can be taken back for a few seconds
+   (the button, or Ctrl+Z). */
+let taUndoAction = null;
+function showUndoToast(message, onUndo) {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  toast.textContent = message + ' ';
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'toast-undo';
+  btn.textContent = '↶ Undo';
+  const action = function () {
+    if (taUndoAction !== action) return;
+    taUndoAction = null;
+    clearTimeout(toastTimeout);
+    toast.classList.remove('show');
+    onUndo();
+  };
+  btn.onclick = action;
+  toast.appendChild(btn);
+  toast.className = 'toast show ok';
+  taSuccessChime();
+  taUndoAction = action;
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove('show');
+    if (taUndoAction === action) taUndoAction = null;
+  }, 7000);
+}
+document.addEventListener('keydown', function (e) {
+  if (!taUndoAction || !(e.ctrlKey || e.metaKey) || e.shiftKey || e.key.toLowerCase() !== 'z') return;
+  const tag = (e.target.tagName || '').toLowerCase();
+  if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) return; // let text fields undo their own typing
+  e.preventDefault();
+  taUndoAction();
+});
 
 /* ================= DOWNLOAD HELPER ================= */
 // Exercise files load their login animation from this site, so every
@@ -541,8 +580,21 @@ function refreshRosterViews() {
 }
 
 function removePointsStudent(id) {
-  savePointsRoster(getPointsRoster().filter(s => s.id !== id));
+  const roster = getPointsRoster();
+  const at = roster.findIndex(s => s.id === id);
+  if (at === -1) return;
+  const st = roster[at];
+  roster.splice(at, 1);
+  savePointsRoster(roster);
   refreshRosterViews();
+  showUndoToast('Removed ' + st.name + ' (ID ' + st.id + ').', function () {
+    const now = getPointsRoster();
+    if (now.some(s => s.id === st.id)) return;
+    now.splice(Math.min(at, now.length), 0, st);
+    savePointsRoster(now);
+    refreshRosterViews();
+    showToast(st.name + ' is back.', 'ok');
+  });
 }
 
 /* ---- Is a result / points entry from one of MY students? ----
@@ -811,6 +863,7 @@ function saveRecentExercises(list) {
 
 function pushRecentExercise(entry) {
   const list = getRecentExercises();
+  const snap = window.taSnapshotForMyExercises ? window.taSnapshotForMyExercises() : null;
   list.unshift({
     title: entry.title,
     typeLabel: entry.typeLabel,
@@ -821,7 +874,10 @@ function pushRecentExercise(entry) {
     boardCode: getPointsBoardCode(),
     date: new Date().toISOString(),
     disabled: false,
-    mergedItems: entry.mergedItems || null
+    mergedItems: entry.mergedItems || null,
+    // The builder's form as it was, so "Use again" can reopen it filled in (set by the Create page).
+    builderTab: snap ? snap.tab : null,
+    builderState: snap ? snap.state : null
   });
   saveRecentExercises(list.slice(0, 200));
   if (entry.html) cacheExerciseHtml(entry.uid, entry.html);

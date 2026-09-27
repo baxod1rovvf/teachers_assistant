@@ -19,7 +19,7 @@ Every page also loads these shared files:
 - `css/style.css`: all styles
 - `js/accounts.js`: sign-in, and keeps each teacher's saved data separate
 - `js/lottie.min.js` + `js/animations.js`: the animation library and its animation data
-- `js/common.js`: shared code (page switching, toasts, sounds, students/groups data, exercises list, results storage, lesson schedule and reminders, lesson plans, theme, profile picture, login screen, assistant robot)
+- `js/common.js`: shared code (page switching, toasts and Undo toasts, sounds, students/groups data, exercises list, results storage, lesson schedule and reminders, lesson plans, theme, profile picture, login screen, assistant robot)
 - `js/firebase.js`: live results, points and account sync
 
 Switching sections in the sidebar doesn't reload the app. The first time you open a section, its panels and script are added to the page you're on (`taNavigate()` in `js/common.js`). After that, switching is instant, just like the old single file. Once the app has loaded, the other sections are downloaded in the background. Opening or refreshing any section's address directly still works.
@@ -35,3 +35,11 @@ On GitHub Pages the address bar shows clean names without `.html`: `…/teachers
    `https://<your-username>.github.io/teachers_assistant/`
 
 That link opens the Dashboard (shown as `…/teachers_assistant/index`). The Control Panel is at `…/teachers_assistant/CP.html`.
+
+## Saved work
+
+- **Drafts:** while a builder is open, its form is saved in this browser every few seconds. Opening the builder again after closing the tab offers **Restore** or **Discard**.
+- **Use again:** every exercise in My Exercises keeps its builder form. **✏️ Use again** reopens the builder filled in. Exercises made before this was added get their word list back (for the list builders).
+- **Undo:** deleting an exercise, removing a student, deleting a group, discarding a draft and **Reset All** happen straight away and can be undone from the message at the top (or with Ctrl+Z) for a few seconds.
+
+The code is in the "SAVED WORK" section of `js/pages/create.js` (`taCaptureBuilder` / `taRestoreBuilder`).
