@@ -1640,3 +1640,13 @@ body.light-theme[data-design="burntorange"] { --surface-page: #FFF4D6; --surface
   letter-spacing: 0.08em; color: var(--brand);
 }
 .code-screen-hint { position: absolute; bottom: 24px; font-size: 0.85rem; color: var(--ink-faint); }
+
+/* ---------- use the same words in another builder ---------- */
+.jump-bar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 0 0 10px; }
+.jump-bar-label { font-size: 0.76rem; font-weight: 700; color: var(--ink-faint); margin-right: 2px; }
+.jump-chip {
+  padding: 5px 11px; border-radius: 999px; border: 1.5px dashed var(--border); background: transparent;
+  color: var(--ink-soft); font: inherit; font-size: 0.76rem; font-weight: 700; cursor: pointer; white-space: nowrap;
+}
+.jump-chip:hover { border-style: solid; border-color: var(--brand); color: var(--brand); }
+#panel-hwcround .jump-bar { display: none; } /* a Homework/Class round builds one exercise at a time */

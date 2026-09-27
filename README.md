@@ -42,7 +42,9 @@ That link opens the Dashboard (shown as `…/teachers_assistant/index`). The Con
 - **Use again:** every exercise in My Exercises keeps its builder form. **✏️ Use again** reopens the builder filled in. Exercises made before this was added get their word list back (for the list builders).
 - **Undo:** deleting an exercise, removing a student, deleting a group, discarding a draft and **Reset All** happen straight away and can be undone from the message at the top (or with Ctrl+Z) for a few seconds.
 
-The code is in the "SAVED WORK" section of `js/pages/create.js` (`taCaptureBuilder` / `taRestoreBuilder`).
+- **Same words, another exercise:** Flashcard, Spelling, Make a Word, Pronunciation and Sentences have a **↪ Use these words in** bar that carries the word list (and the title, if the other builder has none) into another of them. Word Order and Test do the same with sentences. Words already there aren't added twice, Flashcard keeps its translations, and it can be undone.
+
+The code is in the "SAVED WORK" and "USE THE SAME WORDS" sections of `js/pages/create.js` (`taCaptureBuilder` / `taRestoreBuilder`).
 
 ## Getting around and sharing
 

@@ -4206,9 +4206,91 @@ window.taSnapshotForMyExercises = function () {
 });
 
 
+/* ================= USE THE SAME WORDS IN ANOTHER EXERCISE =================
+   Each list builder has a "Use these words in…" bar. It carries the list
+   (and the title, if the other builder has none) into another builder, so
+   20 flashcard words become a Spelling or Make a Word exercise without
+   typing them again. Words go to word builders, sentences to sentence
+   builders. Words already in the other builder aren't added twice. */
+const TA_JUMP = {
+  flashcard:     { p: 'fc', kind: 'word',     noun: 'words',     read: r => ({ w: r[0], tr: r[1] }), row: it => [it.w, it.tr || ''] },
+  spelling:      { p: 'sp', kind: 'word',     noun: 'words',     read: r => ({ w: r[0] }),           row: it => [it.w, []] },
+  makeaword:     { p: 'maw', kind: 'word',    noun: 'words',     read: r => ({ w: r }),              row: it => it.w },
+  pronunciation: { p: 'pr', kind: 'word',     noun: 'words',     read: r => ({ w: r[0] }),           row: it => [it.w, '', ''] },
+  sentences:     { p: 'sn', kind: 'word',     noun: 'words',     read: r => ({ w: r }),              row: it => it.w },
+  wordorder:     { p: 'wo', kind: 'sentence', noun: 'sentences', read: r => ({ w: r }),              row: it => it.w },
+  test:          { p: 'ts', kind: 'sentence', noun: 'sentences', read: r => ({ w: r.s }),            row: it => ({ s: it.w, gap: -1, wrongs: [] }) }
+};
+
+function taJumpItems(tab) {
+  const rows = TA_BUILDER_ROWS[tab].get() || [];
+  return rows.map(TA_JUMP[tab].read)
+    .map(it => Object.assign(it, { w: String(it.w || '').trim(), tr: String(it.tr || '').trim() }))
+    .filter(it => it.w);
+}
+
+function taJumpTo(from, to) {
+  if (currentActiveTab !== from) { showToast('Finish this Homework/Class round first.'); return; }
+  const items = taJumpItems(from);
+  if (!items.length) { showToast('Add some ' + TA_JUMP[from].noun + ' first.'); return; }
+  const target = TA_JUMP[to];
+
+  switchTo(to);
+  const before = taCaptureBuilder(to);
+  const key = s => s.toLowerCase().replace(/\s+/g, ' ');
+  const have = new Set(taJumpItems(to).map(it => key(it.w)));
+  const adding = [];
+  items.forEach(it => { if (!have.has(key(it.w))) { have.add(key(it.w)); adding.push(it); } });
+
+  const titleEl = document.getElementById(target.p + '-title');
+  const fromTitle = document.getElementById(TA_JUMP[from].p + '-title');
+  const tookTitle = titleEl && !titleEl.value.trim() && fromTitle && fromTitle.value.trim();
+  if (tookTitle) titleEl.value = fromTitle.value.trim();
+
+  const label = TA_TAB_LABELS[to][1];
+  if (!adding.length) {
+    showToast('All of these ' + target.noun + ' are already in ' + label + '.', 'ok');
+    return;
+  }
+  const rows = (TA_BUILDER_ROWS[to].get() || []).concat(adding.map(target.row));
+  TA_BUILDER_ROWS[to].set(rows);
+  taHideDraftBanner(to);
+  const skipped = items.length - adding.length;
+  let msg = '↪ ' + adding.length + ' ' + (adding.length === 1 ? target.noun.slice(0, -1) : target.noun) + ' added to ' + label +
+    (skipped ? ' (' + skipped + ' already there)' : '') + '.';
+  const untranslated = to === 'flashcard' ? adding.filter(it => !it.tr).length : 0;
+  if (untranslated) msg += untranslated === 1 ? ' Type its translation next to it.' : ' Type the translations next to them.';
+  showUndoToast(msg, function () {
+    taRestoreBuilder(to, before);
+    showToast('Taken out of ' + label + ' again.', 'ok');
+  });
+  const firstNew = document.querySelectorAll('#panel-' + to + ' .rows > *')[rows.length - adding.length];
+  if (firstNew && firstNew.scrollIntoView) firstNew.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function taMountJumpBars() {
+  Object.keys(TA_JUMP).forEach(from => {
+    const compose = document.getElementById(TA_JUMP[from].p + '-compose');
+    const anchor = compose && compose.parentNode;
+    if (!anchor || document.getElementById('jumpBar-' + from)) return;
+    const targets = Object.keys(TA_JUMP).filter(t => t !== from && TA_JUMP[t].kind === TA_JUMP[from].kind);
+    const bar = document.createElement('div');
+    bar.className = 'jump-bar';
+    bar.id = 'jumpBar-' + from;
+    bar.innerHTML = '<span class="jump-bar-label">↪ Use these ' + TA_JUMP[from].noun + ' in</span>' +
+      targets.map(t => '<button type="button" class="jump-chip" data-to="' + t + '">' + TA_TAB_LABELS[t][0] + ' ' + escapeForHtml(TA_TAB_LABELS[t][1]) + '</button>').join('');
+    bar.addEventListener('click', e => {
+      const b = e.target.closest('.jump-chip');
+      if (b) taJumpTo(from, b.dataset.to);
+    });
+    anchor.parentNode.insertBefore(bar, anchor);
+  });
+}
+
 /* ================= PAGE START ================= */
 initPresBuilder();
 taOnTab('ielts-listening', renderIeltsListeningParts);
 taOnTab('ielts-reading', renderIeltsReadingParts);
 taWireSavedWork();
+taMountJumpBars();
 taStartPage('createpicker');
