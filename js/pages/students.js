@@ -150,7 +150,9 @@ function renderStudentsList() {
       '<h3>' + escapeForHtml(b.name) + '</h3>' +
       '<span class="student-group-count">' + b.students.length + ' student' + (b.students.length === 1 ? '' : 's') + '</span></div>';
     if (!b.unassigned) {
+      const exCount = getRecentExercises().filter(e => e.groupId === b.id).length;
       html += '<div class="gd-actions">' +
+        '<button class="mini-btn" type="button" onclick="taNavigate(\'my-exercises.html?group=\' + encodeURIComponent(' + jsAttr(b.id) + '))">📁 ' + exCount + ' exercise' + (exCount === 1 ? '' : 's') + '</button>' +
         '<button class="mini-btn" type="button" onclick="renameStudentGroup(' + jsAttr(b.id) + ')">✏️ Rename</button>' +
         '<button class="mini-btn danger" type="button" onclick="deleteStudentGroup(' + jsAttr(b.id) + ')">🗑 Delete group</button>' +
       '</div>';

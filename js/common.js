@@ -876,8 +876,9 @@ function pushRecentExercise(entry) {
     disabled: false,
     mergedItems: entry.mergedItems || null,
     // The builder's form as it was, so "Use again" can reopen it filled in (set by the Create page).
-    builderTab: snap ? snap.tab : null,
-    builderState: snap ? snap.state : null
+    builderTab: snap && snap.state ? snap.tab : null,
+    builderState: snap ? snap.state : null,
+    groupId: entry.groupId || (snap && snap.groupId) || ''
   });
   saveRecentExercises(list.slice(0, 200));
   if (entry.html) cacheExerciseHtml(entry.uid, entry.html);
@@ -2157,7 +2158,8 @@ function taQuickSearchItems() {
       }) });
   });
   getRecentExercises().forEach(e => {
-    items.push({ icon: '📁', label: e.title, kind: e.typeLabel + (e.requiredCode ? ' · code ' + e.requiredCode : ''),
+    const gName = groupNameFor(e.groupId);
+    items.push({ icon: '📁', label: e.title, kind: e.typeLabel + (gName ? ' · ' + gName : '') + (e.requiredCode ? ' · code ' + e.requiredCode : ''),
       extra: (e.requiredCode || '') + ' ' + (e.contentSummary || '').slice(0, 2000),
       go: () => taNavigate('my-exercises.html?highlight=' + encodeURIComponent(e.uid)) });
   });

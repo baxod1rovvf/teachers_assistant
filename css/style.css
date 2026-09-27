@@ -1659,3 +1659,13 @@ body.light-theme[data-design="burntorange"] { --surface-page: #FFF4D6; --surface
 .translate-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
 .translate-lang { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 700; color: var(--ink-faint); }
 .translate-lang select { width: auto; padding: 6px 10px; font-size: 0.8rem; }
+
+/* ---------- exercises linked to a group ---------- */
+.myex-chips-label { font-size: 0.85rem; align-self: center; }
+.myex-group-btn {
+  margin-right: 8px; padding: 2px 9px; border-radius: 999px; border: 1.5px solid var(--border); background: transparent;
+  color: var(--brand); font: inherit; font-size: 0.72rem; font-weight: 700; cursor: pointer;
+}
+.myex-group-btn.none { color: var(--ink-faint); border-style: dashed; }
+.myex-group-btn:hover { border-color: var(--brand); color: var(--brand); }
+.group-pick-list { display: flex; flex-wrap: wrap; gap: 8px; }

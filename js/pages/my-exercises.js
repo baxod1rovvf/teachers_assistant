@@ -17,6 +17,7 @@ function getRelativeDayLabel(iso) {
 }
 
 let myexTypeFilter = ''; // '' = every type
+let myexGroupFilter = null; // null = every group, '' = no group, else a group id
 
 function renderRecentExercises() {
   const wrap = document.getElementById('recentExercisesWrap');
@@ -45,12 +46,31 @@ function renderRecentExercises() {
       : '';
   }
 
+  // group chips: every group the teacher has, plus "No group" when some exercises have none
+  const groupEl = document.getElementById('myexGroupChips');
+  const groups = getStudentGroups();
+  const groupCount = {};
+  list.forEach(item => { const g = groups.some(x => x.id === item.groupId) ? item.groupId : ''; groupCount[g] = (groupCount[g] || 0) + 1; });
+  if (myexGroupFilter !== null && myexGroupFilter !== '' && !groups.some(g => g.id === myexGroupFilter)) myexGroupFilter = null;
+  if (groupEl) {
+    const chip = (val, label, n) => '<button type="button" class="myex-type-chip' + (myexGroupFilter === val ? ' active' : '') + '" onclick="setMyexGroupFilter(' + (val === null ? 'null' : jsAttr(val)) + ')">' +
+      escapeForHtml(label) + '<span class="n">' + n + '</span></button>';
+    groupEl.innerHTML = groups.length
+      ? '<span class="myex-chips-label">👥</span>' + chip(null, 'All groups', list.length) +
+        groups.map(g => chip(g.id, g.name, groupCount[g.id] || 0)).join('') +
+        (groupCount[''] ? chip('', 'No group', groupCount['']) : '')
+      : '';
+  }
+  const groupNames = {};
+  groups.forEach(g => { groupNames[g.id] = g.name; });
+
   const searchEl = document.getElementById('myexSearchInput');
   const words = (searchEl ? searchEl.value : '').trim().toLowerCase().split(/\s+/).filter(Boolean);
   const matches = item => {
     if (myexTypeFilter && item.typeLabel !== myexTypeFilter) return false;
+    if (myexGroupFilter !== null && (groupNames[item.groupId] ? item.groupId : '') !== myexGroupFilter) return false;
     if (!words.length) return true;
-    const hay = [item.title, item.typeLabel, item.requiredCode, item.contentSummary].join('\n').toLowerCase();
+    const hay = [item.title, item.typeLabel, item.requiredCode, groupNames[item.groupId] || '', item.contentSummary].join('\n').toLowerCase();
     return words.every(w => hay.indexOf(w) !== -1);
   };
 
@@ -72,7 +92,9 @@ function renderRecentExercises() {
     const disableBtn = item.disabled
       ? ''
       : '<button class="mini-btn danger" type="button" onclick="disableRecentExercisePoints(' + idx + ')">🚫 Disable Points</button>';
-    const codeLine = '<div class="recent-exercise-date">' + (item.requiredCode ? 'Code: ' + escapeForHtml(item.requiredCode) : 'No code set') + ' &middot; ' + dateStr + '</div>';
+    const gName = groupNames[item.groupId];
+    const groupBtn = '<button type="button" class="myex-group-btn' + (gName ? '' : ' none') + '" onclick="changeRecentExerciseGroup(' + idx + ')" title="Change which group this is for">👥 ' + escapeForHtml(gName || 'Set group') + '</button>';
+    const codeLine = '<div class="recent-exercise-date">' + groupBtn + (item.requiredCode ? 'Code: ' + escapeForHtml(item.requiredCode) : 'No code set') + ' &middot; ' + dateStr + '</div>';
     const hasHtml = !!getCachedExerciseHtml(item.uid);
     const openBtn = hasHtml
       ? '<button class="mini-btn" type="button" onclick="redownloadRecentExercise(' + idx + ')">📥 Redownload</button>'
@@ -105,11 +127,12 @@ function renderRecentExercises() {
       '</div>';
   });
   const countEl = document.getElementById('myexCount');
-  const filtered = words.length || myexTypeFilter;
+  const filtered = words.length || myexTypeFilter || myexGroupFilter !== null;
   if (countEl) countEl.textContent = filtered ? shown + ' of ' + list.length : list.length + ' exercise' + (list.length === 1 ? '' : 's');
   wrap.innerHTML = shown
     ? html
-    : '<div class="empty-results">Nothing matches' + (words.length ? ' “' + escapeForHtml(searchEl.value.trim()) + '”' : '') + (myexTypeFilter ? ' in ' + escapeForHtml(myexTypeFilter) : '') + '. ' +
+    : '<div class="empty-results">Nothing matches' + (words.length ? ' “' + escapeForHtml(searchEl.value.trim()) + '”' : '') + (myexTypeFilter ? ' in ' + escapeForHtml(myexTypeFilter) : '') +
+      (myexGroupFilter !== null ? ' for ' + escapeForHtml(groupNames[myexGroupFilter] || 'no group') : '') + '. ' +
       '<button class="mini-btn" type="button" onclick="clearMyexFilters()">Show all</button></div>';
 }
 
@@ -117,8 +140,36 @@ function setMyexTypeFilter(type) {
   myexTypeFilter = type;
   renderRecentExercises();
 }
+function setMyexGroupFilter(groupId) {
+  myexGroupFilter = groupId;
+  renderRecentExercises();
+}
+
+function changeRecentExerciseGroup(idx) {
+  const item = getRecentExercises()[idx];
+  if (!item) return;
+  const groups = getStudentGroups();
+  if (!groups.length) { showToast('Add a group on the Students page first.'); return; }
+  const m = taModal('👥 Which group is "' + item.title + '" for?',
+    '<div class="group-pick-list">' +
+      groups.map(g => '<button type="button" class="mini-btn' + (g.id === item.groupId ? ' solid' : '') + '" data-g="' + escapeForHtml(g.id) + '">' + escapeForHtml(g.name) + '</button>').join('') +
+      '<button type="button" class="mini-btn' + (!groups.some(g => g.id === item.groupId) ? ' solid' : '') + '" data-g="">No group</button>' +
+    '</div>');
+  m.body.querySelectorAll('[data-g]').forEach(b => b.onclick = () => {
+    const list = getRecentExercises();
+    const at = list.findIndex(e => e.uid === item.uid);
+    if (at === -1) return;
+    list[at].groupId = b.dataset.g;
+    saveRecentExercises(list);
+    m.close();
+    renderRecentExercises();
+    showToast(b.dataset.g ? '"' + item.title + '" is now for ' + b.textContent + '.' : '"' + item.title + '" isn\'t linked to a group now.', 'ok');
+  });
+}
+
 function clearMyexFilters() {
   myexTypeFilter = '';
+  myexGroupFilter = null;
   const el = document.getElementById('myexSearchInput');
   if (el) el.value = '';
   renderRecentExercises();
@@ -294,7 +345,7 @@ function separateHomeworkOrClass(idx) {
     pushRecentExercise({
       title: orig.title, typeLabel: orig.typeLabel,
       code: generateClassCode(), uid: generateExerciseUid(),
-      html: orig.html, requiredCode: codeMatch ? codeMatch[1] : ''
+      html: orig.html, requiredCode: codeMatch ? codeMatch[1] : '', groupId: item.groupId || ''
     });
   });
   removeRecentExercise(item.uid);
@@ -318,6 +369,9 @@ async function disableRecentExercisePoints(idx) {
 
 /* ================= PAGE START ================= */
 taOnTab('myexercises', function () {
+  // Opened from a group on the Students page: my-exercises.html?group=<id>
+  const g = new URLSearchParams(location.search).get('group');
+  if (g !== null) { myexTypeFilter = ''; myexGroupFilter = g; const el = document.getElementById('myexSearchInput'); if (el) el.value = ''; }
   renderRecentExercises();
   // Opened from a lesson plan: my-exercises.html?highlight=<uid>
   const uid = new URLSearchParams(location.search).get('highlight');

@@ -283,6 +283,7 @@ function selectHwcType(key) {
   if (numEl) numEl.textContent = hwcRounds.length + 1;
   const actions = card.querySelector('.builder-actions');
   if (actions) actions.style.display = 'none';
+  if (typeof taFillGroupSelect === 'function') taFillGroupSelect(type.key);
   switchTo('hwcround');
 }
 
@@ -326,6 +327,7 @@ function hwcCaptureCurrentRound() {
   const codeMatch = html.match(/const REQUIRED_CODE = "([^"]*)"/);
   const titleMatch = html.match(/<title>([^<]*)<\/title>/);
   hwcRounds.push({
+    groupId: typeof taBuilderGroup === 'function' ? taBuilderGroup(hwcCurrentType.key) : '',
     label: titleMatch ? titleMatch[1] : hwcCurrentType.label,
     html: html,
     code: hwcRounds.length === 0 && codeMatch ? codeMatch[1] : (hwcRounds[0] ? hwcRounds[0].code : '')
@@ -641,7 +643,8 @@ window.addEventListener("message", function (e) {
     html: wrapper,
     requiredCode: requiredCode,
     contentSummary: summary,
-    mergedItems: mergedItems
+    mergedItems: mergedItems,
+    groupId: (hwcRounds.find(r => r.groupId) || {}).groupId || ''
   });
 
   hwcRounds = [];
@@ -4205,6 +4208,7 @@ function taLoadIntoBuilder(tab, state, label) {
 }
 
 function taOnBuilderOpened(tab) {
+  taFillGroupSelect(tab); // groups may have changed since
   if (taPristine[tab] === undefined) {
     taApplySettings(tab); // first time this visit: start from the teacher's usual settings
     taPristine[tab] = taBuilderSignature(tab, taCaptureBuilder(tab));
@@ -4221,6 +4225,37 @@ function taOnBuilderOpened(tab) {
   const now = taCaptureBuilder(tab);
   // Only offer it when the builder is empty; work already on screen is newer.
   if (taIsEmptyBuilder(tab, now) && !taIsEmptyBuilder(tab, draft.state)) taShowDraftBanner(tab, draft);
+}
+
+/* ---------- which group an exercise is for ----------
+   Every builder gets a "For group" picker under its title. The group is
+   saved with the exercise, so My Exercises can show and filter by it. */
+function taGroupSelectId(tab) { return 'grp-' + tab; }
+function taMountGroupPickers() {
+  TA_SAVED_TABS.forEach(tab => {
+    const panel = document.getElementById('panel-' + tab);
+    const title = panel && panel.querySelector('input[id$="-title"]');
+    const field = title && title.closest('.title-field');
+    if (!field || document.getElementById(taGroupSelectId(tab))) return;
+    const box = document.createElement('div');
+    box.className = 'title-field';
+    box.innerHTML = '<label class="field-label" for="' + taGroupSelectId(tab) + '">For group (optional)</label>' +
+      '<select id="' + taGroupSelectId(tab) + '" class="ta-no-remember ta-group-select"></select>';
+    field.after(box);
+    taFillGroupSelect(tab);
+  });
+}
+function taFillGroupSelect(tab) {
+  const sel = document.getElementById(taGroupSelectId(tab));
+  if (!sel) return;
+  const keep = sel.value;
+  sel.innerHTML = '<option value="">— Any group —</option>' +
+    getStudentGroups().map(g => '<option value="' + escapeForHtml(g.id) + '">' + escapeForHtml(g.name) + '</option>').join('');
+  if (Array.from(sel.options).some(o => o.value === keep)) sel.value = keep;
+}
+function taBuilderGroup(tab) {
+  const sel = document.getElementById(taGroupSelectId(tab));
+  return sel ? sel.value : '';
 }
 
 // Called at page start, after the builders' own tab hooks are registered.
@@ -4243,11 +4278,11 @@ window.taSnapshotForMyExercises = function () {
   taRememberSettings(tab);
   const state = taCaptureBuilder(tab);
   const json = JSON.stringify(state);
-  if (json.length > 300000) return null; // big pictures in a presentation: too large to keep in the list
   taSetDraft(tab, null);
   taDraftMine[tab] = false;
   taLastSaved[tab] = json; // the same form isn't saved again as a draft
-  return { tab: tab, state: state };
+  // big pictures in a presentation: too large to keep in the list
+  return { tab: tab, state: json.length > 300000 ? null : state, groupId: taBuilderGroup(tab) };
 };
 
 /* ---------- Reset All: straight away, with Undo ---------- */
@@ -4321,6 +4356,8 @@ function taJumpTo(from, to) {
   const fromTitle = document.getElementById(TA_JUMP[from].p + '-title');
   const tookTitle = titleEl && !titleEl.value.trim() && fromTitle && fromTitle.value.trim();
   if (tookTitle) titleEl.value = fromTitle.value.trim();
+  const toGroup = document.getElementById(taGroupSelectId(to));
+  if (toGroup && !toGroup.value && taBuilderGroup(from)) toGroup.value = taBuilderGroup(from);
 
   const label = TA_TAB_LABELS[to][1];
   if (!adding.length) {
@@ -4351,6 +4388,7 @@ function taHwcJumpTo(from, to) {
   if (!items.length) { showToast('Add some ' + TA_JUMP[from].noun + ' first.'); return; }
   const fromTitleEl = document.getElementById(TA_JUMP[from].p + '-title');
   const title = fromTitleEl ? fromTitleEl.value.trim() : '';
+  const fromGroup = taBuilderGroup(from);
   if (!hwcCaptureCurrentRound()) { showToast('Please finish filling in this exercise first — then its ' + TA_JUMP[from].noun + ' carry over.'); return; }
   const roundNum = hwcRounds.length;
   hwcRestoreCard();
@@ -4364,6 +4402,8 @@ function taHwcJumpTo(from, to) {
   TA_BUILDER_ROWS[to].set(unique.map(target.row));
   const titleEl = document.getElementById(target.p + '-title');
   if (titleEl && title) titleEl.value = title;
+  const toGroup = document.getElementById(taGroupSelectId(to));
+  if (toGroup && fromGroup) toGroup.value = fromGroup;
 
   const label = TA_TAB_LABELS[to][1];
   let msg = 'Round ' + roundNum + ' added. Round ' + (roundNum + 1) + ': ' + label + ' with the same ' + unique.length + ' ' +
@@ -4404,6 +4444,7 @@ function taMountJumpBars() {
 initPresBuilder();
 taOnTab('ielts-listening', renderIeltsListeningParts);
 taOnTab('ielts-reading', renderIeltsReadingParts);
+taMountGroupPickers();
 taWireSavedWork();
 taMountJumpBars();
 taStartPage('createpicker');

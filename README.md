@@ -47,6 +47,8 @@ That link opens the Dashboard (shown as `…/teachers_assistant/index`). The Con
 - **Fill translations:** Flashcard's **🌐 Fill empty translations** machine-translates every word that has no translation yet (Uzbek by default; the language is a setting), using the same free service as Bidirectional Language.
 - **Usual settings:** points, time limit, design, quiz type and the other settings are remembered per exercise type from the last exercise made, and Reset All goes back to them. Titles, words and instructions are never carried over.
 
+- **Exercises for a group:** every builder has a **For group** picker. My Exercises shows each exercise's group (click it to change it), filters by group, and search finds group names. A group on the Students page links to its exercises.
+
 The code is in the "SAVED WORK" and "USE THE SAME WORDS" sections of `js/pages/create.js` (`taCaptureBuilder` / `taRestoreBuilder`).
 
 ## Getting around and sharing
