@@ -145,7 +145,17 @@ body:not(.light-theme) .sidebar-hamburger-anim svg { filter: invert(1); }
   color: var(--ink); white-space: nowrap; pointer-events: none;
 }
 .sidebar-brand { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 1.05rem; display: flex; align-items: center; gap: 10px; padding: 6px 10px 22px; color: var(--ink); white-space: nowrap; }
-.sidebar-brand-anim { width: 40px; height: 40px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-left: -4px; }
+/* the TA logo sits on a white tile so its dark blue reads on every design */
+.brand-tile {
+  width: 40px; height: 40px; flex-shrink: 0; border-radius: 11px; background: #FFFFFF;
+  display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+.brand-tile img { width: 30px; height: auto; display: block; }
+.brand-name { display: inline-flex; flex-direction: column; line-height: 1.05; }
+.brand-name b { font-weight: 800; color: var(--ink); }
+.brand-name span { font-weight: 600; color: #0FA37B; }
+body.light-theme .brand-name b { color: #1B2F82; }
+.login-brand { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 14px; font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; }
 .side-icon-anim { width: 20px; height: 20px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
 .section-heading-anim { width: 32px; height: 32px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
 

@@ -434,7 +434,7 @@ function buildWorksheetHtml(item) {
   return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' +
     '<title>' + wsEsc(item.title) + ' — worksheet</title><style>' +
     'body{font-family:Georgia,"Times New Roman",serif;color:#111;background:#fff;margin:0;padding:28px;max-width:760px;margin:0 auto;line-height:1.5;font-size:15px}' +
-    'h1{font-size:24px;margin:0 0 4px}h2{font-size:17px;margin:22px 0 6px}.ws-sub{color:#555;font-size:13px;margin:0 0 14px}' +
+    '.ws-logo{float:right;height:58px;margin:0 0 8px 16px}h1{font-size:24px;margin:0 0 4px}h2{font-size:17px;margin:22px 0 6px}.ws-sub{color:#555;font-size:13px;margin:0 0 14px}' +
     '.ws-head{display:flex;gap:24px;flex-wrap:wrap;border-bottom:2px solid #111;padding-bottom:10px;margin-bottom:6px;font-size:14px}.ws-head span{flex:1;min-width:180px;border-bottom:1px solid #999;padding-bottom:2px}' +
     '.ws-list{padding-left:26px;margin:6px 0}.ws-list li{margin:0 0 9px}.ws-roomy li{margin-bottom:16px}' +
     '.ws-match{display:flex;gap:40px;flex-wrap:wrap}.ws-match .ws-list{flex:1;min-width:200px}' +
@@ -447,6 +447,7 @@ function buildWorksheetHtml(item) {
     '@media print{.ws-bar{display:none}body{padding:0}}' +
     '</style></head><body>' +
     '<div class="ws-bar"><button type="button" onclick="print()">🖨 Print</button><span>Or save it as PDF from the print window.' + (sheet.key ? ' The answer key prints on its own page.' : '') + '</span></div>' +
+    '<img class="ws-logo" src="' + new URL('images/app/logo-full.png', location.href).href + '" alt="Teacher\'s Assistant">' +
     '<h1>' + wsEsc(item.title) + '</h1><p class="ws-sub">' + wsEsc(item.typeLabel) + (gName ? ' · ' + wsEsc(gName) : '') + '</p>' +
     '<div class="ws-head"><span>Name:</span><span>Date:</span></div>' + partsHtml +
     (sheet.key ? '<div class="ws-key"><h2>Answer key — ' + wsEsc(item.title) + '</h2><p>' + sheet.key + '</p></div>' : '') +

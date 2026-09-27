@@ -7,7 +7,7 @@
      older versions of the same file are dropped when a new one is saved.
    Only this site's own files are handled; the cloud (Firebase) and every
    other site go straight to the network. */
-const CACHE = 'ta-app-v1';
+const CACHE = 'ta-app-v2'; // v2: new logo and icons
 const PAGES = ['./', 'index.html', 'create.html', 'statistics.html', 'my-exercises.html', 'students.html',
   'results.html', 'points.html', 'settings.html'];
 

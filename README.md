@@ -61,7 +61,7 @@ The code is in the "SAVED WORK" and "USE THE SAME WORDS" sections of `js/pages/c
 
 ## Installing as an app
 
-`manifest.webmanifest`, the icons in `images/app/` and the service worker `sw.js` let teachers install the app (Settings → 📲 Install on this device, or the browser's own install option; on iPhone/iPad: Safari → Share → Add to Home Screen). Installed or not, pages the browser has loaded open without a connection: pages are fetched from the network first and saved for offline use; styles, scripts and images are served from the saved copy and refreshed in the background. Because file addresses carry `?v=…`, bumping the version is still what makes browsers pick up new code. The service worker only handles this site's own files, never Firebase.
+`manifest.webmanifest`, the icons in `images/app/` (the TA logo: `logo-mark.png` for the sidebar and sign-in card, `logo-full.png` on printed worksheets, `icon-*.png` and `favicon-64.png` for the app and browser tab) and the service worker `sw.js` let teachers install the app (Settings → 📲 Install on this device, or the browser's own install option; on iPhone/iPad: Safari → Share → Add to Home Screen). Installed or not, pages the browser has loaded open without a connection: pages are fetched from the network first and saved for offline use; styles, scripts and images are served from the saved copy and refreshed in the background. Because file addresses carry `?v=…`, bumping the version is still what makes browsers pick up new code. The service worker only handles this site's own files, never Firebase.
 
 ## Interface language
 

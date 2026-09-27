@@ -1591,27 +1591,6 @@ function toggleThemeAnimated() {
 }
 window.toggleThemeAnimated = toggleThemeAnimated;
 
-function initBrandArcAnim() {
-  const el = document.getElementById('brandArcAnim');
-  if (!el || typeof lottie === 'undefined') return;
-  try {
-    el.innerHTML = '';
-    const anim = lottie.loadAnimation({
-      container: el,
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      animationData: BRAND_ARC_ANIM
-    });
-    anim.addEventListener('DOMLoaded', function () {
-      try {
-        var idleMarker = (BRAND_ARC_ANIM.markers || []).find(function (m) { return m.cm === 'idle'; });
-        if (idleMarker) anim.playSegments([idleMarker.tm, idleMarker.tm + idleMarker.dr], true);
-      } catch (e) { /* ignore */ }
-    });
-  } catch (e) { /* decorative — fail silently */ }
-}
-window.initBrandArcAnim = initBrandArcAnim;
 
 function initStatsIconAnim() {
   const el = document.getElementById('statsIconAnim');
@@ -2320,7 +2299,6 @@ function taStartPage(defaultTab) {
   const hashTab = decodeURIComponent(location.hash.slice(1));
   switchTo(hashTab && document.getElementById('panel-' + hashTab) ? hashTab : defaultTab);
   initWelcomeSplash();
-  initBrandArcAnim();
   initStatsIconAnim();
   initCreateIconAnim();
   taInitSectionAnims();
