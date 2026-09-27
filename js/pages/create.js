@@ -2967,16 +2967,94 @@ function resetEnglishContentForm() {
   if (!confirm('Reset the English Content form? This clears the title, video link, and settings.')) return;
   document.getElementById('ec-title').value = '';
   document.getElementById('ec-youtube').value = '';
+  clearMediaFile('ec');
   document.getElementById('ec-code').value = '';
   showToast('English Content form reset.', 'ok');
 }
 
+/* ================= MEDIA FILES PACKED INTO AN EXERCISE =================
+   Instead of pasting a link, the teacher can choose an audio/video file from
+   their computer. It's stored inside the downloaded exercise file itself (as
+   base64 text), and a small script at the top of that file turns it back into
+   a playable file when a student opens it — no hosting or link needed. */
+const TA_MEDIA_FILES = {}; // 'ec' / 'dc' -> File
+const TA_MEDIA_B64 = {};   // 'ec' / 'dc' -> the file as base64, read as soon as it's chosen
+const TA_MEDIA_WARN_MB = 40, TA_MEDIA_MAX_MB = 300;
+function taFormatMb(bytes) { return (bytes / 1048576).toFixed(bytes < 10485760 ? 1 : 0) + ' MB'; }
+function onMediaFileChosen(prefix, input) {
+  const file = input.files && input.files[0];
+  input.value = '';
+  if (!file) return;
+  if (!/^(audio|video)\//.test(file.type) && !/\.(mp3|m4a|wav|ogg|oga|aac|flac|mp4|m4v|mov|webm|mkv)$/i.test(file.name)) {
+    showToast('That doesn\'t look like an audio or video file.'); return;
+  }
+  if (file.size > TA_MEDIA_MAX_MB * 1048576) {
+    showToast('That file is ' + taFormatMb(file.size) + ' — too big to pack into an exercise (the limit is ' + TA_MEDIA_MAX_MB + ' MB). Try a shorter clip.'); return;
+  }
+  TA_MEDIA_FILES[prefix] = file;
+  delete TA_MEDIA_B64[prefix];
+  // read it now, so creating the exercise (and adding it to a Homework/Class set) is instant
+  taReadFileBase64(file).then(b64 => { if (TA_MEDIA_FILES[prefix] === file) { TA_MEDIA_B64[prefix] = b64; renderMediaFileName(prefix); } })
+    .catch(() => { if (TA_MEDIA_FILES[prefix] === file) { clearMediaFile(prefix); showToast('Could not read that file. Try choosing it again.'); } });
+  const linkInput = document.getElementById(prefix === 'ec' ? 'ec-youtube' : 'dc-audio');
+  if (linkInput) { linkInput.value = ''; linkInput.disabled = true; linkInput.placeholder = 'Using the file you chose'; }
+  renderMediaFileName(prefix);
+}
+function clearMediaFile(prefix) {
+  delete TA_MEDIA_FILES[prefix];
+  delete TA_MEDIA_B64[prefix];
+  const linkInput = document.getElementById(prefix === 'ec' ? 'ec-youtube' : 'dc-audio');
+  if (linkInput) { linkInput.disabled = false; linkInput.placeholder = prefix === 'ec' ? 'YouTube, Vimeo, Google Drive, or a direct video link...' : 'https://example.com/audio.mp3'; }
+  renderMediaFileName(prefix);
+}
+function renderMediaFileName(prefix) {
+  const el = document.getElementById(prefix + '-media-name');
+  if (!el) return;
+  const file = TA_MEDIA_FILES[prefix];
+  el.innerHTML = file
+    ? (TA_MEDIA_B64[prefix] ? '✅ ' : '⏳ ') + escapeForHtml(file.name) + ' <span class="media-pick-size">' + taFormatMb(file.size) + (TA_MEDIA_B64[prefix] ? '' : ' · preparing…') + '</span> <button type="button" class="media-pick-remove" onclick="clearMediaFile(\'' + prefix + '\')" title="Remove this file">✕</button>' +
+      (file.size > TA_MEDIA_WARN_MB * 1048576 ? '<div class="media-pick-warn">Big file: the exercise will be about ' + taFormatMb(file.size * 1.34) + ' and slower to send and open. A shorter or smaller clip works better.</div>' : '')
+    : '';
+}
+window.onMediaFileChosen = onMediaFileChosen;
+window.clearMediaFile = clearMediaFile;
+function taReadFileBase64(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(String(r.result).slice(String(r.result).indexOf(',') + 1));
+    r.onerror = () => reject(r.error);
+    r.readAsDataURL(file);
+  });
+}
+function taGuessMime(file) {
+  if (file.type) return file.type;
+  const ext = (file.name.split('.').pop() || '').toLowerCase();
+  return ({ mp3: 'audio/mpeg', m4a: 'audio/mp4', wav: 'audio/wav', ogg: 'audio/ogg', oga: 'audio/ogg', aac: 'audio/aac', flac: 'audio/flac',
+    mp4: 'video/mp4', m4v: 'video/mp4', mov: 'video/quicktime', webm: 'video/webm', mkv: 'video/x-matroska' })[ext] || 'application/octet-stream';
+}
+// Puts the file inside the exercise, plus the script that unpacks it for students.
+function taEmbedMedia(html, b64, mime) {
+  const block =
+    '<script type="text/plain" id="taMediaData" data-mime="' + escapeForHtml(mime) + '">' + b64 + '<\/script>\n' +
+    '<script>(function(){try{var el=document.getElementById("taMediaData");var s=atob(el.textContent.trim());el.textContent="";' +
+    'var u=new Uint8Array(s.length);for(var i=0;i<s.length;i++)u[i]=s.charCodeAt(i);' +
+    'window.__TA_MEDIA_URL=URL.createObjectURL(new Blob([u],{type:el.getAttribute("data-mime")}));}catch(e){console.error("Media could not be unpacked",e);}' +
+    'document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll("[data-ta-media]").forEach(function(m){m.src=window.__TA_MEDIA_URL||"";});});})();<\/script>\n';
+  const at = html.indexOf('<body>');
+  return html.slice(0, at + 6) + '\n' + block + html.slice(at + 6);
+}
+// Exercises with a packed media file are too big to keep for re-download/merging in the browser.
+const TA_MAX_CACHED_HTML_CHARS = 3 * 1048576;
+
 function createEnglishContent() {
   const title = document.getElementById('ec-title').value.trim();
   if (!title) { showToast('Please enter a title for the exercise.'); return; }
-  const videoUrl = document.getElementById('ec-youtube').value.trim();
-  if (!videoUrl) { showToast('Paste a video link first.'); return; }
-  if (!/^https?:\/\//i.test(videoUrl)) { showToast("That doesn't look like a valid link — it should start with http:// or https://."); return; }
+  const mediaFile = TA_MEDIA_FILES.ec || null;
+  const videoUrl = mediaFile ? '' : document.getElementById('ec-youtube').value.trim();
+  if (!mediaFile && !videoUrl) { showToast('Paste a video link or choose a video file first.'); return; }
+  if (!mediaFile && !/^https?:\/\//i.test(videoUrl)) { showToast("That doesn't look like a valid link — it should start with http:// or https://."); return; }
+  const mediaB64 = mediaFile ? TA_MEDIA_B64.ec : '';
+  if (mediaFile && !mediaB64) { showToast('Still preparing "' + mediaFile.name + '" — try again in a moment.'); return; }
 
   const requiredCode = document.getElementById('ec-code').value.trim();
   const __timerMin_ec = parseFloat((document.getElementById('ec-timer') || {value:''}).value);
@@ -2994,6 +3072,11 @@ function createEnglishContent() {
   html = html.split('__BOARD_CODE__').join(getPointsBoardCode());
   html = html.split('__ROSTER_JSON__').join(JSON.stringify(getPointsRoster()));
   html = html.split('__POINTS_AWARD__').join('0');
+  if (mediaFile) {
+    // the player reads the unpacked file instead of a link
+    html = html.split('const VIDEO_URL = "__VIDEO_URL__";').join('const VIDEO_URL = window.__TA_MEDIA_URL || "";');
+    html = taEmbedMedia(html, mediaB64, taGuessMime(mediaFile));
+  }
   html = html.split('__VIDEO_URL__').join(videoUrl.replace(/'/g, "\\'"));
   html = html.split('__ACCESS_ID_MODE__').join('unified');
   html = html.split('__REQUIRED_CODE__').join(escapeForHtml(requiredCode));
@@ -3034,8 +3117,9 @@ function loadPuterScript() {
 let dcTranscribing = false;
 async function autoTranscribeDictation(targetFieldId, btn) {
   if (dcTranscribing) return;
-  const audioUrl = document.getElementById('dc-audio').value.trim();
-  if (!audioUrl) { showToast('Paste the audio link first.'); return; }
+  const mediaFile = TA_MEDIA_FILES.dc || null;
+  const audioUrl = mediaFile ? '' : document.getElementById('dc-audio').value.trim();
+  if (!mediaFile && !audioUrl) { showToast('Paste the audio link or choose an audio file first.'); return; }
 
   const target = document.getElementById(targetFieldId);
   const originalLabel = btn.textContent;
@@ -3045,7 +3129,7 @@ async function autoTranscribeDictation(targetFieldId, btn) {
 
   try {
     await loadPuterScript();
-    const result = await window.puter.ai.speech2txt(audioUrl);
+    const result = await window.puter.ai.speech2txt(mediaFile || audioUrl);
     const text = (result && result.text) ? result.text : (typeof result === 'string' ? result : '');
     if (!text) { showToast('The transcription came back empty — check the audio link.'); }
     else {
@@ -3214,6 +3298,7 @@ function resetDictationForm() {
   if (!confirm('Reset the Dictation form? This clears the title, audio link, and text.')) return;
   document.getElementById('dc-title').value = '';
   document.getElementById('dc-audio').value = '';
+  clearMediaFile('dc');
   document.getElementById('dc-mode').value = 'free';
   document.getElementById('dc-reference').value = '';
   document.getElementById('dc-cloze-text').value = '';
@@ -3225,9 +3310,10 @@ function resetDictationForm() {
 function createDictation() {
   const title = document.getElementById('dc-title').value.trim();
   if (!title) { showToast('Please enter a title for the exercise.'); return; }
-  const audioUrl = document.getElementById('dc-audio').value.trim();
-  if (!audioUrl) { showToast('Paste an audio link first.'); return; }
-  if (!/^https?:\/\//i.test(audioUrl)) { showToast("That doesn't look like a valid link — it should start with http:// or https://."); return; }
+  const mediaFile = TA_MEDIA_FILES.dc || null;
+  const audioUrl = mediaFile ? '' : document.getElementById('dc-audio').value.trim();
+  if (!mediaFile && !audioUrl) { showToast('Paste an audio link or choose an audio file first.'); return; }
+  if (!mediaFile && !/^https?:\/\//i.test(audioUrl)) { showToast("That doesn't look like a valid link — it should start with http:// or https://."); return; }
 
   const mode = document.getElementById('dc-mode').value;
   let referenceText = '', clozeHtml = '', clozeAnswers = [];
@@ -3248,11 +3334,19 @@ function createDictation() {
   const __timerMin_dc = parseFloat((document.getElementById('dc-timer') || {value:''}).value);
   const timeLimitMinutesDc = isNaN(__timerMin_dc) || __timerMin_dc <= 0 ? '0' : String(__timerMin_dc);
 
+  const mediaB64 = mediaFile ? TA_MEDIA_B64.dc : '';
+  if (mediaFile && !mediaB64) { showToast('Still preparing "' + mediaFile.name + '" — try again in a moment.'); return; }
+
   const code = generateClassCode();
   const classCode = setActiveClassCode(code);
   const __dc_uid = generateExerciseUid();
 
   let html = DICTATION_TEMPLATE;
+  if (mediaFile) {
+    // the audio player gets the unpacked file instead of a link
+    html = html.split('src="__AUDIO_URL__"').join('data-ta-media');
+    html = taEmbedMedia(html, mediaB64, taGuessMime(mediaFile));
+  }
   html = html.split('__TIME_LIMIT_MINUTES__').join(timeLimitMinutesDc);
   html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
   html = html.split('__EXERCISE_CODE__').join(classCode);

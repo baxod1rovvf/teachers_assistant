@@ -770,6 +770,8 @@ const LS_EXERCISE_HTML_CACHE = 'ta_exercise_html_cache';
 const MAX_CACHED_EXERCISE_HTML = 20;
 
 function cacheExerciseHtml(uid, html) {
+  // Exercises with a packed audio/video file are too big for the browser's storage (and cloud sync).
+  if (typeof html === 'string' && html.length > 3 * 1048576) return;
   try {
     const cache = JSON.parse(localStorage.getItem(LS_EXERCISE_HTML_CACHE) || '{}');
     cache[uid] = html;
