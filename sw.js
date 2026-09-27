@@ -1,13 +1,13 @@
 /* Teacher's Assistant service worker: lets the app be installed and open
    quickly (or without a connection) from what it has already loaded.
-   - Pages: the network first, so a teacher always gets the newest version;
-     the saved copy only when offline.
+   - Pages, the app manifest and icons: the network first, so a teacher
+     always gets the newest version; the saved copy only when offline.
    - Styles, scripts, images: the saved copy at once, refreshed in the
      background. Their addresses carry ?v=… so a new version is a new file;
      older versions of the same file are dropped when a new one is saved.
    Only this site's own files are handled; the cloud (Firebase) and every
    other site go straight to the network. */
-const CACHE = 'ta-app-v2'; // v2: new logo and icons
+const CACHE = 'ta-app-v3'; // v3: new logo and icons, manifest always fresh
 const PAGES = ['./', 'index.html', 'create.html', 'statistics.html', 'my-exercises.html', 'students.html',
   'results.html', 'points.html', 'settings.html'];
 
@@ -40,7 +40,9 @@ self.addEventListener('fetch', event => {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
 
-  if (req.mode === 'navigate' || /\.html$/.test(url.pathname)) {
+  // Pages, the app manifest and the app icons: always the newest from the network, so an
+  // installed app notices a new name or icon (the saved copy is only for offline use).
+  if (req.mode === 'navigate' || /\.(html|webmanifest)$/.test(url.pathname) || url.pathname.indexOf('/images/app/') !== -1) {
     event.respondWith(fetch(req).then(res => {
       const copy = res.clone();
       event.waitUntil(saveCopy(new Request(url.origin + url.pathname), copy));

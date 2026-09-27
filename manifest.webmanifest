@@ -1,4 +1,5 @@
 {
+  "id": "./",
   "name": "Teacher's Assistant",
   "short_name": "Teacher's Asst",
   "description": "Build classroom exercises in minutes, and track your students' results and points.",
@@ -9,25 +10,25 @@
   "theme_color": "#101116",
   "icons": [
     {
-      "src": "images/app/icon-192.png",
+      "src": "images/app/icon-ta-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "images/app/icon-512.png",
+      "src": "images/app/icon-ta-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "images/app/icon-192.png",
+      "src": "images/app/icon-ta-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "images/app/icon-512.png",
+      "src": "images/app/icon-ta-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
