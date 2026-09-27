@@ -520,6 +520,16 @@ body.light-theme .picker-icon-listening { background-image: url(../images/icons/
 body.light-theme .picker-icon-homework { background-image: url(../images/icons/create/homework.png); }
 .picker-icon-class { background-image: url(../images/icons/create/class-night.png); }
 body.light-theme .picker-icon-class { background-image: url(../images/icons/create/class.png); }
+.picker-icon-speaking { background-image: url(../images/icons/create/speaking-night.png); }
+body.light-theme .picker-icon-speaking { background-image: url(../images/icons/create/speaking.png); }
+.picker-icon-reading { background-image: url(../images/icons/create/reading-night.png); }
+body.light-theme .picker-icon-reading { background-image: url(../images/icons/create/reading.png); }
+.picker-icon-presentation { background-image: url(../images/icons/create/presentation-night.png); }
+body.light-theme .picker-icon-presentation { background-image: url(../images/icons/create/presentation.png); }
+.picker-icon-pronunciation { background-image: url(../images/icons/create/pronunciation-night.png); }
+body.light-theme .picker-icon-pronunciation { background-image: url(../images/icons/create/pronunciation.png); }
+.picker-icon-test { background-image: url(../images/icons/create/test-night.png); }
+body.light-theme .picker-icon-test { background-image: url(../images/icons/create/test.png); }
 .picker-card-sub { font-size: 0.78rem; color: var(--ink-faint); margin-top: 2px; }
 .hwc-avail-row {
   display: flex; justify-content: space-between; align-items: center; gap: 10px;
