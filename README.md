@@ -44,6 +44,9 @@ That link opens the Dashboard (shown as `…/teachers_assistant/index`). The Con
 
 - **Same words, another exercise:** Flashcard, Spelling, Make a Word, Pronunciation and Sentences have a **↪ Use these words in** bar that carries the word list (and the title, if the other builder has none) into another of them. Word Order and Test do the same with sentences. Words already there aren't added twice, Flashcard keeps its translations, and it can be undone. In a Homework/Class round the same bar reads **↪ Next round with the same words**: it adds the round to the set and starts the next round in the chosen type with the same words and title.
 
+- **Fill translations:** Flashcard's **🌐 Fill empty translations** machine-translates every word that has no translation yet (Uzbek by default; the language is a setting), using the same free service as Bidirectional Language.
+- **Usual settings:** points, time limit, design, quiz type and the other settings are remembered per exercise type from the last exercise made, and Reset All goes back to them. Titles, words and instructions are never carried over.
+
 The code is in the "SAVED WORK" and "USE THE SAME WORDS" sections of `js/pages/create.js` (`taCaptureBuilder` / `taRestoreBuilder`).
 
 ## Getting around and sharing

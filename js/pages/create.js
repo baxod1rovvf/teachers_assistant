@@ -160,6 +160,43 @@ function resetFlashcardForm() {
   renumberRows(fcRows);
 }
 
+/* Fills every empty translation box with a machine translation (the same
+   free service Bidirectional Language uses). Words go in batches, one per
+   line, so 30 words take one or two requests; a batch that comes back
+   with a different number of lines is redone word by word. */
+async function autoTranslateFlashcards() {
+  const lang = document.getElementById('fc-tr-lang').value;
+  const todo = Array.from(fcRows.querySelectorAll('.row-item')).map(r => r.querySelectorAll('input'))
+    .filter(inp => inp[0].value.trim() && !inp[1].value.trim());
+  if (!todo.length) {
+    showToast(fcRows.querySelector('.row-item') ? 'Every word already has a translation.' : 'Type some words first.');
+    return;
+  }
+  const btn = document.getElementById('fc-translate-btn');
+  btn.disabled = true;
+  const label = btn.textContent;
+  btn.textContent = '🌐 Translating…';
+  let ok = 0, fail = 0;
+  for (let i = 0; i < todo.length; i += 40) {
+    const batch = todo.slice(i, i + 40);
+    let lines = null;
+    const joined = await mtTranslateBuilder(batch.map(inp => inp[0].value.trim()).join('\n'), lang);
+    if (joined !== null) {
+      lines = joined.split('\n').map(x => x.trim());
+      if (lines.length !== batch.length) lines = null;
+    }
+    for (let j = 0; j < batch.length; j++) {
+      let tr = lines ? lines[j] : await mtTranslateBuilder(batch[j][0].value.trim(), lang);
+      if (tr && !batch[j][1].value.trim()) { batch[j][1].value = tr; ok++; } else if (!tr) fail++;
+    }
+  }
+  btn.disabled = false;
+  btn.textContent = label;
+  if (!fail) showToast('✅ Translated ' + ok + ' word' + (ok === 1 ? '' : 's') + '. Check them — machine translation can be wrong.', 'ok');
+  else if (ok) showToast('⚠️ Translated ' + ok + ', but ' + fail + ' failed — type those by hand.');
+  else showToast('The translation service isn\'t answering right now — check your internet connection, or type them by hand.');
+}
+
 /* ================= FLASHCARD MODE HINT ================= */
 function onQuizModeChange() {
   const mode = document.getElementById('fc-quiz-mode').value;
@@ -285,6 +322,7 @@ function captureHwcRoundBuild() {
 function hwcCaptureCurrentRound() {
   const html = captureHwcRoundBuild();
   if (!html) return false;
+  if (typeof taRememberSettings === 'function') taRememberSettings(hwcCurrentType.key);
   const codeMatch = html.match(/const REQUIRED_CODE = "([^"]*)"/);
   const titleMatch = html.match(/<title>([^<]*)<\/title>/);
   hwcRounds.push({
@@ -4015,7 +4053,7 @@ function taBuilderSignature(tab, state) {
   if (!state) return '';
   const texts = {};
   taBuilderFields(tab).forEach(el => {
-    if (el.type === 'hidden' || el.type === 'checkbox' || el.tagName === 'SELECT') return;
+    if (el.type === 'hidden' || el.type === 'checkbox' || el.type === 'number' || el.tagName === 'SELECT') return;
     const v = String(state.fields[el.id] == null ? '' : state.fields[el.id]).trim();
     if (v) texts[el.id] = v;
   });
@@ -4048,6 +4086,32 @@ function taTimeAgo(ms) {
   if (h < 24) return h + ' hour' + (h === 1 ? '' : 's') + ' ago';
   const d = Math.round(h / 24);
   return d + ' day' + (d === 1 ? '' : 's') + ' ago';
+}
+
+/* ---------- your usual settings ----------
+   Points, time limit, design, quiz type… are remembered per exercise type
+   from the last one you made, so a new exercise starts the way you like.
+   Only settings, never content (title, words, instructions). */
+const LS_BUILDER_DEFAULTS = 'ta_builder_defaults'; // { tab: { fieldId: value } }
+function taIsSettingField(el) {
+  if (el.classList.contains('ta-no-remember')) return false;
+  return el.tagName === 'SELECT' || el.type === 'checkbox' || el.type === 'number';
+}
+function taGetDefaults() {
+  try { return JSON.parse(localStorage.getItem(LS_BUILDER_DEFAULTS) || '{}') || {}; } catch (e) { return {}; }
+}
+function taRememberSettings(tab) {
+  if (!TA_BUILDER_ROWS[tab]) return;
+  const mine = {};
+  taBuilderFields(tab).forEach(el => { if (taIsSettingField(el)) mine[el.id] = el.type === 'checkbox' ? el.checked : el.value; });
+  const all = taGetDefaults();
+  all[tab] = mine;
+  try { localStorage.setItem(LS_BUILDER_DEFAULTS, JSON.stringify(all)); } catch (e) { /* ignore */ }
+}
+function taApplySettings(tab) {
+  const mine = taGetDefaults()[tab];
+  if (!mine) return;
+  taRestoreBuilder(tab, { v: 1, fields: mine, rows: TA_BUILDER_ROWS[tab].get() });
 }
 
 /* ---------- drafts ---------- */
@@ -4141,7 +4205,10 @@ function taLoadIntoBuilder(tab, state, label) {
 }
 
 function taOnBuilderOpened(tab) {
-  if (taPristine[tab] === undefined) taPristine[tab] = taBuilderSignature(tab, taCaptureBuilder(tab));
+  if (taPristine[tab] === undefined) {
+    taApplySettings(tab); // first time this visit: start from the teacher's usual settings
+    taPristine[tab] = taBuilderSignature(tab, taCaptureBuilder(tab));
+  }
   let pending = null;
   try { pending = JSON.parse(sessionStorage.getItem(SS_BUILDER_LOAD) || 'null'); } catch (e) { pending = null; }
   if (pending && pending.tab === tab) {
@@ -4173,6 +4240,7 @@ window.taSnapshotForMyExercises = function () {
   const tab = taActiveSavedTab() ||
     (currentActiveTab === 'hwcround' && hwcCurrentType && TA_BUILDER_ROWS[hwcCurrentType.key] ? hwcCurrentType.key : null);
   if (!tab) return null;
+  taRememberSettings(tab);
   const state = taCaptureBuilder(tab);
   const json = JSON.stringify(state);
   if (json.length > 300000) return null; // big pictures in a presentation: too large to keep in the list
@@ -4196,6 +4264,7 @@ window.taSnapshotForMyExercises = function () {
     const media = TA_MEDIA_PREFIX[tab];
     const file = media ? TA_MEDIA_FILES[media] : null, b64 = media ? TA_MEDIA_B64[media] : null;
     reset();
+    taApplySettings(tab); // cleared back to the teacher's usual settings, not the factory ones
     showUndoToast('Form cleared.', function () {
       taRestoreBuilder(tab, before);
       if (file) {
@@ -4265,7 +4334,7 @@ function taJumpTo(from, to) {
   let msg = '↪ ' + adding.length + ' ' + (adding.length === 1 ? target.noun.slice(0, -1) : target.noun) + ' added to ' + label +
     (skipped ? ' (' + skipped + ' already there)' : '') + '.';
   const untranslated = to === 'flashcard' ? adding.filter(it => !it.tr).length : 0;
-  if (untranslated) msg += untranslated === 1 ? ' Type its translation next to it.' : ' Type the translations next to them.';
+  if (untranslated) msg += ' Press 🌐 Fill empty translations to add ' + (untranslated === 1 ? 'its translation.' : 'the translations.');
   showUndoToast(msg, function () {
     taRestoreBuilder(to, before);
     showToast('Taken out of ' + label + ' again.', 'ok');
@@ -4299,7 +4368,7 @@ function taHwcJumpTo(from, to) {
   const label = TA_TAB_LABELS[to][1];
   let msg = 'Round ' + roundNum + ' added. Round ' + (roundNum + 1) + ': ' + label + ' with the same ' + unique.length + ' ' +
     (unique.length === 1 ? target.noun.slice(0, -1) : target.noun) + '.';
-  if (to === 'flashcard' && unique.some(it => !it.tr)) msg += ' Type the translations next to them.';
+  if (to === 'flashcard' && unique.some(it => !it.tr)) msg += ' Press 🌐 Fill empty translations to add the translations.';
   showUndoToast(msg, function () {
     // back to the round that was just added, as it was
     hwcRestoreCard();

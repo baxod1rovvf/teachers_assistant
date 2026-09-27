@@ -1654,3 +1654,8 @@ body.light-theme[data-design="burntorange"] { --surface-page: #FFF4D6; --surface
 #panel-hwcround .jump-solo { display: none; }
 #panel-hwcround .jump-hwc { display: inline; }
 #panel-hwcround .jump-bar { padding: 8px 10px; border-radius: 12px; border: 1.5px dashed var(--brand); }
+
+/* ---------- flashcard: fill translations ---------- */
+.translate-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.translate-lang { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 700; color: var(--ink-faint); }
+.translate-lang select { width: auto; padding: 6px 10px; font-size: 0.8rem; }
