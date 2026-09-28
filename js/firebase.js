@@ -133,22 +133,33 @@ window.startPlainCompletionsSync = function () {
       });
     } else if (e.code) codes.push(e.code);
   });
-  const uniqueCodes = [...new Set(codes)];
-  const chunks = [];
-  for (let i = 0; i < uniqueCodes.length; i += 30) chunks.push(uniqueCodes.slice(i, i + 30));
+  // Sets made before their exercises' codes were saved in My Exercises (and whose
+  // file isn't in this browser any more): the set's own progress records name
+  // the code of every exercise a student finished, so those are watched too.
+  const setCodes = [...new Set(exercises.filter(e => e.mergedItems && e.mergedItems.length && e.code).map(e => e.code))];
 
+  const watched = new Set();
   let resultsByChunk = {};
-  chunks.forEach((chunk, ci) => {
-    const q = query(collection(db, 'results'), where('code', 'in', chunk));
-    const unsub = onSnapshot(q, snap => {
-      resultsByChunk[ci] = snap.docs.map(d => d.data()).filter(v => v && typeof v.type === 'string' && v.type.indexOf('POINTS:') !== 0 && v.type !== 'HWC_PROGRESS');
-      window.__allResults = Object.values(resultsByChunk).flat();
-      window.__plainCompletions = window.__allResults.filter(r => noPointsCodes.has(r.code));
-      if (window.renderDashboard) window.renderDashboard();
-      if (window.renderTopActiveStudents) window.renderTopActiveStudents();
-    }, err => { console.error('Plain completions sync error:', err); });
-    plainUnsubscribers.push(unsub);
-  });
+  let chunkCount = 0;
+  function watchCodes(list) {
+    const fresh = [...new Set(list)].filter(c => c && !watched.has(c));
+    fresh.forEach(c => watched.add(c));
+    for (let i = 0; i < fresh.length; i += 30) {
+      const ci = chunkCount++;
+      const q = query(collection(db, 'results'), where('code', 'in', fresh.slice(i, i + 30)));
+      const unsub = onSnapshot(q, snap => {
+        const docs = snap.docs.map(d => d.data());
+        watchCodes(docs.filter(v => v && v.type === 'HWC_PROGRESS' && v.roundCode).map(v => v.roundCode));
+        resultsByChunk[ci] = docs.filter(v => v && typeof v.type === 'string' && v.type.indexOf('POINTS:') !== 0 && v.type !== 'HWC_PROGRESS');
+        window.__allResults = Object.values(resultsByChunk).flat();
+        window.__plainCompletions = window.__allResults.filter(r => noPointsCodes.has(r.code));
+        if (window.renderDashboard) window.renderDashboard();
+        if (window.renderTopActiveStudents) window.renderTopActiveStudents();
+      }, err => { console.error('Plain completions sync error:', err); });
+      plainUnsubscribers.push(unsub);
+    }
+  }
+  watchCodes(codes.concat(setCodes));
 };
 window.startPlainCompletionsSync();
 
