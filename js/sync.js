@@ -31,8 +31,16 @@
   var META_KEY = ns + 'ta_sync_meta';   // { key: time of the last local change }
   var SEEN_KEY = ns + 'ta_sync_seen';   // { key: version id last applied or uploaded }
   function readJson(k) { try { return JSON.parse(raw.get(k) || '{}') || {}; } catch (e) { return {}; } }
-  var meta = readJson(META_KEY), seen = readJson(SEEN_KEY);
-  function saveMeta() { raw.set(META_KEY, JSON.stringify(meta)); }
+  var SEEN_TS_KEY = ns + 'ta_sync_seen_ts'; // { key: time of the cloud copy this device last matched }
+  var meta = readJson(META_KEY), seen = readJson(SEEN_KEY), seenTs = readJson(SEEN_TS_KEY);
+  function markSynced(k, ts) { if (ts > (seenTs[k] || 0)) { seenTs[k] = ts; raw.set(SEEN_TS_KEY, JSON.stringify(seenTs)); } }
+  // Another window of the app (e.g. the installed app and a browser tab) may have
+  // stamped newer changes: keep the newest time for each item, never an older one.
+  function freshMeta() {
+    var stored = readJson(META_KEY);
+    Object.keys(stored).forEach(function (k) { if ((stored[k] || 0) > (meta[k] || 0)) meta[k] = stored[k]; });
+  }
+  function saveMeta() { freshMeta(); raw.set(META_KEY, JSON.stringify(meta)); }
   function saveSeen() { raw.set(SEEN_KEY, JSON.stringify(seen)); }
   function getLocal(k) { return raw.get(ns + k); }
   function setLocal(k, v) { if (v === null || v === undefined) raw.remove(ns + k); else raw.set(ns + k, v); }
@@ -147,11 +155,20 @@
   var ready = false;     // true once the first cloud check has been merged (or we're offline)
   var dirty = {};
   var uploadTimer = null;
+  // Writes the page makes by itself while it starts up aren't the teacher's edits, but
+  // anything after a click or key press is — even before the first cloud check is done
+  // (or while sync is off). Without a time, such an edit (a new exercise, a new student)
+  // would lose to the older cloud copy and disappear when the cloud check arrives.
+  var acted = false;
+  ['pointerdown', 'keydown'].forEach(function (ev) {
+    window.addEventListener(ev, function () { acted = true; }, { capture: true, once: true });
+  });
   function touched(k) {
-    if (!SYNC_SET[k] || !ready) return; // writes made while the page starts up aren't the teacher's edits
+    if (!SYNC_SET[k] || (!ready && !acted)) return;
     meta[k] = Date.now();
     saveMeta();
     dirty[k] = true;
+    if (!ready) return; // sent as soon as the first cloud check is done
     clearTimeout(uploadTimer);
     uploadTimer = setTimeout(flush, 2500);
     setStatus('☁️ Saving…', 'busy');
@@ -241,6 +258,7 @@
     }
     seen[k] = ver;
     saveSeen();
+    // (not "synced" yet: the other devices haven't seen it until it comes back as the cloud's copy)
     // the new version is complete: remove this item's older versions (never a newer one from another device)
     var old = cloudVersions[k] || {};
     Object.keys(old).forEach(function (v) {
@@ -282,28 +300,56 @@
   }
 
   // Returns true if anything on this device changed.
+  /* My Exercises is a list where each entry has its own id and creation date. When one
+     device's list wins, entries only the losing side has that were made after this device
+     last synced are added back: the other side never saw them, so none was deleted there. */
+  function keepNewEntries(k, winner, loser, sinceTs) {
+    if (k !== 'ta_recent_exercises' || !loser) return winner;
+    var w, l;
+    try { w = JSON.parse(winner || '[]'); l = JSON.parse(loser); } catch (e) { return winner; }
+    if (!Array.isArray(w) || !Array.isArray(l)) return winner;
+    var have = {};
+    w.forEach(function (e) { if (e && e.uid) have[e.uid] = true; });
+    var extra = l.filter(function (e) { return e && e.uid && !have[e.uid] && (Date.parse(e.date) || 0) > sinceTs; });
+    if (!extra.length) return winner;
+    var all = extra.concat(w).sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); });
+    return JSON.stringify(all.slice(0, 200));
+  }
+
   async function merge(docs, first) {
     if (!key) return false;
+    freshMeta();
     var cloud = readCloud(docs);
     var changed = false;
     for (var i = 0; i < SYNC_KEYS.length; i++) {
       var k = SYNC_KEYS[i], c = cloud[k];
       var local = getLocal(k), localTs = meta[k] || 0;
       if (!c) { if (local !== null && (first || localTs)) dirty[k] = true; continue; }
-      if (c.ver === seen[k]) { if (localTs > c.ts) dirty[k] = true; continue; } // nothing new from the cloud
+      if (c.ver === seen[k]) { markSynced(k, c.ts); if (localTs > c.ts) dirty[k] = true; continue; } // nothing new from the cloud
       var value;
       try { value = (await unpack(c.parts.join(''))).v; }
       catch (e) { if (local !== null) dirty[k] = true; continue; } // made with an older password: replace it with this device's copy
       seen[k] = c.ver;
-      if (value === local) { if (c.ts > localTs) meta[k] = c.ts; continue; }
+      if (value === local) { if (c.ts > localTs) meta[k] = c.ts; markSynced(k, c.ts); continue; }
       // Newer change wins. Old data from before sync (no change time on either side): the fuller
       // copy wins, and for equal sizes the same one is picked on every device, so two devices
       // never keep overwriting each other.
       var lv = String(local), cv = String(value);
       var takeCloud = c.ts > localTs ||
         (c.ts === localTs && (local === null || (value !== null && (cv.length > lv.length || (cv.length === lv.length && cv > lv)))));
-      if (takeCloud) { setLocal(k, value); meta[k] = c.ts; changed = true; }
-      else dirty[k] = true;
+      // Exercises made after this device last synced were never seen by the other side, so
+      // they can't have been deleted there: whichever list wins, they're kept.
+      var since = seenTs[k] || localTs;
+      if (takeCloud) {
+        var kept = keepNewEntries(k, value, local, since);
+        setLocal(k, kept); changed = true;
+        if (kept !== value) { meta[k] = Date.now(); dirty[k] = true; } else meta[k] = c.ts;
+      } else {
+        var joined = keepNewEntries(k, local, value, since);
+        if (joined !== local) { setLocal(k, joined); meta[k] = Date.now(); changed = true; }
+        dirty[k] = true;
+      }
+      markSynced(k, c.ts);
     }
     saveSeen(); saveMeta();
     return changed;

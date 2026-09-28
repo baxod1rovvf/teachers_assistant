@@ -861,8 +861,31 @@ function getRecentExercises() {
   try { return JSON.parse(localStorage.getItem(LS_RECENT_EXERCISES) || '[]'); } catch (e) { return []; }
 }
 
+/* The list must not be lost when the browser's storage is full: make room by
+   dropping saved copies of exercise files (they're only for "Redownload"),
+   oldest first, and say so if it still can't be saved. */
 function saveRecentExercises(list) {
-  try { localStorage.setItem(LS_RECENT_EXERCISES, JSON.stringify(list)); } catch (e) { /* ignore */ }
+  const json = JSON.stringify(list);
+  for (let tries = 0; tries < 25; tries++) {
+    try { localStorage.setItem(LS_RECENT_EXERCISES, json); return true; }
+    catch (e) { if (!taFreeExerciseCacheSpace(list)) break; }
+  }
+  if (typeof showToast === 'function') showToast('⚠️ This browser\'s storage is full, so My Exercises couldn\'t be saved. Download a backup in Settings, then delete some old exercises.');
+  return false;
+}
+// Drops one saved exercise file (the oldest in the list, or one no longer listed). False when there's none left.
+function taFreeExerciseCacheSpace(list) {
+  try {
+    const cache = JSON.parse(localStorage.getItem(LS_EXERCISE_HTML_CACHE) || '{}');
+    const keys = Object.keys(cache);
+    if (!keys.length) return false;
+    const order = (list || getRecentExercises()).map(e => e.uid);
+    const unlisted = keys.find(k => order.indexOf(k) === -1);
+    const victim = unlisted || keys.sort((a, b) => order.indexOf(b) - order.indexOf(a))[0];
+    delete cache[victim];
+    localStorage.setItem(LS_EXERCISE_HTML_CACHE, JSON.stringify(cache));
+    return true;
+  } catch (e) { return false; }
 }
 
 function pushRecentExercise(entry) {
@@ -913,7 +936,7 @@ const MAX_CACHED_EXERCISE_HTML = 20;
 
 function cacheExerciseHtml(uid, html) {
   // Exercises with a packed audio/video file are too big for the browser's storage (and cloud sync).
-  if (typeof html === 'string' && html.length > 3 * 1048576) return;
+  if (typeof html === 'string' && html.length > 1048576) return;
   try {
     const cache = JSON.parse(localStorage.getItem(LS_EXERCISE_HTML_CACHE) || '{}');
     cache[uid] = html;
