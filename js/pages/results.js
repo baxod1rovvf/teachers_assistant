@@ -149,7 +149,7 @@ async function viewHwcRoundAnswer(roundCode, studentName, roundLabel, studentId)
     const lines = [];
     if (typeof result.score !== 'undefined') lines.push('<div><b>Score:</b> ' + escapeForHtml(String(result.score)) + '</div>');
     if (result.timeDisplay) lines.push('<div><b>Time:</b> ' + escapeForHtml(result.timeDisplay) + '</div>');
-    if (result.dictationFeedback) lines.push('<div style="white-space:pre-wrap;">' + escapeForHtml(result.dictationFeedback) + '</div>');
+    if (result.dictationFeedback) lines.push(taDictationAnswerHtml(result));
     // Sentences: the student's own written sentence for each word.
     if (Array.isArray(result.sentences) && result.sentences.length) {
       lines.push(result.sentences.map((s, i) =>

@@ -90,6 +90,13 @@ window.TA_I18N_ROWS = [
   ['Add to My Exercises', 'Mashqlarimga qoʻshish', 'Добавить в «Мои упражнения»'],
   ['In My Exercises', 'Mashqlarimda bor', 'Уже в «Моих упражнениях»'],
   ['Today', 'Bugun', 'Сегодня'],
+  ['a wrong word', 'notoʻgʻri soʻz', 'неверное слово'],
+  ['missed words', 'tushib qolgan soʻzlar', 'пропущенные слова'],
+  ['faded', 'xira', 'бледные'],
+  ['right', 'toʻgʻri', 'верно'],
+  ['typed', 'yozgani', 'написал'],
+  ['Extra words the student added:', 'Oʻquvchi qoʻshgan ortiqcha soʻzlar:', 'Лишние слова ученика:'],
+  ['What the student typed', 'Oʻquvchi yozgan matn', 'Что написал ученик'],
   ['Yesterday', 'Kecha', 'Вчера'],
   ['Tomorrow', 'Ertaga', 'Завтра'],
 

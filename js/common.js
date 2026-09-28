@@ -1162,6 +1162,101 @@ function viewNotesResult(idx) {
   modal.classList.add('show');
 }
 
+/* ================= DICTATION ANSWERS, READABLE =================
+   The original text with the student's mistakes marked on it: correct words
+   plain, a wrong word shows the right word with what the student typed above
+   it, missed words fade (a missed run is one phrase, not a tag per word), and
+   extra words are listed once at the end. New results carry the student's
+   own text; older ones are read back from their [missing: …] feedback. */
+function taDictNorm(w) { return String(w).toLowerCase().replace(/[^\w']/g, ''); }
+/* Lines the student's words up with the text for showing mistakes: a word typed
+   in place of a similar one (Sara/Sarah, go/goes) is a wrong spelling of it;
+   an unrelated word is an extra, and the one it replaced is missed. */
+function taDictAlign(reference, studentText, norm) {
+  const ref = String(reference || '').trim().split(/\s+/).filter(Boolean);
+  const stu = String(studentText || '').trim().split(/\s+/).filter(Boolean);
+  const a = ref.map(norm), b = stu.map(norm);
+  const lev = (x, y) => {
+    let prev = Array.from({ length: y.length + 1 }, (_, k) => k);
+    for (let i = 1; i <= x.length; i++) {
+      const cur = [i];
+      for (let j = 1; j <= y.length; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (x[i - 1] === y[j - 1] ? 0 : 1));
+      prev = cur;
+    }
+    return prev[y.length];
+  };
+  const sub = (x, y) => {
+    if (x === y) return 0;
+    const len = Math.max(x.length, y.length) || 1;
+    return (1 - lev(x, y) / len) >= 0.5 ? 0.9 : 2.2; // similar: one wrong word; else missed + extra
+  };
+  const m = a.length, n = b.length, d = [];
+  for (let i = 0; i <= m; i++) { d.push(new Array(n + 1).fill(0)); d[i][0] = i; }
+  for (let j = 0; j <= n; j++) d[0][j] = j;
+  for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + sub(a[i - 1], b[j - 1]));
+  const ops = [];
+  let i = m, j = n;
+  while (i > 0 || j > 0) {
+    if (i > 0 && j > 0 && d[i][j] === d[i - 1][j - 1] + sub(a[i - 1], b[j - 1])) {
+      ops.push(a[i - 1] === b[j - 1] ? { type: 'ok', ref: ref[i - 1] } : { type: 'wrong', ref: ref[i - 1], student: stu[j - 1] });
+      i--; j--;
+    } else if (i > 0 && d[i][j] === d[i - 1][j] + 1) { ops.push({ type: 'missing', ref: ref[i - 1] }); i--; }
+    else { ops.push({ type: 'extra', student: stu[j - 1] }); j--; }
+  }
+  return ops.reverse();
+}
+function taDictDiff(reference, studentText) { return taDictAlign(reference, studentText, taDictNorm); }
+// Older results only kept the feedback line: "word [missing: w] said -> right [extra: w] …"
+function taDictParseFeedback(text) {
+  const ops = [], re = /\[missing: ([^\]]*)\]|\[extra: ([^\]]*)\]|(\S+) (?:->|→) (\S+)|(\S+)/g;
+  let m;
+  while ((m = re.exec(String(text || '')))) {
+    if (m[1] !== undefined) ops.push({ type: 'missing', ref: m[1] });
+    else if (m[2] !== undefined) ops.push({ type: 'extra', student: m[2] });
+    else if (m[3] !== undefined) ops.push({ type: 'wrong', student: m[3], ref: m[4] });
+    else ops.push({ type: 'ok', ref: m[5] });
+  }
+  return ops;
+}
+function taDictationAnswerHtml(r) {
+  const esc = escapeForHtml;
+  const fb = String(r.dictationFeedback || '');
+  // Fill-in-the-blanks: one line per blank
+  if (/^[✓✗] Blank \d+:/m.test(fb)) {
+    return '<div class="dd-blanks">' + fb.split('\n').filter(Boolean).map(line => {
+      const ok = line.charAt(0) === '✓';
+      const m = line.match(/Blank (\d+): you wrote "(.*?)"(?: — correct answer: "(.*)")?$/);
+      if (!m) return '<div class="dd-blank">' + esc(line) + '</div>';
+      return '<div class="dd-blank ' + (ok ? 'ok' : 'bad') + '"><span class="dd-blank-n">' + m[1] + '</span>' +
+        (ok ? '<span class="dd-ok-word">' + esc(m[2]) + '</span><span class="dd-tick">✓</span>'
+            : '<span class="dd-said-inline">' + esc(m[2] || '(empty)') + '</span><span class="dd-arrow">→</span><span class="dd-right-inline">' + esc(m[3] || '') + '</span>') +
+        '</div>';
+    }).join('') + '</div>';
+  }
+  const ops = (typeof r.referenceText === 'string' && typeof r.studentText === 'string') ? taDictDiff(r.referenceText, r.studentText) : taDictParseFeedback(fb);
+  const count = t => ops.filter(o => o.type === t).length;
+  const extras = ops.filter(o => o.type === 'extra').map(o => o.student);
+  let text = '', missedRun = [];
+  const flush = () => { if (missedRun.length) { text += '<span class="dd-missing" title="Missed">' + esc(missedRun.join(' ')) + '</span> '; missedRun = []; } };
+  ops.forEach(o => {
+    if (o.type === 'missing') { missedRun.push(o.ref); return; }
+    flush();
+    if (o.type === 'ok') text += '<span class="dd-ok">' + esc(o.ref) + '</span> ';
+    else if (o.type === 'wrong') text += '<ruby class="dd-wrong">' + esc(o.ref) + '<rt>' + esc(o.student) + '</rt></ruby> ';
+  });
+  flush();
+  return '<div class="dd-summary">' +
+      '<span class="dd-chip ok">✓ ' + count('ok') + ' correct</span>' +
+      '<span class="dd-chip wrong">✗ ' + count('wrong') + ' wrong</span>' +
+      '<span class="dd-chip missing">○ ' + ops.filter(o => o.type === 'missing').length + ' missed</span>' +
+      (extras.length ? '<span class="dd-chip extra">+ ' + extras.length + ' extra</span>' : '') +
+    '</div>' +
+    '<div class="dd-legend"><ruby class="dd-wrong">right<rt>typed</rt></ruby> a wrong word · <span class="dd-missing">faded</span> missed words</div>' +
+    '<div class="dd-text">' + text + '</div>' +
+    (extras.length ? '<div class="dd-extras"><b>Extra words the student added:</b> ' + extras.map(w => '<span class="dd-extra-word">' + esc(w) + '</span>').join(' ') + '</div>' : '') +
+    (typeof r.studentText === 'string' ? '<details class="dd-typed"><summary>What the student typed</summary><div>' + esc(r.studentText || '(nothing)') + '</div></details>' : '');
+}
+
 function viewDictationResult(idx) {
   const r = (window.__lastResultsMatches || [])[idx];
   if (!r) return;
@@ -1170,7 +1265,7 @@ function viewDictationResult(idx) {
   const body = document.getElementById('sentenceViewBody');
   if (!modal || !title || !body) return;
   title.textContent = (r.name || 'Student') + ' — ' + (r.title || 'Dictation') + ' (' + (typeof r.score === 'number' ? r.score + '%' : '—') + ')';
-  body.innerHTML = '<div class="resource-card"><div class="resource-card-content" style="white-space:pre-wrap;">' + escapeForHtml(r.dictationFeedback || '(no details)') + '</div></div>';
+  body.innerHTML = r.dictationFeedback ? taDictationAnswerHtml(r) : '<div class="empty-results">(no details)</div>';
   modal.classList.add('show');
 }
 
