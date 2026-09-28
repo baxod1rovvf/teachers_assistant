@@ -283,8 +283,22 @@ function renderHwcSetNote() {
   }
 }
 
+/* The set's title: what the teacher typed, else round 1's exercise title, else the date. */
+function hwcSetTitle() {
+  const typed = (document.getElementById('hwcSetTitle') || { value: '' }).value.trim();
+  if (typed) return { title: typed, typed: true };
+  const r = hwcRounds[0];
+  const p = r && HWC_PREFIX[r.tab];
+  const first = p && r.state && r.state.fields ? String(r.state.fields[p + '-title'] || '').trim() : '';
+  return { title: first || new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), typed: false };
+}
+
 function openHwcBuilder(kind) {
   hwcKind = kind;
+  const titleEl = document.getElementById('hwcSetTitle');
+  if (titleEl) titleEl.value = '';
+  const titleLabel = document.getElementById('hwcSetTitleLabel');
+  if (titleLabel) titleLabel.textContent = kind === 'class' ? 'Class title' : 'Homework title';
   hwcRounds = [];
   hwcCurrentType = null;
   document.getElementById('hwcBuilderTitle').textContent = kind === 'class' ? '\ud83c\udfeb Class' : '\ud83d\udcda Homework';
@@ -460,7 +474,8 @@ function buildAndDownloadHwc() {
   // each round's file is inside the set's own file (see setRoundHtml), not kept twice
   const mergedItems = hwcRounds.map(r => ({ title: r.label, typeLabel: r.label }));
 
-  const title = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const setTitle = hwcSetTitle();
+  const title = setTitle.title;
   const requiredCode = hwcRounds[0].code || '';
   const code = generateClassCode();
   const classCode = setActiveClassCode(code);
@@ -721,7 +736,9 @@ window.addEventListener("message", function (e) {
 </body>
 </html>`;
 
-  const fname = (hwcKind === 'class' ? 'Class_' : 'Homework_') + title.replace(/[^a-z0-9\-_ ]/gi, '').replace(/\s+/g, '_') + '.html';
+  // the teacher's title names the file; without one it's "Homework_<round 1 title or date>"
+  const fname = (setTitle.typed ? '' : (hwcKind === 'class' ? 'Class_' : 'Homework_')) +
+    (title.replace(/[^\p{L}\p{N}\-_ ]/gu, '').trim().replace(/\s+/g, '_') || 'Set') + '.html';
   downloadFile(fname, wrapper);
   showToast('"' + title + '" downloaded \u2014 ' + rounds.length + ' exercises.', 'ok');
 
@@ -737,6 +754,7 @@ window.addEventListener("message", function (e) {
     mergedItems: mergedItems,
     groupId: (hwcRounds.find(r => r.groupId) || {}).groupId || '',
     setKind: hwcKind,
+    setTitle: setTitle.typed ? title : '',
     builderRounds: hwcRounds.every(r => r.state) ? hwcRounds.map(r => ({ tab: r.tab, state: r.state })) : null
   });
 
@@ -4371,6 +4389,8 @@ function taLoadSet(pending) {
   const rounds = (pending.rounds || []).filter(r => HWC_TYPES.some(t => t.key === r.tab));
   if (!rounds.length) return;
   openHwcBuilder(pending.kind === 'class' ? 'class' : 'homework');
+  const titleEl = document.getElementById('hwcSetTitle');
+  if (titleEl) titleEl.value = pending.setTitle || '';
   const previous = {};
   for (let i = 0; i < rounds.length; i++) {
     const r = rounds[i];

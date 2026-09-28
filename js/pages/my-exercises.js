@@ -194,7 +194,7 @@ const MYEX_SUMMARY_BUILDERS = {
 function exerciseLoadFor(item) {
   if (!item) return null;
   if (item.builderRounds && item.builderRounds.length) {
-    return { set: true, kind: item.setKind || (item.typeLabel === 'Class' ? 'class' : 'homework'), rounds: item.builderRounds };
+    return { set: true, kind: item.setKind || (item.typeLabel === 'Class' ? 'class' : 'homework'), rounds: item.builderRounds, setTitle: item.setTitle || '' };
   }
   if (item.builderTab && item.builderState) return { tab: item.builderTab, state: item.builderState };
   const b = MYEX_SUMMARY_BUILDERS[item.typeLabel];

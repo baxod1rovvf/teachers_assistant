@@ -946,6 +946,7 @@ function pushRecentExercise(entry) {
     builderState: entry.builderState || (snap ? snap.state : null),
     groupId: entry.groupId || (snap && snap.groupId) || '',
     setKind: entry.setKind || null,          // Homework/Class sets: 'homework' | 'class'
+    setTitle: entry.setTitle || '',          // … and the title the teacher gave it
     builderRounds: entry.builderRounds || null // … and each round's form
   });
   saveRecentExercises(list.slice(0, 200));

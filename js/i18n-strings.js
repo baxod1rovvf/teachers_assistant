@@ -220,6 +220,8 @@ window.TA_I18N_ROWS = [
   ['Choose a Different Type', 'Boshqa tur tanlash', 'Выбрать другой тип'],
   ['Add Another Exercise', 'Yana mashq qoʻshish', 'Добавить ещё упражнение'],
   ['Added so far', 'Qoʻshilganlar', 'Уже добавлено'],
+  ['Homework title', 'Uy vazifasi nomi', 'Название домашнего задания'],
+  ['Class title', 'Dars toʻplami nomi', 'Название набора для урока'],
   ['Take this exercise out of the set', 'Bu mashqni toʻplamdan olib tashlash', 'Убрать это упражнение из набора'],
   ['Added. Choose the next exercise', 'Qoʻshildi. Keyingi mashqni tanlang', 'Добавлено. Выберите следующее упражнение'],
   ['Cancel? Anything added so far will be lost', 'Bekor qilinsinmi? Hozirgacha qoʻshilganlar yoʻqoladi', 'Отменить? Всё добавленное будет потеряно'],
