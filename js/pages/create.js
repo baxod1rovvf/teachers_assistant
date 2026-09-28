@@ -3144,7 +3144,7 @@ function clearMediaFile(prefix) {
   delete TA_MEDIA_FILES[prefix];
   delete TA_MEDIA_B64[prefix];
   const linkInput = document.getElementById(prefix === 'ec' ? 'ec-youtube' : 'dc-audio');
-  if (linkInput) { linkInput.disabled = false; linkInput.placeholder = prefix === 'ec' ? 'YouTube, Vimeo, Google Drive, or a direct video link...' : 'https://example.com/audio.mp3'; }
+  if (linkInput) { linkInput.disabled = false; linkInput.placeholder = prefix === 'ec' ? 'YouTube, Vimeo, Google Drive, or a direct video link...' : 'A YouTube link, or a link to an audio file (…mp3)'; }
   renderMediaFileName(prefix);
 }
 function renderMediaFileName(prefix) {
@@ -3260,6 +3260,10 @@ async function autoTranscribeDictation(targetFieldId, btn) {
   const mediaFile = TA_MEDIA_FILES.dc || null;
   const audioUrl = mediaFile ? '' : document.getElementById('dc-audio').value.trim();
   if (!mediaFile && !audioUrl) { showToast('Paste the audio link or choose an audio file first.'); return; }
+  if (!mediaFile && taYouTubeId(audioUrl)) {
+    showToast('Auto-transcribe can\'t read YouTube videos. On YouTube, open the video\'s "…more" → "Show transcript", copy it and paste it here.');
+    return;
+  }
 
   const target = document.getElementById(targetFieldId);
   const originalLabel = btn.textContent;
@@ -3445,6 +3449,12 @@ function resetDictationForm() {
   onDictationModeChange();
 }
 
+// The 11-character video id of a YouTube link (watch, youtu.be, shorts, embed, live), or ''.
+function taYouTubeId(url) {
+  const m = String(url || '').match(/(?:youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : '';
+}
+
 function createDictation() {
   const title = document.getElementById('dc-title').value.trim();
   if (!title) { showToast('Please enter a title for the exercise.'); return; }
@@ -3480,7 +3490,17 @@ function createDictation() {
   const __dc_uid = generateExerciseUid();
 
   let html = DICTATION_TEMPLATE;
-  if (mediaFile) {
+  const ytId = mediaFile ? '' : taYouTubeId(audioUrl);
+  if (ytId) {
+    // A YouTube link plays in YouTube's own player (captions off, so they don't give the answers away)
+    const player = '<iframe id="dcYouTube" class="dc-yt" src="https://www.youtube-nocookie.com/embed/' + ytId +
+      '?rel=0&modestbranding=1&cc_load_policy=0&iv_load_policy=3&playsinline=1" title="Listening" ' +
+      'allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>' +
+      '<style>.dc-yt{flex:1 1 320px;min-width:260px;max-width:560px;aspect-ratio:16/9;border:0;border-radius:10px;background:#000;}</style>';
+    const before = html;
+    html = html.replace(/<audio id="dcAudio"[^>]*><\/audio>/, player);
+    if (html === before) { showToast('This Dictation file can\'t play YouTube links — choose the audio file instead.'); return; }
+  } else if (mediaFile) {
     // the audio player gets the unpacked file instead of a link
     html = html.split('src="__AUDIO_URL__"').join('data-ta-media');
     html = taEmbedMedia(html, mediaB64, taGuessMime(mediaFile));
