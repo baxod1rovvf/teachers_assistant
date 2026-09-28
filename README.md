@@ -55,6 +55,8 @@ The code is in the "SAVED WORK" and "USE THE SAME WORDS" sections of `js/pages/c
 
 - **Search (Ctrl+K, ⌘K on a Mac, or `/`):** jump to any section, builder, group, student (by name or ID) or exercise (by title, code or a word in it). There's also a 🔍 Search button in the sidebar.
 - **Add many students:** in an open group, **📋 Add many** takes a pasted class list (`Name, ID` per line, or two columns copied from Excel/Google Sheets) or a CSV file. A preview shows what will be added; students without an ID get the next free number, and IDs already in use are skipped.
+- **Results in Excel:** Results → **📊 Download for Excel (.csv)** gives one row per result (student, ID, group, exercise, score, time, date). It opens in Excel, Google Sheets or Numbers; names starting with `=`, `+`, `-` or `@` are kept as text.
+- **Esc** closes any pop-up.
 - **Backup:** Settings → 💾 Backup downloads one `.json` file with the account's data. **Restore from file** downloads the current data first (`…_before-restore.json`), then replaces it and reloads.
 - **Worksheet:** My Exercises → **🖨 Worksheet** turns a word-list exercise (Flashcard, Spelling, Make a Word, Pronunciation, Sentences, Word Order, Test) into a printable page: matching, circle the spelling, unscramble, gap-fill… with the answer key on its own page.
 - **Share:** My Exercises → **📤 Share** gives a ready message for the class chat, sends the exercise file through the phone's share sheet (or downloads it on a computer), and can show the class code in big numbers for the classroom screen.

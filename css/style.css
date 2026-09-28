@@ -902,7 +902,8 @@ select option { background: var(--surface); color: var(--ink); }
 .import-col { flex: 1; min-width: 220px; display: flex; flex-direction: column; gap: 8px; }
 .import-col .add-btn { margin-top: 4px; }
 .import-tip { font-size: 0.72rem; color: var(--ink-faint); line-height: 1.4; margin: 0; }
-.results-actions-row { margin-bottom: 20px; }
+.results-actions-row { margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+.results-actions-row .add-btn { width: auto; flex: 1 1 240px; margin-top: 0; }
 .results-actions-row .add-btn { border-style: solid; }
 
 .results-table-wrap { margin-bottom: 16px; overflow-x: auto; }

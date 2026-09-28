@@ -2206,6 +2206,20 @@ function taModal(title, bodyHtml, opts) {
   return { el: back, body: body, close: close };
 }
 
+/* ================= ESC CLOSES THE FIXED POP-UPS =================
+   Pop-ups made with taModal() close on Esc themselves. The ones written into
+   the pages (lesson plan, answers viewer, points details, settings…) close
+   with Esc here too, the same as their ✕ or Close button. */
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape' || e.defaultPrevented) return;
+  if (document.querySelector('.ta-modal')) return; // the newest pop-up is on top and closes itself
+  const open = Array.from(document.querySelectorAll('.points-modal-backdrop.show, .modal-backdrop.show, .wheel-winner-modal.show')).pop();
+  if (!open) return;
+  if (open.id === 'sentenceViewModal') { closeSentenceViewModal(); return; }
+  const close = open.querySelector('.points-modal-close, .modal-close');
+  if (close) close.click();
+});
+
 /* ================= QUICK SEARCH (Ctrl+K) =================
    One box to jump anywhere: a section, an exercise builder, a group, a
    student, or an exercise in My Exercises. Opens with Ctrl+K (⌘K on a Mac),

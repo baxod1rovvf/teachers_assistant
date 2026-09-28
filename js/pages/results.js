@@ -550,6 +550,47 @@ function exportResultsReport() {
   showToast('✅ Results report downloaded.', 'ok');
 }
 
+/* The same results as a spreadsheet: opens in Excel, Google Sheets or
+   Numbers, ready to sort, filter or copy into a grade book. */
+function exportResultsCsv() {
+  const code = (document.getElementById('res-code-input').value.trim()) || getActiveCode();
+  if (!code) { showToast('Enter a class code first.'); return; }
+  const idx = taRosterIndex();
+  const rows = collectResults(code).visible
+    .map(r => ({ r: r, st: rosterStudentForResult(r, idx) }))
+    .sort((a, b) => ((a.st ? 0 : 1) - (b.st ? 0 : 1)) || String(a.r.name || '').localeCompare(String(b.r.name || '')) || (new Date(a.r.date) - new Date(b.r.date)));
+  if (!rows.length) { showToast('No results to export for this code yet.'); return; }
+  const pad = n => String(n).padStart(2, '0');
+  const when = iso => { const d = new Date(iso); return isNaN(d) ? '' : d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()); };
+  // every cell quoted; a leading = + - @ is kept as text so a name can never run as a formula
+  const cell = v => { let s = v === undefined || v === null ? '' : String(v); if (/^[=+\-@]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
+  const lines = [['Student', 'Student ID', 'Group', 'Exercise', 'Type', 'Score (%)', 'Other result', 'Time', 'Date'].map(cell).join(',')];
+  rows.forEach(({ r, st }) => {
+    lines.push([
+      st ? st.name : (r.name || ''),
+      st ? st.id : '(name only)',
+      st ? groupNameFor(st.group) : '',
+      r.title || '',
+      r.type || '',
+      typeof r.score === 'number' ? r.score : '',
+      typeof r.score === 'number' ? '' : (r.sentenceCount ? r.sentenceCount + ' sentences' : (r.wordsLearned ? r.wordsLearned + ' words' : '')),
+      r.timeDisplay || '',
+      when(r.date)
+    ].map(cell).join(','));
+  });
+  // the BOM makes Excel read names in Uzbek/Russian letters correctly
+  const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'results_' + code + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+  showToast('✅ Spreadsheet downloaded.', 'ok');
+}
+
 function clearResultsForActiveCode() {
   const code = (document.getElementById('res-code-input').value.trim()) || getActiveCode();
   if (!code) { showToast('Enter a class code first.'); return; }
