@@ -96,7 +96,7 @@ function renderHwcResultsList() {
       const roundCode = (d.roundCodes && d.roundCodes[i]) || '';
       return '<div class="hwc-round-row">' +
         '<span>' + (roundDone ? '\u2713' : '\u2717') + ' ' + escapeForHtml(label) + '</span>' +
-        (roundDone && roundCode ? '<button class="mini-btn" type="button" onclick="viewHwcRoundAnswer(' + jsAttr(roundCode) + ',' + jsAttr(d.studentName) + ',' + jsAttr(label) + ')">\ud83d\udc41</button>' : '') +
+        (roundDone && roundCode ? '<button class="mini-btn" type="button" onclick="viewHwcRoundAnswer(' + jsAttr(roundCode) + ',' + jsAttr(d.studentName) + ',' + jsAttr(label) + ',' + jsAttr(d.studentId || '') + ')">\ud83d\udc41</button>' : '') +
         '</div>';
     }).join('') : '';
 
@@ -124,9 +124,9 @@ function toggleHwcStudentExpand(studentKey) {
   renderHwcResultsList();
 }
 
-async function viewHwcRoundAnswer(roundCode, studentName, roundLabel) {
+async function viewHwcRoundAnswer(roundCode, studentName, roundLabel, studentId) {
   if (!window.taFindResultByCodeAndName) { showToast('Still connecting \u2014 try again in a moment.'); return; }
-  const result = await window.taFindResultByCodeAndName(roundCode, studentName);
+  const result = await window.taFindResultByCodeAndName(roundCode, studentName, studentId);
   const modal = document.getElementById('sentenceViewModal');
   const title = document.getElementById('sentenceViewTitle');
   const body = document.getElementById('sentenceViewBody');

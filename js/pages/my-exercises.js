@@ -106,7 +106,8 @@ function renderRecentExercises() {
       ? '<button class="mini-btn" type="button" onclick="viewRecentExerciseAnswers(' + idx + ')">📝 Answers</button>'
       : '';
     const separateBtn = (item.mergedItems && item.mergedItems.length)
-      ? '<button class="mini-btn" type="button" onclick="separateHomeworkOrClass(' + idx + ')">🔀 Separate</button>'
+      ? '<button class="mini-btn" type="button" onclick="getOneFromSet(' + idx + ')" title="Download one exercise of this set, or add it to My Exercises on its own">📤 Get one exercise</button>' +
+        '<button class="mini-btn" type="button" onclick="separateHomeworkOrClass(' + idx + ')">🔀 Separate</button>'
       : '';
     html +=
       '<div class="recent-exercise-row" data-uid="' + escapeForHtml(item.uid || '') + '">' +
@@ -476,22 +477,59 @@ function viewRecentExerciseResults(idx) {
   if (!item) return;
   taNavigate('results.html?exercise=' + encodeURIComponent(item.uid));
 }
+/* One exercise of a Homework/Class set as its own My Exercises entry. It keeps
+   the code and id it was built with, so "View Results" finds its results. */
+function roundAsExercise(item, i) {
+  const orig = item.mergedItems[i];
+  const round = item.builderRounds && item.builderRounds[i];
+  const pick = re => (orig.html.match(re) || [])[1] || '';
+  const typeName = round && TA_TAB_LABELS[round.tab] ? TA_TAB_LABELS[round.tab][1] : orig.typeLabel;
+  return {
+    title: orig.title, typeLabel: typeName,
+    code: pick(/const EXERCISE_CODE = "([^"]*)"/) || generateClassCode(),
+    uid: pick(/const EXERCISE_UID = "([^"]*)"/) || generateExerciseUid(),
+    html: orig.html, requiredCode: pick(/const REQUIRED_CODE = "([^"]*)"/), groupId: item.groupId || '',
+    builderTab: round ? round.tab : null, builderState: round ? round.state : null
+  };
+}
+
 function separateHomeworkOrClass(idx) {
   const item = getRecentExercises()[idx];
   if (!item || !item.mergedItems || !item.mergedItems.length) return;
   if (!confirm('Separate "' + item.title + '" back into its ' + item.mergedItems.length + ' original exercises?')) return;
-  item.mergedItems.forEach((orig, i) => {
-    const round = item.builderRounds && item.builderRounds[i];
-    const codeMatch = orig.html.match(/const REQUIRED_CODE = "([^"]*)"/);
-    pushRecentExercise({
-      title: orig.title, typeLabel: orig.typeLabel,
-      code: generateClassCode(), uid: generateExerciseUid(),
-      html: orig.html, requiredCode: codeMatch ? codeMatch[1] : '', groupId: item.groupId || '',
-      builderTab: round ? round.tab : null, builderState: round ? round.state : null
-    });
-  });
+  item.mergedItems.forEach((orig, i) => pushRecentExercise(roundAsExercise(item, i)));
   removeRecentExercise(item.uid);
   showToast('Separated back into ' + item.mergedItems.length + ' exercises.', 'ok');
+}
+
+/* Take just one exercise out of a set: download it on its own, or add it to My
+   Exercises as a separate exercise. The set stays as it is. */
+function getOneFromSet(idx) {
+  const item = getRecentExercises()[idx];
+  if (!item || !item.mergedItems || !item.mergedItems.length) return;
+  const have = new Set(getRecentExercises().map(e => e.uid));
+  const m = taModal('📤 Get one exercise from "' + item.title + '"',
+    '<p class="ta-modal-text">Each exercise works on its own too, with its own results. The ' + escapeForHtml(item.typeLabel.toLowerCase()) + ' set stays as it is.</p>' +
+    '<div class="set-round-list">' + item.mergedItems.map((orig, i) => {
+      const ex = roundAsExercise(item, i);
+      return '<div class="set-round-row"><span><b>' + (i + 1) + '.</b> <span translate="no">' + escapeForHtml(orig.title) + '</span> <span class="badge-type">' + escapeForHtml(ex.typeLabel) + '</span></span>' +
+        '<span class="set-round-btns"><button type="button" class="mini-btn" data-dl="' + i + '">⬇ Download</button>' +
+        (have.has(ex.uid) ? '<span class="unavailable-hint">In My Exercises</span>' : '<button type="button" class="mini-btn solid" data-add="' + i + '">➕ Add to My Exercises</button>') +
+        '</span></div>';
+    }).join('') + '</div>', { wide: true });
+  m.body.addEventListener('click', e => {
+    const dl = e.target.closest('[data-dl]'), add = e.target.closest('[data-add]');
+    if (dl) {
+      const orig = item.mergedItems[+dl.dataset.dl];
+      downloadFile((orig.title.replace(/[^a-z0-9\-_ ]/gi, '').trim().replace(/\s+/g, '_') || 'exercise') + '.html', orig.html);
+      showToast('"' + orig.title + '" downloaded.', 'ok');
+    } else if (add) {
+      const ex = roundAsExercise(item, +add.dataset.add);
+      pushRecentExercise(ex);
+      add.outerHTML = '<span class="unavailable-hint">In My Exercises</span>';
+      showUndoToast('Added "' + ex.title + '" to My Exercises.', function () { removeRecentExercise(ex.uid); });
+    }
+  });
 }
 async function disableRecentExercisePoints(idx) {
   const list = getRecentExercises();

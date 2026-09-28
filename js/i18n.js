@@ -203,6 +203,9 @@
       if (/hour/.test(t)) return UZ ? k + ' soat oldin saqlandi' : 'сохранено ' + k + ' ' + n(k, 'час', 'часа', 'часов') + ' назад';
       return UZ ? k + ' kun oldin saqlandi' : 'сохранено ' + k + ' ' + n(k, 'день', 'дня', 'дней') + ' назад';
     }],
+    [/^In (\d+) weeks$/, function (m) { return UZ ? m[1] + ' haftadan keyin' : 'Через ' + m[1] + ' ' + n(+m[1], 'неделю', 'недели', 'недель'); }],
+    [/^Get one exercise from "(.+)"$/, function (m) { return UZ ? '“' + m[1] + '” dan bitta mashq olish' : 'Одно упражнение из «' + m[1] + '»'; }],
+    [/^Added "(.+)" to My Exercises$/, function (m) { return UZ ? '“' + m[1] + '” Mashqlarimga qoʻshildi.' : '«' + m[1] + '» добавлено в «Мои упражнения».'; }],
     [/^(\d+) exercises?$/, function (m) { return UZ ? m[1] + ' ta mashq' : m[1] + ' ' + n(+m[1], 'упражнение', 'упражнения', 'упражнений'); }]
   ];
 

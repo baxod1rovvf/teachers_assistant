@@ -1234,36 +1234,6 @@ function getNextOccurrenceForEntry(entry, now) {
   return null;
 }
 
-function getNextLessonOccurrencesGrouped() {
-  const schedule = getWeeklySchedule();
-  const result = { thisWeek: [], nextWeek: [] };
-  if (!schedule.length) return result;
-  const now = new Date();
-  const thisWeekStart = getWeekStartMonday(now);
-  const nextWeekStart = new Date(thisWeekStart); nextWeekStart.setDate(nextWeekStart.getDate() + 7);
-  const afterNextWeekStart = new Date(thisWeekStart); afterNextWeekStart.setDate(afterNextWeekStart.getDate() + 14);
-  const occurrences = [];
-  schedule.forEach(entry => {
-    const parts = (entry.time || '00:00').split(':');
-    const h = parseInt(parts[0], 10) || 0;
-    const m = parseInt(parts[1], 10) || 0;
-    const totalDays = Math.ceil((afterNextWeekStart.getTime() - now.getTime()) / 86400000) + 1;
-    for (let addDays = 0; addDays < totalDays; addDays++) {
-      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + addDays, h, m, 0, 0);
-      if (d.getTime() >= afterNextWeekStart.getTime()) break;
-      if (d.getDay() === entry.day && d.getTime() >= now.getTime() - 60000) {
-        occurrences.push({ entry: entry, date: d });
-      }
-    }
-  });
-  occurrences.sort((a, b) => a.date - b.date);
-  occurrences.forEach(o => {
-    if (o.date.getTime() < nextWeekStart.getTime()) result.thisWeek.push(o);
-    else result.nextWeek.push(o);
-  });
-  return result;
-}
-
 /* ---- 24h reminders ---- */
 function getUpcomingReminders() {
   const schedule = getWeeklySchedule();
@@ -1333,23 +1303,52 @@ function renderLessonRow(o) {
   '</div>';
 }
 
+/* The next few lessons from the weekly schedule, however many weeks ahead they are. */
+function getNextLessonOccurrences(limit) {
+  const schedule = getWeeklySchedule();
+  if (!schedule.length) return [];
+  const now = new Date();
+  const out = [];
+  schedule.forEach(entry => {
+    const parts = (entry.time || '00:00').split(':');
+    const h = parseInt(parts[0], 10) || 0, m = parseInt(parts[1], 10) || 0;
+    let found = 0;
+    for (let addDays = 0; addDays < 7 * (limit + 1) && found < limit; addDays++) {
+      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + addDays, h, m, 0, 0);
+      if (d.getDay() === entry.day && d.getTime() >= now.getTime() - 60000) { out.push({ entry: entry, date: d }); found++; }
+    }
+  });
+  return out.sort((a, b) => a.date - b.date).slice(0, limit);
+}
+
+function lessonWeekLabel(weekIndex, weekStart) {
+  const end = new Date(weekStart); end.setDate(end.getDate() + 6);
+  const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const name = weekIndex === 0 ? 'This week' : weekIndex === 1 ? 'Next week' : 'In ' + weekIndex + ' weeks';
+  return '<div class="lesson-week-heading">' + name + ' <span class="lesson-week-dates">' + fmt(weekStart) + ' – ' + fmt(end) + '</span></div>';
+}
+
+// Shows the next 5 lessons, under the week each one is in.
 function renderNextLessons() {
   const wrap = document.getElementById('mainLessonsList');
   if (!wrap) return;
-  const grouped = getNextLessonOccurrencesGrouped();
-  if (!grouped.thisWeek.length && !grouped.nextWeek.length) {
+  const next = getNextLessonOccurrences(5);
+  if (!next.length) {
     wrap.innerHTML = '<div class="empty-results">No lessons scheduled yet. <button class="mini-btn" type="button" style="margin-top:8px;" onclick="goToScheduleSettings()">➕ Add your weekly schedule</button></div>';
     return;
   }
-  let html = '';
-  html += '<div class="lesson-week-heading">This Week</div>';
-  html += grouped.thisWeek.length
-    ? grouped.thisWeek.map(renderLessonRow).join('')
-    : '<div class="lesson-week-empty">No more lessons this week.</div>';
-  html += '<div class="lesson-week-heading">Next Week</div>';
-  html += grouped.nextWeek.length
-    ? grouped.nextWeek.map(renderLessonRow).join('')
-    : '<div class="lesson-week-empty">No lessons scheduled next week.</div>';
+  const thisWeekStart = getWeekStartMonday(new Date());
+  let html = '', shownWeek = -1;
+  next.forEach(o => {
+    const weekIndex = Math.round((getWeekStartMonday(o.date) - thisWeekStart) / (7 * 86400000));
+    if (weekIndex !== shownWeek) {
+      if (shownWeek === -1 && weekIndex > 0) html += lessonWeekLabel(0, thisWeekStart) + '<div class="lesson-week-empty">No more lessons this week.</div>';
+      const ws = new Date(thisWeekStart); ws.setDate(ws.getDate() + 7 * weekIndex);
+      html += lessonWeekLabel(weekIndex, ws);
+      shownWeek = weekIndex;
+    }
+    html += renderLessonRow(o);
+  });
   wrap.innerHTML = html;
   showReminderToastIfDue();
 }

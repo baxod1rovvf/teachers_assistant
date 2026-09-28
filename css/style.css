@@ -1693,3 +1693,20 @@ body.light-theme[data-design="burntorange"] { --surface-page: #FFF4D6; --surface
 }
 .lang-choice:hover { border-color: var(--brand); color: var(--brand); }
 .lang-choice.active { border-color: var(--brand); color: var(--brand); background: rgba(139,135,255,0.12); }
+
+/* ---------- Homework/Class: one code and one points value per set ---------- */
+.hwc-later-round .hwc-set-field { display: none; }
+.hwc-set-note {
+  margin: 0 0 14px; padding: 10px 14px; border-radius: var(--radius-md); border: 1.5px dashed var(--brand);
+  font-size: 0.85rem; color: var(--ink-soft); line-height: 1.5;
+}
+.hwc-set-note b { color: var(--ink); }
+
+.set-round-list { display: flex; flex-direction: column; gap: 8px; }
+.set-round-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px 12px; flex-wrap: wrap;
+  padding: 10px 12px; border-radius: 10px; background: var(--surface-sunken); font-size: 0.88rem; color: var(--ink);
+}
+.set-round-btns { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+
+.lesson-week-dates { font-weight: 600; color: var(--ink-faint); margin-left: 6px; text-transform: none; letter-spacing: 0; }

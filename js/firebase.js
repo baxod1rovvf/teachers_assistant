@@ -206,12 +206,18 @@ window.taListenHwcProgress = function (code) {
 
 // Looks up one student's result for a single exercise inside a merged
 // set, by that exercise's own code \u2014 used by the eye-icon drill-down.
-window.taFindResultByCodeAndName = async function (code, studentName) {
+// A round's answers: matched by the student's ID (names can differ between rounds,
+// e.g. the roster name in one and the typed ID in another), then by name.
+window.taFindResultByCodeAndName = async function (code, studentName, studentId) {
   if (!db || !code) return null;
   try {
     const q = query(collection(db, 'results'), where('code', '==', code));
     const snap = await getDocs(q);
-    const matches = snap.docs.map(d => d.data()).filter(v => v && v.name === studentName);
+    const docs = snap.docs.map(d => d.data()).filter(v => v && typeof v.type === 'string' && v.type.indexOf('POINTS:') !== 0);
+    const norm = x => String(x || '').trim().toLowerCase();
+    let matches = studentId ? docs.filter(v => norm(v.studentId) === norm(studentId)) : [];
+    if (!matches.length) matches = docs.filter(v => norm(v.name) === norm(studentName));
+    if (!matches.length && studentId) matches = docs.filter(v => norm(v.name) === norm(studentId));
     if (!matches.length) return null;
     matches.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
     return matches[0];
