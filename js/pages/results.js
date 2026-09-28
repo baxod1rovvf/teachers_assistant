@@ -19,7 +19,10 @@ function formatRelativeTime(ts) {
    progress list there instead of the normal code-upload flow, rather than
    a separate popup. */
 function viewHomeworkClassResults(idx) {
-  const item = getRecentExercises()[idx];
+  showHwcResults(getRecentExercises()[idx]);
+}
+// item: a Homework/Class entry from My Exercises, or { title, code } read from an uploaded file.
+function showHwcResults(item) {
   if (!item) return;
   hwcResultsCurrentItem = item;
   hwcExpandedStudent = null;
@@ -29,7 +32,11 @@ function viewHomeworkClassResults(idx) {
   const subEl = document.querySelector('#activeCodeBox .active-code-sub');
   if (valueEl) valueEl.textContent = item.title;
   if (subEl) subEl.textContent = 'Tap a student\'s progress to see which exercises are done, and view their answers.';
-  switchTo('results');
+  // Already on Results when opened from its own start (results.html?exercise=…): switching
+  // again would run that start again, and again — it never got as far as loading the list.
+  if (currentActiveTab !== 'results') switchTo('results');
+  const wrap = document.getElementById('hwcResultsInlineList');
+  if (wrap) wrap.innerHTML = '<p class="empty-results">⏳ Loading your students\' progress…</p>';
   if (window.taListenHwcProgress) window.taListenHwcProgress(item.code);
   else renderHwcResultsList();
 }
@@ -65,7 +72,11 @@ function renderHwcResultsList() {
   setResultsStatCard(3, '\u23f3', 'rgba(79,126,227,0.14)', 'var(--category-blue)', String(inProgress), 'In Progress');
   setResultsStatCard(4, '\ud83d\udcc8', 'rgba(245,179,1,0.16)', 'var(--celebrate)', avgProgressPct !== null ? avgProgressPct + '%' : '\u2014', 'Average Progress');
 
-  if (!docs.length) { wrap.innerHTML = '<p class="empty-results">No students have started this yet.</p>'; return; }
+  if (window.__hwcProgressError) {
+    wrap.innerHTML = '<p class="empty-results">⚠️ Couldn\'t load the progress: ' + escapeForHtml(window.__hwcProgressError) + '. Check your internet connection and open View Results again.</p>';
+    return;
+  }
+  if (!docs.length) { wrap.innerHTML = '<p class="empty-results">No students have finished an exercise of this set yet. Their progress shows here as soon as they finish the first one.</p>'; return; }
 
   wrap.innerHTML = docs.map(d => {
     const done = d.completedCount === d.totalCount && d.totalCount > 0;
@@ -294,6 +305,19 @@ function onExerciseFileUpload(input) {
   const reader = new FileReader();
   reader.onload = function () {
     const text = String(reader.result || '');
+    // A Homework/Class file: its own code, and the progress view instead of a results table
+    const hwc = text.match(/const HWC_CODE = "([0-9]{6})"/);
+    if (hwc) {
+      const known = getRecentExercises().find(e => e.code === hwc[1] && e.mergedItems);
+      const titleM = text.match(/const HWC_TITLE = ("(?:[^"\\]|\\.)*");/);
+      let title = file.name || 'Homework';
+      try { if (titleM) title = JSON.parse(titleM[1]); } catch (e) { /* keep the file name */ }
+      showHwcResults(known || { title: title, code: hwc[1], mergedItems: [] });
+      if (subEl) subEl.textContent = 'From: ' + (file.name || 'uploaded file') + ' — tap a student to see which exercises are done, and their answers.';
+      if (statusEl) statusEl.textContent = '🟢 Showing this set\'s progress, live.';
+      input.value = '';
+      return;
+    }
     const m = text.match(/const EXERCISE_CODE = "([0-9]{6})"/);
     if (!m) {
       if (statusEl) statusEl.textContent = "⚠️ Couldn't find a code in that file — make sure it's an exercise created by this app.";

@@ -167,6 +167,7 @@ let hwcResultsUnsub = null;
 window.taListenHwcProgress = function (code) {
   if (hwcResultsUnsub) { hwcResultsUnsub(); hwcResultsUnsub = null; }
   window.__hwcProgressDocs = [];
+  window.__hwcProgressError = '';
   if (!db || !code) { if (window.renderHwcResultsList) window.renderHwcResultsList(); return; }
   const q = query(collection(db, 'results'), where('code', '==', code));
   hwcResultsUnsub = onSnapshot(q, snap => {
@@ -200,6 +201,11 @@ window.taListenHwcProgress = function (code) {
       totalTimeSeconds: e.roundTimeSeconds.reduce((a, b) => a + b, 0),
       lastActive: e.lastActive
     }));
+    window.__hwcProgressError = '';
+    if (window.renderHwcResultsList) window.renderHwcResultsList();
+  }, err => {
+    console.error('Homework progress failed:', err);
+    window.__hwcProgressError = (err && err.code === 'permission-denied') ? 'not allowed by the database rules' : ((err && err.code) || 'no connection');
     if (window.renderHwcResultsList) window.renderHwcResultsList();
   });
 };
