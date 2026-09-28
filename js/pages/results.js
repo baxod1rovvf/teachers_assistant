@@ -150,8 +150,9 @@ async function viewHwcRoundAnswer(roundCode, studentName, roundLabel, studentId)
     if (typeof result.score !== 'undefined') lines.push('<div><b>Score:</b> ' + escapeForHtml(String(result.score)) + '</div>');
     if (result.timeDisplay) lines.push('<div><b>Time:</b> ' + escapeForHtml(result.timeDisplay) + '</div>');
     if (result.dictationFeedback) { lines.push(taDictationAnswerHtml(result)); modal.classList.add('wide'); }
-    // Sentences: the student's own written sentence for each word.
+    // Sentences: the student's own written sentence for each word, and the teacher's rating.
     if (Array.isArray(result.sentences) && result.sentences.length) {
+      lines.push(taStarRatingHtml(result));
       lines.push(result.sentences.map((s, i) =>
         '<div class="resource-card">' +
           '<div class="resource-card-title">' + (i + 1) + (s.word ? ' — using "' + escapeForHtml(s.word) + '"' : '') + '</div>' +
@@ -442,7 +443,9 @@ function renderResultsTable(codeOverride) {
       const st = rosterOf.get(r);
       let viewBtn = '<span style="color:var(--ink-faint); font-size:0.8rem;">—</span>';
       if (r.type === 'Sentences' && Array.isArray(r.sentences)) {
-        viewBtn = '<button class="res-view-btn" type="button" onclick="viewSentenceResult(' + idx + ')">👁 View</button>';
+        const stars = sentenceRatingFor(r);
+        viewBtn = '<button class="res-view-btn" type="button" onclick="viewSentenceResult(' + idx + ')">👁 View</button>' +
+          '<button type="button" class="sentence-rate-chip' + (stars ? ' rated' : '') + '" data-key="' + escapeForHtml(resultSignature(r)) + '" onclick="viewSentenceResult(' + idx + ')" title="Rate these sentences (1–5 stars)">' + (stars ? '★ ' + stars + '/5' : '☆ Rate') + '</button>';
       } else if ((r.type === 'BilingualReader' || r.type === 'EnglishContent') && typeof r.notes === 'string' && r.notes.trim()) {
         viewBtn = '<button class="res-view-btn" type="button" onclick="viewNotesResult(' + idx + ')">👁 View Notes</button>';
       } else if (r.type === 'Dictation' && typeof r.dictationFeedback === 'string' && r.dictationFeedback.trim()) {

@@ -73,3 +73,15 @@ Teachers can switch the app between **English, Oʻzbekcha and Русский** (
 - `js/i18n-strings.js` holds the words as `[English, Uzbek, Russian]` rows. It's only downloaded when a language other than English is picked. Text is matched whole, ignoring emoji/symbols at either end and a final `.`, so one row covers "🎓 Dashboard" and "Dashboard". Messages with names or numbers in them are handled by the `PATTERNS` list in `js/i18n.js`.
 - To translate something new, add a row. To keep something as typed (titles, names), put it in an element with `translate="no"`.
 - Exercise files for students stay in English (they're English lessons), and so do the example placeholders ("e.g. Around the House").
+
+## Top Active Students
+
+The Dashboard ranks students (from the Students list) by how well they did, not by how many exercises they finished. Every result of every exercise (including the ones inside Homework/Class sets) becomes a 0–100 score that's fair for its type:
+
+- Dictation, Test, Word Order, Make a Word, Spelling, Pronunciation: the result's own score.
+- Flashcard: speed, compared only with the other students on the same flashcard set (fastest 100, slowest 50).
+- Bidirectional Language / English Content: notes written and time spent, compared only with the others on the same exercise (more is better).
+- Sentences: the teacher's 1–5 star rating in Results (Very bad … Very good = 20 … 100); unrated sentences don't count.
+- IELTS tests don't count.
+
+A student's figure is the average of their scores, pulled a little toward 60 when they have only a few results (`getTopActiveStudents` in `js/pages/main.js`). Star ratings are kept in `ta_sentence_ratings` and synced.

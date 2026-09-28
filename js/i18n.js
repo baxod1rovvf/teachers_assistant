@@ -208,6 +208,8 @@
       var ru = { correct: 'верно', wrong: 'ошибок', missed: 'пропущено', extra: 'лишних' };
       return m[1] + ' ' + (UZ ? uz : ru)[m[2]];
     }],
+    [/^(\d)\/5 — (.+)$/, function (m) { return m[1] + '/5 — ' + trName(m[2]); }],
+    [/^(\d+) results?$/, function (m) { return UZ ? m[1] + ' ta natija' : m[1] + ' ' + n(+m[1], 'результат', 'результата', 'результатов'); }],
     [/^In (\d+) weeks$/, function (m) { return UZ ? m[1] + ' haftadan keyin' : 'Через ' + m[1] + ' ' + n(+m[1], 'неделю', 'недели', 'недель'); }],
     [/^Get one exercise from "(.+)"$/, function (m) { return UZ ? '“' + m[1] + '” dan bitta mashq olish' : 'Одно упражнение из «' + m[1] + '»'; }],
     [/^Added "(.+)" to My Exercises$/, function (m) { return UZ ? '“' + m[1] + '” Mashqlarimga qoʻshildi.' : '«' + m[1] + '» добавлено в «Мои упражнения».'; }],

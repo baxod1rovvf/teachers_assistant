@@ -107,18 +107,32 @@ if (window.getPointsBoardCode) window.startPointsSync(window.getPointsBoardCode(
 // Firestore's "in" operator caps out at 30 values per query), and counts
 // completions for exactly the types that don't participate in points, so
 // nothing here double-counts what the points ledger already covers.
+// It also keeps every result of every exercise (window.__allResults, including
+// the exercises inside Homework/Class sets) for Top Active Students, which
+// judges students by how well they did, not how many exercises they finished.
 let plainUnsubscribers = [];
 window.__plainCompletions = [];
+window.__allResults = [];
 window.startPlainCompletionsSync = function () {
   plainUnsubscribers.forEach(u => { try { u(); } catch (e) { /* ignore */ } });
   plainUnsubscribers = [];
   window.__plainCompletions = [];
+  window.__allResults = [];
   if (!db || !window.getRecentExercises) return;
   const NO_POINTS_TYPES = ['English Content', 'Bidirectional Language'];
-  const codes = (window.getRecentExercises() || [])
-    .filter(e => NO_POINTS_TYPES.indexOf(e.typeLabel) !== -1)
-    .map(e => e.code)
-    .filter(Boolean);
+  const exercises = window.getRecentExercises() || [];
+  const noPointsCodes = new Set(exercises.filter(e => NO_POINTS_TYPES.indexOf(e.typeLabel) !== -1).map(e => e.code));
+  const codes = [];
+  exercises.forEach((e, i) => {
+    if (e.mergedItems && e.mergedItems.length) {
+      // a set's own code only has its progress records; its exercises report under their own codes
+      e.mergedItems.forEach((r, k) => {
+        let c = r && r.code;
+        if (!c && window.setRoundHtml) { const h = window.setRoundHtml(e, k); c = h && (h.match(/const EXERCISE_CODE = "([^"]*)"/) || [])[1]; }
+        if (c) codes.push(c);
+      });
+    } else if (e.code) codes.push(e.code);
+  });
   const uniqueCodes = [...new Set(codes)];
   const chunks = [];
   for (let i = 0; i < uniqueCodes.length; i += 30) chunks.push(uniqueCodes.slice(i, i + 30));
@@ -127,9 +141,11 @@ window.startPlainCompletionsSync = function () {
   chunks.forEach((chunk, ci) => {
     const q = query(collection(db, 'results'), where('code', 'in', chunk));
     const unsub = onSnapshot(q, snap => {
-      resultsByChunk[ci] = snap.docs.map(d => d.data()).filter(v => v && typeof v.type === 'string' && v.type.indexOf('POINTS:') !== 0);
-      window.__plainCompletions = Object.values(resultsByChunk).flat();
+      resultsByChunk[ci] = snap.docs.map(d => d.data()).filter(v => v && typeof v.type === 'string' && v.type.indexOf('POINTS:') !== 0 && v.type !== 'HWC_PROGRESS');
+      window.__allResults = Object.values(resultsByChunk).flat();
+      window.__plainCompletions = window.__allResults.filter(r => noPointsCodes.has(r.code));
       if (window.renderDashboard) window.renderDashboard();
+      if (window.renderTopActiveStudents) window.renderTopActiveStudents();
     }, err => { console.error('Plain completions sync error:', err); });
     plainUnsubscribers.push(unsub);
   });

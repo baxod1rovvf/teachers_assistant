@@ -472,7 +472,7 @@ function buildAndDownloadHwc() {
     code: (r.html.match(/const EXERCISE_CODE = "([^"]*)"/) || [])[1] || ''
   }));
   // each round's file is inside the set's own file (see setRoundHtml), not kept twice
-  const mergedItems = hwcRounds.map(r => ({ title: r.label, typeLabel: r.label }));
+  const mergedItems = hwcRounds.map(r => ({ title: r.label, typeLabel: r.label, code: (r.html.match(/const EXERCISE_CODE = "([^"]*)"/) || [])[1] || '' }));
 
   const setTitle = hwcSetTitle();
   const title = setTitle.title;

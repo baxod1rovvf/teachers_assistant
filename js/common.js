@@ -951,6 +951,7 @@ function pushRecentExercise(entry) {
   });
   saveRecentExercises(list.slice(0, 200));
   if (entry.html) cacheExerciseHtml(entry.uid, entry.html);
+  if (window.startPlainCompletionsSync) { clearTimeout(window.__taResyncTimer); window.__taResyncTimer = setTimeout(window.startPlainCompletionsSync, 3000); }
   if (window.renderRecentExercises) window.renderRecentExercises();
 }
 
@@ -1278,6 +1279,44 @@ function viewDictationResult(idx) {
   modal.classList.add('show', 'wide');
 }
 
+/* ================= RATING STUDENTS' SENTENCES =================
+   Sentences aren't checked automatically, so the teacher gives each
+   student's sentences 1–5 stars (very bad … very good). The rating is what
+   Top Active Students uses for that exercise. Saved per result and synced. */
+const LS_SENTENCE_RATINGS = 'ta_sentence_ratings'; // { resultSignature: 1..5 }
+const SENTENCE_RATING_WORDS = ['', 'Very bad', 'Bad', 'Average', 'Good', 'Very good'];
+function getSentenceRatings() {
+  try { return JSON.parse(localStorage.getItem(LS_SENTENCE_RATINGS) || '{}') || {}; } catch (e) { return {}; }
+}
+function sentenceRatingFor(r) { return getSentenceRatings()[resultSignature(r)] || 0; }
+function taStarRatingHtml(r) {
+  const key = resultSignature(r), n = sentenceRatingFor(r);
+  let stars = '';
+  for (let i = 1; i <= 5; i++) {
+    stars += '<button type="button" class="star' + (i <= n ? ' on' : '') + '" title="' + SENTENCE_RATING_WORDS[i] + '" aria-label="' + i + ' of 5 — ' + SENTENCE_RATING_WORDS[i] + '" ' +
+      'onclick="rateSentences(' + jsAttr(key) + ',' + i + ', this)">★</button>';
+  }
+  return '<div class="star-rating" data-key="' + escapeForHtml(key) + '">' +
+    '<span class="star-rating-label">Rate these sentences</span>' +
+    '<span class="stars">' + stars + '</span>' +
+    '<span class="star-rating-word">' + (n ? n + '/5 — ' + SENTENCE_RATING_WORDS[n] : 'Not rated yet') + '</span>' +
+  '</div>';
+}
+function rateSentences(key, n, btn) {
+  const all = getSentenceRatings();
+  if (all[key] === n) delete all[key]; else all[key] = n; // tapping the same star again clears it
+  try { localStorage.setItem(LS_SENTENCE_RATINGS, JSON.stringify(all)); } catch (e) { /* ignore */ }
+  const box = btn && btn.closest('.star-rating');
+  const now = all[key] || 0;
+  if (box) {
+    box.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('on', i < now));
+    box.querySelector('.star-rating-word').textContent = now ? now + '/5 — ' + SENTENCE_RATING_WORDS[now] : 'Not rated yet';
+  }
+  document.querySelectorAll('.sentence-rate-chip[data-key="' + CSS.escape(key) + '"]').forEach(c => { c.textContent = now ? '★ ' + now + '/5' : '☆ Rate'; c.classList.toggle('rated', !!now); });
+  if (window.renderTopActiveStudents) window.renderTopActiveStudents();
+}
+window.rateSentences = rateSentences;
+
 function viewSentenceResult(idx) {
   const r = (window.__lastResultsMatches || [])[idx];
   if (!r || !Array.isArray(r.sentences)) return;
@@ -1286,7 +1325,7 @@ function viewSentenceResult(idx) {
   const body = document.getElementById('sentenceViewBody');
   if (!modal || !title || !body) return;
   title.textContent = (r.name || 'Student') + ' — ' + (r.title || 'Sentences');
-  body.innerHTML = r.sentences.map((s, i) =>
+  body.innerHTML = taStarRatingHtml(r) + r.sentences.map((s, i) =>
     '<div class="resource-card">' +
       '<div class="resource-card-title">' + (i + 1) + (s.word ? ' — using "' + escapeForHtml(s.word) + '"' : '') + '</div>' +
       '<div class="resource-card-content">' + escapeForHtml(s.text || '(blank)') + '</div>' +
