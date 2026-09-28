@@ -1233,7 +1233,16 @@ function taDictationAnswerHtml(r) {
         '</div>';
     }).join('') + '</div>';
   }
-  const ops = (typeof r.referenceText === 'string' && typeof r.studentText === 'string') ? taDictDiff(r.referenceText, r.studentText) : taDictParseFeedback(fb);
+  let ops;
+  if (typeof r.referenceText === 'string' && typeof r.studentText === 'string') ops = taDictDiff(r.referenceText, r.studentText);
+  else {
+    // Older results: their feedback line was made with the old word pairing ("weeks -> Sarah").
+    // It still holds both texts, so rebuild them and check them again the new way.
+    const old = taDictParseFeedback(fb);
+    const refText = old.filter(o => o.type !== 'extra').map(o => o.ref).join(' ');
+    const stuText = old.filter(o => o.type !== 'missing').map(o => o.type === 'ok' ? o.ref : o.student).join(' ');
+    ops = taDictDiff(refText, stuText);
+  }
   const count = t => ops.filter(o => o.type === t).length;
   const extras = ops.filter(o => o.type === 'extra').map(o => o.student);
   let text = '', missedRun = [];
@@ -1266,7 +1275,7 @@ function viewDictationResult(idx) {
   if (!modal || !title || !body) return;
   title.textContent = (r.name || 'Student') + ' — ' + (r.title || 'Dictation') + ' (' + (typeof r.score === 'number' ? r.score + '%' : '—') + ')';
   body.innerHTML = r.dictationFeedback ? taDictationAnswerHtml(r) : '<div class="empty-results">(no details)</div>';
-  modal.classList.add('show');
+  modal.classList.add('show', 'wide');
 }
 
 function viewSentenceResult(idx) {
@@ -1287,7 +1296,7 @@ function viewSentenceResult(idx) {
 }
 function closeSentenceViewModal() {
   const modal = document.getElementById('sentenceViewModal');
-  if (modal) modal.classList.remove('show');
+  if (modal) modal.classList.remove('show', 'wide');
 }
 
 /* ================= MAIN DASHBOARD: weekly lesson schedule ================= */
