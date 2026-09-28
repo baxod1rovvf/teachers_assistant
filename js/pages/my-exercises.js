@@ -482,13 +482,15 @@ function viewRecentExerciseResults(idx) {
 function roundAsExercise(item, i) {
   const orig = item.mergedItems[i];
   const round = item.builderRounds && item.builderRounds[i];
-  const pick = re => (orig.html.match(re) || [])[1] || '';
+  const html = setRoundHtml(item, i);
+  if (!html) return null; // the set's file isn't saved in this browser any more
+  const pick = re => (html.match(re) || [])[1] || '';
   const typeName = round && TA_TAB_LABELS[round.tab] ? TA_TAB_LABELS[round.tab][1] : orig.typeLabel;
   return {
     title: orig.title, typeLabel: typeName,
     code: pick(/const EXERCISE_CODE = "([^"]*)"/) || generateClassCode(),
     uid: pick(/const EXERCISE_UID = "([^"]*)"/) || generateExerciseUid(),
-    html: orig.html, requiredCode: pick(/const REQUIRED_CODE = "([^"]*)"/), groupId: item.groupId || '',
+    html: html, requiredCode: pick(/const REQUIRED_CODE = "([^"]*)"/), groupId: item.groupId || '',
     builderTab: round ? round.tab : null, builderState: round ? round.state : null
   };
 }
@@ -496,17 +498,22 @@ function roundAsExercise(item, i) {
 function separateHomeworkOrClass(idx) {
   const item = getRecentExercises()[idx];
   if (!item || !item.mergedItems || !item.mergedItems.length) return;
+  const parts = item.mergedItems.map((orig, i) => roundAsExercise(item, i));
+  if (parts.some(p => !p)) { showToast(SET_FILE_GONE); return; }
   if (!confirm('Separate "' + item.title + '" back into its ' + item.mergedItems.length + ' original exercises?')) return;
-  item.mergedItems.forEach((orig, i) => pushRecentExercise(roundAsExercise(item, i)));
+  parts.forEach(p => pushRecentExercise(p));
   removeRecentExercise(item.uid);
   showToast('Separated back into ' + item.mergedItems.length + ' exercises.', 'ok');
 }
 
 /* Take just one exercise out of a set: download it on its own, or add it to My
    Exercises as a separate exercise. The set stays as it is. */
+const SET_FILE_GONE = 'This set\'s file isn\'t saved in this browser any more, so its exercises can\'t be taken out. Use "Use again" to rebuild the set, or Redownload it on the device where you made it.';
+
 function getOneFromSet(idx) {
   const item = getRecentExercises()[idx];
   if (!item || !item.mergedItems || !item.mergedItems.length) return;
+  if (!roundAsExercise(item, 0)) { showToast(SET_FILE_GONE); return; }
   const have = new Set(getRecentExercises().map(e => e.uid));
   const m = taModal('📤 Get one exercise from "' + item.title + '"',
     '<p class="ta-modal-text">Each exercise works on its own too, with its own results. The ' + escapeForHtml(item.typeLabel.toLowerCase()) + ' set stays as it is.</p>' +
@@ -521,7 +528,7 @@ function getOneFromSet(idx) {
     const dl = e.target.closest('[data-dl]'), add = e.target.closest('[data-add]');
     if (dl) {
       const orig = item.mergedItems[+dl.dataset.dl];
-      downloadFile((orig.title.replace(/[^a-z0-9\-_ ]/gi, '').trim().replace(/\s+/g, '_') || 'exercise') + '.html', orig.html);
+      downloadFile((orig.title.replace(/[^a-z0-9\-_ ]/gi, '').trim().replace(/\s+/g, '_') || 'exercise') + '.html', setRoundHtml(item, +dl.dataset.dl));
       showToast('"' + orig.title + '" downloaded.', 'ok');
     } else if (add) {
       const ex = roundAsExercise(item, +add.dataset.add);

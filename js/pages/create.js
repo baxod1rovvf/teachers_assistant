@@ -457,7 +457,8 @@ function buildAndDownloadHwc() {
       .replace(/const POINTS_AWARD = -?\d+(?:\.\d+)?;/, 'const POINTS_AWARD = ' + (i === hwcRounds.length - 1 ? setPoints : 0) + ';'),
     code: (r.html.match(/const EXERCISE_CODE = "([^"]*)"/) || [])[1] || ''
   }));
-  const mergedItems = hwcRounds.map(r => ({ title: r.label, typeLabel: r.label, html: r.html }));
+  // each round's file is inside the set's own file (see setRoundHtml), not kept twice
+  const mergedItems = hwcRounds.map(r => ({ title: r.label, typeLabel: r.label }));
 
   const title = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   const requiredCode = hwcRounds[0].code || '';

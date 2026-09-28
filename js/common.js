@@ -865,14 +865,53 @@ function getRecentExercises() {
    dropping saved copies of exercise files (they're only for "Redownload"),
    oldest first, and say so if it still can't be saved. */
 function saveRecentExercises(list) {
-  const json = JSON.stringify(list);
+  slimSetRounds(list, false);
   for (let tries = 0; tries < 25; tries++) {
-    try { localStorage.setItem(LS_RECENT_EXERCISES, json); return true; }
-    catch (e) { if (!taFreeExerciseCacheSpace(list)) break; }
+    try { localStorage.setItem(LS_RECENT_EXERCISES, JSON.stringify(list)); return true; }
+    catch (e) {
+      if (taFreeExerciseCacheSpace(list)) continue;
+      if (slimSetRounds(list, true)) continue; // last resort: sets keep "Use again", lose "Get one"
+      break;
+    }
   }
   if (typeof showToast === 'function') showToast('⚠️ This browser\'s storage is full, so My Exercises couldn\'t be saved. Download a backup in Settings, then delete some old exercises.');
   return false;
 }
+/* Homework/Class sets used to keep a full copy of every round's file in the list
+   itself, which filled the browser's storage. The rounds are inside the set's own
+   file (kept for Redownload), so the copies are dropped whenever that file is there
+   — or, with force, from the oldest set that still has them. True if any went. */
+function slimSetRounds(list, force) {
+  let slimmed = false;
+  const sets = list.filter(e => e && e.mergedItems && e.mergedItems.some(r => r && r.html));
+  if (force) sets.reverse(); // oldest first
+  for (const e of sets) {
+    if (!force && !getCachedExerciseHtml(e.uid)) continue;
+    e.mergedItems = e.mergedItems.map(r => ({ title: r.title, typeLabel: r.typeLabel }));
+    slimmed = true;
+    if (force) break;
+  }
+  return slimmed;
+}
+
+/* One exercise of a Homework/Class set as a file of its own, taken from the set's
+   file: with the set's class code, and the set's points. Null if the set's file
+   isn't saved in this browser any more. */
+function setRoundHtml(item, i) {
+  const r = item.mergedItems && item.mergedItems[i];
+  if (r && r.html) return r.html; // sets made before this change
+  const wrapper = getCachedExerciseHtml(item.uid);
+  const m = wrapper && wrapper.match(/const HWC_ROUNDS = (.*);\n/);
+  if (!m) return null;
+  let rounds;
+  try { rounds = JSON.parse(m[1]); } catch (e) { return null; }
+  if (!rounds[i]) return null;
+  const pts = Math.max.apply(null, rounds.map(x => Number((x.html.match(/const POINTS_AWARD = (-?\d+(?:\.\d+)?);/) || [])[1]) || 0));
+  return rounds[i].html
+    .replace(/const REQUIRED_CODE = "[^"]*";/, 'const REQUIRED_CODE = ' + JSON.stringify(item.requiredCode || '') + ';')
+    .replace(/const POINTS_AWARD = -?\d+(?:\.\d+)?;/, 'const POINTS_AWARD = ' + pts + ';');
+}
+
 // Drops one saved exercise file (the oldest in the list, or one no longer listed). False when there's none left.
 function taFreeExerciseCacheSpace(list) {
   try {
@@ -934,22 +973,34 @@ function removeRecentExercise(uid) {
 const LS_EXERCISE_HTML_CACHE = 'ta_exercise_html_cache';
 const MAX_CACHED_EXERCISE_HTML = 20;
 
+// All saved copies together stay under this many characters (the browser allows ~5 million
+// for everything this site keeps), so there's always room left for the lists themselves.
+const MAX_CACHED_EXERCISE_CHARS = 2200000;
+
 function cacheExerciseHtml(uid, html) {
   // Exercises with a packed audio/video file are too big for the browser's storage (and cloud sync).
   if (typeof html === 'string' && html.length > 1048576) return;
   try {
     const cache = JSON.parse(localStorage.getItem(LS_EXERCISE_HTML_CACHE) || '{}');
     cache[uid] = html;
-    const keys = Object.keys(cache);
-    if (keys.length > MAX_CACHED_EXERCISE_HTML) {
-      const recentUids = getRecentExercises().map(e => e.uid);
-      keys.forEach(k => {
-        if (Object.keys(cache).length <= MAX_CACHED_EXERCISE_HTML) return;
-        if (recentUids.indexOf(k) === -1 || recentUids.indexOf(k) >= MAX_CACHED_EXERCISE_HTML) delete cache[k];
-      });
+    // newest first: this file, then the list's order; files no longer listed go first
+    const order = getRecentExercises().map(e => e.uid);
+    const rank = k => k === uid ? -1 : (order.indexOf(k) === -1 ? 1e9 : order.indexOf(k));
+    const keys = Object.keys(cache).sort((a, b) => rank(a) - rank(b));
+    let total = 0;
+    keys.forEach((k, i) => {
+      total += cache[k].length;
+      if (k !== uid && (i >= MAX_CACHED_EXERCISE_HTML || total > MAX_CACHED_EXERCISE_CHARS)) delete cache[k];
+    });
+    for (;;) {
+      try { localStorage.setItem(LS_EXERCISE_HTML_CACHE, JSON.stringify(cache)); break; }
+      catch (e) {
+        const oldest = Object.keys(cache).sort((a, b) => rank(b) - rank(a)).find(k => k !== uid);
+        if (!oldest) throw e;
+        delete cache[oldest];
+      }
     }
-    localStorage.setItem(LS_EXERCISE_HTML_CACHE, JSON.stringify(cache));
-  } catch (e) { /* storage full or file too large \u2014 the exercise still downloads fine, it just won't have a "Get" button later */ }
+  } catch (e) { /* storage full or file too large \u2014 the exercise still downloads fine, it just won't have a "Redownload" button later */ }
 }
 function getCachedExerciseHtml(uid) {
   try {
