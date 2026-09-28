@@ -1,0 +1,403 @@
+/* ================= CLOUD SYNC — the same data on every device =================
+   A teacher's students, groups, lessons, exercises, results and profile photo
+   live in this browser's storage. This keeps a copy in the cloud (Firebase)
+   so signing in on another device brings the same data, and a change on one
+   device shows up on the others.
+
+   Privacy: everything is compressed and encrypted (AES-GCM) with a key made
+   from the teacher's own password at sign-in, before it leaves the device.
+   The key is only kept in this browser's sign-in session.
+
+   Each synced item (e.g. ta_student_groups) is stored in its own record,
+   updated in place, with the time it was last changed; the newer change wins.
+   Data from before sync existed has no change time; when both sides only have
+   such old data, the fuller copy wins, so an empty new device never wipes
+   real data. Loaded right after accounts.js on every page. */
+(function () {
+  var SYNC_KEYS = ['ta_student_groups', 'ta_points_roster', 'ta_weekly_schedule', 'ta_recent_exercises',
+    'ta_exercise_html_cache', 'ta_results', 'ta_code_resets', 'ta_active_code', 'ta_points_code',
+    'ta_teacher_name', 'ta_avatar', 'ta_lessons_archived', 'ta_design_day', 'ta_design_night', 'ta_sentence_ratings'];
+  var SYNC_SET = {};
+  SYNC_KEYS.forEach(function (k) { SYNC_SET[k] = true; });
+  var SEP = '␟';
+  var CHUNK = 700000; // characters per cloud record (records are limited to 1 MB)
+
+  var user = window.__TA_USER;
+  if (!user || !user.login || !window.taRaw) return; // not signed in
+  var login = String(user.login).toUpperCase();
+  var ns = window.__TA_NS || '';
+  var raw = window.taRaw;
+
+  var META_KEY = ns + 'ta_sync_meta';   // { key: time of the last local change }
+  var SEEN_KEY = ns + 'ta_sync_seen';   // { key: version id last applied or uploaded }
+  function readJson(k) { try { return JSON.parse(raw.get(k) || '{}') || {}; } catch (e) { return {}; } }
+  var SEEN_TS_KEY = ns + 'ta_sync_seen_ts'; // { key: time of the cloud copy this device last matched }
+  var meta = readJson(META_KEY), seen = readJson(SEEN_KEY), seenTs = readJson(SEEN_TS_KEY);
+  function markSynced(k, ts) { if (ts > (seenTs[k] || 0)) { seenTs[k] = ts; raw.set(SEEN_TS_KEY, JSON.stringify(seenTs)); } }
+  // Another window of the app (e.g. the installed app and a browser tab) may have
+  // stamped newer changes: keep the newest time for each item, never an older one.
+  function freshMeta() {
+    var stored = readJson(META_KEY);
+    Object.keys(stored).forEach(function (k) { if ((stored[k] || 0) > (meta[k] || 0)) meta[k] = stored[k]; });
+  }
+  function saveMeta() { freshMeta(); raw.set(META_KEY, JSON.stringify(meta)); }
+  function saveSeen() { raw.set(SEEN_KEY, JSON.stringify(seen)); }
+  function getLocal(k) { return raw.get(ns + k); }
+  function setLocal(k, v) { if (v === null || v === undefined) raw.remove(ns + k); else raw.set(ns + k, v); }
+
+  /* ---------- status line (shown in the sidebar) ---------- */
+  var status = { text: '', cls: '' };
+  function setStatus(text, cls) {
+    status = { text: text, cls: cls || '' };
+    var el = document.getElementById('taSyncStatus');
+    if (el) { el.textContent = text; el.className = 'sync-status' + (cls ? ' ' + cls : ''); }
+  }
+  function mountStatus() {
+    if (document.getElementById('taSyncStatus')) return;
+    var profile = document.querySelector('.sidebar-profile');
+    if (!profile) return;
+    var el = document.createElement('button');
+    el.type = 'button';
+    el.id = 'taSyncStatus';
+    el.title = 'Your data is kept in step across your devices';
+    el.addEventListener('click', function () {
+      if (status.cls === 'off') askPasswordAndStart();
+      else if (status.cls === 'bad') syncNow();
+    });
+    profile.parentNode.insertBefore(el, profile);
+    setStatus(status.text, status.cls);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountStatus); else mountStatus();
+
+  /* ---------- key ---------- */
+  var key = null;
+  var keyReady = null, started = false;
+  function useKey(sk) {
+    keyReady = crypto.subtle.importKey('raw', b64decode(sk), 'AES-GCM', false, ['encrypt', 'decrypt'])
+      .then(function (k) { key = k; })
+      .catch(function (e) { console.error('Sync key failed:', e); setStatus('☁️ Sync is off — tap to turn it on', 'off'); });
+    keyReady.then(function () { if (key && !started) { started = true; start(); } });
+  }
+
+  /* Devices signed in before sync existed have no key yet: ask for the
+     password once, right here, instead of making the teacher sign out. */
+  function askPasswordAndStart() {
+    if (document.getElementById('taSyncUnlock')) return;
+    var wrap = document.createElement('div');
+    wrap.id = 'taSyncUnlock';
+    wrap.className = 'sync-unlock-back';
+    wrap.innerHTML = '<form class="sync-unlock-card" novalidate>' +
+      '<h3>☁️ Turn on sync</h3>' +
+      '<p>Enter your password to keep this device\'s students, lessons and exercises in step with your other devices.</p>' +
+      '<input type="password" autocomplete="current-password" placeholder="Your password">' +
+      '<div class="sync-unlock-err" role="alert"></div>' +
+      '<div class="sync-unlock-btns"><button type="button" class="sync-unlock-cancel">Not now</button><button type="submit" class="sync-unlock-ok">Turn on</button></div>' +
+      '</form>';
+    document.body.appendChild(wrap);
+    var form = wrap.querySelector('form'), input = wrap.querySelector('input'), err = wrap.querySelector('.sync-unlock-err');
+    setTimeout(function () { input.focus(); }, 30);
+    wrap.querySelector('.sync-unlock-cancel').onclick = function () { wrap.remove(); };
+    form.onsubmit = async function (e) {
+      e.preventDefault();
+      if (typeof taHashPassword !== 'function' || typeof taDeriveSyncKey !== 'function') { err.textContent = 'Please reload the page and try again.'; return; }
+      if (taHashPassword(login, input.value) !== user.hash) { err.textContent = 'That password is incorrect.'; input.select(); return; }
+      form.querySelector('.sync-unlock-ok').disabled = true;
+      var sk = await taDeriveSyncKey(login, input.value);
+      if (!sk) { err.textContent = 'This browser could not turn on sync. Open the site from its https:// address.'; return; }
+      // save the key into this sign-in (and the remembered one, if any)
+      user.sk = sk;
+      var s = JSON.stringify(user);
+      raw.sessionSet('ta_session_v1', s);
+      if (raw.get('ta_remember_v1')) raw.set('ta_remember_v1', s);
+      wrap.remove();
+      useKey(sk);
+    };
+  }
+
+  if (!window.crypto || !crypto.subtle) { setStatus('☁️ Sync needs the https:// address of this site', 'bad'); return; }
+  if (!user.sk) setStatus('☁️ Sync is off — tap to turn it on', 'off');
+
+  /* ---------- encoding ---------- */
+  function b64encode(bytes) {
+    var s = '';
+    for (var i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+    return btoa(s);
+  }
+  function b64decode(str) {
+    var s = atob(str), out = new Uint8Array(s.length);
+    for (var i = 0; i < s.length; i++) out[i] = s.charCodeAt(i);
+    return out;
+  }
+  async function pack(obj) {
+    var text = new TextEncoder().encode(JSON.stringify(obj));
+    var body = text, flag = 0;
+    if (window.CompressionStream) {
+      try {
+        body = new Uint8Array(await new Response(new Blob([text]).stream().pipeThrough(new CompressionStream('gzip'))).arrayBuffer());
+        flag = 1;
+      } catch (e) { body = text; flag = 0; }
+    }
+    var plain = new Uint8Array(body.length + 1);
+    plain[0] = flag; plain.set(body, 1);
+    var iv = crypto.getRandomValues(new Uint8Array(12));
+    var ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv }, key, plain));
+    return b64encode(iv) + ':' + b64encode(ct);
+  }
+  async function unpack(sealed) {
+    var p = sealed.split(':');
+    var plain = new Uint8Array(await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64decode(p[0]) }, key, b64decode(p[1])));
+    var body = plain.subarray(1);
+    if (plain[0] === 1) body = new Uint8Array(await new Response(new Blob([body]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
+    return JSON.parse(new TextDecoder().decode(body));
+  }
+
+  /* ---------- local changes: stamp them and upload shortly after ---------- */
+  var ready = false;     // true once the first cloud check has been merged (or we're offline)
+  var dirty = {};
+  var uploadTimer = null;
+  // Writes the page makes by itself while it starts up aren't the teacher's edits, but
+  // anything after a click or key press is — even before the first cloud check is done
+  // (or while sync is off). Without a time, such an edit (a new exercise, a new student)
+  // would lose to the older cloud copy and disappear when the cloud check arrives.
+  var acted = false;
+  ['pointerdown', 'keydown'].forEach(function (ev) {
+    window.addEventListener(ev, function () { acted = true; }, { capture: true, once: true });
+  });
+  function touched(k) {
+    if (!SYNC_SET[k] || (!ready && !acted)) return;
+    meta[k] = Date.now();
+    saveMeta();
+    dirty[k] = true;
+    if (!ready) return; // sent as soon as the first cloud check is done
+    clearTimeout(uploadTimer);
+    uploadTimer = setTimeout(flush, 2500);
+    setStatus('☁️ Saving…', 'busy');
+  }
+  var proto = Storage.prototype, prevSet = proto.setItem, prevRemove = proto.removeItem;
+  function isLocal(store) { try { return store === window.localStorage; } catch (e) { return false; } }
+  proto.setItem = function (k, v) {
+    var before = isLocal(this) && SYNC_SET[k] ? this.getItem(k) : null;
+    var r = prevSet.call(this, k, v);
+    if (isLocal(this) && SYNC_SET[k] && before !== String(v)) touched(k);
+    return r;
+  };
+  proto.removeItem = function (k) {
+    var had = isLocal(this) && SYNC_SET[k] ? this.getItem(k) !== null : false;
+    var r = prevRemove.call(this, k);
+    if (had) touched(k);
+    return r;
+  };
+  document.addEventListener('visibilitychange', function () { if (document.hidden) flush(); });
+  window.addEventListener('pagehide', flush);
+
+  /* ---------- cloud ---------- */
+  var backend = null;
+  function waitBackend() {
+    return new Promise(function (resolve) {
+      var start = Date.now();
+      (function poll() {
+        if (window.taSyncBackend) return resolve(window.taSyncBackend);
+        if (Date.now() - start > 12000) return resolve(null);
+        setTimeout(poll, 150);
+      })();
+    });
+  }
+  /* Firebase's rules for this project only accept new records with the
+     account code (TAUSER) and don't allow editing a record, only creating and
+     deleting. So every change is saved as a new version (its own records),
+     and the older versions of that item are deleted once it's saved. */
+  var SYNC_CODE = 'TAUSER';
+  var SYNC_TYPE = 'TA_SYNC:' + login;
+  var cloudVersions = {}; // key -> { ver: { ts, ids: [record ids] } } from the latest cloud read
+
+  var uploading = null, failures = 0, retryTimer = null;
+  async function flush() {
+    clearTimeout(uploadTimer);
+    if (!backend || !key) return;
+    if (uploading) { await uploading; }
+    var keys = Object.keys(dirty);
+    if (!keys.length) { if (ready && !failures) setStatus('☁️ Synced', 'ok'); return; }
+    dirty = {};
+    uploading = (async function () {
+      try {
+        for (var i = 0; i < keys.length; i++) await upload(keys[i]);
+        failures = 0;
+        setStatus('☁️ Synced', 'ok');
+      } catch (e) {
+        console.error('Sync upload failed:', e);
+        keys.forEach(function (k) { dirty[k] = true; });
+        failures++;
+        var code = (e && (e.code || e.name)) ? ' (' + String(e.code || e.name).replace('permission-denied', 'not allowed by Firebase rules') + ')' : '';
+        setStatus('⚠️ Not synced' + code + ' — tap to retry', 'bad');
+        // wait longer after each failure instead of retrying on every cloud update
+        clearTimeout(retryTimer);
+        retryTimer = setTimeout(flush, Math.min(5 * 60000, 15000 * Math.pow(2, failures - 1)));
+      }
+    })();
+    await uploading;
+    uploading = null;
+  }
+  async function upload(k) {
+    var value = getLocal(k);
+    var ts = meta[k] || 0;
+    var sealed = await pack({ v: value });
+    var ver = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    var parts = [];
+    for (var i = 0; i < sealed.length; i += CHUNK) parts.push(sealed.slice(i, i + CHUNK));
+    if (!parts.length) parts.push('');
+    var ids = [];
+    for (var j = 0; j < parts.length; j++) {
+      var id = docId(k, ver, j);
+      await backend.put(id, {
+        v: 1, code: SYNC_CODE, builtAt: '', type: SYNC_TYPE,
+        title: [k, ver, j, parts.length, ts, value === null ? 'x' : ''].join(SEP),
+        name: '', data: parts[j], score: 0, warnings: 0, timeSeconds: 0, timeDisplay: '00:00',
+        date: new Date().toISOString()
+      });
+      ids.push(id);
+    }
+    seen[k] = ver;
+    saveSeen();
+    // (not "synced" yet: the other devices haven't seen it until it comes back as the cloud's copy)
+    // the new version is complete: remove this item's older versions (never a newer one from another device)
+    var old = cloudVersions[k] || {};
+    Object.keys(old).forEach(function (v) {
+      if (v === ver || old[v].ts > ts) return;
+      old[v].ids.forEach(function (oid) { backend.remove(oid).catch(function () { /* already gone */ }); });
+    });
+    cloudVersions[k] = {}; cloudVersions[k][ver] = { ts: ts, ids: ids };
+  }
+  function docId(k, ver, i) { return ('tasync_' + login + '_' + k + '_' + ver + '_' + i).replace(/[^A-Za-z0-9_.-]/g, '-'); }
+
+  // Picks, per item, the newest version whose parts are all present.
+  function readCloud(docs) {
+    var byKey = {};
+    docs.forEach(function (d) {
+      if (!d || d.type !== SYNC_TYPE || typeof d.title !== 'string') return;
+      var p = d.title.split(SEP);
+      var k = p[0], ver = p[1], idx = +p[2], n = +p[3], ts = +p[4] || 0;
+      if (!SYNC_SET[k]) return;
+      var versions = byKey[k] || (byKey[k] = {});
+      var v = versions[ver] || (versions[ver] = { ver: ver, n: n, ts: ts, parts: [], ids: [] });
+      v.parts[idx] = typeof d.data === 'string' ? d.data : '';
+      if (d.__id) v.ids.push(d.__id);
+    });
+    var out = {};
+    cloudVersions = {};
+    Object.keys(byKey).forEach(function (k) {
+      var best = null;
+      cloudVersions[k] = {};
+      Object.keys(byKey[k]).forEach(function (ver) {
+        var v = byKey[k][ver];
+        cloudVersions[k][ver] = { ts: v.ts, ids: v.ids };
+        var complete = v.parts.length === v.n && v.parts.every(function (x) { return typeof x === 'string'; });
+        // newest wins; equal times are settled by version id so every device picks the same one
+        if (complete && (!best || v.ts > best.ts || (v.ts === best.ts && v.ver > best.ver))) best = v;
+      });
+      if (best) out[k] = best;
+    });
+    return out;
+  }
+
+  // Returns true if anything on this device changed.
+  /* My Exercises is a list where each entry has its own id and creation date. When one
+     device's list wins, entries only the losing side has that were made after this device
+     last synced are added back: the other side never saw them, so none was deleted there. */
+  function keepNewEntries(k, winner, loser, sinceTs) {
+    if (k !== 'ta_recent_exercises' || !loser) return winner;
+    var w, l;
+    try { w = JSON.parse(winner || '[]'); l = JSON.parse(loser); } catch (e) { return winner; }
+    if (!Array.isArray(w) || !Array.isArray(l)) return winner;
+    var have = {};
+    w.forEach(function (e) { if (e && e.uid) have[e.uid] = true; });
+    var extra = l.filter(function (e) { return e && e.uid && !have[e.uid] && (Date.parse(e.date) || 0) > sinceTs; });
+    if (!extra.length) return winner;
+    var all = extra.concat(w).sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); });
+    return JSON.stringify(all.slice(0, 200));
+  }
+
+  async function merge(docs, first) {
+    if (!key) return false;
+    freshMeta();
+    var cloud = readCloud(docs);
+    var changed = false;
+    for (var i = 0; i < SYNC_KEYS.length; i++) {
+      var k = SYNC_KEYS[i], c = cloud[k];
+      var local = getLocal(k), localTs = meta[k] || 0;
+      if (!c) { if (local !== null && (first || localTs)) dirty[k] = true; continue; }
+      if (c.ver === seen[k]) { markSynced(k, c.ts); if (localTs > c.ts) dirty[k] = true; continue; } // nothing new from the cloud
+      var value;
+      try { value = (await unpack(c.parts.join(''))).v; }
+      catch (e) { if (local !== null) dirty[k] = true; continue; } // made with an older password: replace it with this device's copy
+      seen[k] = c.ver;
+      if (value === local) { if (c.ts > localTs) meta[k] = c.ts; markSynced(k, c.ts); continue; }
+      // Newer change wins. Old data from before sync (no change time on either side): the fuller
+      // copy wins, and for equal sizes the same one is picked on every device, so two devices
+      // never keep overwriting each other.
+      var lv = String(local), cv = String(value);
+      var takeCloud = c.ts > localTs ||
+        (c.ts === localTs && (local === null || (value !== null && (cv.length > lv.length || (cv.length === lv.length && cv > lv)))));
+      // Exercises made after this device last synced were never seen by the other side, so
+      // they can't have been deleted there: whichever list wins, they're kept.
+      var since = seenTs[k] || localTs;
+      if (takeCloud) {
+        var kept = keepNewEntries(k, value, local, since);
+        setLocal(k, kept); changed = true;
+        if (kept !== value) { meta[k] = Date.now(); dirty[k] = true; } else meta[k] = c.ts;
+      } else {
+        var joined = keepNewEntries(k, local, value, since);
+        if (joined !== local) { setLocal(k, joined); meta[k] = Date.now(); changed = true; }
+        dirty[k] = true;
+      }
+      markSynced(k, c.ts);
+    }
+    saveSeen(); saveMeta();
+    return changed;
+  }
+
+  function refreshScreen() {
+    try {
+      if (typeof applyTheme === 'function') applyTheme(); // a design chosen on another device
+      if (typeof applyAvatar === 'function') applyAvatar();
+      var nameEl = document.getElementById('sidebarProfileName');
+      if (nameEl && typeof getTeacherName === 'function') nameEl.textContent = getTeacherName();
+      if (typeof switchTo === 'function' && typeof currentActiveTab !== 'undefined') switchTo(currentActiveTab);
+      if (window.renderRecentExercises) window.renderRecentExercises();
+    } catch (e) { console.error(e); }
+  }
+
+  async function start() {
+    setStatus('☁️ Syncing…', 'busy');
+    backend = await waitBackend();
+    if (!backend) { ready = true; setStatus('☁️ Offline — will sync when connected', 'bad'); return; }
+    var first = true;
+    backend.listen(SYNC_CODE, SYNC_TYPE, async function (docs) {
+      var wasFirst = first; first = false;
+      var changed = await merge(docs, wasFirst);
+      if (wasFirst) {
+        ready = true;
+        await flush();
+        var guard = Number(raw.sessionGet('ta_sync_reloaded_at')) || 0;
+        if (changed && Date.now() - guard > 30000) {
+          // this device just received data: reload once so every part of the page shows it
+          raw.sessionSet('ta_sync_reloaded_at', String(Date.now()));
+          location.reload();
+          return;
+        }
+        if (changed) refreshScreen();
+      } else if (changed) {
+        refreshScreen();
+        if (typeof showToast === 'function') showToast('☁️ Updated from your other device', 'ok');
+      }
+      if (Object.keys(dirty).length) { if (!failures) flush(); } else if (!failures) setStatus('☁️ Synced', 'ok');
+    }, function (err) {
+      console.error('Sync listen failed:', err);
+      ready = true;
+      setStatus('⚠️ Not synced — tap to retry', 'bad');
+    });
+  }
+  function syncNow() { failures = 0; clearTimeout(retryTimer); setStatus('☁️ Syncing…', 'busy'); SYNC_KEYS.forEach(function (k) { if (getLocal(k) !== null) dirty[k] = true; }); flush(); }
+
+  window.taSync = { flush: flush, now: syncNow, turnOn: askPasswordAndStart, status: function () { return status; } };
+  if (user.sk) useKey(user.sk);
+})();
