@@ -541,6 +541,10 @@ body.light-theme .picker-icon-presentation { background-image: url(../images/ico
 body.light-theme .picker-icon-pronunciation { background-image: url(../images/icons/create/pronunciation.png); }
 .picker-icon-test { background-image: url(../images/icons/create/test-night.png); }
 body.light-theme .picker-icon-test { background-image: url(../images/icons/create/test.png); }
+/* Jungle and Bamboozle: one icon for day and night */
+.picker-icon-jungle { background-image: url(../images/icons/create/jungle.png); }
+.picker-icon-bamboozle { background-image: url(../images/icons/create/bamboozle.png); }
+.tab-btn .exercise-badge.picker-icon { background-color: transparent !important; background-size: contain; background-repeat: no-repeat; background-position: center; box-shadow: none; }
 .picker-card-sub { font-size: 0.78rem; color: var(--ink-faint); margin-top: 2px; }
 .hwc-avail-row {
   display: flex; justify-content: space-between; align-items: center; gap: 10px;
