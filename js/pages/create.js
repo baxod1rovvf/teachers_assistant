@@ -4036,7 +4036,7 @@ function addJungleQuestion(text) {
 }
 
 // Pictures are resized to at most 900px and saved as JPEG.
-function jgShrinkImage(file, done) {
+function taShrinkImage(file, done) {
   const reader = new FileReader();
   reader.onload = () => {
     const img = new Image();
@@ -4062,7 +4062,7 @@ document.getElementById('jg-image-input').addEventListener('change', function (e
   const i = jgImageFor;
   e.target.value = '';
   if (!file || !jgQuestions[i]) return;
-  jgShrinkImage(file, src => { jgQuestions[i].img = src; renderJungleRows(); });
+  taShrinkImage(file, src => { jgQuestions[i].img = src; renderJungleRows(); });
 });
 
 function jungleQuestionsFilled() {
@@ -4107,6 +4107,116 @@ function resetJungleForm() {
   document.getElementById('jg-compose').value = '';
   jgQuestions = [];
   renderJungleRows();
+}
+
+/* ================= BAMBOOZLE (team quiz game for the classroom screen) =================
+   Every question is one numbered card with hidden points. The answer is
+   optional and only shown when the teacher asks for it. */
+let bzQuestions = []; // [{ q, a, pts, img }]
+let bzImageFor = -1;
+
+function bzDefaultPoints() {
+  return parseInt(document.getElementById('bz-default-points').value, 10) || 10;
+}
+
+function renderBamboozleRows() {
+  const wrap = document.getElementById('bz-rows');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  bzQuestions.forEach((item, i) => {
+    const row = document.createElement('div');
+    row.className = 'row-item jg-row';
+    row.innerHTML =
+      '<div class="idx">' + (i + 1) + '</div>' +
+      '<div class="jg-row-body">' +
+        '<textarea rows="2" placeholder="e.g. What is the past tense of &quot;go&quot;?"></textarea>' +
+        '<div class="bz-row-line">' +
+          '<input type="text" class="bz-ans" placeholder="Answer (optional, only you see it)">' +
+          '<label class="bz-pts-label"><input type="number" class="bz-pts" min="1" max="1000" step="1"> pts</label>' +
+        '</div>' +
+        '<div class="jg-row-img"></div>' +
+      '</div>' +
+      '<button class="remove-btn" type="button" title="Remove this question">&times;</button>';
+    const ta = row.querySelector('textarea'), ans = row.querySelector('.bz-ans'), pts = row.querySelector('.bz-pts');
+    ta.value = item.q || '';
+    ans.value = item.a || '';
+    pts.value = item.pts;
+    ta.addEventListener('input', () => { bzQuestions[i].q = ta.value; });
+    ans.addEventListener('input', () => { bzQuestions[i].a = ans.value; });
+    pts.addEventListener('input', () => { bzQuestions[i].pts = Math.max(1, Math.abs(parseInt(pts.value, 10) || 0)) || bzDefaultPoints(); });
+    const imgBox = row.querySelector('.jg-row-img');
+    if (item.img) {
+      imgBox.innerHTML = '<img alt=""><button class="mini-btn danger" type="button">✕ Remove picture</button>';
+      imgBox.querySelector('img').src = item.img;
+      imgBox.querySelector('button').onclick = () => { bzQuestions[i].img = ''; renderBamboozleRows(); };
+    } else {
+      imgBox.innerHTML = '<button class="mini-btn" type="button">🖼 Add a picture</button>';
+      imgBox.querySelector('button').onclick = () => { bzImageFor = i; document.getElementById('bz-image-input').click(); };
+    }
+    row.querySelector('.remove-btn').onclick = () => { bzQuestions.splice(i, 1); renderBamboozleRows(); };
+    wrap.appendChild(row);
+  });
+  const count = document.getElementById('bz-count');
+  if (count) count.textContent = bzQuestions.length;
+}
+
+// "Question | answer | points" — the answer and the points are optional.
+function addBamboozleQuestion(text) {
+  const parts = String(text || '').split('|').map(s => s.trim());
+  let pts = bzDefaultPoints();
+  if (parts.length > 1 && /^\d+$/.test(parts[parts.length - 1])) pts = parseInt(parts.pop(), 10) || pts;
+  bzQuestions.push({ q: parts[0] || '', a: parts.slice(1).join(' | '), pts: pts, img: '' });
+  renderBamboozleRows();
+}
+
+document.getElementById('bz-image-input').addEventListener('change', function (e) {
+  const file = (e.target.files || [])[0];
+  const i = bzImageFor;
+  e.target.value = '';
+  if (!file || !bzQuestions[i]) return;
+  taShrinkImage(file, src => { bzQuestions[i].img = src; renderBamboozleRows(); });
+});
+
+function bamboozleQuestionsFilled() {
+  return bzQuestions.filter(item => (item.q || '').trim() || item.img)
+    .map(item => ({ q: (item.q || '').trim(), a: (item.a || '').trim(), pts: Math.abs(parseInt(item.pts, 10) || 0) || bzDefaultPoints(), img: item.img || '' }));
+}
+
+function buildBamboozleHtml(title) {
+  const data = { title: title, wrong: document.getElementById('bz-wrong').value, questions: bamboozleQuestionsFilled() };
+  let html = BAMBOOZLE_TEMPLATE;
+  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__BAMBOOZLE_DATA__').join(JSON.stringify(data).replace(/</g, '\\u003c'));
+  return html;
+}
+
+function previewBamboozle() {
+  if (!bamboozleQuestionsFilled().length) { showToast('Add at least one question first.'); return; }
+  const title = document.getElementById('bz-title').value.trim() || 'Bamboozle';
+  const url = URL.createObjectURL(new Blob([buildBamboozleHtml(title)], { type: 'text/html' }));
+  window.open(url, '_blank');
+  setTimeout(() => URL.revokeObjectURL(url), 30000);
+}
+
+function createBamboozle() {
+  const title = document.getElementById('bz-title').value.trim();
+  if (!title) { showToast('Please enter a game title.'); return; }
+  const qs = bamboozleQuestionsFilled();
+  if (qs.length < 2) { showToast('Add at least 2 questions — each one is a card.'); return; }
+  const html = buildBamboozleHtml(title);
+  pushRecentExercise({ title: title, typeLabel: 'Bamboozle', code: '', uid: generateExerciseUid(), html: html,
+    contentSummary: qs.map((item, i) => (i + 1) + '. ' + (item.q || '(picture)') + (item.a ? ' → ' + item.a : '') + ' (' + item.pts + ' pts)').join('\n') });
+  downloadFile(typedFilename('Bamboozle', title, 'bamboozle'), html);
+  showToast('"' + title + '" downloaded!', 'ok');
+}
+
+function resetBamboozleForm() {
+  document.getElementById('bz-title').value = '';
+  document.getElementById('bz-compose').value = '';
+  document.getElementById('bz-default-points').value = '10';
+  document.getElementById('bz-wrong').value = 'zero';
+  bzQuestions = [];
+  renderBamboozleRows();
 }
 
 /* ================= SAVED WORK: drafts, "Use again", Undo for Reset =================
@@ -4234,6 +4344,10 @@ const TA_BUILDER_ROWS = {
   jungle: {
     get: () => JSON.parse(JSON.stringify(jgQuestions)),
     set: v => { jgQuestions = Array.isArray(v) ? JSON.parse(JSON.stringify(v)) : []; renderJungleRows(); }
+  },
+  bamboozle: {
+    get: () => JSON.parse(JSON.stringify(bzQuestions)),
+    set: v => { bzQuestions = Array.isArray(v) ? JSON.parse(JSON.stringify(v)) : []; renderBamboozleRows(); }
   }
 };
 function taIeltsGroupRows(prefix, parts) {
@@ -4323,7 +4437,7 @@ function taDescribeState(tab, state) {
   let count = 0, noun = 'item';
   if (tab === 'presentation' && rows) { count = rows.slides.length; noun = 'slide'; }
   else if (tab === 'bilingual') { count = (rows || []).reduce((n, p) => n + p.sentences.length, 0); noun = 'sentence'; }
-  else if (tab === 'jungle') { count = (rows || []).length; noun = 'question'; }
+  else if (tab === 'jungle' || tab === 'bamboozle') { count = (rows || []).length; noun = 'question'; }
   else if (/ielts-/.test(tab)) { count = (rows || []).reduce((n, part) => n + part.filter(g => g[1].trim()).length, 0); noun = 'question group'; }
   else if (Array.isArray(rows)) {
     count = rows.length;
@@ -4584,7 +4698,7 @@ window.taSnapshotForMyExercises = function () {
 [
   ['wordorder', 'resetWordOrderForm'], ['makeaword', 'resetMakeAWordForm'], ['flashcard', 'resetFlashcardForm'],
   ['presentation', 'resetPresentationForm'], ['pronunciation', 'resetPronunciationForm'], ['sentences', 'resetSentencesForm'],
-  ['bilingual', 'resetBilingualForm'], ['engcontent', 'resetEnglishContentForm'], ['dictation', 'resetDictationForm'], ['jungle', 'resetJungleForm'],
+  ['bilingual', 'resetBilingualForm'], ['engcontent', 'resetEnglishContentForm'], ['dictation', 'resetDictationForm'], ['jungle', 'resetJungleForm'], ['bamboozle', 'resetBamboozleForm'],
   ['ielts-listening', 'resetIeltsListeningForm'], ['ielts-reading', 'resetIeltsReadingForm'], ['ielts-writing', 'resetIeltsWritingForm'],
   ['spelling', 'resetSpellingForm'], ['test', 'resetTestForm']
 ].forEach(function (pair) {

@@ -11,11 +11,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Teacher's Asst">
 <!-- Shared by every page: accounts must load first (it scopes this browser's storage to the signed-in teacher). -->
-<script src="js/accounts.js?v=20260929g"></script>
-<script src="js/i18n.js?v=20260929g"></script>
-<script src="js/sync.js?v=20260929g"></script>
-<script src="js/lottie.min.js?v=20260929g"></script>
-<link rel="stylesheet" href="css/style.css?v=20260929g">
+<script src="js/accounts.js?v=20260929h"></script>
+<script src="js/i18n.js?v=20260929h"></script>
+<script src="js/sync.js?v=20260929h"></script>
+<script src="js/lottie.min.js?v=20260929h"></script>
+<link rel="stylesheet" href="css/style.css?v=20260929h">
 </head>
 <body>
 
@@ -97,6 +97,7 @@
       <button class="tab-btn" data-tab="engcontent"><span class="exercise-badge" style="background:var(--category-orange);">🎬</span> English Content</button>
       <button class="tab-btn" data-tab="dictation"><span class="exercise-badge" style="background:var(--category-teal);">🎧</span> Dictation</button>
       <button class="tab-btn" data-tab="jungle"><span class="exercise-badge" style="background:var(--category-green);">🌴</span> Jungle</button>
+      <button class="tab-btn" data-tab="bamboozle"><span class="exercise-badge" style="background:var(--category-rose);">🎯</span> Bamboozle</button>
     </div>
     <div class="tab-row" id="inprocessTabRow">
       <button class="tab-btn" data-tab="presentation"><span class="exercise-badge" style="background:var(--category-rose);">🖥️</span> Presentation</button>
@@ -150,6 +151,10 @@
         <button class="picker-card" type="button" onclick="switchTo('jungle')">
           <span class="exercise-badge" style="background:var(--category-green);" aria-hidden="true">🌴</span>
           <div><div class="picker-card-title">Jungle</div><div class="picker-card-sub">Board game: roll the dice, answer the question</div></div>
+        </button>
+        <button class="picker-card" type="button" onclick="switchTo('bamboozle')">
+          <span class="exercise-badge" style="background:var(--category-rose);" aria-hidden="true">🎯</span>
+          <div><div class="picker-card-title">Bamboozle</div><div class="picker-card-sub">Team quiz: pick a card, win its hidden points</div></div>
         </button>
       </div>
     </div>
@@ -1299,6 +1304,68 @@
     </div>
   </div>
 
+  <!-- ================= BAMBOOZLE (team quiz game) ================= -->
+  <div class="panel" id="panel-bamboozle">
+    <div class="card">
+      <div class="card-head">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🎯 Bamboozle</h2></div>
+        <p>A team quiz for the classroom screen, played with you (no student IDs). The class splits into 2–4 teams: red, blue, green and yellow. Numbered cards hide your questions and their points. A team picks a card, answers, and you press Correct or Incorrect. Then it's the next team's turn and their colour spreads across the screen. When every card is used, the winner is shown.</p>
+        <div class="deco-chips">
+          <span class="deco-chip" style="background:#d93030; --tilt:-3deg;">Red 25</span>
+          <span class="deco-chip" style="background:#1e63d6; --tilt:3deg;">Blue 30</span>
+          <span class="deco-spark">🎯🏆</span>
+        </div>
+      </div>
+
+      <div class="builder-grid">
+        <div class="builder-left">
+          <div class="title-field">
+            <label class="field-label">Game Title</label>
+            <input type="text" id="bz-title" placeholder="e.g. Unit 5 Review">
+          </div>
+          <div class="title-field">
+            <label class="field-label">Points for new questions</label>
+            <select id="bz-default-points">
+              <option value="5">5 points</option>
+              <option value="10" selected>10 points</option>
+              <option value="15">15 points</option>
+              <option value="20">20 points</option>
+              <option value="25">25 points</option>
+              <option value="50">50 points</option>
+            </select>
+          </div>
+          <div class="title-field">
+            <label class="field-label">When the answer is wrong</label>
+            <select id="bz-wrong">
+              <option value="zero" selected>The team gets 0 points</option>
+              <option value="lose">The team loses the card's points</option>
+            </select>
+          </div>
+          <p class="canvas-hint">Each question can have its own points, an answer that only you reveal (👁 Show answer), and a picture. Team names can be changed when the game starts. About 40 cards fit on one screen.</p>
+          <button class="mini-btn" type="button" style="margin-top:12px;" onclick="previewBamboozle()">👁 Try the game in a new tab</button>
+        </div>
+
+        <div class="builder-right">
+          <div class="rows-label-row">
+            <label class="field-label">Questions — one card each</label>
+            <span class="rows-count"><span id="bz-count">0</span> questions</span>
+          </div>
+          <div class="compose-row">
+            <textarea id="bz-compose" class="compose-box" rows="1" placeholder="Question | answer | points  (answer and points are optional; paste many: one per line)" onkeydown="handleComposeKeydown(event, 'bz-compose', 'line', addBamboozleQuestion)"></textarea>
+            <button class="compose-enter-btn" type="button" onclick="commitComposeBox('bz-compose', 'line', addBamboozleQuestion)">⏎ Enter</button>
+          </div>
+          <div class="rows jg-rows" id="bz-rows"></div>
+          <input type="file" id="bz-image-input" accept="image/*" style="display:none;">
+        </div>
+      </div>
+
+      <div class="builder-actions">
+        <button class="reset-btn" type="button" onclick="resetBamboozleForm()">🔄 Reset All</button>
+        <button class="create-btn" onclick="createBamboozle()">Create "Bamboozle" ⬇</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ================= DICTATION ================= -->
   <div class="panel" id="panel-dictation">
     <div class="card">
@@ -1424,10 +1491,10 @@
   </div>
 </div>
 
-<script src="js/animations.js?v=20260929g"></script>
-<script src="js/common.js?v=20260929g"></script>
-<script src="js/exercise-templates.js?v=20260929g"></script>
-<script src="js/pages/create.js?v=20260929g"></script>
-<script type="module" src="js/firebase.js?v=20260929g"></script>
+<script src="js/animations.js?v=20260929h"></script>
+<script src="js/common.js?v=20260929h"></script>
+<script src="js/exercise-templates.js?v=20260929h"></script>
+<script src="js/pages/create.js?v=20260929h"></script>
+<script type="module" src="js/firebase.js?v=20260929h"></script>
 </body>
 </html>
