@@ -3991,6 +3991,124 @@ function splitTestRows() {
 }
 
 
+/* ================= JUNGLE (board game for the classroom screen) =================
+   Every question is one square of the board, in order. A picture can go
+   under a question; it's shrunk before it's kept so the file stays small. */
+let jgQuestions = []; // [{ q, img }]
+let jgImageFor = -1;
+
+function renderJungleRows() {
+  const wrap = document.getElementById('jg-rows');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  jgQuestions.forEach((item, i) => {
+    const row = document.createElement('div');
+    row.className = 'row-item jg-row';
+    row.innerHTML =
+      '<div class="idx">' + (i + 1) + '</div>' +
+      '<div class="jg-row-body">' +
+        '<textarea rows="2" placeholder="e.g. What vocabulary word do you use for this?"></textarea>' +
+        '<div class="jg-row-img"></div>' +
+      '</div>' +
+      '<button class="remove-btn" type="button" title="Remove this question">&times;</button>';
+    const ta = row.querySelector('textarea');
+    ta.value = item.q || '';
+    ta.addEventListener('input', () => { jgQuestions[i].q = ta.value; });
+    const imgBox = row.querySelector('.jg-row-img');
+    if (item.img) {
+      imgBox.innerHTML = '<img alt=""><button class="mini-btn danger" type="button">✕ Remove picture</button>';
+      imgBox.querySelector('img').src = item.img;
+      imgBox.querySelector('button').onclick = () => { jgQuestions[i].img = ''; renderJungleRows(); };
+    } else {
+      imgBox.innerHTML = '<button class="mini-btn" type="button">🖼 Add a picture</button>';
+      imgBox.querySelector('button').onclick = () => { jgImageFor = i; document.getElementById('jg-image-input').click(); };
+    }
+    row.querySelector('.remove-btn').onclick = () => { jgQuestions.splice(i, 1); renderJungleRows(); };
+    wrap.appendChild(row);
+  });
+  const count = document.getElementById('jg-count');
+  if (count) count.textContent = jgQuestions.length;
+}
+
+function addJungleQuestion(text) {
+  jgQuestions.push({ q: text || '', img: '' });
+  renderJungleRows();
+}
+
+// Pictures are resized to at most 900px and saved as JPEG.
+function jgShrinkImage(file, done) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    const img = new Image();
+    img.onload = () => {
+      const k = Math.min(1, 900 / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = Math.max(1, Math.round(img.width * k));
+      c.height = Math.max(1, Math.round(img.height * k));
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, c.width, c.height);
+      ctx.drawImage(img, 0, 0, c.width, c.height);
+      done(c.toDataURL('image/jpeg', 0.82));
+    };
+    img.onerror = () => showToast('That file isn\'t a picture the browser can open.');
+    img.src = reader.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+document.getElementById('jg-image-input').addEventListener('change', function (e) {
+  const file = (e.target.files || [])[0];
+  const i = jgImageFor;
+  e.target.value = '';
+  if (!file || !jgQuestions[i]) return;
+  jgShrinkImage(file, src => { jgQuestions[i].img = src; renderJungleRows(); });
+});
+
+function jungleQuestionsFilled() {
+  return jgQuestions.filter(item => (item.q || '').trim() || item.img).map(item => ({ q: (item.q || '').trim(), img: item.img || '' }));
+}
+
+function buildJungleHtml(title) {
+  const data = {
+    title: title,
+    instructions: document.getElementById('jg-instructions').value.trim(),
+    questions: jungleQuestionsFilled()
+  };
+  let html = JUNGLE_TEMPLATE;
+  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__JUNGLE_DATA__').join(JSON.stringify(data).replace(/</g, '\\u003c'));
+  return html;
+}
+
+function previewJungle() {
+  if (!jungleQuestionsFilled().length) { showToast('Add at least one question first.'); return; }
+  const title = document.getElementById('jg-title').value.trim() || 'Jungle Game';
+  const url = URL.createObjectURL(new Blob([buildJungleHtml(title)], { type: 'text/html' }));
+  window.open(url, '_blank');
+  setTimeout(() => URL.revokeObjectURL(url), 30000);
+}
+
+function createJungle() {
+  const title = document.getElementById('jg-title').value.trim();
+  if (!title) { showToast('Please enter a game title.'); return; }
+  const qs = jungleQuestionsFilled();
+  if (qs.length < 3) { showToast('Add at least 3 questions — each one is a square on the board.'); return; }
+  const html = buildJungleHtml(title);
+  pushRecentExercise({ title: title, typeLabel: 'Jungle', code: '', uid: generateExerciseUid(), html: html,
+    contentSummary: qs.map((item, i) => (i + 1) + '. ' + (item.q || '(picture)')).join('\n') });
+  downloadFile(typedFilename('Jungle', title, 'jungle'), html);
+  showToast('"' + title + '" downloaded!', 'ok');
+}
+
+function resetJungleForm() {
+  document.getElementById('jg-title').value = '';
+  document.getElementById('jg-instructions').value = '';
+  document.getElementById('jg-compose').value = '';
+  jgQuestions = [];
+  renderJungleRows();
+}
+
 /* ================= SAVED WORK: drafts, "Use again", Undo for Reset =================
    taCaptureBuilder(tab) reads a builder's whole form (its fields and its
    rows) into plain data, and taRestoreBuilder(tab, state) puts it back.
@@ -4112,7 +4230,11 @@ const TA_BUILDER_ROWS = {
   'ielts-reading': taIeltsGroupRows('ir', 3),
   'ielts-writing': { get: () => null, set: () => {} },
   engcontent: { get: () => null, set: () => {} },
-  dictation: { get: () => null, set: () => {} }
+  dictation: { get: () => null, set: () => {} },
+  jungle: {
+    get: () => JSON.parse(JSON.stringify(jgQuestions)),
+    set: v => { jgQuestions = Array.isArray(v) ? JSON.parse(JSON.stringify(v)) : []; renderJungleRows(); }
+  }
 };
 function taIeltsGroupRows(prefix, parts) {
   const nums = Array.from({ length: parts }, (_, i) => i + 1);
@@ -4201,6 +4323,7 @@ function taDescribeState(tab, state) {
   let count = 0, noun = 'item';
   if (tab === 'presentation' && rows) { count = rows.slides.length; noun = 'slide'; }
   else if (tab === 'bilingual') { count = (rows || []).reduce((n, p) => n + p.sentences.length, 0); noun = 'sentence'; }
+  else if (tab === 'jungle') { count = (rows || []).length; noun = 'question'; }
   else if (/ielts-/.test(tab)) { count = (rows || []).reduce((n, part) => n + part.filter(g => g[1].trim()).length, 0); noun = 'question group'; }
   else if (Array.isArray(rows)) {
     count = rows.length;
@@ -4461,7 +4584,7 @@ window.taSnapshotForMyExercises = function () {
 [
   ['wordorder', 'resetWordOrderForm'], ['makeaword', 'resetMakeAWordForm'], ['flashcard', 'resetFlashcardForm'],
   ['presentation', 'resetPresentationForm'], ['pronunciation', 'resetPronunciationForm'], ['sentences', 'resetSentencesForm'],
-  ['bilingual', 'resetBilingualForm'], ['engcontent', 'resetEnglishContentForm'], ['dictation', 'resetDictationForm'],
+  ['bilingual', 'resetBilingualForm'], ['engcontent', 'resetEnglishContentForm'], ['dictation', 'resetDictationForm'], ['jungle', 'resetJungleForm'],
   ['ielts-listening', 'resetIeltsListeningForm'], ['ielts-reading', 'resetIeltsReadingForm'], ['ielts-writing', 'resetIeltsWritingForm'],
   ['spelling', 'resetSpellingForm'], ['test', 'resetTestForm']
 ].forEach(function (pair) {
