@@ -1513,7 +1513,7 @@ function showLessonWarning(list) {
     box.id = 'taLessonWarn';
     box.className = 'lesson-warn';
     box.setAttribute('role', 'status');
-    document.body.appendChild(box);
+    taNoticeStack().prepend(box);
   }
   box.innerHTML = '<div class="lesson-warn-head"><span>⏰ ' + (list.length === 1 ? 'A lesson' : list.length + ' lessons') + ' in the next 24 hours</span>' +
       '<button type="button" class="lesson-warn-close" aria-label="Close">✕</button></div>' +
@@ -1536,6 +1536,122 @@ function showLessonWarning(list) {
   taLessonWarnTimer = setTimeout(hide, 5000);
 }
 window.showReminderToastIfDue = showReminderToastIfDue;
+
+// The top-right corner holds the lesson warning and, under it, the finished-exercises one.
+function taNoticeStack() {
+  let el = document.getElementById('taNoticeStack');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'taNoticeStack';
+    el.className = 'notice-stack';
+    document.body.appendChild(el);
+  }
+  return el;
+}
+
+/* ---- Finished exercises: warned about until checked ----
+   Opening the site lists the students (from the Students list) who finished
+   an exercise in the last 7 days that the teacher hasn't marked as checked
+   yet. "Checked" (per student, or all at once) stops the warning for those;
+   closing it with ✕ only hides it until the next visit. New completions
+   coming in while the site is open bring it back. The checked ones are kept
+   per account and synced (ta_checked_completions). */
+const LS_CHECKED_COMPLETIONS = 'ta_checked_completions';
+const TA_COMPLETION_DAYS = 7;
+function getCheckedCompletions() {
+  try { return JSON.parse(localStorage.getItem(LS_CHECKED_COMPLETIONS) || '[]'); } catch (e) { return []; }
+}
+function markCompletionsChecked(keys) {
+  const list = getCheckedCompletions();
+  const have = new Set(list);
+  keys.forEach(k => { if (!have.has(k)) { list.push(k); have.add(k); } });
+  try { localStorage.setItem(LS_CHECKED_COMPLETIONS, JSON.stringify(list.slice(-3000))); } catch (e) { /* ignore */ }
+}
+function taCompletionKey(r) { return r.code + '|' + String(r.studentId || r.name || '').trim().toLowerCase() + '|' + (r.date || ''); }
+// Unchecked completions from the last week, grouped by student, newest first.
+function getUncheckedCompletions() {
+  const since = Date.now() - TA_COMPLETION_DAYS * 86400000;
+  const checked = new Set(getCheckedCompletions());
+  const rosterIdx = taRosterIndex();
+  // an exercise inside a Homework/Class set is shown with the set's name
+  const setTitleForCode = {};
+  (getRecentExercises() || []).forEach(e => {
+    if (e.mergedItems && e.mergedItems.length) e.mergedItems.forEach(it => { if (it && it.code) setTitleForCode[it.code] = e.title; });
+  });
+  const byStudent = {};
+  (window.__allResults || []).forEach(r => {
+    if (!r || !r.code || !r.date || !(new Date(r.date).getTime() >= since)) return;
+    const student = rosterStudentForResult(r, rosterIdx);
+    if (!student) return;
+    const key = taCompletionKey(r);
+    if (checked.has(key)) return;
+    const sk = String(student.id);
+    if (!byStudent[sk]) byStudent[sk] = { name: student.name, items: [], latest: 0 };
+    const set = setTitleForCode[r.code];
+    byStudent[sk].items.push({ key: key, title: r.title || r.type || 'Exercise', set: set || '' });
+    byStudent[sk].latest = Math.max(byStudent[sk].latest, new Date(r.date).getTime());
+  });
+  return Object.values(byStudent).sort((a, b) => b.latest - a.latest);
+}
+let taCompletionsShown = new Set(), taCompletionsTimer = 0, taCompletionsFirst = true;
+// Called whenever the results feed changes (js/firebase.js); waits for it to settle.
+function taCompletionsChanged() {
+  clearTimeout(taCompletionsTimer);
+  taCompletionsTimer = setTimeout(() => {
+    if (!window.__TA_USER) return;
+    const groups = getUncheckedCompletions();
+    const keys = groups.flatMap(g => g.items.map(i => i.key));
+    const isNew = keys.some(k => !taCompletionsShown.has(k));
+    const box = document.getElementById('taDoneWarn');
+    if (taCompletionsFirst || isNew || (box && box.classList.contains('show'))) showCompletionsWarning(groups);
+    taCompletionsFirst = false;
+    keys.forEach(k => taCompletionsShown.add(k));
+  }, 1500);
+}
+window.taCompletionsChanged = taCompletionsChanged;
+function showCompletionsWarning(groups) {
+  let box = document.getElementById('taDoneWarn');
+  if (!groups.length) { if (box) box.classList.remove('show'); return; }
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'taDoneWarn';
+    box.className = 'lesson-warn done-warn';
+    box.setAttribute('role', 'status');
+    taNoticeStack().appendChild(box);
+  }
+  const n = groups.length;
+  box.innerHTML = '<div class="lesson-warn-head"><span>✅ ' + n + ' student' + (n === 1 ? '' : 's') + ' finished exercises</span>' +
+      '<button type="button" class="lesson-warn-close" aria-label="Remind me next time">✕</button></div>' +
+    '<div class="done-warn-list">' + groups.map((g, i) => {
+      // a set's exercises are summed up under the set's name: "Sep 28 · 5 exercises"
+      const parts = [], perSet = {};
+      g.items.forEach(x => {
+        if (!x.set) { parts.push(x.title); return; }
+        if (!(x.set in perSet)) { perSet[x.set] = 0; parts.push({ set: x.set }); }
+        perSet[x.set]++;
+      });
+      const labels = parts.map(x => typeof x === 'string' ? x : x.set + ' · ' + perSet[x.set] + ' exercise' + (perSet[x.set] === 1 ? '' : 's'));
+      const shown = labels.slice(0, 3).map(escapeForHtml).join(', ') + (labels.length > 3 ? ' +' + (labels.length - 3) + ' more' : '');
+      return '<div class="lesson-warn-row">' +
+        '<span class="res-avatar done-warn-avatar" style="background:' + avatarColorForName(g.name) + ';">' + escapeForHtml(initialsForName(g.name)) + '</span>' +
+        '<div class="lesson-warn-main"><b translate="no">' + escapeForHtml(g.name) + '</b><small>' + shown + '</small></div>' +
+        '<button type="button" class="done-warn-check" data-i="' + i + '">✓ Checked</button>' +
+      '</div>';
+    }).join('') + '</div>' +
+    '<div class="done-warn-foot"><button type="button" class="done-warn-results">Open Results</button>' +
+      '<button type="button" class="done-warn-all">✓ All checked</button></div>';
+  box.querySelector('.lesson-warn-close').onclick = () => box.classList.remove('show');
+  box.querySelectorAll('.done-warn-check').forEach(btn => btn.onclick = () => {
+    markCompletionsChecked(groups[+btn.dataset.i].items.map(x => x.key));
+    showCompletionsWarning(getUncheckedCompletions());
+  });
+  box.querySelector('.done-warn-all').onclick = () => {
+    markCompletionsChecked(groups.flatMap(g => g.items.map(x => x.key)));
+    box.classList.remove('show');
+  };
+  box.querySelector('.done-warn-results').onclick = () => { box.classList.remove('show'); switchTo('results'); };
+  if (!box.classList.contains('show')) { void box.offsetWidth; box.classList.add('show'); }
+}
 
 function renderLessonRow(o) {
   const palette = lessonColorForId(o.entry.id);
