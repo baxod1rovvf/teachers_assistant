@@ -1286,6 +1286,31 @@ body.glass-ui .lesson-warn {
   -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
 }
 
+/* the top-right stack: lesson warning, then finished exercises */
+.notice-stack {
+  position: fixed; top: 16px; right: 16px; z-index: 100001; width: min(360px, calc(100vw - 32px));
+  display: flex; flex-direction: column; gap: 10px; pointer-events: none;
+}
+.notice-stack .lesson-warn { position: relative; top: auto; right: auto; width: 100%; }
+.notice-stack .lesson-warn:not(.show) { position: absolute; }
+.done-warn { border-left-color: var(--success); }
+body.glass-ui .done-warn { border-left-color: var(--success); }
+.done-warn-list { max-height: 50vh; overflow-y: auto; }
+.done-warn-avatar { width: 30px; height: 30px; font-size: 0.7rem; flex-shrink: 0; }
+.done-warn .lesson-warn-main small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.done-warn-check {
+  flex-shrink: 0; border: 1.5px solid var(--success); background: var(--success-surface); color: var(--success);
+  font: 700 0.72rem 'Inter', sans-serif; padding: 5px 9px; border-radius: 999px; cursor: pointer;
+}
+.done-warn-check:hover { background: var(--success); color: var(--on-success); }
+.done-warn-foot { display: flex; justify-content: space-between; gap: 8px; margin-top: 10px; }
+.done-warn-foot button {
+  border: 1.5px solid var(--border); background: none; color: var(--ink); font: 700 0.78rem 'Inter', sans-serif;
+  padding: 7px 12px; border-radius: 10px; cursor: pointer;
+}
+.done-warn-foot .done-warn-all { border-color: var(--success); background: var(--success); color: var(--on-success); }
+.done-warn-foot button:hover { filter: brightness(1.08); border-color: var(--brand); }
+
 /* ---------- Toast ---------- */
 .toast {
   position: fixed; top: 24px; left: 50%; transform: translate(-50%, -140%) scale(0.92);

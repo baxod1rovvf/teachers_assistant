@@ -157,6 +157,7 @@ window.startPlainCompletionsSync = function () {
         window.__plainCompletions = window.__allResults.filter(r => NO_POINTS_TYPES.indexOf(r.type) !== -1);
         if (window.renderDashboard) window.renderDashboard();
         if (window.renderTopActiveStudents) window.renderTopActiveStudents();
+        if (window.taCompletionsChanged) window.taCompletionsChanged();
       }, err => { console.error('Plain completions sync error:', err); });
       plainUnsubscribers.push(unsub);
     }
