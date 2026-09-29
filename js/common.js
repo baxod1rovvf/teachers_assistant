@@ -268,10 +268,111 @@ function switchTo(tab) {
     document.querySelectorAll('[data-tab="createpicker"]').forEach(b => b.classList.add('active'));
   }
 
+  taLiquidMove();
   if (TA_TAB_HOOKS[tab]) TA_TAB_HOOKS[tab]();
 
   // Keep the AI robot's FAQ bubble in sync with whichever section is now active.
   if (typeof aiRobotBubbleOpen !== 'undefined' && aiRobotBubbleOpen) renderAiRobotQuestionList();
+}
+
+/* ================= SIDEBAR: liquid highlight =================
+   The highlight behind the chosen sidebar section flows to the next one like
+   a drop of liquid: its front runs ahead, the back stretches into a thinning
+   tail and follows, and the drop wobbles a little as it lands. It's one SVG
+   shape behind the links, redrawn every frame from where the front and the
+   back are. */
+const TA_LIQUID = { svg: null, path: null, at: null, raf: 0 };
+function taLiquidNav() { return document.querySelector('.sidebar nav'); }
+function taLiquidTarget(nav) {
+  const btn = nav.querySelector('.side-btn.active');
+  if (!btn || !btn.offsetHeight) return null;
+  return { x: btn.offsetLeft, y: btn.offsetTop, w: btn.offsetWidth, h: btn.offsetHeight };
+}
+function taLiquidSetup(nav) {
+  if (TA_LIQUID.svg && TA_LIQUID.svg.parentNode === nav) return true;
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('class', 'side-liquid');
+  svg.setAttribute('aria-hidden', 'true');
+  const path = document.createElementNS(NS, 'path');
+  svg.appendChild(path);
+  nav.insertBefore(svg, nav.firstChild);
+  nav.classList.add('has-liquid');
+  TA_LIQUID.svg = svg; TA_LIQUID.path = path; TA_LIQUID.at = null;
+  // the sidebar opening, closing or changing size moves the links: follow them without animating
+  if (window.ResizeObserver) new ResizeObserver(() => { if (!TA_LIQUID.raf) taLiquidMove(true); }).observe(nav);
+  return true;
+}
+// A rounded rectangle (the drop) with a tapering tail behind it: the tail's
+// tip is half an ellipse and its sides curve in and flow into the drop's top.
+// Drawn with the drop below the tail; flip = true mirrors it for moving up.
+function taLiquidPath(cx, headTop, headH, headW, tailTop, tailH, tailW, flip, base) {
+  const r = Math.min(10, headH / 2, headW / 2);
+  const Y = v => (flip ? 2 * base - v : v).toFixed(2);
+  const X = v => v.toFixed(2);
+  const sw = flip ? 0 : 1;
+  const hL = cx - headW / 2, hR = cx + headW / 2, hB = headTop + headH;
+  const tMid = tailTop + tailH / 2;
+  const corner = (x, y) => 'A' + r + ' ' + r + ' 0 0 ' + sw + ' ' + X(x) + ' ' + Y(y);
+  if (tMid > headTop - 2) {
+    // no tail showing: just the drop
+    return 'M' + X(hL + r) + ' ' + Y(headTop) + 'H' + X(hR - r) + corner(hR, headTop + r) + 'V' + Y(hB - r) +
+      corner(hR - r, hB) + 'H' + X(hL + r) + corner(hL, hB - r) + 'V' + Y(headTop + r) + corner(hL + r, headTop) + 'Z';
+  }
+  const tL = cx - tailW / 2, tR = cx + tailW / 2, drop = (headTop - tMid) * 0.65;
+  return 'M' + X(tL) + ' ' + Y(tMid) +
+    'A' + X(tailW / 2) + ' ' + X(tailH / 2) + ' 0 0 ' + sw + ' ' + X(tR) + ' ' + Y(tMid) +
+    'C' + X(tR) + ' ' + Y(tMid + drop) + ' ' + X(hR - r - (hR - r - tR) * 0.45) + ' ' + Y(headTop) + ' ' + X(hR - r) + ' ' + Y(headTop) +
+    corner(hR, headTop + r) + 'V' + Y(hB - r) + corner(hR - r, hB) + 'H' + X(hL + r) + corner(hL, hB - r) +
+    'V' + Y(headTop + r) + corner(hL + r, headTop) +
+    'C' + X(hL + r + (tL - hL - r) * 0.45) + ' ' + Y(headTop) + ' ' + X(tL) + ' ' + Y(tMid + drop) + ' ' + X(tL) + ' ' + Y(tMid) + 'Z';
+}
+function taLiquidDrawStill(t) {
+  TA_LIQUID.path.setAttribute('d', taLiquidPath(t.x + t.w / 2, t.y, t.h, t.w, t.y, t.h, t.w, false, 0));
+}
+function taLiquidMove(instant) {
+  const nav = taLiquidNav();
+  if (!nav || !taLiquidSetup(nav)) return;
+  const to = taLiquidTarget(nav);
+  if (TA_LIQUID.raf) { cancelAnimationFrame(TA_LIQUID.raf); TA_LIQUID.raf = 0; }
+  if (!to) { TA_LIQUID.svg.style.opacity = '0'; TA_LIQUID.at = null; return; }
+  TA_LIQUID.svg.style.opacity = '';
+  const from = TA_LIQUID.at;
+  TA_LIQUID.at = to;
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (instant || !from || from.y === to.y || reduce) { taLiquidDrawStill(to); return; }
+
+  const flip = to.y < from.y;               // moving up: draw it mirrored around the start
+  const base = from.y + from.h / 2;
+  const m = v => flip ? 2 * base - v : v;   // position in the "moving down" drawing
+  const fromTop = flip ? m(from.y + from.h) : from.y, toTop = flip ? m(to.y + to.h) : to.y;
+  const cx = to.x + to.w / 2;
+  const dist = Math.abs(toTop - fromTop);
+  const DUR = Math.min(760, 520 + dist * 0.5);
+  const easeOutBack = p => { const c = 1.5; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); };
+  const easeInOut = p => p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+  const clamp = p => Math.max(0, Math.min(1, p));
+  const start = performance.now();
+  function frame(now) {
+    const p = clamp((now - start) / DUR);
+    const hp = easeOutBack(clamp(p / 0.62));                 // the front shoots ahead and overshoots a little
+    const tp = easeInOut(clamp((p - 0.1) / 0.62));            // the back lets go a moment later
+    const headTop = fromTop + (toTop - fromTop) * hp;
+    // the back trails the front by at most a short tail, as a drop does
+    const maxGap = to.h * 1.5;
+    let tailTop = Math.max(fromTop + (toTop - fromTop) * tp, headTop - maxGap);
+    const s = clamp((headTop - tailTop) / maxGap);            // 0 at rest, 1 fully stretched
+    const tailW = to.w * (1 - 0.86 * s), tailH = to.h * (1 - 0.4 * s);
+    // landing wobble: squashed and a little wider, springing back
+    const land = clamp((p - 0.5) / 0.5);
+    const wob = land > 0 ? Math.exp(-4 * land) * Math.sin(land * Math.PI * 2.5) * (1 - land) : 0;
+    const headH = to.h * (1 - 0.1 * s) * (1 - 0.16 * wob), headW = to.w * (1 - 0.1 * s) * (1 + 0.03 * wob);
+    const hTop = headTop + (to.h - headH) / 2;
+    TA_LIQUID.path.setAttribute('d', taLiquidPath(cx, hTop, headH, Math.min(headW, to.w + 6), tailTop, tailH, tailW, flip, base));
+    if (p < 1) TA_LIQUID.raf = requestAnimationFrame(frame);
+    else { TA_LIQUID.raf = 0; taLiquidDrawStill(to); }
+  }
+  TA_LIQUID.raf = requestAnimationFrame(frame);
 }
 
 // Builder tabs on the Create page are buttons that switch panels; sidebar
