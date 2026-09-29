@@ -676,6 +676,7 @@ function applyTheme() {
   const t = getTheme();
   document.body.classList.toggle('light-theme', t === 'light');
   document.body.dataset.design = getDesign();
+  document.body.classList.toggle('glass-ui', getUiStyle() === 'glass');
   // the phone's status bar (installed app) takes the design's page colour
   const d = taDesignByKey(getDesign());
   const meta = document.querySelector('meta[name="theme-color"]');
@@ -720,11 +721,28 @@ function setDesign(key) {
   } else applyTheme();
   renderDesignPicker();
 }
+/* Style: the classic solid blocks, or glassmorphism (frosted, see-through
+   blocks over a soft colour backdrop, css/style.css "GLASS STYLE"). It goes
+   with every colour design, day and night, and is picked in the same 🎨 box. */
+const LS_UI_STYLE = 'ta_ui_style';
+function getUiStyle() {
+  try { return localStorage.getItem(LS_UI_STYLE) === 'glass' ? 'glass' : 'classic'; } catch (e) { return 'classic'; }
+}
+function setUiStyle(style) {
+  try { localStorage.setItem(LS_UI_STYLE, style === 'glass' ? 'glass' : 'classic'); } catch (e) { /* ignore */ }
+  applyTheme();
+  renderDesignPicker();
+}
+window.setUiStyle = setUiStyle;
 function renderDesignPicker() {
   const box = document.getElementById('designPicker');
   if (!box) return;
   const cur = getDesign();
-  box.innerHTML = '<div class="design-picker-title">🎨 Design</div>' + TA_DESIGNS.map(d =>
+  const style = getUiStyle();
+  const styleBtn = (key, label) => '<button type="button" class="style-option' + (style === key ? ' active' : '') + '" onclick="setUiStyle(\'' + key + '\')" aria-pressed="' + (style === key) + '">' + label + '</button>';
+  box.innerHTML = '<div class="design-picker-title">✨ Style</div>' +
+    '<div class="style-choice">' + styleBtn('classic', '<span class="style-swatch classic"></span>Classic') + styleBtn('glass', '<span class="style-swatch glass"></span>Glass') + '</div>' +
+    '<div class="design-picker-title">🎨 Design</div>' + TA_DESIGNS.map(d =>
     '<button type="button" class="design-option' + (d.key === cur ? ' active' : '') + '" onclick="setDesign(\'' + d.key + '\')" aria-pressed="' + (d.key === cur) + '">' +
       '<span class="design-swatch" style="background:conic-gradient(' + d.accent + ' 0 50%, ' + d.base + ' 50% 100%)"></span>' +
       '<span>' + escapeForHtml(d.name) + '<small class="design-mode">' + (d.mode === 'day' ? '☀️ Day' : '🌙 Night') + '</small></span>' +

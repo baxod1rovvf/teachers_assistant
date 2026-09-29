@@ -16,7 +16,7 @@
 (function () {
   var SYNC_KEYS = ['ta_student_groups', 'ta_points_roster', 'ta_weekly_schedule', 'ta_recent_exercises',
     'ta_exercise_html_cache', 'ta_results', 'ta_code_resets', 'ta_active_code', 'ta_points_code',
-    'ta_teacher_name', 'ta_avatar', 'ta_lessons_archived', 'ta_design_day', 'ta_design_night', 'ta_sentence_ratings'];
+    'ta_teacher_name', 'ta_avatar', 'ta_lessons_archived', 'ta_design_day', 'ta_design_night', 'ta_ui_style', 'ta_sentence_ratings'];
   var SYNC_SET = {};
   SYNC_KEYS.forEach(function (k) { SYNC_SET[k] = true; });
   var SEP = '␟';

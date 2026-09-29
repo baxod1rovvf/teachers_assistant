@@ -89,7 +89,7 @@ window.renderInstallSection = renderInstallSection;
    data is downloaded first, so a restore can always be taken back. */
 const TA_BACKUP_KEYS = ['ta_student_groups', 'ta_points_roster', 'ta_weekly_schedule', 'ta_recent_exercises',
   'ta_exercise_html_cache', 'ta_results', 'ta_code_resets', 'ta_active_code', 'ta_points_code',
-  'ta_teacher_name', 'ta_avatar', 'ta_lessons_archived', 'ta_design_day', 'ta_design_night',
+  'ta_teacher_name', 'ta_avatar', 'ta_lessons_archived', 'ta_design_day', 'ta_design_night', 'ta_ui_style',
   'ta_theme', 'ta_sound_enabled', 'ta_builder_drafts', 'ta_sentence_ratings'];
 const LS_LAST_BACKUP = 'ta_last_backup_at';
 
