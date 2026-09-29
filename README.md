@@ -47,6 +47,8 @@ That link opens the Dashboard (shown as `…/teachers_assistant/index`). The Con
 - **Fill translations:** Flashcard's **🌐 Fill empty translations** machine-translates every word that has no translation yet (Uzbek by default; the language is a setting), using the same free service as Bidirectional Language.
 - **Usual settings:** points, time limit, design, quiz type and the other settings are remembered per exercise type from the last exercise made, and Reset All goes back to them. Titles, words and instructions are never carried over.
 
+- **Jungle (board game):** Create → 🌴 Jungle. Each question the teacher writes is one square of a winding jungle board, in order, and a picture can go under any question (pictures are shrunk to 900px). In the game file the class picks 2, 3 or 4 teams (a token each, shown on the left). A team rolls the dice and moves that many squares, then the question on that square pops up: rolling 6 opens question 6, and the same team rolling 3 next time opens question 9. Tokens can also be dragged to any square, clicking a square shows its question, and the first team past the last square wins. The game is `JUNGLE_TEMPLATE` in `js/exercise-templates.js`; the builder is in the "JUNGLE" section of `js/pages/create.js`.
+
 - **Exercises for a group:** every builder has a **For group** picker. My Exercises shows each exercise's group (click it to change it), filters by group, and search finds group names. A group on the Students page links to its exercises.
 
 The code is in the "SAVED WORK" and "USE THE SAME WORDS" sections of `js/pages/create.js` (`taCaptureBuilder` / `taRestoreBuilder`).

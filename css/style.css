@@ -1932,3 +1932,13 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 .sentence-rate-chip.rated { border-style: solid; border-color: rgba(245,179,1,0.5); color: #C98A1C; background: rgba(245,179,1,0.1); }
 
 .top-student-count { display: block; font-size: 0.72rem; font-weight: 600; color: var(--ink-faint); }
+
+/* ---------- Jungle builder: one question per row, with an optional picture ---------- */
+.row-item.jg-row { align-items: flex-start; }
+.rows.jg-rows { max-height: 520px; }
+.jg-row .idx { margin-top: 10px; }
+.jg-row .remove-btn { margin-top: 6px; }
+.jg-row-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.jg-row-body textarea { width: 100%; min-height: 0; resize: vertical; }
+.jg-row-img { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.jg-row-img img { max-height: 90px; max-width: 160px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); object-fit: contain; background: #fff; }
