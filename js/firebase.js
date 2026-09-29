@@ -107,6 +107,9 @@ if (window.getPointsBoardCode) window.startPointsSync(window.getPointsBoardCode(
 // Firestore's "in" operator caps out at 30 values per query), and counts
 // completions for exactly the types that don't participate in points, so
 // nothing here double-counts what the points ledger already covers.
+// They're picked out by the result's own type, so the ones inside
+// Homework/Class sets count too (the set itself isn't an English Content
+// exercise, so looking them up by the exercise list missed them).
 // It also keeps every result of every exercise (window.__allResults, including
 // the exercises inside Homework/Class sets) for Top Active Students, which
 // judges students by how well they did, not how many exercises they finished.
@@ -119,9 +122,8 @@ window.startPlainCompletionsSync = function () {
   window.__plainCompletions = [];
   window.__allResults = [];
   if (!db || !window.getRecentExercises) return;
-  const NO_POINTS_TYPES = ['English Content', 'Bidirectional Language'];
+  const NO_POINTS_TYPES = ['EnglishContent', 'BilingualReader']; // as a result's type names them
   const exercises = window.getRecentExercises() || [];
-  const noPointsCodes = new Set(exercises.filter(e => NO_POINTS_TYPES.indexOf(e.typeLabel) !== -1).map(e => e.code));
   const codes = [];
   exercises.forEach((e, i) => {
     if (e.mergedItems && e.mergedItems.length) {
@@ -152,7 +154,7 @@ window.startPlainCompletionsSync = function () {
         watchCodes(docs.filter(v => v && v.type === 'HWC_PROGRESS' && v.roundCode).map(v => v.roundCode));
         resultsByChunk[ci] = docs.filter(v => v && typeof v.type === 'string' && v.type.indexOf('POINTS:') !== 0 && v.type !== 'HWC_PROGRESS');
         window.__allResults = Object.values(resultsByChunk).flat();
-        window.__plainCompletions = window.__allResults.filter(r => noPointsCodes.has(r.code));
+        window.__plainCompletions = window.__allResults.filter(r => NO_POINTS_TYPES.indexOf(r.type) !== -1);
         if (window.renderDashboard) window.renderDashboard();
         if (window.renderTopActiveStudents) window.renderTopActiveStudents();
       }, err => { console.error('Plain completions sync error:', err); });
