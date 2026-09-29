@@ -1485,18 +1485,55 @@ function markReminderShown(key) {
     }
   } catch (e) { /* ignore */ }
 }
+/* Opening the site warns about every lesson in the next 24 hours; while it
+   stays open, a lesson that newly comes within 24 hours is warned about once.
+   The warning sits in the top-right corner and goes away after 5 seconds. */
+let taEnteredWarned = false;
 function showReminderToastIfDue() {
+  if (!window.__TA_USER) return; // not signed in yet: the login screen is showing
   const reminders = getUpcomingReminders();
-  if (!reminders.length) return;
-  const shown = getShownReminderKeys();
-  const due = reminders.filter(r => shown.indexOf(r.entry.id + '_' + r.date.toISOString()) === -1);
-  if (!due.length) return;
-  const first = due[0];
-  const label = due.length > 1
-    ? ('⏰ Reminder: ' + (first.entry.group || 'Lesson') + ' starts ' + formatTimeUntil(first.date) + ' (+' + (due.length - 1) + ' more within 24h)')
-    : ('⏰ Reminder: ' + (first.entry.group || 'Lesson') + ' starts ' + formatTimeUntil(first.date) + ', ' + formatTimeDisplay(first.entry.time));
-  showToast(label);
-  due.forEach(r => markReminderShown(r.entry.id + '_' + r.date.toISOString()));
+  const key = r => r.entry.id + '_' + r.date.toISOString();
+  let list;
+  if (!taEnteredWarned) {
+    taEnteredWarned = true;
+    list = reminders;
+  } else {
+    const shown = getShownReminderKeys();
+    list = reminders.filter(r => shown.indexOf(key(r)) === -1);
+  }
+  if (!list.length) return;
+  list.forEach(r => markReminderShown(key(r)));
+  showLessonWarning(list);
+}
+let taLessonWarnTimer = 0;
+function showLessonWarning(list) {
+  let box = document.getElementById('taLessonWarn');
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'taLessonWarn';
+    box.className = 'lesson-warn';
+    box.setAttribute('role', 'status');
+    document.body.appendChild(box);
+  }
+  box.innerHTML = '<div class="lesson-warn-head"><span>⏰ ' + (list.length === 1 ? 'A lesson' : list.length + ' lessons') + ' in the next 24 hours</span>' +
+      '<button type="button" class="lesson-warn-close" aria-label="Close">✕</button></div>' +
+    list.map(r => {
+      const palette = lessonColorForId(r.entry.id);
+      return '<div class="lesson-warn-row">' +
+        '<span class="lesson-warn-dot" style="background:' + palette.color + ';"></span>' +
+        '<div class="lesson-warn-main"><b>' + escapeForHtml(r.entry.group || 'Lesson') + '</b>' +
+          '<small>' + SCHEDULE_DAY_SHORT[r.date.getDay()] + ' ' + formatTimeDisplay(r.entry.time) + (r.entry.level ? ' · ' + escapeForHtml(r.entry.level) : '') + '</small></div>' +
+        '<span class="lesson-warn-when">' + formatTimeUntil(r.date) + '</span>' +
+      '</div>';
+    }).join('') +
+    '<div class="lesson-warn-bar"></div>';
+  const hide = () => { box.classList.remove('show'); clearTimeout(taLessonWarnTimer); };
+  box.querySelector('.lesson-warn-close').onclick = hide;
+  box.classList.remove('show');
+  void box.offsetWidth; // restart the slide-in and the 5-second bar
+  box.classList.add('show');
+  clearTimeout(taLessonWarnTimer);
+  taLessonWarnTimer = setTimeout(hide, 5000);
 }
 window.showReminderToastIfDue = showReminderToastIfDue;
 
@@ -2553,6 +2590,8 @@ function taStartPage(defaultTab) {
   taInitSectionAnims();
   initAiRobotWidget();
   initSidebarHamburgerAnim();
+
+  setTimeout(showReminderToastIfDue, 900);
 
   /* Re-check lesson reminders periodically so the reminder pop-ups and "starts
      soon" badges stay accurate even if the app is left open across the 24h boundary. */

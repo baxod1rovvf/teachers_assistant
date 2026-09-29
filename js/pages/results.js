@@ -94,7 +94,7 @@ function renderHwcResultsList() {
     // Total time to complete the WHOLE homework set, shown only once every
     // round is done (a partial total would be misleading). Under 15 minutes
     // is flagged red (likely rushed); 15+ minutes shown in green.
-    let totalTimeHtml = '';
+    let totalTimeHtml = '<span class="hwc-total-time"></span>'; // keeps its column when there's no total
     if (done && typeof d.totalTimeSeconds === 'number' && d.totalTimeSeconds > 0) {
       const totalMin = Math.floor(d.totalTimeSeconds / 60);
       const totalSec = d.totalTimeSeconds % 60;
