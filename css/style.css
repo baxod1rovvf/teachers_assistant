@@ -340,7 +340,8 @@ body.light-theme .side-btn.active img.icon-mono { filter: invert(1); }
   display: flex; align-items: center; gap: 12px; padding: 10px 2px; border-bottom: 1px solid var(--border);
 }
 .top-student-row:last-child { border-bottom: none; }
-.top-student-rank { font-size: 1.05rem; width: 24px; text-align: center; flex-shrink: 0; }
+.top-student-rank { font-size: 1.05rem; width: 28px; text-align: center; flex-shrink: 0; }
+.top-student-rank-img { width: 28px; height: 28px; display: block; }
 .top-student-name { flex: 1; font-size: 0.87rem; font-weight: 700; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .top-student-score { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 0.88rem; }
 

@@ -113,7 +113,7 @@ function getTopActiveStudents(limit) {
   arr.sort((a, b) => (b.avg - a.avg) || (b.count - a.count));
   return arr.slice(0, limit);
 }
-const RANK_ICONS = ['🥇', '🥈', '🥉'];
+const RANK_ICONS = ['images/icons/rank/rank-1.png', 'images/icons/rank/rank-2.png', 'images/icons/rank/rank-3.png'];
 function renderTopActiveStudents() {
   const wrap = document.getElementById('mainTopStudentsList');
   if (!wrap) return;
@@ -122,7 +122,9 @@ function renderTopActiveStudents() {
   wrap.innerHTML = top.map((s, i) => {
     const initials = initialsForName(s.name);
     const avatarColor = avatarColorForName(s.name);
-    const rankIcon = RANK_ICONS[i] || ('#' + (i + 1));
+    const rankIcon = RANK_ICONS[i]
+      ? '<img class="top-student-rank-img" src="' + RANK_ICONS[i] + '" alt="#' + (i + 1) + '">'
+      : '#' + (i + 1);
     const pct = Math.round(s.avg);
     const scoreColor = pct >= 80 ? 'var(--success)' : (pct >= 50 ? 'var(--warning)' : 'var(--danger)');
     return '<div class="top-student-row">' +
