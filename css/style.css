@@ -1942,3 +1942,8 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 .jg-row-body textarea { width: 100%; min-height: 0; resize: vertical; }
 .jg-row-img { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .jg-row-img img { max-height: 90px; max-width: 160px; border-radius: var(--radius-sm); border: 1.5px solid var(--border); object-fit: contain; background: #fff; }
+/* Bamboozle builder: answer and points under each question */
+.bz-row-line { display: flex; gap: 8px; align-items: center; }
+.bz-row-line .bz-ans { flex: 1; min-width: 0; }
+.bz-pts-label { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 700; color: var(--ink-faint); white-space: nowrap; }
+.bz-pts-label .bz-pts { width: 76px; }

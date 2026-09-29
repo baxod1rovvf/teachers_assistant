@@ -62,8 +62,8 @@ const TA_PAGES = {
   points: 'points.html',
   settings: 'settings.html'
 };
-const BUILDER_TABS = ['wordorder', 'makeaword', 'flashcard', 'presentation', 'pronunciation', 'spelling', 'test', 'sentences', 'bilingual', 'engcontent', 'dictation', 'jungle', 'ielts-listening', 'ielts-reading', 'ielts-writing', 'ielts-speaking'];
-const READY_TABS = ['flashcard', 'wordorder', 'makeaword', 'spelling', 'sentences', 'bilingual', 'engcontent', 'dictation', 'jungle'];
+const BUILDER_TABS = ['wordorder', 'makeaword', 'flashcard', 'presentation', 'pronunciation', 'spelling', 'test', 'sentences', 'bilingual', 'engcontent', 'dictation', 'jungle', 'bamboozle', 'ielts-listening', 'ielts-reading', 'ielts-writing', 'ielts-speaking'];
+const READY_TABS = ['flashcard', 'wordorder', 'makeaword', 'spelling', 'sentences', 'bilingual', 'engcontent', 'dictation', 'jungle', 'bamboozle'];
 const INPROCESS_TABS = ['presentation', 'pronunciation', 'test'];
 const CREATE_TABS = READY_TABS.concat(INPROCESS_TABS);
 
@@ -1979,7 +1979,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: "Where do I see my students' results?", a: 'Open "Results" in the sidebar for individual exercise scores, or check "Homework & Class" for combined results.' }
   ])
 };
-const AI_ROBOT_BUILDER_TABS = ['flashcard', 'wordorder', 'makeaword', 'spelling', 'sentences', 'bilingual', 'engcontent', 'dictation', 'jungle', 'presentation', 'pronunciation', 'test'];
+const AI_ROBOT_BUILDER_TABS = ['flashcard', 'wordorder', 'makeaword', 'spelling', 'sentences', 'bilingual', 'engcontent', 'dictation', 'jungle', 'bamboozle', 'presentation', 'pronunciation', 'test'];
 function getAiRobotFaqForTab(tab) {
   if (AI_ROBOT_FAQ_BY_TAB[tab]) return AI_ROBOT_FAQ_BY_TAB[tab];
   if (AI_ROBOT_BUILDER_TABS.indexOf(tab) !== -1) return AI_ROBOT_FAQ_BY_TAB.builder;
@@ -2428,7 +2428,7 @@ const TA_TAB_LABELS = {
   points: ['🏆', 'Points & Rewards'], settings: ['⚙️', 'Settings'],
   flashcard: ['🎴', 'Flashcard'], wordorder: ['🧩', 'Word Order'], makeaword: ['🧱', 'Make a Word'],
   spelling: ['🔤', 'Spelling'], sentences: ['✍️', 'Sentences'], bilingual: ['📖', 'Bidirectional Language'],
-  engcontent: ['🎬', 'English Content'], dictation: ['🎧', 'Dictation'], jungle: ['🌴', 'Jungle'], presentation: ['🖥️', 'Presentation'],
+  engcontent: ['🎬', 'English Content'], dictation: ['🎧', 'Dictation'], jungle: ['🌴', 'Jungle'], bamboozle: ['🎯', 'Bamboozle'], presentation: ['🖥️', 'Presentation'],
   pronunciation: ['🎙️', 'Pronunciation'], test: ['✅', 'Test'], 'ielts-listening': ['🎧', 'IELTS Listening'],
   'ielts-reading': ['📗', 'IELTS Reading'], 'ielts-writing': ['✍️', 'IELTS Writing']
 };
