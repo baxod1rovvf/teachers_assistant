@@ -133,22 +133,30 @@ function topStudentRowsHtml(top) {
     '</div>';
   }).join('');
 }
-// Everyone's Top 5, then each group's own Top 5 below it (Target, Apex…).
+// One group's Top 5 at a time: a button per group (Target, Apex…) picks which.
+// The choice is remembered on this device.
+const LS_TOP_GROUP = 'ta_top_students_group';
 function renderTopActiveStudents() {
   const wrap = document.getElementById('mainTopStudentsList');
   if (!wrap) return;
-  const top = getTopActiveStudents(5);
-  if (!top.length) { wrap.innerHTML = '<div class="empty-results">No results from your students yet. Only students who enter with their ID appear here; Sentences count once you rate them in Results.</div>'; return; }
   const roster = getPointsRoster();
   const groups = getStudentGroups().filter(g => roster.some(st => st.group === g.id));
-  wrap.innerHTML = topStudentRowsHtml(top) + groups.map(g => {
-    const gTop = getTopActiveStudents(5, g.id);
-    return '<div class="top-group-block">' +
-      '<div class="top-group-title"><span translate="no">' + escapeForHtml(g.name) + '</span><small>Top 5</small></div>' +
-      (gTop.length ? topStudentRowsHtml(gTop) : '<div class="top-group-empty">No results from this group yet.</div>') +
-    '</div>';
-  }).join('');
+  if (!groups.length) { wrap.innerHTML = '<div class="empty-results">Put your students into groups on the Students page to see each group\'s Top 5.</div>'; return; }
+  let cur = '';
+  try { cur = localStorage.getItem(LS_TOP_GROUP) || ''; } catch (e) { /* ignore */ }
+  if (!groups.some(g => g.id === cur)) cur = groups[0].id;
+  const top = getTopActiveStudents(5, cur);
+  wrap.innerHTML = '<div class="top-group-tabs" role="tablist">' + groups.map(g =>
+      '<button type="button" role="tab" class="top-group-tab' + (g.id === cur ? ' active' : '') + '" aria-selected="' + (g.id === cur) + '"' +
+      ' onclick="selectTopStudentsGroup(' + jsAttr(g.id) + ')"><span translate="no">' + escapeForHtml(g.name) + '</span></button>').join('') + '</div>' +
+    (top.length ? topStudentRowsHtml(top)
+      : '<div class="empty-results">No results from this group yet. Only students who enter with their ID appear here; Sentences count once you rate them in Results.</div>');
 }
+function selectTopStudentsGroup(id) {
+  try { localStorage.setItem(LS_TOP_GROUP, id); } catch (e) { /* ignore */ }
+  renderTopActiveStudents();
+}
+window.selectTopStudentsGroup = selectTopStudentsGroup;
 window.renderTopActiveStudents = renderTopActiveStudents;
 
 /* ================= DASHBOARD: stat tiles ================= */

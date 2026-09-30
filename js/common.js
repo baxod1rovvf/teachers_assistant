@@ -615,35 +615,24 @@ function rosterStudentForId(id, idx) {
   idx = idx || taRosterIndex();
   return idx.byId[String(id).trim().toLowerCase()] || null;
 }
-/* Results: the students who should have done an exercise but haven't. An
-   exercise given to a group (My Exercises → group) only expects that group's
-   students; one without a group expects everyone on the Students list, shown
-   split by group. doneStudents: the roster students who did it. */
+/* Results: the students of an exercise's group (chosen when it was made, or
+   in My Exercises) who haven't done it. An exercise made without a group has
+   no such list. doneStudents: the roster students who did it. */
 function taMissingStudentsHtml(exercise, doneStudents) {
   if (!exercise) return '';
-  const roster = getPointsRoster();
-  if (!roster.length) return '';
-  const groups = getStudentGroups();
-  const group = groups.find(g => g.id === exercise.groupId) || null;
+  const group = getStudentGroups().find(g => g.id === exercise.groupId) || null;
+  if (!group) return '';
   const done = new Set((doneStudents || []).filter(Boolean).map(st => String(st.id).trim().toLowerCase()));
-  const missing = roster.filter(st => (!group || st.group === group.id) && !done.has(String(st.id).trim().toLowerCase()));
+  const missing = getPointsRoster().filter(st => st.group === group.id && !done.has(String(st.id).trim().toLowerCase()));
   const chip = st => '<span class="missing-student"><span class="res-avatar" style="background:' + avatarColorForName(st.name) + ';">' +
     escapeForHtml(initialsForName(st.name)) + '</span><span translate="no">' + escapeForHtml(st.name) + '</span><small>ID ' + escapeForHtml(String(st.id)) + '</small></span>';
-  let body;
-  if (!missing.length) body = '<div class="empty-results">Everyone ' + (group ? 'in ' + escapeForHtml(group.name) + ' ' : '') + 'has done it. 🎉</div>';
-  else if (group) body = '<div class="missing-list">' + missing.map(chip).join('') + '</div>';
-  else {
-    // no group given: split by group, so it's clear which group is behind
-    const byGroup = {};
-    missing.forEach(st => { const k = groups.some(g => g.id === st.group) ? st.group : ''; (byGroup[k] = byGroup[k] || []).push(st); });
-    body = groups.concat([{ id: '', name: 'Not in a group' }]).filter(g => byGroup[g.id]).map(g =>
-      '<div class="missing-group"><div class="missing-group-name"><span translate="no">' + escapeForHtml(g.name) + '</span> · ' + byGroup[g.id].length + '</div>' +
-      '<div class="missing-list">' + byGroup[g.id].map(chip).join('') + '</div></div>').join('');
-  }
+  const gName = '<span translate="no">' + escapeForHtml(group.name) + '</span>';
   return '<div class="results-section missing-section">' +
-    '<div class="results-section-head"><h3>🚫 Didn\'t do it' + (group ? ' — <span translate="no">' + escapeForHtml(group.name) + '</span>' : '') + ' (' + missing.length + ')</h3>' +
-    '<p>' + (group ? 'Students in ' + escapeForHtml(group.name) + ' (this exercise\'s group) with no result yet.' : 'This exercise has no group, so everyone on your Students list is expected. Give it a group in My Exercises to see only that group.') + '</p></div>' +
-    body + '</div>';
+    '<div class="results-section-head"><h3>🚫 Didn\'t do it — ' + gName + ' (' + missing.length + ')</h3>' +
+    '<p>Students in ' + gName + ' (this exercise\'s group) with no result yet.</p></div>' +
+    (missing.length ? '<div class="missing-list">' + missing.map(chip).join('') + '</div>'
+      : '<div class="empty-results">Everyone in ' + gName + ' has done it. 🎉</div>') +
+    '</div>';
 }
 function taExerciseForCode(code) {
   return code ? (getRecentExercises() || []).find(e => e.code === code) || null : null;
