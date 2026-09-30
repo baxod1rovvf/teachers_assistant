@@ -25,7 +25,8 @@ async function prepare(context, opts = {}) {
     ta_theme: 'dark',
     ta_student_groups: JSON.stringify(data.groups),
     ta_points_roster: JSON.stringify(data.roster),
-    ta_recent_exercises: JSON.stringify(data.exercises())
+    ta_recent_exercises: JSON.stringify(data.exercises()),
+    ta_last_backup_at: new Date(now).toISOString()   // no "Time for a backup" reminder in the way
   }, opts.storage || {});
   const session = opts.session || { login: 'TOXIRJON', ce: ADMIN_CLOUD.email };
   const cloud = opts.cloud === false ? null : ADMIN_CLOUD;

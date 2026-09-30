@@ -529,6 +529,43 @@ window.taDbLimitReached = function () {
   taDbWarning('taDbLimitWarn', '⚠️ The database has reached a limit',
     'Firebase (where results, sync and exercise links live) refused a request because a limit of its free plan was reached — usually a <b>daily</b> limit, which resets at the start of the next day (Pacific time). Until then results may not arrive and links may not open. If this happens often, check the usage page, and consider sharing big exercises (audio, pictures) as files instead of links.');
 };
+/* ---- Weekly backup reminder ----
+   A browser can't save a file by itself, so once a week (from the last
+   backup downloaded on this device) the app reminds the teacher to download
+   one: Settings → Backup, which includes every result from the database. */
+const TA_BACKUP_EVERY = 7 * 86400000;
+function taBackupReminderIfDue() {
+  if (!window.__TA_USER) return;
+  let last = 0, snooze = 0, exercises = [];
+  try {
+    last = Date.parse(localStorage.getItem('ta_last_backup_at') || '') || 0;
+    snooze = +localStorage.getItem('ta_backup_remind_at') || 0;
+    exercises = JSON.parse(localStorage.getItem('ta_recent_exercises') || '[]');
+  } catch (e) { /* ignore */ }
+  if (!exercises.length || Date.now() - last < TA_BACKUP_EVERY || Date.now() < snooze) return;
+  let box = document.getElementById('taBackupWarn');
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'taBackupWarn';
+    box.className = 'lesson-warn db-warn';
+    box.setAttribute('role', 'status');
+    taNoticeStack().appendChild(box);
+  }
+  box.innerHTML = '<div class="lesson-warn-head"><span>💾 Time for a backup</span><button type="button" class="lesson-warn-close" aria-label="Close">✕</button></div>' +
+    '<div class="db-warn-text">' + (last ? 'Your last backup from this device was ' + Math.floor((Date.now() - last) / 86400000) + ' days ago.' : 'You haven\'t downloaded a backup from this device yet.') +
+    ' One file keeps your students, exercises and <b>all results</b> — if results are ever deleted, they can be put back from it. Keep it somewhere safe (e.g. Google Drive or Telegram "Saved Messages").</div>' +
+    '<div class="done-warn-foot"><button type="button" class="done-warn-later">Remind me tomorrow</button><button type="button" class="done-warn-all">Download a backup</button></div>';
+  const later = () => { try { localStorage.setItem('ta_backup_remind_at', String(Date.now() + 86400000)); } catch (e) { /* ignore */ } box.classList.remove('show'); };
+  box.querySelector('.lesson-warn-close').onclick = later;
+  box.querySelector('.done-warn-later').onclick = later;
+  box.querySelector('.done-warn-all').onclick = () => {
+    box.classList.remove('show');
+    if (typeof downloadBackup === 'function') downloadBackup(); else location.href = 'settings.html#backup';
+  };
+  void box.offsetWidth;
+  box.classList.add('show');
+}
+window.taBackupReminderDone = function () { const b = document.getElementById('taBackupWarn'); if (b) b.classList.remove('show'); };
 function taSweepPlayLinksIfDue() {
   if (!window.__TA_USER || !window.taSweepPlayLinks) return;
   let last = 0;
@@ -3011,6 +3048,7 @@ function taStartPage(defaultTab) {
 
   setTimeout(showReminderToastIfDue, 900);
   setTimeout(taSweepPlayLinksIfDue, 8000);
+  setTimeout(taBackupReminderIfDue, 9000);
 
   /* Re-check lesson reminders periodically so the reminder pop-ups and "starts
      soon" badges stay accurate even if the app is left open across the 24h boundary. */

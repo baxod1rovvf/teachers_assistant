@@ -1848,6 +1848,8 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 .ta-modal-body textarea:focus { outline: none; border-color: var(--brand); }
 .ta-modal-text { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.5; margin: 0; }
 .ta-modal-text.warn { color: var(--danger); }
+.ta-modal-text.backup-pick { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.ta-modal-text.backup-pick input { margin-top: 3px; flex-shrink: 0; }
 .ta-modal-btns { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
 .mini-btn:disabled { opacity: 0.45; cursor: default; }
 .backup-last { font-size: 0.78rem; color: var(--ink-faint); margin-top: 8px; }

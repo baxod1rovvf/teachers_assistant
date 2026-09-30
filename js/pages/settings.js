@@ -120,12 +120,23 @@ function saveBackupFile(backup, suffix) {
   setTimeout(() => URL.revokeObjectURL(url), 4000);
 }
 
-function downloadBackup() {
+// The backup also carries the results from the database (see taResultsForBackup
+// in firebase.js), so results deleted there can be put back.
+async function downloadBackup() {
   const backup = buildBackup();
+  showToast('Preparing the backup…');
+  let results = null;
+  try {
+    const fn = await taWaitFor('taResultsForBackup', 9000);
+    if (fn) results = await Promise.race([fn(), new Promise(r => setTimeout(() => r(null), 30000))]);
+  } catch (e) { results = null; }
+  if (results) backup.results = results;
   saveBackupFile(backup);
   try { localStorage.setItem(LS_LAST_BACKUP, backup.createdAt); } catch (e) { /* ignore */ }
   renderBackupInfo();
-  showToast('Backup downloaded. Keep the file somewhere safe.', 'ok');
+  if (window.taBackupReminderDone) window.taBackupReminderDone();
+  showToast(results ? 'Backup downloaded, with ' + results.length + ' results from the database. Keep the file somewhere safe.'
+    : 'Backup downloaded — but without the database results (no connection). Try again when online.', results ? 'ok' : '');
 }
 
 function backupSummary(data) {
@@ -157,16 +168,37 @@ function onBackupFileChosen(input) {
     }
     const data = {};
     TA_BACKUP_KEYS.forEach(k => { if (typeof backup.data[k] === 'string') data[k] = backup.data[k]; });
+    const results = Array.isArray(backup.results) ? backup.results : [];
     const other = backup.login && taCurrentLogin() && backup.login.toUpperCase() !== taCurrentLogin().toUpperCase();
     const m = taModal('⬆ Restore this backup?',
       '<p class="ta-modal-text">Made <b>' + escapeForHtml(fmtDate(backup.createdAt)) + '</b>' + (backup.login ? ' from account <b>' + escapeForHtml(backup.login) + '</b>' : '') + '.</p>' +
       '<p class="ta-modal-text">' + escapeForHtml(backupSummary(data)) + '</p>' +
       (other ? '<p class="ta-modal-text warn">This backup is from a different account. Restoring puts its data into <b>' + escapeForHtml(taCurrentLogin()) + '</b>.</p>' : '') +
-      '<p class="ta-modal-text">It replaces what\'s in your account now. Your current data is downloaded as a backup file first, so you can go back.</p>' +
+      (results.length ? '<label class="ta-modal-text backup-pick"><input type="checkbox" data-pick="data" checked> Students, groups, exercises, lessons and settings — <i>replaces what\'s in your account now</i> (your current data is downloaded first, so you can go back)</label>' +
+        '<label class="ta-modal-text backup-pick"><input type="checkbox" data-pick="results" checked> Put back results that were deleted from the database — <b>' + results.length + '</b> result' + (results.length === 1 ? '' : 's') + ' in this file; the ones still there are left as they are</label>'
+      : '<p class="ta-modal-text">It replaces what\'s in your account now. Your current data is downloaded as a backup file first, so you can go back.</p>') +
       '<div class="ta-modal-btns"><button type="button" class="mini-btn" data-act="cancel">Cancel</button><button type="button" class="mini-btn solid" data-act="ok">Restore</button></div>');
     m.body.querySelector('[data-act="cancel"]').onclick = m.close;
     m.body.querySelector('[data-act="ok"]').onclick = async () => {
+      const pick = k => { const el = m.body.querySelector('[data-pick="' + k + '"]'); return el ? el.checked : k === 'data'; };
+      const doData = pick('data'), doResults = results.length > 0 && pick('results');
+      if (!doData && !doResults) return;
       m.close();
+      if (doResults) {
+        showToast('Putting back results…');
+        let r = null;
+        try { const fn = await taWaitFor('taRestoreResults', 9000); r = fn ? await fn(results) : null; } catch (e) { r = null; }
+        if (!r) { showToast('Could not reach the database. Check your internet connection and try again.'); return; }
+        const parts = [r.added + ' result' + (r.added === 1 ? '' : 's') + ' put back', r.there + ' already there'];
+        if (r.hidden) parts.push(r.hidden + ' left out (you deleted all results of that exercise yourself)');
+        if (r.failed) parts.push(r.failed + ' refused by the database');
+        await new Promise(res => {
+          const done = taModal(r.failed ? '⚠️ Results partly put back' : '✅ Results put back', '<p class="ta-modal-text" id="restoreResultsInfo">' + escapeForHtml(parts.join(' · ')) + '.</p>' +
+            '<div class="ta-modal-btns"><button type="button" class="mini-btn solid" data-act="ok">OK</button></div>', { onClose: res });
+          done.body.querySelector('[data-act="ok"]').onclick = done.close;
+        });
+        if (!doData) return;
+      }
       saveBackupFile(buildBackup(), '_before-restore'); // the way back
       TA_BACKUP_KEYS.forEach(k => {
         try {
@@ -191,6 +223,10 @@ taOnTab('settings', function () {
   renderInstallSection();
   const langPick = document.getElementById('settingsLangPick');
   if (langPick) langPick.innerHTML = taLangPickerHtml();
+  if (location.hash === '#backup') setTimeout(function () {
+    const el = document.getElementById('settingsBackupSection');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
   if (location.hash === '#install') setTimeout(function () {
     const el = document.getElementById('settingsInstallSection');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });

@@ -340,6 +340,66 @@ window.startPlainCompletionsSync = function () {
 };
 window.startPlainCompletionsSync();
 
+/* ---- Results backup (Settings → Backup) ----
+   The backup file also carries every result of this teacher's exercises (and
+   points), as kept on this device — read first, so nothing is missing. Results
+   deleted from the database can be put back from such a file, under their own
+   ids (so nothing is doubled). */
+window.taResultsForBackup = async function () {
+  await rs.ready;
+  if (!db) return null;
+  const codes = [...plainCodes];
+  const board = window.getPointsBoardCode ? window.getPointsBoardCode() : '';
+  if (board) codes.push(board);
+  await rsEnsureCodes(codes);
+  const own = new Set(codes.concat([...rs.loaded]));
+  const out = [];
+  rs.docs.forEach((v, id) => {
+    if (!v || !own.has(v.code) || (typeof v.type === 'string' && v.type.indexOf('TA_SYNC:') === 0)) return;
+    out.push(Object.assign({ __id: id }, v));
+  });
+  return out;
+};
+window.taRestoreResults = async function (list) {
+  const res = { added: 0, there: 0, hidden: 0, failed: 0 };
+  if (!db) { res.failed = list.length; return res; }
+  const ok = r => r && typeof r.__id === 'string' && /^[A-Za-z0-9_-]{1,100}$/.test(r.__id) && typeof r.code === 'string' && r.kind !== 'ta-reset'
+    && !(typeof r.type === 'string' && (r.type.indexOf('TA_SYNC:') === 0 || r.type === 'TA_ACCOUNT'));
+  list = list.filter(ok);
+  const codes = [...new Set(list.map(r => r.code))];
+  // what the database still has, read fresh (and each code's "all results deleted" time)
+  const have = new Set(), cutoff = Object.assign({}, window.getLocalResets ? window.getLocalResets() : {});
+  for (let i = 0; i < codes.length; i += 30) {
+    const snap = await getDocs(query(collection(db, 'results'), where('code', 'in', codes.slice(i, i + 30))));
+    snap.docs.forEach(d => {
+      have.add(d.id);
+      const v = d.data() || {};
+      if (v.kind === 'ta-reset' && v.resetAt && !(cutoff[v.code] >= v.resetAt)) cutoff[v.code] = v.resetAt;
+    });
+  }
+  const todo = [];
+  list.forEach(r => {
+    if (have.has(r.__id)) { res.there++; return; }
+    // results of an exercise whose results the teacher deleted on purpose would stay hidden anyway
+    if (cutoff[r.code] && (!r.builtAt || r.builtAt <= cutoff[r.code])) { res.hidden++; return; }
+    todo.push(r);
+  });
+  for (let i = 0; i < todo.length; i += 20) {
+    await Promise.all(todo.slice(i, i + 20).map(r => {
+      const data = Object.assign({}, r);
+      delete data.__id;
+      // a new server time, so every device's "anything new?" listener picks it up
+      data.submittedAt = serverTimestamp();
+      data.restoredAt = new Date().toISOString();
+      return setDoc(doc(db, 'results', r.__id), data).then(() => { res.added++; }, e => { res.failed++; taReportDbError(e); });
+    }));
+  }
+  codes.forEach(c => rs.loaded.delete(c));
+  await rsEnsureCodes(codes);
+  rsChanged();
+  return res;
+};
+
 // Lets the teacher's own page write points directly (manual +/- adjustments,
 // and "disable points" markers) using the same schema-safe document shape
 // the exercise files use.
