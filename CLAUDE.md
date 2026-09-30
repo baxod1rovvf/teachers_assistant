@@ -64,19 +64,15 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
    shows "Open in Chrome" when it detects the problem.
 
 **Less likely (< 20 %) but serious**
-18. **"Delete all results" doesn't leave its marker — until the new rules are published.** The
-    old rules refuse the `ta-reset` marker; `firestore.rules` allows it for signed-in teachers.
-    A deletion made on one device reaches the others' kept copy only at their weekly full re-read.
-6. **The database lock (2026-09-30) must be switched on by the teacher.** The code is in place
-   (see "Database lock" below), but it protects nothing until the rules from CP.html →
-   "🔐 Database lock" are pasted into Firebase → Firestore → Rules → Publish. **Check whether
-   that was done** (CP shows "🟢 The database is locked"). Until then anyone can read, create and
-   delete records. Even after it: anyone can still *read* everything and send *fake student
-   results or points* (students' scores are computed on their device), and the passwords'
-   fingerprints (`TA_ACCOUNT` hashes) are public, so a weak password could be guessed offline.
-7. **A fake exercise link could run someone else's code on the teacher's site** — only until the
-   lock is published: after it, only signed-in teachers can create `TA_SYNC:PLAY` records. Still
-   advise: only open exercise links the teacher shared themselves.
+18. **"Delete all results"** — its marker is allowed since the lock (2026-09-30). A deletion made on one device reaches the others' kept copy only at their weekly full re-read.
+6. **The database lock is on (rules published 2026-09-30; CP showed "🟢 The database is
+   locked").** Only signed-in teachers can save their own kinds of records or delete. Still:
+   anyone can *read* everything and send *fake student results or points* (students' scores
+   are computed on their device), and the passwords' fingerprints (`TA_ACCOUNT` hashes) are
+   public, so a weak password could be guessed offline. If someone pastes old rules back into
+   Firebase, the lock is gone — CP's "🔐 Database lock" box shows the state.
+7. **A fake exercise link could run someone else's code on the teacher's site** — much less
+   likely since the lock: only signed-in teachers can create `TA_SYNC:PLAY` records. Still advise: only open exercise links the teacher shared themselves.
 19. **Teachers whose password isn't saved in the Control Panel can't save to the locked
     database** (their synced data, links, points). CP shows "🔐 Database: can't save yet" — the
     administrator sets their password again with 🔑 Change password (it can be the same one).
