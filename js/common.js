@@ -458,6 +458,23 @@ document.addEventListener('keydown', function (e) {
 // Opened from disk the app has no web address, and the files keep the 🔐 instead.
 const TA_APP_URL = /^https?:$/.test(location.protocol) ? new URL('.', location.href).href : '';
 
+/* Pronunciation exercises: the web link students open (play.html). */
+function taPlayUrl(uid) { return /^https:/.test(TA_APP_URL) && uid ? TA_APP_URL + 'play.html?x=' + encodeURIComponent(uid) : ''; }
+async function taPublishPlayable(uid, html) {
+  if (!taPlayUrl(uid) || !html) return false;
+  const publish = await taWaitFor('taPublishPlay', 9000);
+  if (!publish) return false;
+  const ok = await publish(uid, html.split('__TA_APP_URL__').join(TA_APP_URL));
+  if (ok) {
+    const list = getRecentExercises();
+    const item = list.find(e => e.uid === uid);
+    if (item && !item.playPublished) { item.playPublished = true; saveRecentExercises(list); }
+  }
+  return ok;
+}
+window.taPlayUrl = taPlayUrl;
+window.taPublishPlayable = taPublishPlayable;
+
 function downloadFile(filename, content) {
   content = content.split('__TA_APP_URL__').join(TA_APP_URL);
   const blob = new Blob([content], { type: 'text/html' });

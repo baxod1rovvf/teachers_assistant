@@ -2272,6 +2272,8 @@ function createPronunciation() {
   pushRecentExercise({ title: title, typeLabel: 'Pronunciation', code: classCode, uid: __uid, html: html, requiredCode: __requiredCode_pr, contentSummary: words.map(w => w.w).join('\n') });
   downloadFile(typedFilename('Pronunciation', title, 'pronunciation'), html);
   showToast('"' + title + '" downloaded!' + (mode === 'code' ? ' Class code: ' + classCode : ''), 'ok');
+  // also online, so students can open it from a link where the microphone works (see Share)
+  taPublishPlayable(__uid, html);
 }
 
 onPronDesignChange();
