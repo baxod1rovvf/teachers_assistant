@@ -5,6 +5,9 @@ const path = require('path');
 const data = require('./data');
 
 const FAKE_FIRESTORE = fs.readFileSync(path.join(__dirname, 'fake-firestore.js'), 'utf8');
+const FAKE_AUTH = fs.readFileSync(path.join(__dirname, 'fake-auth.js'), 'utf8');
+// the administrator's database account in the tests (made up)
+const ADMIN_CLOUD = { email: 'toxirjon+000000000000@teachers-assistant.app', uid: 'uid-admin' };
 
 /**
  * Sets up a browser context. Options:
@@ -12,6 +15,9 @@ const FAKE_FIRESTORE = fs.readFileSync(path.join(__dirname, 'fake-firestore.js')
  *   storage  — extra localStorage items (as the app saves them)
  *   empty    — start with nothing saved (no students, no exercises)
  *   signedIn — false to see the login screen
+ *   session  — who is signed in (default: the administrator, also signed in to the database)
+ *   cloud    — false: not signed in to the database (fake-auth.js)
+ *   rules    — true: the stand-in database refuses what the real rules refuse without a sign-in
  */
 async function prepare(context, opts = {}) {
   const now = Date.now();
@@ -21,19 +27,30 @@ async function prepare(context, opts = {}) {
     ta_points_roster: JSON.stringify(data.roster),
     ta_recent_exercises: JSON.stringify(data.exercises())
   }, opts.storage || {});
-  await context.addInitScript(({ storage, signedIn }) => {
-    if (signedIn) sessionStorage.setItem('ta_session_v1', JSON.stringify({ login: 'TOXIRJON' }));
+  const session = opts.session || { login: 'TOXIRJON', ce: ADMIN_CLOUD.email };
+  const cloud = opts.cloud === false ? null : ADMIN_CLOUD;
+  await context.addInitScript(({ storage, signedIn, session, cloud, rules }) => {
+    if (rules) window.__RULES = true;
+    // seed the sign-in once per tab (the app changes it when it signs in or out)
+    if (!sessionStorage.getItem('__seededSession')) {
+      sessionStorage.setItem('__seededSession', '1');
+      if (signedIn) sessionStorage.setItem('ta_session_v1', JSON.stringify(session));
+      const users = {};
+      if (cloud) users[cloud.email] = { uid: cloud.uid, pw: 'x' };
+      sessionStorage.setItem('__fakeAuth', JSON.stringify({ users, current: cloud && signedIn ? cloud.email : null }));
+    }
     // seed once per browser context (a reload keeps what the app saved since)
     if (!localStorage.getItem('__seeded')) {
       localStorage.setItem('__seeded', '1');
       for (const k in storage) localStorage.setItem(k, storage[k]);
     }
-  }, { storage, signedIn: opts.signedIn !== false });
+  }, { storage, signedIn: opts.signedIn !== false, session, cloud, rules: !!opts.rules });
   await context.addInitScript(docs => { window.__FIXTURE = docs; }, opts.docs || data.results(now));
   // nothing leaves the test machine (fonts, animations from other sites…) —
   // added first, because the rules added later are checked before it
   await context.route(/^https?:\/\/(?!localhost)/, r => r.abort());
   await context.route(/gstatic\.com\/firebasejs\/.*firebase-firestore\.js/, r => r.fulfill({ contentType: 'application/javascript', body: FAKE_FIRESTORE }));
+  await context.route(/gstatic\.com\/firebasejs\/.*firebase-auth\.js/, r => r.fulfill({ contentType: 'application/javascript', body: FAKE_AUTH }));
   await context.route(/gstatic\.com\/firebasejs\/.*firebase-app\.js/, r => r.fulfill({ contentType: 'application/javascript', body: 'export function initializeApp(){return {}}' }));
 }
 
@@ -68,4 +85,4 @@ function template(name, fill = {}) {
   return t.replace(/__([A-Z_]+)__/g, (m, k) => k in all ? all[k] : '');
 }
 
-module.exports = { prepare, watchErrors, hideNotices, template, rawTemplate, data };
+module.exports = { prepare, watchErrors, hideNotices, template, rawTemplate, data, ADMIN_CLOUD };

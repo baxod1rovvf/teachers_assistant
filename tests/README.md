@@ -7,7 +7,8 @@ Dictation audio), results (read once, then only new ones), Top 5 per group,
 the database warnings, the lesson and finished-exercise warnings.
 
 - **The real database is never touched**: `support/fake-firestore.js` stands in for
-  Firebase, and `support/data.js` is a made-up class (no real students).
+  Firebase, `support/fake-auth.js` for the database sign-in, and `support/data.js` is a
+  made-up class (no real students).
 - **On GitHub** they run by themselves for every push (`.github/workflows/tests.yml`);
   a red ✗ next to a commit means something broke.
 - **Here**: `npm install`, then `npm test` (or, with a browser already installed,

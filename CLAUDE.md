@@ -26,7 +26,8 @@ before or alongside the first task** (they asked for this so they don't forget):
    was reached ("⚠️ The database has reached a limit"), and when exercise links take more
    than 400 MB ("⚠️ Exercise links are taking a lot of space"). If the teacher mentions
    either warning, results not arriving, or links not opening, check the limits first.
-3. **Anyone can read the `results` collection** (no login; the rules allow reads). Online
+3. **Anyone can read the `results` collection** (no login; the rules allow reads — the database
+   lock only protects writes and deletes). Online
    exercises — including their answers and the class list (names, IDs) — can be read by
    anyone who finds the database. The exercise files contain the same data. Synced app data
    (`TA_SYNC:<login>` records) is encrypted and not affected.
@@ -63,25 +64,24 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
    shows "Open in Chrome" when it detects the problem.
 
 **Less likely (< 20 %) but serious**
-18. **"Delete all results" doesn't leave its marker.** The rules refuse the `ta-reset` marker
-    record (`deleteLiveResultsForCode`, checked 2026-09-30: 403 even in the app's own shape).
-    The results themselves are deleted, but the marker that should stop old copies of the file
-    from sending results again is never saved, so old files can still send results for that
-    code. Also, a deletion made on one device reaches the others' kept copy only at their
-    weekly full re-read.
-6. **Anyone can change the database.** The security rules need no login: anyone who finds
-   the project id and API key (they are in every exercise file) can **read, create and
-   delete** records in `results` — delete students' results or points, or spam fake results
-   (confirmed 2026-09-30: an unauthenticated REST DELETE worked). Scores are also computed
-   on the student's device, so a clever student could send a fake score. Real fix: Firebase
-   Authentication + stricter rules (a big change; discuss with the teacher first).
-7. **A fake exercise link could run someone else's code on the teacher's site.** Because
-   anyone can create a `TA_SYNC:PLAY` record, someone could make a `play.html?x=…` link with
-   their own page. It runs on the app's own address, so if the **teacher** opened it in the
-   browser where they use the app, it could read the app's saved data in that browser
-   (student list, exercises; synced data is encrypted, but the local copy isn't). Advise:
-   only open exercise links the teacher shared themselves. Fix idea: serve play pages from a
-   separate origin, or check the record was made by this teacher (needs auth).
+18. **"Delete all results" doesn't leave its marker — until the new rules are published.** The
+    old rules refuse the `ta-reset` marker; `firestore.rules` allows it for signed-in teachers.
+    A deletion made on one device reaches the others' kept copy only at their weekly full re-read.
+6. **The database lock (2026-09-30) must be switched on by the teacher.** The code is in place
+   (see "Database lock" below), but it protects nothing until the rules from CP.html →
+   "🔐 Database lock" are pasted into Firebase → Firestore → Rules → Publish. **Check whether
+   that was done** (CP shows "🟢 The database is locked"). Until then anyone can read, create and
+   delete records. Even after it: anyone can still *read* everything and send *fake student
+   results or points* (students' scores are computed on their device), and the passwords'
+   fingerprints (`TA_ACCOUNT` hashes) are public, so a weak password could be guessed offline.
+7. **A fake exercise link could run someone else's code on the teacher's site** — only until the
+   lock is published: after it, only signed-in teachers can create `TA_SYNC:PLAY` records. Still
+   advise: only open exercise links the teacher shared themselves.
+19. **Teachers whose password isn't saved in the Control Panel can't save to the locked
+    database** (their synced data, links, points). CP shows "🔐 Database: can't save yet" — the
+    administrator sets their password again with 🔑 Change password (it can be the same one).
+20. **If the administrator's password changes**, the administrator gets a new database account
+    (new id), so the rules must be copied from CP and published again.
 8. **Browser storage filling up** (~5–10 MB per site): My Exercises keeps copies of exercise
    files and builder forms (pictures included). When full, older saved copies are dropped
    (so "Redownload"/"Use again"/Share-renewal may stop working for old exercises) and, in the
@@ -126,6 +126,32 @@ real students' names or results into the repository (it is public).
   are never seen by that listener — every result/points/progress record must carry
   `submittedAt: serverTimestamp()` (exercise files do; the teacher's own points writes do
   since 2026-09-30). `taResultsCacheInfo()` in the console shows what's kept.
+
+## Database lock (Firebase Authentication) — keep this in mind when changing writes
+
+- `firestore.rules` (in the repo, with `__ADMIN_UID__`; CP.html → "🔐 Database lock" shows it
+  with the administrator's id filled in, to paste into Firebase). Reads stay open. Students'
+  exercise files can create records of the student shape (`code` 6 chars, `name`, `type`, `v`)
+  that aren't a teacher's kind. Teacher's kinds — `TA_SYNC:*` (sync, exercise links),
+  `POINTS:Bonus`/`DISABLE`/`Removed`, `kind: 'ta-reset'` — and **every delete** need a signed-in
+  teacher; `TA_ACCOUNT` and the `accounts` collection only the administrator (by uid). No
+  updates. **A new kind of record the teacher's app writes must be added to `teachersKind` in
+  the rules, and to the stand-in in `tests/support/fake-firestore.js`.**
+- Each teacher's database account (`taCloudIdentity` in `js/accounts.js`, copied in CP.html):
+  e-mail `<login>+<tag>@teachers-assistant.app`, tag = first 12 hex of
+  sha256(`TA-AUTH-v1|LOGIN|password`), password `TA1|LOGIN|password`. The app signs in at login
+  (`taCloudSignIn`, making the account the first time) and saves the e-mail as `ce` in the
+  session; on load `taCloudCheck` (common.js) asks for the password once if this browser isn't
+  signed in to that account ("🔐 Enter your password once"), and again when a write is refused
+  (`permission-denied` → `taCloudRefused`). Logout signs out too.
+- CP.html signs in as the administrator at its sign-in, and keeps `accounts/<login>` =
+  `{ status, tag }` in step with the teacher accounts (it can work out the tag because it
+  keeps the teachers' passwords, encrypted). A new password → a new tag → the old database
+  account stops working by itself; turning a teacher off → `status: 'off'`.
+- Tests: `tests/support/fake-auth.js` stands in for firebase-auth; `prepare(context, { rules:
+  true })` makes the stand-in database refuse teacher's kinds without a sign-in.
+  `tests/database-lock.spec.js`. The real rules were checked with the Firestore emulator
+  (`firebase-tools` + `@firebase/rules-unit-testing`, needs Java) — do that again when changing them.
 
 ## How exercise links work (keep this in mind when changing them)
 

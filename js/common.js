@@ -2095,6 +2095,7 @@ function initWelcomeSplash() {
     overlay.classList.add('signed-in');
     setTimeout(dismiss, 250);
     taRecheckAccount();
+    taCloudCheck();
     return;
   }
 
@@ -2144,7 +2145,10 @@ async function taSubmitLogin(ev) {
   }
   btn.textContent = 'Signing in…';
   const sk = await taDeriveSyncKey(res.login, pass);
-  const session = JSON.stringify({ login: res.login, name: res.name, hash: res.hash, sk: sk, at: new Date().toISOString() });
+  // the database account (see "DATABASE SIGN-IN" in accounts.js); if it fails
+  // here (offline…), the app asks for the password again next time
+  const cloud = await taCloudSignIn(res.login, pass);
+  const session = JSON.stringify({ login: res.login, name: res.name, hash: res.hash, sk: sk, ce: cloud.ok ? cloud.email : '', at: new Date().toISOString() });
   window.taRaw.sessionSet(TA_SESSION_KEY, session);
   if (remember && remember.checked) window.taRaw.set(TA_REMEMBER_KEY, session); else window.taRaw.remove(TA_REMEMBER_KEY);
   window.taRaw.set('ta_last_login', res.login);
@@ -2178,6 +2182,63 @@ async function taRecheckAccount() {
   }
 }
 window.initWelcomeSplash = initWelcomeSplash;
+
+/* The database only takes the teacher's own records (synced data, exercise
+   links, points, deleting results) from a browser signed in to the teacher's
+   database account. Browsers signed in before that existed — or whose sign-in
+   was lost — are asked for the password once. */
+async function taCloudCheck(force) {
+  const u = window.__TA_USER;
+  if (!u || !(await taWaitFor('taCloudSignInWith', 9000))) return;
+  const current = await window.taCloudReady;
+  const live = window.taCloudUser ? window.taCloudUser() : current;
+  if (u.ce && live && live.email === String(u.ce).toLowerCase()) return;
+  if (!force && window.taRaw.sessionGet('ta_cloud_later') === '1') return;
+  taAskCloudPassword();
+}
+let taCloudRefusedShown = false;
+window.taCloudRefused = function () {
+  if (taCloudRefusedShown || !window.__TA_USER) return;
+  taCloudRefusedShown = true;
+  taCloudCheck(true);
+};
+function taAskCloudPassword() {
+  if (document.getElementById('taCloudUnlock')) return;
+  const u = window.__TA_USER;
+  const wrap = document.createElement('div');
+  wrap.id = 'taCloudUnlock';
+  wrap.className = 'sync-unlock-back';
+  wrap.innerHTML = '<form class="sync-unlock-card" novalidate>' +
+    '<h3>🔐 Enter your password once</h3>' +
+    '<p>The database is now locked, so only teachers can save and delete things. Enter your password so this device can save your data, exercise links and points.</p>' +
+    '<input type="password" autocomplete="current-password" placeholder="Your password">' +
+    '<div class="sync-unlock-err" role="alert"></div>' +
+    '<div class="sync-unlock-btns"><button type="button" class="sync-unlock-cancel">Not now</button><button type="submit" class="sync-unlock-ok">Continue</button></div>' +
+    '</form>';
+  document.body.appendChild(wrap);
+  const form = wrap.querySelector('form'), input = wrap.querySelector('input'), err = wrap.querySelector('.sync-unlock-err'), ok = wrap.querySelector('.sync-unlock-ok');
+  setTimeout(function () { input.focus(); }, 30);
+  wrap.querySelector('.sync-unlock-cancel').onclick = function () { window.taRaw.sessionSet('ta_cloud_later', '1'); wrap.remove(); };
+  form.onsubmit = async function (e) {
+    e.preventDefault();
+    if (taHashPassword(u.login, input.value) !== u.hash) { err.textContent = 'That password is incorrect.'; input.select(); return; }
+    ok.disabled = true; ok.textContent = 'Checking…'; err.textContent = '';
+    const r = await taCloudSignIn(u.login, input.value);
+    if (!r.ok) {
+      ok.disabled = false; ok.textContent = 'Continue';
+      err.textContent = r.code === 'offline' || r.code === 'timeout' || /network/.test(r.code)
+        ? 'Can\'t reach the database. Check your internet connection and try again.'
+        : 'The database refused this sign-in (' + r.code + '). Please tell the administrator.';
+      return;
+    }
+    u.ce = r.email;
+    if (!u.sk) u.sk = await taDeriveSyncKey(u.login, input.value);
+    taSaveSession(u);
+    wrap.remove();
+    showToast('🔐 Signed in to the database', 'ok');
+  };
+}
+window.taCloudCheck = taCloudCheck;
 
 /* ================= LOTTIE ANIMATIONS: toggle, brand, statistics ================= */
 

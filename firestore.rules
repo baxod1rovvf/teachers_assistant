@@ -1,0 +1,48 @@
+rules_version = '2';
+// Teacher's Assistant — database rules (Firebase console → Firestore → Rules).
+// The Control Panel (CP.html → "Database lock") shows this text with the
+// administrator's id filled in, ready to copy. See CLAUDE.md.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isAdmin() { return signedIn() && request.auth.uid == '__ADMIN_UID__'; }
+    // a teacher's database account: "<login>+<tag>@teachers-assistant.app", where
+    // the Control Panel has saved the right tag for that login in accounts/<login>
+    function email() { return request.auth.token.email; }
+    function acct() { return /databases/$(database)/documents/accounts/$(email().split('@')[0].split('[+]')[0]); }
+    function isTeacher() {
+      return isAdmin() || (signedIn()
+        && request.auth.token.email is string
+        && email().matches('[a-z0-9_.-]+[+][0-9a-f]{12}@teachers-assistant[.]app')
+        && exists(acct())
+        && get(acct()).data.status == 'active'
+        && get(acct()).data.tag == email().split('@')[0].split('[+]')[1]);
+    }
+    // records only the teacher's app makes (synced data, exercise links,
+    // points the teacher gives or removes, "results deleted" markers)
+    function teachersKind(d) {
+      return (d.get('type', '') is string && (d.get('type', '').matches('TA_SYNC:.*')
+                || d.get('type', '') in ['TA_ACCOUNT', 'POINTS:Bonus', 'POINTS:DISABLE', 'POINTS:Removed']))
+        || d.get('kind', '') == 'ta-reset';
+    }
+    // what an exercise file sends (a student's result, progress or points)
+    function studentShape(d) {
+      return d.keys().hasAll(['code', 'name', 'type', 'v'])
+        && d.code is string && d.code.size() == 6
+        && d.name is string && d.name.size() < 100;
+    }
+
+    match /results/{resultId} {
+      allow read: if true;
+      allow create: if (studentShape(request.resource.data) && !teachersKind(request.resource.data))
+                    || (isTeacher() && request.resource.data.get('type', '') != 'TA_ACCOUNT')
+                    || isAdmin();
+      allow delete: if isTeacher();
+      allow update: if false;
+    }
+    // which database account belongs to which teacher (written by the Control Panel)
+    match /accounts/{key} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

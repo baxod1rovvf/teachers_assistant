@@ -151,7 +151,9 @@ function taLogout(skipConfirm) {
   function out() {
     window.taRaw.sessionRemove(TA_SESSION_KEY);
     window.taRaw.remove(TA_REMEMBER_KEY);
-    location.reload();
+    var done = function () { location.reload(); };
+    if (typeof window.taCloudSignOut === 'function') Promise.race([window.taCloudSignOut(), new Promise(function (r) { setTimeout(r, 2000); })]).then(done, done);
+    else done();
   }
   // send any change that's still waiting to be synced first (at most a few seconds)
   if (window.taSync) Promise.race([window.taSync.flush(), new Promise(function (r) { setTimeout(r, 4000); })]).then(out, out);
@@ -164,4 +166,39 @@ function taDefaultTeacherName() {
   if (u.name) return u.name;
   var l = String(u.login || 'Teacher');
   return l.charAt(0).toUpperCase() + l.slice(1).toLowerCase();
+}
+
+/* ================= DATABASE SIGN-IN (Firebase Authentication) =================
+   The database only lets signed-in teachers save their own kind of records
+   (synced data, exercise links, points, deleting results — see
+   firestore.rules). Each teacher has a database account made from their login
+   and password: the e-mail carries a "tag" that only someone who knows the
+   password can work out, and the Control Panel (which knows the passwords)
+   tells the database which tag is right for each login. A new password gives
+   a new tag, so an old database account stops working by itself. */
+var TA_CLOUD_DOMAIN = 'teachers-assistant.app';
+function taCloudIdentity(login, password) {
+  login = String(login || '').trim().toUpperCase();
+  var tag = taSha256('TA-AUTH-v1|' + login + '|' + String(password)).slice(0, 12);
+  var key = login.toLowerCase().replace(/[^a-z0-9_.-]/g, '_');
+  return { key: key, tag: tag, email: key + '+' + tag + '@' + TA_CLOUD_DOMAIN, password: 'TA1|' + login + '|' + String(password) };
+}
+/* Signs this browser in to the database (making the account the first time).
+   Never throws: { ok, email, code }. */
+async function taCloudSignIn(login, password) {
+  var id = taCloudIdentity(login, password);
+  var fn = await taWaitFor('taCloudSignInWith', 9000);
+  if (!fn) return { ok: false, email: id.email, code: 'offline' };
+  var r;
+  try {
+    r = await Promise.race([fn(id.email, id.password), new Promise(function (res) { setTimeout(function () { res({ ok: false, code: 'timeout' }); }, 15000); })]);
+  } catch (e) { r = { ok: false, code: (e && e.code) || 'failed' }; }
+  r.email = id.email;
+  return r;
+}
+/* Saves the database e-mail into this sign-in (and the remembered one). */
+function taSaveSession(user) {
+  var s = JSON.stringify(user);
+  window.taRaw.sessionSet(TA_SESSION_KEY, s);
+  if (window.taRaw.get(TA_REMEMBER_KEY)) window.taRaw.set(TA_REMEMBER_KEY, s);
 }
