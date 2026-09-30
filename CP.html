@@ -89,6 +89,11 @@ input:focus { border-color: var(--brand); background: rgba(244,241,234,0.08); }
 .unlock-back .card { width: min(380px, 100%); display: flex; flex-direction: column; gap: 12px; }
 .unlock-back h2 { font-size: 1.1rem; }
 .unlock-btns { display: flex; justify-content: flex-end; gap: 8px; }
+.db-line { font-size: 0.8rem; color: var(--ink-soft); flex-basis: 100%; }
+.db-line.ok { color: var(--success); }
+.db-line.bad { color: var(--warning); }
+.rules-box { width: 100%; min-height: 180px; margin-top: 10px; padding: 12px; border-radius: 12px; border: 1.5px solid var(--border); background: var(--surface-sunken); color: var(--ink); font: 0.74rem/1.45 ui-monospace, Menlo, Consolas, monospace; resize: vertical; }
+.db-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
 .empty { color: var(--ink-soft); font-size: 0.88rem; padding: 14px; text-align: center; border: 1.5px dashed var(--border); border-radius: 12px; }
 .howto { font-size: 0.86rem; color: var(--ink-soft); line-height: 1.6; padding-left: 18px; margin-top: 8px; }
 .toast {
@@ -144,6 +149,17 @@ const ADMIN_LOGIN = 'TOXIRJON';
 const ADMIN_HASH = '417c7342809abaa8e5858c58274e5fe464a9cdee7198772a775e24872b9d610c';
 const ACCOUNTS_CODE = 'TAUSER';
 const SEP = '\u241F';
+
+/* Database accounts (same as "DATABASE SIGN-IN" in js/accounts.js): the
+   database only lets signed-in teachers save the teacher's own records. The
+   e-mail carries a tag worked out from the password; this panel saves the
+   right tag for each teacher in the database (accounts/<login>). */
+function taCloudIdentity(login, password) {
+  login = String(login || '').trim().toUpperCase();
+  const tag = taSha256('TA-AUTH-v1|' + login + '|' + String(password)).slice(0, 12);
+  const key = login.toLowerCase().replace(/[^a-z0-9_.-]/g, '_');
+  return { key: key, tag: tag, email: key + '+' + tag + '@teachers-assistant.app', password: 'TA1|' + login + '|' + String(password) };
+}
 
 /* Teacher passwords are kept so the administrator can look them up here. They
    are stored encrypted (AES-GCM) with a key made from the administrator's own
@@ -225,6 +241,25 @@ async function ctrlDecryptPw(sealed) {
     <div class="users" id="userList"><div class="empty">Loading…</div></div>
   </div>
 
+  <div class="card" id="dbCard">
+    <h2>🔐 Database lock</h2>
+    <p class="sub">Only signed-in teachers can save to the database or delete from it. Students' exercises can still send results.</p>
+    <div class="status-line" id="dbStatus">Checking…</div>
+    <div class="db-actions">
+      <button class="mini hidden" type="button" id="dbSignInBtn">🔐 Sign in to the database</button>
+      <button class="mini" type="button" id="dbRulesBtn">📜 Show the database rules</button>
+    </div>
+    <div class="hidden" id="dbRulesWrap">
+      <ol class="howto">
+        <li>Press <b>📋 Copy the rules</b>.</li>
+        <li>Open <a href="https://console.firebase.google.com/project/teachers-assistant-app-ccd1a/firestore/rules" target="_blank" rel="noopener" style="color:var(--brand)">Firebase → Firestore → Rules</a>.</li>
+        <li>Select everything there, paste, and press <b>Publish</b>.</li>
+      </ol>
+      <textarea class="rules-box" id="dbRules" readonly spellcheck="false"></textarea>
+      <div class="db-actions"><button class="mini" type="button" id="dbCopyBtn">📋 Copy the rules</button></div>
+    </div>
+  </div>
+
   <div class="card">
     <h2>How teachers get started</h2>
     <ol class="howto">
@@ -239,7 +274,7 @@ async function ctrlDecryptPw(sealed) {
 <!-- asks for the admin password when the password key isn't in memory (e.g. still signed in from an older version) -->
 <div class="unlock-back hidden" id="unlockBack">
   <form class="card" id="unlockForm" novalidate>
-    <h2>🔓 Unlock teacher passwords</h2>
+    <h2 id="unlockTitle">🔓 Unlock teacher passwords</h2>
     <p class="sub" id="unlockWhy">Enter your Control Panel password to save and view teacher passwords.</p>
     <label class="field"><span>Your password</span><input type="password" id="unlockPass" autocomplete="current-password"></label>
     <div class="error" id="unlockError" role="alert"></div>
@@ -278,14 +313,17 @@ async function ctrlDecryptPw(sealed) {
     if (login === ADMIN_LOGIN && taHashPassword(login, pass) === ADMIN_HASH) {
       try { sessionStorage.setItem('ta_ctrl_session', '1'); } catch (err) { /* ignore */ }
       ctrlDeriveKey(pass).then(ctrlRememberKey).catch(err => console.error('Password key failed:', err)).then(showPanel);
+      dbSignIn(pass).catch(() => {});
     } else {
       $('gateError').textContent = 'Login or password is incorrect.';
       $('gatePass').select();
     }
   });
   $('logoutBtn').addEventListener('click', () => {
-    try { sessionStorage.removeItem('ta_ctrl_session'); sessionStorage.removeItem(PW_KEY_STORE); } catch (err) { /* ignore */ }
-    location.reload();
+    try { sessionStorage.removeItem('ta_ctrl_session'); sessionStorage.removeItem(PW_KEY_STORE); sessionStorage.removeItem('ta_ctrl_ce'); } catch (err) { /* ignore */ }
+    const done = () => location.reload();
+    if (window.ctrlFirebase && window.ctrlFirebase.signOut) Promise.race([window.ctrlFirebase.signOut(), new Promise(r => setTimeout(r, 2000))]).then(done, done);
+    else done();
   });
 
   /* ---------- account records (append-only; the newest record per login wins) ---------- */
@@ -323,6 +361,7 @@ async function ctrlDecryptPw(sealed) {
           accounts = parse(docs);
           setConn('🟢 Connected — changes apply right away.', 'ok');
           render();
+          dbSyncAccess();
         }, err => {
           console.error(err);
           setConn('⚠️ Could not load accounts: ' + (err && err.code ? err.code : 'connection problem') + '.', 'bad');
@@ -354,6 +393,7 @@ async function ctrlDecryptPw(sealed) {
             '<button class="mini danger" type="button" data-act="delete" data-login="' + esc(a.login) + '">🗑 Delete</button>' +
           '</div>' +
           '<div class="pw-line" data-login="' + esc(a.login) + '">' + pwLineHtml(a) + '</div>' +
+          dbLineHtml(a) +
         '</div>';
       });
     }
@@ -377,6 +417,11 @@ async function ctrlDecryptPw(sealed) {
   // Makes sure the password key is ready, asking for the admin password if needed. Resolves true/false.
   function ctrlEnsureKey(why) {
     if (ctrlPwKey) return Promise.resolve(true);
+    return askAdminPassword(why, async pass => { await ctrlRememberKey(await ctrlDeriveKey(pass)); render(); dbSyncAccess(); });
+  }
+  // Asks for the administrator's password, then runs use(password); resolves true/false.
+  function askAdminPassword(why, use, title) {
+    $('unlockTitle').textContent = title || '🔓 Unlock teacher passwords';
     return new Promise(resolve => {
       const back = $('unlockBack'), form = $('unlockForm'), input = $('unlockPass'), err = $('unlockError');
       $('unlockWhy').textContent = why || 'Enter your Control Panel password to save and view teacher passwords.';
@@ -388,9 +433,8 @@ async function ctrlDecryptPw(sealed) {
       form.onsubmit = async e => {
         e.preventDefault();
         if (taHashPassword(ADMIN_LOGIN, input.value) !== ADMIN_HASH) { err.textContent = 'That password is incorrect.'; input.select(); return; }
-        try { await ctrlRememberKey(await ctrlDeriveKey(input.value)); }
-        catch (ex) { console.error(ex); err.textContent = 'This browser could not unlock passwords. Open the Control Panel over https (its github.io link).'; return; }
-        render();
+        try { await use(input.value); }
+        catch (ex) { console.error(ex); err.textContent = ex && ex.shown ? ex.message : 'This browser could not unlock passwords. Open the Control Panel over https (its github.io link).'; return; }
         done(true);
       };
     });
@@ -402,6 +446,112 @@ async function ctrlDecryptPw(sealed) {
     if (pw === null) { toast('Could not read this password. Set a new one with 🔑 Change password.', true); return null; }
     return pw;
   }
+
+  /* ---------- database lock ---------- */
+  let dbAdmin = null;        // the administrator's database account, once signed in
+  let dbAccess = null;       // accounts/<login> records, or null until they can be read
+  let dbAccessErr = '';
+  let dbWant = {};           // login -> what accounts/<key> should say ({ status, tag })
+  let dbAccessUnsub = null;
+  async function waitFirebase() {
+    for (let i = 0; i < 100 && !window.ctrlFirebase; i++) await new Promise(r => setTimeout(r, 100));
+    return window.ctrlFirebase || null;
+  }
+  // signs this panel in to the database as the administrator (making the account the first time)
+  async function dbSignIn(pass) {
+    const fb = await waitFirebase();
+    if (!fb) throw Object.assign(new Error('Could not reach the database.'), { shown: true });
+    const id = taCloudIdentity(ADMIN_LOGIN, pass);
+    const r = await fb.signIn(id.email, id.password);
+    if (!r.ok) { dbShowStatus(); throw Object.assign(new Error('The database refused the sign-in (' + r.code + ').'), { shown: true }); }
+    try { sessionStorage.setItem('ta_ctrl_ce', id.email); } catch (e) { /* ignore */ }
+    dbAdmin = fb.user();
+    dbStartAccess();
+    dbShowStatus();
+  }
+  async function dbRestore() {
+    const fb = await waitFirebase();
+    if (!fb) { dbShowStatus(); return; }
+    const u = await fb.ready;
+    let ce = '';
+    try { ce = sessionStorage.getItem('ta_ctrl_ce') || ''; } catch (e) { /* ignore */ }
+    if (u && ce && u.email === ce) { dbAdmin = u; dbStartAccess(); }
+    dbShowStatus();
+  }
+  function dbStartAccess() {
+    if (dbAccessUnsub || !window.ctrlFirebase) return;
+    dbAccessUnsub = window.ctrlFirebase.listenAccess(list => {
+      dbAccess = {}; dbAccessErr = '';
+      list.forEach(d => { dbAccess[d.__id] = d; });
+      dbShowStatus(); render(); dbSyncAccess();
+    }, err => {
+      dbAccess = null; dbAccessUnsub = null;
+      dbAccessErr = err && err.code ? err.code : 'error';
+      dbShowStatus(); render();
+      setTimeout(dbStartAccess, 30000); // try again (e.g. once the rules are published)
+    });
+  }
+  // what accounts/<key> should say for one teacher: only an active teacher whose password is saved here
+  async function dbWanted(a) {
+    const id = taCloudIdentity(a.login, '');
+    if (a.status !== 'active' || !a.pw || !ctrlPwKey) return { key: id.key, status: 'off', tag: '' };
+    const pw = await ctrlDecryptPw(a.pw);
+    if (pw === null || taHashPassword(a.login, pw) !== a.hash) return { key: id.key, status: 'off', tag: '' };
+    return { key: id.key, status: 'active', tag: taCloudIdentity(a.login, pw).tag };
+  }
+  let dbSyncing = false, dbSyncAgain = false;
+  async function dbSyncAccess() {
+    if (!dbAdmin || !dbAccess || !ctrlPwKey) return;
+    if (dbSyncing) { dbSyncAgain = true; return; }
+    dbSyncing = true;
+    try {
+      const want = {};
+      for (const a of Object.values(accounts)) want[a.login] = await dbWanted(a);
+      dbWant = want;
+      for (const login of Object.keys(want)) {
+        const w = want[login], have = dbAccess[w.key];
+        if (have && have.status === w.status && (have.tag || '') === w.tag) continue;
+        if (!have && w.status === 'off') continue;
+        await window.ctrlFirebase.setAccess(w.key, { login: login, status: w.status, tag: w.tag, date: new Date().toISOString() });
+      }
+    } catch (e) { console.error('Database access sync failed:', e); }
+    dbSyncing = false;
+    render();
+    if (dbSyncAgain) { dbSyncAgain = false; dbSyncAccess(); }
+  }
+  function dbLineHtml(a) {
+    if (a.status !== 'active') return '';
+    if (!a.pw) return '<div class="db-line bad">🔐 Database: can\'t save yet — set a password with 🔑 Change password (it can be the same one)</div>';
+    if (!dbAdmin || !dbAccess) return '';
+    const w = dbWant[a.login], have = w && dbAccess[w.key];
+    if (w && w.status === 'active' && have && have.status === 'active' && have.tag === w.tag) return '<div class="db-line ok">🔐 Database: ready</div>';
+    if (w && w.status !== 'active') return '<div class="db-line bad">🔐 Database: can\'t save yet — set a password with 🔑 Change password (it can be the same one)</div>';
+    return '<div class="db-line">🔐 Database: updating…</div>';
+  }
+  function dbShowStatus() {
+    const el = $('dbStatus');
+    $('dbSignInBtn').classList.toggle('hidden', !!dbAdmin);
+    if (!dbAdmin) { el.textContent = '⚠️ This panel isn\'t signed in to the database — press 🔐 Sign in to the database.'; el.className = 'status-line bad'; return; }
+    if (dbAccess) { el.textContent = '🟢 The database is locked. Teachers marked "ready" below can save.'; el.className = 'status-line ok'; return; }
+    if (/permission-denied/.test(dbAccessErr)) { el.textContent = '⚠️ The new database rules aren\'t published yet — press 📜 Show the database rules.'; el.className = 'status-line bad'; return; }
+    el.textContent = dbAccessErr ? '⚠️ Could not check the database (' + dbAccessErr + ').' : 'Checking…';
+    el.className = 'status-line' + (dbAccessErr ? ' bad' : '');
+  }
+  $('dbSignInBtn').addEventListener('click', () => askAdminPassword('Enter your Control Panel password to sign in to the database.', dbSignIn, '🔐 Sign in to the database'));
+  $('dbRulesBtn').addEventListener('click', async () => {
+    const wrap = $('dbRulesWrap');
+    if (!wrap.classList.contains('hidden')) { wrap.classList.add('hidden'); return; }
+    if (!dbAdmin) { toast('Sign in to the database first.', true); return; }
+    let text = '';
+    try { const r = await fetch('firestore.rules', { cache: 'no-store' }); if (r.ok) text = await r.text(); } catch (e) { /* below */ }
+    if (!text || text.indexOf('__ADMIN_UID__') === -1) { toast('Could not load the rules — open the Control Panel from its github.io link.', true); return; }
+    $('dbRules').value = text.split('__ADMIN_UID__').join(dbAdmin.uid);
+    wrap.classList.remove('hidden');
+  });
+  $('dbCopyBtn').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText($('dbRules').value); toast('📋 Rules copied — paste them in Firebase and press Publish'); }
+    catch (e) { $('dbRules').select(); toast('Could not copy — select the text and copy it yourself.', true); }
+  });
 
   /* ---------- add ---------- */
   $('addForm').addEventListener('submit', async e => {
@@ -481,11 +631,12 @@ async function ctrlDecryptPw(sealed) {
   /* stay signed in for this tab */
   let signedIn = false;
   try { signedIn = sessionStorage.getItem('ta_ctrl_session') === '1'; } catch (err) { /* ignore */ }
-  if (signedIn) ctrlRestoreKey().then(showPanel); else $('gateUser').focus();
+  if (signedIn) { ctrlRestoreKey().then(showPanel).then(dbSyncAccess); dbRestore(); } else $('gateUser').focus();
 </script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-  import { getFirestore, collection, query, where, onSnapshot, addDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+  import { getFirestore, collection, query, where, onSnapshot, addDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
   const firebaseConfig = {
     apiKey: "AIzaSyCefg2YghdSneABh0ZOUu3-snO4soVw0lA",
     authDomain: "teachers-assistant-app-ccd1a.firebaseapp.com",
@@ -496,8 +647,24 @@ async function ctrlDecryptPw(sealed) {
     measurementId: "G-7P60GBSYEM"
   };
   try {
-    const db = getFirestore(initializeApp(firebaseConfig));
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
     window.ctrlFirebase = {
+      ready: new Promise(res => { const stop = onAuthStateChanged(auth, u => { stop(); res(u); }, () => res(null)); }),
+      user: () => auth.currentUser,
+      signIn: async (email, password) => {
+        try { await signInWithEmailAndPassword(auth, email, password); return { ok: true }; }
+        catch (e) {
+          if (!/invalid-credential|invalid-login-credentials|user-not-found|wrong-password/.test(String(e && e.code))) return { ok: false, code: (e && e.code) || 'failed' };
+          try { await createUserWithEmailAndPassword(auth, email, password); return { ok: true, created: true }; }
+          catch (e2) { return { ok: false, code: (e2 && e2.code) || 'failed' }; }
+        }
+      },
+      signOut: () => signOut(auth).catch(() => {}),
+      // which database account belongs to which teacher (see firestore.rules)
+      listenAccess: (onData, onErr) => onSnapshot(collection(db, 'accounts'), snap => onData(snap.docs.map(d => Object.assign({ __id: d.id }, d.data()))), onErr),
+      setAccess: (key, data) => setDoc(doc(db, 'accounts', key), data),
       write: data => addDoc(collection(db, 'results'), data),
       // account records only: teachers' synced data shares the TAUSER code with its own type
       listen: (onData, onErr) => onSnapshot(query(collection(db, 'results'), where('code', '==', ACCOUNTS_CODE), where('type', '==', 'TA_ACCOUNT')),

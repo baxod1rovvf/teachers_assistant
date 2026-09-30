@@ -1,4 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 import { getFirestore, collection, query, where, onSnapshot, getDocs, deleteDoc, updateDoc, doc, addDoc, setDoc, serverTimestamp, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -11,13 +12,30 @@ const firebaseConfig = {
   measurementId: "G-7P60GBSYEM"
 };
 
-let db = null;
+let db = null, auth = null;
 try {
   const app = initializeApp(firebaseConfig);
+  try { auth = getAuth(app); } catch (e) { console.error("Firebase sign-in unavailable:", e); }
   db = getFirestore(app);
 } catch (e) {
   console.error("Firebase init failed:", e);
 }
+
+/* Database sign-in (see "DATABASE SIGN-IN" in js/accounts.js): the database
+   only lets signed-in teachers save the teacher's own kinds of records. */
+window.taCloudReady = auth ? new Promise(res => { const stop = onAuthStateChanged(auth, u => { stop(); res(u); }, () => res(null)); }) : Promise.resolve(null);
+window.taCloudUser = () => (auth && auth.currentUser) || null;
+window.taCloudSignInWith = async function (email, password) {
+  if (!auth) return { ok: false, code: 'offline' };
+  try { await signInWithEmailAndPassword(auth, email, password); return { ok: true }; }
+  catch (e) {
+    // no account yet (Firebase gives one answer for "no account" and "wrong password"): make it
+    if (!/invalid-credential|invalid-login-credentials|user-not-found|wrong-password/.test(String(e && e.code))) return { ok: false, code: (e && e.code) || 'failed' };
+    try { await createUserWithEmailAndPassword(auth, email, password); return { ok: true, created: true }; }
+    catch (e2) { return { ok: false, code: (e2 && e2.code) || 'failed' }; }
+  }
+};
+window.taCloudSignOut = () => auth ? signOut(auth).catch(() => {}) : Promise.resolve();
 
 // Cloud sync (js/sync.js): one record per synced item, updated in place.
 if (db) {
@@ -95,6 +113,7 @@ window.taSweepPlayLinks = async function () {
 function taReportDbError(e) {
   const code = e && (e.code || '');
   if (/resource-exhausted/.test(String(code)) && window.taDbLimitReached) window.taDbLimitReached();
+  if (/permission-denied/.test(String(code)) && window.taCloudRefused) window.taCloudRefused();
 }
 window.taReportDbError = taReportDbError;
 
@@ -339,7 +358,7 @@ window.taDisableExercisePoints = async function (boardCode, exerciseCode) {
       timeSeconds: 0, timeDisplay: '00:00', date: new Date().toISOString(), submittedAt: serverTimestamp()
     });
     return 'ok';
-  } catch (e) { console.error('Disable points failed:', e); return 'failed'; }
+  } catch (e) { taReportDbError(e); console.error('Disable points failed:', e); return 'failed'; }
 };
 
 // Watches every student's progress through one Homework/Class set,
@@ -508,7 +527,7 @@ window.deleteLiveResultsForCode = async function (code, resetAt) {
     // moment is expired", so old copies of the file can never pollute the
     // results again — on this computer or any other.
     await addDoc(collection(db, 'results'), {
-      v: 1, kind: 'ta-reset', code: code, resetAt: resetAt || new Date().toISOString()
+      v: 1, kind: 'ta-reset', code: code, resetAt: resetAt || new Date().toISOString(), submittedAt: serverTimestamp()
     });
     snap.docs.length = 0;
     // Refresh the live listener's local copy immediately so the table
@@ -517,6 +536,7 @@ window.deleteLiveResultsForCode = async function (code, resetAt) {
     if (window.renderResultsTable) window.renderResultsTable();
     return { ok: true, count: realCount };
   } catch (e) {
+    taReportDbError(e);
     console.error('Failed deleting live results for code', code, e);
     return { ok: false, count: 0 };
   }
