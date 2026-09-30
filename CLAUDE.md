@@ -31,6 +31,77 @@ before or alongside the first task** (they asked for this so they don't forget):
    anyone who finds the database. The exercise files contain the same data. Synced app data
    (`TA_SYNC:<login>` records) is encrypted and not affected.
 
+## ⚠️ Known risks — warn the teacher (they asked: even unlikely ones, under 20 %)
+
+The teacher wants to hear about problems **before** they happen. In a new chat, after the
+database reminder above, give a **short** list of the risks below (one line each, plain
+words), and whenever a task touches one of these areas, mention the relevant risk again.
+Check whether anything below has changed (fixed, or got worse) before repeating it, and
+update this list when you fix or discover something. Rough likelihoods are for the next
+few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~100 students).
+
+**More likely (≥ 20 %)**
+1. **Daily read limit (50 000 reads/day, shared by all teacher accounts).** Opening the app
+   reads every result of every exercise (`startPlainCompletionsSync`, points board, live
+   results) — about **1 300 reads per full load** on 2026-09-30, growing with every result
+   (results are never deleted). ~35–40 full loads a day across all devices/teachers reaches
+   the limit; then results stop arriving until the next day (Pacific time) and the app shows
+   "The database has reached a limit". Fix when it comes up: read results incrementally
+   (only new ones since the last visit), or archive old results.
+2. **Monthly download limit (10 GiB)** from exercise links — heavy for audio/picture
+   exercises (dictation audio is now shrunk, ~0.4 MB per minute of audio; sets with many
+   pictures are still heavy).
+3. **Old exercise files keep old bugs.** Files made before a fix never change: Sentences with
+   multi-line instructions (fixed 2026-09-30), Pronunciation microphone on phones (fixed
+   2026-09-30), dictation extra-word scoring inside the student's own score. The teacher has
+   to recreate them ("Use again"). Renewing a link from Share re-uploads the app's saved copy
+   — which is the old broken one for "Review - Apex" (its fixed copy was put online by hand
+   under a different link, `xfix7ee298e757c4`, until 2026-10-07).
+4. **Links expire after 7 days** — students who open a link late see "This link has
+   expired"; the teacher has to Share again.
+5. **Students open files inside Telegram/Instagram viewers** — no microphone there, and
+   iPhones can't open .html files at all. Links (play.html) are the answer; the exercise
+   shows "Open in Chrome" when it detects the problem.
+
+**Less likely (< 20 %) but serious**
+6. **Anyone can change the database.** The security rules need no login: anyone who finds
+   the project id and API key (they are in every exercise file) can **read, create and
+   delete** records in `results` — delete students' results or points, or spam fake results
+   (confirmed 2026-09-30: an unauthenticated REST DELETE worked). Scores are also computed
+   on the student's device, so a clever student could send a fake score. Real fix: Firebase
+   Authentication + stricter rules (a big change; discuss with the teacher first).
+7. **A fake exercise link could run someone else's code on the teacher's site.** Because
+   anyone can create a `TA_SYNC:PLAY` record, someone could make a `play.html?x=…` link with
+   their own page. It runs on the app's own address, so if the **teacher** opened it in the
+   browser where they use the app, it could read the app's saved data in that browser
+   (student list, exercises; synced data is encrypted, but the local copy isn't). Advise:
+   only open exercise links the teacher shared themselves. Fix idea: serve play pages from a
+   separate origin, or check the record was made by this teacher (needs auth).
+8. **Browser storage filling up** (~5–10 MB per site): My Exercises keeps copies of exercise
+   files and builder forms (pictures included). When full, older saved copies are dropped
+   (so "Redownload"/"Use again"/Share-renewal may stop working for old exercises) and, in the
+   worst case, new data can't be saved.
+9. **Forgotten password = synced data can't be read.** Sync is encrypted with a key from the
+   teacher's password; on a new device without the password, cloud copies are unreadable.
+   Remind them to keep a backup file (Settings → Backup) now and then.
+10. **Speech recognition depends on Google's servers** (Chrome's Web Speech API): needs the
+    internet, can be slow or refuse at times; Safari on iPhone works less reliably.
+11. **The site's address must not change.** Renaming the GitHub repo/user, making the repo
+    private (Pages may stop), or a stuck Pages deployment breaks every link and the login
+    animation inside exercise files (the address is written into each file).
+12. **The Firebase SDK is loaded from gstatic.com (version 10.12.5)**; if that URL ever
+    stopped working, results would stop everywhere. Very unlikely.
+13. **Upgrading Firebase to the paid (Blaze) plan** would turn limits into bills — heavy link
+    traffic would then cost money instead of stopping. Warn before any such upgrade; suggest
+    a budget alert.
+14. **Two Claude chats editing at once** → merge conflicts on `main` (it happened once with the
+    `?v=` stamp). Always fetch `main` before merging and re-test after resolving.
+15. **Very long audio in the Dictation builder** (e.g. 30+ min) is shrunk in the teacher's
+    browser; on a weak phone this can take long or crash the tab — suggest a computer.
+16. **Student ID typos / shared IDs**: results then don't match the Students list and are
+    left out of Statistics, Top 5 and "Didn't do it".
+17. **Reminders and notifications only work while the app is open** (no server to push them).
+
 ## How exercise links work (keep this in mind when changing them)
 
 - `js/firebase.js` → `taPublishPlay` writes an exercise as records `play-<uid>`,
