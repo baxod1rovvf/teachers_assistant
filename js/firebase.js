@@ -43,15 +43,18 @@ window.taPublishPlay = async function (uid, html, oldParts) {
   const n = Math.max(1, Math.ceil(html.length / PLAY_CHUNK));
   if (n > 40) return null; // over 12 MB: too big to put online
   const date = new Date().toISOString();
+  const id = i => i ? 'play-' + uid + '-' + i : 'play-' + uid;
   try {
+    // the security rules allow creating and deleting records, not changing them:
+    // a link put online again (renewed, or a new version) first removes its old records
+    for (let i = 0; i < Math.max(n, oldParts || 0); i++) await deleteDoc(doc(db, 'results', id(i))).catch(() => {});
     for (let i = 0; i < n; i++) {
       const part = html.slice(i * PLAY_CHUNK, (i + 1) * PLAY_CHUNK);
-      await setDoc(doc(db, 'results', i ? 'play-' + uid + '-' + i : 'play-' + uid), {
+      await setDoc(doc(db, 'results', id(i)), {
         v: 1, code: 'TAUSER', builtAt: '', type: 'TA_SYNC:PLAY', title: [uid, i, n].join('␟'), name: '', data: part,
         score: part.length, warnings: 0, timeSeconds: 0, timeDisplay: '00:00', date: date
       });
     }
-    for (let i = n; i < (oldParts || 0); i++) await deleteDoc(doc(db, 'results', 'play-' + uid + '-' + i)).catch(() => {});
     return { parts: n, bytes: html.length, date: date };
   } catch (e) { taReportDbError(e); console.error('Putting the exercise online failed:', e); return null; }
 };
