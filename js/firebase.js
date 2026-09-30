@@ -30,6 +30,20 @@ if (db) {
   };
 }
 
+// A pronunciation exercise is also kept online, so students can open it from a
+// web link (play.html?x=<uid>): a phone only lets a page use the microphone
+// when it comes from a real web address, never from a file opened in a chat.
+window.taPublishPlay = async function (uid, html) {
+  if (!db || !uid || !html || html.length > 700000) return false;
+  try {
+    await setDoc(doc(db, 'results', 'play-' + uid), {
+      v: 1, code: 'TAUSER', builtAt: '', type: 'TA_SYNC:PLAY', title: uid, name: '', data: html,
+      score: 0, warnings: 0, timeSeconds: 0, timeDisplay: '00:00', date: new Date().toISOString()
+    });
+    return true;
+  } catch (e) { console.error('Publishing the exercise link failed:', e); return false; }
+};
+
 window.taFetchAccounts = async function () {
   if (!db) return null;
   try {

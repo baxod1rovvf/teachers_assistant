@@ -261,10 +261,17 @@ function deleteRecentExercise(idx) {
    A ready message for Telegram/WhatsApp, the exercise file itself (the
    phone's share sheet where it can send files, otherwise a download), and
    the class code in big numbers for the classroom screen. */
+// Pronunciation needs the microphone, which a phone only allows on a web page:
+// those are shared as a link (opened in Chrome) instead of a file.
+function sharesAsLink(item) { return item && item.typeLabel === 'Pronunciation' && !!taPlayUrl(item.uid); }
 function shareMessageFor(item) {
   const lines = ['📘 ' + item.title + ' (' + item.typeLabel + ')'];
   if (item.requiredCode) lines.push('🔑 Code: ' + item.requiredCode);
-  lines.push('Open the file, type your student ID' + (item.requiredCode ? ' and the code' : '') + ', and start. Good luck! 🍀');
+  if (sharesAsLink(item)) {
+    lines.push('🎤 Open this link in Google Chrome (on an iPhone: Safari) — the microphone only works there:');
+    lines.push(taPlayUrl(item.uid));
+    lines.push('Type your student ID' + (item.requiredCode ? ' and the code' : '') + ', allow the microphone, and start. Good luck! 🍀');
+  } else lines.push('Open the file, type your student ID' + (item.requiredCode ? ' and the code' : '') + ', and start. Good luck! 🍀');
   return lines.join('\n');
 }
 
@@ -289,13 +296,20 @@ function shareRecentExercise(idx) {
       (html ? '<button type="button" class="mini-btn" data-act="file">📎 Send the file</button>' : '') +
       (item.requiredCode ? '<button type="button" class="mini-btn" data-act="code">🔢 Show code on screen</button>' : '') +
     '</div>' +
+    (sharesAsLink(item) ? '<p class="ta-modal-text">🎤 <b>Pronunciation needs the microphone</b>, and a phone only allows it on a web page — so the message has a <b>link</b> for students to open in Chrome. Send the message rather than the file.</p>' : '') +
     '<p class="ta-modal-text">' + (html
       ? 'On a phone, <b>Send the file</b> opens Telegram, WhatsApp and the rest with the file and message attached. On a computer it downloads the file for you to attach.'
       : 'This file isn\'t saved in this browser any more, so only the message can be shared. Send the file you downloaded when you made it.') + '</p>',
     { wide: true });
   const msgEl = m.body.querySelector('.share-msg');
   msgEl.value = shareMessageFor(item);
-  m.body.querySelector('[data-act="copy"]').onclick = () => taCopyText(msgEl.value, 'Message copied — paste it into your class chat.');
+  // a pronunciation exercise made before links existed is put online now
+  let online = Promise.resolve(true);
+  if (sharesAsLink(item) && !item.playPublished) {
+    online = html ? taPublishPlayable(item.uid, html) : Promise.resolve(false);
+    online.then(ok => { if (!ok) showToast(html ? 'Couldn\'t put the exercise online — check the internet and try again.' : 'This exercise isn\'t saved in this browser, so its link can\'t be made. Create it again.'); });
+  }
+  m.body.querySelector('[data-act="copy"]').onclick = () => online.then(() => taCopyText(msgEl.value, 'Message copied — paste it into your class chat.'));
   const fileBtn = m.body.querySelector('[data-act="file"]');
   if (fileBtn) fileBtn.onclick = async () => {
     const filename = item.title.replace(/[^a-z0-9\-_ ]/gi, '').trim().replace(/\s+/g, '_') + '.html';
