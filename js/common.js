@@ -1533,6 +1533,72 @@ function markReminderShown(key) {
     }
   } catch (e) { /* ignore */ }
 }
+/* ---- Ready: the teacher marks each coming lesson as prepared ----
+   (the lesson itself is planned elsewhere). Kept per lesson date, per
+   account, and synced (ta_lessons_ready). */
+const LS_LESSONS_READY = 'ta_lessons_ready';
+const LS_READY_REMINDED = 'ta_ready_reminded_at'; // this device: when it last reminded
+const TA_READY_EVERY_MS = 2 * 60 * 60 * 1000;
+function taLessonKey(entry, date) { return entry.id + '_' + date.toISOString(); }
+function getReadyLessons() {
+  try { return JSON.parse(localStorage.getItem(LS_LESSONS_READY) || '[]'); } catch (e) { return []; }
+}
+function isLessonReady(entry, date) { return getReadyLessons().indexOf(taLessonKey(entry, date)) !== -1; }
+function setLessonReady(key, on) {
+  let list = getReadyLessons().filter(k => k !== key);
+  if (on) list.push(key);
+  // only keep the last few weeks
+  const cutoff = Date.now() - 21 * 86400000;
+  list = list.filter(k => { const t = Date.parse(k.slice(k.indexOf('_') + 1)); return !t || t > cutoff; });
+  try { localStorage.setItem(LS_LESSONS_READY, JSON.stringify(list)); } catch (e) { /* ignore */ }
+  if (window.renderNextLessons && document.getElementById('mainLessonsList')) window.renderNextLessons();
+  const box = document.getElementById('taLessonWarn');
+  if (box && box.classList.contains('show')) {
+    box.querySelectorAll('.lesson-ready-btn').forEach(b => { if (b.dataset.key === key) { b.classList.toggle('on', on); b.textContent = on ? '✅ Ready' : 'Ready'; } });
+  }
+}
+window.setLessonReady = setLessonReady;
+function taReadyButtonHtml(entry, date) {
+  const key = taLessonKey(entry, date), on = isLessonReady(entry, date);
+  return '<button class="lesson-ready-btn' + (on ? ' on' : '') + '" type="button" data-key="' + escapeForHtml(key) + '"' +
+    ' onclick="event.stopPropagation(); setLessonReady(this.dataset.key, !this.classList.contains(\'on\'))"' +
+    ' title="' + (on ? 'Ready — tap to undo' : 'Tap when this lesson is prepared') + '">' + (on ? '✅ Ready' : 'Ready') + '</button>';
+}
+// Lessons in the next 24 hours that aren't marked ready yet.
+function getUnreadyLessons() { return getUpcomingReminders().filter(r => !isLessonReady(r.entry, r.date)); }
+/* Every 2 hours (checked every few minutes while the site is open), a lesson
+   in the next 24 hours that isn't ready brings the warning back, and a
+   system notification too when they're allowed. */
+function taReadyReminderCheck() {
+  if (!window.__TA_USER) return;
+  const list = getUnreadyLessons();
+  if (!list.length) return;
+  let last = 0;
+  try { last = +localStorage.getItem(LS_READY_REMINDED) || 0; } catch (e) { /* ignore */ }
+  if (Date.now() - last < TA_READY_EVERY_MS) return;
+  try { localStorage.setItem(LS_READY_REMINDED, String(Date.now())); } catch (e) { /* ignore */ }
+  showLessonWarning(list, true);
+  taSystemNotify('📋 ' + (list.length === 1 ? 'A lesson isn\'t' : list.length + ' lessons aren\'t') + ' ready yet',
+    list.map(r => (r.entry.group || 'Lesson') + ' — ' + SCHEDULE_DAY_SHORT[r.date.getDay()] + ' ' + formatTimeDisplay(r.entry.time) + ' (' + formatTimeUntil(r.date) + ')').join('\n'));
+}
+window.taReadyReminderCheck = taReadyReminderCheck;
+function taSystemNotify(title, body) {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  const opts = { body: body, icon: 'images/app/icon-ta-192.png', tag: 'ta-lessons-ready' };
+  // phones only show notifications through the service worker
+  if (navigator.serviceWorker && navigator.serviceWorker.ready) {
+    navigator.serviceWorker.ready.then(reg => reg.showNotification(title, opts)).catch(() => { try { new Notification(title, opts); } catch (e) { /* ignore */ } });
+  } else { try { new Notification(title, opts); } catch (e) { /* ignore */ } }
+}
+function taAskNotifications(btn) {
+  if (!('Notification' in window)) { showToast('This browser can\'t show notifications.'); return; }
+  Notification.requestPermission().then(p => {
+    if (btn) btn.remove();
+    showToast(p === 'granted' ? '🔔 Notifications on — you\'ll be reminded about lessons that aren\'t ready.' : 'Notifications stay off. You can allow them in the browser\'s site settings.', p === 'granted' ? 'ok' : undefined);
+  });
+}
+window.taAskNotifications = taAskNotifications;
+
 /* Opening the site warns about every lesson in the next 24 hours; while it
    stays open, a lesson that newly comes within 24 hours is warned about once.
    The warning sits in the top-right corner and goes away after 5 seconds. */
@@ -1552,9 +1618,12 @@ function showReminderToastIfDue() {
   if (!list.length) return;
   list.forEach(r => markReminderShown(key(r)));
   showLessonWarning(list);
+  // opening the site counts as a reminder: the next one about unready lessons comes 2 hours later
+  if (getUnreadyLessons().length) { try { localStorage.setItem(LS_READY_REMINDED, String(Date.now())); } catch (e) { /* ignore */ } }
 }
 let taLessonWarnTimer = 0;
-function showLessonWarning(list) {
+// notReady: the every-2-hours reminder about lessons not marked ready yet
+function showLessonWarning(list, notReady) {
   let box = document.getElementById('taLessonWarn');
   if (!box) {
     box = document.createElement('div');
@@ -1563,7 +1632,10 @@ function showLessonWarning(list) {
     box.setAttribute('role', 'status');
     taNoticeStack().prepend(box);
   }
-  box.innerHTML = '<div class="lesson-warn-head"><span>⏰ ' + (list.length === 1 ? 'A lesson' : list.length + ' lessons') + ' in the next 24 hours</span>' +
+  const n = list.length;
+  box.innerHTML = '<div class="lesson-warn-head"><span>' + (notReady
+      ? '📋 ' + (n === 1 ? 'A lesson isn\'t' : n + ' lessons aren\'t') + ' ready yet'
+      : '⏰ ' + (n === 1 ? 'A lesson' : n + ' lessons') + ' in the next 24 hours') + '</span>' +
       '<button type="button" class="lesson-warn-close" aria-label="Close">✕</button></div>' +
     list.map(r => {
       const palette = lessonColorForId(r.entry.id);
@@ -1572,8 +1644,11 @@ function showLessonWarning(list) {
         '<div class="lesson-warn-main"><b>' + escapeForHtml(r.entry.group || 'Lesson') + '</b>' +
           '<small>' + SCHEDULE_DAY_SHORT[r.date.getDay()] + ' ' + formatTimeDisplay(r.entry.time) + (r.entry.level ? ' · ' + escapeForHtml(r.entry.level) : '') + '</small></div>' +
         '<span class="lesson-warn-when">' + formatTimeUntil(r.date) + '</span>' +
+        taReadyButtonHtml(r.entry, r.date) +
       '</div>';
     }).join('') +
+    ('Notification' in window && Notification.permission === 'default' && list.some(r => !isLessonReady(r.entry, r.date))
+      ? '<button type="button" class="lesson-warn-notify" onclick="taAskNotifications(this)">🔔 Also remind me with notifications</button>' : '') +
     '<div class="lesson-warn-bar"></div>';
   const hide = () => { box.classList.remove('show'); clearTimeout(taLessonWarnTimer); };
   box.querySelector('.lesson-warn-close').onclick = hide;
@@ -1737,7 +1812,7 @@ function renderLessonRow(o) {
     '<div class="lesson-time-col"><div class="lesson-time-val">' + formatTimeDisplay(o.entry.time) + '</div><div class="lesson-day-val">' + SCHEDULE_DAY_SHORT[o.date.getDay()] + '</div>' + soonBadge + '</div>' +
     '<div class="lesson-group-col"><img class="lesson-group-icon icon-mono" src="images/icons/students.png" alt=""><b>' + escapeForHtml(o.entry.group || 'Untitled group') + '</b></div>' +
     '<div class="lesson-level-col">' + levelPill + '</div>' +
-    '<button class="lesson-plan-btn" type="button" onclick="openLessonPlanModal(' + jsAttr(o.entry.id) + ')">📝 Plan</button>' +
+    taReadyButtonHtml(o.entry, o.date) +
   '</div>';
 }
 
@@ -2785,6 +2860,7 @@ function taStartPage(defaultTab) {
      soon" badges stay accurate even if the app is left open across the 24h boundary. */
   setInterval(function () {
     showReminderToastIfDue();
+    taReadyReminderCheck();
     if (currentActiveTab === 'main') renderNextLessons();
   }, 5 * 60 * 1000);
 
