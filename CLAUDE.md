@@ -107,6 +107,15 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
     left out of Statistics, Top 5 and "Didn't do it".
 17. **Reminders and notifications only work while the app is open** (no server to push them).
 
+## Automatic tests — run them before every merge
+
+`npm test` (Playwright, `tests/*.spec.js`, ~40 s; see `tests/README.md`). In this cloud
+environment: `npm install` then `PW_CHROMIUM=/opt/pw-browsers/chromium npx playwright test`.
+They also run on GitHub for every push (`.github/workflows/tests.yml`). **Run them before
+merging into `main`, and don't merge while any fail.** When you add or change a feature, add
+or update a test for it. The tests use a stand-in database and a made-up class — never put
+real students' names or results into the repository (it is public).
+
 ## Results kept on the device (keep this in mind when changing how results load)
 
 - `js/firebase.js` keeps every result it has read in IndexedDB (`ta_results_cache…`, per
