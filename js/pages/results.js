@@ -78,8 +78,22 @@ function renderHwcResultsList() {
   }
   if (!docs.length) { wrap.innerHTML = '<p class="empty-results">No students have finished an exercise of this set yet. Their progress shows here as soon as they finish the first one.</p>'; return; }
 
+  // each student's answers to the set's exercises (for Checked / Not checked)
+  const norm = x => String(x || '').trim().toLowerCase();
+  const answersFor = d => {
+    const codes = new Set((d.roundCodes || []).filter(Boolean));
+    return (window.__allResults || []).filter(r => r && codes.has(r.code) &&
+      ((d.studentId && norm(r.studentId) === norm(d.studentId)) || norm(r.name) === norm(d.studentName) || (d.studentId && norm(r.name) === norm(d.studentId))));
+  };
+  const checkedSet = new Set(getCheckedCompletions());
   wrap.innerHTML = docs.map(d => {
     const done = d.completedCount === d.totalCount && d.totalCount > 0;
+    const answers = answersFor(d);
+    const unchecked = answers.filter(r => !checkedSet.has(taCompletionKey(r)));
+    const checkHtml = answers.length
+      ? taCheckChipHtml((unchecked.length ? unchecked : answers).map(taCompletionKey), !unchecked.length,
+          unchecked.length ? '○ ' + unchecked.length + ' to check' : '✓ Checked')
+      : '';
     const startedNone = d.completedCount === 0;
     const pct = d.totalCount ? Math.round((d.completedCount / d.totalCount) * 100) : 0;
     let statusLabel, pillBg, pillColor, barColor;
@@ -105,9 +119,14 @@ function renderHwcResultsList() {
     const roundsHtml = isExpanded ? (d.roundLabels || []).map((label, i) => {
       const roundDone = !!(d.completedFlags && d.completedFlags[i]);
       const roundCode = (d.roundCodes && d.roundCodes[i]) || '';
+      const roundAnswers = answers.filter(r => r.code === roundCode);
+      const roundChecked = roundAnswers.length && roundAnswers.every(r => checkedSet.has(taCompletionKey(r)));
       return '<div class="hwc-round-row">' +
         '<span>' + (roundDone ? '\u2713' : '\u2717') + ' ' + escapeForHtml(label) + '</span>' +
-        (roundDone && roundCode ? '<button class="mini-btn" type="button" onclick="viewHwcRoundAnswer(' + jsAttr(roundCode) + ',' + jsAttr(d.studentName) + ',' + jsAttr(label) + ',' + jsAttr(d.studentId || '') + ')">\ud83d\udc41</button>' : '') +
+        '<span class="hwc-round-actions">' +
+          (roundAnswers.length ? taCheckChipHtml(roundAnswers.map(taCompletionKey), roundChecked) : '') +
+          (roundDone && roundCode ? '<button class="mini-btn" type="button" onclick="viewHwcRoundAnswer(' + jsAttr(roundCode) + ',' + jsAttr(d.studentName) + ',' + jsAttr(label) + ',' + jsAttr(d.studentId || '') + ')">\ud83d\udc41</button>' : '') +
+        '</span>' +
         '</div>';
     }).join('') : '';
 
@@ -119,7 +138,7 @@ function renderHwcResultsList() {
           '<span>' + fractionText + ' \u00b7 ' + pct + '%</span>' +
           '<div class="res-score-bar-track"><div class="res-score-bar-fill" style="width:' + pct + '%; background:' + barColor + ';"></div></div>' +
         '</div>' +
-        '<div class="hwc-col-status"><span class="res-status-pill" style="background:' + pillBg + '; color:' + pillColor + ';">' + statusLabel + '</span></div>' +
+        '<div class="hwc-col-status"><span class="res-status-pill" style="background:' + pillBg + '; color:' + pillColor + ';">' + statusLabel + '</span>' + checkHtml + '</div>' +
         totalTimeHtml +
         '<span class="hwc-time">' + formatRelativeTime(d.lastActive) + '</span>' +
         '<span class="hwc-chevron">' + (isExpanded ? '\u25b2' : '\u25bc') + '</span>' +
@@ -147,7 +166,7 @@ async function viewHwcRoundAnswer(roundCode, studentName, roundLabel, studentId)
     body.innerHTML = '<div class="empty-results">No result found for this exercise yet.</div>';
   } else {
     const lines = [];
-    if (typeof result.score !== 'undefined') lines.push('<div><b>Score:</b> ' + escapeForHtml(String(result.score)) + '</div>');
+    if (typeof result.score !== 'undefined') lines.push('<div><b>Score:</b> ' + escapeForHtml(String(taResultScore(result))) + '</div>');
     if (result.timeDisplay) lines.push('<div><b>Time:</b> ' + escapeForHtml(result.timeDisplay) + '</div>');
     if (result.dictationFeedback) { lines.push(taDictationAnswerHtml(result)); modal.classList.add('wide'); }
     // Sentences: the student's own written sentence for each word, and the teacher's rating.
@@ -398,9 +417,9 @@ function renderResultsTable(codeOverride) {
   const idMatches = matches.filter(r => rosterOf.get(r));
   const nameMatches = matches.filter(r => !rosterOf.get(r));
 
-  const scored = idMatches.filter(r => typeof r.score === 'number');
-  const avgScore = scored.length ? (scored.reduce((a, r) => a + r.score, 0) / scored.length).toFixed(1) : null;
-  const highScore = scored.length ? Math.max.apply(null, scored.map(r => r.score)) : null;
+  const scored = idMatches.filter(r => typeof taResultScore(r) === 'number');
+  const avgScore = scored.length ? (scored.reduce((a, r) => a + taResultScore(r), 0) / scored.length).toFixed(1) : null;
+  const highScore = scored.length ? Math.max.apply(null, scored.map(r => taResultScore(r))) : null;
   const timed = idMatches.filter(r => typeof r.timeSeconds === 'number');
   const avgTime = timed.length ? Math.round(timed.reduce((a, r) => a + r.timeSeconds, 0) / timed.length) : null;
   const avgTimeDisplay = avgTime !== null ? (String(Math.floor(avgTime / 60)).padStart(2, '0') + ':' + String(avgTime % 60).padStart(2, '0')) : '—';
@@ -436,7 +455,7 @@ function renderResultsTable(codeOverride) {
 
   const tableFor = function (rows) {
     let html = '<table class="results-table"><thead><tr>' +
-      '<th>Student</th><th>Exercise</th><th>Score</th><th>Time</th><th>Status</th><th>Date</th><th></th>' +
+      '<th>Student</th><th>Exercise</th><th>Score</th><th>Time</th><th>Checked</th><th>Date</th><th></th>' +
       '</tr></thead><tbody>';
     rows.forEach(function (o) {
       const r = o.r, idx = o.i;
@@ -454,11 +473,11 @@ function renderResultsTable(codeOverride) {
       const initials = initialsForName(r.name);
       const avatarColor = avatarColorForName(r.name || '');
       let scoreCell;
-      if (typeof r.score === 'number') {
-        const pct = Math.max(0, Math.min(100, r.score));
+      if (typeof taResultScore(r) === 'number') {
+        const pct = Math.max(0, Math.min(100, taResultScore(r)));
         const barColor = pct >= 80 ? 'var(--success)' : (pct >= 50 ? 'var(--warning)' : 'var(--danger)');
         scoreCell = '<div class="res-score-cell">' +
-          '<span>' + r.score + '%</span>' +
+          '<span>' + taResultScore(r) + '%</span>' +
           '<div class="res-score-bar-track"><div class="res-score-bar-fill" style="width:' + pct + '%; background:' + barColor + ';"></div></div>' +
           '</div>';
       } else {
@@ -469,7 +488,7 @@ function renderResultsTable(codeOverride) {
         '<td><span class="badge-type">' + escapeForHtml(r.type || '—') + '</span></td>' +
         '<td>' + scoreCell + '</td>' +
         '<td>' + escapeForHtml(r.timeDisplay || '—') + '</td>' +
-        '<td><span class="res-status-pill">✅ Completed</span></td>' +
+        '<td>' + taCheckChipHtml([taCompletionKey(r)], taIsChecked(r)) + '</td>' +
         '<td>' + fmtDate(r.date) + '</td>' +
         '<td>' + viewBtn + '</td>' +
         '</tr>';
@@ -502,8 +521,8 @@ function exportResultsReport() {
     .map(o => { o.r.__entered = o.st ? ('ID ' + o.st.id + (groupNameFor(o.st.group) ? ' · ' + groupNameFor(o.st.group) : '')) : 'Name only'; return o.r; });
   if (matches.length === 0) { showToast('No results to export for this code yet.'); return; }
 
-  const scored = matches.filter(r => typeof r.score === 'number');
-  const avgScore = scored.length ? (scored.reduce((a, r) => a + r.score, 0) / scored.length).toFixed(1) : null;
+  const scored = matches.filter(r => typeof taResultScore(r) === 'number');
+  const avgScore = scored.length ? (scored.reduce((a, r) => a + taResultScore(r), 0) / scored.length).toFixed(1) : null;
   const timed = matches.filter(r => typeof r.timeSeconds === 'number');
   const avgTime = timed.length ? Math.round(timed.reduce((a, r) => a + r.timeSeconds, 0) / timed.length) : null;
   const avgTimeDisplay = avgTime !== null ? (String(Math.floor(avgTime / 60)).padStart(2, '0') + ':' + String(avgTime % 60).padStart(2, '0')) : '—';
@@ -513,7 +532,7 @@ function exportResultsReport() {
     '<td>' + escapeForHtml(r.name || '—') + '</td>' +
     '<td>' + escapeForHtml(r.__entered || '') + '</td>' +
     '<td>' + escapeForHtml(r.type || '—') + '</td>' +
-    '<td>' + (typeof r.score === 'number' ? r.score : (r.wordsLearned ? r.wordsLearned + ' words' : '—')) + '</td>' +
+    '<td>' + (typeof taResultScore(r) === 'number' ? taResultScore(r) : (r.wordsLearned ? r.wordsLearned + ' words' : '—')) + '</td>' +
     '<td>' + escapeForHtml(r.timeDisplay || '—') + '</td>' +
     '<td>' + fmtDate(r.date) + '</td>' +
     '</tr>'
@@ -575,8 +594,8 @@ function exportResultsCsv() {
       st ? groupNameFor(st.group) : '',
       r.title || '',
       r.type || '',
-      typeof r.score === 'number' ? r.score : '',
-      typeof r.score === 'number' ? '' : (r.sentenceCount ? r.sentenceCount + ' sentences' : (r.wordsLearned ? r.wordsLearned + ' words' : '')),
+      typeof taResultScore(r) === 'number' ? taResultScore(r) : '',
+      typeof taResultScore(r) === 'number' ? '' : (r.sentenceCount ? r.sentenceCount + ' sentences' : (r.wordsLearned ? r.wordsLearned + ' words' : '')),
       r.timeDisplay || '',
       when(r.date)
     ].map(cell).join(','));

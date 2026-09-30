@@ -1311,6 +1311,18 @@ body.glass-ui .done-warn { border-left-color: var(--success); }
 .done-warn-foot .done-warn-all { border-color: var(--success); background: var(--success); color: var(--on-success); }
 .done-warn-foot button:hover { filter: brightness(1.08); border-color: var(--brand); }
 
+/* Results: whether the teacher has checked a student's answers */
+.check-chip {
+  border: 1.5px solid var(--border); background: var(--surface-sunken); color: var(--ink-soft); white-space: nowrap;
+  font: 700 0.74rem 'Inter', sans-serif; padding: 4px 10px; border-radius: 999px; cursor: pointer;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.check-chip:hover { border-color: var(--success); color: var(--success); }
+.check-chip.on { border-color: var(--success); background: var(--success-surface); color: var(--success); }
+.hwc-col-status { gap: 6px; flex-wrap: wrap; align-items: center; }
+.hwc-round-actions { display: inline-flex; align-items: center; gap: 8px; }
+.hwc-round-row .check-chip { font-size: 0.74rem; padding: 4px 10px; }
+
 /* ---------- Toast ---------- */
 .toast {
   position: fixed; top: 24px; left: 50%; transform: translate(-50%, -140%) scale(0.92);
@@ -1918,7 +1930,9 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 .dd-chip.ok { background: var(--success-surface); color: var(--success); }
 .dd-chip.wrong { background: var(--danger-surface); color: var(--danger); }
 .dd-chip.missing { background: rgba(211,147,34,0.16); color: #C98A1C; }
-.dd-chip.extra { background: var(--surface-sunken); color: var(--ink-soft); }
+.dd-chip.extra { background: var(--danger-surface); color: var(--danger); }
+.dd-chip.mistakes { background: var(--surface-sunken); color: var(--ink); }
+.dd-extra-in { color: var(--danger); text-decoration: line-through; text-decoration-thickness: 2px; background: var(--danger-surface); padding: 1px 6px; border-radius: 6px; }
 .dd-legend { font-size: 0.76rem; color: var(--ink-faint); }
 .dd-text { font-size: 1.02rem; line-height: 2.4; color: var(--ink); padding: 6px 2px; }
 .dd-ok { color: var(--ink); }

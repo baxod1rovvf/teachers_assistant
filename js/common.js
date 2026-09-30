@@ -1237,6 +1237,31 @@ function taDictParseFeedback(text) {
   }
   return ops;
 }
+// A dictation's word-by-word check (null for fill-in-the-blanks or no answer).
+function taDictationOps(r) {
+  const fb = String(r.dictationFeedback || '');
+  if (typeof r.referenceText === 'string' && typeof r.studentText === 'string') return taDictDiff(r.referenceText, r.studentText);
+  if (!fb || /^[✓✗] Blank \d+:/m.test(fb)) return null;
+  // Older results: their feedback line was made with the old word pairing ("weeks -> Sarah").
+  // It still holds both texts, so rebuild them and check them again the new way.
+  const old = taDictParseFeedback(fb);
+  const refText = old.filter(o => o.type !== 'extra').map(o => o.ref).join(' ');
+  const stuText = old.filter(o => o.type !== 'missing').map(o => o.type === 'ok' ? o.ref : o.student).join(' ');
+  return taDictDiff(refText, stuText);
+}
+/* A result's score. A dictation's is worked out again here so that extra words
+   count as mistakes (correct words out of the text's words plus the extras):
+   older exercise files only divided by the text's words, so a student who typed
+   the text twice still got 100%. */
+function taResultScore(r) {
+  if (!r || r.type !== 'Dictation') return r ? r.score : undefined;
+  const ops = taDictationOps(r);
+  if (!ops) return r.score;
+  const correct = ops.filter(o => o.type === 'ok').length;
+  const total = ops.length; // every word of the text, plus every extra word
+  return total ? Math.round(correct / total * 100) : (typeof r.score === 'number' ? r.score : 0);
+}
+window.taResultScore = taResultScore;
 function taDictationAnswerHtml(r) {
   const esc = escapeForHtml;
   const fb = String(r.dictationFeedback || '');
@@ -1252,18 +1277,9 @@ function taDictationAnswerHtml(r) {
         '</div>';
     }).join('') + '</div>';
   }
-  let ops;
-  if (typeof r.referenceText === 'string' && typeof r.studentText === 'string') ops = taDictDiff(r.referenceText, r.studentText);
-  else {
-    // Older results: their feedback line was made with the old word pairing ("weeks -> Sarah").
-    // It still holds both texts, so rebuild them and check them again the new way.
-    const old = taDictParseFeedback(fb);
-    const refText = old.filter(o => o.type !== 'extra').map(o => o.ref).join(' ');
-    const stuText = old.filter(o => o.type !== 'missing').map(o => o.type === 'ok' ? o.ref : o.student).join(' ');
-    ops = taDictDiff(refText, stuText);
-  }
+  const ops = taDictationOps(r) || [];
   const count = t => ops.filter(o => o.type === t).length;
-  const extras = ops.filter(o => o.type === 'extra').map(o => o.student);
+  const mistakes = count('wrong') + count('missing') + count('extra');
   let text = '', missedRun = [];
   const flush = () => { if (missedRun.length) { text += '<span class="dd-missing" title="Missed">' + esc(missedRun.join(' ')) + '</span> '; missedRun = []; } };
   ops.forEach(o => {
@@ -1271,17 +1287,19 @@ function taDictationAnswerHtml(r) {
     flush();
     if (o.type === 'ok') text += '<span class="dd-ok">' + esc(o.ref) + '</span> ';
     else if (o.type === 'wrong') text += '<ruby class="dd-wrong">' + esc(o.ref) + '<rt>' + esc(o.student) + '</rt></ruby> ';
+    // an extra word stays exactly where the student typed it, crossed out
+    else if (o.type === 'extra') text += '<span class="dd-extra-in" title="Extra word — counts as a mistake">' + esc(o.student) + '</span> ';
   });
   flush();
   return '<div class="dd-summary">' +
       '<span class="dd-chip ok">✓ ' + count('ok') + ' correct</span>' +
       '<span class="dd-chip wrong">✗ ' + count('wrong') + ' wrong</span>' +
-      '<span class="dd-chip missing">○ ' + ops.filter(o => o.type === 'missing').length + ' missed</span>' +
-      (extras.length ? '<span class="dd-chip extra">+ ' + extras.length + ' extra</span>' : '') +
+      '<span class="dd-chip missing">○ ' + count('missing') + ' missed</span>' +
+      '<span class="dd-chip extra">+ ' + count('extra') + ' extra</span>' +
+      '<span class="dd-chip mistakes">' + mistakes + ' mistake' + (mistakes === 1 ? '' : 's') + ' · ' + taResultScore(r) + '%</span>' +
     '</div>' +
-    '<div class="dd-legend"><ruby class="dd-wrong">right<rt>typed</rt></ruby> a wrong word · <span class="dd-missing">faded</span> missed words</div>' +
+    '<div class="dd-legend"><ruby class="dd-wrong">right<rt>typed</rt></ruby> a wrong word · <span class="dd-missing">faded</span> missed words · <span class="dd-extra-in">crossed</span> extra words the student added (each one is a mistake)</div>' +
     '<div class="dd-text">' + text + '</div>' +
-    (extras.length ? '<div class="dd-extras"><b>Extra words the student added:</b> ' + extras.map(w => '<span class="dd-extra-word">' + esc(w) + '</span>').join(' ') + '</div>' : '') +
     (typeof r.studentText === 'string' ? '<details class="dd-typed"><summary>What the student typed</summary><div>' + esc(r.studentText || '(nothing)') + '</div></details>' : '');
 }
 
@@ -1292,7 +1310,8 @@ function viewDictationResult(idx) {
   const title = document.getElementById('sentenceViewTitle');
   const body = document.getElementById('sentenceViewBody');
   if (!modal || !title || !body) return;
-  title.textContent = (r.name || 'Student') + ' — ' + (r.title || 'Dictation') + ' (' + (typeof r.score === 'number' ? r.score + '%' : '—') + ')';
+  const score = taResultScore(r);
+  title.textContent = (r.name || 'Student') + ' — ' + (r.title || 'Dictation') + ' (' + (typeof score === 'number' ? score + '%' : '—') + ')';
   body.innerHTML = r.dictationFeedback ? taDictationAnswerHtml(r) : '<div class="empty-results">(no details)</div>';
   modal.classList.add('show', 'wide');
 }
@@ -1567,6 +1586,30 @@ function markCompletionsChecked(keys) {
   keys.forEach(k => { if (!have.has(k)) { list.push(k); have.add(k); } });
   try { localStorage.setItem(LS_CHECKED_COMPLETIONS, JSON.stringify(list.slice(-3000))); } catch (e) { /* ignore */ }
 }
+function unmarkCompletionsChecked(keys) {
+  const drop = new Set(keys);
+  try { localStorage.setItem(LS_CHECKED_COMPLETIONS, JSON.stringify(getCheckedCompletions().filter(k => !drop.has(k)))); } catch (e) { /* ignore */ }
+}
+// Results: tick a student's answers as checked (or back to not checked). The
+// same list stops the "finished exercises" warning, so both stay in step.
+function taSetChecked(keys, on) {
+  if (on) markCompletionsChecked(keys); else unmarkCompletionsChecked(keys);
+  if (window.renderResultsTable && document.getElementById('resultsTableWrap')) window.renderResultsTable();
+  if (window.renderHwcResultsList) window.renderHwcResultsList();
+  const box = document.getElementById('taDoneWarn');
+  if (box && box.classList.contains('show')) showCompletionsWarning(getUncheckedCompletions());
+}
+window.taSetChecked = taSetChecked;
+function taIsChecked(r) { return getCheckedCompletions().indexOf(taCompletionKey(r)) !== -1; }
+window.taIsChecked = taIsChecked;
+// the ✓ Checked / ○ Not checked button shown next to a result
+function taCheckChipHtml(keys, checked, label) {
+  return '<button type="button" class="check-chip' + (checked ? ' on' : '') + '" data-keys="' + escapeForHtml(JSON.stringify(keys)).replace(/"/g, '&quot;') + '"' +
+    ' onclick="event.stopPropagation(); taSetChecked(JSON.parse(this.dataset.keys), ' + (!checked) + ')"' +
+    ' title="' + (checked ? 'Checked — tap to mark as not checked' : 'Not checked yet — tap when you have checked it') + '">' +
+    (label || (checked ? '✓ Checked' : '○ Not checked')) + '</button>';
+}
+window.taCheckChipHtml = taCheckChipHtml;
 function taCompletionKey(r) { return r.code + '|' + String(r.studentId || r.name || '').trim().toLowerCase() + '|' + (r.date || ''); }
 // Unchecked completions from the last week, grouped by student, newest first.
 function getUncheckedCompletions() {

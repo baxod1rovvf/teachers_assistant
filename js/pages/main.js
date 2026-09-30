@@ -75,8 +75,8 @@ function performanceScores(results) {
     } else if (type === 'Sentences') {
       const stars = sentenceRatingFor(r);
       if (stars) out.push({ r: r, score: stars * 20 });
-    } else if (typeof r.score === 'number') {
-      out.push({ r: r, score: Math.max(0, Math.min(100, r.score)) });
+    } else if (typeof taResultScore(r) === 'number') {
+      out.push({ r: r, score: Math.max(0, Math.min(100, taResultScore(r))) });
     }
   });
   Object.keys(byCode).forEach(k => {
