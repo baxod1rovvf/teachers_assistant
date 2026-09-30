@@ -2914,8 +2914,32 @@ function addSnWordFilled(text) {
   input.value = text;
 }
 
+// The picture students write about: kept (resized) in a hidden field, so drafts,
+// "Use again" and Homework/Class sets keep it like the rest of the form.
+function setSnPicture(src) {
+  const field = document.getElementById('sn-picture');
+  if (field) field.value = src || '';
+  renderSnPicture();
+}
+function renderSnPicture() {
+  const src = (document.getElementById('sn-picture') || {}).value || '';
+  const img = document.getElementById('sn-picture-preview');
+  if (img) { img.src = src; img.style.display = src ? '' : 'none'; }
+  const pick = document.getElementById('sn-picture-pick');
+  if (pick) pick.textContent = src ? '🖼️ Change picture' : '🖼️ Add a picture';
+  const rm = document.getElementById('sn-picture-remove');
+  if (rm) rm.style.display = src ? '' : 'none';
+}
+document.getElementById('sn-picture-input').addEventListener('change', function (e) {
+  const file = e.target.files && e.target.files[0];
+  e.target.value = '';
+  if (file) taShrinkImage(file, setSnPicture);
+});
+document.getElementById('sn-picture').addEventListener('change', renderSnPicture);
+
 function resetSentencesForm() {
   document.getElementById('sn-title').value = '';
+  setSnPicture('');
   const snIns = document.getElementById('sn-instructions'); if (snIns) snIns.value = '';
   const snPts = document.getElementById('sn-points'); if (snPts) snPts.value = '10';
   const snCount = document.getElementById('sn-count'); if (snCount) snCount.value = '5';
@@ -2937,8 +2961,9 @@ function createSentences() {
   const instructions = (document.getElementById('sn-instructions').value || '').trim();
   const count = Math.max(1, Math.min(30, parseInt(document.getElementById('sn-count').value, 10) || 5));
 
-  if (words.length === 0 && !instructions) {
-    showToast('Add some words, or write instructions for a free-writing exercise.');
+  const picture = (document.getElementById('sn-picture') || {}).value || '';
+  if (words.length === 0 && !instructions && !picture) {
+    showToast('Add some words, a picture, or write instructions for a free-writing exercise.');
     return;
   }
 
@@ -2968,6 +2993,7 @@ function createSentences() {
   html = html.split('__BOARD_CODE__').join(getPointsBoardCode());
   html = html.split('__ROSTER_JSON__').join(JSON.stringify(getPointsRoster()));
   html = html.split('__POINTS_TYPE_LABEL__').join('Sentences');
+  html = html.split('__PICTURE_SRC__').join(/^data:image\/[a-z+]+;base64,[A-Za-z0-9+/=]+$/.test(picture) ? picture : '');
 
   pushRecentExercise({ title: title, typeLabel: 'Sentences', code: classCode, uid: __sn_uid, html: html, requiredCode: __requiredCode_sn, contentSummary: (words.length ? words.join('\n') : instructions) });
   downloadFile(typedFilename('Sentences', title, 'sentences'), html);
@@ -4414,6 +4440,8 @@ function taRestoreBuilder(tab, state) {
   });
   // Selects that show or hide other settings (design, quiz mode, number of options…)
   changed.forEach(el => el.dispatchEvent(new Event('change')));
+  // hidden fields (like the Sentences picture) update what shows them
+  Object.keys(fields).forEach(id => { const el = document.getElementById(id); if (el && el.type === 'hidden') el.dispatchEvent(new Event('change')); });
   TA_BUILDER_ROWS[tab].set(state.rows);
 }
 
