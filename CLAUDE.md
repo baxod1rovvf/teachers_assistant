@@ -38,6 +38,8 @@ before or alongside the first task** (they asked for this so they don't forget):
   the sync record shape (`code: 'TAUSER'`, `type: 'TA_SYNC:PLAY'`) because the security rules
   only allow certain record shapes — a different `type`/`code` is refused (403).
   `title` = `uid␟part␟total`, `score` = characters in that part, `date` = when published.
+  **The rules allow creating and deleting records but not changing them** (a PATCH/`setDoc`
+  on an existing record is refused, 403) — so re-publishing deletes the old records first.
 - `js/common.js` → `pushRecentExercise` puts every new exercise online 5 s after it's made;
   `taPublishPlayable` records `playAt`/`playParts`/`playBytes` on the My Exercises item;
   Share (`js/pages/my-exercises.js`) renews a link that expired. Exercises merged into a
