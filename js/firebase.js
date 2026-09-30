@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getFirestore, collection, query, where, onSnapshot, getDocs, deleteDoc, updateDoc, doc, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, collection, query, where, onSnapshot, getDocs, deleteDoc, updateDoc, doc, addDoc, setDoc, serverTimestamp, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCefg2YghdSneABh0ZOUu3-snO4soVw0lA",
@@ -107,9 +107,120 @@ window.taFetchAccounts = async function () {
   } catch (e) { taReportDbError(e); console.error('Account check failed:', e); return null; }
 };
 
-let unsubscribe = null;
-window.__liveResults = [];
+/* ================= RESULTS KEPT ON THIS DEVICE =================
+   Opening the app used to read every result of every exercise again
+   (~1 300 reads a time, against a free limit of 50 000 a day shared by all
+   teachers). Now the results already read are kept in this browser
+   (IndexedDB, per account), and only these are read from the database:
+   - results that arrived since the newest one kept here (by the server's
+     time, "submittedAt" — students' clocks can be wrong), minus 10 minutes to
+     be safe; the same query keeps listening while the app is open;
+   - every result of an exercise code not read before (once);
+   - everything again once a week, so results deleted on another device go.
+   Everything else (Results, Statistics, Points, Top 5…) is worked out from
+   the copy kept here. Without IndexedDB it simply reads everything, as before. */
+const RS_OVERLAP = 10 * 60 * 1000;
+const RS_FULL_EVERY = 7 * 86400000;
+const rs = { docs: new Map(), loaded: new Set(), mark: 0, fullAt: 0, ready: null, deltaUnsub: null };
+function rsDbName() { return 'ta_results_cache' + (window.__TA_NS ? '__' + String(window.__TA_NS).replace(/[^a-z0-9_]/gi, '_') : ''); }
+function rsIdb() {
+  return new Promise(resolve => {
+    try {
+      const req = indexedDB.open(rsDbName(), 1);
+      req.onupgradeneeded = () => req.result.createObjectStore('kv');
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => resolve(null);
+    } catch (e) { resolve(null); }
+  });
+}
+function rsPlain(data) {
+  const v = Object.assign({}, data);
+  if (v.submittedAt && typeof v.submittedAt.toMillis === 'function') v.submittedAt = v.submittedAt.toMillis();
+  return v;
+}
+function rsPut(id, v) {
+  rs.docs.set(id, v);
+  if (typeof v.submittedAt === 'number' && v.submittedAt > rs.mark) rs.mark = v.submittedAt;
+}
+function rsByCode(code) { const out = []; rs.docs.forEach(v => { if (v && v.code === code) out.push(v); }); return out; }
+rs.ready = (async function () {
+  const idb = await rsIdb();
+  rs.idb = idb;
+  if (!idb) return;
+  const state = await new Promise(resolve => {
+    try {
+      const r = idb.transaction('kv').objectStore('kv').get('state');
+      r.onsuccess = () => resolve(r.result || null);
+      r.onerror = () => resolve(null);
+    } catch (e) { resolve(null); }
+  });
+  if (!state) return;
+  if (Date.now() - (state.fullAt || 0) > RS_FULL_EVERY) { rs.fullAt = 0; return; } // time for a full refresh
+  (state.docs || []).forEach(([id, v]) => rs.docs.set(id, v));
+  (state.loaded || []).forEach(c => rs.loaded.add(c));
+  rs.mark = state.mark || 0;
+  rs.fullAt = state.fullAt || 0;
+})();
+let rsSaveTimer = 0;
+function rsSave() {
+  clearTimeout(rsSaveTimer);
+  rsSaveTimer = setTimeout(() => {
+    if (!rs.idb) return;
+    try {
+      rs.idb.transaction('kv', 'readwrite').objectStore('kv').put(
+        { docs: Array.from(rs.docs.entries()), loaded: Array.from(rs.loaded), mark: rs.mark, fullAt: rs.fullAt }, 'state');
+    } catch (e) { console.error('Could not keep the results on this device:', e); }
+  }, 800);
+}
+// Reads every result of the codes not read before (30 codes per query), once.
+const rsLoading = new Map(); // code -> promise
+async function rsEnsureCodes(codes) {
+  await rs.ready;
+  if (!db) return;
+  const fresh = [...new Set(codes)].filter(c => c && !rs.loaded.has(c) && !rsLoading.has(c));
+  const waits = [...new Set(codes)].filter(c => rsLoading.has(c)).map(c => rsLoading.get(c));
+  for (let i = 0; i < fresh.length; i += 30) {
+    const chunk = fresh.slice(i, i + 30);
+    const job = getDocs(query(collection(db, 'results'), where('code', 'in', chunk))).then(snap => {
+      // replace what's kept for these codes (results deleted meanwhile go)
+      rs.docs.forEach((v, id) => { if (v && chunk.indexOf(v.code) !== -1) rs.docs.delete(id); });
+      snap.docs.forEach(d => rsPut(d.id, rsPlain(d.data())));
+      chunk.forEach(c => rs.loaded.add(c));
+      if (!rs.fullAt) rs.fullAt = Date.now();
+      rsSave();
+    }).catch(e => { taReportDbError(e); console.error('Loading results failed:', e); })
+      .finally(() => chunk.forEach(c => rsLoading.delete(c)));
+    chunk.forEach(c => rsLoading.set(c, job));
+    waits.push(job);
+  }
+  await Promise.all(waits);
+  rsStartDelta();
+}
+// New results as they arrive (any exercise), from the newest one kept here.
+function rsStartDelta() {
+  if (rs.deltaUnsub || !db) return;
+  const since = rs.mark ? rs.mark - RS_OVERLAP : Date.now() - 86400000;
+  rs.deltaUnsub = onSnapshot(query(collection(db, 'results'), where('submittedAt', '>', Timestamp.fromMillis(since))), snap => {
+    snap.docChanges().forEach(ch => {
+      if (ch.type === 'removed') rs.docs.delete(ch.doc.id);
+      else rsPut(ch.doc.id, rsPlain(ch.doc.data()));
+    });
+    rsSave();
+    rsChanged();
+  }, err => { taReportDbError(err); console.error('New results listener failed:', err); rs.deltaUnsub = null; });
+}
+// Results deleted from this device: forget them here too.
+function rsForget(ids) { ids.forEach(id => rs.docs.delete(id)); rsSave(); rsChanged(); }
 
+// Everything the pages show is worked out again when the kept results change.
+let rsChangedTimer = 0;
+function rsChanged() {
+  clearTimeout(rsChangedTimer);
+  rsChangedTimer = setTimeout(() => { rsDeriveLive(); rsDerivePoints(); rsDerivePlain(); rsDeriveHwc(); }, 30);
+}
+window.taResultsCacheInfo = () => ({ kept: rs.docs.size, codes: rs.loaded.size, newest: rs.mark ? new Date(rs.mark).toISOString() : '', fullAt: rs.fullAt ? new Date(rs.fullAt).toISOString() : '' });
+
+window.__liveResults = [];
 function setStatus(text, cls) {
   const el = document.getElementById('liveSyncStatus');
   if (!el) return;
@@ -117,10 +228,18 @@ function setStatus(text, cls) {
   el.className = 'live-sync-status' + (cls ? ' ' + cls : '');
 }
 
+// ---- Results page: one exercise code ----
+let liveCode = '';
+function rsDeriveLive() {
+  if (!liveCode) return;
+  window.__liveResults = rsByCode(liveCode);
+  const n = window.__liveResults.filter(r => !r || r.kind !== 'ta-reset').length;
+  setStatus('🟢 Live — ' + n + ' result' + (n === 1 ? '' : 's') + ' synced automatically for code ' + liveCode, 'ok');
+  if (window.renderResultsTable) window.renderResultsTable();
+}
 window.startLiveSync = function (code) {
-  if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+  liveCode = '';
   window.__liveResults = [];
-
   if (!db) {
     setStatus('🔴 Live sync unavailable — Firebase failed to load.', 'err');
     if (window.renderResultsTable) window.renderResultsTable();
@@ -131,70 +250,62 @@ window.startLiveSync = function (code) {
     if (window.renderResultsTable) window.renderResultsTable();
     return;
   }
-
+  liveCode = code;
   setStatus('🟡 Connecting to live results...', '');
-  const q = query(collection(db, 'results'), where('code', '==', code));
-  unsubscribe = onSnapshot(q, snap => {
-    window.__liveResults = snap.docs.map(d => d.data());
-    const n = window.__liveResults.filter(r => !r || r.kind !== 'ta-reset').length;
-    setStatus('🟢 Live — ' + n + ' result' + (n === 1 ? '' : 's') + ' synced automatically for code ' + code, 'ok');
-    if (window.renderResultsTable) window.renderResultsTable();
-  }, err => {
-    taReportDbError(err);
-    console.error('Firestore live sync error:', err);
-    setStatus('🔴 Live sync error — check your Firestore security rules (see console for details).', 'err');
-  });
+  rsEnsureCodes([code]).then(() => { if (liveCode === code) rsDeriveLive(); });
 };
-
 // Kick off live sync for whatever code is already showing (active code or
 // whatever the teacher last typed into the "Class code to view" box).
 const startingCode = (document.getElementById('res-code-input') || {}).value || '';
 window.startLiveSync(startingCode.trim());
 
-// ---- Points board live sync ----
-let pointsUnsubscribe = null;
+// ---- Points board ----
+let pointsBoard = '';
 window.__pointsLedger = [];
+function rsDerivePoints() {
+  if (!pointsBoard) return;
+  window.__pointsLedger = rsByCode(pointsBoard).map(v => window.taParsePointsDoc(v)).filter(Boolean);
+  if (window.renderPointsBoard) window.renderPointsBoard();
+  if (window.renderDashboard) window.renderDashboard();
+}
 window.startPointsSync = function (boardCode) {
-  if (pointsUnsubscribe) { pointsUnsubscribe(); pointsUnsubscribe = null; }
+  pointsBoard = boardCode || '';
   window.__pointsLedger = [];
   if (!db || !boardCode) { if (window.renderPointsBoard) window.renderPointsBoard(); return; }
-  const pq = query(collection(db, 'results'), where('code', '==', boardCode));
-  pointsUnsubscribe = onSnapshot(pq, snap => {
-    window.__pointsLedger = snap.docs.map(d => window.taParsePointsDoc(d.data())).filter(Boolean);
-    if (window.renderPointsBoard) window.renderPointsBoard();
-    if (window.renderDashboard) window.renderDashboard();
-  }, err => { taReportDbError(err); console.error('Points live sync error:', err); });
+  rsEnsureCodes([boardCode]).then(() => { if (pointsBoard === boardCode) rsDerivePoints(); });
 };
 if (window.getPointsBoardCode) window.startPointsSync(window.getPointsBoardCode());
 
-// ---- Plain (non-points) completions live sync ----
+// ---- Every result of every exercise (Statistics, Top 5, Didn't do it…) ----
 // Types like English Content and Bidirectional Language never award points, so
-// their completions never show up in the points ledger above \u2014 which
-// meant Statistics always showed 0 for them no matter how many students
-// finished them. This queries the results collection directly, keyed by
-// every exercise code this teacher has ever created (batched, since
-// Firestore's "in" operator caps out at 30 values per query), and counts
-// completions for exactly the types that don't participate in points, so
-// nothing here double-counts what the points ledger already covers.
-// They're picked out by the result's own type, so the ones inside
-// Homework/Class sets count too (the set itself isn't an English Content
-// exercise, so looking them up by the exercise list missed them).
-// It also keeps every result of every exercise (window.__allResults, including
-// the exercises inside Homework/Class sets) for Top Active Students, which
-// judges students by how well they did, not how many exercises they finished.
-let plainUnsubscribers = [];
+// their completions never show up in the points ledger — Statistics counts them
+// from here, picked out by the result's own type (so the ones inside
+// Homework/Class sets count too). __allResults keeps every result of every
+// exercise (sets' exercises included) for Top Active Students.
 window.__plainCompletions = [];
 window.__allResults = [];
-window.startPlainCompletionsSync = function () {
-  plainUnsubscribers.forEach(u => { try { u(); } catch (e) { /* ignore */ } });
-  plainUnsubscribers = [];
-  window.__plainCompletions = [];
-  window.__allResults = [];
-  if (!db || !window.getRecentExercises) return;
+let plainCodes = new Set();
+function rsDerivePlain() {
+  if (!plainCodes.size) return;
+  // Sets made before their exercises' codes were saved in My Exercises: the set's
+  // own progress records name the code of every exercise a student finished.
+  const more = [];
+  rs.docs.forEach(v => { if (v && v.type === 'HWC_PROGRESS' && v.roundCode && plainCodes.has(v.code) && !plainCodes.has(v.roundCode)) more.push(v.roundCode); });
+  if (more.length) { more.forEach(c => plainCodes.add(c)); rsEnsureCodes(more).then(rsChanged); }
   const NO_POINTS_TYPES = ['EnglishContent', 'BilingualReader']; // as a result's type names them
+  const all = [];
+  rs.docs.forEach(v => { if (v && plainCodes.has(v.code) && typeof v.type === 'string' && v.type.indexOf('POINTS:') !== 0 && v.type !== 'HWC_PROGRESS') all.push(v); });
+  window.__allResults = all;
+  window.__plainCompletions = all.filter(r => NO_POINTS_TYPES.indexOf(r.type) !== -1);
+  if (window.renderDashboard) window.renderDashboard();
+  if (window.renderTopActiveStudents) window.renderTopActiveStudents();
+  if (window.taCompletionsChanged) window.taCompletionsChanged();
+}
+window.startPlainCompletionsSync = function () {
+  if (!db || !window.getRecentExercises) return;
   const exercises = window.getRecentExercises() || [];
   const codes = [];
-  exercises.forEach((e, i) => {
+  exercises.forEach(e => {
     if (e.mergedItems && e.mergedItems.length) {
       // a set's own code only has its progress records; its exercises report under their own codes
       e.mergedItems.forEach((r, k) => {
@@ -202,36 +313,11 @@ window.startPlainCompletionsSync = function () {
         if (!c && window.setRoundHtml) { const h = window.setRoundHtml(e, k); c = h && (h.match(/const EXERCISE_CODE = "([^"]*)"/) || [])[1]; }
         if (c) codes.push(c);
       });
+      if (e.code) codes.push(e.code);
     } else if (e.code) codes.push(e.code);
   });
-  // Sets made before their exercises' codes were saved in My Exercises (and whose
-  // file isn't in this browser any more): the set's own progress records name
-  // the code of every exercise a student finished, so those are watched too.
-  const setCodes = [...new Set(exercises.filter(e => e.mergedItems && e.mergedItems.length && e.code).map(e => e.code))];
-
-  const watched = new Set();
-  let resultsByChunk = {};
-  let chunkCount = 0;
-  function watchCodes(list) {
-    const fresh = [...new Set(list)].filter(c => c && !watched.has(c));
-    fresh.forEach(c => watched.add(c));
-    for (let i = 0; i < fresh.length; i += 30) {
-      const ci = chunkCount++;
-      const q = query(collection(db, 'results'), where('code', 'in', fresh.slice(i, i + 30)));
-      const unsub = onSnapshot(q, snap => {
-        const docs = snap.docs.map(d => d.data());
-        watchCodes(docs.filter(v => v && v.type === 'HWC_PROGRESS' && v.roundCode).map(v => v.roundCode));
-        resultsByChunk[ci] = docs.filter(v => v && typeof v.type === 'string' && v.type.indexOf('POINTS:') !== 0 && v.type !== 'HWC_PROGRESS');
-        window.__allResults = Object.values(resultsByChunk).flat();
-        window.__plainCompletions = window.__allResults.filter(r => NO_POINTS_TYPES.indexOf(r.type) !== -1);
-        if (window.renderDashboard) window.renderDashboard();
-        if (window.renderTopActiveStudents) window.renderTopActiveStudents();
-        if (window.taCompletionsChanged) window.taCompletionsChanged();
-      }, err => { taReportDbError(err); console.error('Plain completions sync error:', err); });
-      plainUnsubscribers.push(unsub);
-    }
-  }
-  watchCodes(codes.concat(setCodes));
+  plainCodes = new Set(codes);
+  rsEnsureCodes(codes).then(rsDerivePlain);
 };
 window.startPlainCompletionsSync();
 
@@ -240,7 +326,7 @@ window.startPlainCompletionsSync();
 // the exercise files use.
 window.taAwardPoints = async function (payload) {
   if (!db) return 'failed';
-  try { await addDoc(collection(db, 'results'), payload); return 'ok'; }
+  try { await addDoc(collection(db, 'results'), Object.assign({ submittedAt: serverTimestamp() }, payload)); return 'ok'; }
   catch (e) { taReportDbError(e); console.error('Points write failed:', e); return 'failed'; }
 };
 
@@ -250,7 +336,7 @@ window.taDisableExercisePoints = async function (boardCode, exerciseCode) {
     await addDoc(collection(db, 'results'), {
       v: 1, code: boardCode, builtAt: '', type: 'POINTS:DISABLE',
       title: 'x\u241F' + exerciseCode, name: '', score: 0, warnings: 0,
-      timeSeconds: 0, timeDisplay: '00:00', date: new Date().toISOString()
+      timeSeconds: 0, timeDisplay: '00:00', date: new Date().toISOString(), submittedAt: serverTimestamp()
     });
     return 'ok';
   } catch (e) { console.error('Disable points failed:', e); return 'failed'; }
@@ -262,51 +348,59 @@ window.taDisableExercisePoints = async function (boardCode, exerciseCode) {
 // rules), so each completed round is its own small record; this
 // aggregates all of them, per student, into the completedFlags/lastActive
 // shape the results list actually renders.
-let hwcResultsUnsub = null;
+let hwcCode = '';
+function rsDeriveHwc() {
+  if (!hwcCode) return;
+  const records = rsByCode(hwcCode).filter(v => v && v.type === 'HWC_PROGRESS');
+  const byStudent = {};
+  records.forEach(r => {
+    const key = r.studentId;
+    if (!byStudent[key]) {
+      byStudent[key] = {
+        studentId: r.studentId, studentName: r.name, totalCount: r.totalCount,
+        completedFlags: new Array(r.totalCount).fill(false),
+        roundLabels: new Array(r.totalCount).fill(''),
+        roundCodes: new Array(r.totalCount).fill(''),
+        roundTimeSeconds: new Array(r.totalCount).fill(0),
+        lastActive: r.date
+      };
+    }
+    const entry = byStudent[key];
+    if (typeof r.roundIndex === 'number' && r.roundIndex < entry.totalCount) {
+      entry.completedFlags[r.roundIndex] = true;
+      entry.roundLabels[r.roundIndex] = r.roundLabel;
+      entry.roundCodes[r.roundIndex] = r.roundCode;
+      entry.roundTimeSeconds[r.roundIndex] = typeof r.timeSeconds === 'number' ? r.timeSeconds : 0;
+    }
+    if (!entry.lastActive || new Date(r.date) > new Date(entry.lastActive)) entry.lastActive = r.date;
+  });
+  window.__hwcProgressDocs = Object.values(byStudent).map(e => ({
+    studentId: e.studentId, studentName: e.studentName,
+    totalCount: e.totalCount, completedCount: e.completedFlags.filter(Boolean).length,
+    completedFlags: e.completedFlags, roundLabels: e.roundLabels, roundCodes: e.roundCodes,
+    totalTimeSeconds: e.roundTimeSeconds.reduce((a, b) => a + b, 0),
+    lastActive: e.lastActive
+  }));
+  window.__hwcProgressError = '';
+  if (window.renderHwcResultsList) window.renderHwcResultsList();
+}
+// Every student's progress through one Homework/Class set (the Results drill-down):
+// each finished exercise of the set is its own small record; they're gathered per student.
 window.taListenHwcProgress = function (code) {
-  if (hwcResultsUnsub) { hwcResultsUnsub(); hwcResultsUnsub = null; }
+  hwcCode = code || '';
   window.__hwcProgressDocs = [];
   window.__hwcProgressError = '';
   if (!db || !code) { if (window.renderHwcResultsList) window.renderHwcResultsList(); return; }
-  const q = query(collection(db, 'results'), where('code', '==', code));
-  hwcResultsUnsub = onSnapshot(q, snap => {
-    const records = snap.docs.map(d => d.data()).filter(v => v && v.type === 'HWC_PROGRESS');
-    const byStudent = {};
-    records.forEach(r => {
-      const key = r.studentId;
-      if (!byStudent[key]) {
-        byStudent[key] = {
-          studentId: r.studentId, studentName: r.name, totalCount: r.totalCount,
-          completedFlags: new Array(r.totalCount).fill(false),
-          roundLabels: new Array(r.totalCount).fill(''),
-          roundCodes: new Array(r.totalCount).fill(''),
-          roundTimeSeconds: new Array(r.totalCount).fill(0),
-          lastActive: r.date
-        };
-      }
-      const entry = byStudent[key];
-      if (typeof r.roundIndex === 'number' && r.roundIndex < entry.totalCount) {
-        entry.completedFlags[r.roundIndex] = true;
-        entry.roundLabels[r.roundIndex] = r.roundLabel;
-        entry.roundCodes[r.roundIndex] = r.roundCode;
-        entry.roundTimeSeconds[r.roundIndex] = typeof r.timeSeconds === 'number' ? r.timeSeconds : 0;
-      }
-      if (!entry.lastActive || new Date(r.date) > new Date(entry.lastActive)) entry.lastActive = r.date;
-    });
-    window.__hwcProgressDocs = Object.values(byStudent).map(e => ({
-      studentId: e.studentId, studentName: e.studentName,
-      totalCount: e.totalCount, completedCount: e.completedFlags.filter(Boolean).length,
-      completedFlags: e.completedFlags, roundLabels: e.roundLabels, roundCodes: e.roundCodes,
-      totalTimeSeconds: e.roundTimeSeconds.reduce((a, b) => a + b, 0),
-      lastActive: e.lastActive
-    }));
-    window.__hwcProgressError = '';
-    if (window.renderHwcResultsList) window.renderHwcResultsList();
-  }, err => {
-    taReportDbError(err);
-    console.error('Homework progress failed:', err);
-    window.__hwcProgressError = (err && err.code === 'permission-denied') ? 'not allowed by the database rules' : ((err && err.code) || 'no connection');
-    if (window.renderHwcResultsList) window.renderHwcResultsList();
+  rsEnsureCodes([code]).then(() => {
+    if (hwcCode !== code) return;
+    if (!rs.loaded.has(code)) {
+      window.__hwcProgressError = 'no connection';
+      if (window.renderHwcResultsList) window.renderHwcResultsList();
+      return;
+    }
+    rsDeriveHwc();
+    // the set's exercises too (answers, Checked / Not checked)
+    rsEnsureCodes(rsByCode(code).filter(v => v && v.type === 'HWC_PROGRESS' && v.roundCode).map(v => v.roundCode)).then(rsChanged);
   });
 };
 
@@ -317,9 +411,8 @@ window.taListenHwcProgress = function (code) {
 window.taFindResultByCodeAndName = async function (code, studentName, studentId) {
   if (!db || !code) return null;
   try {
-    const q = query(collection(db, 'results'), where('code', '==', code));
-    const snap = await getDocs(q);
-    const docs = snap.docs.map(d => d.data()).filter(v => v && typeof v.type === 'string' && v.type.indexOf('POINTS:') !== 0);
+    await rsEnsureCodes([code]);
+    const docs = rsByCode(code).filter(v => v && typeof v.type === 'string' && v.type.indexOf('POINTS:') !== 0);
     const norm = x => String(x || '').trim().toLowerCase();
     let matches = studentId ? docs.filter(v => norm(v.studentId) === norm(studentId)) : [];
     if (!matches.length) matches = docs.filter(v => norm(v.name) === norm(studentName));
@@ -367,7 +460,7 @@ window.deleteAllPointsForBoard = async function (boardCode) {
         v: 1, code: boardCode, builtAt: '', type: 'POINTS:Removed',
         title: 'By teacher' + SEP + '__RESET__' + SEP + studentId,
         name: info.name, score: -info.total, warnings: 0,
-        timeSeconds: 0, timeDisplay: '00:00', date: new Date().toISOString()
+        timeSeconds: 0, timeDisplay: '00:00', date: new Date().toISOString(), submittedAt: serverTimestamp()
       });
     }));
 
@@ -393,6 +486,7 @@ window.deleteAllPointsEntirelyForBoard = async function (boardCode) {
       return typeof v.type === 'string' && v.type.indexOf('POINTS:') === 0;
     });
     await Promise.all(pointsDocs.map(d => deleteDoc(doc(db, 'results', d.id))));
+    rsForget(pointsDocs.map(d => d.id));
     if (window.renderPointsBoard) window.renderPointsBoard();
     if (window.renderDashboard) window.renderDashboard();
     return { ok: true, count: pointsDocs.length };
@@ -409,6 +503,7 @@ window.deleteLiveResultsForCode = async function (code, resetAt) {
     const snap = await getDocs(q);
     const realCount = snap.docs.filter(d => (d.data() || {}).kind !== 'ta-reset').length;
     await Promise.all(snap.docs.map(d => deleteDoc(doc(db, 'results', d.id))));
+    rsForget(snap.docs.map(d => d.id));
     // Leave a single marker behind that says "everything built before this
     // moment is expired", so old copies of the file can never pollute the
     // results again — on this computer or any other.
