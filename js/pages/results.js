@@ -76,7 +76,11 @@ function renderHwcResultsList() {
     wrap.innerHTML = '<p class="empty-results">⚠️ Couldn\'t load the progress: ' + escapeForHtml(window.__hwcProgressError) + '. Check your internet connection and open View Results again.</p>';
     return;
   }
-  if (!docs.length) { wrap.innerHTML = '<p class="empty-results">No students have finished an exercise of this set yet. Their progress shows here as soon as they finish the first one.</p>'; return; }
+  // who hasn't started the set at all (from the set's group, or everyone)
+  const setExercise = (hwcResultsCurrentItem.mergedItems ? hwcResultsCurrentItem : null) || taExerciseForCode(hwcResultsCurrentItem.code) || hwcResultsCurrentItem;
+  const rosterIdx = taRosterIndex();
+  const missingHtml = taMissingStudentsHtml(setExercise, docs.map(d => rosterStudentForId(d.studentId, rosterIdx) || rosterStudentForResult({ name: d.studentName }, rosterIdx)));
+  if (!docs.length) { wrap.innerHTML = '<p class="empty-results">No students have finished an exercise of this set yet. Their progress shows here as soon as they finish the first one.</p>' + missingHtml; return; }
 
   // each student's answers to the set's exercises (for Checked / Not checked)
   const norm = x => String(x || '').trim().toLowerCase();
@@ -145,7 +149,7 @@ function renderHwcResultsList() {
       '</div>' +
       (isExpanded ? '<div class="hwc-round-list">' + roundsHtml + '</div>' : '') +
       '</div>';
-  }).join('');
+  }).join('') + missingHtml;
 }
 window.renderHwcResultsList = renderHwcResultsList;
 
@@ -396,8 +400,9 @@ function renderResultsTable(codeOverride) {
   const matches = collected.visible;
   const expiredCount = collected.expired.length;
 
+  const exercise = taExerciseForCode(lookupCode);
   if (!lookupCode || matches.length === 0) {
-    wrap.innerHTML = '<div class="empty-results" id="emptyResultsMsg">' +
+    wrap.innerHTML = taMissingStudentsHtml(exercise, []) + '<div class="empty-results" id="emptyResultsMsg">' +
       (expiredCount > 0
         ? '🚫 ' + expiredCount + ' submission' + (expiredCount > 1 ? 's' : '') + ' for this code came from an <b>expired file</b> (a file built before you last deleted the results for this code), so they are not shown. Only students using the newest file you created will appear here.'
         : 'No results yet for this code.') +
@@ -502,6 +507,7 @@ function renderResultsTable(codeOverride) {
     '<div class="results-section-head"><h3>🎓 Entered with ID — your students (' + idRows.length + ')</h3><p>Matched to your Students list.</p></div>' +
     (idRows.length ? tableFor(idRows) : '<div class="empty-results">No results from students with an ID' + (searchTerm ? ' match your search' : '') + '.</div>') +
     '</div>';
+  html += taMissingStudentsHtml(exercise, idMatches.map(r => rosterOf.get(r)));
   html += '<div class="results-section name-only">' +
     '<div class="results-section-head"><h3>✍️ Entered with a name only (' + nameRows.length + ')</h3><p>Not on your Students list — left out of Statistics and Top Active Students.</p></div>' +
     (nameRows.length ? tableFor(nameRows) : '<div class="empty-results">No name-only results' + (searchTerm ? ' match your search' : '') + '.</div>') +

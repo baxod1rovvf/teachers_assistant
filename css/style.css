@@ -342,6 +342,15 @@ body.light-theme .side-btn.active img.icon-mono { filter: invert(1); }
 .top-student-row:last-child { border-bottom: none; }
 .top-student-rank { font-size: 1.05rem; width: 28px; text-align: center; flex-shrink: 0; }
 .top-student-rank-img { width: 28px; height: 28px; display: block; }
+/* Top 5: one button per group (Target, Apex…) */
+.top-group-tabs { display: flex; gap: 8px; margin: -4px 0 8px; flex-wrap: wrap; }
+.top-group-tab {
+  flex: 1; min-width: 90px; padding: 8px 14px; border-radius: 999px; cursor: pointer;
+  border: 1.5px solid var(--border); background: var(--surface-sunken); color: var(--ink-soft);
+  font: 800 0.85rem 'Inter', sans-serif; transition: background .15s ease, color .15s ease, border-color .15s ease;
+}
+.top-group-tab:hover { border-color: var(--brand); color: var(--brand); }
+.top-group-tab.active { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
 .top-student-name { flex: 1; font-size: 0.87rem; font-weight: 700; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .top-student-score { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 0.88rem; }
 
@@ -1322,6 +1331,17 @@ body.glass-ui .done-warn { border-left-color: var(--success); }
 .hwc-col-status { gap: 6px; flex-wrap: wrap; align-items: center; }
 .hwc-round-actions { display: inline-flex; align-items: center; gap: 8px; }
 .hwc-round-row .check-chip { font-size: 0.74rem; padding: 4px 10px; }
+
+/* Results: students who didn't do the exercise */
+.missing-section { margin-top: 18px; }
+.missing-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.missing-student {
+  display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px 5px 5px; border-radius: 999px;
+  border: 1.5px solid color-mix(in srgb, var(--danger) 45%, var(--border)); background: var(--danger-surface);
+  font-size: 0.84rem; font-weight: 700; color: var(--ink);
+}
+.missing-student .res-avatar { width: 26px; height: 26px; font-size: 0.66rem; }
+.missing-student small { font-size: 0.7rem; font-weight: 600; color: var(--ink-faint); }
 
 /* ---------- Toast ---------- */
 .toast {

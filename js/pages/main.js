@@ -93,13 +93,15 @@ function performanceScores(results) {
   return out;
 }
 
-function getTopActiveStudents(limit) {
+// groupId: only that group's students (Top 5 of Target, of Apex…); left out: everyone.
+function getTopActiveStudents(limit, groupId) {
   const byId = {};
   const rosterIdx = taRosterIndex();
   // compare everyone who did an exercise, but only rank students from the Students list
   performanceScores(getAllScoredResultsCombined()).forEach(({ r, score }) => {
     const st = rosterStudentForResult(r, rosterIdx);
     if (!st) return;
+    if (groupId !== undefined && st.group !== groupId) return;
     const key = String(st.id).trim().toLowerCase();
     if (!byId[key]) byId[key] = { name: st.name, total: 0, count: 0 };
     byId[key].total += score;
@@ -114,12 +116,8 @@ function getTopActiveStudents(limit) {
   return arr.slice(0, limit);
 }
 const RANK_ICONS = ['images/icons/rank/rank-1.png', 'images/icons/rank/rank-2.png', 'images/icons/rank/rank-3.png'];
-function renderTopActiveStudents() {
-  const wrap = document.getElementById('mainTopStudentsList');
-  if (!wrap) return;
-  const top = getTopActiveStudents(5);
-  if (!top.length) { wrap.innerHTML = '<div class="empty-results">No results from your students yet. Only students who enter with their ID appear here; Sentences count once you rate them in Results.</div>'; return; }
-  wrap.innerHTML = top.map((s, i) => {
+function topStudentRowsHtml(top) {
+  return top.map((s, i) => {
     const initials = initialsForName(s.name);
     const avatarColor = avatarColorForName(s.name);
     const rankIcon = RANK_ICONS[i]
@@ -135,6 +133,30 @@ function renderTopActiveStudents() {
     '</div>';
   }).join('');
 }
+// One group's Top 5 at a time: a button per group (Target, Apex…) picks which.
+// The choice is remembered on this device.
+const LS_TOP_GROUP = 'ta_top_students_group';
+function renderTopActiveStudents() {
+  const wrap = document.getElementById('mainTopStudentsList');
+  if (!wrap) return;
+  const roster = getPointsRoster();
+  const groups = getStudentGroups().filter(g => roster.some(st => st.group === g.id));
+  if (!groups.length) { wrap.innerHTML = '<div class="empty-results">Put your students into groups on the Students page to see each group\'s Top 5.</div>'; return; }
+  let cur = '';
+  try { cur = localStorage.getItem(LS_TOP_GROUP) || ''; } catch (e) { /* ignore */ }
+  if (!groups.some(g => g.id === cur)) cur = groups[0].id;
+  const top = getTopActiveStudents(5, cur);
+  wrap.innerHTML = '<div class="top-group-tabs" role="tablist">' + groups.map(g =>
+      '<button type="button" role="tab" class="top-group-tab' + (g.id === cur ? ' active' : '') + '" aria-selected="' + (g.id === cur) + '"' +
+      ' onclick="selectTopStudentsGroup(' + jsAttr(g.id) + ')"><span translate="no">' + escapeForHtml(g.name) + '</span></button>').join('') + '</div>' +
+    (top.length ? topStudentRowsHtml(top)
+      : '<div class="empty-results">No results from this group yet. Only students who enter with their ID appear here; Sentences count once you rate them in Results.</div>');
+}
+function selectTopStudentsGroup(id) {
+  try { localStorage.setItem(LS_TOP_GROUP, id); } catch (e) { /* ignore */ }
+  renderTopActiveStudents();
+}
+window.selectTopStudentsGroup = selectTopStudentsGroup;
 window.renderTopActiveStudents = renderTopActiveStudents;
 
 /* ================= DASHBOARD: stat tiles ================= */

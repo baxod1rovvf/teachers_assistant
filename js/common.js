@@ -615,6 +615,28 @@ function rosterStudentForId(id, idx) {
   idx = idx || taRosterIndex();
   return idx.byId[String(id).trim().toLowerCase()] || null;
 }
+/* Results: the students of an exercise's group (chosen when it was made, or
+   in My Exercises) who haven't done it. An exercise made without a group has
+   no such list. doneStudents: the roster students who did it. */
+function taMissingStudentsHtml(exercise, doneStudents) {
+  if (!exercise) return '';
+  const group = getStudentGroups().find(g => g.id === exercise.groupId) || null;
+  if (!group) return '';
+  const done = new Set((doneStudents || []).filter(Boolean).map(st => String(st.id).trim().toLowerCase()));
+  const missing = getPointsRoster().filter(st => st.group === group.id && !done.has(String(st.id).trim().toLowerCase()));
+  const chip = st => '<span class="missing-student"><span class="res-avatar" style="background:' + avatarColorForName(st.name) + ';">' +
+    escapeForHtml(initialsForName(st.name)) + '</span><span translate="no">' + escapeForHtml(st.name) + '</span><small>ID ' + escapeForHtml(String(st.id)) + '</small></span>';
+  const gName = '<span translate="no">' + escapeForHtml(group.name) + '</span>';
+  return '<div class="results-section missing-section">' +
+    '<div class="results-section-head"><h3>🚫 Didn\'t do it — ' + gName + ' (' + missing.length + ')</h3>' +
+    '<p>Students in ' + gName + ' (this exercise\'s group) with no result yet.</p></div>' +
+    (missing.length ? '<div class="missing-list">' + missing.map(chip).join('') + '</div>'
+      : '<div class="empty-results">Everyone in ' + gName + ' has done it. 🎉</div>') +
+    '</div>';
+}
+function taExerciseForCode(code) {
+  return code ? (getRecentExercises() || []).find(e => e.code === code) || null : null;
+}
 function rosterStudentForResult(r, idx) {
   if (!r) return null;
   idx = idx || taRosterIndex();
