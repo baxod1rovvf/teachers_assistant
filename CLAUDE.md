@@ -41,13 +41,12 @@ update this list when you fix or discover something. Rough likelihoods are for t
 few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~100 students).
 
 **More likely (≥ 20 %)**
-1. **Daily read limit (50 000 reads/day, shared by all teacher accounts).** Opening the app
-   reads every result of every exercise (`startPlainCompletionsSync`, points board, live
-   results) — about **1 300 reads per full load** on 2026-09-30, growing with every result
-   (results are never deleted). ~35–40 full loads a day across all devices/teachers reaches
-   the limit; then results stop arriving until the next day (Pacific time) and the app shows
-   "The database has reached a limit". Fix when it comes up: read results incrementally
-   (only new ones since the last visit), or archive old results.
+1. **Daily read limit (50 000 reads/day, shared by all teacher accounts)** — *much reduced
+   2026-09-30.* Opening the app used to read every result again (~1 300 reads a time). Now
+   results are kept on the device (IndexedDB, `js/firebase.js` "RESULTS KEPT ON THIS DEVICE")
+   and only new ones are read (by server time `submittedAt`), plus a full re-read once a week
+   per device and once per new exercise code. Still possible on a busy day with many teachers,
+   new devices, or cleared browsers (each starts with one full read).
 2. **Monthly download limit (10 GiB)** from exercise links — heavy for audio/picture
    exercises (dictation audio is now shrunk, ~0.4 MB per minute of audio; sets with many
    pictures are still heavy).
@@ -64,6 +63,12 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
    shows "Open in Chrome" when it detects the problem.
 
 **Less likely (< 20 %) but serious**
+18. **"Delete all results" doesn't leave its marker.** The rules refuse the `ta-reset` marker
+    record (`deleteLiveResultsForCode`, checked 2026-09-30: 403 even in the app's own shape).
+    The results themselves are deleted, but the marker that should stop old copies of the file
+    from sending results again is never saved, so old files can still send results for that
+    code. Also, a deletion made on one device reaches the others' kept copy only at their
+    weekly full re-read.
 6. **Anyone can change the database.** The security rules need no login: anyone who finds
    the project id and API key (they are in every exercise file) can **read, create and
    delete** records in `results` — delete students' results or points, or spam fake results
@@ -101,6 +106,17 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
 16. **Student ID typos / shared IDs**: results then don't match the Students list and are
     left out of Statistics, Top 5 and "Didn't do it".
 17. **Reminders and notifications only work while the app is open** (no server to push them).
+
+## Results kept on the device (keep this in mind when changing how results load)
+
+- `js/firebase.js` keeps every result it has read in IndexedDB (`ta_results_cache…`, per
+  account namespace) and derives `__allResults`, `__plainCompletions`, `__pointsLedger`,
+  `__liveResults` and `__hwcProgressDocs` from it (`rsDerive*`). Loading: `rsEnsureCodes(codes)`
+  reads a code's results once (`code in […]`, 30 per query); `rsStartDelta` listens to
+  `submittedAt > newest kept − 10 min` for everything new. Records without `submittedAt`
+  are never seen by that listener — every result/points/progress record must carry
+  `submittedAt: serverTimestamp()` (exercise files do; the teacher's own points writes do
+  since 2026-09-30). `taResultsCacheInfo()` in the console shows what's kept.
 
 ## How exercise links work (keep this in mind when changing them)
 
