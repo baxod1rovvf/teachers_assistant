@@ -806,7 +806,7 @@ function createWordOrder() {
   let html = WORD_ORDER_TEMPLATE;
   const classCode = setActiveClassCode(code);
   const points = readPointsAward('wo');
-  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
   html = html.split('__SENTENCE_COUNT__').join(String(sentences.length));
   html = html.split('__SENTENCES_JSON__').join(JSON.stringify(sentences));
   html = html.split('__EXERCISE_CODE__').join(classCode);
@@ -847,7 +847,7 @@ function createMakeAWord() {
   let html = MAKE_A_WORD_TEMPLATE;
   const classCode = setActiveClassCode(code);
   const points = readPointsAward('maw');
-  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
   html = html.split('__WORD_COUNT__').join(String(words.length));
   html = html.split('__WORDS_JSON__').join(JSON.stringify(words));
   html = html.split('__EXERCISE_CODE__').join(classCode);
@@ -885,7 +885,7 @@ function createFlashcardRunner(title, mode, code, pairs) {
   const points = readPointsAward('fc');
 
   let html = FLASHCARD_GAME_TEMPLATE;
-  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
   html = html.split('__WORD_COUNT__').join(String(words.length));
   html = html.split('__WORDS_JSON__').join(JSON.stringify(words));
   html = html.split('__ANSWER_SECONDS__').join(document.getElementById('fc-seconds').value);
@@ -950,7 +950,7 @@ function createFlashcard() {
   let html = FLASHCARD_TEMPLATE;
   const classCode = setActiveClassCode(code);
   const points = readPointsAward('fc');
-  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
   html = html.split('__WORD_COUNT__').join(String(pairs.length));
   html = html.split('__GROUPS_JSON__').join(JSON.stringify(groups));
   html = html.split('__QUIZ_MODE__').join(document.getElementById('fc-quiz-mode').value);
@@ -2245,7 +2245,7 @@ function createPronunciation() {
   let html = (design === 'game') ? PRONUNCIATION_GAME_TEMPLATE : PRONUNCIATION_FLASH_TEMPLATE;
   const classCode = setActiveClassCode(code);
 
-  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
   html = html.split('__WORD_COUNT__').join(String(words.length));
   html = html.split('__WORDS_JSON__').join(JSON.stringify(words));
   html = html.split('__PASS_SCORE__').join(document.getElementById('pr-pass').value);
@@ -2676,7 +2676,7 @@ function createSpelling() {
   const classCode = setActiveClassCode(code);
   const points = readPointsAward('sp');
   let html = QUIZ_TEMPLATE;
-  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
   html = html.split('__TYPE_LABEL__').join('Spelling');
   html = html.split('__QUIZ_MODE__').join('spelling');
   html = html.split('__ITEM_COUNT__').join(String(items.length));
@@ -2879,7 +2879,7 @@ function createTest() {
   const classCode = setActiveClassCode(code);
   const points = readPointsAward('ts');
   let html = QUIZ_TEMPLATE;
-  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
   html = html.split('__TYPE_LABEL__').join('Test');
   html = html.split('__QUIZ_MODE__').join('gap');
   html = html.split('__ITEM_COUNT__').join(String(items.length));
@@ -2974,10 +2974,10 @@ function createSentences() {
   const classCode = setActiveClassCode(code);
   const points = readPointsAward('sn');
   let html = SENTENCES_TEMPLATE;
-  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
   html = html.split('__WORDS_JSON__').join(JSON.stringify(words));
   html = html.split('__SENTENCE_COUNT__').join(String(count));
-  html = html.split('__TOP_INSTRUCTION__').join(escapeForHtml(instructions));
+  html = html.split('__TOP_INSTRUCTION__').join(escapeForJsString(instructions)); // it's a "…" string in the script: line breaks and quotes must be escaped
   html = html.split('__WELCOME_SUB__').join(escapeForHtml(welcomeSub));
   html = html.split('__EXERCISE_CODE__').join(classCode);
   html = html.split('__FILE_BUILT_AT__').join(new Date().toISOString());
@@ -3107,7 +3107,7 @@ function createBilingualReader() {
   const points = readPointsAward('br');
 
   let html = BILINGUAL_READER_TEMPLATE;
-  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
   html = html.split('__PARAGRAPHS_JSON__').join(JSON.stringify(brParagraphs));
   html = html.split('__TARGET_LANG_NAME__').join(escapeForHtml(langName));
   html = html.split('__TARGET_LANG_CODE__').join(langCode);
@@ -3232,7 +3232,7 @@ function createEnglishContent() {
 
   let html = ENGLISH_CONTENT_TEMPLATE;
   html = html.split('__TIME_LIMIT_MINUTES__').join(timeLimitMinutesEc);
-  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
   html = html.split('__EXERCISE_CODE__').join(classCode);
   html = html.split('__EXERCISE_UID__').join(__ec_uid);
   html = html.split('__BOARD_CODE__').join(getPointsBoardCode());
@@ -3532,7 +3532,7 @@ function createDictation() {
     html = taEmbedMedia(html, mediaB64, taGuessMime(mediaFile));
   }
   html = html.split('__TIME_LIMIT_MINUTES__').join(timeLimitMinutesDc);
-  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
   html = html.split('__EXERCISE_CODE__').join(classCode);
   html = html.split('__EXERCISE_UID__').join(__dc_uid);
   html = html.split('__BOARD_CODE__').join(getPointsBoardCode());
@@ -3715,7 +3715,7 @@ function createIeltsListening() {
   const __il_uid = generateExerciseUid();
 
   let html = IELTS_LISTENING_TEMPLATE;
-  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
   html = html.split('__EXERCISE_CODE__').join(classCode);
   html = html.split('__EXERCISE_UID__').join(__il_uid);
   html = html.split('__BOARD_CODE__').join(getPointsBoardCode());
@@ -3814,7 +3814,7 @@ function createIeltsReading() {
   const __ir_uid = generateExerciseUid();
 
   let html = IELTS_READING_TEMPLATE;
-  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
   html = html.split('__EXERCISE_CODE__').join(classCode);
   html = html.split('__EXERCISE_UID__').join(__ir_uid);
   html = html.split('__BOARD_CODE__').join(getPointsBoardCode());
@@ -3857,7 +3857,7 @@ function createIeltsWriting() {
   const __iw_uid = generateExerciseUid();
 
   let html = IELTS_WRITING_TEMPLATE;
-  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
   html = html.split('__EXERCISE_CODE__').join(classCode);
   html = html.split('__EXERCISE_UID__').join(__iw_uid);
   html = html.split('__BOARD_CODE__').join(getPointsBoardCode());
@@ -4102,7 +4102,7 @@ function buildJungleHtml(title) {
     questions: jungleQuestionsFilled()
   };
   let html = JUNGLE_TEMPLATE;
-  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
   html = html.split('__JUNGLE_DATA__').join(JSON.stringify(data).replace(/</g, '\\u003c'));
   return html;
 }
@@ -4211,7 +4211,7 @@ function bamboozleQuestionsFilled() {
 function buildBamboozleHtml(title) {
   const data = { title: title, wrong: document.getElementById('bz-wrong').value, questions: bamboozleQuestionsFilled() };
   let html = BAMBOOZLE_TEMPLATE;
-  html = html.split('__EXERCISE_TITLE__').join(escapeForHtml(title));
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
   html = html.split('__BAMBOOZLE_DATA__').join(JSON.stringify(data).replace(/</g, '\\u003c'));
   return html;
 }

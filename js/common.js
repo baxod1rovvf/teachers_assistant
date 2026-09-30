@@ -1154,6 +1154,13 @@ function escapeForHtml(str) {
    JSON.stringify, then also escapes "</script" so the value can never
    accidentally close the surrounding script tag. Does NOT include the
    surrounding quotes themselves, since the template already has those. */
+/* An exercise title goes into the page's text and also into a "…" string in
+   its script, so it must be safe in both: HTML-escaped, with double quotes,
+   backslashes and line breaks made harmless too (a title like
+   Review "Apex" used to break the exercise's script). */
+function escapeForTemplateText(str) {
+  return escapeForHtml(String(str)).replace(/"/g, '&quot;').replace(/\\/g, '&#92;').replace(/[\r\n]+/g, ' ');
+}
 function escapeForJsString(str) {
   return JSON.stringify(String(str)).slice(1, -1).split('</script').join('<\\/script');
 }
