@@ -84,7 +84,9 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
    worst case, new data can't be saved.
 9. **Forgotten password = synced data can't be read.** Sync is encrypted with a key from the
    teacher's password; on a new device without the password, cloud copies are unreadable.
-   Remind them to keep a backup file (Settings → Backup) now and then.
+   The backup file (Settings → Backup, weekly reminder) is the safety net — it also holds
+   every result, so deleted results can be put back. It only protects if the teacher
+   actually downloads it and keeps it somewhere other than the same device.
 10. **Speech recognition depends on Google's servers** (Chrome's Web Speech API): needs the
     internet, can be slow or refuse at times; Safari on iPhone works less reliably.
 11. **The site's address must not change.** Renaming the GitHub repo/user, making the repo
@@ -122,6 +124,20 @@ real students' names or results into the repository (it is public).
   are never seen by that listener — every result/points/progress record must carry
   `submittedAt: serverTimestamp()` (exercise files do; the teacher's own points writes do
   since 2026-09-30). `taResultsCacheInfo()` in the console shows what's kept.
+
+## Results backup (Settings → Backup)
+
+- "Download backup" (`downloadBackup` in `js/pages/settings.js`) puts the app's data **and**
+  `results: [...]` — every record of this teacher's exercise/points codes, with its database id
+  as `__id` — into one JSON file (`taResultsForBackup` in firebase.js reads the teacher's codes
+  first). Restoring such a file offers two checkboxes: the app data (replaces it, as before)
+  and "put back results deleted from the database" (`taRestoreResults`: reads the codes fresh,
+  re-creates only missing ids with `setDoc`, `submittedAt: serverTimestamp()` and `restoredAt`;
+  skips `ta-reset` markers, `TA_SYNC:*`, and results of codes the teacher deleted on purpose).
+- A browser can't save files by itself, so `taBackupReminderIfDue` (common.js) shows
+  "💾 Time for a backup" when the last backup from this device is over 7 days old
+  (`ta_last_backup_at`; "Remind me tomorrow" → `ta_backup_remind_at`). The tests seed
+  `ta_last_backup_at` so the reminder stays out of the way.
 
 ## Database lock (Firebase Authentication) — keep this in mind when changing writes
 
