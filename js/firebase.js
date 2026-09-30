@@ -24,25 +24,76 @@ if (db) {
   window.taSyncBackend = {
     // only this teacher's sync records; changes still on their way to the server are skipped
     listen: (code, type, onData, onErr) => onSnapshot(query(collection(db, 'results'), where('code', '==', code), where('type', '==', type)),
-      snap => { if (!snap.metadata.hasPendingWrites) onData(snap.docs.map(d => Object.assign({ __id: d.id }, d.data()))); }, onErr),
-    put: (id, data) => setDoc(doc(db, 'results', id), data),
+      snap => { if (!snap.metadata.hasPendingWrites) onData(snap.docs.map(d => Object.assign({ __id: d.id }, d.data()))); }, e => { taReportDbError(e); if (onErr) onErr(e); }),
+    put: (id, data) => setDoc(doc(db, 'results', id), data).catch(e => { taReportDbError(e); throw e; }),
     remove: id => deleteDoc(doc(db, 'results', id))
   };
 }
 
-// A pronunciation exercise is also kept online, so students can open it from a
-// web link (play.html?x=<uid>): a phone only lets a page use the microphone
-// when it comes from a real web address, never from a file opened in a chat.
-window.taPublishPlay = async function (uid, html) {
-  if (!db || !uid || !html || html.length > 700000) return false;
+/* ---- Exercise links (play.html?x=<uid>) ----
+   Every exercise is also kept online for 7 days, so students can open it from
+   a link: iPhones can't open an exercise file at all, and a phone only lets a
+   page use the microphone when it comes from a web address. An exercise is
+   stored as one or more records ("play-<uid>", "play-<uid>-1"…, 300 000
+   characters each — a record may hold 1 MB). CLAUDE.md explains the limits. */
+const PLAY_CHUNK = 300000;
+const PLAY_DAYS = 7;
+window.taPublishPlay = async function (uid, html, oldParts) {
+  if (!db || !uid || !html) return null;
+  const n = Math.max(1, Math.ceil(html.length / PLAY_CHUNK));
+  if (n > 40) return null; // over 12 MB: too big to put online
+  const date = new Date().toISOString();
   try {
-    await setDoc(doc(db, 'results', 'play-' + uid), {
-      v: 1, code: 'TAUSER', builtAt: '', type: 'TA_SYNC:PLAY', title: uid, name: '', data: html,
-      score: 0, warnings: 0, timeSeconds: 0, timeDisplay: '00:00', date: new Date().toISOString()
-    });
-    return true;
-  } catch (e) { console.error('Publishing the exercise link failed:', e); return false; }
+    for (let i = 0; i < n; i++) {
+      const part = html.slice(i * PLAY_CHUNK, (i + 1) * PLAY_CHUNK);
+      await setDoc(doc(db, 'results', i ? 'play-' + uid + '-' + i : 'play-' + uid), {
+        v: 1, code: 'TAUSER', builtAt: '', type: 'TA_SYNC:PLAY', title: [uid, i, n].join('␟'), name: '', data: part,
+        score: part.length, warnings: 0, timeSeconds: 0, timeDisplay: '00:00', date: date
+      });
+    }
+    for (let i = n; i < (oldParts || 0); i++) await deleteDoc(doc(db, 'results', 'play-' + uid + '-' + i)).catch(() => {});
+    return { parts: n, bytes: html.length, date: date };
+  } catch (e) { taReportDbError(e); console.error('Putting the exercise online failed:', e); return null; }
 };
+window.taUnpublishPlay = async function (uid, parts) {
+  if (!db || !uid) return;
+  for (let i = 0; i < Math.max(1, parts || 1); i++) {
+    await deleteDoc(doc(db, 'results', i ? 'play-' + uid + '-' + i : 'play-' + uid)).catch(() => {});
+  }
+};
+// Deletes every exercise link older than 7 days (any teacher's), and tells how
+// much the ones still online take. Only the records' names, dates and sizes are
+// read (not the exercises), so this stays light.
+window.taSweepPlayLinks = async function () {
+  const url = 'https://firestore.googleapis.com/v1/projects/' + firebaseConfig.projectId + '/databases/(default)/documents:runQuery?key=' + firebaseConfig.apiKey;
+  const body = { structuredQuery: { from: [{ collectionId: 'results' }],
+    select: { fields: [{ fieldPath: 'title' }, { fieldPath: 'date' }, { fieldPath: 'score' }] },
+    where: { fieldFilter: { field: { fieldPath: 'type' }, op: 'EQUAL', value: { stringValue: 'TA_SYNC:PLAY' } } } } };
+  const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  if (!r.ok) { if (r.status === 429) taReportDbError({ code: 'resource-exhausted' }); throw new Error('sweep ' + r.status); }
+  const rows = await r.json();
+  const cutoff = Date.now() - PLAY_DAYS * 86400000;
+  let liveBytes = 0, liveLinks = 0, deleted = 0;
+  for (const row of rows) {
+    const d = row.document;
+    if (!d) continue;
+    const id = d.name.split('/').pop();
+    const f = d.fields || {};
+    const when = Date.parse((f.date && f.date.stringValue) || '') || 0;
+    if (when < cutoff) { await deleteDoc(doc(db, 'results', id)).then(() => { deleted++; }, () => {}); continue; }
+    liveBytes += +((f.score && f.score.integerValue) || 0);
+    if (!/-\d+$/.test(id)) liveLinks++;
+  }
+  return { liveBytes: liveBytes, liveLinks: liveLinks, deleted: deleted };
+};
+
+/* Firebase's free plan has daily and monthly limits; when one is reached it
+   answers "resource-exhausted". The app then warns the teacher (common.js). */
+function taReportDbError(e) {
+  const code = e && (e.code || '');
+  if (/resource-exhausted/.test(String(code)) && window.taDbLimitReached) window.taDbLimitReached();
+}
+window.taReportDbError = taReportDbError;
 
 window.taFetchAccounts = async function () {
   if (!db) return null;
@@ -50,7 +101,7 @@ window.taFetchAccounts = async function () {
     // account records only (sync records share the TAUSER code but have their own type)
     const snap = await getDocs(query(collection(db, 'results'), where('code', '==', TA_ACCOUNTS_CODE), where('type', '==', 'TA_ACCOUNT')));
     return snap.docs.map(d => d.data());
-  } catch (e) { console.error('Account check failed:', e); return null; }
+  } catch (e) { taReportDbError(e); console.error('Account check failed:', e); return null; }
 };
 
 let unsubscribe = null;
@@ -86,6 +137,7 @@ window.startLiveSync = function (code) {
     setStatus('🟢 Live — ' + n + ' result' + (n === 1 ? '' : 's') + ' synced automatically for code ' + code, 'ok');
     if (window.renderResultsTable) window.renderResultsTable();
   }, err => {
+    taReportDbError(err);
     console.error('Firestore live sync error:', err);
     setStatus('🔴 Live sync error — check your Firestore security rules (see console for details).', 'err');
   });
@@ -108,7 +160,7 @@ window.startPointsSync = function (boardCode) {
     window.__pointsLedger = snap.docs.map(d => window.taParsePointsDoc(d.data())).filter(Boolean);
     if (window.renderPointsBoard) window.renderPointsBoard();
     if (window.renderDashboard) window.renderDashboard();
-  }, err => { console.error('Points live sync error:', err); });
+  }, err => { taReportDbError(err); console.error('Points live sync error:', err); });
 };
 if (window.getPointsBoardCode) window.startPointsSync(window.getPointsBoardCode());
 
@@ -172,7 +224,7 @@ window.startPlainCompletionsSync = function () {
         if (window.renderDashboard) window.renderDashboard();
         if (window.renderTopActiveStudents) window.renderTopActiveStudents();
         if (window.taCompletionsChanged) window.taCompletionsChanged();
-      }, err => { console.error('Plain completions sync error:', err); });
+      }, err => { taReportDbError(err); console.error('Plain completions sync error:', err); });
       plainUnsubscribers.push(unsub);
     }
   }
@@ -186,7 +238,7 @@ window.startPlainCompletionsSync();
 window.taAwardPoints = async function (payload) {
   if (!db) return 'failed';
   try { await addDoc(collection(db, 'results'), payload); return 'ok'; }
-  catch (e) { console.error('Points write failed:', e); return 'failed'; }
+  catch (e) { taReportDbError(e); console.error('Points write failed:', e); return 'failed'; }
 };
 
 window.taDisableExercisePoints = async function (boardCode, exerciseCode) {
@@ -248,6 +300,7 @@ window.taListenHwcProgress = function (code) {
     window.__hwcProgressError = '';
     if (window.renderHwcResultsList) window.renderHwcResultsList();
   }, err => {
+    taReportDbError(err);
     console.error('Homework progress failed:', err);
     window.__hwcProgressError = (err && err.code === 'permission-denied') ? 'not allowed by the database rules' : ((err && err.code) || 'no connection');
     if (window.renderHwcResultsList) window.renderHwcResultsList();
@@ -271,7 +324,7 @@ window.taFindResultByCodeAndName = async function (code, studentName, studentId)
     if (!matches.length) return null;
     matches.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
     return matches[0];
-  } catch (e) { console.error('Result lookup failed:', e); return null; }
+  } catch (e) { taReportDbError(e); console.error('Result lookup failed:', e); return null; }
 };
 
 // Permanently deletes every live (Firebase) result for a class code, so

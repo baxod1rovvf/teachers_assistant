@@ -1362,6 +1362,12 @@ body.glass-ui .done-warn { border-left-color: var(--success); }
 .sn-picture-box img { max-width: 100%; max-height: 220px; border-radius: 12px; border: 1.5px solid var(--border); object-fit: contain; background: var(--surface-sunken); }
 .sn-picture-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
+/* database limits */
+.db-warn { border-left-color: var(--danger); }
+body.glass-ui .db-warn { border-left-color: var(--danger); }
+.db-warn-text { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.5; }
+.done-warn-foot a.done-warn-results { text-decoration: none; display: inline-flex; align-items: center; border: 1.5px solid var(--border); color: var(--ink); font: 700 0.78rem 'Inter', sans-serif; padding: 7px 12px; border-radius: 10px; }
+
 /* ---------- Toast ---------- */
 .toast {
   position: fixed; top: 24px; left: 50%; transform: translate(-50%, -140%) scale(0.92);

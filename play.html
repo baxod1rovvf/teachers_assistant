@@ -16,10 +16,10 @@
 </style>
 </head>
 <body>
-<!-- Opens an exercise the teacher's app put online (a pronunciation exercise:
-     a phone only lets a page use the microphone when it comes from a web
-     address like this one, not from a file opened in a chat).
-     play.html?x=<exercise id> -->
+<!-- Opens an exercise the teacher's app put online for 7 days (iPhones can't
+     open exercise files, and a phone only lets a page use the microphone when
+     it comes from a web address like this one). play.html?x=<exercise id>.
+     The records are made by js/firebase.js (taPublishPlay); see CLAUDE.md. -->
 <div class="box" id="box"><div class="spin"></div><h1>Opening the exercise…</h1><p>One moment.</p></div>
 <script>
 (function () {
@@ -27,22 +27,42 @@
   function fail(title, text) { box.innerHTML = '<h1>' + title + '</h1><p>' + text + '</p>'; }
   var id = new URLSearchParams(location.search).get('x') || '';
   if (!/^[A-Za-z0-9_-]{4,80}$/.test(id)) { fail('This link is incomplete', 'Ask your teacher to send the exercise link again.'); return; }
-  var url = 'https://firestore.googleapis.com/v1/projects/teachers-assistant-app-ccd1a/databases/(default)/documents/results/play-' +
-    encodeURIComponent(id) + '?key=AIzaSyCefg2YghdSneABh0ZOUu3-snO4soVw0lA';
-  fetch(url).then(function (r) {
-    if (r.status === 404) throw new Error('missing');
-    if (!r.ok) throw new Error('http ' + r.status);
-    return r.json();
-  }).then(function (d) {
-    var f = d && d.fields;
-    var html = f && f.type && f.type.stringValue === 'TA_SYNC:PLAY' && f.data && f.data.stringValue;
+  var base = 'https://firestore.googleapis.com/v1/projects/teachers-assistant-app-ccd1a/databases/(default)/documents/results/';
+  var key = '?key=AIzaSyCefg2YghdSneABh0ZOUu3-snO4soVw0lA';
+  var DAYS = 7;
+  function part(docId) {
+    return fetch(base + encodeURIComponent(docId) + key).then(function (r) {
+      if (r.status === 404) throw new Error('missing');
+      if (!r.ok) throw new Error('http ' + r.status);
+      return r.json();
+    }).then(function (d) {
+      var f = d && d.fields;
+      if (!f || !f.type || f.type.stringValue !== 'TA_SYNC:PLAY' || !f.data) throw new Error('missing');
+      return f;
+    });
+  }
+  // an exercise is one record, or several (big ones: audio, pictures)
+  part('play-' + id).then(function (f) {
+    var when = Date.parse((f.date && f.date.stringValue) || '') || 0;
+    if (when && Date.now() - when > DAYS * 86400000) throw new Error('expired');
+    var bits = String((f.title && f.title.stringValue) || '').split('␟');
+    var n = Math.max(1, parseInt(bits[2], 10) || 1);
+    var rest = [];
+    for (var i = 1; i < n; i++) rest.push(part('play-' + id + '-' + i));
+    return Promise.all(rest).then(function (more) {
+      return [f.data.stringValue].concat(more.map(function (m) { return m.data.stringValue; })).join('');
+    });
+  }).then(function (html) {
     if (!html || html.indexOf('<html') === -1) throw new Error('missing');
     // the exercise replaces this page, and runs here at this web address
     document.open();
     document.write(html);
     document.close();
   }).catch(function (e) {
-    if (String(e && e.message) === 'missing') fail('This exercise isn’t online', 'Ask your teacher to send it again.');
+    var m = String(e && e.message);
+    if (m === 'expired') fail('This link has expired', 'Exercise links work for ' + DAYS + ' days. Ask your teacher to share it again.');
+    else if (m === 'missing') fail('This exercise isn’t online', 'The link may have expired. Ask your teacher to share it again.');
+    else if (m === 'http 429') fail('Too many people right now', 'The exercise server has reached its limit for today. Try again later, or ask your teacher for the file.');
     else fail('Couldn’t open the exercise', 'Check your internet connection, then reload this page.');
   });
 })();

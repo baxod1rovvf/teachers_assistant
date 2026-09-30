@@ -261,16 +261,18 @@ function deleteRecentExercise(idx) {
    A ready message for Telegram/WhatsApp, the exercise file itself (the
    phone's share sheet where it can send files, otherwise a download), and
    the class code in big numbers for the classroom screen. */
-// Pronunciation needs the microphone, which a phone only allows on a web page:
-// those are shared as a link (opened in Chrome) instead of a file.
-function sharesAsLink(item) { return item && item.typeLabel === 'Pronunciation' && !!taPlayUrl(item.uid); }
-function shareMessageFor(item) {
+// Every exercise can be shared as a link (online for 7 days): iPhones can't open
+// exercise files, and a phone only allows the microphone on a web page.
+function sharesAsLink(item, html) { return !!(item && taPlayUrl(item.uid) && (taPlayLive(item) || html)); }
+function shareMessageFor(item, html) {
   const lines = ['📘 ' + item.title + ' (' + item.typeLabel + ')'];
   if (item.requiredCode) lines.push('🔑 Code: ' + item.requiredCode);
-  if (sharesAsLink(item)) {
-    lines.push('🎤 Open this link in Google Chrome (on an iPhone: Safari) — the microphone only works there:');
+  if (sharesAsLink(item, html)) {
+    lines.push(item.typeLabel === 'Pronunciation'
+      ? '🎤 Open this link in Google Chrome (on an iPhone: Safari) — the microphone only works there:'
+      : '🔗 Open this link (works on any phone, iPhone too):');
     lines.push(taPlayUrl(item.uid));
-    lines.push('Type your student ID' + (item.requiredCode ? ' and the code' : '') + ', allow the microphone, and start. Good luck! 🍀');
+    lines.push('Type your student ID' + (item.requiredCode ? ' and the code' : '') + (item.typeLabel === 'Pronunciation' ? ', allow the microphone,' : '') + ' and start. Good luck! 🍀');
   } else lines.push('Open the file, type your student ID' + (item.requiredCode ? ' and the code' : '') + ', and start. Good luck! 🍀');
   return lines.join('\n');
 }
@@ -296,18 +298,33 @@ function shareRecentExercise(idx) {
       (html ? '<button type="button" class="mini-btn" data-act="file">📎 Send the file</button>' : '') +
       (item.requiredCode ? '<button type="button" class="mini-btn" data-act="code">🔢 Show code on screen</button>' : '') +
     '</div>' +
-    (sharesAsLink(item) ? '<p class="ta-modal-text">🎤 <b>Pronunciation needs the microphone</b>, and a phone only allows it on a web page — so the message has a <b>link</b> for students to open in Chrome. Send the message rather than the file.</p>' : '') +
+    (sharesAsLink(item, html) ? '<p class="ta-modal-text share-link-note">🔗 …</p>' : '') +
     '<p class="ta-modal-text">' + (html
       ? 'On a phone, <b>Send the file</b> opens Telegram, WhatsApp and the rest with the file and message attached. On a computer it downloads the file for you to attach.'
       : 'This file isn\'t saved in this browser any more, so only the message can be shared. Send the file you downloaded when you made it.') + '</p>',
     { wide: true });
   const msgEl = m.body.querySelector('.share-msg');
-  msgEl.value = shareMessageFor(item);
-  // a pronunciation exercise made before links existed is put online now
+  msgEl.value = shareMessageFor(item, html);
+  // the link: already online, or put (back) online now for another 7 days
+  const note = m.body.querySelector('.share-link-note');
+  const showUntil = it => {
+    if (!note) return;
+    const until = taPlayUntil(it);
+    note.innerHTML = '🔗 <b>The link works until ' + (until ? until.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }) : '—') + '</b> (7 days), on any phone — iPhones too. ' +
+      (it.typeLabel === 'Pronunciation' ? 'Pronunciation needs the microphone, which only works from the link (in Chrome), so send the message rather than the file. ' : '') +
+      'After that it\'s deleted; share again for a new one.';
+  };
   let online = Promise.resolve(true);
-  if (sharesAsLink(item) && !item.playPublished) {
-    online = html ? taPublishPlayable(item.uid, html) : Promise.resolve(false);
-    online.then(ok => { if (!ok) showToast(html ? 'Couldn\'t put the exercise online — check the internet and try again.' : 'This exercise isn\'t saved in this browser, so its link can\'t be made. Create it again.'); });
+  if (sharesAsLink(item, html)) {
+    if (taPlayLive(item)) showUntil(item);
+    else {
+      if (note) note.textContent = '🔗 Putting the exercise online…';
+      online = taPublishPlayable(item.uid, html);
+      online.then(ok => {
+        if (ok) showUntil(getRecentExercises().find(e => e.uid === item.uid) || item);
+        else if (note) note.textContent = '⚠️ Couldn\'t put the exercise online (no internet, or the database is full) — send the file instead, or try again.';
+      });
+    }
   }
   m.body.querySelector('[data-act="copy"]').onclick = () => online.then(() => taCopyText(msgEl.value, 'Message copied — paste it into your class chat.'));
   const fileBtn = m.body.querySelector('[data-act="file"]');

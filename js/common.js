@@ -458,22 +458,92 @@ document.addEventListener('keydown', function (e) {
 // Opened from disk the app has no web address, and the files keep the 🔐 instead.
 const TA_APP_URL = /^https?:$/.test(location.protocol) ? new URL('.', location.href).href : '';
 
-/* Pronunciation exercises: the web link students open (play.html). */
+/* ---- Exercise links (play.html?x=<uid>) ----
+   Every exercise is also put online for 7 days (js/firebase.js), so students
+   can open it from a link — iPhones can't open exercise files, and a phone
+   only allows the microphone on a web page. Sharing again renews the 7 days.
+   See CLAUDE.md for the limits this runs into. */
+const TA_PLAY_DAYS = 7;
 function taPlayUrl(uid) { return /^https:/.test(TA_APP_URL) && uid ? TA_APP_URL + 'play.html?x=' + encodeURIComponent(uid) : ''; }
+// online now, and for at least another hour
+function taPlayLive(item) {
+  const t = item && Date.parse(item.playAt || '');
+  return !!t && Date.now() - t < TA_PLAY_DAYS * 86400000 - 3600000;
+}
+function taPlayUntil(item) {
+  const t = item && Date.parse(item.playAt || '');
+  return t ? new Date(t + TA_PLAY_DAYS * 86400000) : null;
+}
 async function taPublishPlayable(uid, html) {
   if (!taPlayUrl(uid) || !html) return false;
   const publish = await taWaitFor('taPublishPlay', 9000);
   if (!publish) return false;
-  const ok = await publish(uid, html.split('__TA_APP_URL__').join(TA_APP_URL));
-  if (ok) {
-    const list = getRecentExercises();
-    const item = list.find(e => e.uid === uid);
-    if (item && !item.playPublished) { item.playPublished = true; saveRecentExercises(list); }
-  }
-  return ok;
+  const before = getRecentExercises().find(e => e.uid === uid);
+  const res = await publish(uid, html.split('__TA_APP_URL__').join(TA_APP_URL), before && before.playParts);
+  if (!res) return false;
+  const list = getRecentExercises();
+  const item = list.find(e => e.uid === uid);
+  if (item) { item.playAt = res.date; item.playParts = res.parts; item.playBytes = res.bytes; delete item.playPublished; saveRecentExercises(list); }
+  if (window.renderRecentExercises) window.renderRecentExercises();
+  return true;
 }
 window.taPlayUrl = taPlayUrl;
+window.taPlayLive = taPlayLive;
+window.taPlayUntil = taPlayUntil;
 window.taPublishPlayable = taPublishPlayable;
+
+/* ---- Database limits: warn the teacher ----
+   The app can't read Firebase's usage, so it warns from what it sees:
+   - Firebase answering "resource-exhausted" (a daily or monthly limit of the
+     free plan was reached) — from any read or write (js/firebase.js);
+   - the space exercise links take, measured by the twice-a-day cleanup. */
+const TA_DB_FREE_BYTES = 1024 * 1024 * 1024;   // the free plan's storage: 1 GiB
+const TA_PLAY_WARN_BYTES = 400 * 1024 * 1024;   // links alone over 400 MB: warn
+function taDbWarning(id, title, text) {
+  if (!window.__TA_USER) return;
+  try { if (+localStorage.getItem('ta_db_warn_hidden_' + id) > Date.now()) return; } catch (e) { /* ignore */ }
+  let box = document.getElementById(id);
+  if (!box) {
+    box = document.createElement('div');
+    box.id = id;
+    box.className = 'lesson-warn db-warn';
+    box.setAttribute('role', 'alert');
+    taNoticeStack().prepend(box);
+  }
+  box.innerHTML = '<div class="lesson-warn-head"><span>' + title + '</span><button type="button" class="lesson-warn-close" aria-label="Close">✕</button></div>' +
+    '<div class="db-warn-text">' + text + '</div>' +
+    '<div class="done-warn-foot"><a class="done-warn-results" href="https://console.firebase.google.com/project/teachers-assistant-app-ccd1a/usage" target="_blank" rel="noopener">Open Firebase usage</a>' +
+    '<button type="button" class="done-warn-all">Remind me tomorrow</button></div>';
+  box.querySelector('.lesson-warn-close').onclick = () => box.classList.remove('show');
+  box.querySelector('.done-warn-all').onclick = () => {
+    try { localStorage.setItem('ta_db_warn_hidden_' + id, String(Date.now() + 86400000)); } catch (e) { /* ignore */ }
+    box.classList.remove('show');
+  };
+  void box.offsetWidth;
+  box.classList.add('show');
+}
+let taDbLimitShown = false;
+window.taDbLimitReached = function () {
+  if (taDbLimitShown) return;
+  taDbLimitShown = true;
+  taDbWarning('taDbLimitWarn', '⚠️ The database has reached a limit',
+    'Firebase (where results, sync and exercise links live) refused a request because a limit of its free plan was reached — usually a <b>daily</b> limit, which resets at the start of the next day (Pacific time). Until then results may not arrive and links may not open. If this happens often, check the usage page, and consider sharing big exercises (audio, pictures) as files instead of links.');
+};
+function taSweepPlayLinksIfDue() {
+  if (!window.__TA_USER || !window.taSweepPlayLinks) return;
+  let last = 0;
+  try { last = +localStorage.getItem('ta_play_sweep_at') || 0; } catch (e) { /* ignore */ }
+  if (Date.now() - last < 12 * 3600000) return;
+  try { localStorage.setItem('ta_play_sweep_at', String(Date.now())); } catch (e) { /* ignore */ }
+  window.taSweepPlayLinks().then(r => {
+    try { localStorage.setItem('ta_play_usage', JSON.stringify({ at: Date.now(), bytes: r.liveBytes, links: r.liveLinks })); } catch (e) { /* ignore */ }
+    if (r.liveBytes > TA_PLAY_WARN_BYTES) {
+      const mb = Math.round(r.liveBytes / 1048576);
+      taDbWarning('taDbSpaceWarn', '⚠️ Exercise links are taking a lot of space',
+        r.liveLinks + (r.liveLinks === 1 ? ' exercise link is' : ' exercise links are') + ' online, taking about <b>' + mb + ' MB</b> of the database\'s ' + Math.round(TA_DB_FREE_BYTES / 1048576) + ' MB (free plan). They are deleted 7 days after they were shared, so this goes down by itself — but if it keeps growing, share exercises with audio or pictures as files instead of links.');
+    }
+  }).catch(() => { /* try again next time */ });
+}
 
 function downloadFile(filename, content) {
   content = content.split('__TA_APP_URL__').join(TA_APP_URL);
@@ -1008,6 +1078,11 @@ function pushRecentExercise(entry) {
   });
   saveRecentExercises(list.slice(0, 200));
   if (entry.html) cacheExerciseHtml(entry.uid, entry.html);
+  if (entry.html && taPlayUrl(entry.uid)) {
+    setTimeout(() => {
+      if (getRecentExercises().some(e => e.uid === entry.uid)) taPublishPlayable(entry.uid, entry.html);
+    }, 5000);
+  }
   if (window.startPlainCompletionsSync) { clearTimeout(window.__taResyncTimer); window.__taResyncTimer = setTimeout(window.startPlainCompletionsSync, 3000); }
   if (window.renderRecentExercises) window.renderRecentExercises();
 }
@@ -1015,6 +1090,8 @@ function pushRecentExercise(entry) {
 /* Used when an exercise is moved into a Homework/Class set \u2014 it should
    no longer appear as its own separate entry in My Exercises. */
 function removeRecentExercise(uid) {
+  const gone = getRecentExercises().find(e => e.uid === uid);
+  if (gone && gone.playAt && window.taUnpublishPlay) window.taUnpublishPlay(uid, gone.playParts);
   const list = getRecentExercises().filter(e => e.uid !== uid);
   saveRecentExercises(list);
   try {
@@ -2872,6 +2949,7 @@ function taStartPage(defaultTab) {
   initSidebarHamburgerAnim();
 
   setTimeout(showReminderToastIfDue, 900);
+  setTimeout(taSweepPlayLinksIfDue, 8000);
 
   /* Re-check lesson reminders periodically so the reminder pop-ups and "starts
      soon" badges stay accurate even if the app is left open across the 24h boundary. */
