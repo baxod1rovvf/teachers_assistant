@@ -3145,6 +3145,7 @@ function resetEnglishContentForm() {
    a playable file when a student opens it — no hosting or link needed. */
 const TA_MEDIA_FILES = {}; // 'ec' / 'dc' -> File
 const TA_MEDIA_B64 = {};   // 'ec' / 'dc' -> the file as base64, read as soon as it's chosen
+const TA_MEDIA_PACKED = {}; // 'dc' -> { mime, bytes } when the audio was made smaller before packing
 const TA_MEDIA_WARN_MB = 40, TA_MEDIA_MAX_MB = 300;
 function taFormatMb(bytes) { return (bytes / 1048576).toFixed(bytes < 10485760 ? 1 : 0) + ' MB'; }
 function onMediaFileChosen(prefix, input) {
@@ -3159,8 +3160,18 @@ function onMediaFileChosen(prefix, input) {
   }
   TA_MEDIA_FILES[prefix] = file;
   delete TA_MEDIA_B64[prefix];
-  // read it now, so creating the exercise (and adding it to a Homework/Class set) is instant
-  taReadFileBase64(file).then(b64 => { if (TA_MEDIA_FILES[prefix] === file) { TA_MEDIA_B64[prefix] = b64; renderMediaFileName(prefix); } })
+  delete TA_MEDIA_PACKED[prefix];
+  // read it now, so creating the exercise (and adding it to a Homework/Class set) is instant;
+  // a Dictation's audio is made smaller first (speech quality — see taShrinkSpeechAudio)
+  const isAudio = /^audio\//.test(file.type) || /\.(mp3|m4a|wav|ogg|oga|aac|flac)$/i.test(file.name);
+  const ready = (prefix === 'dc' && isAudio)
+    ? taShrinkSpeechAudio(file).then(blob => {
+        if (!blob || blob.size > file.size * 0.9) return taReadFileBase64(file); // not worth it: keep the original
+        TA_MEDIA_PACKED[prefix] = { mime: 'audio/mpeg', bytes: blob.size };
+        return taReadFileBase64(blob);
+      }, () => taReadFileBase64(file))
+    : taReadFileBase64(file);
+  ready.then(b64 => { if (TA_MEDIA_FILES[prefix] === file) { TA_MEDIA_B64[prefix] = b64; renderMediaFileName(prefix); } })
     .catch(() => { if (TA_MEDIA_FILES[prefix] === file) { clearMediaFile(prefix); showToast('Could not read that file. Try choosing it again.'); } });
   const linkInput = document.getElementById(prefix === 'ec' ? 'ec-youtube' : 'dc-audio');
   if (linkInput) { linkInput.value = ''; linkInput.disabled = true; linkInput.placeholder = 'Using the file you chose'; }
@@ -3169,6 +3180,7 @@ function onMediaFileChosen(prefix, input) {
 function clearMediaFile(prefix) {
   delete TA_MEDIA_FILES[prefix];
   delete TA_MEDIA_B64[prefix];
+  delete TA_MEDIA_PACKED[prefix];
   const linkInput = document.getElementById(prefix === 'ec' ? 'ec-youtube' : 'dc-audio');
   if (linkInput) { linkInput.disabled = false; linkInput.placeholder = prefix === 'ec' ? 'YouTube, Vimeo, Google Drive, or a direct video link...' : 'A YouTube link, or a link to an audio file (…mp3)'; }
   renderMediaFileName(prefix);
@@ -3177,9 +3189,11 @@ function renderMediaFileName(prefix) {
   const el = document.getElementById(prefix + '-media-name');
   if (!el) return;
   const file = TA_MEDIA_FILES[prefix];
+  const packed = TA_MEDIA_PACKED[prefix];
   el.innerHTML = file
-    ? (TA_MEDIA_B64[prefix] ? '✅ ' : '⏳ ') + escapeForHtml(file.name) + ' <span class="media-pick-size">' + taFormatMb(file.size) + (TA_MEDIA_B64[prefix] ? '' : ' · preparing…') + '</span> <button type="button" class="media-pick-remove" onclick="clearMediaFile(\'' + prefix + '\')" title="Remove this file">✕</button>' +
-      (file.size > TA_MEDIA_WARN_MB * 1048576 ? '<div class="media-pick-warn">Big file: the exercise will be about ' + taFormatMb(file.size * 1.34) + ' and slower to send and open. A shorter or smaller clip works better.</div>' : '')
+    ? (TA_MEDIA_B64[prefix] ? '✅ ' : '⏳ ') + escapeForHtml(file.name) + ' <span class="media-pick-size">' + taFormatMb(file.size) +
+      (!TA_MEDIA_B64[prefix] ? ' · ' + (prefix === 'dc' ? 'making it smaller…' : 'preparing…') : packed ? ' → ' + taFormatMb(packed.bytes) + ' (made smaller for speech)' : '') + '</span> <button type="button" class="media-pick-remove" onclick="clearMediaFile(\'' + prefix + '\')" title="Remove this file">✕</button>' +
+      ((packed ? packed.bytes : file.size) > TA_MEDIA_WARN_MB * 1048576 ? '<div class="media-pick-warn">Big file: the exercise will be about ' + taFormatMb(file.size * 1.34) + ' and slower to send and open. A shorter or smaller clip works better.</div>' : '')
     : '';
 }
 window.onMediaFileChosen = onMediaFileChosen;
@@ -3191,6 +3205,52 @@ function taReadFileBase64(file) {
     r.onerror = () => reject(r.error);
     r.readAsDataURL(file);
   });
+}
+/* Dictation audio is made smaller before it's packed into the exercise: one
+   channel, 22 kHz, MP3 at 48 kbps — clear for speech, and usually 3–6 times
+   smaller, which matters because every student downloads the whole exercise
+   (and links count against the database's monthly downloads, see CLAUDE.md).
+   MP3 plays everywhere, iPhones included. The encoder (js/vendor/lame.min.js,
+   lamejs, LGPL) is only loaded when it's needed. */
+function taLoadLame() {
+  if (window.lamejs) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'js/vendor/lame.min.js';
+    s.onload = () => window.lamejs ? resolve() : reject(new Error('lamejs'));
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+async function taShrinkSpeechAudio(file) {
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC || !window.OfflineAudioContext) return null;
+  const buf = await file.arrayBuffer();
+  const ctx = new AC();
+  let decoded;
+  try { decoded = await new Promise((res, rej) => ctx.decodeAudioData(buf, res, rej)); }
+  finally { try { ctx.close(); } catch (e) { /* ignore */ } }
+  const RATE = 22050;
+  const off = new OfflineAudioContext(1, Math.max(1, Math.ceil(decoded.duration * RATE)), RATE); // mixed down to one channel
+  const src = off.createBufferSource();
+  src.buffer = decoded;
+  src.connect(off.destination);
+  src.start();
+  const mono = (await off.startRendering()).getChannelData(0);
+  await taLoadLame();
+  const enc = new lamejs.Mp3Encoder(1, RATE, 48);
+  const BLOCK = 1152 * 16, parts = [];
+  const pcm = new Int16Array(BLOCK);
+  for (let i = 0, n = 0; i < mono.length; i += BLOCK, n++) {
+    const len = Math.min(BLOCK, mono.length - i);
+    for (let k = 0; k < len; k++) { const v = Math.max(-1, Math.min(1, mono[i + k])); pcm[k] = v < 0 ? v * 32768 : v * 32767; }
+    const out = enc.encodeBuffer(pcm.subarray(0, len));
+    if (out.length) parts.push(new Uint8Array(out));
+    if (n % 40 === 39) await new Promise(r => setTimeout(r)); // keep the page responsive
+  }
+  const end = enc.flush();
+  if (end.length) parts.push(new Uint8Array(end));
+  return new Blob(parts, { type: 'audio/mpeg' });
 }
 function taGuessMime(file) {
   if (file.type) return file.type;
@@ -3529,7 +3589,7 @@ function createDictation() {
   } else if (mediaFile) {
     // the audio player gets the unpacked file instead of a link
     html = html.split('src="__AUDIO_URL__"').join('data-ta-media');
-    html = taEmbedMedia(html, mediaB64, taGuessMime(mediaFile));
+    html = taEmbedMedia(html, mediaB64, (TA_MEDIA_PACKED.dc && TA_MEDIA_PACKED.dc.mime) || taGuessMime(mediaFile));
   }
   html = html.split('__TIME_LIMIT_MINUTES__').join(timeLimitMinutesDc);
   html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
