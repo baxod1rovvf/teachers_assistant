@@ -1,0 +1,11 @@
+{
+  "name": "teachers-assistant",
+  "private": true,
+  "description": "Teacher's Assistant — only used to run the automatic tests (the site itself needs no build).",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1"
+  }
+}
