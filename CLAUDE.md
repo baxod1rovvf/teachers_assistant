@@ -59,6 +59,11 @@ before or alongside the first task** (they asked for this so they don't forget):
 
 ## Other things worth knowing
 
+- Dictation audio chosen as a file is packed inside the exercise (base64). It is made smaller
+  first in the builder (`taShrinkSpeechAudio` in `js/pages/create.js`: one channel, 22 kHz,
+  MP3 48 kbps, using `js/vendor/lame.min.js` — lamejs, LGPL, loaded only then); a 64 s clip went
+  from 2.4 MB to 0.4 MB. Keep it that way: audio is what makes exercises heavy.
+
 - Every change to CSS/JS needs the `?v=` stamp bumped in all the `*.html` pages (they share
   one stamp, e.g. `v=20260930g`), or browsers keep the old files.
 - Text put into an exercise template's `<script>` must be escaped for a JS string
