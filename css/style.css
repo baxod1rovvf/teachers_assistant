@@ -342,6 +342,11 @@ body.light-theme .side-btn.active img.icon-mono { filter: invert(1); }
 .top-student-row:last-child { border-bottom: none; }
 .top-student-rank { font-size: 1.05rem; width: 28px; text-align: center; flex-shrink: 0; }
 .top-student-rank-img { width: 28px; height: 28px; display: block; }
+/* each group's own Top 5 under the overall one */
+.top-group-block { margin-top: 14px; padding-top: 12px; border-top: 1.5px solid var(--border); }
+.top-group-title { display: flex; align-items: baseline; gap: 8px; font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 0.95rem; color: var(--brand); margin-bottom: 2px; }
+.top-group-title small { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 700; color: var(--ink-faint); }
+.top-group-empty { font-size: 0.8rem; color: var(--ink-faint); padding: 8px 2px; }
 .top-student-name { flex: 1; font-size: 0.87rem; font-weight: 700; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .top-student-score { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 0.88rem; }
 
@@ -1322,6 +1327,19 @@ body.glass-ui .done-warn { border-left-color: var(--success); }
 .hwc-col-status { gap: 6px; flex-wrap: wrap; align-items: center; }
 .hwc-round-actions { display: inline-flex; align-items: center; gap: 8px; }
 .hwc-round-row .check-chip { font-size: 0.74rem; padding: 4px 10px; }
+
+/* Results: students who didn't do the exercise */
+.missing-section { margin-top: 18px; }
+.missing-group { margin-bottom: 10px; }
+.missing-group-name { font-weight: 800; font-size: 0.85rem; color: var(--brand); margin: 4px 0 6px; }
+.missing-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.missing-student {
+  display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px 5px 5px; border-radius: 999px;
+  border: 1.5px solid color-mix(in srgb, var(--danger) 45%, var(--border)); background: var(--danger-surface);
+  font-size: 0.84rem; font-weight: 700; color: var(--ink);
+}
+.missing-student .res-avatar { width: 26px; height: 26px; font-size: 0.66rem; }
+.missing-student small { font-size: 0.7rem; font-weight: 600; color: var(--ink-faint); }
 
 /* ---------- Toast ---------- */
 .toast {

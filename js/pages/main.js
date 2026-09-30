@@ -93,13 +93,15 @@ function performanceScores(results) {
   return out;
 }
 
-function getTopActiveStudents(limit) {
+// groupId: only that group's students (Top 5 of Target, of Apex…); left out: everyone.
+function getTopActiveStudents(limit, groupId) {
   const byId = {};
   const rosterIdx = taRosterIndex();
   // compare everyone who did an exercise, but only rank students from the Students list
   performanceScores(getAllScoredResultsCombined()).forEach(({ r, score }) => {
     const st = rosterStudentForResult(r, rosterIdx);
     if (!st) return;
+    if (groupId !== undefined && st.group !== groupId) return;
     const key = String(st.id).trim().toLowerCase();
     if (!byId[key]) byId[key] = { name: st.name, total: 0, count: 0 };
     byId[key].total += score;
@@ -114,12 +116,8 @@ function getTopActiveStudents(limit) {
   return arr.slice(0, limit);
 }
 const RANK_ICONS = ['images/icons/rank/rank-1.png', 'images/icons/rank/rank-2.png', 'images/icons/rank/rank-3.png'];
-function renderTopActiveStudents() {
-  const wrap = document.getElementById('mainTopStudentsList');
-  if (!wrap) return;
-  const top = getTopActiveStudents(5);
-  if (!top.length) { wrap.innerHTML = '<div class="empty-results">No results from your students yet. Only students who enter with their ID appear here; Sentences count once you rate them in Results.</div>'; return; }
-  wrap.innerHTML = top.map((s, i) => {
+function topStudentRowsHtml(top) {
+  return top.map((s, i) => {
     const initials = initialsForName(s.name);
     const avatarColor = avatarColorForName(s.name);
     const rankIcon = RANK_ICONS[i]
@@ -132,6 +130,22 @@ function renderTopActiveStudents() {
       '<span class="res-avatar" style="background:' + avatarColor + ';">' + escapeForHtml(initials) + '</span>' +
       '<div class="top-student-name"><span translate="no">' + escapeForHtml(s.name) + '</span><span class="top-student-count">' + s.count + ' result' + (s.count === 1 ? '' : 's') + '</span></div>' +
       '<div class="top-student-score" style="color:' + scoreColor + ';" title="Average of how well they did in each exercise">' + pct + '%</div>' +
+    '</div>';
+  }).join('');
+}
+// Everyone's Top 5, then each group's own Top 5 below it (Target, Apex…).
+function renderTopActiveStudents() {
+  const wrap = document.getElementById('mainTopStudentsList');
+  if (!wrap) return;
+  const top = getTopActiveStudents(5);
+  if (!top.length) { wrap.innerHTML = '<div class="empty-results">No results from your students yet. Only students who enter with their ID appear here; Sentences count once you rate them in Results.</div>'; return; }
+  const roster = getPointsRoster();
+  const groups = getStudentGroups().filter(g => roster.some(st => st.group === g.id));
+  wrap.innerHTML = topStudentRowsHtml(top) + groups.map(g => {
+    const gTop = getTopActiveStudents(5, g.id);
+    return '<div class="top-group-block">' +
+      '<div class="top-group-title"><span translate="no">' + escapeForHtml(g.name) + '</span><small>Top 5</small></div>' +
+      (gTop.length ? topStudentRowsHtml(gTop) : '<div class="top-group-empty">No results from this group yet.</div>') +
     '</div>';
   }).join('');
 }
