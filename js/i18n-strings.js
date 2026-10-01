@@ -660,5 +660,527 @@ window.TA_I18N_ROWS = [
   ['Turn on sync', 'Sinxronlashni yoqish', 'Включить синхронизацию'],
   ['Not now', 'Hozir emas', 'Не сейчас'],
   ['Turn on', 'Yoqish', 'Включить'],
-  ['Your password', 'Parolingiz', 'Ваш пароль']
+  ['Your password', 'Parolingiz', 'Ваш пароль'],
+  /* ---------- AI robot ---------- */
+  ['Search all questions', 'Barcha savollardan qidirish', 'Поиск по всем вопросам'],
+  ['Back to questions', 'Savollarga qaytish', 'Назад к вопросам']
 ];
+
+/* The AI robot's questions and answers in Uzbek and Russian, keyed by the
+   English question (js/common.js, AI_ROBOT_FAQ_BY_TAB / AI_ROBOT_TYPE_FAQ):
+   'English question': [Uzbek question, Uzbek answer, Russian question, Russian answer].
+   Button names are written as they appear on screen in that language (some
+   newer buttons are only in English for now). tests/robot.spec.js checks that
+   every question has its translations. */
+window.TA_ROBOT_I18N = {
+  'How do Flashcards work?': [
+    'Kartochkalar qanday ishlaydi?',
+    'Soʻzlarni tarjimasi bilan qoʻshing (tarjimalarni ilova oʻzi ham toʻldira oladi). Oʻquvchilar har bir guruh kartochkalarini varaqlab chiqadi, keyin keyingi guruhdan oldin qisqa test topshiradi.',
+    'Как работают «Карточки»?',
+    'Добавьте слова с переводами (приложение может заполнить переводы само). Ученики листают карточки каждой группы, а перед следующей группой проходят короткий тест с вариантами ответа.'],
+  'How does Word Order work?': [
+    '“Soʻz tartibi” qanday ishlaydi?',
+    'Gaplarni yozing. Oʻquvchilar aralashtirilgan soʻzlarni sudrab, toʻgʻri tartibga qoʻyadi; har bir gap tugatilmaguncha mashq tugamaydi.',
+    'Как работает «Порядок слов»?',
+    'Напишите предложения. Ученики перетаскивают перемешанные слова в правильном порядке; пока каждое предложение не собрано, упражнение не закончится.'],
+  'How does Make a Word work?': [
+    '“Soʻz yasash” qanday ishlaydi?',
+    'Soʻzlarni yozing. Oʻquvchilar aralashtirilgan harflarni kataklarga sudrab, har bir soʻzni yozadi.',
+    'Как работает «Составь слово»?',
+    'Напишите слова. Ученики перетаскивают перемешанные буквы в ячейки и составляют каждое слово.'],
+  'How does Spelling work?': [
+    '“Imlo” qanday ishlaydi?',
+    'Soʻzni yozing — uchta ishonarli xato yozilish varianti oʻzi tuziladi. Oʻquvchilar aralashtirilgan toʻrttasini koʻradi va toʻgʻrisini tanlaydi; avval soʻzni ovozda eshitishi ham mumkin.',
+    'Как работает «Правописание»?',
+    'Напишите слово — три правдоподобных варианта с ошибками составятся сами. Ученики видят все четыре вперемешку и выбирают правильный; слово можно сначала прослушать.'],
+  'How does Test work?': [
+    '“Test” qanday ishlaydi?',
+    'Butun gapni yozing, keyin yashiriladigan soʻzni bosing. Notoʻgʻri variantlar oʻzi tuziladi (oʻsha soʻzning grammatik jihatdan notoʻgʻri shakllari).',
+    'Как работает «Тест»?',
+    'Напишите всё предложение, затем нажмите на слово, которое нужно скрыть. Неправильные варианты составятся сами (грамматически неверные формы того же слова).'],
+  'How does Sentences work?': [
+    '“Gaplar” qanday ishlaydi?',
+    'Oʻquvchilar oʻz gaplarini yozadi: gap tuzish uchun soʻzlar bering yoki shunchaki nechta gap va nima haqida yozishni ayting. Tepaga rasm ham qoʻyish mumkin. Gaplar avtomatik tekshirilmaydi — Natijalar boʻlimida ularni yulduzcha bilan baholang.',
+    'Как работают «Предложения»?',
+    'Ученики пишут свои предложения: дайте слова, вокруг которых строить предложения, или просто укажите, сколько предложений написать и о чём. Сверху можно добавить картинку. Предложения не проверяются автоматически — оцените их звёздами в разделе «Результаты».'],
+  'How does Bidirectional Language work?': [
+    '“Ikki tilli matn” qanday ishlaydi?',
+    'Inglizcha matnni joylang, tilni tanlang va tarjima qiling (avtomatik yoki qoʻlda). Oʻquvchilar ikkalasini yonma-yon koʻradi; gapni bossa, u ikkala ustunda belgilanadi, inglizcha soʻzni bossa — lugʻatda ochiladi. Ularning yozuvlari Natijalarda chiqadi.',
+    'Как работает «Двуязычный текст»?',
+    'Вставьте английский текст, выберите язык и переведите его (автоматически или вручную). Ученики видят оба текста рядом; нажатие на предложение подсвечивает его в обоих столбцах, а на английское слово — открывает перевод. Их заметки видны в «Результатах».'],
+  'How does English Content work?': [
+    '“Ingliz tilidagi video” qanday ishlaydi?',
+    'YouTube video havolasini joylang. Oʻquvchilar bir tomonda videoni koʻradi, boshqa tomonda yozib boradi. Ularning yozuvlarini Natijalarda koʻrasiz (“👁 View Notes”).',
+    'Как работает «Видео на английском»?',
+    'Вставьте ссылку на видео YouTube. Ученики смотрят его с одной стороны и делают заметки с другой. Их заметки вы видите в «Результатах» («👁 View Notes»).'],
+  'How does Dictation work?': [
+    '“Diktant” qanday ishlaydi?',
+    'Audioni (kompyuteringizdagi fayl yoki YouTube havolasi) va matnni qoʻshing. Oʻquvchilar tinglab, eshitganini yozadi — erkin yoki matndagi boʻsh joylarni toʻldirib. Tushib qolgan, notoʻgʻri va ortiqcha soʻzlar xato hisoblanadi.',
+    'Как работает «Диктант»?',
+    'Добавьте аудио (файл с компьютера или ссылку YouTube) и текст. Ученики слушают и пишут то, что слышат, — свободно или заполняя пропуски в тексте. Пропущенные, неверные и лишние слова считаются ошибками.'],
+  'Why is my dictation file big?': [
+    'Diktant faylim nega katta?',
+    'Audio mashqning ichiga joylanadi. Ilova uni avval kichraytiradi (taxminan 1 daqiqaga 0,4 MB). Juda uzun audioni (30+ daqiqa) kompyuterda qilgan maʼqul.',
+    'Почему файл диктанта такой большой?',
+    'Аудио упаковывается прямо в упражнение. Приложение сначала его сжимает (примерно 0,4 МБ на минуту). Очень длинное аудио (30+ минут) лучше делать на компьютере.'],
+  'How does Pronunciation work?': [
+    '“Talaffuz” qanday ishlaydi?',
+    'Faqat soʻzlarni yozing — talaffuzini ilova oʻzi aniqlaydi. Oʻquvchilar har bir soʻzni mikrofonga aytadi va foizni hamda qaysi tovushlar toʻgʻri (yashil) va notoʻgʻri (qizil) ekanini koʻradi. Chrome’da, internet yoqiq holda eng yaxshi ishlaydi.',
+    'Как работает «Произношение»?',
+    'Напишите только слова — произношение приложение определит само. Ученики произносят каждое слово в микрофон и видят процент и какие звуки были верными (зелёные) и неверными (красные). Лучше всего работает в Chrome с включённым интернетом.'],
+  'The microphone doesn\'t work on phones — why?': [
+    'Telefonda mikrofon ishlamayapti — nega?',
+    'Telefonlar mikrofonni faqat veb-sahifada ruxsat beradi, Telegram yoki Instagram ichida emas. Oʻquvchilarga “📤 Ulashish” dagi havolani yuboring va uni Chrome’da (yoki Safari’da) ochishni ayting.',
+    'На телефоне не работает микрофон — почему?',
+    'Телефоны разрешают микрофон только на веб-странице, а не внутри Telegram или Instagram. Отправьте ученикам ссылку из «📤 Поделиться» и попросите открыть её в Chrome (или Safari).'],
+  'How does Presentation work?': [
+    '“Taqdimot” qanday ishlaydi?',
+    'Har bir slayd alohida boʻlim: matn bloklarini qoʻshing, istalgan joyga suring va har birini oʻz rangiga boʻyang. Darsda koʻrsatish uchun taqdimotni yuklab oling.',
+    'Как работает «Презентация»?',
+    'Каждый слайд — отдельный раздел: добавляйте текстовые блоки, перетаскивайте их куда угодно и раскрашивайте каждый отдельно. Скачайте презентацию, чтобы показать на уроке.'],
+  'How does Jungle work?': [
+    '“Jungli” qanday ishlaydi?',
+    'Sinf ekrani uchun stol oʻyini. Sinf 2–4 jamoaga boʻlinadi, har birining oʻz fishkasi bor. Jamoa zar tashlaydi, yuradi va oʻsha katakdagi savolga javob beradi. Xuddi shu savollarni Bamboozle’da ishlatish uchun “🔁 Make it a Bamboozle” ni bosing.',
+    'Как работают «Джунгли»?',
+    'Настольная игра для экрана в классе. Класс делится на 2–4 команды, у каждой своя фишка. Команда бросает кубик, ходит и отвечает на вопрос этой клетки. Чтобы использовать те же вопросы в Bamboozle, нажмите «🔁 Make it a Bamboozle».'],
+  'How does Bamboozle work?': [
+    'Bamboozle qanday ishlaydi?',
+    'Sinf ekrani uchun jamoaviy viktorina, siz bilan oʻynaladi (oʻquvchi IDsi kerak emas). 2–4 jamoa raqamli kartalarni tanlaydi — ular ortida savollaringiz va ballari yashiringan. Xuddi shu savollarni Jungli’da ishlatish uchun “🔁 Make it a Jungle” ni bosing.',
+    'Как работает Bamboozle?',
+    'Командная викторина для экрана в классе, играется вместе с вами (ID учеников не нужны). 2–4 команды выбирают пронумерованные карточки, за которыми спрятаны ваши вопросы и их баллы. Чтобы использовать те же вопросы в «Джунглях», нажмите «🔁 Make it a Jungle».'],
+  'What is Teacher\'s Assistant?': [
+    'Teacher\'s Assistant nima?',
+    'Bu sinf uchun hammasi bir joyda jamlangan vosita — interaktiv mashqlar tuzing, haftalik darslarni rejalashtiring, natijalarni kuzating va oʻquvchilarni ragʻbatlantiring, hech qanday dasturlashsiz.',
+    'Что такое Teacher\'s Assistant?',
+    'Это всё для урока в одном месте — создавайте интерактивные упражнения, планируйте уроки на неделю, следите за результатами и награждайте учеников, без всякого программирования.'],
+  'How do I set up my weekly lesson schedule?': [
+    'Haftalik dars jadvalini qanday tuzaman?',
+    '“⚙️ Jadvalni boshqarish” ni bosing (yoki Sozlamalar → Haftalik dars jadvali) va har bir darsni bir marta kuni va vaqti bilan qoʻshing. U har hafta takrorlanadi va “Yaqinlashayotgan darslar” da chiqadi. U yerda dars yonidagi “📝 Plan” ni bosib, uning rejasini yozasiz.',
+    'Как настроить расписание уроков на неделю?',
+    'Нажмите «⚙️ Управлять расписанием» (или Настройки → Недельное расписание) и добавьте каждый урок один раз с днём и временем. Он повторяется каждую неделю и показывается в «Ближайших уроках». Там же кнопкой «📝 Plan» рядом с уроком можно написать его план.'],
+  'What does the "Ready" button on a lesson do?': [
+    'Darsdagi “Ready” tugmasi nima qiladi?',
+    'Darsga tayyorlanib boʻlganingizda “Ready” ni bosing. Shu paytgacha ilova keyingi 24 soat ichidagi darslarni eslatib turadi — ochganingizda va har 2 soatda.',
+    'Что делает кнопка «Ready» у урока?',
+    'Нажмите «Ready», когда подготовились к уроку. До этого приложение напоминает об уроках в ближайшие 24 часа — при открытии и потом каждые 2 часа.'],
+  'Will I get reminded before a lesson?': [
+    'Darsdan oldin eslatma boʻladimi?',
+    'Ha — darsga 24 soat qolganda eslatma chiqadi, “Yaqinlashayotgan darslar” da esa dars yonida “tez orada” belgisi paydo boʻladi. Eslatmalar faqat ilova ochiq turganda ishlaydi.',
+    'Будут ли напоминания перед уроком?',
+    'Да — за 24 часа до урока появится напоминание, а в «Ближайших уроках» у урока будет значок «скоро». Напоминания работают, только пока приложение открыто.'],
+  'How do I write a plan for a lesson?': [
+    'Dars rejasini qanday yozaman?',
+    'Sozlamalar → Haftalik dars jadvali ga oʻting va dars yonidagi “📝 Plan” ni bosing. Izohlaringizni yozing, unga mashqlarni tanlang va “💾 Save Plan” ni bosing.',
+    'Как написать план урока?',
+    'Откройте Настройки → Недельное расписание и нажмите «📝 Plan» рядом с уроком. Напишите заметки, выберите упражнения и нажмите «💾 Save Plan».'],
+  'How is "Top 5 Active Students" worked out?': [
+    '“Eng faol 5 oʻquvchi” qanday hisoblanadi?',
+    'Oʻquvchilar nechta mashq qilgani boʻyicha emas, qanchalik yaxshi bajargani boʻyicha saralanadi. Har bir natija adolatli 0–100 ballga aylantiriladi (Gaplar uchun Natijalarda bergan yulduzchalaringiz olinadi). Bir vaqtda bitta guruhni koʻrish uchun guruh tugmalaridan (masalan, Target / Apex) foydalaning.',
+    'Как считается «Топ-5 активных учеников»?',
+    'Учеников ранжируют по тому, насколько хорошо они справились, а не по количеству упражнений. Каждый результат превращается в честную оценку 0–100 (для «Предложений» — по звёздам, которые вы ставите в «Результатах»). Кнопками групп (например, Target / Apex) смотрите по одной группе.'],
+  'What is "Lessons taught"?': [
+    '“Oʻtilgan darslar” nima?',
+    'Haftalik jadvalingizdagi har bir dars kuni va vaqti oʻtgan sari bir martadan hisoblanadi. Darsni jadvaldan olib tashlasangiz ham, u hisoblagani saqlanib qoladi.',
+    'Что такое «Проведено уроков»?',
+    'Каждый урок из недельного расписания засчитывается каждый раз, когда проходят его день и время. Если убрать урок из расписания, уже посчитанное сохраняется.'],
+  'What is the note about students who finished exercises?': [
+    'Mashqni tugatgan oʻquvchilar haqidagi eslatma nima?',
+    'Ilovani ochganingizda, oxirgi 7 kunda mashqni tugatgan, lekin siz hali tekshirmagan oʻquvchilar roʻyxati chiqadi. Bitta oʻquvchi uchun “Checked” ni yoki hammasi uchun “All checked” ni bosing. ✕ bilan yopsangiz, u faqat keyingi safargacha yashirinadi.',
+    'Что за сообщение об учениках, закончивших упражнения?',
+    'При открытии приложения появляется список ваших учеников, которые за последние 7 дней закончили упражнение, а вы его ещё не проверили. Нажмите «Checked» для одного ученика или «All checked» для всех. Закрытие крестиком ✕ скрывает его только до следующего раза.'],
+  'Can I switch between day and night mode?': [
+    'Kunduzgi va tungi rejimni almashtirsa boʻladimi?',
+    'Ha — istalgan payt yorugʻ va qorongʻi koʻrinish oʻrtasida almashish uchun shu sahifa tepasidagi tugmachani bosing.',
+    'Можно ли переключаться между дневным и ночным режимом?',
+    'Да — нажмите переключатель вверху этой страницы, чтобы в любой момент сменить светлую и тёмную тему.'],
+  'How do I change the colours or the look?': [
+    'Ranglar yoki koʻrinishni qanday oʻzgartiraman?',
+    'Kunduz/tun tugmachasi yonidagi 🎨 tugmasini bosing. Uslubni (Classic yoki Glass) va rang dizaynini tanlang. Toʻrtta dizayn kunduz uchun, ikkitasi tun uchun.',
+    'Как поменять цвета или внешний вид?',
+    'Нажмите кнопку 🎨 рядом с переключателем день/ночь. Выберите стиль (Classic или Glass) и цветовое оформление. Четыре варианта — дневные, два — ночные.'],
+  'How do I turn sounds off?': [
+    'Ovozlarni qanday oʻchiraman?',
+    'Shu sahifa tepasidagi karnay tugmasini bosing. 🔇 — ovozlar oʻchiq degani; qayta yoqish uchun yana bosing.',
+    'Как выключить звуки?',
+    'Нажмите кнопку с динамиком вверху этой страницы. 🔇 значит, звуки выключены; нажмите ещё раз, чтобы включить.'],
+  'How do I find something quickly?': [
+    'Biror narsani tez qanday topaman?',
+    'Yon paneldagi “🔍 Qidirish” ni bosing yoki Ctrl+K (Mac’da ⌘K) ni bosing. Boʻlim, mashq turi, guruh, oʻquvchi yoki mashq nomini yozing va darhol oʻshanga oʻting.',
+    'Как быстро что-нибудь найти?',
+    'Нажмите «🔍 Поиск» в боковой панели или Ctrl+K (⌘K на Mac). Введите раздел, тип упражнения, группу, ученика или название упражнения — и сразу перейдёте туда.'],
+  'What is the "Edunest system" button?': [
+    '“Edunest system” tugmasi nima?',
+    'U Edunest’ning oʻqituvchi sahifasini yangi oynada ochadi.',
+    'Что за кнопка «Edunest system»?',
+    'Она открывает страницу учителя Edunest в новой вкладке.'],
+  'Can I move the robot?': [
+    'Robotni surish mumkinmi?',
+    'Ha — meni istalgan joyga sudrang. Ikki marta bossangiz, bouling shari kabi dumalab ketaman. 🤖',
+    'Можно ли передвинуть робота?',
+    'Да — перетащите меня куда угодно. Нажмите на меня дважды, и я покачусь, как шар для боулинга. 🤖'],
+  'How do I create a new exercise?': [
+    'Yangi mashqni qanday yarataman?',
+    '“➕ Yangi mashq yaratish” ni bosing va turini tanlang — Kartochkalar, Soʻz tartibi, Test, Diktant va boshqalar. Mazmunini toʻldiring, “Yaratish” ni bosing — tayyor fayl kompyuteringizga yuklanadi. Nusxasi Mashqlarim boʻlimida saqlanadi.',
+    'Как создать новое упражнение?',
+    'Нажмите «➕ Создать упражнение» и выберите тип — Карточки, Порядок слов, Тест, Диктант и другие. Заполните содержание, нажмите «Создать» — готовый файл скачается на компьютер. Копия сохраняется в «Моих упражнениях».'],
+  'What\'s the difference between Ready to use and In process?': [
+    '“Foydalanishga tayyor” va “Ishlab chiqilmoqda” ning farqi nima?',
+    '“Foydalanishga tayyor” turlari toʻliq tayyor. “Ishlab chiqilmoqda” turlari yangiroq va hali takomillashtirilmoqda, lekin ularni hozir ham sinab koʻrishingiz mumkin.',
+    'Чем отличаются «Готовы к работе» и «В разработке»?',
+    'Типы из «Готовы к работе» полностью готовы. Типы «В разработке» новее и ещё дорабатываются, но их уже можно пробовать.'],
+  'Which exercise types are there?': [
+    'Qanday mashq turlari bor?',
+    'Soʻz tartibi, Soʻz yasash, Kartochkalar, Taqdimot, Talaffuz, Imlo, Test, Gaplar, Ikki tilli matn, Ingliz tilidagi video, Diktant va ikkita sinf oʻyini: Jungli va Bamboozle. Bundan tashqari, Uy vazifasi/Dars toʻplamlari hamda IELTS Listening, Reading va Writing.',
+    'Какие есть типы упражнений?',
+    'Порядок слов, Составь слово, Карточки, Презентация, Произношение, Правописание, Тест, Предложения, Двуязычный текст, Видео на английском, Диктант и две игры для класса: Джунгли и Bamboozle. А ещё наборы «Домашнее задание»/«Урок» и IELTS Listening, Reading и Writing.'],
+  'Can I combine several exercises into one?': [
+    'Bir nechta mashqni bittaga birlashtirsa boʻladimi?',
+    'Ha — bu shu sahifadagi “Uy vazifasi va dars”. Uy vazifasi (oʻquvchilar mustaqil bajaradi) yoki Dars (darsda birga ishlatiladi) ni tanlang, 1-bosqichni tuzing, keyingi bosqich uchun “➕ Yana mashq qoʻshish” ni, oxirida “Yaratish ⬇” ni bosing.',
+    'Можно ли объединить несколько упражнений в одно?',
+    'Да — это «Домашнее задание и урок» на этой странице. Выберите «Домашнее задание» (ученики делают сами) или «Урок» (используется вместе на уроке), соберите раунд 1, нажмите «➕ Добавить ещё упражнение» для следующего раунда, а в конце — «Создать ⬇».'],
+  'What are Jungle and Bamboozle?': [
+    'Jungli va Bamboozle nima?',
+    'Sinf ekrani uchun jamoa boʻlib oʻynaladigan ikki oʻyin. Jungli — zar bilan oʻynaladigan stol oʻyini, Bamboozle — raqamli kartali viktorina. Ikkalasi bir xil savollardan foydalanadi, shuning uchun birini ikkinchisiga aylantirish mumkin.',
+    'Что такое «Джунгли» и Bamboozle?',
+    'Две командные игры для экрана в классе. «Джунгли» — настольная игра с кубиком, Bamboozle — викторина с пронумерованными карточками. У них одинаковые вопросы, поэтому одну можно превратить в другую.'],
+  'What about IELTS?': [
+    'IELTS-chi?',
+    'IELTS Listening (4 qism), Reading (3 qism) va Writing (Task 1 va 2, AI tekshiradi) IELTS uslubidagi testlarni tuzadi. Ular Statistika va Ballarga taʼsir qilmaydi, natijalari alohida. Speaking hali ishlab chiqilmagan.',
+    'А IELTS?',
+    'IELTS Listening (4 части), Reading (3 части) и Writing (Task 1 и 2, проверяет ИИ) создают тесты в стиле IELTS. Они не влияют на Статистику и Баллы, у них свои результаты. Speaking ещё не сделан.'],
+  'Where does my finished exercise go?': [
+    'Tayyor mashqim qayerga ketadi?',
+    'U kompyuteringizga tayyor fayl boʻlib yuklanadi, nusxasi “Mashqlarim” da saqlanadi va havola orqali ulashishingiz uchun 7 kunga internetga ham qoʻyiladi.',
+    'Куда попадает готовое упражнение?',
+    'Оно скачивается на компьютер готовым файлом, копия сохраняется в «Моих упражнениях», а ещё оно на 7 дней выкладывается в интернет, чтобы им можно было поделиться ссылкой.'],
+  'How do I add many words or sentences at once?': [
+    'Koʻp soʻz yoki gapni birdaniga qanday qoʻshaman?',
+    'Ularni roʻyxat tepasidagi maydonga yozing yoki joylang va Enter ni bosing. Vergul bilan (yoki har biri yangi qatordan) ajratilgan soʻzlar va . ! ? bilan ajratilgan gaplar har biri alohida qatorga aylanadi.',
+    'Как добавить сразу много слов или предложений?',
+    'Напишите или вставьте их в поле над списком и нажмите Enter. Слова через запятую (или каждое с новой строки) и предложения, разделённые . ! ?, станут отдельными строками.'],
+  'Can I use the same words in another exercise?': [
+    'Xuddi shu soʻzlarni boshqa mashqda ishlatsa boʻladimi?',
+    'Ha — roʻyxat ostida “↪ Bu soʻzlarni ishlatish:” qatori bor. Boshqa mashq turini bosing — u soʻzlaringiz bilan toʻldirilgan holda ochiladi.',
+    'Можно ли использовать те же слова в другом упражнении?',
+    'Да — под списком есть строка «↪ Использовать эти слова в». Нажмите другой тип упражнения — он откроется уже с вашими словами.'],
+  'What if I close the page before finishing?': [
+    'Tugatmasdan sahifani yopib qoʻysam-chi?',
+    'Hech narsa yoʻqolmaydi. Yozayotganingizda ishingiz qoralama sifatida saqlanadi; oʻsha mashq turini qayta ochsangiz, uni qaytarishni taklif qiladi.',
+    'Что будет, если закрыть страницу, не закончив?',
+    'Ничего не потеряется. Пока вы печатаете, работа сохраняется как черновик; откройте тот же конструктор снова, и он предложит её вернуть.'],
+  'I pressed Reset All by mistake — can I get it back?': [
+    'Adashib “Hammasini tozalash” ni bosib yubordim — qaytarsa boʻladimi?',
+    'Ha — “Hammasini tozalash” dan keyin bir necha soniya “Qaytarish” tugmali xabar chiqadi. “Qaytarish” ni bosing (yoki Ctrl+Z).',
+    'Я случайно нажал «Очистить всё» — можно вернуть?',
+    'Да — сразу после «Очистить всё» на несколько секунд появляется сообщение с кнопкой «Отменить». Нажмите её (или Ctrl+Z).'],
+  'Why does a new exercise start with my old settings?': [
+    'Nega yangi mashq eski sozlamalarim bilan boshlanadi?',
+    'Ilova har bir tur uchun odatdagi sozlamalaringizni (ball, vaqt chegarasi, dizayn…) oxirgi yaratganingizdan eslab qoladi. Faqat sozlamalarni — soʻzlar yoki nomni hech qachon.',
+    'Почему новое упражнение начинается с моими прежними настройками?',
+    'Приложение запоминает ваши обычные настройки для каждого типа (баллы, ограничение времени, оформление…) по последнему созданному упражнению. Только настройки — никогда не слова и не название.'],
+  'How do I choose which group an exercise is for?': [
+    'Mashq qaysi guruh uchun ekanini qanday tanlayman?',
+    'Yaratayotganda guruhni tanlang (yoki keyinroq Mashqlarim boʻlimida 👥 tugmasi bilan oʻzgartiring). Shunda Natijalar oʻsha guruhda kim bajarmaganini koʻrsatadi.',
+    'Как выбрать, для какой группы упражнение?',
+    'Выберите группу при создании (или поменяйте позже в «Моих упражнениях» кнопкой 👥). Тогда «Результаты» покажут, кто в этой группе его не сделал.'],
+  'How many points does an exercise give?': [
+    'Mashq necha ball beradi?',
+    'Mashq tuzayotganda “Bajargani uchun beriladigan ball” ni belgilang. Oʻquvchilar IDsi bilan tugatganda ballar “Ballar va mukofotlar” jadvaliga tushadi.',
+    'Сколько баллов даёт упражнение?',
+    'Укажите «Баллы за выполнение» в конструкторе. Ученики получают их в «Баллах и наградах», когда заканчивают упражнение со своим ID.'],
+  'Can I edit an exercise after creating it?': [
+    'Mashqni yaratgandan keyin oʻzgartirsa boʻladimi?',
+    'Ha — Mashqlarim boʻlimida “✏️ Qayta ishlatish” ni bosing. Mashq toʻldirilgan holda ochiladi; keraklisini oʻzgartirib, yangi versiyasini yarating. Yangisini ulashing.',
+    'Можно ли изменить упражнение после создания?',
+    'Да — в «Моих упражнениях» нажмите «✏️ Использовать снова». Конструктор откроется заполненным; измените что нужно и создайте новую версию. Делитесь новой.'],
+  'Do results here count toward Statistics and Points?': [
+    'Bu yerdagi natijalar Statistika va Ballarga qoʻshiladimi?',
+    'Ha — oʻquvchilar natija yuborishi bilan ular avtomatik ravishda Natijalar, Statistika va (ballar yoqiq boʻlsa) Ballar va mukofotlar boʻlimlariga tushadi.',
+    'Учитываются ли эти результаты в Статистике и Баллах?',
+    'Да — как только ученики отправляют результаты, они автоматически попадают в «Результаты», «Статистику» и (если баллы включены) в «Баллы и награды».'],
+  'How do I build a Homework & Class set?': [
+    'Uy vazifasi/Dars toʻplamini qanday tuzaman?',
+    '1-bosqich uchun mashq turini tanlang va toʻldiring. Keyingi bosqichni qoʻshish uchun “➕ Yana mashq qoʻshish” ni, toʻplam tayyor boʻlgach “Yaratish ⬇” ni bosing. Xohlasangiz, toʻplamga nom bering.',
+    'Как собрать набор «Домашнее задание и урок»?',
+    'Выберите тип упражнения для раунда 1 и заполните его. Нажмите «➕ Добавить ещё упражнение», чтобы добавить следующий раунд, и «Создать ⬇», когда набор готов. Можно дать набору название.'],
+  'Can the next round use the same words?': [
+    'Keyingi bosqich xuddi shu soʻzlardan foydalana oladimi?',
+    'Ha — roʻyxat ostidagi “↪ Keyingi bosqich — xuddi shu soʻzlar bilan:” ni bosing. Keyingi mashq turi soʻzlar toʻldirilgan holda ochiladi.',
+    'Может ли следующий раунд использовать те же слова?',
+    'Да — нажмите «↪ Следующий раунд с теми же словами:» под списком. Следующий тип упражнения откроется уже со словами.'],
+  'How do code and points work in a set?': [
+    'Toʻplamda kod va ballar qanday ishlaydi?',
+    'Toʻplamning bitta kodi va bitta ball qiymati boʻladi, ular 1-bosqichda tanlanadi. Oʻquvchilar butun toʻplamni tugatgach ballarni oladi.',
+    'Как в наборе работают код и баллы?',
+    'У набора один код и одно количество баллов, они выбираются в раунде 1. Ученики получают баллы, когда закончат весь набор.'],
+  'How do students use it?': [
+    'Oʻquvchilar undan qanday foydalanadi?',
+    'Ular toʻplamni ochadi, IDsini (va kodni) bir marta kiritadi va har bir mashqni tartib bilan bajaradi. Toʻxtab qolsa, qolgan joyidan davom etadi. Oxirida sertifikat oladi.',
+    'Как ученики им пользуются?',
+    'Они открывают набор, один раз вводят свой ID (и код) и проходят все упражнения по порядку. Если остановятся, продолжат с того же места. В конце получают сертификат.'],
+  'Can a student skip an exercise in a set?': [
+    'Oʻquvchi toʻplamdagi mashqni tashlab ketishi mumkinmi?',
+    'Yoʻq. Mashq faqat oʻquvchi “Submit” ni bosganda (hamma javoblar toʻldirilgan boʻlsa) yoki vaqt chegarasi tugaganda bajarilgan hisoblanadi, toʻplam esa javoblar sizga yetib kelguncha kutadi. Agar yuborib boʻlmasa, oʻquvchi “Try again” ni koʻradi va mashq hisoblanmaydi.',
+    'Может ли ученик пропустить упражнение в наборе?',
+    'Нет. Упражнение засчитывается, только когда ученик нажимает «Submit» (заполнив все ответы) или когда кончается время, а набор ждёт, пока ответы дойдут до вас. Если их не удаётся отправить, ученик видит «Try again», и упражнение не засчитывается.'],
+  'Where do I see the combined results?': [
+    'Umumiy natijalarni qayerda koʻraman?',
+    'Mashqlarim boʻlimida toʻplamdagi “📊 Natijalarni koʻrish” ni bosing. Har bir oʻquvchining yutugʻini (masalan, 2/3), umumiy vaqtini koʻrasiz va javoblarini ochishingiz mumkin.',
+    'Где посмотреть общие результаты?',
+    'В «Моих упражнениях» нажмите «📊 Результаты» у набора. Вы увидите прогресс каждого ученика (например, 2/3), общее время и сможете открыть их ответы.'],
+  'How does Statistics work?': [
+    'Statistika qanday ishlaydi?',
+    'U oʻquvchilaringiz qaysi mashq turlarini eng koʻp bajarishini koʻrsatadi. Uy vazifasi/Dars toʻplamlari ichidagi mashqlar ham hisoblanadi.',
+    'Как работает Статистика?',
+    'Она показывает, какие типы упражнений ваши ученики выполняют чаще всего. Упражнения внутри наборов «Домашнее задание»/«Урок» тоже учитываются.'],
+  'Who is counted in Statistics?': [
+    'Statistikada kimlar hisoblanadi?',
+    'Faqat Oʻquvchilar roʻyxatingizdagi ID bilan kirgan oʻquvchilar. Faqat ism yozganlar hisobga olinmaydi.',
+    'Кто учитывается в Статистике?',
+    'Только ученики, вошедшие с ID из вашего списка «Ученики». Те, кто ввёл только имя, не учитываются.'],
+  'What is My Exercises for?': [
+    'Mashqlarim boʻlimi nima uchun?',
+    'Siz tuzgan barcha mashqlar shu yerda — ularni ulashing, natijalarini koʻring, tuzuvchida qayta oching, chop eting yoki ballarini oʻchiring.',
+    'Для чего «Мои упражнения»?',
+    'Здесь все созданные вами упражнения — делитесь ими, смотрите результаты, открывайте снова в конструкторе, печатайте или отключайте баллы.'],
+  'Why do some exercises have a coloured edge?': [
+    'Nega baʼzi mashqlarning cheti rangli?',
+    'Bular toʻplamlar: 📚 Uy vazifasi toʻplamlari toʻq sariq, 🏫 Dars toʻplamlari yashil chetli — ular yakka mashqlardan ajralib turishi uchun.',
+    'Почему у некоторых упражнений цветной край?',
+    'Это наборы: у 📚 наборов «Домашнее задание» оранжевый край, у 🏫 наборов «Урок» — зелёный, чтобы они выделялись среди отдельных упражнений.'],
+  'How do I find an exercise?': [
+    'Mashqni qanday topaman?',
+    'Qidiruv maydoniga yozing (nomi, soʻz yoki kod) yoki faqat oʻshalarni koʻrsatish uchun roʻyxat ustidagi guruh va tur tugmalarini bosing.',
+    'Как найти упражнение?',
+    'Введите в поле поиска (название, слово или код) или нажмите кнопки групп и типов над списком, чтобы показать только их.'],
+  'How do I send an exercise to my students?': [
+    'Mashqni oʻquvchilarga qanday yuboraman?',
+    '“📤 Ulashish” ni bosing. Havola (7 kun ishlaydi, iPhone’da ham) va “🔗 Copy link” tugmasi, Telegram’ga joylash uchun tayyor xabar, faylning oʻzi va doska uchun “🔢 Kodni ekranda koʻrsatish” chiqadi.',
+    'Как отправить упражнение ученикам?',
+    'Нажмите «📤 Поделиться». Вы получите ссылку (работает 7 дней, и на iPhone тоже) с кнопкой «🔗 Copy link», готовое сообщение для Telegram, сам файл и «🔢 Показать код на экране» для доски.'],
+  'The link has expired — what now?': [
+    'Havolaning muddati tugadi — endi nima qilaman?',
+    'Havolalar 7 kun ishlaydi. “📤 Ulashish” ni yana bosing — ilova mashqni yana 7 kunga internetga qoʻyadi.',
+    'Срок ссылки истёк — что делать?',
+    'Ссылки работают 7 дней. Снова нажмите «📤 Поделиться», и приложение выложит упражнение ещё на 7 дней.'],
+  'What does "✏️ Use again" do?': [
+    '“✏️ Qayta ishlatish” nima qiladi?',
+    'U mashqni hamma narsasi toʻldirilgan holda tuzuvchida ochadi — uni oʻzgartirishingiz yoki yangi versiyasini yaratishingiz mumkin.',
+    'Что делает «✏️ Использовать снова»?',
+    'Открывает упражнение в конструкторе со всем заполненным, чтобы его можно было изменить или сделать новую версию.'],
+  'What does "⚠️ Made before a fix" mean?': [
+    '“⚠️ Made before a fix” nimani bildiradi?',
+    'Bu fayl xato tuzatilishidan oldin yaratilgan, shuning uchun unda hali oʻsha xato bor. “✏️ Qayta ishlatish” ni bosing, yangi nusxa yarating va oʻshani ulashing.',
+    'Что значит «⚠️ Made before a fix»?',
+    'Этот файл создан до исправления ошибки, поэтому ошибка в нём осталась. Нажмите «✏️ Использовать снова», создайте новую копию и делитесь ею.'],
+  'Can I print an exercise?': [
+    'Mashqni chop etsa boʻladimi?',
+    'Ha — soʻzlar roʻyxatli mashqlarda “🖨 Tarqatma” ni bosing. Qogʻoz varianti yangi oynada ochiladi, javoblari alohida sahifada. Chop eting yoki PDF qilib saqlang.',
+    'Можно ли распечатать упражнение?',
+    'Да — у упражнений со списком слов нажмите «🖨 Рабочий лист». Бумажная версия откроется в новой вкладке, ответы — на отдельной странице. Распечатайте или сохраните в PDF.'],
+  'How do I change the group of an exercise?': [
+    'Mashqning guruhini qanday oʻzgartiraman?',
+    'Mashq nomi ostidagi 👥 tugmasini bosing va guruhni tanlang.',
+    'Как поменять группу упражнения?',
+    'Нажмите кнопку 👥 под названием упражнения и выберите группу.'],
+  'Can I turn a Jungle into a Bamboozle?': [
+    'Jungli’ni Bamboozle’ga aylantirsa boʻladimi?',
+    'Ha — “🔁 Make it a Bamboozle” (yoki “Make it a Jungle”) ni bosing. Ikkinchi oʻyin xuddi shu savollar bilan ochiladi.',
+    'Можно ли превратить «Джунгли» в Bamboozle?',
+    'Да — нажмите «🔁 Make it a Bamboozle» (или «Make it a Jungle»). Другая игра откроется с теми же вопросами.'],
+  'How do I take one exercise out of a set?': [
+    'Toʻplamdan bitta mashqni qanday olaman?',
+    'Uy vazifasi/Dars toʻplamida “📤 Bitta mashqni olish” ni bosing — uni yuklab olish yoki Mashqlarimga qoʻshish mumkin; hammasini koʻrish uchun “🔀 Ajratish” ni bosing.',
+    'Как достать одно упражнение из набора?',
+    'У набора нажмите «📤 Взять одно упражнение», чтобы скачать одно из упражнений или добавить его в «Мои упражнения», или «🔀 Разделить», чтобы увидеть все.'],
+  'How do I stop an exercise giving points?': [
+    'Mashq ball berishini qanday toʻxtataman?',
+    '“🚫 Ballarni oʻchirish” ni bosing. Shundan keyin u “Ballar oʻchiq” deb belgilanadi va oʻquvchilar undan ball olmaydi.',
+    'Как сделать, чтобы упражнение не давало баллы?',
+    'Нажмите «🚫 Отключить баллы». Оно будет помечено «Баллы выкл.», и ученики больше не получат за него баллы.'],
+  'Can I delete an old exercise?': [
+    'Eski mashqni oʻchirsa boʻladimi?',
+    'Ha — “🗑 Oʻchirish” ni bosing. Allaqachon yuborilgan natijalarga taʼsir qilmaydi.',
+    'Можно ли удалить старое упражнение?',
+    'Да — нажмите «🗑 Удалить». Уже отправленные результаты не пострадают.'],
+  'What do "📥 Redownload" and "File not cached" mean?': [
+    '“📥 Qayta yuklab olish” va “Fayl saqlanmagan” nimani bildiradi?',
+    '“Qayta yuklab olish” faylni sizga yana beradi. “Fayl saqlanmagan” — bu brauzer endi nusxasini saqlamaydi degani (odatda xotira toʻlgani uchun) — uni qayta yaratish uchun “✏️ Qayta ishlatish” dan foydalaning.',
+    'Что значат «📥 Скачать снова» и «Файл не сохранён»?',
+    '«Скачать снова» даёт файл ещё раз. «Файл не сохранён» значит, что этот браузер больше не хранит копию (обычно из-за нехватки памяти) — сделайте его заново через «✏️ Использовать снова».'],
+  'What is the Students list for?': [
+    'Oʻquvchilar roʻyxati nima uchun?',
+    'Har bir oʻquvchiga alohida ID bering — ular mashqda ism oʻrniga shuni yozadi. Faqat shu roʻyxatdagi oʻquvchilar Statistika, Top 5 va “Didn\'t do it” da hisoblanadi.',
+    'Для чего список «Ученики»?',
+    'Дайте каждому ученику свой ID — его он вводит в упражнении вместо имени. Только ученики из этого списка учитываются в Статистике, Топ-5 и «Didn\'t do it».'],
+  'How do I add a whole class at once?': [
+    'Butun sinfni birdaniga qanday qoʻshaman?',
+    '“📋 Koʻp qoʻshish” ni bosing. Sinf roʻyxatini joylang (har qatorda bitta oʻquvchi, “Ism, ID” yoki toʻgʻridan-toʻgʻri Excel/Google Sheets’dan nusxalangan) yoki CSV faylni tanlang. IDsi yoʻq oʻquvchilarga keyingi boʻsh raqam beriladi.',
+    'Как добавить сразу весь класс?',
+    'Нажмите «📋 Добавить списком». Вставьте список класса (по ученику в строке, «Имя, ID» или прямо из Excel/Google Таблиц) или выберите CSV-файл. Ученики без ID получат следующий свободный номер.'],
+  'What are groups?': [
+    'Guruhlar nima?',
+    'Har bir oʻquvchi bitta guruhga tegishli (masalan, ikki xil sinf). Mashqlarni guruh uchun tuzish mumkin, shunda Natijalar oʻsha guruhda kim bajarmaganini koʻrsatadi.',
+    'Что такое группы?',
+    'Каждый ученик состоит в одной группе (например, два разных класса). Упражнения можно делать для группы, и тогда «Результаты» показывают, кто в ней их не сделал.'],
+  'Do students need an account?': [
+    'Oʻquvchilarga hisob kerakmi?',
+    'Yoʻq — mashq yuborish va reytingda chiqish uchun ularga faqat ID kerak.',
+    'Нужен ли ученикам аккаунт?',
+    'Нет — чтобы отправлять упражнения и попадать в рейтинг, им нужен только ID.'],
+  'A student\'s results are missing — why?': [
+    'Oʻquvchining natijalari yoʻq — nega?',
+    'Odatda oʻquvchi IDni notoʻgʻri yoki faqat ismini yozgan boʻladi. Shunda natijalari “Entered with a name only” ostida chiqadi va Statistika hamda Top 5 ga kirmaydi.',
+    'Нет результатов ученика — почему?',
+    'Обычно ученик ввёл неверный ID или только имя. Тогда его результаты попадают в «Entered with a name only» и не учитываются в Статистике и Топ-5.'],
+  'Where do I see my students\' results?': [
+    'Oʻquvchilarim natijalarini qayerda koʻraman?',
+    'Yon paneldagi Natijalar boʻlimida. Yoki Mashqlarim boʻlimida mashqdagi “📊 Natijalarni koʻrish” ni bosing (yoki mashq faylini Natijalarga yuklang). Yangi natijalar oʻzi kelib turadi.',
+    'Где смотреть результаты учеников?',
+    'В разделе «Результаты» в боковой панели. Или в «Моих упражнениях» нажмите «📊 Результаты» у упражнения (либо загрузите файл упражнения в «Результаты»). Новые результаты приходят сами.'],
+  'What does "⚖️ Punish?" do?': [
+    '“⚖️ Punish?” nima qiladi?',
+    'Oʻquvchini “⚠️ Will be punished” (jazolanadi) deb belgilash uchun uning yonida bosing — qatori qizarib qoladi. Belgini olib tashlash uchun yana bosing. U natijalar jadvalida, toʻplamdagi oʻquvchilar roʻyxatida va “Didn\'t do it” da ishlaydi. Belgi faqat shu mashq uchun.',
+    'Что делает «⚖️ Punish?»?',
+    'Нажмите рядом с учеником, чтобы отметить его «⚠️ Will be punished» (будет наказан) — его строка станет красной. Нажмите ещё раз, чтобы снять отметку. Работает в таблице результатов, в списке учеников набора и в «Didn\'t do it». Отметка — только для этого упражнения.'],
+  'What does "○ Not checked / ✓ Checked" mean?': [
+    '“○ Not checked / ✓ Checked” nimani bildiradi?',
+    'Oʻquvchining javoblarini koʻrib chiqqaningizdan keyin bosing (“Checked” — tekshirildi). Tekshirilgan oʻquvchilar ilovani ochganda chiqadigan “mashqni tugatganlar” eslatmasida boshqa koʻrinmaydi.',
+    'Что значит «○ Not checked / ✓ Checked»?',
+    'Нажмите после того, как посмотрели ответы ученика («Checked» — проверено). Проверенные ученики больше не появляются в сообщении о закончивших упражнения при открытии приложения.'],
+  'Who is in "Didn\'t do it"?': [
+    '“Didn\'t do it” da kimlar bor?',
+    'Mashq guruhidagi hali natijasi yoʻq oʻquvchilar. Bu faqat guruh uchun tuzilgan mashqlarda chiqadi.',
+    'Кто в списке «Didn\'t do it»?',
+    'Ученики группы этого упражнения, у которых ещё нет результата. Список есть только у упражнений, сделанных для группы.'],
+  'What is "Entered with a name only"?': [
+    '“Entered with a name only” nima?',
+    'Oʻquvchilar roʻyxatingizdagi ID oʻrniga ism yozgan kishilar. Ular Statistika va Top 5 ga kirmaydi.',
+    'Что такое «Entered with a name only»?',
+    'Это те, кто ввёл имя вместо ID из вашего списка учеников. Они не учитываются в Статистике и Топ-5.'],
+  'How do I rate Sentences?': [
+    'Gaplarni qanday baholayman?',
+    '“Gaplar” natijasi yonidagi “☆ Baholash” ni bosing va 1–5 yulduzcha bering. Yulduzchalar “Eng faol 5 oʻquvchi” uchun ishlatiladi.',
+    'Как оценить «Предложения»?',
+    'Нажмите «☆ Оценить» рядом с результатом «Предложений» и поставьте 1–5 звёзд. Звёзды используются в «Топ-5 активных учеников».'],
+  'How do I see a student\'s answers?': [
+    'Oʻquvchining javoblarini qanday koʻraman?',
+    'Uning qatoridagi “👁 Koʻrish” ni bosing. Uy vazifasi/Dars toʻplamida oʻquvchi qatorini bosib, bosqichlarini oching, keyin har biri uchun 👁 ni bosing.',
+    'Как посмотреть ответы ученика?',
+    'Нажмите «👁 Смотреть» в его строке. В наборе нажмите на строку ученика, чтобы открыть его раунды, затем 👁 у каждого.'],
+  'How are dictations scored?': [
+    'Diktantlar qanday baholanadi?',
+    'Har bir tushib qolgan, notoʻgʻri yoki ortiqcha soʻz bitta xato hisoblanadi. “👁 Koʻrish” oʻquvchi matnini xatolari yozilgan joyida belgilab koʻrsatadi.',
+    'Как оцениваются диктанты?',
+    'Каждое пропущенное, неверное или лишнее слово — одна ошибка. «👁 Смотреть» показывает текст ученика с ошибками, отмеченными там, где они написаны.'],
+  'How are Homework & Class results different?': [
+    'Uy vazifasi/Dars natijalari nimasi bilan farq qiladi?',
+    'Ular butun toʻplam boʻyicha oʻquvchilarga guruhlanadi: har bir oʻquvchi nechta mashqni tugatgani (masalan, 2/3), umumiy vaqti (15 daqiqadan kam boʻlsa qizil) va javoblari.',
+    'Чем отличаются результаты «Домашнего задания»/«Урока»?',
+    'Они собраны по ученикам на весь набор: сколько упражнений закончил каждый (например, 2/3), общее время (красным, если меньше 15 минут) и ответы.'],
+  'A student shows "Completed" but 👁 says "No result found" — why?': [
+    'Oʻquvchida “Bajarildi” deb turibdi, lekin 👁 “No result found” deydi — nega?',
+    'Uning javoblari bazaga yetib bormagan (odatda internet yomonligi sababli), toʻplam esa mashqni baribir hisoblagan — bu 2026-yil 1-oktabrdan oldin yaratilgan toʻplamlardagi muammo. Yangi toʻplamlar javoblar saqlanguncha kutadi. Mashqlarim boʻlimida “✏️ Qayta ishlatish” bilan toʻplamni qayta yarating, yangisini ulashing va oʻquvchidan qayta bajarishni soʻrang.',
+    'У ученика «Выполнено», но 👁 пишет «No result found» — почему?',
+    'Его ответы не дошли до базы (обычно из-за плохого интернета), а набор всё равно засчитал упражнение — это проблема наборов, созданных до 1 октября 2026 г. Новые наборы ждут, пока ответы сохранятся. Создайте набор заново через «✏️ Использовать снова» в «Моих упражнениях», поделитесь новым и попросите ученика пройти его снова.'],
+  'Can I download the results?': [
+    'Natijalarni yuklab olsa boʻladimi?',
+    'Ha — chop etiladigan hisobot uchun “⬇ Natijalar hisobotini yuklab olish (.html)”, jadval uchun “📊 Excel uchun yuklab olish (.csv)”.',
+    'Можно ли скачать результаты?',
+    'Да — «⬇ Скачать отчёт о результатах (.html)» для отчёта на печать или «📊 Скачать для Excel (.csv)» для таблицы.'],
+  'What does "Delete ALL results for this code" do?': [
+    '“Bu kodning BARCHA natijalarini oʻchirish” nima qiladi?',
+    'U oʻsha mashqning hamma natijalarini oʻchiradi. Faylning eski nusxalari endi hisoblanmaydi; faqat yangi yaratilgan faylni ishlatgan oʻquvchilar chiqadi. Avval zaxira nusxa oling (Sozlamalar → 💾 Zaxira nusxa).',
+    'Что делает «Удалить ВСЕ результаты по коду»?',
+    'Удаляет все результаты этого упражнения. Старые копии файла перестают учитываться; появятся только ученики с заново созданным файлом. Сначала сделайте резервную копию (Настройки → 💾 Резервная копия).'],
+  'Why does it say students used an old copy?': [
+    'Nega oʻquvchilar eski nusxadan foydalangan deyapti?',
+    'Bu natijalar xato tuzatilishidan oldin yaratilgan fayldan kelgan. Mashqlarim boʻlimida “✏️ Qayta ishlatish” bilan yangi nusxa yarating va oʻshani ulashing.',
+    'Почему написано, что ученики использовали старую копию?',
+    'Эти результаты пришли из файла, созданного до исправления ошибки. Создайте новую копию через «✏️ Использовать снова» в «Моих упражнениях» и делитесь ею.'],
+  'How do Points & Rewards work?': [
+    'Ballar va mukofotlar qanday ishlaydi?',
+    'Oʻquvchilar IDsi bilan mashqlarni tugatib ball yigʻadi. Bu sahifa guruhlar boʻyicha jonli reyting — oʻquvchilarni koʻrish uchun guruhni bosing.',
+    'Как работают «Баллы и награды»?',
+    'Ученики получают баллы, заканчивая упражнения со своим ID. Эта страница — рейтинг по группам в реальном времени; нажмите на группу, чтобы увидеть её учеников.'],
+  'How do I give or take points by hand?': [
+    'Ballarni qoʻlda qanday beraman yoki olaman?',
+    'Oʻquvchi yonidagi + yoki − ni bosing va necha ball ekanini yozing. U “Bonus: By Teacher <ismingiz>” boʻlib chiqadi (ismingizni Sozlamalarda yozing).',
+    'Как вручную начислить или снять баллы?',
+    'Нажмите + или − рядом с учеником и введите количество баллов. Это появится как «Bonus: By Teacher <ваше имя>» (имя задаётся в Настройках).'],
+  'How do students see the leaderboard?': [
+    'Oʻquvchilar reytingni qanday koʻradi?',
+    '“⬇ Ulashiladigan reytingni yuklab olish (.html)” ni bosing va faylni ularga yuboring. U jonli yangilanadi, istalgan kishi ismni bosib, qaysi mashqlar ball keltirganini koʻradi.',
+    'Как ученикам увидеть рейтинг?',
+    'Нажмите «⬇ Скачать рейтинг для учеников (.html)» и отправьте им файл. Он обновляется в реальном времени, и любой может нажать на имя и увидеть, за какие упражнения получены баллы.'],
+  'What is the Points Board Code?': [
+    'Ballar jadvali kodi nima?',
+    'U mashqlaringizni shu jadvalga bogʻlaydi va har bir mashqqa avtomatik qoʻyiladi. “🔄 Yangi kod” yangi jadval boshlaydi.',
+    'Что такое код доски баллов?',
+    'Он связывает ваши упражнения с этой доской и автоматически вставляется в каждое упражнение. «🔄 Новый код» начинает новую доску.'],
+  'Can I reset points?': [
+    'Ballarni nolga tushirsa boʻladimi?',
+    'Ha — “🗑 Barcha ballarni nolga tushirish” hammani nolga qaytaradi, “🗑 Hammasini butunlay oʻchirish” esa barcha yozuvlarni oʻchiradi.',
+    'Можно ли обнулить баллы?',
+    'Да — «🗑 Обнулить все баллы» сбрасывает всех до нуля, а «🗑 Удалить всё полностью» удаляет все записи.'],
+  'How do I change the language?': [
+    'Tilni qanday oʻzgartiraman?',
+    '🌐 Til boʻlimida English, Oʻzbekcha yoki Русский ni tanlang. Menyular va tugmalar oʻzgaradi; oʻquvchilar uchun mashqlar ingliz tilida qoladi.',
+    'Как сменить язык?',
+    'В разделе 🌐 Язык выберите English, Oʻzbekcha или Русский. Меняются меню и кнопки; упражнения для учеников остаются на английском.'],
+  'How do I make a backup?': [
+    'Zaxira nusxani qanday olaman?',
+    '💾 Zaxira nusxa boʻlimida “⬇ Zaxira nusxani yuklab olish” ni bosing. Bitta faylda oʻquvchilar, guruhlar, mashqlar, jadval va barcha natijalar boʻladi. Uni xavfsiz joyda saqlang (faqat shu qurilmada emas). Ilova har hafta eslatadi.',
+    'Как сделать резервную копию?',
+    'В разделе 💾 Резервная копия нажмите «⬇ Скачать резервную копию». В одном файле — ученики, группы, упражнения, расписание и все результаты. Храните его в надёжном месте (не только на этом устройстве). Приложение напоминает каждую неделю.'],
+  'How do I bring back deleted results or data?': [
+    'Oʻchirilgan natijalar yoki maʼlumotlarni qanday qaytaraman?',
+    '💾 Zaxira nusxa boʻlimida “⬆ Fayldan tiklash” ni bosing va zaxira faylni tanlang. Ilova maʼlumotlarini qaytarish va/yoki bazadan oʻchirilgan natijalarni tiklash mumkin.',
+    'Как вернуть удалённые результаты или данные?',
+    'В разделе 💾 Резервная копия нажмите «⬆ Восстановить из файла» и выберите копию. Можно вернуть данные приложения и/или результаты, удалённые из базы.'],
+  'How do I put the app on my phone or computer?': [
+    'Ilovani telefon yoki kompyuterga qanday oʻrnataman?',
+    '📲 Shu qurilmaga oʻrnatish boʻlimida Install ni bosing (Chrome, Edge, Android). iPhone/iPad’da ilovani Safari’da oching → Ulashish → “Bosh ekranga qoʻshish”.',
+    'Как установить приложение на телефон или компьютер?',
+    'В разделе 📲 Установить на это устройство нажмите Install (Chrome, Edge, Android). На iPhone/iPad откройте приложение в Safari → «Поделиться» → «На экран «Домой»».'],
+  'What is 🩺 Status?': [
+    '🩺 Holat nima?',
+    'U ilova shu qurilmada qanday ishlayotganini koʻrsatadi: baza, kirish, saqlangan natijalar, sinxronlash, oxirgi zaxira nusxa, havolalar joyi va xotira. Biror narsa ishlamasa, odatda shu yerdagi ⚠️ sababini aytadi.',
+    'Что такое 🩺 Статус?',
+    'Показывает, как приложение работает на этом устройстве: база, вход, сохранённые результаты, синхронизация, последняя резервная копия, место под ссылки и память. Если что-то не работает, ⚠️ здесь обычно объясняет почему.'],
+  'What is sync?': [
+    'Sinxronlash nima?',
+    'Maʼlumotlaringiz (shifrlangan holda) bulutga nusxalanadi, shunda boshqa qurilmalarda ham bir xil narsa koʻrinadi. Yon panelda “☁️ Sinxronlash oʻchiq” deb tursa, uni bosing va parolingizni kiriting.',
+    'Что такое синхронизация?',
+    'Ваши данные копируются (в зашифрованном виде) в облако, чтобы на других устройствах было то же самое. Если в боковой панели написано «☁️ Синхронизация выключена», нажмите и введите пароль.'],
+  'Can I share this app with another teacher?': [
+    'Bu ilovani boshqa oʻqituvchi bilan ulashsa boʻladimi?',
+    'Ha — Ulashish boʻlimidagi “🔗 Ilova havolasini nusxalash” dan foydalaning. Hamkasbingiz oʻz hisobi bilan kiradi, shuning uchun oʻquvchilaringiz, mashqlaringiz va ballaringiz faqat sizniki boʻlib qoladi.',
+    'Можно ли поделиться приложением с другим учителем?',
+    'Да — нажмите «🔗 Скопировать ссылку» в разделе «Поделиться». Коллега войдёт в свой аккаунт, так что ваши ученики, упражнения и баллы останутся только вашими.'],
+  'Can I change my name or profile picture?': [
+    'Ismim yoki profil rasmimni oʻzgartirsa boʻladimi?',
+    'Ha — ikkalasi ham shu yerda, Sozlamalarda. Ismingiz bonus ballarda chiqadi (“Bonus: By Teacher …”).',
+    'Можно ли сменить имя или фото профиля?',
+    'Да — и то и другое здесь, в Настройках. Ваше имя видно у бонусных баллов («Bonus: By Teacher …»).'],
+  'How do IELTS Listening exercises work?': [
+    'IELTS Listening mashqlari qanday ishlaydi?',
+    'Toʻliq IELTS uslubidagi listening testlari (4 qismdan istalganini tuzing; oʻquvchilar siz tuzganlarini tartib bilan bajaradi), boshqa mashqlaringizdan alohida hisoblanadi — Statistika va Ballarga taʼsir qilmaydi.',
+    'Как работают упражнения IELTS Listening?',
+    'Полноценные тесты по аудированию в стиле IELTS (соберите любые из 4 частей; ученики проходят собранные по порядку), учитываются отдельно от других упражнений — на Статистику и Баллы не влияют.'],
+  'How do IELTS Writing exercises work?': [
+    'IELTS Writing mashqlari qanday ishlaydi?',
+    'Task 1 va Task 2 topshiriqlarini yozing (eng kam soʻz soni va xohlasangiz vaqt chegarasi bilan). Oʻquvchilar javob yozadi, topshirgach ularni AI tekshiradi. Statistika va Ballarga taʼsir qilmaydi.',
+    'Как работают упражнения IELTS Writing?',
+    'Напишите задания Task 1 и Task 2 (минимум слов и, если нужно, ограничение времени). Ученики пишут ответы, после отправки их проверяет ИИ. На Статистику и Баллы не влияют.'],
+  'How do IELTS Reading exercises work?': [
+    'IELTS Reading mashqlari qanday ishlaydi?',
+    'Toʻliq IELTS uslubidagi reading testlari: 3 qismdan istalganini tuzing — har bir matnni joylang (xatboshilar boʻsh qator bilan ajratiladi) va savollarini qoʻshing. Statistika va Ballarga taʼsir qilmaydi.',
+    'Как работают упражнения IELTS Reading?',
+    'Полноценные тесты по чтению в стиле IELTS: соберите любые из 3 частей — вставьте каждый текст (абзацы разделяются пустой строкой) и добавьте вопросы. На Статистику и Баллы не влияют.'],
+  'Have another question?': [
+    'Yana savolingiz bormi?',
+    'Javob topmadingizmi? Yuqoridagi qidiruv maydoniga soʻz yozing (u hamma javoblarni qidiradi) yoki toʻgʻridan-toʻgʻri Toxirjonga yozing, u yordam beradi: +998886660904',
+    'Есть другой вопрос?',
+    'Не нашли ответ? Введите слово в поиск выше (он ищет по всем ответам) или напишите Тохиржону напрямую — он поможет: +998886660904']
+};

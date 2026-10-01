@@ -2702,6 +2702,13 @@ function getAiRobotFaqForTab(tab) {
   if (AI_ROBOT_BUILDER_TABS.indexOf(tab) !== -1) return (AI_ROBOT_TYPE_FAQ[tab] || []).concat(AI_ROBOT_FAQ_BY_TAB.builder);
   return AI_ROBOT_FAQ_BY_TAB.default;
 }
+// a question and its answer in the app's language (js/i18n-strings.js, TA_ROBOT_I18N)
+function aiRobotText(item) {
+  const lang = window.taUiLang ? window.taUiLang() : 'en';
+  const t = lang !== 'en' && window.TA_ROBOT_I18N && window.TA_ROBOT_I18N[item.q];
+  if (!t) return { q: item.q, a: item.a, own: false };
+  return lang === 'uz' ? { q: t[0], a: t[1], own: true } : { q: t[2], a: t[3], own: true };
+}
 // every question once, for the search box
 function getAiRobotAllFaq() {
   const seen = new Set(), out = [];
@@ -2952,11 +2959,14 @@ function aiRobotFilter(text) {
   if (!list) return;
   const words = aiRobotQuery.toLowerCase().split(/\s+/).filter(Boolean);
   aiRobotShown = words.length
-    ? getAiRobotAllFaq().filter(it => { const t = (it.q + ' ' + it.a).toLowerCase(); return words.every(w => t.indexOf(w) !== -1); }).concat([AI_ROBOT_CONTACT_ITEM])
+    ? getAiRobotAllFaq().filter(it => { const x = aiRobotText(it); const t = (x.q + ' ' + x.a + ' ' + it.q + ' ' + it.a).toLowerCase(); return words.every(w => t.indexOf(w) !== -1); }).concat([AI_ROBOT_CONTACT_ITEM])
     : getAiRobotFaqForTab(currentActiveTab);
-  list.innerHTML = (words.length && aiRobotShown.length === 1 ? '<div class="ai-robot-none">No answer mentions “' + escapeForHtml(aiRobotQuery.trim()) + '”.</div>' : '') +
+  const lang = window.taUiLang ? window.taUiLang() : 'en';
+  const none = lang === 'uz' ? 'Hech bir javobda “%” yoʻq.' : lang === 'ru' ? 'Ни в одном ответе нет «%».' : 'No answer mentions “%”.';
+  list.innerHTML = (words.length && aiRobotShown.length === 1 ? '<div class="ai-robot-none" translate="no">' + escapeForHtml(none).replace('%', escapeForHtml(aiRobotQuery.trim())) + '</div>' : '') +
     aiRobotShown.map(function (item, i) {
-      return '<button type="button" class="ai-robot-q-item" onclick="showAiRobotAnswer(' + i + ')">' + escapeForHtml(item.q) + '</button>';
+      const x = aiRobotText(item);
+      return '<button type="button" class="ai-robot-q-item" onclick="showAiRobotAnswer(' + i + ')"' + (x.own ? ' translate="no"' : '') + '>' + escapeForHtml(x.q) + '</button>';
     }).join('');
 }
 function showAiRobotAnswer(i) {
@@ -2966,8 +2976,11 @@ function showAiRobotAnswer(i) {
   if (!body) return;
   body.innerHTML =
     '<button type="button" class="ai-robot-back-btn" onclick="renderAiRobotQuestionList()">← Back to questions</button>' +
-    '<div class="ai-robot-answer-q">' + escapeForHtml(item.q) + '</div>' +
-    '<div class="ai-robot-answer-a">' + escapeForHtml(item.a) + '</div>';
+    (function (x) {
+      const no = x.own ? ' translate="no"' : '';
+      return '<div class="ai-robot-answer-q"' + no + '>' + escapeForHtml(x.q) + '</div>' +
+        '<div class="ai-robot-answer-a"' + no + '>' + escapeForHtml(x.a) + '</div>';
+    })(aiRobotText(item));
   playAiRobotOnce('yes');
 }
 window.aiRobotFilter = aiRobotFilter;

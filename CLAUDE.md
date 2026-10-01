@@ -17,8 +17,11 @@ users ask it how to use things. Where: `AI_ROBOT_FAQ_BY_TAB` (one list per secti
 `createpicker`, `builder`, `hwcbuilder`, `dashboard` = Statistics, `myexercises`, `students`,
 `results`, `points`, `settings`, IELTS ones) and `AI_ROBOT_TYPE_FAQ` (one list per exercise
 type) in `js/common.js`. Write in plain words with the real button names (e.g. "Tap "📤 Share""),
-and fix answers that a change makes wrong. The robot's search box looks through every answer
-from any page. `tests/robot.spec.js` checks it. Do this in the same change as the feature —
+and fix answers that a change makes wrong. **Also add the Uzbek and Russian translation** of
+each new or changed question/answer to `TA_ROBOT_I18N` in `js/i18n-strings.js` (keyed by the
+English question; button names as they appear on screen in that language). The robot's search
+box looks through every answer from any page. `tests/robot.spec.js` checks it, and fails when a
+question has no translation. Do this in the same change as the feature —
 don't wait to be asked.
 
 ## ⚠️ Tell the teacher at the start of a new chat — database limits
