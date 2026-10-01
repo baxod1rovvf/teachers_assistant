@@ -268,14 +268,15 @@ function deleteRecentExercise(idx) {
 // Every exercise can be shared as a link (online for 7 days): iPhones can't open
 // exercise files, and a phone only allows the microphone on a web page.
 function sharesAsLink(item, html) { return !!(item && taPlayUrl(item.uid) && (taPlayLive(item) || html)); }
-function shareMessageFor(item, html) {
+// withLink false: the message as shown, without the link (the Share window shows the link above it)
+function shareMessageFor(item, html, withLink) {
   const lines = ['📘 ' + item.title + ' (' + item.typeLabel + ')'];
   if (item.requiredCode) lines.push('🔑 Code: ' + item.requiredCode);
   if (sharesAsLink(item, html)) {
     lines.push(item.typeLabel === 'Pronunciation'
       ? '🎤 Open this link in Google Chrome (on an iPhone: Safari) — the microphone only works there:'
       : '🔗 Open this link (works on any phone, iPhone too):');
-    lines.push(taPlayUrl(item.uid));
+    if (withLink !== false) lines.push(taPlayUrl(item.uid));
     lines.push('Type your student ID' + (item.requiredCode ? ' and the code' : '') + (item.typeLabel === 'Pronunciation' ? ', allow the microphone,' : '') + ' and start. Good luck! 🍀');
   } else lines.push('Open the file, type your student ID' + (item.requiredCode ? ' and the code' : '') + ', and start. Good luck! 🍀');
   return lines.join('\n');
@@ -294,11 +295,15 @@ function shareRecentExercise(idx) {
   const item = getRecentExercises()[idx];
   if (!item) return;
   const html = getCachedExerciseHtml(item.uid);
+  const asLink = sharesAsLink(item, html);
   const m = taModal('📤 Share "' + item.title + '"',
+    (asLink ? '<label class="field-label">Link</label>' +
+      '<div class="share-link-row"><input type="text" class="share-link" readonly spellcheck="false" aria-label="Link to the exercise">' +
+      '<button type="button" class="mini-btn solid" data-act="copylink">🔗 Copy link</button></div>' : '') +
     '<label class="field-label">Message for your students</label>' +
     '<textarea class="share-msg" rows="4"></textarea>' +
     '<div class="share-actions">' +
-      '<button type="button" class="mini-btn solid" data-act="copy">📋 Copy message</button>' +
+      '<button type="button" class="mini-btn' + (asLink ? '' : ' solid') + '" data-act="copy">📋 Copy message</button>' +
       (html ? '<button type="button" class="mini-btn" data-act="file">📎 Send the file</button>' : '') +
       (item.requiredCode ? '<button type="button" class="mini-btn" data-act="code">🔢 Show code on screen</button>' : '') +
     '</div>' +
@@ -308,7 +313,17 @@ function shareRecentExercise(idx) {
       : 'This file isn\'t saved in this browser any more, so only the message can be shared. Send the file you downloaded when you made it.') + '</p>',
     { wide: true });
   const msgEl = m.body.querySelector('.share-msg');
-  msgEl.value = shareMessageFor(item, html);
+  msgEl.value = shareMessageFor(item, html, false);
+  // what's copied: the message with the link put back in, after the line that announces it
+  const withLink = text => {
+    if (!asLink) return text;
+    const url = taPlayUrl(item.uid);
+    if (text.indexOf(url) !== -1) return text;
+    const lines = text.split('\n');
+    const at = lines.findIndex(l => /^(🔗|🎤)/.test(l));
+    lines.splice(at === -1 ? lines.length : at + 1, 0, url);
+    return lines.join('\n');
+  };
   // the link: already online, or put (back) online now for another 7 days
   const note = m.body.querySelector('.share-link-note');
   const showUntil = it => {
@@ -330,7 +345,16 @@ function shareRecentExercise(idx) {
       });
     }
   }
-  m.body.querySelector('[data-act="copy"]').onclick = () => online.then(() => taCopyText(msgEl.value, 'Message copied — paste it into your class chat.'));
+  m.body.querySelector('[data-act="copy"]').onclick = () => online.then(() => taCopyText(withLink(msgEl.value), 'Message copied, with the link — paste it into your class chat.'));
+  const linkEl = m.body.querySelector('.share-link');
+  if (linkEl) {
+    linkEl.value = taPlayUrl(item.uid);
+    linkEl.onfocus = () => linkEl.select();
+    m.body.querySelector('[data-act="copylink"]').onclick = () => online.then(ok => {
+      if (ok === false) { showToast('The exercise isn\'t online — send the file instead, or try again.'); return; }
+      taCopyText(linkEl.value, 'Link copied.');
+    });
+  }
   const fileBtn = m.body.querySelector('[data-act="file"]');
   if (fileBtn) fileBtn.onclick = async () => {
     const filename = item.title.replace(/[^a-z0-9\-_ ]/gi, '').trim().replace(/\s+/g, '_') + '.html';
@@ -338,11 +362,11 @@ function shareRecentExercise(idx) {
     let file = null;
     try { file = new File([content], filename || 'exercise.html', { type: 'text/html' }); } catch (e) { file = null; }
     if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
-      try { await navigator.share({ files: [file], text: msgEl.value, title: item.title }); return; }
+      try { await navigator.share({ files: [file], text: withLink(msgEl.value), title: item.title }); return; }
       catch (e) { if (e && e.name === 'AbortError') return; } // closed the share sheet
     }
     downloadFile(filename || 'exercise.html', html);
-    taCopyText(msgEl.value, 'File downloaded and message copied — attach the file in your class chat.');
+    taCopyText(withLink(msgEl.value), 'File downloaded and message copied — attach the file in your class chat.');
   };
   const codeBtn = m.body.querySelector('[data-act="code"]');
   if (codeBtn) codeBtn.onclick = () => { m.close(); showCodeOnScreen(item); };

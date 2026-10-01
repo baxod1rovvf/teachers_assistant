@@ -2053,3 +2053,8 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 .status-row.bad { border-left: 4px solid var(--danger); }
 .status-row .mini-btn { margin-left: 6px; }
 @media (max-width: 560px) { .status-row { grid-template-columns: 26px 1fr; } .status-row > span:last-child { grid-column: 2; } }
+
+/* Share: the link on its own, with a copy button */
+.share-link-row { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; }
+.share-link { flex: 1; min-width: 0; padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--surface-sunken); color: var(--ink); font: 600 0.86rem ui-monospace, Menlo, Consolas, monospace; }
+.share-link-row .mini-btn { flex-shrink: 0; }
