@@ -116,6 +116,13 @@ merging into `main`, and don't merge while any fail.** When you add or change a 
 or update a test for it. The tests use a stand-in database and a made-up class — never put
 real students' names or results into the repository (it is public).
 
+## The AI robot (help bubble) — add every new feature to it
+
+The teacher asked: **every new feature or option must also get a question + answer in the
+robot** (`AI_ROBOT_FAQ_BY_TAB` / `AI_ROBOT_TYPE_FAQ` in `js/common.js`), in the section where
+it lives, in plain words with the real button names. Change answers when a feature changes.
+The robot's search box looks through all answers from any page. `tests/robot.spec.js`.
+
 ## Results kept on the device (keep this in mind when changing how results load)
 
 - `js/firebase.js` keeps every result it has read in IndexedDB (`ta_results_cache…`, per

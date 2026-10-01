@@ -202,6 +202,12 @@ body.light-theme .brand-name b { color: #1B2F82; }
   background: transparent; color: var(--ink); font-size: 0.8rem; font-weight: 600; cursor: pointer; margin-bottom: 2px;
 }
 .ai-robot-q-item:hover { background: var(--surface-sunken); }
+.ai-robot-search {
+  width: 100%; box-sizing: border-box; margin: 0 0 8px; padding: 8px 10px; border-radius: 10px; border: 1.5px solid var(--border);
+  background: var(--surface-sunken); color: var(--ink); font: 600 0.8rem 'Inter', sans-serif;
+}
+.ai-robot-search:focus { outline: none; border-color: var(--brand); }
+.ai-robot-none { font-size: 0.78rem; color: var(--ink-faint); padding: 4px 10px 8px; }
 .ai-robot-back-btn { background: none; border: none; color: var(--brand); font-size: 0.76rem; font-weight: 700; cursor: pointer; padding: 2px 2px 8px; }
 .ai-robot-answer-q { font-size: 0.82rem; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
 .ai-robot-answer-a { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.55; }
