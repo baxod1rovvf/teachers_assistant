@@ -215,12 +215,78 @@ function onBackupFileChosen(input) {
   reader.readAsText(file);
 }
 
+/* ================= STATUS =================
+   One place that says how the app is doing on this device: the database,
+   sign-in, results kept here, sync, backups, links, storage, version. */
+function taAgo(ms) {
+  if (!ms) return 'never';
+  const m = Math.round((Date.now() - ms) / 60000);
+  if (m < 1) return 'just now';
+  if (m < 60) return m + ' min ago';
+  if (m < 48 * 60) return Math.round(m / 60) + ' h ago';
+  return Math.round(m / 1440) + ' days ago';
+}
+function taMb(bytes) { return bytes >= 1048576 ? (bytes / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(bytes / 1024)) + ' KB'; }
+async function renderStatusPanel() {
+  const el = document.getElementById('statusRows');
+  if (!el) return;
+  const rows = [];
+  const row = (icon, label, value, cls) => rows.push('<div class="status-row ' + (cls || '') + '"><span class="status-ic">' + icon + '</span><b>' + label + '</b><span>' + value + '</span></div>');
+
+  // internet and the database
+  const err = window.__taLastDbError;
+  const recentErr = err && Date.now() - err.at < 3600000 ? err : null;
+  if (!navigator.onLine) row('📡', 'Internet', 'Offline — results and sync wait until you\'re back online.', 'bad');
+  else if (recentErr && /resource-exhausted/.test(recentErr.code)) row('🗄', 'Database', 'A free-plan limit was reached ' + taAgo(recentErr.at) + ' — it usually resets the next day.', 'bad');
+  else if (recentErr) row('🗄', 'Database', 'Last problem ' + taAgo(recentErr.at) + ': ' + escapeForHtml(recentErr.code) + '.', 'warn');
+  else row('🗄', 'Database', typeof window.taFetchAccounts === 'function' ? 'Connected.' : 'Still loading…', typeof window.taFetchAccounts === 'function' ? 'ok' : 'warn');
+
+  // database sign-in (the lock)
+  const u = window.__TA_USER || {};
+  const cloud = window.taCloudUser ? window.taCloudUser() : null;
+  if (cloud && u.ce && cloud.email === String(u.ce).toLowerCase()) row('🔐', 'Database sign-in', 'Signed in — this device can save and delete.', 'ok');
+  else row('🔐', 'Database sign-in', 'Not signed in — this device can\'t save points, links or synced data. <button type="button" class="mini-btn" onclick="taCloudCheck(true)">Sign in</button>', 'bad');
+
+  // results kept on this device
+  const info = window.taResultsCacheInfo ? window.taResultsCacheInfo() : null;
+  if (info) row('📊', 'Results on this device', info.kept + ' kept · newest ' + (info.newest ? taAgo(Date.parse(info.newest)) : '—') + ' · full re-read ' + (info.fullAt ? taAgo(Date.parse(info.fullAt)) : 'not yet'), 'ok');
+
+  // sync
+  const sync = window.taSync ? window.taSync.status() : null;
+  if (sync && sync.text) row('☁️', 'Sync', escapeForHtml(sync.text.replace(/^☁️\s*/, '')), sync.cls === 'bad' || sync.cls === 'off' ? 'warn' : 'ok');
+
+  // backup
+  const lastBackup = Date.parse(localStorage.getItem(LS_LAST_BACKUP) || '') || 0;
+  row('💾', 'Last backup', lastBackup ? taAgo(lastBackup) + ' (from this device)' : 'None from this device yet', !lastBackup || Date.now() - lastBackup > 7 * 86400000 ? 'warn' : 'ok');
+
+  // exercise links
+  let play = null;
+  try { play = JSON.parse(localStorage.getItem('ta_play_usage') || 'null'); } catch (e) { play = null; }
+  if (play) row('🔗', 'Exercise links online', play.links + ' link' + (play.links === 1 ? '' : 's') + ', about ' + taMb(play.bytes) + ' (all teachers; checked ' + taAgo(play.at) + ')', play.bytes > 400 * 1048576 ? 'warn' : 'ok');
+
+  // browser storage
+  let mine = 0;
+  try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); mine += (k.length + (window.taRaw.get(k) || '').length) * 2; } } catch (e) { /* ignore */ }
+  let est = null;
+  try { est = navigator.storage && navigator.storage.estimate ? await navigator.storage.estimate() : null; } catch (e) { est = null; }
+  const full = mine > 4 * 1048576;
+  row('🧺', 'Browser storage', 'Saved data ' + taMb(mine) + ' of about 5 MB' + (est && est.usage ? ' · everything this site keeps: ' + taMb(est.usage) : '') + (full ? ' — nearly full: older saved exercise copies may be dropped.' : ''), full ? 'warn' : 'ok');
+
+  // version
+  const s = document.querySelector('script[src*="js/common.js?v="]');
+  const v = s ? (s.getAttribute('src').match(/v=([0-9a-z]+)/) || [])[1] : '';
+  row('🏷', 'App version', escapeForHtml(v || '—') + ' · Firebase 10.12.5 (kept in the app)', 'ok');
+
+  el.innerHTML = rows.join('');
+}
+
 /* ================= PAGE START ================= */
 taOnTab('settings', function () {
   renderWeeklyScheduleSettings();
   if (location.hash === '#schedule') scrollToScheduleSettings();
   renderBackupInfo();
   renderInstallSection();
+  setTimeout(renderStatusPanel, 1500);
   const langPick = document.getElementById('settingsLangPick');
   if (langPick) langPick.innerHTML = taLangPickerHtml();
   if (location.hash === '#backup') setTimeout(function () {

@@ -1,9 +1,10 @@
 {
   "name": "teachers-assistant",
   "private": true,
-  "description": "Teacher's Assistant — only used to run the automatic tests (the site itself needs no build).",
+  "description": "Teacher's Assistant \u2014 only used to run the automatic tests (the site itself needs no build).",
   "scripts": {
-    "test": "playwright test"
+    "test": "playwright test",
+    "stamp": "node tools/bump-version.js"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1"

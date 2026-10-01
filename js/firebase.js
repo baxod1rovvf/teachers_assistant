@@ -1,6 +1,6 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, collection, query, where, onSnapshot, getDocs, deleteDoc, updateDoc, doc, addDoc, setDoc, serverTimestamp, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { initializeApp } from "./vendor/firebase-10.12.5/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "./vendor/firebase-10.12.5/firebase-auth.js";
+import { getFirestore, collection, query, where, onSnapshot, getDocs, deleteDoc, updateDoc, doc, addDoc, setDoc, serverTimestamp, Timestamp } from "./vendor/firebase-10.12.5/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCefg2YghdSneABh0ZOUu3-snO4soVw0lA",
@@ -112,6 +112,7 @@ window.taSweepPlayLinks = async function () {
    answers "resource-exhausted". The app then warns the teacher (common.js). */
 function taReportDbError(e) {
   const code = e && (e.code || '');
+  window.__taLastDbError = { code: String(code || (e && e.message) || 'error'), at: Date.now() };   // for Settings → Status
   if (/resource-exhausted/.test(String(code)) && window.taDbLimitReached) window.taDbLimitReached();
   if (/permission-denied/.test(String(code)) && window.taCloudRefused) window.taCloudRefused();
 }

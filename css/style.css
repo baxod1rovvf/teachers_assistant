@@ -2043,3 +2043,13 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 .old-file-line.minor { color: var(--ink-soft); }
 .old-file-note { margin: 0 0 12px; padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(--warning); background: var(--warning-surface); color: var(--ink); font-size: 0.84rem; line-height: 1.5; }
 .old-file-note ul { margin: 4px 0 4px 18px; }
+
+/* Settings → Status */
+.status-rows { display: flex; flex-direction: column; gap: 6px; }
+.status-row { display: grid; grid-template-columns: 26px 170px 1fr; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 10px; border: 1.5px solid var(--border); font-size: 0.84rem; color: var(--ink-soft); }
+.status-row b { color: var(--ink); font-weight: 700; }
+.status-row.ok { border-left: 4px solid var(--success); }
+.status-row.warn { border-left: 4px solid var(--warning); }
+.status-row.bad { border-left: 4px solid var(--danger); }
+.status-row .mini-btn { margin-left: 6px; }
+@media (max-width: 560px) { .status-row { grid-template-columns: 26px 1fr; } .status-row > span:last-child { grid-column: 2; } }
