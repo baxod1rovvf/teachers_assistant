@@ -294,11 +294,15 @@ function shareRecentExercise(idx) {
   const item = getRecentExercises()[idx];
   if (!item) return;
   const html = getCachedExerciseHtml(item.uid);
+  const asLink = sharesAsLink(item, html);
   const m = taModal('📤 Share "' + item.title + '"',
+    (asLink ? '<label class="field-label">Link</label>' +
+      '<div class="share-link-row"><input type="text" class="share-link" readonly spellcheck="false" aria-label="Link to the exercise">' +
+      '<button type="button" class="mini-btn solid" data-act="copylink">🔗 Copy link</button></div>' : '') +
     '<label class="field-label">Message for your students</label>' +
     '<textarea class="share-msg" rows="4"></textarea>' +
     '<div class="share-actions">' +
-      '<button type="button" class="mini-btn solid" data-act="copy">📋 Copy message</button>' +
+      '<button type="button" class="mini-btn' + (asLink ? '' : ' solid') + '" data-act="copy">📋 Copy message</button>' +
       (html ? '<button type="button" class="mini-btn" data-act="file">📎 Send the file</button>' : '') +
       (item.requiredCode ? '<button type="button" class="mini-btn" data-act="code">🔢 Show code on screen</button>' : '') +
     '</div>' +
@@ -331,6 +335,15 @@ function shareRecentExercise(idx) {
     }
   }
   m.body.querySelector('[data-act="copy"]').onclick = () => online.then(() => taCopyText(msgEl.value, 'Message copied — paste it into your class chat.'));
+  const linkEl = m.body.querySelector('.share-link');
+  if (linkEl) {
+    linkEl.value = taPlayUrl(item.uid);
+    linkEl.onfocus = () => linkEl.select();
+    m.body.querySelector('[data-act="copylink"]').onclick = () => online.then(ok => {
+      if (ok === false) { showToast('The exercise isn\'t online — send the file instead, or try again.'); return; }
+      taCopyText(linkEl.value, 'Link copied.');
+    });
+  }
   const fileBtn = m.body.querySelector('[data-act="file"]');
   if (fileBtn) fileBtn.onclick = async () => {
     const filename = item.title.replace(/[^a-z0-9\-_ ]/gi, '').trim().replace(/\s+/g, '_') + '.html';
