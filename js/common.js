@@ -1203,7 +1203,7 @@ const TA_FILE_FIXES = [
     what: 'the microphone doesn\'t turn on on phones' },
   { id: 'dictation', at: '2026-09-30T07:06:00Z', types: /dictation/i, minor: true,
     what: 'students see too high a score when they type extra words (your Results show the right one)' },
-  { id: 'setsave', at: '2026-10-01T19:00:00Z', types: /^(homework|class)$/i,
+  { id: 'setsave', at: '2026-10-01T17:30:00Z', types: /^(homework|class)$/i,
     what: 'if a student\'s answers fail to upload, the set still counts the exercise as done — you see "Completed" but no answers' }
 ];
 const taScriptCheckCache = new Map();
