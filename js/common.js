@@ -748,8 +748,12 @@ function taMissingStudentsHtml(exercise, doneStudents) {
   if (!group) return '';
   const done = new Set((doneStudents || []).filter(Boolean).map(st => String(st.id).trim().toLowerCase()));
   const missing = getPointsRoster().filter(st => st.group === group.id && !done.has(String(st.id).trim().toLowerCase()));
-  const chip = st => '<span class="missing-student"><span class="res-avatar" style="background:' + avatarColorForName(st.name) + ';">' +
-    escapeForHtml(initialsForName(st.name)) + '</span><span translate="no">' + escapeForHtml(st.name) + '</span><small>ID ' + escapeForHtml(String(st.id)) + '</small></span>';
+  const chip = st => {
+    const pk = taPunishKey(exercise.code, st.id);
+    return '<span class="missing-student' + (taIsPunished(pk) ? ' punished' : '') + '"><span class="res-avatar" style="background:' + avatarColorForName(st.name) + ';">' +
+      escapeForHtml(initialsForName(st.name)) + '</span><span translate="no">' + escapeForHtml(st.name) + '</span><small>ID ' + escapeForHtml(String(st.id)) + '</small>' +
+      (exercise.code ? taPunishChipHtml(pk) : '') + '</span>';
+  };
   const gName = '<span translate="no">' + escapeForHtml(group.name) + '</span>';
   return '<div class="results-section missing-section">' +
     '<div class="results-section-head"><h3>🚫 Didn\'t do it — ' + gName + ' (' + missing.length + ')</h3>' +
@@ -1964,6 +1968,34 @@ function taCheckChipHtml(keys, checked, label) {
     (label || (checked ? '✓ Checked' : '○ Not checked')) + '</button>';
 }
 window.taCheckChipHtml = taCheckChipHtml;
+/* ---- Results: "Will be punished" ----
+   The teacher marks a student for one exercise (or Homework/Class set); the
+   student's row then stands out in red. Kept per account and synced
+   (ta_punished), as "code|student id or name". */
+const LS_PUNISHED = 'ta_punished';
+function taGetPunished() {
+  try { return JSON.parse(localStorage.getItem(LS_PUNISHED) || '[]'); } catch (e) { return []; }
+}
+function taPunishKey(code, student) { return String(code || '') + '|' + String(student || '').trim().toLowerCase(); }
+function taIsPunished(key) { return taGetPunished().indexOf(key) !== -1; }
+function taSetPunished(key, on) {
+  const list = taGetPunished().filter(k => k !== key);
+  if (on) list.push(key);
+  try { localStorage.setItem(LS_PUNISHED, JSON.stringify(list.slice(-3000))); } catch (e) { /* ignore */ }
+  if (window.renderResultsTable && document.getElementById('resultsTableWrap')) window.renderResultsTable();
+  if (window.renderHwcResultsList) window.renderHwcResultsList();
+}
+function taPunishChipHtml(key) {
+  const on = taIsPunished(key);
+  return '<button type="button" class="punish-chip' + (on ? ' on' : '') + '" data-key="' + escapeForHtml(key) + '"' +
+    ' onclick="event.stopPropagation(); taSetPunished(this.dataset.key, ' + (!on) + ')"' +
+    ' title="' + (on ? 'Marked: will be punished — tap to take the mark off' : 'Mark this student: will be punished') + '">' +
+    (on ? '⚠️ Will be punished' : '⚖️ Punish?') + '</button>';
+}
+window.taPunishKey = taPunishKey;
+window.taIsPunished = taIsPunished;
+window.taSetPunished = taSetPunished;
+window.taPunishChipHtml = taPunishChipHtml;
 function taCompletionKey(r) { return r.code + '|' + String(r.studentId || r.name || '').trim().toLowerCase() + '|' + (r.date || ''); }
 // Unchecked completions from the last week, grouped by student, newest first.
 function getUncheckedCompletions() {

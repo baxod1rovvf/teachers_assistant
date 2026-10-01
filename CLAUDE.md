@@ -237,3 +237,7 @@ real students' names or results into the repository (it is public).
   back with `JSON.stringify(t).replace(/<\//g, '<\\/')`.
 - Accounts: each teacher's `localStorage` is namespaced (`js/accounts.js`); the admin
   `TOXIRJON` uses un-prefixed keys.
+- Results → "⚖️ Punish?" / "⚠️ Will be punished" (`taPunishChipHtml` etc. in common.js): per
+  exercise/set code + student, kept in `ta_punished` (synced, in the backup); marked rows turn
+  red in the results table, a set's student list and "Didn't do it". My Exercises shows
+  Homework/Class sets with a coloured edge and a "📚 Homework set"/"🏫 Class set" label.

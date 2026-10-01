@@ -134,7 +134,9 @@ function renderHwcResultsList() {
         '</div>';
     }).join('') : '';
 
-    return '<div class="hwc-student-row">' +
+    const punishKey = taPunishKey(hwcResultsCurrentItem.code, d.studentId || d.studentName);
+    const punished = taIsPunished(punishKey);
+    return '<div class="hwc-student-row' + (punished ? ' punished' : '') + '">' +
       '<div class="hwc-student-head" onclick="toggleHwcStudentExpand(' + jsAttr(studentKey) + ')">' +
         '<div class="hwc-col-name"><span class="res-avatar" style="background:' + avatarColor + ';">' + escapeForHtml(initials) + '</span><b>' + escapeForHtml(d.studentName) + '</b></div>' +
         '<div class="hwc-col-id">ID: ' + escapeForHtml(d.studentId) + '</div>' +
@@ -142,7 +144,7 @@ function renderHwcResultsList() {
           '<span>' + fractionText + ' \u00b7 ' + pct + '%</span>' +
           '<div class="res-score-bar-track"><div class="res-score-bar-fill" style="width:' + pct + '%; background:' + barColor + ';"></div></div>' +
         '</div>' +
-        '<div class="hwc-col-status"><span class="res-status-pill" style="background:' + pillBg + '; color:' + pillColor + ';">' + statusLabel + '</span>' + checkHtml + '</div>' +
+        '<div class="hwc-col-status"><span class="res-status-pill" style="background:' + pillBg + '; color:' + pillColor + ';">' + statusLabel + '</span>' + checkHtml + taPunishChipHtml(punishKey) + '</div>' +
         totalTimeHtml +
         '<span class="hwc-time">' + formatRelativeTime(d.lastActive) + '</span>' +
         '<span class="hwc-chevron">' + (isExpanded ? '\u25b2' : '\u25bc') + '</span>' +
@@ -443,12 +445,14 @@ function renderResultsTable(codeOverride) {
     ? indexed.filter(function (o) { return (o.r.name || '').toLowerCase().indexOf(searchTerm) !== -1 || (o.r.type || '').toLowerCase().indexOf(searchTerm) !== -1; })
     : indexed;
 
+  const punishedCount = taGetPunished().filter(k => k.indexOf(String(lookupCode) + '|') === 0).length;
   let html = taOldFileBannerHtml(matches) + '<div class="results-summary">' +
     '<span><b>' + idMatches.length + '</b> with ID</span>' +
     '<span><b>' + nameMatches.length + '</b> name only</span>' +
     (avgScore !== null ? '<span>Average score (with ID): <b>' + avgScore + '</b></span>' : '') +
     '<span>Average time: <b>' + avgTimeDisplay + '</b></span>' +
     (expiredCount > 0 ? '<span>🚫 <b>' + expiredCount + '</b> hidden (expired file)</span>' : '') +
+    (punishedCount ? '<span class="punished-count">⚠️ <b>' + punishedCount + '</b> will be punished</span>' : '') +
     '</div>';
 
   if (displayRows.length === 0) {
@@ -460,7 +464,7 @@ function renderResultsTable(codeOverride) {
 
   const tableFor = function (rows) {
     let html = '<table class="results-table"><thead><tr>' +
-      '<th>Student</th><th>Exercise</th><th>Score</th><th>Time</th><th>Checked</th><th>Date</th><th></th>' +
+      '<th>Student</th><th>Exercise</th><th>Score</th><th>Time</th><th>Checked</th><th>Punish</th><th>Date</th><th></th>' +
       '</tr></thead><tbody>';
     rows.forEach(function (o) {
       const r = o.r, idx = o.i;
@@ -488,12 +492,14 @@ function renderResultsTable(codeOverride) {
       } else {
         scoreCell = escapeForHtml(r.sentenceCount ? r.sentenceCount + ' sentences' : (r.wordsLearned ? r.wordsLearned + ' words' : '—'));
       }
-      html += '<tr>' +
+      const punishKey = taPunishKey(r.code, st ? st.id : r.name);
+      html += '<tr' + (taIsPunished(punishKey) ? ' class="punished"' : '') + '>' +
         '<td><div class="res-student-cell"><span class="res-avatar" style="background:' + avatarColor + ';">' + escapeForHtml(initials) + '</span><span>' + escapeForHtml(r.name || '—') + (st ? '<span class="res-id-tag">ID ' + escapeForHtml(st.id) + (groupNameFor(st.group) ? ' · ' + escapeForHtml(groupNameFor(st.group)) : '') + '</span>' : '') + '</span></div></td>' +
         '<td><span class="badge-type">' + escapeForHtml(r.type || '—') + '</span></td>' +
         '<td>' + scoreCell + '</td>' +
         '<td>' + escapeForHtml(r.timeDisplay || '—') + '</td>' +
         '<td>' + taCheckChipHtml([taCompletionKey(r)], taIsChecked(r)) + '</td>' +
+        '<td>' + taPunishChipHtml(punishKey) + '</td>' +
         '<td>' + fmtDate(r.date) + '</td>' +
         '<td>' + viewBtn + '</td>' +
         '</tr>';

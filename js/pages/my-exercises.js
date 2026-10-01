@@ -86,9 +86,16 @@ function renderRecentExercises() {
       html += '<div class="recent-exercise-daygroup">' + escapeForHtml(groupLabel) + '</div>';
     }
     const dateStr = fmtDate(item.date);
-    const disabledBadge = item.disabled
+    // Homework and Class sets stand out from single exercises
+    const setKind = (item.setKind === 'class' || item.typeLabel === 'Class') ? 'class'
+      : ((item.setKind === 'homework' || item.typeLabel === 'Homework') ? 'homework' : '');
+    const setBadge = setKind
+      ? '<span class="badge-set ' + setKind + '">' + (setKind === 'class' ? '🏫 Class set' : '📚 Homework set') +
+        (item.mergedItems && item.mergedItems.length ? ' · ' + item.mergedItems.length + ' exercises' : '') + '</span>'
+      : '';
+    const disabledBadge = setBadge + (item.disabled
       ? '<span class="badge-type" style="background:rgba(232,103,74,0.14); color:var(--danger);">Points off</span>'
-      : '<span class="badge-type">' + escapeForHtml(item.typeLabel) + '</span>';
+      : (setKind ? '' : '<span class="badge-type">' + escapeForHtml(item.typeLabel) + '</span>'));
     const disableBtn = item.disabled
       ? ''
       : '<button class="mini-btn danger" type="button" onclick="disableRecentExercisePoints(' + idx + ')">🚫 Disable Points</button>';
@@ -117,7 +124,7 @@ function renderRecentExercises() {
         '<button class="mini-btn" type="button" onclick="separateHomeworkOrClass(' + idx + ')">🔀 Separate</button>'
       : '';
     html +=
-      '<div class="recent-exercise-row" data-uid="' + escapeForHtml(item.uid || '') + '">' +
+      '<div class="recent-exercise-row' + (setKind ? ' set-row set-' + setKind : '') + '" data-uid="' + escapeForHtml(item.uid || '') + '">' +
         '<div class="recent-exercise-info">' +
           '<div class="recent-exercise-title"><span translate="no">' + escapeForHtml(item.title) + '</span> ' + disabledBadge + '</div>' +
           codeLine + oldLine +

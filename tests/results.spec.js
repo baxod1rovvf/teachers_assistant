@@ -103,3 +103,49 @@ test('a homework set shows each student\'s progress and their answers open', asy
   await expect(page.locator('#sentenceViewBody')).toContainText('correct');
   expect(errors).toEqual([]);
 });
+
+test('"Will be punished" marks a student in red and is remembered', async ({ page, context }) => {
+  await prepare(context);
+  const errors = watchErrors(page);
+  await page.goto('/results.html');
+  await page.waitForTimeout(1500);
+  await hideNotices(page);
+  const open = () => page.evaluate(code => { document.getElementById('res-code-input').value = code; onResultsCodeInput(); }, data.DICTATION_CODE);
+  await open();
+  const row = () => page.locator('.results-table tbody tr', { hasText: 'Alice Test' });
+  await expect(row()).not.toHaveClass(/punished/);
+  await row().locator('.punish-chip').click();
+  await expect(row()).toHaveClass(/punished/);
+  await expect(row().locator('.punish-chip')).toHaveText('⚠️ Will be punished');
+  await expect(page.locator('.results-summary')).toContainText('1 will be punished');
+  // a student who didn't do it can be marked too
+  const cora = page.locator('.missing-student', { hasText: 'Cora Test' });
+  await cora.locator('.punish-chip').click();
+  await expect(page.locator('.missing-student', { hasText: 'Cora Test' })).toHaveClass(/punished/);
+  await page.reload();
+  await page.waitForTimeout(1500);
+  await hideNotices(page);
+  await open();
+  await expect(row()).toHaveClass(/punished/);
+  await expect(page.locator('.missing-student', { hasText: 'Cora Test' })).toHaveClass(/punished/);
+  // take it off again
+  await row().locator('.punish-chip').click();
+  await expect(row()).not.toHaveClass(/punished/);
+  // in a homework set
+  await page.evaluate(() => showExerciseResults('uset'));
+  const dilya = page.locator('.hwc-student-row', { hasText: 'Dilya Test' });
+  await dilya.locator('.punish-chip').click();
+  await expect(page.locator('.hwc-student-row', { hasText: 'Dilya Test' })).toHaveClass(/punished/);
+  expect(errors).toEqual([]);
+});
+
+test('My Exercises: Homework and Class sets stand out', async ({ page, context }) => {
+  await prepare(context);
+  await page.goto('/my-exercises.html');
+  await page.waitForTimeout(1000);
+  await hideNotices(page);
+  const set = page.locator('.recent-exercise-row[data-uid="uset"]');
+  await expect(set).toHaveClass(/set-row/);
+  await expect(set.locator('.badge-set')).toContainText('Homework set');
+  await expect(page.locator('.recent-exercise-row.set-row')).toHaveCount(await page.locator('.badge-set').count());
+});

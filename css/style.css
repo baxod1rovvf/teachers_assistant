@@ -1071,6 +1071,16 @@ table.results-table tr:hover td { background: rgba(244,241,234,0.03); }
 .recent-exercise-date { font-size: 0.76rem; color: var(--ink-faint); margin-top: 2px; }
 .unavailable-hint { font-size: 0.78rem; color: var(--ink-faint); font-style: italic; align-self: center; }
 .recent-exercise-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+/* My Exercises: Homework and Class sets stand out (coloured edge, tint, label) */
+.recent-exercise-row.set-row { --set-c: #E8730F; border-color: color-mix(in srgb, var(--set-c) 55%, var(--border)); border-left: 6px solid var(--set-c);
+  background: color-mix(in srgb, var(--set-c) 9%, transparent); padding: 16px 16px 16px 14px; }
+.recent-exercise-row.set-class { --set-c: #2F9E6E; }
+.recent-exercise-row.set-row .recent-exercise-title { font-size: 1.02rem; }
+.badge-set { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 0.76rem; font-weight: 800;
+  background: var(--set-c, #E8730F); color: #fff; letter-spacing: 0.01em; white-space: nowrap; }
+body.glass-ui .recent-exercise-row.set-row { border-color: color-mix(in srgb, var(--set-c) 55%, var(--glass-border)); border-left: 6px solid var(--set-c); }
+body.glass-ui .recent-exercise-row.set-row::before { background: linear-gradient(135deg, color-mix(in srgb, var(--set-c) 22%, transparent) 0%, color-mix(in srgb, var(--set-c) 10%, var(--glass-bg)) 60%); }
+
 .recent-exercise-row.flash-highlight { animation: flashHighlight 1.6s ease; }
 @keyframes flashHighlight {
   0%, 100% { border-color: var(--border); box-shadow: none; }
@@ -1345,6 +1355,23 @@ body.glass-ui .done-warn { border-left-color: var(--success); }
 .hwc-col-status { gap: 6px; flex-wrap: wrap; align-items: center; }
 .hwc-round-actions { display: inline-flex; align-items: center; gap: 8px; }
 .hwc-round-row .check-chip { font-size: 0.74rem; padding: 4px 10px; }
+
+/* Results: "Will be punished" — the student's row turns red */
+.punish-chip {
+  border: 1.5px dashed var(--border); background: none; color: var(--ink-faint); white-space: nowrap;
+  font: 700 0.72rem 'Inter', sans-serif; padding: 4px 10px; border-radius: 999px; cursor: pointer; margin-left: 4px;
+}
+.punish-chip:hover { border-color: var(--danger); color: var(--danger); }
+.punish-chip.on { border: 1.5px solid var(--danger); background: var(--danger); color: #fff; }
+table.results-table tr.punished td, table.results-table tr.punished:hover td { background: var(--danger-surface); }
+table.results-table tr.punished td:first-child { box-shadow: inset 5px 0 0 var(--danger); }
+table.results-table tr.punished .res-student-cell { color: var(--danger); font-weight: 800; }
+.hwc-student-row.punished, body.glass-ui .hwc-student-row.punished { border: 2px solid var(--danger); border-left-width: 6px; background: var(--danger-surface); }
+body.glass-ui .hwc-student-row.punished::before { background: color-mix(in srgb, var(--danger) 16%, transparent); }
+.hwc-student-row.punished .hwc-col-name b { color: var(--danger); }
+.missing-student.punished { border: 2px solid var(--danger); box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 25%, transparent); }
+.missing-student .punish-chip { font-size: 0.68rem; padding: 2px 8px; }
+.results-summary .punished-count { color: var(--danger); font-weight: 700; }
 
 /* Results: students who didn't do the exercise */
 .missing-section { margin-top: 18px; }
