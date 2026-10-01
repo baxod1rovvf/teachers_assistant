@@ -548,6 +548,13 @@ html,body{margin:0;padding:0;height:100%;background:#101116;font-family:'Inter',
   <p id="hwcNextSub"></p>
   <button class="ta-btn" onclick="hwcNext()">Start Exercise <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 </div>
+<div class="ta-screen" id="hwcSaving">
+  <div style="font-size:2.4rem;position:relative;z-index:2;" id="hwcSavingIcon">\u2601\ufe0f</div>
+  <h1 id="hwcSavingTitle">Sending your answers\u2026</h1>
+  <div class="ta-underline"></div>
+  <p id="hwcSavingSub">Please wait \u2014 your answers are on their way to your teacher.</p>
+  <button class="ta-btn" id="hwcRetryBtn" style="display:none;" onclick="hwcRetrySave()">Try again</button>
+</div>
 <div class="ta-screen" id="hwcDone">
   <div class="ta-blob ta-blob1"></div>
   <div class="ta-blob ta-blob3"></div>
@@ -563,12 +570,13 @@ html,body{margin:0;padding:0;height:100%;background:#101116;font-family:'Inter',
 <iframe id="hwcFrame" allow="fullscreen" allowfullscreen style="display:none;"></iframe>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-  import { getFirestore, collection, query, where, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+  import { getFirestore, collection, query, where, getDocs, addDoc, serverTimestamp, doc, setDoc, getDocFromServer } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
   const firebaseConfig = {apiKey: "AIzaSyCefg2YghdSneABh0ZOUu3-snO4soVw0lA", authDomain: "teachers-assistant-app-ccd1a.firebaseapp.com", projectId: "teachers-assistant-app-ccd1a", storageBucket: "teachers-assistant-app-ccd1a.firebasestorage.app", messagingSenderId: "185909682129", appId: "1:185909682129:web:21fd63e09809eac82d8af0", measurementId: "G-7P60GBSYEM"};
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   window.__hwcDb = db; window.__hwcCollection = collection; window.__hwcQuery = query; window.__hwcWhere = where;
   window.__hwcGetDocs = getDocs; window.__hwcAddDoc = addDoc; window.__hwcServerTimestamp = serverTimestamp;
+  window.__hwcDoc = doc; window.__hwcSetDoc = setDoc; window.__hwcGetDocFromServer = getDocFromServer;
   window.__hwcFirebaseReady = true;
 <\/script>
 <script>
@@ -635,7 +643,7 @@ function hwcLoad(i) {
   frame.id = "hwcFrame";
   // The student's code and ID go into the round itself, so it never asks for them again.
   const identity = "ta_merge_identity:" + JSON.stringify({ id: hwcStudentId, name: hwcStudentName, code: HWC_REQUIRED_CODE });
-  const carry = "<script>window.name = " + JSON.stringify(identity).replace(/</g, "\\\\u003c") + ";<\\/script>";
+  const carry = "<script>window.name = " + JSON.stringify(identity).replace(/</g, "\\\\u003c") + ";(" + hwcRoundHook.toString() + ")();<\\/script>";
   const html = HWC_ROUNDS[i].html;
   const at = html.search(/<head[^>]*>/i);
   frame.name = identity;
@@ -643,6 +651,8 @@ function hwcLoad(i) {
   document.getElementById("hwcBar").style.display = "flex";
   frame.style.display = "block";
   hwcRoundStartTs = Date.now();
+  hwcGotComplete = false; hwcResultState = null; hwcPendingResult = null;
+  clearTimeout(hwcWaitTimer);
 }
 async function hwcBegin() {
   const idVal = (document.getElementById("hwcIdInput").value || "").trim();
@@ -670,18 +680,98 @@ function hwcNext() {
   hwcShow(null);
   hwcLoad(hwcIdx);
 }
-window.addEventListener("message", function (e) {
-  if (!(e && e.data && e.data.taMergeEvent === "round-complete")) return;
-  if (e.data.identity && e.data.identity.name) hwcStudentName = e.data.identity.name;
+/* A round counts as done only once the student's answers are safely in the
+   database. Each round hands its result to this file (hwcRoundHook, put into
+   the round), which saves it, tries again if needed, and only then moves on.
+   Before, a round said "done" before its own upload had finished, so a
+   failed upload still counted the round as completed, with no answers. */
+let hwcGotComplete = false, hwcResultState = null, hwcPendingResult = null, hwcWaitTimer = null;
+function hwcRoundHook() {
+  var pend = {}, n = 0;
+  window.addEventListener('message', function (e) {
+    var d = e.data;
+    if (d && d.taMergeEvent === 'round-result-saved' && pend[d.id]) { pend[d.id](d.status); delete pend[d.id]; }
+  });
+  function viaSet(p) {
+    var full = Object.assign({}, p);
+    if (full.studentId === undefined) full.studentId = (typeof taStudentId !== 'undefined' ? taStudentId : (typeof studentId !== 'undefined' ? studentId : ''));
+    if (full.isRosterMatch === undefined) full.isRosterMatch = (typeof isRosterMatch !== 'undefined' ? !!isRosterMatch : false);
+    return new Promise(function (res) {
+      var id = ++n;
+      pend[id] = res;
+      try { parent.postMessage({ taMergeEvent: 'round-result', id: id, payload: JSON.parse(JSON.stringify(full)) }, '*'); }
+      catch (err) { delete pend[id]; res('failed'); }
+    });
+  }
+  try { Object.defineProperty(window, 'submitResultToFirebase', { configurable: true, get: function () { return viaSet; }, set: function () {} }); } catch (err) { /* ignore */ }
+}
+function hwcWithin(promise, ms) {
+  return Promise.race([promise, new Promise(function (_, rej) { setTimeout(function () { rej(new Error("timeout")); }, ms); })]);
+}
+function hwcSavingScreen(failed) {
+  document.getElementById("hwcSavingIcon").textContent = failed ? "\u26a0\ufe0f" : "\u2601\ufe0f";
+  document.getElementById("hwcSavingTitle").textContent = failed ? "Your answers haven't reached your teacher" : "Sending your answers\u2026";
+  document.getElementById("hwcSavingSub").textContent = failed
+    ? "Check your internet connection, then press Try again. Don't close this page \u2014 your answers are still here."
+    : "Please wait \u2014 your answers are on their way to your teacher.";
+  document.getElementById("hwcRetryBtn").style.display = failed ? "" : "none";
+  hwcShow("hwcSaving");
+}
+// One record per submission (its own id): sending it again can never make a copy.
+async function hwcSaveRoundResult() {
+  const job = hwcPendingResult;
+  if (!job) return;
+  hwcResultState = "saving";
+  if (hwcGotComplete) hwcSavingScreen(false);
+  for (let tries = 0; tries < 40 && !window.__hwcFirebaseReady; tries++) await new Promise(r => setTimeout(r, 100));
+  const p = job.payload;
+  const rid = "r_" + String(p.code || "") + "_" + String(p.studentId || hwcStudentId || p.name || "").replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 40) + "_" + String(p.date || "").replace(/[^0-9]/g, "");
+  let ok = false;
+  for (let attempt = 0; attempt < 3 && !ok && window.__hwcFirebaseReady; attempt++) {
+    if (attempt) await new Promise(r => setTimeout(r, 1500 * attempt));
+    const ref = window.__hwcDoc(window.__hwcDb, "results", rid);
+    try {
+      await hwcWithin(window.__hwcSetDoc(ref, Object.assign({}, p, { submittedAt: window.__hwcServerTimestamp() })), 15000);
+      ok = true;
+    } catch (e) {
+      // already saved by an earlier try (changing a record is refused)?
+      try { const snap = await hwcWithin(window.__hwcGetDocFromServer(ref), 10000); if (snap.exists()) ok = true; } catch (e2) { /* still not there */ }
+    }
+  }
+  if (job !== hwcPendingResult) return; // a newer round took over
+  hwcResultState = ok ? "ok" : "failed";
+  try { job.source && job.source.postMessage({ taMergeEvent: "round-result-saved", id: job.id, status: ok ? "ok" : "failed" }, "*"); } catch (e) { /* ignore */ }
+  if (!hwcGotComplete) return;
+  if (ok) hwcRoundDone(); else hwcSavingScreen(true);
+}
+function hwcRetrySave() { if (hwcPendingResult) hwcSaveRoundResult(); }
+function hwcRoundDone() {
+  clearTimeout(hwcWaitTimer);
   hwcCompleted[hwcIdx] = true;
   hwcSaveProgress();
-  // Cover the screen immediately \u2014 this is what keeps the round's own
-  // certificate from being shown; only the wrapper's own certificate, at
-  // the very end of the whole set, is meant to be seen.
   if (hwcIdx >= HWC_ROUNDS.length - 1) { hwcNext(); return; }
   document.getElementById("hwcNextLabel").textContent = HWC_ROUNDS[hwcIdx + 1].label;
   document.getElementById("hwcNextSub").textContent = "Exercise " + (hwcIdx + 2) + " of " + HWC_ROUNDS.length + " \u2014 press start when you're ready.";
   hwcShow("hwcNextScreen");
+}
+window.addEventListener("message", function (e) {
+  const d = e && e.data;
+  if (!d) return;
+  if (d.taMergeEvent === "round-result" && d.payload) {
+    hwcPendingResult = { payload: d.payload, id: d.id, source: e.source };
+    hwcSaveRoundResult();
+    return;
+  }
+  if (d.taMergeEvent !== "round-complete" || hwcGotComplete) return;
+  if (d.identity && d.identity.name) hwcStudentName = d.identity.name;
+  hwcGotComplete = true;
+  // Cover the screen immediately \u2014 this is what keeps the round's own
+  // certificate from being shown; only the wrapper's own certificate, at
+  // the very end of the whole set, is meant to be seen.
+  if (hwcResultState === "ok") { hwcRoundDone(); return; }
+  hwcSavingScreen(hwcResultState === "failed");
+  // a round that sends no result of its own moves on after a moment
+  if (!hwcResultState) hwcWaitTimer = setTimeout(function () { if (!hwcResultState) hwcRoundDone(); }, 3000);
 });
 <\/script>
 <!-- ================= LOGIN ANIMATION =================

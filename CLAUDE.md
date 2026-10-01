@@ -9,6 +9,18 @@ through Firebase Firestore (project `teachers-assistant-app-ccd1a`, collection `
 The teacher asks for changes in plain words, often by screenshot, and merges to `main`
 when asked ("merge it"). Explain things simply — they are a teacher, not a developer.
 
+## 🤖 Every new feature goes into the AI robot too (the teacher asked for this)
+
+**Whenever you add or change a feature, option or button, also add (or update) a question +
+answer about it in the AI robot** — the floating help robot on every page. The teacher's
+users ask it how to use things. Where: `AI_ROBOT_FAQ_BY_TAB` (one list per section: `main`,
+`createpicker`, `builder`, `hwcbuilder`, `dashboard` = Statistics, `myexercises`, `students`,
+`results`, `points`, `settings`, IELTS ones) and `AI_ROBOT_TYPE_FAQ` (one list per exercise
+type) in `js/common.js`. Write in plain words with the real button names (e.g. "Tap "📤 Share""),
+and fix answers that a change makes wrong. The robot's search box looks through every answer
+from any page. `tests/robot.spec.js` checks it. Do this in the same change as the feature —
+don't wait to be asked.
+
 ## ⚠️ Tell the teacher at the start of a new chat — database limits
 
 **If this is a new conversation, remind the teacher of the points below once, briefly,
@@ -53,7 +65,8 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
    pictures are still heavy).
 3. **Old exercise files keep old bugs.** Files made before a fix never change: Sentences with
    multi-line instructions (fixed 2026-09-30), Pronunciation microphone on phones (fixed
-   2026-09-30), dictation extra-word scoring inside the student's own score. The teacher has
+   2026-09-30), dictation extra-word scoring inside the student's own score, Homework/Class sets
+   counting a round as done when its answers failed to upload (fixed 2026-10-01). The teacher has
    to recreate them ("Use again") — since 2026-10-01 the app points these out (see "Old
    exercise files" below). Renewing a link from Share re-uploads the app's saved copy
    — which is the old broken one for "Review - Apex" (its fixed copy was put online by hand
@@ -116,12 +129,17 @@ merging into `main`, and don't merge while any fail.** When you add or change a 
 or update a test for it. The tests use a stand-in database and a made-up class — never put
 real students' names or results into the repository (it is public).
 
-## The AI robot (help bubble) — add every new feature to it
+## Homework/Class sets: a round is done only when its answers are saved
 
-The teacher asked: **every new feature or option must also get a question + answer in the
-robot** (`AI_ROBOT_FAQ_BY_TAB` / `AI_ROBOT_TYPE_FAQ` in `js/common.js`), in the section where
-it lives, in plain words with the real button names. Change answers when a feature changes.
-The robot's search box looks through all answers from any page. `tests/robot.spec.js`.
+- The set file (`buildAndDownloadHwc` in `js/pages/create.js`) runs each round in an iframe
+  and puts `hwcRoundHook` into it: the round's `submitResultToFirebase` hands the result to the
+  set, which saves it with its own id (`r_<code>_<student>_<date>`, `setDoc`; a retry of a
+  record that's already there is refused → `getDocFromServer` confirms it), up to 3 tries, and
+  only then writes `HWC_PROGRESS` and moves on. If it can't, the student sees "Try again".
+  Before 2026-10-01 a round said "done" before its own upload finished, so a failed upload
+  still counted as Completed with no answers (seen for 2 of ~15 students in "Present simple";
+  `TA_FILE_FIXES` id `setsave` points out the old sets). A round type that sends no result
+  moves on after 3 s. `tests/exercises.spec.js` ("Homework set: …").
 
 ## Results kept on the device (keep this in mind when changing how results load)
 

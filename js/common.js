@@ -1202,7 +1202,9 @@ const TA_FILE_FIXES = [
   { id: 'mic', at: '2026-09-30T18:52:00Z', types: /pronunciation/i,
     what: 'the microphone doesn\'t turn on on phones' },
   { id: 'dictation', at: '2026-09-30T07:06:00Z', types: /dictation/i, minor: true,
-    what: 'students see too high a score when they type extra words (your Results show the right one)' }
+    what: 'students see too high a score when they type extra words (your Results show the right one)' },
+  { id: 'setsave', at: '2026-10-01T19:00:00Z', types: /^(homework|class)$/i,
+    what: 'if a student\'s answers fail to upload, the set still counts the exercise as done — you see "Completed" but no answers' }
 ];
 const taScriptCheckCache = new Map();
 // true when one of the file's own scripts can't even be read (so nothing on the page works)
@@ -2571,6 +2573,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'Can the next round use the same words?', a: 'Yes — tap "↪ Next round with the same words" under the list. The next exercise type opens with the words already filled in.' },
     { q: 'How do code and points work in a set?', a: 'The set has one code and one points value, chosen in round 1. Students get the points once they finish the whole set.' },
     { q: 'How do students use it?', a: 'They open the set, enter their ID (and code) once, and work through every exercise in order. If they stop, they pick up where they left off. At the end they get a certificate.' },
+    { q: 'Can a student skip an exercise in a set?', a: 'No. An exercise only counts as done when the student presses Submit (with every answer filled in) or its time limit runs out, and the set waits until the answers have reached you. If they can\'t be sent, the student sees "Try again" and the exercise isn\'t counted.' },
     { q: 'Where do I see the combined results?', a: 'In My Exercises tap "📊 View Results" on the set. You see each student\'s progress (e.g. 2/3), their total time, and can open their answers.' }
   ]),
   dashboard: aiFaq([
@@ -2610,6 +2613,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'How do I see a student\'s answers?', a: 'Tap "👁 View" in their row. In a Homework/Class set, tap the student\'s row to open their rounds, then 👁 for each one.' },
     { q: 'How are dictations scored?', a: 'Each missing, wrong or extra word counts as a mistake. 👁 View shows the student\'s text with the mistakes marked where they were typed.' },
     { q: 'How are Homework & Class results different?', a: 'They are grouped by student across the whole set: how many exercises each student finished (e.g. 2/3), their total time (red if under 15 minutes) and their answers.' },
+    { q: 'A student shows "Completed" but 👁 says "No result found" — why?', a: 'Their answers didn\'t reach the database (usually a bad connection) while the set still counted the exercise — a problem in sets made before 1 Oct 2026. New sets wait until the answers are saved. Make the set again with "✏️ Use again" in My Exercises and share the new one; ask the student to redo it.' },
     { q: 'Can I download the results?', a: 'Yes — "⬇ Download Results Report (.html)" for a printable report, or "📊 Download for Excel (.csv)" for a spreadsheet.' },
     { q: 'What does "Delete ALL results for this code" do?', a: 'It removes every result of that exercise. Old copies of the file stop counting; only students who use a newly made file appear. Keep a backup first (Settings → 💾 Backup).' },
     { q: 'Why does it say students used an old copy?', a: 'Those results came from a file made before a bug was fixed. Make a new copy with "✏️ Use again" in My Exercises and share that.' }

@@ -138,3 +138,70 @@ test('Dictation: the chosen audio is made much smaller, and still as long', asyn
   await expect(page.locator('#dc-media-name')).toContainText('made smaller');
   expect(errors).toEqual([]);
 });
+
+// A Homework/Class set counts an exercise as done only when the student's
+// answers are saved (before: a failed upload still counted it, with no answers).
+test('Homework set: an exercise counts as done only once its answers are saved', async ({ page, context }, info) => {
+  test.setTimeout(90000);
+  await prepare(context);
+  const errors = watchErrors(page);
+  await page.goto('/create.html');
+  await page.waitForTimeout(1200);
+  await hideNotices(page);
+  const fillRound = async (title) => {
+    await page.evaluate(() => selectHwcType('sentences'));
+    await page.fill('#sn-title', title);
+    await page.fill('#sn-instructions', 'Write about your day.');
+    await page.evaluate(() => { const c = document.getElementById('sn-count'); c.value = '2'; c.dispatchEvent(new Event('input')); });
+  };
+  await page.evaluate(() => openHwcBuilder('homework'));
+  await fillRound('Day one');
+  await page.evaluate(() => hwcAddExercise());
+  await fillRound('Day two');
+  const [download] = await Promise.all([page.waitForEvent('download'), page.evaluate(() => hwcFinishAndCreate())]);
+  const file = info.outputPath('set.html');
+  await download.saveAs(file);
+  expect(errors).toEqual([]);
+
+  const student = await context.newPage();
+  await student.goto('file://' + file);
+  await student.fill('#hwcIdInput', '10001');
+  await student.click('#hwcStart .ta-btn');
+  const round = student.frameLocator('#hwcFrame');
+  const answer = async () => {
+    await expect(round.locator('#slide-sentences')).toHaveClass(/active/, { timeout: 8000 });
+    const boxes = round.locator('.sentence-space textarea');
+    await expect(boxes).toHaveCount(2);
+    await boxes.nth(0).fill('I woke up early.');
+    await boxes.nth(1).fill('I went to school.');
+    await round.locator('.sentence-submit-btn').click();
+  };
+  const writes = () => student.evaluate(() => window.__writes.map(w => w.type + ':' + w.id));
+
+  // round 1: saved by the set itself, then marked done
+  await answer();
+  await expect(student.locator('#hwcNextScreen')).toHaveClass(/show/, { timeout: 8000 });
+  let w = await writes();
+  expect(w.filter(x => x.startsWith('Sentences:r_'))).toHaveLength(1);
+  expect(w.filter(x => x.startsWith('HWC_PROGRESS'))).toHaveLength(1);
+  // the round didn't send a copy of its own (no doubles in Results)
+  const roundWrites = await student.frames().find(f => f !== student.mainFrame()).evaluate(() => (window.__writes || []).map(x => x.type));
+  expect(roundWrites.filter(t => t === 'Sentences')).toHaveLength(0);
+
+  // round 2: no connection → not done, "Try again"
+  await student.click('#hwcNextScreen .ta-btn');
+  await student.evaluate(() => { window.__failWrites = 1000; });
+  await answer();
+  await expect(student.locator('#hwcSaving')).toHaveClass(/show/);
+  await expect(student.locator('#hwcRetryBtn')).toBeVisible({ timeout: 20000 });
+  await expect(student.locator('#hwcSavingTitle')).toContainText("haven't reached");
+  w = await writes();
+  expect(w.filter(x => x.startsWith('HWC_PROGRESS'))).toHaveLength(1);
+  // connection back → saved, then the certificate
+  await student.evaluate(() => { window.__failWrites = 0; });
+  await student.click('#hwcRetryBtn');
+  await expect(student.locator('#hwcDone')).toHaveClass(/show/, { timeout: 10000 });
+  w = await writes();
+  expect(w.filter(x => x.startsWith('Sentences:r_'))).toHaveLength(2);
+  expect(w.filter(x => x.startsWith('HWC_PROGRESS'))).toHaveLength(2);
+});
