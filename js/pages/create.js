@@ -4305,6 +4305,32 @@ function resetBamboozleForm() {
   renderBamboozleRows();
 }
 
+/* ================= JUNGLE ⇄ BAMBOOZLE =================
+   The same questions (and pictures) in the other classroom game. Bamboozle
+   cards get the usual points; Jungle has no answers or points, so those stay
+   behind. switchRecentGame (my-exercises.js) does the same from My Exercises. */
+function switchGameBuilder(to) {
+  const fromJungle = to === 'bamboozle';
+  const qs = fromJungle ? jungleQuestionsFilled() : bamboozleQuestionsFilled();
+  if (!qs.length) { showToast('Add some questions first.'); return; }
+  const title = document.getElementById(fromJungle ? 'jg-title' : 'bz-title').value.trim();
+  const target = fromJungle ? bamboozleQuestionsFilled() : jungleQuestionsFilled();
+  if (target.length && !confirm('The ' + (fromJungle ? 'Bamboozle' : 'Jungle') + ' builder already has ' + target.length + ' question' + (target.length === 1 ? '' : 's') + '. Replace them?')) return;
+  if (fromJungle) {
+    bzQuestions = qs.map(x => ({ q: x.q, a: '', pts: bzDefaultPoints(), img: x.img }));
+    document.getElementById('bz-title').value = title;
+    renderBamboozleRows();
+  } else {
+    jgQuestions = qs.map(x => ({ q: x.q, img: x.img }));
+    document.getElementById('jg-title').value = title;
+    renderJungleRows();
+  }
+  switchTo(to);
+  const answers = !fromJungle && qs.some(x => x.a);
+  showToast('🔁 ' + qs.length + ' questions moved to ' + (fromJungle ? 'Bamboozle — each card is worth ' + bzDefaultPoints() + ' points; add answers if you like.' : 'Jungle' + (answers ? ' (Jungle has no answers or points, so those stay in Bamboozle).' : '.')) +
+    (!fromJungle && qs.length < 3 ? ' Jungle needs at least 3.' : ''), 'ok');
+}
+
 /* ================= SAVED WORK: drafts, "Use again", Undo for Reset =================
    taCaptureBuilder(tab) reads a builder's whole form (its fields and its
    rows) into plain data, and taRestoreBuilder(tab, state) puts it back.
