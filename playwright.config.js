@@ -12,6 +12,9 @@ module.exports = defineConfig({
   use: {
     baseURL: 'http://localhost:4173',
     viewport: { width: 1400, height: 950 },
+    // the app's offline helper (sw.js) would hand out the real Firebase files
+    // from its own copy, past the stand-ins
+    serviceWorkers: 'block',
     launchOptions: Object.assign(
       // a stand-in microphone that is always allowed (Pronunciation tests)
       { args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'] },

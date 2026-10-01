@@ -50,9 +50,9 @@ async function prepare(context, opts = {}) {
   // nothing leaves the test machine (fonts, animations from other sites…) —
   // added first, because the rules added later are checked before it
   await context.route(/^https?:\/\/(?!localhost)/, r => r.abort());
-  await context.route(/gstatic\.com\/firebasejs\/.*firebase-firestore\.js/, r => r.fulfill({ contentType: 'application/javascript', body: FAKE_FIRESTORE }));
-  await context.route(/gstatic\.com\/firebasejs\/.*firebase-auth\.js/, r => r.fulfill({ contentType: 'application/javascript', body: FAKE_AUTH }));
-  await context.route(/gstatic\.com\/firebasejs\/.*firebase-app\.js/, r => r.fulfill({ contentType: 'application/javascript', body: 'export function initializeApp(){return {}}' }));
+  await context.route(/(gstatic\.com\/firebasejs|js\/vendor\/firebase-[\d.]+)\/.*?firebase-firestore\.js/, r => r.fulfill({ contentType: 'application/javascript', body: FAKE_FIRESTORE }));
+  await context.route(/(gstatic\.com\/firebasejs|js\/vendor\/firebase-[\d.]+)\/.*?firebase-auth\.js/, r => r.fulfill({ contentType: 'application/javascript', body: FAKE_AUTH }));
+  await context.route(/(gstatic\.com\/firebasejs|js\/vendor\/firebase-[\d.]+)\/.*?firebase-app\.js/, r => r.fulfill({ contentType: 'application/javascript', body: 'export function initializeApp(){return {}}' }));
 }
 
 /** Collects page errors, so a test can say there were none. */

@@ -93,8 +93,9 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
 11. **The site's address must not change.** Renaming the GitHub repo/user, making the repo
     private (Pages may stop), or a stuck Pages deployment breaks every link and the login
     animation inside exercise files (the address is written into each file).
-12. **The Firebase SDK is loaded from gstatic.com (version 10.12.5)**; if that URL ever
-    stopped working, results would stop everywhere. Very unlikely.
+12. **The Firebase SDK in exercise files is loaded from gstatic.com (version 10.12.5)**; if
+    that URL ever stopped working, students' results would stop. The teacher app itself keeps
+    its own copy since 2026-10-01 (`js/vendor/firebase-10.12.5/`). Very unlikely.
 13. **Upgrading Firebase to the paid (Blaze) plan** would turn limits into bills — heavy link
     traffic would then cost money instead of stopping. Warn before any such upgrade; suggest
     a budget alert.
@@ -214,7 +215,20 @@ real students' names or results into the repository (it is public).
   from 2.4 MB to 0.4 MB. Keep it that way: audio is what makes exercises heavy.
 
 - Every change to CSS/JS needs the `?v=` stamp bumped in all the `*.html` pages (they share
-  one stamp, e.g. `v=20260930g`), or browsers keep the old files.
+  one stamp, e.g. `v=20261001c`), or browsers keep the old files: run `npm run stamp`
+  (`tools/bump-version.js`; date + letter). `tests/housekeeping.spec.js` checks every page
+  uses one stamp and that the files exist.
+- Firebase for the app (js/firebase.js, CP.html) comes from `js/vendor/firebase-10.12.5/`
+  (the npm package's browser builds, import of firebase-app pointed at the folder — see its
+  README). Exercise files and the downloadable points board still use gstatic.com (they open
+  from anywhere). To upgrade: new folder with the new version, change the imports, re-test.
+- `sw.js` (offline helper) keeps copies of the site's own files, the Firebase copy included;
+  the tests block it (`serviceWorkers: 'block'` in playwright.config.js), or it would hand
+  out the real Firebase files instead of the stand-ins.
+- Settings → 🩺 Status (`renderStatusPanel` in js/pages/settings.js): database, database
+  sign-in, results kept, sync, last backup, links space, browser storage, version. When
+  something "doesn't work", ask the teacher for a screenshot of it. Last database error:
+  `window.__taLastDbError` (set by `taReportDbError`).
 - Text put into an exercise template's `<script>` must be escaped for a JS string
   (`escapeForJsString`); titles use `escapeForTemplateText` (page text and script at once).
   Raw line breaks or quotes there break the whole exercise.
