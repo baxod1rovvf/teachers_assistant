@@ -2037,3 +2037,9 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 .bz-row-line .bz-ans { flex: 1; min-width: 0; }
 .bz-pts-label { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 700; color: var(--ink-faint); white-space: nowrap; }
 .bz-pts-label .bz-pts { width: 76px; }
+
+/* Old exercise files (made before a fix) */
+.old-file-line { margin-top: 6px; font-size: 0.78rem; line-height: 1.45; color: var(--warning); }
+.old-file-line.minor { color: var(--ink-soft); }
+.old-file-note { margin: 0 0 12px; padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(--warning); background: var(--warning-surface); color: var(--ink); font-size: 0.84rem; line-height: 1.5; }
+.old-file-note ul { margin: 4px 0 4px 18px; }

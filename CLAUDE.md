@@ -54,7 +54,8 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
 3. **Old exercise files keep old bugs.** Files made before a fix never change: Sentences with
    multi-line instructions (fixed 2026-09-30), Pronunciation microphone on phones (fixed
    2026-09-30), dictation extra-word scoring inside the student's own score. The teacher has
-   to recreate them ("Use again"). Renewing a link from Share re-uploads the app's saved copy
+   to recreate them ("Use again") — since 2026-10-01 the app points these out (see "Old
+   exercise files" below). Renewing a link from Share re-uploads the app's saved copy
    — which is the old broken one for "Review - Apex" (its fixed copy was put online by hand
    under a different link, `xfix7ee298e757c4`, until 2026-10-07).
 4. **Links expire after 7 days** — students who open a link late see "This link has
@@ -124,6 +125,20 @@ real students' names or results into the repository (it is public).
   are never seen by that listener — every result/points/progress record must carry
   `submittedAt: serverTimestamp()` (exercise files do; the teacher's own points writes do
   since 2026-09-30). `taResultsCacheInfo()` in the console shows what's kept.
+
+## Old exercise files (made before a fix)
+
+- `TA_FILE_FIXES` in `js/common.js` lists fixes that need the teacher to recreate files: `at`
+  (when the fix reached the site), `types` (regex on the My Exercises type / a set round's
+  label / a result's `type`), or `test(html)` (the kept file shows the problem itself —
+  `taFileScriptBroken` tries to read each plain `<script>` with `new Function`), and `minor`.
+  **When you fix a bug that lives inside exercise files, add an entry here** (with the time
+  the fix is merged), so the teacher is told which files to recreate.
+- Shown in: My Exercises (a line under the exercise, `taOldFileIssues`), Results (a note when
+  results came from a file whose `builtAt` is before a fix, `taOldFileBannerHtml`), and a
+  top-right note on entry ("⚠️ Old exercise files", `taOldFileWarnCheck`, 12 s after load;
+  "Got it" → `ta_old_file_ack`). Minor fixes only show in My Exercises/Results.
+  `tests/old-files.spec.js`.
 
 ## Results backup (Settings → Backup)
 

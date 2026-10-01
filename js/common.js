@@ -1182,6 +1182,125 @@ function getCachedExerciseHtml(uid) {
   } catch (e) { return null; }
 }
 
+/* ================= OLD EXERCISE FILES =================
+   An exercise file never changes after it's made, so a file made before a
+   fix keeps the old problem. The app checks the files it keeps (My
+   Exercises) and the results students send (each carries when its file was
+   made, builtAt), and warns the teacher to make a new copy (✏️ Use again).
+   Add an entry here whenever a fix needs the teacher to recreate files:
+   at = when the fix reached the site; types = which exercises it concerns
+   (My Exercises type / a set round's label / a result's type); test(html) =
+   true when a kept file shows the problem itself; minor = students can still
+   do the exercise. */
+const TA_FILE_FIXES = [
+  { id: 'script', at: '2026-09-30T16:17:00Z', test: html => taFileScriptBroken(html),
+    what: 'has an error and doesn\'t start — "Start" does nothing, and inside a Homework/Class set it asks for a code that doesn\'t exist' },
+  { id: 'mic', at: '2026-09-30T18:52:00Z', types: /pronunciation/i,
+    what: 'the microphone doesn\'t turn on on phones' },
+  { id: 'dictation', at: '2026-09-30T07:06:00Z', types: /dictation/i, minor: true,
+    what: 'students see too high a score when they type extra words (your Results show the right one)' }
+];
+const taScriptCheckCache = new Map();
+// true when one of the file's own scripts can't even be read (so nothing on the page works)
+function taFileScriptBroken(html) {
+  if (typeof html !== 'string' || !html) return false;
+  if (taScriptCheckCache.has(html)) return taScriptCheckCache.get(html);
+  let broken = false;
+  const re = /<script(\s[^>]*)?>([\s\S]*?)<\/script>/gi;
+  let m;
+  while (!broken && (m = re.exec(html))) {
+    if (/\b(src|type)\s*=/i.test(m[1] || '')) continue;   // modules (Firebase) and outside files
+    try { new Function(m[2]); } catch (e) { broken = e instanceof SyntaxError; }
+  }
+  taScriptCheckCache.set(html, broken);
+  return broken;
+}
+// The fixes a My Exercises item was made before: [{ fix, where }] (where = a set round's label)
+function taOldFileIssues(item) {
+  if (!item || !item.date) return [];
+  const out = [], seen = new Set();
+  const add = (fix, where) => { if (!seen.has(fix.id)) { seen.add(fix.id); out.push({ fix: fix, where: where || '' }); } };
+  const rounds = item.mergedItems && item.mergedItems.length ? item.mergedItems.map((r, i) => ({ label: r.typeLabel || r.title || '', html: () => setRoundHtml(item, i) })) : null;
+  TA_FILE_FIXES.forEach(fix => {
+    if (item.date >= fix.at) return;
+    if (fix.test) {
+      if (fix.test(getCachedExerciseHtml(item.uid))) return add(fix);
+      if (rounds) rounds.forEach(r => { if (fix.test(r.html())) add(fix, r.label); });
+      return;
+    }
+    if (fix.types.test(item.typeLabel || '')) return add(fix);
+    if (rounds) rounds.forEach(r => { if (fix.types.test(r.label) || fix.types.test((String(r.html() || '').match(/<title>([^<]*)<\/title>/) || [])[1] || '')) add(fix, r.label); });
+  });
+  return out;
+}
+// The fixes the file that sent this result was made before
+function taOldResultFixes(r) {
+  if (!r || typeof r.builtAt !== 'string' || !r.builtAt || typeof r.type !== 'string') return [];
+  return TA_FILE_FIXES.filter(f => f.types && f.types.test(r.type) && r.builtAt < f.at);
+}
+function taOldFileWhat(issues) {
+  return issues.map(x => (x.where ? '“' + escapeForHtml(x.where) + '”: ' : '') + x.fix.what).join('; ');
+}
+// Results page: a note when students used a file made before a fix
+function taOldFileBannerHtml(results) {
+  const byFix = new Map();
+  (results || []).forEach(r => taOldResultFixes(r).forEach(f => byFix.set(f, (byFix.get(f) || 0) + 1)));
+  if (!byFix.size) return '';
+  const lines = [...byFix].map(([f, n]) => '<li><b>' + n + '</b> result' + (n === 1 ? '' : 's') + ' came from a copy made before a fix — ' + f.what + '.</li>').join('');
+  return '<div class="old-file-note" role="note"><b>⚠️ Old copy of this exercise</b><ul>' + lines + '</ul>' +
+    'Make a new copy in My Exercises (✏️ Use again → create it), and send students the new file or link.</div>';
+}
+/* On entry: one note listing the exercises made before a fix, and those whose
+   students are still sending results from an old copy (last 7 days). "Got it"
+   stops it for those. */
+const LS_OLD_FILE_ACK = 'ta_old_file_ack';
+function taOldFileWarnCheck() {
+  if (!window.__TA_USER) return;
+  let ack = [];
+  try { ack = JSON.parse(localStorage.getItem(LS_OLD_FILE_ACK) || '[]'); } catch (e) { ack = []; }
+  const rows = [];
+  getRecentExercises().forEach(item => {
+    const issues = taOldFileIssues(item).filter(x => !x.fix.minor);
+    const key = 'x:' + item.uid + ':' + issues.map(x => x.fix.id).join(',');
+    if (issues.length && ack.indexOf(key) === -1) rows.push({ key: key, title: item.title, what: taOldFileWhat(issues) });
+  });
+  const weekAgo = new Date(Date.now() - 7 * 86400000).toISOString();
+  const byCode = new Map();
+  (window.__allResults || []).forEach(r => {
+    if (!r || !(r.date >= weekAgo)) return;
+    taOldResultFixes(r).filter(f => !f.minor).forEach(f => {
+      const key = 'r:' + r.code + ':' + f.id;
+      if (ack.indexOf(key) === -1 && !byCode.has(key)) byCode.set(key, { key: key, title: r.title || r.code, what: 'students are still using an old copy — ' + f.what });
+    });
+  });
+  byCode.forEach(v => { if (!rows.some(x => x.title === v.title)) rows.push(v); });
+  let box = document.getElementById('taOldFileWarn');
+  if (!rows.length) { if (box) box.classList.remove('show'); return; }
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'taOldFileWarn';
+    box.className = 'lesson-warn db-warn';
+    box.setAttribute('role', 'status');
+    taNoticeStack().appendChild(box);
+  }
+  box.innerHTML = '<div class="lesson-warn-head"><span>⚠️ Old exercise files</span><button type="button" class="lesson-warn-close" aria-label="Close">✕</button></div>' +
+    '<div class="db-warn-text">These were made before a fix, so they still have the old problem. Make a new copy (My Exercises → ✏️ Use again) and share the new one.</div>' +
+    rows.slice(0, 6).map(x => '<div class="lesson-warn-row"><div class="lesson-warn-main"><b translate="no">' + escapeForHtml(x.title) + '</b><small>' + x.what + '</small></div></div>').join('') +
+    (rows.length > 6 ? '<div class="db-warn-text">…and ' + (rows.length - 6) + ' more.</div>' : '') +
+    '<div class="done-warn-foot"><button type="button" class="done-warn-later">Got it</button><button type="button" class="done-warn-all">Open My Exercises</button></div>';
+  box.querySelector('.lesson-warn-close').onclick = () => box.classList.remove('show');
+  box.querySelector('.done-warn-later').onclick = () => {
+    try { localStorage.setItem(LS_OLD_FILE_ACK, JSON.stringify(ack.concat(rows.map(x => x.key)).slice(-500))); } catch (e) { /* ignore */ }
+    box.classList.remove('show');
+  };
+  box.querySelector('.done-warn-all').onclick = () => {
+    box.classList.remove('show');
+    if (typeof switchTo === 'function' && document.getElementById('panel-myexercises')) switchTo('myexercises'); else location.href = 'my-exercises.html';
+  };
+  void box.offsetWidth;
+  box.classList.add('show');
+}
+
 /* ================= CLASS CODE + RESULTS STORAGE ================= */
 const LS_ACTIVE_CODE = 'ta_active_code';
 const LS_RESULTS = 'ta_results';
@@ -3049,6 +3168,7 @@ function taStartPage(defaultTab) {
   setTimeout(showReminderToastIfDue, 900);
   setTimeout(taSweepPlayLinksIfDue, 8000);
   setTimeout(taBackupReminderIfDue, 9000);
+  setTimeout(taOldFileWarnCheck, 12000);
 
   /* Re-check lesson reminders periodically so the reminder pop-ups and "starts
      soon" badges stay accurate even if the app is left open across the 24h boundary. */

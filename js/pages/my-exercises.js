@@ -94,6 +94,10 @@ function renderRecentExercises() {
       : '<button class="mini-btn danger" type="button" onclick="disableRecentExercisePoints(' + idx + ')">🚫 Disable Points</button>';
     const gName = groupNames[item.groupId];
     const groupBtn = '<button type="button" class="myex-group-btn' + (gName ? '' : ' none') + '" onclick="changeRecentExerciseGroup(' + idx + ')" title="Change which group this is for"' + (gName ? ' translate="no"' : '') + '>👥 ' + escapeForHtml(gName || 'Set group') + '</button>';
+    const oldIssues = taOldFileIssues(item);
+    const oldLine = oldIssues.length
+      ? '<div class="old-file-line' + (oldIssues.every(x => x.fix.minor) ? ' minor' : '') + '">⚠️ Made before a fix: ' + taOldFileWhat(oldIssues) + '. Press ✏️ Use again to make a new copy, and share that one.</div>'
+      : '';
     const codeLine = '<div class="recent-exercise-date">' + groupBtn + (item.requiredCode ? 'Code: ' + escapeForHtml(item.requiredCode) : 'No code set') + ' &middot; ' + dateStr + '</div>';
     const hasHtml = !!getCachedExerciseHtml(item.uid);
     const openBtn = hasHtml
@@ -113,7 +117,7 @@ function renderRecentExercises() {
       '<div class="recent-exercise-row" data-uid="' + escapeForHtml(item.uid || '') + '">' +
         '<div class="recent-exercise-info">' +
           '<div class="recent-exercise-title"><span translate="no">' + escapeForHtml(item.title) + '</span> ' + disabledBadge + '</div>' +
-          codeLine +
+          codeLine + oldLine +
         '</div>' +
         '<div class="recent-exercise-actions">' +
           againBtn +

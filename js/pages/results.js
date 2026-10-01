@@ -443,7 +443,7 @@ function renderResultsTable(codeOverride) {
     ? indexed.filter(function (o) { return (o.r.name || '').toLowerCase().indexOf(searchTerm) !== -1 || (o.r.type || '').toLowerCase().indexOf(searchTerm) !== -1; })
     : indexed;
 
-  let html = '<div class="results-summary">' +
+  let html = taOldFileBannerHtml(matches) + '<div class="results-summary">' +
     '<span><b>' + idMatches.length + '</b> with ID</span>' +
     '<span><b>' + nameMatches.length + '</b> name only</span>' +
     (avgScore !== null ? '<span>Average score (with ID): <b>' + avgScore + '</b></span>' : '') +
