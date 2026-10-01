@@ -26,13 +26,17 @@ test('a new exercise is put online, and Share gives its link and until when it w
   await hideNotices(page);
   await page.evaluate(PRETEND_HTTPS);
   await page.evaluate(() => shareRecentExercise(getRecentExercises().findIndex(e => e.title === 'Link test')));
-  await expect(page.locator('.share-msg')).toHaveValue(new RegExp('play\\.html\\?x=' + item.uid));
+  await expect(page.locator('.share-msg')).toHaveValue(/Open this link/);
+  expect(await page.locator('.share-msg').inputValue()).not.toContain('play.html');   // the link is shown above it instead
   await expect(page.locator('.share-link-note')).toContainText('The link works until');
   // the link on its own, with a copy button
   await expect(page.locator('.share-link')).toHaveValue(new RegExp('play\\.html\\?x=' + item.uid + '$'));
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.click('[data-act="copylink"]');
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(new RegExp('play\\.html\\?x=' + item.uid + '$'));
+  // "Copy message" still gives students the link, right after the line that announces it
+  await page.click('[data-act="copy"]');
+  await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(new RegExp('Open this link[^\\n]*\\nhttps?://[^\\n]*play\\.html\\?x=' + item.uid + '\\n'));
   expect(errors).toEqual([]);
 });
 
