@@ -14,8 +14,8 @@ test('the robot answers questions about the newest features, found with its sear
   await expect(body).toContainText('Ready');
   // a Results question, searched for from the Dashboard
   await body.locator('.ai-robot-search').fill('punish');
-  await body.locator('.ai-robot-q-item', { hasText: 'Punish' }).click();
-  await expect(body.locator('.ai-robot-answer-a')).toContainText('Will be punished');
+  await body.locator('.ai-robot-q-item', { hasText: '⚖️' }).click();
+  await expect(body.locator('.ai-robot-answer-a')).toContainText('will be punished');
   await body.locator('.ai-robot-back-btn').click();
   await expect(body.locator('.ai-robot-search')).toHaveValue('punish');
   await body.locator('.ai-robot-search').fill('zzzz nothing');
@@ -55,6 +55,6 @@ test('in Uzbek and Russian the robot answers in that language', async ({ page, c
     await expect(body.locator('.ai-robot-answer-a')).toContainText(a);
     await body.locator('.ai-robot-back-btn').click();
     await body.locator('.ai-robot-search').fill(word);
-    await expect(body.locator('.ai-robot-q-item').first()).toContainText('Punish');
+    await expect(body.locator('.ai-robot-q-item').first()).toContainText('⚖️');
   }
 });

@@ -4398,7 +4398,7 @@ function resetBamboozleForm() {
 /* ================= JUNGLE ⇄ BAMBOOZLE =================
    The same questions (and pictures) in the other classroom game. Bamboozle
    cards get the usual points; Jungle has no answers or points, so those stay
-   behind. switchRecentGame (my-exercises.js) does the same from My Exercises. */
+   behind. (For a game made earlier: Use again in My Exercises, then this.) */
 function switchGameBuilder(to) {
   const fromJungle = to === 'bamboozle';
   const qs = fromJungle ? jungleQuestionsFilled() : bamboozleQuestionsFilled();

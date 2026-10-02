@@ -96,14 +96,12 @@ function renderHwcResultsList() {
     const unchecked = answers.filter(r => !checkedSet.has(taCompletionKey(r)));
     const checkHtml = answers.length
       ? taCheckChipHtml((unchecked.length ? unchecked : answers).map(taCompletionKey), !unchecked.length,
-          unchecked.length ? '○ ' + unchecked.length + ' to check' : '✓ Checked')
+          unchecked.length ? unchecked.length + ' to check' : '')
       : '';
     const startedNone = d.completedCount === 0;
     const pct = d.totalCount ? Math.round((d.completedCount / d.totalCount) * 100) : 0;
-    let statusLabel, pillBg, pillColor, barColor;
-    if (done) { statusLabel = '\u2705 Completed'; pillBg = 'var(--success-surface)'; pillColor = 'var(--success)'; barColor = 'var(--success)'; }
-    else if (startedNone) { statusLabel = '\u26a0\ufe0f Needs Attention'; pillBg = 'var(--danger-surface)'; pillColor = 'var(--danger)'; barColor = 'var(--danger)'; }
-    else { statusLabel = '\u23f3 In Progress'; pillBg = 'rgba(79,126,227,0.14)'; pillColor = 'var(--category-blue)'; barColor = 'var(--warning)'; }
+    // done / not started / in progress shows in the bar's colour (and the 4/4)
+    const barColor = done ? 'var(--success)' : (startedNone ? 'var(--danger)' : 'var(--warning)');
     const fractionText = d.completedCount + '/' + d.totalCount;
     const studentKey = d.studentId;
     const isExpanded = hwcExpandedStudent === studentKey;
@@ -144,7 +142,7 @@ function renderHwcResultsList() {
           '<span>' + fractionText + ' \u00b7 ' + pct + '%</span>' +
           '<div class="res-score-bar-track"><div class="res-score-bar-fill" style="width:' + pct + '%; background:' + barColor + ';"></div></div>' +
         '</div>' +
-        '<div class="hwc-col-status"><span class="res-status-pill" style="background:' + pillBg + '; color:' + pillColor + ';">' + statusLabel + '</span>' + checkHtml + taPunishChipHtml(punishKey) + '</div>' +
+        '<div class="hwc-col-status">' + checkHtml + taPunishChipHtml(punishKey) + '</div>' +
         totalTimeHtml +
         '<span class="hwc-time">' + formatRelativeTime(d.lastActive) + '</span>' +
         '<span class="hwc-chevron">' + (isExpanded ? '\u25b2' : '\u25bc') + '</span>' +

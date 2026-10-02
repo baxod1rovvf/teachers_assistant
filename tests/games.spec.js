@@ -25,19 +25,3 @@ test('the Jungle builder hands its questions to Bamboozle, and back', async ({ p
   expect(await page.evaluate(() => jungleQuestionsFilled())).toEqual([
     { q: 'What is "it"?', img: '' }, { q: 'Say "67"', img: '' }, { q: 'Name a fruit', img: '' }]);
 });
-
-test('My Exercises turns a Jungle game into a Bamboozle, from its saved file', async ({ page, context }) => {
-  const data = { title: 'Review', instructions: '', questions: [{ q: 'One', img: '' }, { q: 'Two', img: '' }, { q: 'Three', img: '' }] };
-  const html = '<html><body><script>\nconst DATA = ' + JSON.stringify(data) + ';\nconst QS = DATA.questions;\n<\/script></body></html>';
-  await prepare(context, { storage: {
-    ta_recent_exercises: JSON.stringify([{ uid: 'ujng01', title: 'Review', typeLabel: 'Jungle', code: '', date: new Date().toISOString() }]),
-    ta_exercise_html_cache: JSON.stringify({ ujng01: html })
-  } });
-  await page.goto('/my-exercises.html');
-  await page.waitForTimeout(1200);
-  await hideNotices(page);
-  await page.click('.recent-exercise-row[data-uid="ujng01"] button:has-text("Make it a Bamboozle")');
-  await page.waitForURL(/create\.html#bamboozle/);
-  await expect(page.locator('#bz-title')).toHaveValue('Review', { timeout: 5000 });
-  expect((await page.evaluate(() => bamboozleQuestionsFilled())).map(x => x.q)).toEqual(['One', 'Two', 'Three']);
-});

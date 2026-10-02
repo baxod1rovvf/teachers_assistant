@@ -1390,6 +1390,19 @@ body.glass-ui .hwc-student-row.punished::before { background: color-mix(in srgb,
 .missing-student .punish-chip { font-size: 0.68rem; padding: 2px 8px; }
 .results-summary .punished-count { color: var(--danger); font-weight: 700; }
 
+/* ✓ / ✕ and ⚖️ / ⚠️ are round icon buttons */
+.check-chip, .punish-chip {
+  width: 30px; height: 30px; padding: 0; margin: 0; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; font-size: 0.9rem; line-height: 1; flex-shrink: 0; vertical-align: middle;
+}
+.check-chip:not(.on) { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 40%, var(--border)); }
+.check-chip.on { font-weight: 900; }
+.punish-chip { border-style: solid; }
+.punish-chip:not(.on) { opacity: 0.55; }
+.punish-chip:not(.on):hover { opacity: 1; }
+.hwc-round-row .check-chip { width: 26px; height: 26px; padding: 0; font-size: 0.8rem; }
+.missing-student .punish-chip { width: 24px; height: 24px; padding: 0; font-size: 0.75rem; }
+
 /* Results: students who didn't do the exercise */
 .missing-section { margin-top: 18px; }
 .missing-list { display: flex; flex-wrap: wrap; gap: 8px; }

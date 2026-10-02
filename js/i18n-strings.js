@@ -960,6 +960,26 @@ window.TA_ROBOT_I18N = {
     'Nomi yonidagi ✎ ni bosing, yangi nomni yozing va “Saqlash” ni bosing. Yangi nom Mashqlarim va Natijalarda koʻrinadi. Oʻquvchilarga allaqachon yuborilgan faylda eski nom qoladi.',
     'Как переименовать упражнение?',
     'Нажмите ✎ рядом с названием, введите новое и нажмите «Сохранить». Новое название видно в «Моих упражнениях» и «Результатах». В файле, уже отправленном ученикам, останется старое.'],
+  'Can I turn a Jungle into a Bamboozle?': [
+    'Jungli’ni Bamboozle’ga aylantirsa boʻladimi?',
+    'Ha — Jungli tuzuvchisida “🔁 Make it a Bamboozle” ni bosing (Bamboozle tuzuvchisida — “🔁 Make it a Jungle”). Ikkinchi oʻyin xuddi shu savollar bilan ochiladi. Avval yaratilgan oʻyin uchun oldin “✏️ Qayta ishlatish” ni bosing.',
+    'Можно ли превратить «Джунгли» в Bamboozle?',
+    'Да — в конструкторе «Джунглей» нажмите «🔁 Make it a Bamboozle» (в конструкторе Bamboozle — «🔁 Make it a Jungle»). Другая игра откроется с теми же вопросами. Для игры, сделанной раньше, сначала нажмите «✏️ Использовать снова».'],
+  'How do I stop an exercise giving points?': [
+    'Mashq ball bermasligi uchun nima qilaman?',
+    'Yaratayotganda “Bajargani uchun beriladigan ball” da 0 ni tanlang. Allaqachon yaratilgan mashq uchun “✏️ Qayta ishlatish” ni bosing, ballni 0 qiling va yangi nusxasini ulashing.',
+    'Как сделать, чтобы упражнение не давало баллы?',
+    'При создании выберите 0 в «Баллы за выполнение». Для уже созданного упражнения нажмите «✏️ Использовать снова», поставьте 0 баллов и поделитесь новой копией.'],
+  'What do ⚖️ and ⚠️ next to a student mean?': [
+    'Oʻquvchi yonidagi ⚖️ va ⚠️ nimani bildiradi?',
+    'Oʻquvchini “jazolanadi” deb belgilash uchun uning yonidagi ⚖️ ni bosing — u qizil ⚠️ ga aylanadi va qatori qizarib qoladi. Belgini olib tashlash uchun ⚠️ ni bosing. U natijalar jadvalida, toʻplamdagi oʻquvchilar roʻyxatida va “Didn\'t do it” da ishlaydi. Belgi faqat shu mashq uchun.',
+    'Что значат ⚖️ и ⚠️ рядом с учеником?',
+    'Нажмите ⚖️ рядом с учеником, чтобы отметить, что он «будет наказан», — значок станет красным ⚠️, а строка покраснеет. Нажмите ⚠️, чтобы снять отметку. Работает в таблице результатов, в списке учеников набора и в «Didn\'t do it». Отметка — только для этого упражнения.'],
+  'What do ✓ and ✕ next to a student mean?': [
+    'Oʻquvchi yonidagi ✓ va ✕ nimani bildiradi?',
+    '✕ — oʻquvchining javoblarini hali tekshirmagansiz degani; koʻrib chiqqaningizdan keyin bosing, u ✓ (tekshirildi) ga aylanadi. Qaytarish uchun ✓ ni bosing. Tekshirilgan oʻquvchilar ilovani ochganda chiqadigan “mashqni tugatganlar” eslatmasida boshqa koʻrinmaydi.',
+    'Что значат ✓ и ✕ рядом с учеником?',
+    '✕ значит, что вы ещё не проверили ответы ученика; нажмите после проверки — станет ✓ (проверено). Нажмите ✓, чтобы вернуть. Проверенные ученики больше не появляются в сообщении о закончивших упражнения при открытии приложения.'],
   'How do I find an exercise?': [
     'Mashqni qanday topaman?',
     'Qidiruv maydoniga yozing (nomi, soʻz yoki kod) yoki faqat oʻshalarni koʻrsatish uchun roʻyxat ustidagi guruh va tur tugmalarini bosing.',
@@ -995,21 +1015,11 @@ window.TA_ROBOT_I18N = {
     'Mashq nomi ostidagi 👥 tugmasini bosing va guruhni tanlang.',
     'Как поменять группу упражнения?',
     'Нажмите кнопку 👥 под названием упражнения и выберите группу.'],
-  'Can I turn a Jungle into a Bamboozle?': [
-    'Jungli’ni Bamboozle’ga aylantirsa boʻladimi?',
-    'Ha — “🔁 Make it a Bamboozle” (yoki “Make it a Jungle”) ni bosing. Ikkinchi oʻyin xuddi shu savollar bilan ochiladi.',
-    'Можно ли превратить «Джунгли» в Bamboozle?',
-    'Да — нажмите «🔁 Make it a Bamboozle» (или «Make it a Jungle»). Другая игра откроется с теми же вопросами.'],
   'How do I take one exercise out of a set?': [
     'Toʻplamdan bitta mashqni qanday olaman?',
     'Uy vazifasi/Dars toʻplamida “📤 Bitta mashqni olish” ni bosing — uni yuklab olish yoki Mashqlarimga qoʻshish mumkin; hammasini koʻrish uchun “🔀 Ajratish” ni bosing.',
     'Как достать одно упражнение из набора?',
     'У набора нажмите «📤 Взять одно упражнение», чтобы скачать одно из упражнений или добавить его в «Мои упражнения», или «🔀 Разделить», чтобы увидеть все.'],
-  'How do I stop an exercise giving points?': [
-    'Mashq ball berishini qanday toʻxtataman?',
-    '“🚫 Ballarni oʻchirish” ni bosing. Shundan keyin u “Ballar oʻchiq” deb belgilanadi va oʻquvchilar undan ball olmaydi.',
-    'Как сделать, чтобы упражнение не давало баллы?',
-    'Нажмите «🚫 Отключить баллы». Оно будет помечено «Баллы выкл.», и ученики больше не получат за него баллы.'],
   'Can I delete an old exercise?': [
     'Eski mashqni oʻchirsa boʻladimi?',
     'Ha — “🗑 Oʻchirish” ni bosing. Allaqachon yuborilgan natijalarga taʼsir qilmaydi.',
@@ -1050,16 +1060,6 @@ window.TA_ROBOT_I18N = {
     'Yon paneldagi Natijalar boʻlimida. Yoki Mashqlarim boʻlimida mashqdagi “📊 Natijalarni koʻrish” ni bosing (yoki mashq faylini Natijalarga yuklang). Yangi natijalar oʻzi kelib turadi.',
     'Где смотреть результаты учеников?',
     'В разделе «Результаты» в боковой панели. Или в «Моих упражнениях» нажмите «📊 Результаты» у упражнения (либо загрузите файл упражнения в «Результаты»). Новые результаты приходят сами.'],
-  'What does "⚖️ Punish?" do?': [
-    '“⚖️ Punish?” nima qiladi?',
-    'Oʻquvchini “⚠️ Will be punished” (jazolanadi) deb belgilash uchun uning yonida bosing — qatori qizarib qoladi. Belgini olib tashlash uchun yana bosing. U natijalar jadvalida, toʻplamdagi oʻquvchilar roʻyxatida va “Didn\'t do it” da ishlaydi. Belgi faqat shu mashq uchun.',
-    'Что делает «⚖️ Punish?»?',
-    'Нажмите рядом с учеником, чтобы отметить его «⚠️ Will be punished» (будет наказан) — его строка станет красной. Нажмите ещё раз, чтобы снять отметку. Работает в таблице результатов, в списке учеников набора и в «Didn\'t do it». Отметка — только для этого упражнения.'],
-  'What does "○ Not checked / ✓ Checked" mean?': [
-    '“○ Not checked / ✓ Checked” nimani bildiradi?',
-    'Oʻquvchining javoblarini koʻrib chiqqaningizdan keyin bosing (“Checked” — tekshirildi). Tekshirilgan oʻquvchilar ilovani ochganda chiqadigan “mashqni tugatganlar” eslatmasida boshqa koʻrinmaydi.',
-    'Что значит «○ Not checked / ✓ Checked»?',
-    'Нажмите после того, как посмотрели ответы ученика («Checked» — проверено). Проверенные ученики больше не появляются в сообщении о закончивших упражнения при открытии приложения.'],
   'Who is in "Didn\'t do it"?': [
     '“Didn\'t do it” da kimlar bor?',
     'Mashq guruhidagi hali natijasi yoʻq oʻquvchilar. Bu faqat guruh uchun tuzilgan mashqlarda chiqadi.',

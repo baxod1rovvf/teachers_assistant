@@ -1963,11 +1963,12 @@ window.taSetChecked = taSetChecked;
 function taIsChecked(r) { return getCheckedCompletions().indexOf(taCompletionKey(r)) !== -1; }
 window.taIsChecked = taIsChecked;
 // the ✓ Checked / ○ Not checked button shown next to a result
+// just an icon: ✓ checked, ✕ not checked yet (label: what the tooltip adds, e.g. "2 to check")
 function taCheckChipHtml(keys, checked, label) {
+  const tip = checked ? 'Checked — tap to mark as not checked' : (label ? label + ' — tap when you have checked them' : 'Not checked yet — tap when you have checked it');
   return '<button type="button" class="check-chip' + (checked ? ' on' : '') + '" data-keys="' + escapeForHtml(JSON.stringify(keys)).replace(/"/g, '&quot;') + '"' +
     ' onclick="event.stopPropagation(); taSetChecked(JSON.parse(this.dataset.keys), ' + (!checked) + ')"' +
-    ' title="' + (checked ? 'Checked — tap to mark as not checked' : 'Not checked yet — tap when you have checked it') + '">' +
-    (label || (checked ? '✓ Checked' : '○ Not checked')) + '</button>';
+    ' title="' + escapeForHtml(tip) + '" aria-label="' + escapeForHtml(tip) + '">' + (checked ? '✓' : '✕') + '</button>';
 }
 window.taCheckChipHtml = taCheckChipHtml;
 /* ---- Results: "Will be punished" ----
@@ -1991,8 +1992,8 @@ function taPunishChipHtml(key) {
   const on = taIsPunished(key);
   return '<button type="button" class="punish-chip' + (on ? ' on' : '') + '" data-key="' + escapeForHtml(key) + '"' +
     ' onclick="event.stopPropagation(); taSetPunished(this.dataset.key, ' + (!on) + ')"' +
-    ' title="' + (on ? 'Marked: will be punished — tap to take the mark off' : 'Mark this student: will be punished') + '">' +
-    (on ? '⚠️ Will be punished' : '⚖️ Punish?') + '</button>';
+    ' title="' + (on ? 'Will be punished — tap to take the mark off' : 'Mark this student: will be punished') + '"' +
+    ' aria-label="' + (on ? 'Will be punished' : 'Punish?') + '">' + (on ? '⚠️' : '⚖️') + '</button>';
 }
 window.taPunishKey = taPunishKey;
 window.taIsPunished = taIsPunished;
@@ -2612,9 +2613,9 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'What does "⚠️ Made before a fix" mean?', a: 'That file was made before a bug was fixed, so it still has the bug. Press "✏️ Use again", create a new copy and share that one.' },
     { q: 'Can I print an exercise?', a: 'Yes — tap "🖨 Worksheet" on word-list exercises. A paper version opens in a new tab with an answer key on its own page. Print it or save it as PDF.' },
     { q: 'How do I change the group of an exercise?', a: 'Tap the 👥 button under the exercise title and pick a group.' },
-    { q: 'Can I turn a Jungle into a Bamboozle?', a: 'Yes — tap "🔁 Make it a Bamboozle" (or "Make it a Jungle"). The other game opens with the same questions.' },
+    { q: 'Can I turn a Jungle into a Bamboozle?', a: 'Yes — in the Jungle builder tap "🔁 Make it a Bamboozle" (in the Bamboozle builder: "🔁 Make it a Jungle"). The other game opens with the same questions. For a game you made earlier, tap "✏️ Use again" first.' },
     { q: 'How do I take one exercise out of a set?', a: 'On a Homework/Class set tap "📤 Get one exercise" to download one of its exercises or add it to My Exercises, or "🔀 Separate" to see them all.' },
-    { q: 'How do I stop an exercise giving points?', a: 'Tap "🚫 Disable Points". It is then marked "Points off" and students no longer get points from it.' },
+    { q: 'How do I stop an exercise giving points?', a: 'Choose 0 in "Points awarded on completion" when you create it. For an exercise you already made, tap "✏️ Use again", set the points to 0 and share the new copy.' },
     { q: 'Can I delete an old exercise?', a: 'Yes — tap "🗑 Delete". Results already submitted are not affected.' },
     { q: 'What do "📥 Redownload" and "File not cached" mean?', a: 'Redownload gives you the file again. "File not cached" means this browser no longer keeps a copy (usually because storage was full) — use "✏️ Use again" to make it again.' }
   ]),
@@ -2627,8 +2628,8 @@ const AI_ROBOT_FAQ_BY_TAB = {
   ]),
   results: aiFaq([
     { q: "Where do I see my students' results?", a: 'Right here. In My Exercises tap "📊 View Results" on an exercise, or upload the exercise file here. New results arrive by themselves.' },
-    { q: 'What does "⚖️ Punish?" do?', a: 'Tap it next to a student to mark them "⚠️ Will be punished" — their row turns red. Tap again to take the mark off. It works in the results table, in a set\'s student list and in "Didn\'t do it". The mark is only for that exercise.' },
-    { q: 'What does "○ Not checked / ✓ Checked" mean?', a: 'Tap it after you have looked at a student\'s answers. Checked students stop appearing in the "finished exercises" note you get when you open the app.' },
+    { q: 'What do ⚖️ and ⚠️ next to a student mean?', a: 'Tap ⚖️ next to a student to mark them "will be punished" — it turns into a red ⚠️ and their row turns red. Tap ⚠️ to take the mark off. It works in the results table, in a set\'s student list and in "Didn\'t do it". The mark is only for that exercise.' },
+    { q: 'What do ✓ and ✕ next to a student mean?', a: '✕ means you haven\'t checked the student\'s answers yet; tap it after you have looked at them and it becomes ✓ (checked). Tap ✓ to change it back. Checked students stop appearing in the "finished exercises" note you get when you open the app.' },
     { q: 'Who is in "Didn\'t do it"?', a: 'Students in the exercise\'s group who have no result yet. It only shows for exercises made for a group.' },
     { q: 'What is "Entered with a name only"?', a: 'People who typed a name instead of an ID from your Students list. They are left out of Statistics and Top 5.' },
     { q: 'How do I rate Sentences?', a: 'Tap "☆ Rate" next to a Sentences result and give 1–5 stars. The stars are used for Top 5 Active Students.' },

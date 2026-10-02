@@ -96,9 +96,6 @@ function renderRecentExercises() {
     const disabledBadge = setBadge + (item.disabled
       ? '<span class="badge-type" style="background:rgba(232,103,74,0.14); color:var(--danger);">Points off</span>'
       : (setKind ? '' : '<span class="badge-type">' + escapeForHtml(item.typeLabel) + '</span>'));
-    const disableBtn = item.disabled
-      ? ''
-      : '<button class="mini-btn danger" type="button" onclick="disableRecentExercisePoints(' + idx + ')">🚫 Disable Points</button>';
     const gName = groupNames[item.groupId];
     const groupBtn = '<button type="button" class="myex-group-btn' + (gName ? '' : ' none') + '" onclick="changeRecentExerciseGroup(' + idx + ')" title="Change which group this is for"' + (gName ? ' translate="no"' : '') + '>👥 ' + escapeForHtml(gName || 'Set group') + '</button>';
     const oldIssues = taOldFileIssues(item);
@@ -112,9 +109,6 @@ function renderRecentExercises() {
       : '<span class="unavailable-hint">File not cached</span>';
     const againBtn = exerciseLoadFor(item)
       ? '<button class="mini-btn solid" type="button" onclick="useRecentExerciseAgain(' + idx + ')" title="Open this exercise in its builder, filled in, to change it or make a new version">✏️ Use again</button>'
-      : '';
-    const gameBtn = (item.typeLabel === 'Jungle' || item.typeLabel === 'Bamboozle')
-      ? '<button class="mini-btn" type="button" onclick="switchRecentGame(' + idx + ')" title="Open the same questions in the other classroom game">🔁 Make it a ' + (item.typeLabel === 'Jungle' ? 'Bamboozle' : 'Jungle') + '</button>'
       : '';
     const answersBtn = item.contentSummary
       ? '<button class="mini-btn" type="button" onclick="viewRecentExerciseAnswers(' + idx + ')">📝 Answers</button>'
@@ -132,14 +126,12 @@ function renderRecentExercises() {
         '</div>' +
         '<div class="recent-exercise-actions">' +
           againBtn +
-          gameBtn +
           openBtn +
           (worksheetFor(item) ? '<button class="mini-btn" type="button" onclick="printRecentExercise(' + idx + ')" title="A paper version for lessons without devices, with an answer key">🖨 Worksheet</button>' : '') +
           '<button class="mini-btn" type="button" onclick="shareRecentExercise(' + idx + ')" title="Message and file to send to students, or show the code on the board">📤 Share</button>' +
           answersBtn +
           separateBtn +
           '<button class="mini-btn" type="button" onclick="viewRecentExerciseResults(' + idx + ')">📊 View Results</button>' +
-          disableBtn +
           '<button class="mini-btn danger" type="button" onclick="deleteRecentExercise(' + idx + ')">🗑 Delete</button>' +
         '</div>' +
       '</div>';
@@ -255,31 +247,6 @@ function exerciseLoadFor(item) {
   fields[b.p + '-title'] = item.title;
   fields[b.p + '-code'] = item.requiredCode || '';
   return { tab: b.tab, state: { v: 1, fields: fields, rows: lines.map(b.row) } };
-}
-
-/* Jungle ⇄ Bamboozle from My Exercises: the same questions open in the other
-   game's builder (from the saved form, or else from the saved file). */
-function gameQuestionsOf(item) {
-  const load = exerciseLoadFor(item);
-  if (load && !load.set && Array.isArray(load.state && load.state.rows)) return load.state.rows;
-  const html = getCachedExerciseHtml(item.uid);
-  const m = html && html.match(/const DATA = (\{[\s\S]*?\});\s*\n/);
-  try { return m ? JSON.parse(m[1]).questions || null : null; } catch (e) { return null; }
-}
-function switchRecentGame(idx) {
-  const item = getRecentExercises()[idx];
-  if (!item) return;
-  const to = item.typeLabel === 'Jungle' ? 'bamboozle' : 'jungle';
-  const qs = (gameQuestionsOf(item) || []).filter(x => x && ((x.q || '').trim() || x.img));
-  if (!qs.length) { showToast('This game\'s questions aren\'t saved in this browser.'); return; }
-  const fields = {};
-  fields[to === 'bamboozle' ? 'bz-title' : 'jg-title'] = item.title;
-  const rows = to === 'bamboozle'
-    ? qs.map(x => ({ q: x.q || '', a: x.a || '', pts: 10, img: x.img || '' }))
-    : qs.map(x => ({ q: x.q || '', img: x.img || '' }));
-  try { sessionStorage.setItem('ta_builder_load', JSON.stringify({ title: item.title, tab: to, state: { v: 1, fields: fields, rows: rows } })); }
-  catch (e) { showToast('Your browser blocked this — try again.'); return; }
-  taNavigate('create.html#' + to);
 }
 
 function useRecentExerciseAgain(idx) {
@@ -669,22 +636,6 @@ function getOneFromSet(idx) {
     }
   });
 }
-async function disableRecentExercisePoints(idx) {
-  const list = getRecentExercises();
-  const item = list[idx];
-  if (!item) return;
-  if (!window.taDisableExercisePoints) { showToast('Still connecting — try again in a moment.'); return; }
-  const res = await window.taDisableExercisePoints(item.boardCode || getPointsBoardCode(), item.code);
-  if (res === 'ok') {
-    list[idx].disabled = true;
-    saveRecentExercises(list);
-    renderRecentExercises();
-    showToast('"' + item.title + '" will no longer award points.', 'ok');
-  } else {
-    showToast("Couldn't save that — check your internet connection.");
-  }
-}
-
 /* ================= PAGE START ================= */
 taOnTab('myexercises', function () {
   // Opened from a group on the Students page: my-exercises.html?group=<id>

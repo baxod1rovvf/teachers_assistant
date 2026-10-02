@@ -70,14 +70,14 @@ test('"Didn\'t do it" lists only the group\'s students who have no result; Check
 
   // Checked / Not checked
   const aliceChip = page.locator('.results-table tbody tr', { hasText: 'Alice Test' }).locator('.check-chip');
-  await expect(aliceChip).toHaveText('○ Not checked');
+  await expect(aliceChip).toHaveText('✕');
   await aliceChip.click();
-  await expect(page.locator('.results-table tbody tr', { hasText: 'Alice Test' }).locator('.check-chip')).toHaveText('✓ Checked');
+  await expect(page.locator('.results-table tbody tr', { hasText: 'Alice Test' }).locator('.check-chip')).toHaveText('✓');
   await page.reload();
   await page.waitForTimeout(1500);
   await hideNotices(page);
   await page.evaluate(code => { document.getElementById('res-code-input').value = code; onResultsCodeInput(); }, data.DICTATION_CODE);
-  await expect(page.locator('.results-table tbody tr', { hasText: 'Alice Test' }).locator('.check-chip')).toHaveText('✓ Checked');
+  await expect(page.locator('.results-table tbody tr', { hasText: 'Alice Test' }).locator('.check-chip')).toHaveText('✓');
 
   // the Apex homework set: Farida (Apex) did nothing
   await page.evaluate(() => showExerciseResults('uset'));
@@ -96,7 +96,7 @@ test('a homework set shows each student\'s progress and their answers open', asy
   await page.evaluate(() => showExerciseResults('uset'));
   const row = page.locator('.hwc-student-row', { hasText: 'Dilya Test' });
   await expect(row).toContainText('3/3');
-  await expect(row).toContainText('Completed');
+  await expect(row).not.toContainText('Completed'); // the 3/3 says it
   await page.evaluate(() => toggleHwcStudentExpand('20001'));
   await page.evaluate(() => viewHwcRoundAnswer('700004', 'Dilya Test', 'My room — Dictation', '20001'));
   await expect(page.locator('#sentenceViewTitle')).toContainText('Dilya Test');
@@ -116,7 +116,7 @@ test('"Will be punished" marks a student in red and is remembered', async ({ pag
   await expect(row()).not.toHaveClass(/punished/);
   await row().locator('.punish-chip').click();
   await expect(row()).toHaveClass(/punished/);
-  await expect(row().locator('.punish-chip')).toHaveText('⚠️ Will be punished');
+  await expect(row().locator('.punish-chip')).toHaveText('⚠️');
   await expect(page.locator('.results-summary')).toContainText('1 will be punished');
   // a student who didn't do it can be marked too
   const cora = page.locator('.missing-student', { hasText: 'Cora Test' });

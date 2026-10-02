@@ -24,3 +24,12 @@ test('an exercise can be renamed, and the new name is kept', async ({ page, cont
   await expect(page.locator('#taDoneWarn')).toContainText('Present simple — week 1');
   expect(errors).toEqual([]);
 });
+
+test('My Exercises has no "Disable Points" or "Make it a Jungle/Bamboozle" buttons', async ({ page, context }) => {
+  await prepare(context);
+  await page.goto('/my-exercises.html');
+  await page.waitForTimeout(1000);
+  await expect(page.locator('.recent-exercise-row').first()).toBeVisible();
+  await expect(page.locator('.recent-exercise-actions', { hasText: 'Disable Points' })).toHaveCount(0);
+  await expect(page.locator('.recent-exercise-actions', { hasText: 'Make it a' })).toHaveCount(0);
+});
