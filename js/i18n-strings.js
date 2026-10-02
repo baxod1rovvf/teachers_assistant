@@ -798,9 +798,9 @@ window.TA_ROBOT_I18N = {
     'Каждый урок из недельного расписания засчитывается каждый раз, когда проходят его день и время. Если убрать урок из расписания, уже посчитанное сохраняется.'],
   'What is the note about students who finished exercises?': [
     'Mashqni tugatgan oʻquvchilar haqidagi eslatma nima?',
-    'Ilovani ochganingizda, oxirgi 7 kunda mashqni tugatgan, lekin siz hali tekshirmagan oʻquvchilar roʻyxati chiqadi. Oʻquvchi ismi ostidagi mashqni (📊) bossangiz, oʻsha mashq natijalari ochiladi. Bitta oʻquvchi uchun “Checked” ni yoki hammasi uchun “All checked” ni bosing. ✕ bilan yopsangiz, u faqat keyingi safargacha yashirinadi.',
+    'Ilovani ochganingizda, oxirgi 7 kunda mashqni tugatgan, lekin siz hali tekshirmagan oʻquvchilar roʻyxati chiqadi. Oʻquvchi ismi ostidagi mashqni (📊) bossangiz, oʻsha mashq natijalari ochiladi. Eslatma ochiq qoladi, shuning uchun keyingi oʻquvchining mashqini ham ochishingiz mumkin. Bitta oʻquvchi uchun “Checked” ni yoki hammasi uchun “All checked” ni bosing. ✕ bilan yopsangiz, u faqat keyingi safargacha yashirinadi.',
     'Что за сообщение об учениках, закончивших упражнения?',
-    'При открытии приложения появляется список ваших учеников, которые за последние 7 дней закончили упражнение, а вы его ещё не проверили. Нажмите на упражнение под именем ученика (📊), чтобы открыть результаты этого упражнения. Нажмите «Checked» для одного ученика или «All checked» для всех. Закрытие крестиком ✕ скрывает его только до следующего раза.'],
+    'При открытии приложения появляется список ваших учеников, которые за последние 7 дней закончили упражнение, а вы его ещё не проверили. Нажмите на упражнение под именем ученика (📊), чтобы открыть результаты этого упражнения. Сообщение остаётся открытым, так что можно сразу открыть упражнение следующего ученика. Нажмите «Checked» для одного ученика или «All checked» для всех. Закрытие крестиком ✕ скрывает его только до следующего раза.'],
   'Can I switch between day and night mode?': [
     'Kunduzgi va tungi rejimni almashtirsa boʻladimi?',
     'Ha — istalgan payt yorugʻ va qorongʻi koʻrinish oʻrtasida almashish uchun shu sahifa tepasidagi tugmachani bosing.',

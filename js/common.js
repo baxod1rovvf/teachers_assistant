@@ -2186,8 +2186,10 @@ function showCompletionsWarning(groups) {
     box.classList.remove('show');
   };
   box.querySelector('.done-warn-results').onclick = () => { box.classList.remove('show'); switchTo('results'); };
+  // the note stays open, so the next student's exercise can be opened too
   box.querySelectorAll('.done-warn-ex').forEach(btn => btn.onclick = () => {
-    box.classList.remove('show');
+    box.querySelectorAll('.done-warn-ex.opened').forEach(b => b.classList.remove('opened'));
+    btn.classList.add('opened');
     taOpenResultsFor(btn.dataset.code, btn.dataset.set);
   });
   if (!box.classList.contains('show')) { void box.offsetWidth; box.classList.add('show'); }
@@ -2662,7 +2664,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'How do I write a plan for a lesson?', a: 'Go to Settings → Weekly Lesson Schedule and tap "📝 Plan" next to the lesson. Write your notes, pick the exercises for it, and tap "💾 Save Plan".' },
     { q: 'How is "Top 5 Active Students" worked out?', a: 'Students are ranked by how well they did, not by how many exercises they finished. Each result becomes a fair 0–100 score (Sentences use the stars you give in Results). Use the group buttons (e.g. Target / Apex) to see one group at a time.' },
     { q: 'What is "Lessons taught"?', a: 'Every lesson on your weekly schedule counts once each time its day and time pass. Removing a lesson from the schedule keeps what it already counted.' },
-    { q: 'What is the note about students who finished exercises?', a: 'When you open the app, a note lists your students who finished an exercise in the last 7 days that you haven\'t checked yet. Tap an exercise under a student\'s name (📊) to open that exercise\'s results. Tap "Checked" for one student, or "All checked". Closing it with ✕ only hides it until next time.' },
+    { q: 'What is the note about students who finished exercises?', a: 'When you open the app, a note lists your students who finished an exercise in the last 7 days that you haven\'t checked yet. Tap an exercise under a student\'s name (📊) to open that exercise\'s results. The note stays open, so you can open the next student\'s exercise too. Tap "Checked" for one student, or "All checked". Closing it with ✕ only hides it until next time.' },
     { q: 'Can I switch between day and night mode?', a: 'Yes — tap the toggle switch at the top of this page to flip between light and dark themes any time.' },
     { q: 'How do I change the colours or the look?', a: 'Tap the 🎨 button next to the day/night switch. Pick a Style (Classic or Glass) and a colour Design. Four designs are for day and two for night.' },
     { q: 'How do I turn sounds off?', a: 'Tap the speaker button at the top of this page. 🔇 means sounds are off; tap it again to turn them back on.' },

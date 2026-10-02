@@ -1364,6 +1364,7 @@ body.glass-ui .done-warn { border-left-color: var(--success); }
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: left;
 }
 .done-warn-ex:hover { border-color: var(--brand); color: var(--brand); }
+.done-warn-ex.opened { border-color: var(--brand); color: var(--brand); background: color-mix(in srgb, var(--brand) 14%, transparent); }
 .done-warn-foot { display: flex; justify-content: space-between; gap: 8px; margin-top: 10px; }
 .done-warn-foot button {
   border: 1.5px solid var(--border); background: none; color: var(--ink); font: 700 0.78rem 'Inter', sans-serif;

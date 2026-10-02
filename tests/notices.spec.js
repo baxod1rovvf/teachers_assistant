@@ -61,8 +61,8 @@ test('each exercise in the "finished exercises" note opens that exercise\'s own 
   await done.locator('.lesson-warn-row', { hasText: 'Bobur Test' }).locator('.done-warn-ex').click();
   await expect(page.locator('#activeCodeValue')).toHaveText('Kitchen', { timeout: 8000 });
   await expect(page.locator('.results-table tbody tr', { hasText: 'Bobur Test' })).toBeVisible();
-  await page.goto('/index.html');
-  await expect(done).toHaveClass(/show/, { timeout: 8000 });
+  // the note stays open: the other exercise can be opened straight away
+  await expect(done).toHaveClass(/show/);
   await done.locator('.lesson-warn-row', { hasText: 'Dilya Test' }).locator('.done-warn-ex').click();
   await expect(page.locator('#activeCodeValue')).toHaveText('Sep test', { timeout: 8000 });
   await expect(page.locator('.hwc-student-row', { hasText: 'Dilya Test' })).toBeVisible();
