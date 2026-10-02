@@ -209,9 +209,13 @@ async function viewHwcRoundAnswer(roundCode, studentName, roundLabel, studentId)
 }
 
 // A result's time; old Flashcard files often lost it (0 seconds): "—", not a fake 00:00
+// (inside a Homework/Class set, the time the set itself measured for that exercise is shown instead)
 function taTimeText(r) {
   if (!r || !r.timeDisplay) return '—';
-  if (r.type === 'Flashcard' && !r.timeSeconds) return '—';
+  if (r.type === 'Flashcard' && !r.timeSeconds) {
+    const t = window.taRoundTimeFor ? window.taRoundTimeFor(r.code, r.studentId || r.name) : 0;
+    return t ? String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0') : 'not recorded';
+  }
   return r.timeDisplay;
 }
 

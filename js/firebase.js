@@ -305,6 +305,23 @@ if (window.getPointsBoardCode) window.startPointsSync(window.getPointsBoardCode(
 window.__plainCompletions = [];
 window.__allResults = [];
 let plainCodes = new Set();
+/* How long a student spent on each exercise of a Homework/Class set, as the set
+   itself measured it (its progress records): "exercise code|student" → seconds. */
+let rsRoundTimes = {};
+function rsBuildRoundTimes() {
+  const out = {};
+  rs.docs.forEach(v => {
+    if (!v || v.type !== 'HWC_PROGRESS' || !v.roundCode || !(v.timeSeconds > 0)) return;
+    out[v.roundCode + '|' + String(v.studentId || '').trim().toLowerCase()] = v.timeSeconds;
+  });
+  rsRoundTimes = out;
+}
+function taRoundTimeFor(code, student) {
+  return rsRoundTimes[code + '|' + String(student || '').trim().toLowerCase()] || 0;
+}
+window.taRoundTimeFor = taRoundTimeFor;
+function rsFmtTime(sec) { return String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(sec % 60).padStart(2, '0'); }
+
 function rsDerivePlain() {
   if (!plainCodes.size) return;
   // Sets made before their exercises' codes were saved in My Exercises: the set's
@@ -313,8 +330,14 @@ function rsDerivePlain() {
   rs.docs.forEach(v => { if (v && v.type === 'HWC_PROGRESS' && v.roundCode && plainCodes.has(v.code) && !plainCodes.has(v.roundCode)) more.push(v.roundCode); });
   if (more.length) { more.forEach(c => plainCodes.add(c)); rsEnsureCodes(more).then(rsChanged); }
   const NO_POINTS_TYPES = ['EnglishContent', 'BilingualReader']; // as a result's type names them
+  rsBuildRoundTimes();
   const all = [];
-  rs.docs.forEach(v => { if (v && plainCodes.has(v.code) && typeof v.type === 'string' && v.type.indexOf('POINTS:') !== 0 && v.type !== 'HWC_PROGRESS') all.push(v); });
+  rs.docs.forEach(v => {
+    if (!(v && plainCodes.has(v.code) && typeof v.type === 'string' && v.type.indexOf('POINTS:') !== 0 && v.type !== 'HWC_PROGRESS')) return;
+    // Flashcard files made before 2026-10-02 sent 0 seconds; inside a set, the set timed the exercise itself
+    const t = v.type === 'Flashcard' && !v.timeSeconds ? taRoundTimeFor(v.code, v.studentId || v.name) : 0;
+    all.push(t ? Object.assign({}, v, { timeSeconds: t, timeDisplay: rsFmtTime(t), timeFromSet: true }) : v);
+  });
   window.__allResults = all;
   window.__plainCompletions = all.filter(r => NO_POINTS_TYPES.indexOf(r.type) !== -1);
   if (window.renderDashboard) window.renderDashboard();

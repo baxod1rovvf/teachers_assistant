@@ -171,3 +171,20 @@ test('a set\'s rounds a student hasn\'t done yet still show their names', async 
   });
   await expect(page.locator('.hwc-round-row').nth(1)).toContainText('Say it — Pronunciation');
 });
+
+test('a Flashcard result with 0 seconds inside a set shows the time the set measured', async ({ page, context }) => {
+  await prepare(context);
+  await page.goto('/results.html');
+  await page.waitForTimeout(1500);
+  await hideNotices(page);
+  const now = new Date().toISOString();
+  await page.evaluate(now => {
+    window.__studentSubmits({ v: 1, code: '700001', type: 'HWC_PROGRESS', title: 'Sep test', name: 'Alice Test', studentId: '10001',
+      roundIndex: 0, roundLabel: 'Words — Vocabulary Journey', roundCode: '700099', totalCount: 3, timeSeconds: 964, date: now });
+    window.__studentSubmits({ v: 1, code: '700099', type: 'Flashcard', title: 'Words', name: 'Alice Test', studentId: '10001',
+      timeSeconds: 0, timeDisplay: '00:00', date: now });
+  }, now);
+  await page.waitForTimeout(1500);
+  await page.evaluate(() => { document.getElementById('res-code-input').value = '700099'; onResultsCodeInput(); });
+  await expect(page.locator('.results-table tbody tr', { hasText: 'Alice Test' })).toContainText('16:04', { timeout: 8000 });
+});

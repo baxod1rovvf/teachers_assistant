@@ -674,6 +674,7 @@ window.TA_I18N_ROWS = [
   ['Checked', 'Tekshirildi', 'Проверено'],
   ['Punished?', 'Jazo?', 'Наказать?'],
   ['Last online', 'Oxirgi faollik', 'Последняя активность'],
+  ['not recorded', 'yozilmagan', 'не записано'],
   /* ---------- AI robot ---------- */
   ['Search all questions', 'Barcha savollardan qidirish', 'Поиск по всем вопросам'],
   ['Back to questions', 'Savollarga qaytish', 'Назад к вопросам']
@@ -961,11 +962,11 @@ window.TA_ROBOT_I18N = {
     'Bular toʻplamlar: 📚 Uy vazifasi toʻplamlari toʻq sariq, 🏫 Dars toʻplamlari yashil chetli — ular yakka mashqlardan ajralib turishi uchun.',
     'Почему у некоторых упражнений цветной край?',
     'Это наборы: у 📚 наборов «Домашнее задание» оранжевый край, у 🏫 наборов «Урок» — зелёный, чтобы они выделялись среди отдельных упражнений.'],
-  'Why does a Flashcard result show "—" (or 00:00) for time?': [
-    'Nega Kartochkalar natijasida vaqt “—” (yoki 00:00) deb turibdi?',
-    '2026-yil 3-oktabrdan oldin yaratilgan Kartochkalar fayllari oʻquvchi tugatganda vaqtni yoʻqotib qoʻyardi, shuning uchun 0 yuborilgan. Oʻquvchi mashqni bajargan. Mashqlarim boʻlimida “✏️ Qayta ishlatish” bilan mashqni qayta yarating va yangisini ulashing.',
-    'Почему в результате «Карточек» время «—» (или 00:00)?',
-    'Файлы «Карточек», созданные до 3 октября 2026 г., теряли время, когда ученик заканчивал, поэтому отправлялся 0. Ученик упражнение выполнил. Создайте упражнение заново через «✏️ Использовать снова» в «Моих упражнениях» и поделитесь новым.'],
+  'Why does a Flashcard result say "not recorded" for time?': [
+    'Nega Kartochkalar natijasida vaqt “not recorded” (yozilmagan) deb turibdi?',
+    'Oʻquvchi mashqni tugatgan — natija hammasi bilan birga kelgan. Faqat vaqt yoʻqolgan: 2026-yil 3-oktabrdan oldin yaratilgan Kartochkalar fayllari 0 soniya yuborardi. Uy vazifasi/Dars toʻplami ichida toʻplamning oʻzi oʻlchagan vaqt koʻrsatiladi. Mashqlarim boʻlimida “✏️ Qayta ishlatish” bilan mashqni qayta yarating va yangisini ulashing.',
+    'Почему в результате «Карточек» время «not recorded» (не записано)?',
+    'Ученик закончил — результат пришёл со всем остальным. Потерялось только время: файлы «Карточек», созданные до 3 октября 2026 г., отправляли 0 секунд. Внутри набора «Домашнее задание»/«Урок» показывается время, которое измерил сам набор. Создайте упражнение заново через «✏️ Использовать снова» в «Моих упражнениях» и поделитесь новым.'],
   'How do I rename an exercise?': [
     'Mashq nomini qanday oʻzgartiraman?',
     'Nomi yonidagi ✎ ni bosing, yangi nomni yozing va “Saqlash” ni bosing. Yangi nom Mashqlarim va Natijalarda koʻrinadi. Oʻquvchilarga allaqachon yuborilgan faylda eski nom qoladi.',
