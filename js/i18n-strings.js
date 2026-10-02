@@ -668,6 +668,12 @@ window.TA_I18N_ROWS = [
   ['New name', 'Yangi nom', 'Новое название'],
   ['Please type a name', 'Iltimos, nom yozing', 'Пожалуйста, введите название'],
   ['The new name shows in My Exercises and Results. A file you have already sent keeps its old name', 'Yangi nom Mashqlarim va Natijalarda koʻrinadi. Allaqachon yuborilgan faylda eski nom qoladi', 'Новое название видно в «Моих упражнениях» и «Результатах». В уже отправленном файле останется старое'],
+  /* ---------- Results: a set's student list, column names ---------- */
+  ['Name', 'Ism', 'Имя'],
+  ['Progress', 'Bajarilishi', 'Прогресс'],
+  ['Checked', 'Tekshirildi', 'Проверено'],
+  ['Punished?', 'Jazo?', 'Наказать?'],
+  ['Last online', 'Oxirgi faollik', 'Последняя активность'],
   /* ---------- AI robot ---------- */
   ['Search all questions', 'Barcha savollardan qidirish', 'Поиск по всем вопросам'],
   ['Back to questions', 'Savollarga qaytish', 'Назад к вопросам']

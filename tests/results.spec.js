@@ -97,6 +97,12 @@ test('a homework set shows each student\'s progress and their answers open', asy
   const row = page.locator('.hwc-student-row', { hasText: 'Dilya Test' });
   await expect(row).toContainText('3/3');
   await expect(row).not.toContainText('Completed'); // the 3/3 says it
+  // the column names above the list
+  const head = page.locator('.hwc-list-head');
+  for (const t of ['Name', 'ID', 'Progress', 'Checked', 'Punished?', 'Time', 'Last online']) await expect(head).toContainText(t);
+  // lined up: "Checked" sits right above the ✓/✕ icon
+  const hx = (await head.locator('span').nth(3).boundingBox()).x, cx = (await row.locator('.hwc-col-status').boundingBox()).x;
+  expect(Math.abs(hx - cx)).toBeLessThan(4);
   await page.evaluate(() => toggleHwcStudentExpand('20001'));
   await page.evaluate(() => viewHwcRoundAnswer('700004', 'Dilya Test', 'My room — Dictation', '20001'));
   await expect(page.locator('#sentenceViewTitle')).toContainText('Dilya Test');

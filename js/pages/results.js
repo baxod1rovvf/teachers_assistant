@@ -90,7 +90,11 @@ function renderHwcResultsList() {
       ((d.studentId && norm(r.studentId) === norm(d.studentId)) || norm(r.name) === norm(d.studentName) || (d.studentId && norm(r.name) === norm(d.studentId))));
   };
   const checkedSet = new Set(getCheckedCompletions());
-  wrap.innerHTML = docs.map(d => {
+  // the column names, lined up with the rows below
+  const headHtml = '<div class="hwc-list-head" aria-hidden="true">' +
+    ['Name', 'ID', 'Progress', 'Checked', 'Punished?', 'Time', 'Last online', ''].map((t, i) =>
+      '<span' + (i >= 5 ? ' class="right"' : '') + '>' + t + '</span>').join('') + '</div>';
+  wrap.innerHTML = headHtml + docs.map(d => {
     const done = d.completedCount === d.totalCount && d.totalCount > 0;
     const answers = answersFor(d);
     const unchecked = answers.filter(r => !checkedSet.has(taCompletionKey(r)));
@@ -142,7 +146,8 @@ function renderHwcResultsList() {
           '<span>' + fractionText + ' \u00b7 ' + pct + '%</span>' +
           '<div class="res-score-bar-track"><div class="res-score-bar-fill" style="width:' + pct + '%; background:' + barColor + ';"></div></div>' +
         '</div>' +
-        '<div class="hwc-col-status">' + checkHtml + taPunishChipHtml(punishKey) + '</div>' +
+        '<div class="hwc-col-status">' + checkHtml + '</div>' +
+        '<div class="hwc-col-punish">' + taPunishChipHtml(punishKey) + '</div>' +
         totalTimeHtml +
         '<span class="hwc-time">' + formatRelativeTime(d.lastActive) + '</span>' +
         '<span class="hwc-chevron">' + (isExpanded ? '\u25b2' : '\u25bc') + '</span>' +

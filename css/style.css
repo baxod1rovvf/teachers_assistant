@@ -634,9 +634,18 @@ body.light-theme .picker-icon-test { background-image: url(../images/icons/creat
 .hwc-student-head {
   /* name, ID, progress, status, total time (only once finished), last active, ▼ —
      the same columns in every row, so they line up and the ▼ stays at the end */
-  display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1.1fr) minmax(0, 1.8fr) minmax(0, 1.3fr) 7.5em 6.5em 1em;
+  display: grid; grid-template-columns: var(--hwc-cols);
   align-items: center; gap: 16px; padding: 14px 16px; cursor: pointer;
 }
+/* name, ID, progress, checked, punished, time, last online, ▼ */
+#hwcResultsInlineList { --hwc-cols: minmax(0, 2fr) minmax(0, 1.1fr) minmax(0, 1.8fr) 5.6rem 6.2rem 7rem 7.2rem 0.8rem; }
+.hwc-list-head {
+  display: grid; grid-template-columns: var(--hwc-cols); gap: 16px; padding: 0 17.5px 8px;
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: var(--brand); text-align: left;
+}
+.hwc-list-head span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hwc-list-head .right { text-align: right; }
+.hwc-col-punish { display: flex; }
 .hwc-student-head .hwc-total-time { text-align: right; white-space: nowrap; }
 .hwc-student-head .hwc-time { text-align: right; }
 .hwc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
@@ -657,6 +666,7 @@ body.light-theme .picker-icon-test { background-image: url(../images/icons/creat
 .hwc-student-head .res-score-cell { width: 100%; }
 @media (max-width: 860px) {
   .hwc-student-head { grid-template-columns: 1fr; row-gap: 8px; }
+  .hwc-list-head { display: none; }
   .hwc-col-status { justify-content: flex-start; }
   .hwc-time, .hwc-chevron { justify-self: start; }
   .hwc-student-head .hwc-total-time, .hwc-student-head .hwc-time { text-align: left; }
