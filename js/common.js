@@ -2698,6 +2698,8 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'How do code and points work in a set?', a: 'The set has one code and one points value, chosen in round 1. Students get the points once they finish the whole set.' },
     { q: 'How do students use it?', a: 'They open the set, enter their ID (and code) once, and work through every exercise in order. If they stop, they pick up where they left off. At the end they get a certificate.' },
     { q: 'Can a student skip an exercise in a set?', a: 'No. An exercise only counts as done when the student presses Submit (with every answer filled in) or its time limit runs out, and the set waits until the answers have reached you. If they can\'t be sent, the student sees "Try again" and the exercise isn\'t counted.' },
+    { q: 'What happens when a student finishes the last exercise of a set?', a: 'They see "📤 Send my answers to my teacher". When they press it, an animation plays while the answers are sent, then "✅ Your answers have been sent to your teacher" and their certificate. If the internet fails, they see "Try again".' },
+    { q: 'Can students look at their dictation mistakes in a set?', a: 'Yes. After a dictation, its page with the mistakes stays on screen as long as they like. They move on only when they press "Next exercise" (on the last exercise: "Send my answers to my teacher").' },
     { q: 'Where do I see the combined results?', a: 'In My Exercises tap "📊 View Results" on the set. You see each student\'s progress (e.g. 2/3), their total time, and can open their answers.' }
   ]),
   dashboard: aiFaq([

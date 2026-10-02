@@ -937,6 +937,16 @@ window.TA_ROBOT_I18N = {
     'Yoʻq. Mashq faqat oʻquvchi “Submit” ni bosganda (hamma javoblar toʻldirilgan boʻlsa) yoki vaqt chegarasi tugaganda bajarilgan hisoblanadi, toʻplam esa javoblar sizga yetib kelguncha kutadi. Agar yuborib boʻlmasa, oʻquvchi “Try again” ni koʻradi va mashq hisoblanmaydi.',
     'Может ли ученик пропустить упражнение в наборе?',
     'Нет. Упражнение засчитывается, только когда ученик нажимает «Submit» (заполнив все ответы) или когда кончается время, а набор ждёт, пока ответы дойдут до вас. Если их не удаётся отправить, ученик видит «Try again», и упражнение не засчитывается.'],
+  'What happens when a student finishes the last exercise of a set?': [
+    'Oʻquvchi toʻplamdagi oxirgi mashqni tugatganda nima boʻladi?',
+    'U “📤 Send my answers to my teacher” (javoblarimni oʻqituvchimga yuborish) tugmasini koʻradi. Bosganda javoblar yuborilayotgan paytda animatsiya chiqadi, keyin “✅ Your answers have been sent to your teacher” (javoblaringiz oʻqituvchingizga yuborildi) va sertifikati. Internet ishlamasa, “Try again” chiqadi.',
+    'Что происходит, когда ученик заканчивает последнее упражнение набора?',
+    'Он видит кнопку «📤 Send my answers to my teacher» (отправить ответы учителю). Когда он её нажимает, пока ответы отправляются, идёт анимация, затем «✅ Your answers have been sent to your teacher» (ответы отправлены учителю) и сертификат. Если пропал интернет — «Try again».'],
+  'Can students look at their dictation mistakes in a set?': [
+    'Oʻquvchilar toʻplamdagi diktant xatolarini koʻra oladimi?',
+    'Ha. Diktantdan keyin xatolari koʻrsatilgan sahifa xohlagancha ekranda qoladi. Ular faqat “Next exercise” (keyingi mashq) tugmasini bosganda oʻtadi (oxirgi mashqda — “Send my answers to my teacher”).',
+    'Могут ли ученики посмотреть ошибки диктанта в наборе?',
+    'Да. После диктанта страница с ошибками остаётся на экране сколько угодно. Дальше они переходят, только нажав «Next exercise» (следующее упражнение; в последнем упражнении — «Send my answers to my teacher»).'],
   'Where do I see the combined results?': [
     'Umumiy natijalarni qayerda koʻraman?',
     'Mashqlarim boʻlimida toʻplamdagi “📊 Natijalarni koʻrish” ni bosing. Har bir oʻquvchining yutugʻini (masalan, 2/3), umumiy vaqtini koʻrasiz va javoblarini ochishingiz mumkin.',

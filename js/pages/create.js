@@ -493,6 +493,14 @@ function buildAndDownloadHwc() {
 html,body{margin:0;padding:0;height:100%;background:#101116;font-family:'Inter',system-ui,sans-serif;overflow:hidden;}
 #hwcBar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px;background:#17181F;color:#F2F2F7;font-weight:800;font-size:.95rem;position:relative;z-index:10;}
 #hwcFrame{width:100%;height:calc(100% - 40px);border:none;display:block;position:relative;z-index:10;}
+.hwc-send-anim{position:relative;z-index:2;width:min(440px,86vw);height:calc(min(440px,86vw) * 0.185);display:none;align-items:center;justify-content:center;}
+.hwc-send-anim svg{width:100% !important;height:100% !important;}
+.hwc-send-bar{width:80%;height:12px;border-radius:999px;background:linear-gradient(90deg,#4F46E5,#EC4899,#4F46E5);background-size:200% 100%;animation:hwcBar 1.2s linear infinite;}
+@keyframes hwcBar{from{background-position:200% 0}to{background-position:0 0}}
+.hwc-sent-note{position:relative;z-index:2;color:#3FD6B4 !important;font-weight:800;font-size:1.05rem !important;}
+#hwcReviewBar{position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;padding:12px 16px;background:rgba(16,17,22,.94);color:#fff;font-weight:700;box-shadow:0 -8px 24px rgba(0,0,0,.35);}
+#hwcReviewBar.show{display:flex;}
+#hwcReviewBar .ta-btn{padding:12px 18px;font-size:.98rem;}
 .ta-screen{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;background:#101116;color:#fff;text-align:center;padding:24px;overflow:hidden;}
 .ta-screen.show{display:flex;}
 .ta-screen .ta-blob{position:absolute;border-radius:50%;opacity:.75;pointer-events:none;}
@@ -549,15 +557,19 @@ html,body{margin:0;padding:0;height:100%;background:#101116;font-family:'Inter',
   <button class="ta-btn" onclick="hwcNext()">Start Exercise <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 </div>
 <div class="ta-screen" id="hwcSaving">
-  <div style="font-size:2.4rem;position:relative;z-index:2;" id="hwcSavingIcon">\u2601\ufe0f</div>
+  <div style="font-size:2.4rem;position:relative;z-index:2;" id="hwcSavingIcon">\ud83c\udf89</div>
+  <div class="hwc-send-anim" id="hwcSendAnim"><div class="hwc-send-bar"></div></div>
   <h1 id="hwcSavingTitle">Sending your answers\u2026</h1>
   <div class="ta-underline"></div>
   <p id="hwcSavingSub">Please wait \u2014 your answers are on their way to your teacher.</p>
+  <button class="ta-btn" id="hwcSendBtn" style="display:none;" onclick="hwcSendNow()">\ud83d\udce4 Send my answers to my teacher</button>
   <button class="ta-btn" id="hwcRetryBtn" style="display:none;" onclick="hwcRetrySave()">Try again</button>
 </div>
+<div id="hwcReviewBar"><span id="hwcReviewMsg">Look at your mistakes \u2014 take your time.</span><button class="ta-btn" id="hwcReviewBtn" onclick="hwcReviewNext()">Next exercise \u2192</button></div>
 <div class="ta-screen" id="hwcDone">
   <div class="ta-blob ta-blob1"></div>
   <div class="ta-blob ta-blob3"></div>
+  <p class="hwc-sent-note">\u2705 Your answers have been sent to your teacher</p>
   <div class="ta-cert-box">
     <div style="font-size:2.2rem;">\ud83c\udfc6</div>
     <h1 style="font-size:1.4rem;">Certificate of Completion</h1>
@@ -651,7 +663,9 @@ function hwcLoad(i) {
   document.getElementById("hwcBar").style.display = "flex";
   frame.style.display = "block";
   hwcRoundStartTs = Date.now();
-  hwcGotComplete = false; hwcResultState = null; hwcPendingResult = null;
+  hwcGotComplete = false; hwcResultState = null; hwcPendingResult = null; hwcPressed = false;
+  hwcReview = /\u2014 Dictation$/.test(HWC_ROUNDS[i].label || ""); // a dictation's mistakes stay on screen
+  document.getElementById("hwcReviewBar").classList.remove("show");
   clearTimeout(hwcWaitTimer);
 }
 async function hwcBegin() {
@@ -708,21 +722,51 @@ function hwcRoundHook() {
 function hwcWithin(promise, ms) {
   return Promise.race([promise, new Promise(function (_, rej) { setTimeout(function () { rej(new Error("timeout")); }, ms); })]);
 }
-function hwcSavingScreen(failed) {
-  document.getElementById("hwcSavingIcon").textContent = failed ? "\u26a0\ufe0f" : "\u2601\ufe0f";
-  document.getElementById("hwcSavingTitle").textContent = failed ? "Your answers haven't reached your teacher" : "Sending your answers\u2026";
-  document.getElementById("hwcSavingSub").textContent = failed
-    ? "Check your internet connection, then press Try again. Don't close this page \u2014 your answers are still here."
+/* The end of each exercise:
+   - most exercises: their answers are saved straight away, then "Next exercise";
+   - a Dictation stays on its page, so the student can look at the mistakes for as
+     long as they like, until they press "Next exercise" (hwcReviewBar);
+   - the last exercise: the student presses "Send my answers to my teacher"; an
+     animation plays while they're saved, then "Your answers have been sent". */
+let hwcReview = false, hwcPressed = false;
+const HWC_APP_URL = "__TA_APP_URL__";
+function hwcIsLast() { return hwcIdx >= HWC_ROUNDS.length - 1; }
+let hwcAnimLoading = false;
+function hwcPlaySendAnim() {
+  if (hwcAnimLoading || !/^https?:/.test(HWC_APP_URL)) return; // offline / opened as a file: the moving bar stays
+  hwcAnimLoading = true;
+  const box = document.getElementById("hwcSendAnim");
+  const go = function () {
+    fetch(HWC_APP_URL + "animations/sending-answers.json").then(function (r) { return r.json(); }).then(function (data) {
+      box.textContent = "";
+      window.lottie.loadAnimation({ container: box, renderer: "svg", loop: true, autoplay: true, animationData: data });
+    }).catch(function () { /* keep the moving bar */ });
+  };
+  if (window.lottie) { go(); return; }
+  const lib = document.createElement("script");
+  lib.src = HWC_APP_URL + "js/lottie.min.js";
+  lib.onload = go;
+  document.head.appendChild(lib);
+}
+// mode: "ready" (send button), "sending" (animation), "failed" (Try again)
+function hwcSavingScreen(mode) {
+  if (mode === true) mode = "failed"; else if (mode === false) mode = "sending";
+  const el = id => document.getElementById(id);
+  el("hwcSavingIcon").style.display = mode === "sending" ? "none" : "";
+  el("hwcSavingIcon").textContent = mode === "failed" ? "\u26a0\ufe0f" : "\ud83c\udf89";
+  el("hwcSendAnim").style.display = mode === "sending" ? "flex" : "none";
+  el("hwcSavingTitle").textContent = mode === "ready" ? "You've finished every exercise!" : mode === "failed" ? "Your answers haven't reached your teacher" : "Sending your answers\u2026";
+  el("hwcSavingSub").textContent = mode === "ready" ? "Press the button to send your answers to your teacher."
+    : mode === "failed" ? "Check your internet connection, then press Try again. Don't close this page \u2014 your answers are still here."
     : "Please wait \u2014 your answers are on their way to your teacher.";
-  document.getElementById("hwcRetryBtn").style.display = failed ? "" : "none";
+  el("hwcSendBtn").style.display = mode === "ready" ? "" : "none";
+  el("hwcRetryBtn").style.display = mode === "failed" ? "" : "none";
+  if (mode === "sending") hwcPlaySendAnim();
+  document.getElementById("hwcReviewBar").classList.remove("show");
   hwcShow("hwcSaving");
 }
 // One record per submission (its own id): sending it again can never make a copy.
-async function hwcSaveRoundResult() {
-  const job = hwcPendingResult;
-  if (!job) return;
-  hwcResultState = "saving";
-  if (hwcGotComplete) hwcSavingScreen(false);
+async function hwcSaveJob(job) {
   for (let tries = 0; tries < 40 && !window.__hwcFirebaseReady; tries++) await new Promise(r => setTimeout(r, 100));
   const p = job.payload;
   const rid = "r_" + String(p.code || "") + "_" + String(p.studentId || hwcStudentId || p.name || "").replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 40) + "_" + String(p.date || "").replace(/[^0-9]/g, "");
@@ -738,38 +782,88 @@ async function hwcSaveRoundResult() {
       try { const snap = await hwcWithin(window.__hwcGetDocFromServer(ref), 10000); if (snap.exists()) ok = true; } catch (e2) { /* still not there */ }
     }
   }
+  try { job.source && job.source.postMessage({ taMergeEvent: "round-result-saved", id: job.id, status: ok ? "ok" : "failed" }, "*"); } catch (e) { /* ignore */ }
+  return ok;
+}
+// every exercise but the last: saved as soon as it's finished
+async function hwcSaveRoundResult() {
+  const job = hwcPendingResult;
+  if (!job) return;
+  hwcResultState = "saving";
+  if (hwcGotComplete && (!hwcReview || hwcPressed)) hwcSavingScreen("sending");
+  else if (hwcReview) hwcReviewBarState();
+  const ok = await hwcSaveJob(job);
   if (job !== hwcPendingResult) return; // a newer round took over
   hwcResultState = ok ? "ok" : "failed";
-  try { job.source && job.source.postMessage({ taMergeEvent: "round-result-saved", id: job.id, status: ok ? "ok" : "failed" }, "*"); } catch (e) { /* ignore */ }
-  if (!hwcGotComplete) return;
-  if (ok) hwcRoundDone(); else hwcSavingScreen(true);
+  hwcAfterSave();
 }
-function hwcRetrySave() { if (hwcPendingResult) hwcSaveRoundResult(); }
+function hwcAfterSave() {
+  if (!hwcGotComplete) return;
+  if (hwcReview && !hwcPressed) { hwcReviewBarState(); return; }
+  if (hwcResultState === "failed") { hwcSavingScreen("failed"); return; }
+  if (hwcResultState === "ok") hwcRoundDone();
+}
+function hwcRetrySave() { if (hwcIsLast()) hwcSendNow(); else if (hwcPendingResult) hwcSaveRoundResult(); }
 function hwcRoundDone() {
   clearTimeout(hwcWaitTimer);
   hwcCompleted[hwcIdx] = true;
   hwcSaveProgress();
-  if (hwcIdx >= HWC_ROUNDS.length - 1) { hwcNext(); return; }
+  if (hwcPressed) { hwcNext(); return; } // "Next exercise" was pressed on the dictation's page
   document.getElementById("hwcNextLabel").textContent = HWC_ROUNDS[hwcIdx + 1].label;
   document.getElementById("hwcNextSub").textContent = "Exercise " + (hwcIdx + 2) + " of " + HWC_ROUNDS.length + " \u2014 press start when you're ready.";
   hwcShow("hwcNextScreen");
+}
+// the dictation's own page stays, with this bar under it
+function hwcReviewBarState() {
+  const bar = document.getElementById("hwcReviewBar"), btn = document.getElementById("hwcReviewBtn"), msg = document.getElementById("hwcReviewMsg");
+  bar.classList.add("show");
+  if (hwcIsLast()) { btn.textContent = "\ud83d\udce4 Send my answers to my teacher"; msg.textContent = "Look at your mistakes \u2014 take your time."; return; }
+  const failed = hwcResultState === "failed";
+  btn.textContent = failed ? "Try again" : "Next exercise \u2192";
+  msg.textContent = failed ? "Your answers haven't reached your teacher yet \u2014 check the internet." : "Look at your mistakes \u2014 take your time.";
+}
+function hwcReviewNext() {
+  if (hwcIsLast()) { hwcSendNow(); return; }
+  if (hwcResultState === "failed") { hwcSaveRoundResult(); return; }
+  hwcPressed = true;
+  document.getElementById("hwcReviewBar").classList.remove("show");
+  if (hwcResultState === "ok" || !hwcPendingResult) hwcRoundDone();
+  else hwcSavingScreen("sending"); // still saving: moves on as soon as it's done
+}
+// the last exercise: "Send my answers to my teacher"
+async function hwcSendNow() {
+  hwcPressed = true;
+  hwcSavingScreen("sending");
+  const t0 = Date.now();
+  for (let i = 0; i < 30 && !hwcPendingResult; i++) await new Promise(r => setTimeout(r, 100)); // the answers may still be on their way from the exercise
+  let ok = true;
+  if (hwcPendingResult) { hwcResultState = "saving"; ok = await hwcSaveJob(hwcPendingResult); hwcResultState = ok ? "ok" : "failed"; }
+  if (ok) { hwcCompleted[hwcIdx] = true; await hwcWithin(hwcSaveProgress(), 15000).catch(function () { /* progress is saved again next time */ }); }
+  const rest = 5300 - (Date.now() - t0); // until the animation's bar is full
+  if (rest > 0) await new Promise(r => setTimeout(r, rest));
+  if (!ok) { hwcSavingScreen("failed"); return; }
+  hwcShow("hwcDone");
 }
 window.addEventListener("message", function (e) {
   const d = e && e.data;
   if (!d) return;
   if (d.taMergeEvent === "round-result" && d.payload) {
     hwcPendingResult = { payload: d.payload, id: d.id, source: e.source };
+    if (d.payload.type === "Dictation") hwcReview = true;
+    if (hwcIsLast()) { hwcResultState = "held"; if (hwcGotComplete && hwcReview) hwcReviewBarState(); return; } // sent with the button
     hwcSaveRoundResult();
     return;
   }
   if (d.taMergeEvent !== "round-complete" || hwcGotComplete) return;
   if (d.identity && d.identity.name) hwcStudentName = d.identity.name;
   hwcGotComplete = true;
+  if (hwcReview) { hwcReviewBarState(); return; }
   // Cover the screen immediately \u2014 this is what keeps the round's own
   // certificate from being shown; only the wrapper's own certificate, at
   // the very end of the whole set, is meant to be seen.
+  if (hwcIsLast()) { hwcSavingScreen("ready"); return; }
   if (hwcResultState === "ok") { hwcRoundDone(); return; }
-  hwcSavingScreen(hwcResultState === "failed");
+  hwcSavingScreen(hwcResultState === "failed" ? "failed" : "sending");
   // a round that sends no result of its own moves on after a moment
   if (!hwcResultState) hwcWaitTimer = setTimeout(function () { if (!hwcResultState) hwcRoundDone(); }, 3000);
 });

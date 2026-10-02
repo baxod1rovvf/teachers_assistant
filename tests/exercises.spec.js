@@ -188,12 +188,16 @@ test('Homework set: an exercise counts as done only once its answers are saved',
   const roundWrites = await student.frames().find(f => f !== student.mainFrame()).evaluate(() => (window.__writes || []).map(x => x.type));
   expect(roundWrites.filter(t => t === 'Sentences')).toHaveLength(0);
 
-  // round 2: no connection → not done, "Try again"
+  // round 2, the last: nothing is sent until "Send my answers to my teacher"
   await student.click('#hwcNextScreen .ta-btn');
-  await student.evaluate(() => { window.__failWrites = 1000; });
   await answer();
-  await expect(student.locator('#hwcSaving')).toHaveClass(/show/);
-  await expect(student.locator('#hwcRetryBtn')).toBeVisible({ timeout: 20000 });
+  await expect(student.locator('#hwcSendBtn')).toBeVisible({ timeout: 8000 });
+  expect((await writes()).filter(x => x.startsWith('Sentences:r_'))).toHaveLength(1);
+  // no connection → not done, "Try again"
+  await student.evaluate(() => { window.__failWrites = 1000; });
+  await student.click('#hwcSendBtn');
+  await expect(student.locator('#hwcSendAnim')).toBeVisible();
+  await expect(student.locator('#hwcRetryBtn')).toBeVisible({ timeout: 25000 });
   await expect(student.locator('#hwcSavingTitle')).toContainText("haven't reached");
   w = await writes();
   expect(w.filter(x => x.startsWith('HWC_PROGRESS'))).toHaveLength(1);
@@ -201,6 +205,7 @@ test('Homework set: an exercise counts as done only once its answers are saved',
   await student.evaluate(() => { window.__failWrites = 0; });
   await student.click('#hwcRetryBtn');
   await expect(student.locator('#hwcDone')).toHaveClass(/show/, { timeout: 10000 });
+  await expect(student.locator('#hwcDone')).toContainText('Your answers have been sent to your teacher');
   w = await writes();
   expect(w.filter(x => x.startsWith('Sentences:r_'))).toHaveLength(2);
   expect(w.filter(x => x.startsWith('HWC_PROGRESS'))).toHaveLength(2);
@@ -243,4 +248,45 @@ test('finishing an exercise in full screen keeps its time and its certificate (F
     return { warnings: violations, cert: document.getElementById('slide-certificate').classList.contains('active') };
   });
   expect(sent).toEqual({ warnings: 0, cert: true });
+});
+
+// A dictation inside a set: its page (with the mistakes) stays until "Next exercise".
+test('Homework set: after a dictation, students stay on their mistakes until they press Next exercise', async ({ page, context }, info) => {
+  test.setTimeout(60000);
+  await prepare(context);
+  await page.goto('/create.html');
+  await page.waitForTimeout(1200);
+  await hideNotices(page);
+  const fillRound = async (title) => {
+    await page.evaluate(() => selectHwcType('sentences'));
+    await page.fill('#sn-title', title);
+    await page.fill('#sn-instructions', 'Write about your day.');
+    await page.evaluate(() => { const c = document.getElementById('sn-count'); c.value = '1'; c.dispatchEvent(new Event('input')); });
+  };
+  await page.evaluate(() => openHwcBuilder('homework'));
+  await fillRound('One');
+  await page.evaluate(() => hwcAddExercise());
+  await fillRound('Two');
+  const [download] = await Promise.all([page.waitForEvent('download'), page.evaluate(() => hwcFinishAndCreate())]);
+  const file = info.outputPath('set2.html');
+  await download.saveAs(file);
+
+  const student = await context.newPage();
+  await student.goto('file://' + file);
+  await student.fill('#hwcIdInput', '10001');
+  await student.click('#hwcStart .ta-btn');
+  await expect(student.locator('#hwcStageCount')).toHaveText('Exercise 1 of 2', { timeout: 8000 });
+  // round 1 finishes as a dictation does: its answers, then "done"
+  await student.evaluate(() => {
+    window.postMessage({ taMergeEvent: 'round-result', id: 1, payload: { v: 1, type: 'Dictation', code: '123456', name: 'Alice Test', studentId: '10001', score: 80, date: new Date().toISOString() } }, '*');
+    setTimeout(() => window.postMessage({ taMergeEvent: 'round-complete', identity: { name: 'Alice Test' } }, '*'), 100);
+  });
+  await expect(student.locator('#hwcReviewBar')).toBeVisible();
+  await student.waitForTimeout(4000); // plenty of time: nothing moves on by itself
+  await expect(student.locator('#hwcReviewBar')).toBeVisible();
+  await expect(student.locator('#hwcNextScreen')).not.toHaveClass(/show/);
+  expect(await student.evaluate(() => window.__writes.filter(w => w.type === 'Dictation').length)).toBe(1); // saved meanwhile
+  await student.click('#hwcReviewBtn');
+  await expect(student.locator('#hwcStageCount')).toHaveText('Exercise 2 of 2', { timeout: 8000 });
+  await expect(student.locator('#hwcReviewBar')).not.toBeVisible();
 });

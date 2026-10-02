@@ -150,6 +150,12 @@ real students' names or results into the repository (it is public).
   still counted as Completed with no answers (seen for 2 of ~15 students in "Present simple";
   `TA_FILE_FIXES` id `setsave` points out the old sets). A round type that sends no result
   moves on after 3 s. `tests/exercises.spec.js` ("Homework set: …").
+- The **last** round's answers are held until the student presses "📤 Send my answers to my
+  teacher" (`hwcSendNow`): `animations/sending-answers.json` plays (lottie from the site, a CSS
+  bar offline) for at least 5.3 s while it saves, then "✅ Your answers have been sent…" + the
+  certificate. A **Dictation** round (label "… — Dictation" or a result of type Dictation)
+  isn't covered when it ends: its page with the mistakes stays, saving in the background,
+  with `#hwcReviewBar` "Next exercise →" (2026-10-02).
 
 ## Results kept on the device (keep this in mind when changing how results load)
 
