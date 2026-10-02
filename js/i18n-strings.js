@@ -1029,9 +1029,9 @@ window.TA_ROBOT_I18N = {
     'Этот файл создан до исправления ошибки, поэтому ошибка в нём осталась. Нажмите «✏️ Использовать снова», создайте новую копию и делитесь ею.'],
   'Can I print an exercise?': [
     'Mashqni chop etsa boʻladimi?',
-    'Ha — soʻzlar roʻyxatli mashqlarda “🖨 Tarqatma” ni bosing. Qogʻoz varianti yangi oynada ochiladi, javoblari alohida sahifada. Chop eting yoki PDF qilib saqlang.',
+    'Ha — soʻzlar roʻyxatli mashqlarda va Uy vazifasi/Dars toʻplamlarida “🖨 Tarqatma” ni bosing (toʻplamning har bir mashqi ketma-ket; diktant va matnlarning qogʻoz varianti yoʻq). Qogʻoz varianti yangi oynada ochiladi, javoblari alohida sahifada. Chop eting yoki PDF qilib saqlang.',
     'Можно ли распечатать упражнение?',
-    'Да — у упражнений со списком слов нажмите «🖨 Рабочий лист». Бумажная версия откроется в новой вкладке, ответы — на отдельной странице. Распечатайте или сохраните в PDF.'],
+    'Да — нажмите «🖨 Рабочий лист» у упражнений со списком слов и у наборов «Домашнее задание»/«Урок» (упражнения набора идут одно за другим; у диктантов и текстов бумажной версии нет). Бумажная версия откроется в новой вкладке, ответы — на отдельной странице. Распечатайте или сохраните в PDF.'],
   'How do I change the group of an exercise?': [
     'Mashqning guruhini qanday oʻzgartiraman?',
     'Mashq nomi ostidagi 👥 tugmasini bosing va guruhni tanlang.',

@@ -2715,7 +2715,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'The link has expired — what now?', a: 'Links work for 7 days. Tap "📤 Share" again and the app puts the exercise online again with a new 7 days.' },
     { q: 'What does "✏️ Use again" do?', a: 'It opens the exercise in its builder with everything filled in, so you can change it or make a new version.' },
     { q: 'What does "⚠️ Made before a fix" mean?', a: 'That file was made before a bug was fixed, so it still has the bug. Press "✏️ Use again", create a new copy and share that one.' },
-    { q: 'Can I print an exercise?', a: 'Yes — tap "🖨 Worksheet" on word-list exercises. A paper version opens in a new tab with an answer key on its own page. Print it or save it as PDF.' },
+    { q: 'Can I print an exercise?', a: 'Yes — tap "🖨 Worksheet" on word-list exercises, and on Homework/Class sets (each exercise of the set one after another; dictations and readings have no paper version). A paper version opens in a new tab with an answer key on its own page. Print it or save it as PDF.' },
     { q: 'How do I change the group of an exercise?', a: 'Tap the 👥 button under the exercise title and pick a group.' },
     { q: 'Can I turn a Jungle into a Bamboozle?', a: 'Yes — in the Jungle builder tap "🔁 Make it a Bamboozle" (in the Bamboozle builder: "🔁 Make it a Jungle"). The other game opens with the same questions. For a game you made earlier, tap "✏️ Use again" first.' },
     { q: 'How do I take one exercise out of a set?', a: 'On a Homework/Class set tap "📤 Get one exercise" to download one of its exercises or add it to My Exercises, or "🔀 Separate" to see them all.' },

@@ -92,3 +92,28 @@ test('a set whose file isn\'t kept here gets it back from its online link (Get o
   // kept from now on: no second download
   expect(await page.evaluate(() => (getCachedExerciseHtml('uset2') || '').length)).toBe(setHtml.length);
 });
+
+test('a Homework set has a worksheet too: each exercise one after another, with one answer key', async ({ page, context }) => {
+  await prepare(context, { storage: { ta_recent_exercises: JSON.stringify([{ uid: 'uhws1', title: 'Week 5 homework', typeLabel: 'Homework', code: '515151', date: new Date().toISOString(),
+    mergedItems: [{ title: 'Animals — Spelling' }, { title: 'Cats — Word Order' }, { title: 'Story — Dictation' }],
+    builderRounds: [
+      { tab: 'spelling', state: { v: 1, fields: {}, rows: [['house', ['hause', 'hous']], ['garden', ['gardan']]] } },
+      { tab: 'wordorder', state: { v: 1, fields: {}, rows: ['I like my cat'] } },
+      { tab: 'dictation', state: { v: 1, fields: {}, rows: [] } }
+    ] }]) } });
+  await page.goto('/my-exercises.html');
+  await page.waitForTimeout(1000);
+  await hideNotices(page);
+  const row = page.locator('.recent-exercise-row[data-uid="uhws1"]');
+  const [sheet] = await Promise.all([context.waitForEvent('page'), row.locator('button', { hasText: 'Worksheet' }).click()]);
+  await sheet.waitForLoadState();
+  const text = await sheet.locator('body').innerText();
+  expect(text).toContain('1. Animals — Spelling');
+  expect(text).toContain('2. Cats — Word Order');
+  expect(text).not.toContain('Story — Dictation');       // no paper version of a dictation
+  expect(text).toContain('Circle the correct spelling');
+  expect(text).toContain('Put the words in the right order');
+  const key = await sheet.locator('.ws-key').innerText();
+  expect(key).toContain('house');
+  expect(key).toContain('I like my cat');
+});

@@ -450,14 +450,28 @@ function wsMix(list) {
 const WS_LETTERS = 'abcdefghijklmnopqrstuvwxyz';
 function wsEsc(t) { return escapeForHtml(String(t == null ? '' : t)).replace(/"/g, '&quot;'); }
 
-function worksheetFor(item) {
-  const load = exerciseLoadFor(item);
-  if (!load || load.set || !WS_BUILDERS[load.tab]) return null;
-  const rows = (load.state.rows || []).filter(r => {
-    const w = typeof r === 'string' ? r : Array.isArray(r) ? r[0] : r.s;
+function wsRowsOf(state) {
+  return ((state && state.rows) || []).filter(r => {
+    const w = typeof r === 'string' ? r : Array.isArray(r) ? r[0] : (r && r.s);
     return String(w || '').trim();
   });
-  return rows.length ? { tab: load.tab, rows: rows } : null;
+}
+// { sections: [{ title, tab, rows }] } — one for an exercise; for a Homework/Class set, one per
+// exercise that has a paper version (from each exercise's saved form). Null when there's none.
+function worksheetFor(item) {
+  const load = exerciseLoadFor(item);
+  if (!load) return null;
+  if (load.set) {
+    const sections = (load.rounds || []).map((r, i) => {
+      if (!r || !r.state || !WS_BUILDERS[r.tab]) return null;
+      const orig = item.mergedItems && item.mergedItems[i];
+      return { title: (orig && (orig.title || orig.typeLabel)) || ('Exercise ' + (i + 1)), tab: r.tab, rows: wsRowsOf(r.state) };
+    }).filter(sec => sec && sec.rows.length);
+    return sections.length ? { set: true, sections: sections } : null;
+  }
+  if (!WS_BUILDERS[load.tab]) return null;
+  const rows = wsRowsOf(load.state);
+  return rows.length ? { sections: [{ title: item.title, tab: load.tab, rows: rows }] } : null;
 }
 
 const WS_BUILDERS = {
@@ -524,14 +538,22 @@ const WS_BUILDERS = {
 
 function buildWorksheetHtml(item) {
   const ws = worksheetFor(item);
-  const sheet = WS_BUILDERS[ws.tab](ws.rows);
+  const secs = ws.sections.map(sec => ({ title: sec.title, sheet: WS_BUILDERS[sec.tab](sec.rows) }));
+  const many = secs.length > 1;
   const gName = groupNameFor(item.groupId);
-  const partsHtml = sheet.parts.map((p, i) =>
-    '<section><h2>' + (sheet.parts.length > 1 ? (i + 1) + '. ' : '') + wsEsc(p.h) + '</h2>' + (p.note ? '<p class="ws-note">' + p.note + '</p>' : '') + p.body + '</section>').join('');
+  // a set: each exercise under its own heading, one after another
+  const partsHtml = secs.map((sec, n) => (many ? '<h2 class="ws-exercise">' + (n + 1) + '. ' + wsEsc(sec.title) + '</h2>' : '') +
+    sec.sheet.parts.map((p, i) => {
+      const h = many ? 'h3' : 'h2';
+      return '<section><' + h + '>' + (sec.sheet.parts.length > 1 ? (many ? WS_LETTERS[i] + ') ' : (i + 1) + '. ') : '') + wsEsc(p.h) + '</' + h + '>' + (p.note ? '<p class="ws-note">' + p.note + '</p>' : '') + p.body + '</section>';
+    }).join('')).join('');
+  const keyed = secs.filter(sec => sec.sheet.key);
+  const sheet = { key: keyed.length ? keyed.map(sec => many ? '<b>' + (secs.indexOf(sec) + 1) + '. ' + wsEsc(sec.title) + '</b><br>' + sec.sheet.key : sec.sheet.key).join('<br><br>') : '' };
   return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' +
     '<title>' + wsEsc(item.title) + ' — worksheet</title><style>' +
     'body{font-family:Georgia,"Times New Roman",serif;color:#111;background:#fff;margin:0;padding:28px;max-width:760px;margin:0 auto;line-height:1.5;font-size:15px}' +
-    '.ws-logo{float:right;height:58px;margin:0 0 8px 16px}h1{font-size:24px;margin:0 0 4px}h2{font-size:17px;margin:22px 0 6px}.ws-sub{color:#555;font-size:13px;margin:0 0 14px}' +
+    '.ws-logo{float:right;height:58px;margin:0 0 8px 16px}h1{font-size:24px;margin:0 0 4px}h2{font-size:17px;margin:22px 0 6px}h3{font-size:15px;margin:14px 0 6px}' +
+    'h2.ws-exercise{font-size:19px;border-top:2px solid #111;padding-top:12px;margin-top:28px}.ws-sub{color:#555;font-size:13px;margin:0 0 14px}' +
     '.ws-head{display:flex;gap:24px;flex-wrap:wrap;border-bottom:2px solid #111;padding-bottom:10px;margin-bottom:6px;font-size:14px}.ws-head span{flex:1;min-width:180px;border-bottom:1px solid #999;padding-bottom:2px}' +
     '.ws-list{padding-left:26px;margin:6px 0}.ws-list li{margin:0 0 9px}.ws-roomy li{margin-bottom:16px}' +
     '.ws-match{display:flex;gap:40px;flex-wrap:wrap}.ws-match .ws-list{flex:1;min-width:200px}' +
