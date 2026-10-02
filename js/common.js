@@ -1299,9 +1299,9 @@ const TA_FILE_FIXES = [
     what: 'the microphone doesn\'t turn on on phones' },
   { id: 'dictation', at: '2026-09-30T07:06:00Z', types: /dictation/i, minor: true,
     what: 'students see too high a score when they type extra words (your Results show the right one)' },
-  { id: 'flashtime', at: '2026-10-02T23:59:00Z', types: /flashcard|vocabulary journey/i,
+  { id: 'flashtime', at: '2026-10-02T17:14:00Z', types: /flashcard|vocabulary journey/i,
     what: 'the result often says 0 seconds (the time is lost when the exercise ends), so Results and Top 5 show it wrong' },
-  { id: 'sentencesend', at: '2026-10-02T23:59:00Z', types: /^sentences$|sentence writing/i, minor: true,
+  { id: 'sentencesend', at: '2026-10-02T17:14:00Z', types: /^sentences$|sentence writing/i, minor: true,
     what: 'when a student finishes, the start screen can come back instead of the certificate, with one extra warning' },
   { id: 'setsave', at: '2026-10-01T17:30:00Z', types: /^(homework|class)$/i,
     what: 'if a student\'s answers fail to upload, the set still counts the exercise as done — you see "Completed" but no answers' }
