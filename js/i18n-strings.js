@@ -1025,11 +1025,11 @@ window.TA_ROBOT_I18N = {
     'Ha — “🗑 Oʻchirish” ni bosing. Allaqachon yuborilgan natijalarga taʼsir qilmaydi.',
     'Можно ли удалить старое упражнение?',
     'Да — нажмите «🗑 Удалить». Уже отправленные результаты не пострадают.'],
-  'What do "📥 Redownload" and "File not cached" mean?': [
-    '“📥 Qayta yuklab olish” va “Fayl saqlanmagan” nimani bildiradi?',
-    '“Qayta yuklab olish” faylni sizga yana beradi. “Fayl saqlanmagan” — bu brauzer endi nusxasini saqlamaydi degani (odatda xotira toʻlgani uchun) — uni qayta yaratish uchun “✏️ Qayta ishlatish” dan foydalaning.',
-    'Что значат «📥 Скачать снова» и «Файл не сохранён»?',
-    '«Скачать снова» даёт файл ещё раз. «Файл не сохранён» значит, что этот браузер больше не хранит копию (обычно из-за нехватки памяти) — сделайте его заново через «✏️ Использовать снова».'],
+  'How do I download an exercise file again?': [
+    'Mashq faylini qayta qanday yuklab olaman?',
+    '“📤 Ulashish” ni bosing — “📥 Qayta yuklab olish” havolaning ostida. Agar u boʻlmasa, bu brauzer endi fayl nusxasini saqlamaydi (odatda xotira toʻlgani uchun) — uni qayta yaratish uchun “✏️ Qayta ishlatish” dan foydalaning.',
+    'Как снова скачать файл упражнения?',
+    'Нажмите «📤 Поделиться» — «📥 Скачать снова» прямо под ссылкой. Если её нет, этот браузер больше не хранит копию файла (обычно из-за нехватки памяти) — сделайте его заново через «✏️ Использовать снова».'],
   'What is the Students list for?': [
     'Oʻquvchilar roʻyxati nima uchun?',
     'Har bir oʻquvchiga alohida ID bering — ular mashqda ism oʻrniga shuni yozadi. Faqat shu roʻyxatdagi oʻquvchilar Statistika, Top 5 va “Didn\'t do it” da hisoblanadi.',

@@ -2628,7 +2628,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'How do I take one exercise out of a set?', a: 'On a Homework/Class set tap "📤 Get one exercise" to download one of its exercises or add it to My Exercises, or "🔀 Separate" to see them all.' },
     { q: 'How do I stop an exercise giving points?', a: 'Choose 0 in "Points awarded on completion" when you create it. For an exercise you already made, tap "✏️ Use again", set the points to 0 and share the new copy.' },
     { q: 'Can I delete an old exercise?', a: 'Yes — tap "🗑 Delete". Results already submitted are not affected.' },
-    { q: 'What do "📥 Redownload" and "File not cached" mean?', a: 'Redownload gives you the file again. "File not cached" means this browser no longer keeps a copy (usually because storage was full) — use "✏️ Use again" to make it again.' }
+    { q: 'How do I download an exercise file again?', a: 'Tap "📤 Share" — "📥 Redownload" is right under the link. If it isn\'t there, this browser no longer keeps a copy of the file (usually because storage was full) — use "✏️ Use again" to make it again.' }
   ]),
   students: aiFaq([
     { q: 'What is the Students list for?', a: 'Give each student a unique ID — this is what they type into an exercise instead of a name. Only students on this list count in Statistics, Top 5 and "Didn\'t do it".' },

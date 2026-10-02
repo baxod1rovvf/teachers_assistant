@@ -1074,6 +1074,7 @@ table.results-table tr:hover td { background: rgba(244,241,234,0.03); }
 }
 .recent-exercise-row:last-child { margin-bottom: 0; }
 .recent-exercise-title { font-weight: 700; color: var(--ink); font-size: 0.92rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.share-dl-row { display: flex; margin: 8px 0 4px; }
 .myex-rename { background: none; border: none; color: var(--ink-faint); cursor: pointer; font-size: 0.9rem; padding: 0 2px; line-height: 1; }
 .myex-rename:hover { color: var(--brand); }
 .myex-rename-input { width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--surface-sunken); color: var(--ink); font: 600 0.95rem 'Inter', sans-serif; }

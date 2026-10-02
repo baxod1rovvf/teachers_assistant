@@ -103,10 +103,6 @@ function renderRecentExercises() {
       ? '<div class="old-file-line' + (oldIssues.every(x => x.fix.minor) ? ' minor' : '') + '">⚠️ Made before a fix: ' + taOldFileWhat(oldIssues) + '. Press ✏️ Use again to make a new copy, and share that one.</div>'
       : '';
     const codeLine = '<div class="recent-exercise-date">' + groupBtn + (item.requiredCode ? 'Code: ' + escapeForHtml(item.requiredCode) : 'No code set') + ' &middot; ' + dateStr + '</div>';
-    const hasHtml = !!getCachedExerciseHtml(item.uid);
-    const openBtn = hasHtml
-      ? '<button class="mini-btn" type="button" onclick="redownloadRecentExercise(' + idx + ')">📥 Redownload</button>'
-      : '<span class="unavailable-hint">File not cached</span>';
     const againBtn = exerciseLoadFor(item)
       ? '<button class="mini-btn solid" type="button" onclick="useRecentExerciseAgain(' + idx + ')" title="Open this exercise in its builder, filled in, to change it or make a new version">✏️ Use again</button>'
       : '';
@@ -126,7 +122,6 @@ function renderRecentExercises() {
         '</div>' +
         '<div class="recent-exercise-actions">' +
           againBtn +
-          openBtn +
           (worksheetFor(item) ? '<button class="mini-btn" type="button" onclick="printRecentExercise(' + idx + ')" title="A paper version for lessons without devices, with an answer key">🖨 Worksheet</button>' : '') +
           '<button class="mini-btn" type="button" onclick="shareRecentExercise(' + idx + ')" title="Message and file to send to students, or show the code on the board">📤 Share</button>' +
           answersBtn +
@@ -339,6 +334,7 @@ function shareRecentExercise(idx) {
     (asLink ? '<label class="field-label">Link</label>' +
       '<div class="share-link-row"><input type="text" class="share-link" readonly spellcheck="false" aria-label="Link to the exercise">' +
       '<button type="button" class="mini-btn solid" data-act="copylink">🔗 Copy link</button></div>' : '') +
+    (html ? '<div class="share-dl-row"><button type="button" class="mini-btn" data-act="redownload" title="Download the exercise file again">📥 Redownload</button></div>' : '') +
     '<label class="field-label">Message for your students</label>' +
     '<textarea class="share-msg" rows="4"></textarea>' +
     '<div class="share-actions">' +
@@ -394,6 +390,8 @@ function shareRecentExercise(idx) {
       taCopyText(linkEl.value, 'Link copied.');
     });
   }
+  const dlBtn = m.body.querySelector('[data-act="redownload"]');
+  if (dlBtn) dlBtn.onclick = () => redownloadRecentExercise(idx);
   const fileBtn = m.body.querySelector('[data-act="file"]');
   if (fileBtn) fileBtn.onclick = async () => {
     const filename = item.title.replace(/[^a-z0-9\-_ ]/gi, '').trim().replace(/\s+/g, '_') + '.html';

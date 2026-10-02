@@ -33,3 +33,25 @@ test('My Exercises has no "Disable Points" or "Make it a Jungle/Bamboozle" butto
   await expect(page.locator('.recent-exercise-actions', { hasText: 'Disable Points' })).toHaveCount(0);
   await expect(page.locator('.recent-exercise-actions', { hasText: 'Make it a' })).toHaveCount(0);
 });
+
+test('Redownload is inside Share, under the link', async ({ page, context }) => {
+  await prepare(context, { storage: {
+    ta_recent_exercises: JSON.stringify([{ uid: 'uw1', title: 'Animals', typeLabel: 'Word Order', code: '123456', date: new Date().toISOString() }]),
+    ta_exercise_html_cache: JSON.stringify({ uw1: '<html><body>exercise</body></html>' })
+  } });
+  await page.goto('/my-exercises.html');
+  await page.waitForTimeout(1000);
+  await hideNotices(page);
+  const row = page.locator('.recent-exercise-row[data-uid="uw1"]');
+  await expect(row.locator('.recent-exercise-actions')).not.toContainText('Redownload');
+  await row.locator('button', { hasText: 'Share' }).click();
+  const dl = page.locator('[data-act="redownload"]');
+  await expect(dl).toBeVisible();
+  // right under the link (there's no link on this test address), above the message
+  const around = await page.evaluate(() => { const d = document.querySelector('.share-dl-row');
+    return [d.previousElementSibling ? d.previousElementSibling.className : '', d.nextElementSibling.textContent]; });
+  expect(around[0]).toMatch(/^(share-link-row|)$/);
+  expect(around[1]).toContain('Message for your students');
+  const [download] = await Promise.all([page.waitForEvent('download'), dl.click()]);
+  expect(download.suggestedFilename()).toBe('Animals.html');
+});
