@@ -1151,6 +1151,7 @@ function removeRecentExercise(uid) {
     delete cache[uid];
     localStorage.setItem(LS_EXERCISE_HTML_CACHE, JSON.stringify(cache));
   } catch (e) { /* ignore */ }
+  taDeleteBigFile(uid);
   if (window.renderRecentExercises) window.renderRecentExercises();
 }
 
@@ -1166,8 +1167,8 @@ const MAX_CACHED_EXERCISE_HTML = 20;
 const MAX_CACHED_EXERCISE_CHARS = 2200000;
 
 function cacheExerciseHtml(uid, html) {
-  // Exercises with a packed audio/video file are too big for the browser's storage (and cloud sync).
-  if (typeof html === 'string' && html.length > 1048576) return;
+  // Big files (pictures, audio) don't fit in this small storage (or cloud sync): IndexedDB keeps them.
+  if (typeof html === 'string' && html.length > 1048576) { taPutBigFile(uid, html); return; }
   try {
     const cache = JSON.parse(localStorage.getItem(LS_EXERCISE_HTML_CACHE) || '{}');
     cache[uid] = html;
@@ -1188,14 +1189,98 @@ function cacheExerciseHtml(uid, html) {
         delete cache[oldest];
       }
     }
-  } catch (e) { /* storage full or file too large \u2014 the exercise still downloads fine, it just won't have a "Redownload" button later */ }
+  } catch (e) { if (typeof html === 'string') taPutBigFile(uid, html); /* storage full: keep it in IndexedDB instead */ }
 }
 function getCachedExerciseHtml(uid) {
   try {
     const cache = JSON.parse(localStorage.getItem(LS_EXERCISE_HTML_CACHE) || '{}');
-    return cache[uid] || null;
+    return cache[uid] || taBigHtml.get(uid) || null;
+  } catch (e) { return taBigHtml.get(uid) || null; }
+}
+
+/* ---- Big exercise files (over 1 MB: sets with pictures, dictations with audio) ----
+   The browser's small storage (~5 MB for everything this site keeps) can't hold
+   them, so they're kept in IndexedDB (room for hundreds of MB), per account, the
+   newest MAX_BIG_FILES of them, and read into memory at page start so
+   getCachedExerciseHtml stays instant. Before 2026-10-02 such files weren't kept
+   at all, so "Redownload" and "Get one exercise" didn't work for them;
+   taEnsureExerciseHtml fetches those back from their online link (7 days). */
+const MAX_BIG_FILES = 15;
+const taBigHtml = new Map();
+let taBigReady = null;
+function taBigDb() {
+  return new Promise((resolve, reject) => {
+    const r = indexedDB.open('ta_big_files' + (window.__TA_NS || ''), 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('html');
+    r.onsuccess = () => resolve(r.result);
+    r.onerror = () => reject(r.error);
+  });
+}
+function taLoadBigFiles() {
+  if (!taBigReady) {
+    taBigReady = taBigDb().then(db => new Promise(resolve => {
+      const req = db.transaction('html', 'readonly').objectStore('html').openCursor();
+      req.onsuccess = () => { const c = req.result; if (c) { if (!taBigHtml.has(c.key)) taBigHtml.set(c.key, c.value); c.continue(); } else resolve(); };
+      req.onerror = () => resolve();
+    })).catch(() => { /* no IndexedDB here: big files just aren't kept */ })
+      .then(() => { if (taBigHtml.size && window.renderRecentExercises && document.getElementById('recentExercisesWrap')) window.renderRecentExercises(); });
+  }
+  return taBigReady;
+}
+function taPutBigFile(uid, html) {
+  taBigHtml.set(uid, html);
+  // keep the newest ones that are still in My Exercises
+  const order = getRecentExercises().map(e => e.uid);
+  const rank = k => k === uid ? -1 : (order.indexOf(k) === -1 ? 1e9 : order.indexOf(k));
+  const drop = Array.from(taBigHtml.keys()).sort((a, b) => rank(a) - rank(b)).filter((k, i) => k !== uid && (i >= MAX_BIG_FILES || order.indexOf(k) === -1));
+  drop.forEach(k => taBigHtml.delete(k));
+  taBigDb().then(db => {
+    const st = db.transaction('html', 'readwrite').objectStore('html');
+    st.put(html, uid);
+    drop.forEach(k => st.delete(k));
+  }).catch(() => { /* only kept in memory until the page closes */ });
+}
+function taDeleteBigFile(uid) {
+  if (!taBigHtml.delete(uid)) return;
+  taBigDb().then(db => db.transaction('html', 'readwrite').objectStore('html').delete(uid)).catch(() => {});
+}
+// The exercise's file: kept here, or else fetched back from its online link (and kept from now on).
+const taRecovering = {};
+async function taEnsureExerciseHtml(item) {
+  if (!item) return null;
+  await taLoadBigFiles();
+  const have = getCachedExerciseHtml(item.uid);
+  if (have || !taPlayLive(item)) return have;
+  if (!taRecovering[item.uid]) {
+    if (typeof showToast === 'function') showToast('⏳ Getting the file back from its online link…', 'ok');
+    taRecovering[item.uid] = taFetchPlayHtml(item.uid).then(html => {
+      if (html) taPutBigFile(item.uid, html);
+      return html;
+    }).finally(() => { delete taRecovering[item.uid]; });
+  }
+  return taRecovering[item.uid];
+}
+// An exercise as it is online (play.html reads it the same way)
+async function taFetchPlayHtml(uid) {
+  const base = 'https://firestore.googleapis.com/v1/projects/teachers-assistant-app-ccd1a/databases/(default)/documents/results/';
+  const key = '?key=AIzaSyCefg2YghdSneABh0ZOUu3-snO4soVw0lA';
+  const part = async id => {
+    const r = await fetch(base + encodeURIComponent(id) + key);
+    if (!r.ok) throw new Error('http ' + r.status);
+    const f = (await r.json()).fields || {};
+    if (!f.type || f.type.stringValue !== 'TA_SYNC:PLAY' || !f.data) throw new Error('missing');
+    return f;
+  };
+  try {
+    const first = await part('play-' + uid);
+    const n = Math.max(1, parseInt(String((first.title && first.title.stringValue) || '').split('\u241F')[2], 10) || 1);
+    const rest = [];
+    for (let i = 1; i < n; i++) rest.push(part('play-' + uid + '-' + i));
+    const html = [first.data.stringValue].concat((await Promise.all(rest)).map(f => f.data.stringValue)).join('');
+    return html.indexOf('<html') !== -1 ? html : null;
   } catch (e) { return null; }
 }
+window.taEnsureExerciseHtml = taEnsureExerciseHtml;
 
 /* ================= OLD EXERCISE FILES =================
    An exercise file never changes after it's made, so a file made before a
@@ -2628,7 +2713,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'How do I take one exercise out of a set?', a: 'On a Homework/Class set tap "📤 Get one exercise" to download one of its exercises or add it to My Exercises, or "🔀 Separate" to see them all.' },
     { q: 'How do I stop an exercise giving points?', a: 'Choose 0 in "Points awarded on completion" when you create it. For an exercise you already made, tap "✏️ Use again", set the points to 0 and share the new copy.' },
     { q: 'Can I delete an old exercise?', a: 'Yes — tap "🗑 Delete". Results already submitted are not affected.' },
-    { q: 'How do I download an exercise file again?', a: 'Tap "📤 Share" — "📥 Redownload" is right under the link. If it isn\'t there, this browser no longer keeps a copy of the file (usually because storage was full) — use "✏️ Use again" to make it again.' }
+    { q: 'How do I download an exercise file again?', a: 'Tap "📤 Share" — "📥 Redownload" is right under the link. Big files (with pictures or audio) are kept too. If the file isn\'t on this device, the app gets it back from its online link (for 7 days after sharing); after that, use "✏️ Use again" to make it again.' }
   ]),
   students: aiFaq([
     { q: 'What is the Students list for?', a: 'Give each student a unique ID — this is what they type into an exercise instead of a name. Only students on this list count in Statistics, Top 5 and "Didn\'t do it".' },
@@ -3363,6 +3448,7 @@ function taStartPage(defaultTab) {
   if (TA_CLEAN_URLS && /\.html$/.test(location.pathname)) {
     history.replaceState(null, '', taAddressFor(taCurrentPageFile(), location.search, location.hash));
   }
+  taLoadBigFiles();
   taSetupSidebar();
   taMountQuickSearch();
   applyTheme();

@@ -256,10 +256,10 @@ function useRecentExerciseAgain(idx) {
 
 window.renderRecentExercises = renderRecentExercises;
 
-function redownloadRecentExercise(idx) {
+async function redownloadRecentExercise(idx) {
   const item = getRecentExercises()[idx];
   if (!item) return;
-  const html = getCachedExerciseHtml(item.uid);
+  const html = await taEnsureExerciseHtml(item);
   if (!html) { showToast('This file was not cached and can\'t be redownloaded.'); return; }
   downloadFile(item.title.replace(/[^a-z0-9]/gi, '_') + '.html', html);
   showToast('Redownloaded "' + item.title + '".', 'ok');
@@ -325,10 +325,10 @@ function taCopyText(text, doneMsg) {
   return Promise.resolve();
 }
 
-function shareRecentExercise(idx) {
+async function shareRecentExercise(idx) {
   const item = getRecentExercises()[idx];
   if (!item) return;
-  const html = getCachedExerciseHtml(item.uid);
+  const html = getCachedExerciseHtml(item.uid) || (taPlayLive(item) ? await taEnsureExerciseHtml(item) : null);
   const asLink = sharesAsLink(item, html);
   const m = taModal('📤 Share "' + item.title + '"',
     (asLink ? '<label class="field-label">Link</label>' +
@@ -591,9 +591,10 @@ function roundAsExercise(item, i) {
   };
 }
 
-function separateHomeworkOrClass(idx) {
+async function separateHomeworkOrClass(idx) {
   const item = getRecentExercises()[idx];
   if (!item || !item.mergedItems || !item.mergedItems.length) return;
+  await taEnsureExerciseHtml(item);
   const parts = item.mergedItems.map((orig, i) => roundAsExercise(item, i));
   if (parts.some(p => !p)) { showToast(SET_FILE_GONE); return; }
   if (!confirm('Separate "' + item.title + '" back into its ' + item.mergedItems.length + ' original exercises?')) return;
@@ -604,11 +605,12 @@ function separateHomeworkOrClass(idx) {
 
 /* Take just one exercise out of a set: download it on its own, or add it to My
    Exercises as a separate exercise. The set stays as it is. */
-const SET_FILE_GONE = 'This set\'s file isn\'t saved in this browser any more, so its exercises can\'t be taken out. Use "Use again" to rebuild the set, or Redownload it on the device where you made it.';
+const SET_FILE_GONE = 'This set\'s file isn\'t saved in this browser, and its online link has expired, so its exercises can\'t be taken out. Use "Use again" to rebuild the set.';
 
-function getOneFromSet(idx) {
+async function getOneFromSet(idx) {
   const item = getRecentExercises()[idx];
   if (!item || !item.mergedItems || !item.mergedItems.length) return;
+  await taEnsureExerciseHtml(item);
   if (!roundAsExercise(item, 0)) { showToast(SET_FILE_GONE); return; }
   const have = new Set(getRecentExercises().map(e => e.uid));
   const m = taModal('📤 Get one exercise from "' + item.title + '"',

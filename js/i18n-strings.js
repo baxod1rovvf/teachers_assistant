@@ -1033,9 +1033,9 @@ window.TA_ROBOT_I18N = {
     'Да — нажмите «🗑 Удалить». Уже отправленные результаты не пострадают.'],
   'How do I download an exercise file again?': [
     'Mashq faylini qayta qanday yuklab olaman?',
-    '“📤 Ulashish” ni bosing — “📥 Qayta yuklab olish” havolaning ostida. Agar u boʻlmasa, bu brauzer endi fayl nusxasini saqlamaydi (odatda xotira toʻlgani uchun) — uni qayta yaratish uchun “✏️ Qayta ishlatish” dan foydalaning.',
+    '“📤 Ulashish” ni bosing — “📥 Qayta yuklab olish” havolaning ostida. Katta fayllar (rasm yoki audioli) ham saqlanadi. Fayl bu qurilmada boʻlmasa, ilova uni onlayn havolasidan qaytarib oladi (ulashilgandan keyin 7 kun davomida); undan keyin uni “✏️ Qayta ishlatish” bilan qayta yarating.',
     'Как снова скачать файл упражнения?',
-    'Нажмите «📤 Поделиться» — «📥 Скачать снова» прямо под ссылкой. Если её нет, этот браузер больше не хранит копию файла (обычно из-за нехватки памяти) — сделайте его заново через «✏️ Использовать снова».'],
+    'Нажмите «📤 Поделиться» — «📥 Скачать снова» прямо под ссылкой. Большие файлы (с картинками или аудио) тоже сохраняются. Если файла нет на этом устройстве, приложение заберёт его по онлайн-ссылке (7 дней после публикации); после этого сделайте его заново через «✏️ Использовать снова».'],
   'What is the Students list for?': [
     'Oʻquvchilar roʻyxati nima uchun?',
     'Har bir oʻquvchiga alohida ID bering — ular mashqda ism oʻrniga shuni yozadi. Faqat shu roʻyxatdagi oʻquvchilar Statistika, Top 5 va “Didn\'t do it” da hisoblanadi.',

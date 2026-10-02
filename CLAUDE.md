@@ -96,7 +96,11 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
 20. **If the administrator's password changes**, the administrator gets a new database account
     (new id), so the rules must be copied from CP and published again.
 8. **Browser storage filling up** (~5–10 MB per site): My Exercises keeps copies of exercise
-   files and builder forms (pictures included). When full, older saved copies are dropped
+   files and builder forms (pictures included). Files over 1 MB go to IndexedDB instead
+   (`taPutBigFile` in common.js, newest 15, since 2026-10-02 — before that they weren't kept
+   at all, so a 2.1 MB set with pictures couldn't be Redownloaded or split); a missing copy is
+   fetched back from its online link while it lasts (`taEnsureExerciseHtml`). Big files are
+   not in the backup file or synced to other devices. When full, older saved copies are dropped
    (so "Redownload"/"Use again"/Share-renewal may stop working for old exercises) and, in the
    worst case, new data can't be saved.
 9. **Forgotten password = synced data can't be read.** Sync is encrypted with a key from the
