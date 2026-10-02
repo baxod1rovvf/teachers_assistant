@@ -311,7 +311,9 @@ const TA_PAGE_TITLES = {};
 const TA_PAGE_HTML = {};
 function taFetchPage(file) {
   if (!TA_PAGE_HTML[file]) {
-    TA_PAGE_HTML[file] = fetch(file).then(r => {
+    // no-cache: ask the server whether there's a newer copy (the browser would otherwise
+    // reuse its saved page for a while after an update, with the old scripts in it)
+    TA_PAGE_HTML[file] = fetch(file, { cache: 'no-cache' }).then(r => {
       if (!r.ok) throw new Error(file + ': ' + r.status);
       return r.text();
     });
@@ -332,8 +334,17 @@ function taLoadScript(src) {
 }
 
 // Adds another section's panels, pop-ups and scripts to this page.
+// The ?v= stamp of the app's files a page uses (one stamp for every page).
+function taPageStamp(doc) {
+  const sc = Array.from(doc.querySelectorAll('script[src]')).map(x => x.getAttribute('src') || '').find(x => /js\/common\.js\?v=/.test(x));
+  return sc ? sc.split('?v=')[1] : '';
+}
 async function taLoadPage(file) {
   const doc = new DOMParser().parseFromString(await taFetchPage(file), 'text/html');
+  // A newer (or older) version of the app than the page already open: mixing them would
+  // show one section new and another old — open that section with a full page load.
+  const mine = taPageStamp(document), theirs = taPageStamp(doc);
+  if (mine && theirs && mine !== theirs) throw new Error('another version of the app');
   const wrap = document.querySelector('.main-content .wrap');
   doc.querySelectorAll('.main-content .wrap > *:not(.masthead)').forEach(el => {
     if (!el.id || !document.getElementById(el.id)) wrap.appendChild(document.importNode(el, true));

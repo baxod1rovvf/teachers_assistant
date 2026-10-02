@@ -246,6 +246,11 @@ real students' names or results into the repository (it is public).
   one stamp, e.g. `v=20261001c`), or browsers keep the old files: run `npm run stamp`
   (`tools/bump-version.js`; date + letter). `tests/housekeeping.spec.js` checks every page
   uses one stamp and that the files exist.
+- Sections open without a reload (`taNavigate` → `taLoadPage` fetches the other page's HTML
+  and adds its panels and scripts). That fetch uses `cache: 'no-cache'` (GitHub Pages lets
+  browsers reuse a page for ~10 min, which mixed a new section with an old one after an
+  update — 2026-10-02), and if the other page's `?v=` stamp differs from the open page's,
+  it opens with a full page load instead. `tests/pages.spec.js`.
 - Firebase for the app (js/firebase.js, CP.html) comes from `js/vendor/firebase-10.12.5/`
   (the npm package's browser builds, import of firebase-app pointed at the folder — see its
   README). Exercise files and the downloadable points board still use gstatic.com (they open
