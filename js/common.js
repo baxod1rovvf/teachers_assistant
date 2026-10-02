@@ -2005,9 +2005,10 @@ function getUncheckedCompletions() {
   const checked = new Set(getCheckedCompletions());
   const rosterIdx = taRosterIndex();
   // an exercise inside a Homework/Class set is shown with the set's name
-  const setTitleForCode = {};
+  const setTitleForCode = {}, nameForCode = {};
   (getRecentExercises() || []).forEach(e => {
-    if (e.mergedItems && e.mergedItems.length) e.mergedItems.forEach(it => { if (it && it.code) setTitleForCode[it.code] = e.title; });
+    if (e.mergedItems && e.mergedItems.length) e.mergedItems.forEach(it => { if (it && it.code) setTitleForCode[it.code] = { title: e.title, uid: e.uid }; });
+    else if (e.code) nameForCode[e.code] = e.title;
   });
   const byStudent = {};
   (window.__allResults || []).forEach(r => {
@@ -2019,7 +2020,7 @@ function getUncheckedCompletions() {
     const sk = String(student.id);
     if (!byStudent[sk]) byStudent[sk] = { name: student.name, items: [], latest: 0 };
     const set = setTitleForCode[r.code];
-    byStudent[sk].items.push({ key: key, title: r.title || r.type || 'Exercise', set: set || '' });
+    byStudent[sk].items.push({ key: key, title: nameForCode[r.code] || r.title || r.type || 'Exercise', set: set ? set.title : '', setUid: set ? set.uid : '', code: r.code });
     byStudent[sk].latest = Math.max(byStudent[sk].latest, new Date(r.date).getTime());
   });
   return Object.values(byStudent).sort((a, b) => b.latest - a.latest);
@@ -2054,22 +2055,25 @@ function showCompletionsWarning(groups) {
   box.innerHTML = '<div class="lesson-warn-head"><span>✅ ' + n + ' student' + (n === 1 ? '' : 's') + ' finished exercises</span>' +
       '<button type="button" class="lesson-warn-close" aria-label="Remind me next time">✕</button></div>' +
     '<div class="done-warn-list">' + groups.map((g, i) => {
-      // a set's exercises are summed up under the set's name: "Sep 28 · 5 exercises"
-      const parts = [], perSet = {};
+      // one button per exercise (a set's exercises together under the set's name:
+      // "Sep 28 · 5 exercises"), each opening that exercise's own results
+      const targets = [], byKey = {};
       g.items.forEach(x => {
-        if (!x.set) { parts.push(x.title); return; }
-        if (!(x.set in perSet)) { perSet[x.set] = 0; parts.push({ set: x.set }); }
-        perSet[x.set]++;
+        const k = x.setUid ? 'set:' + x.setUid : 'code:' + x.code + '|' + x.title;
+        if (!byKey[k]) { byKey[k] = { title: x.set || x.title, n: 0, code: x.code, setUid: x.setUid || '', set: !!x.setUid }; targets.push(byKey[k]); }
+        byKey[k].n++;
       });
-      const labels = parts.map(x => typeof x === 'string' ? x : x.set + ' · ' + perSet[x.set] + ' exercise' + (perSet[x.set] === 1 ? '' : 's'));
-      const shown = labels.slice(0, 3).map(escapeForHtml).join(', ') + (labels.length > 3 ? ' +' + (labels.length - 3) + ' more' : '');
+      const btns = targets.slice(0, 3).map(t =>
+        '<button type="button" class="done-warn-ex" data-code="' + escapeForHtml(t.code || '') + '" data-set="' + escapeForHtml(t.setUid) + '" title="Open the results of this exercise">📊 <span translate="no">' +
+          escapeForHtml(t.title) + '</span>' + (t.set ? ' · ' + t.n + ' exercise' + (t.n === 1 ? '' : 's') : '') + '</button>').join('') +
+        (targets.length > 3 ? '<small>+' + (targets.length - 3) + ' more</small>' : '');
       return '<div class="lesson-warn-row">' +
         '<span class="res-avatar done-warn-avatar" style="background:' + avatarColorForName(g.name) + ';">' + escapeForHtml(initialsForName(g.name)) + '</span>' +
-        '<div class="lesson-warn-main"><b translate="no">' + escapeForHtml(g.name) + '</b><small>' + shown + '</small></div>' +
+        '<div class="lesson-warn-main"><b translate="no">' + escapeForHtml(g.name) + '</b><div class="done-warn-exs">' + btns + '</div></div>' +
         '<button type="button" class="done-warn-check" data-i="' + i + '">✓ Checked</button>' +
       '</div>';
     }).join('') + '</div>' +
-    '<div class="done-warn-foot"><button type="button" class="done-warn-results">Open Results</button>' +
+    '<div class="done-warn-foot"><button type="button" class="done-warn-results">All results</button>' +
       '<button type="button" class="done-warn-all">✓ All checked</button></div>';
   box.querySelector('.lesson-warn-close').onclick = () => box.classList.remove('show');
   box.querySelectorAll('.done-warn-check').forEach(btn => btn.onclick = () => {
@@ -2081,8 +2085,25 @@ function showCompletionsWarning(groups) {
     box.classList.remove('show');
   };
   box.querySelector('.done-warn-results').onclick = () => { box.classList.remove('show'); switchTo('results'); };
+  box.querySelectorAll('.done-warn-ex').forEach(btn => btn.onclick = () => {
+    box.classList.remove('show');
+    taOpenResultsFor(btn.dataset.code, btn.dataset.set);
+  });
   if (!box.classList.contains('show')) { void box.offsetWidth; box.classList.add('show'); }
 }
+
+// Results of one exercise (or Homework/Class set, by its My Exercises uid), from any page
+function taOpenResultsFor(code, setUid) {
+  const list = getRecentExercises() || [];
+  const item = setUid ? list.find(e => e.uid === setUid)
+    : list.find(e => e.code === code && !(e.mergedItems && e.mergedItems.length));
+  taRunOnPage('results.html', () => {
+    if (item && window.showExerciseResults) { window.showExerciseResults(item.uid); return; }
+    const input = document.getElementById('res-code-input');
+    if (input && code) { input.value = code; if (window.onResultsCodeInput) window.onResultsCodeInput(); }
+  });
+}
+window.taOpenResultsFor = taOpenResultsFor;
 
 function renderLessonRow(o) {
   const palette = lessonColorForId(o.entry.id);
@@ -2540,7 +2561,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'How do I write a plan for a lesson?', a: 'Go to Settings → Weekly Lesson Schedule and tap "📝 Plan" next to the lesson. Write your notes, pick the exercises for it, and tap "💾 Save Plan".' },
     { q: 'How is "Top 5 Active Students" worked out?', a: 'Students are ranked by how well they did, not by how many exercises they finished. Each result becomes a fair 0–100 score (Sentences use the stars you give in Results). Use the group buttons (e.g. Target / Apex) to see one group at a time.' },
     { q: 'What is "Lessons taught"?', a: 'Every lesson on your weekly schedule counts once each time its day and time pass. Removing a lesson from the schedule keeps what it already counted.' },
-    { q: 'What is the note about students who finished exercises?', a: 'When you open the app, a note lists your students who finished an exercise in the last 7 days that you haven\'t checked yet. Tap "Checked" for one student, or "All checked". Closing it with ✕ only hides it until next time.' },
+    { q: 'What is the note about students who finished exercises?', a: 'When you open the app, a note lists your students who finished an exercise in the last 7 days that you haven\'t checked yet. Tap an exercise under a student\'s name (📊) to open that exercise\'s results. Tap "Checked" for one student, or "All checked". Closing it with ✕ only hides it until next time.' },
     { q: 'Can I switch between day and night mode?', a: 'Yes — tap the toggle switch at the top of this page to flip between light and dark themes any time.' },
     { q: 'How do I change the colours or the look?', a: 'Tap the 🎨 button next to the day/night switch. Pick a Style (Classic or Glass) and a colour Design. Four designs are for day and two for night.' },
     { q: 'How do I turn sounds off?', a: 'Tap the speaker button at the top of this page. 🔇 means sounds are off; tap it again to turn them back on.' },
@@ -2583,6 +2604,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
   myexercises: aiFaq([
     { q: 'What is My Exercises for?', a: "Every exercise you've built lives here — share it, see its results, open it again in its builder, print it, or turn off its points." },
     { q: 'Why do some exercises have a coloured edge?', a: 'Those are sets: 📚 Homework sets have an orange edge and 🏫 Class sets a green one, so they stand out from single exercises.' },
+    { q: 'How do I rename an exercise?', a: 'Tap the ✎ next to its name, type the new name and tap Save. The new name shows in My Exercises and Results. A file you have already sent to students keeps its old name.' },
     { q: 'How do I find an exercise?', a: 'Type in the search box (title, word or code), or tap the group and type buttons above the list to show only those.' },
     { q: 'How do I send an exercise to my students?', a: 'Tap "📤 Share". You get a link (works for 7 days, also on iPhones) with "🔗 Copy link", a ready message to paste into Telegram, the file itself, and "🔢 Show code on screen" for the board.' },
     { q: 'The link has expired — what now?', a: 'Links work for 7 days. Tap "📤 Share" again and the app puts the exercise online again with a new 7 days.' },

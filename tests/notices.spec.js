@@ -50,3 +50,20 @@ test('students who finished exercises are listed until checked', async ({ page, 
   await page.waitForTimeout(5000);
   await expect(page.locator('#taDoneWarn.show')).toHaveCount(0);
 });
+
+test('each exercise in the "finished exercises" note opens that exercise\'s own results', async ({ page, context }) => {
+  await prepare(context);
+  await page.goto('/index.html');
+  const done = page.locator('#taDoneWarn');
+  await expect(done).toHaveClass(/show/, { timeout: 8000 });
+  // Bobur did the Kitchen dictation; Dilya did the "Sep test" homework set
+  await expect(done.locator('.lesson-warn-row', { hasText: 'Dilya Test' }).locator('.done-warn-ex')).toContainText('Sep test · 3 exercises');
+  await done.locator('.lesson-warn-row', { hasText: 'Bobur Test' }).locator('.done-warn-ex').click();
+  await expect(page.locator('#activeCodeValue')).toHaveText('Kitchen', { timeout: 8000 });
+  await expect(page.locator('.results-table tbody tr', { hasText: 'Bobur Test' })).toBeVisible();
+  await page.goto('/index.html');
+  await expect(done).toHaveClass(/show/, { timeout: 8000 });
+  await done.locator('.lesson-warn-row', { hasText: 'Dilya Test' }).locator('.done-warn-ex').click();
+  await expect(page.locator('#activeCodeValue')).toHaveText('Sep test', { timeout: 8000 });
+  await expect(page.locator('.hwc-student-row', { hasText: 'Dilya Test' })).toBeVisible();
+});

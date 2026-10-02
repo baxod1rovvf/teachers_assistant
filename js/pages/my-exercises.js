@@ -126,7 +126,8 @@ function renderRecentExercises() {
     html +=
       '<div class="recent-exercise-row' + (setKind ? ' set-row set-' + setKind : '') + '" data-uid="' + escapeForHtml(item.uid || '') + '">' +
         '<div class="recent-exercise-info">' +
-          '<div class="recent-exercise-title"><span translate="no">' + escapeForHtml(item.title) + '</span> ' + disabledBadge + '</div>' +
+          '<div class="recent-exercise-title"><span translate="no">' + escapeForHtml(item.title) + '</span>' +
+            '<button type="button" class="myex-rename" onclick="renameRecentExercise(' + idx + ')" title="Rename" aria-label="Rename">✎</button> ' + disabledBadge + '</div>' +
           codeLine + oldLine +
         '</div>' +
         '<div class="recent-exercise-actions">' +
@@ -182,6 +183,41 @@ function changeRecentExerciseGroup(idx) {
     renderRecentExercises();
     showToast(b.dataset.g ? '"' + item.title + '" is now for ' + b.textContent + '.' : '"' + item.title + '" isn\'t linked to a group now.', 'ok');
   });
+}
+
+/* Rename: the name in My Exercises, Results and the notes, and the name
+   "Use again" starts with. A file already sent to students keeps the old
+   name inside it (make a new one with Use again to change that too). */
+function renameRecentExercise(idx) {
+  const item = getRecentExercises()[idx];
+  if (!item) return;
+  const m = taModal('✎ Rename',
+    '<input type="text" class="ta-input myex-rename-input" maxlength="120" spellcheck="false" aria-label="New name">' +
+    '<p class="ta-modal-text">The new name shows in My Exercises and Results. A file you have already sent keeps its old name.</p>' +
+    '<div class="share-actions"><button type="button" class="mini-btn solid" data-act="save">Save</button><button type="button" class="mini-btn" data-act="cancel">Cancel</button></div>');
+  const input = m.body.querySelector('.myex-rename-input');
+  input.value = item.title;
+  setTimeout(() => { input.focus(); input.select(); }, 30);
+  const save = () => {
+    const name = input.value.replace(/\s+/g, ' ').trim();
+    if (!name) { showToast('Please type a name.'); return; }
+    const list = getRecentExercises();
+    const at = list.findIndex(e => e.uid === item.uid);
+    if (at === -1) { m.close(); return; }
+    const old = list[at].title;
+    list[at].title = name;
+    if (list[at].setTitle) list[at].setTitle = name;
+    // "Use again" opens the builder with the new name
+    const st = list[at].builderState;
+    if (st && st.fields) Object.keys(st.fields).forEach(id => { if (/-title$/.test(id) && st.fields[id] === old) st.fields[id] = name; });
+    saveRecentExercises(list);
+    m.close();
+    renderRecentExercises();
+    showToast('Renamed to "' + name + '".', 'ok');
+  };
+  m.body.querySelector('[data-act="save"]').onclick = save;
+  m.body.querySelector('[data-act="cancel"]').onclick = m.close;
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') save(); });
 }
 
 function clearMyexFilters() {

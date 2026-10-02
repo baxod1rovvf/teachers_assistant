@@ -186,6 +186,8 @@
     [/^"(.+)" is now for (.+)$/, function (m) { return UZ ? '“' + m[1] + '” endi ' + m[2] + ' uchun.' : '«' + m[1] + '» теперь для «' + m[2] + '».'; }],
     [/^"(.+)" isn't linked to a group now$/, function (m) { return UZ ? '“' + m[1] + '” endi hech qaysi guruhga bogʻlanmagan.' : '«' + m[1] + '» больше не привязано к группе.'; }],
     [/^Which group is "(.+)" for\?$/, function (m) { return UZ ? '“' + m[1] + '” qaysi guruh uchun?' : 'Для какой группы «' + m[1] + '»?'; }],
+    [/^Renamed to "(.+)"$/, function (m) { return UZ ? 'Yangi nom: “' + m[1] + '”.' : 'Новое название: «' + m[1] + '».'; }],
+    [/^\+(\d+) more$/, function (m) { return UZ ? 'yana ' + m[1] + ' ta' : 'ещё ' + m[1]; }],
     [/^Share "(.+)"$/, function (m) { return UZ ? '“' + m[1] + '”ni ulashish' : 'Поделиться «' + m[1] + '»'; }],
     [/^Nothing matches(.*)$/, function (m) { return UZ ? 'Hech narsa topilmadi.' : 'Ничего не найдено.'; }],
     [/^"(.+)" reopened: (\d+) rounds? added, the last one is open to check\. Then add more or press Create$/, function (m) {

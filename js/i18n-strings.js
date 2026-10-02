@@ -661,6 +661,13 @@ window.TA_I18N_ROWS = [
   ['Not now', 'Hozir emas', 'Не сейчас'],
   ['Turn on', 'Yoqish', 'Включить'],
   ['Your password', 'Parolingiz', 'Ваш пароль'],
+  /* ---------- My Exercises: rename; finished-exercises note ---------- */
+  ['Save', 'Saqlash', 'Сохранить'],
+  ['All results', 'Barcha natijalar', 'Все результаты'],
+  ['Open the results of this exercise', 'Shu mashq natijalarini ochish', 'Открыть результаты этого упражнения'],
+  ['New name', 'Yangi nom', 'Новое название'],
+  ['Please type a name', 'Iltimos, nom yozing', 'Пожалуйста, введите название'],
+  ['The new name shows in My Exercises and Results. A file you have already sent keeps its old name', 'Yangi nom Mashqlarim va Natijalarda koʻrinadi. Allaqachon yuborilgan faylda eski nom qoladi', 'Новое название видно в «Моих упражнениях» и «Результатах». В уже отправленном файле останется старое'],
   /* ---------- AI robot ---------- */
   ['Search all questions', 'Barcha savollardan qidirish', 'Поиск по всем вопросам'],
   ['Back to questions', 'Savollarga qaytish', 'Назад к вопросам']
@@ -785,9 +792,9 @@ window.TA_ROBOT_I18N = {
     'Каждый урок из недельного расписания засчитывается каждый раз, когда проходят его день и время. Если убрать урок из расписания, уже посчитанное сохраняется.'],
   'What is the note about students who finished exercises?': [
     'Mashqni tugatgan oʻquvchilar haqidagi eslatma nima?',
-    'Ilovani ochganingizda, oxirgi 7 kunda mashqni tugatgan, lekin siz hali tekshirmagan oʻquvchilar roʻyxati chiqadi. Bitta oʻquvchi uchun “Checked” ni yoki hammasi uchun “All checked” ni bosing. ✕ bilan yopsangiz, u faqat keyingi safargacha yashirinadi.',
+    'Ilovani ochganingizda, oxirgi 7 kunda mashqni tugatgan, lekin siz hali tekshirmagan oʻquvchilar roʻyxati chiqadi. Oʻquvchi ismi ostidagi mashqni (📊) bossangiz, oʻsha mashq natijalari ochiladi. Bitta oʻquvchi uchun “Checked” ni yoki hammasi uchun “All checked” ni bosing. ✕ bilan yopsangiz, u faqat keyingi safargacha yashirinadi.',
     'Что за сообщение об учениках, закончивших упражнения?',
-    'При открытии приложения появляется список ваших учеников, которые за последние 7 дней закончили упражнение, а вы его ещё не проверили. Нажмите «Checked» для одного ученика или «All checked» для всех. Закрытие крестиком ✕ скрывает его только до следующего раза.'],
+    'При открытии приложения появляется список ваших учеников, которые за последние 7 дней закончили упражнение, а вы его ещё не проверили. Нажмите на упражнение под именем ученика (📊), чтобы открыть результаты этого упражнения. Нажмите «Checked» для одного ученика или «All checked» для всех. Закрытие крестиком ✕ скрывает его только до следующего раза.'],
   'Can I switch between day and night mode?': [
     'Kunduzgi va tungi rejimni almashtirsa boʻladimi?',
     'Ha — istalgan payt yorugʻ va qorongʻi koʻrinish oʻrtasida almashish uchun shu sahifa tepasidagi tugmachani bosing.',
@@ -948,6 +955,11 @@ window.TA_ROBOT_I18N = {
     'Bular toʻplamlar: 📚 Uy vazifasi toʻplamlari toʻq sariq, 🏫 Dars toʻplamlari yashil chetli — ular yakka mashqlardan ajralib turishi uchun.',
     'Почему у некоторых упражнений цветной край?',
     'Это наборы: у 📚 наборов «Домашнее задание» оранжевый край, у 🏫 наборов «Урок» — зелёный, чтобы они выделялись среди отдельных упражнений.'],
+  'How do I rename an exercise?': [
+    'Mashq nomini qanday oʻzgartiraman?',
+    'Nomi yonidagi ✎ ni bosing, yangi nomni yozing va “Saqlash” ni bosing. Yangi nom Mashqlarim va Natijalarda koʻrinadi. Oʻquvchilarga allaqachon yuborilgan faylda eski nom qoladi.',
+    'Как переименовать упражнение?',
+    'Нажмите ✎ рядом с названием, введите новое и нажмите «Сохранить». Новое название видно в «Моих упражнениях» и «Результатах». В файле, уже отправленном ученикам, останется старое.'],
   'How do I find an exercise?': [
     'Mashqni qanday topaman?',
     'Qidiruv maydoniga yozing (nomi, soʻz yoki kod) yoki faqat oʻshalarni koʻrsatish uchun roʻyxat ustidagi guruh va tur tugmalarini bosing.',
