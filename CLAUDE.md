@@ -69,7 +69,10 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
 3. **Old exercise files keep old bugs.** Files made before a fix never change: Sentences with
    multi-line instructions (fixed 2026-09-30), Pronunciation microphone on phones (fixed
    2026-09-30), dictation extra-word scoring inside the student's own score, Homework/Class sets
-   counting a round as done when its answers failed to upload (fixed 2026-10-01). The teacher has
+   counting a round as done when its answers failed to upload (fixed 2026-10-01), Flashcard
+   sending 0 seconds and Sentences showing the start screen instead of the certificate (both:
+   `showCertificate` left full screen while the full-screen guard was still on, so the guard
+   "restarted" the finished exercise; fixed 2026-10-02 — 44 of 246 Flashcard results had 0 s). The teacher has
    to recreate them ("Use again") — since 2026-10-01 the app points these out (see "Old
    exercise files" below). Renewing a link from Share re-uploads the app's saved copy
    — which is the old broken one for "Review - Apex" (its fixed copy was put online by hand

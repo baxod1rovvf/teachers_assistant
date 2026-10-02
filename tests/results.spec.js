@@ -155,3 +155,19 @@ test('My Exercises: Homework and Class sets stand out', async ({ page, context }
   await expect(set.locator('.badge-set')).toContainText('Homework set');
   await expect(page.locator('.recent-exercise-row.set-row')).toHaveCount(await page.locator('.badge-set').count());
 });
+
+test('a set\'s rounds a student hasn\'t done yet still show their names', async ({ page, context }) => {
+  await prepare(context, { storage: { ta_recent_exercises: JSON.stringify([{ uid: 'uhw9', title: 'Oct set', typeLabel: 'Homework', code: '909090', date: new Date().toISOString(),
+    mergedItems: [{ title: 'Words — Vocabulary Journey', code: '111111' }, { title: 'Say it — Pronunciation', code: '222222' }] }]) } });
+  await page.goto('/results.html');
+  await page.waitForTimeout(1200);
+  await hideNotices(page);
+  await page.evaluate(() => {
+    hwcResultsCurrentItem = getRecentExercises()[0];
+    window.__hwcProgressDocs = [{ studentId: '10001', studentName: 'Alice Test', completedCount: 1, totalCount: 2, completedFlags: [true, false],
+      roundLabels: ['Words — Vocabulary Journey', ''], roundCodes: ['111111', ''], lastActive: new Date().toISOString() }];
+    hwcExpandedStudent = '10001';
+    renderHwcResultsList();
+  });
+  await expect(page.locator('.hwc-round-row').nth(1)).toContainText('Say it — Pronunciation');
+});

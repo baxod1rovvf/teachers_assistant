@@ -90,6 +90,16 @@ function renderHwcResultsList() {
       ((d.studentId && norm(r.studentId) === norm(d.studentId)) || norm(r.name) === norm(d.studentName) || (d.studentId && norm(r.name) === norm(d.studentId))));
   };
   const checkedSet = new Set(getCheckedCompletions());
+  // rounds a student hasn't done yet have no progress record: their names come from the set itself
+  const setRounds = (setExercise && setExercise.mergedItems) || [];
+  docs.forEach(d => {
+    for (let i = 0; i < (d.totalCount || 0); i++) {
+      const r = setRounds[i];
+      if (!r) continue;
+      if (d.roundLabels && !d.roundLabels[i]) d.roundLabels[i] = r.title || r.typeLabel || '';
+      if (d.roundCodes && !d.roundCodes[i]) d.roundCodes[i] = r.code || '';
+    }
+  });
   // the column names, lined up with the rows below
   const headHtml = '<div class="hwc-list-head" aria-hidden="true">' +
     ['Name', 'ID', 'Progress', 'Checked', 'Punished?', 'Time', 'Last online', ''].map((t, i) =>
@@ -176,7 +186,7 @@ async function viewHwcRoundAnswer(roundCode, studentName, roundLabel, studentId)
   } else {
     const lines = [];
     if (typeof result.score !== 'undefined') lines.push('<div><b>Score:</b> ' + escapeForHtml(String(taResultScore(result))) + '</div>');
-    if (result.timeDisplay) lines.push('<div><b>Time:</b> ' + escapeForHtml(result.timeDisplay) + '</div>');
+    if (result.timeDisplay) lines.push('<div><b>Time:</b> ' + escapeForHtml(taTimeText(result)) + '</div>');
     if (result.dictationFeedback) { lines.push(taDictationAnswerHtml(result)); modal.classList.add('wide'); }
     // Sentences: the student's own written sentence for each word, and the teacher's rating.
     if (Array.isArray(result.sentences) && result.sentences.length) {
@@ -196,6 +206,13 @@ async function viewHwcRoundAnswer(roundCode, studentName, roundLabel, studentId)
     body.innerHTML = lines.join('') || '<div class="empty-results">No further detail recorded for this exercise.</div>';
   }
   modal.classList.add('show');
+}
+
+// A result's time; old Flashcard files often lost it (0 seconds): "—", not a fake 00:00
+function taTimeText(r) {
+  if (!r || !r.timeDisplay) return '—';
+  if (r.type === 'Flashcard' && !r.timeSeconds) return '—';
+  return r.timeDisplay;
 }
 
 function renderActiveCodeBox() {
@@ -500,7 +517,7 @@ function renderResultsTable(codeOverride) {
         '<td><div class="res-student-cell"><span class="res-avatar" style="background:' + avatarColor + ';">' + escapeForHtml(initials) + '</span><span>' + escapeForHtml(r.name || '—') + (st ? '<span class="res-id-tag">ID ' + escapeForHtml(st.id) + (groupNameFor(st.group) ? ' · ' + escapeForHtml(groupNameFor(st.group)) : '') + '</span>' : '') + '</span></div></td>' +
         '<td><span class="badge-type">' + escapeForHtml(r.type || '—') + '</span></td>' +
         '<td>' + scoreCell + '</td>' +
-        '<td>' + escapeForHtml(r.timeDisplay || '—') + '</td>' +
+        '<td>' + escapeForHtml(taTimeText(r)) + '</td>' +
         '<td>' + taCheckChipHtml([taCompletionKey(r)], taIsChecked(r)) + '</td>' +
         '<td>' + taPunishChipHtml(punishKey) + '</td>' +
         '<td>' + fmtDate(r.date) + '</td>' +

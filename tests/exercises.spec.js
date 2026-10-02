@@ -205,3 +205,42 @@ test('Homework set: an exercise counts as done only once its answers are saved',
   expect(w.filter(x => x.startsWith('Sentences:r_'))).toHaveLength(2);
   expect(w.filter(x => x.startsWith('HWC_PROGRESS'))).toHaveLength(2);
 });
+
+// Finishing leaves full screen. The full-screen guard used to treat that as cheating:
+// it restarted the exercise and wiped the times, so Flashcard results said 0 seconds.
+test('finishing an exercise in full screen keeps its time and its certificate (Flashcard, Sentences)', async ({ page, context }, info) => {
+  await prepare(context);
+  const fakeFullScreen = () => {
+    window.__fs = false;
+    Object.defineProperty(document, 'fullscreenElement', { configurable: true, get: () => window.__fs ? document.documentElement : null });
+    document.exitFullscreen = () => { window.__fs = false; document.dispatchEvent(new Event('fullscreenchange')); return Promise.resolve(); };
+  };
+  // Flashcard
+  const fc = info.outputPath('flash.html');
+  require('fs').writeFileSync(fc, template('FLASHCARD_TEMPLATE', { GROUPS_JSON: JSON.stringify([{ title: 'G1', words: [{ en: 'cat', uz: 'mushuk' }, { en: 'dog', uz: 'it' }] }]),
+    QUIZ_DIRECTION: 'en2uz', QUIZ_MODE: 'choice', LOSE_PROGRESS: 'false', KEEP_PROGRESS_ON_BACK: 'false' }));
+  await page.goto('file://' + fc);
+  await page.evaluate(fakeFullScreen);
+  const flash = await page.evaluate(async () => {
+    studentName = 'Alice Test'; sessionActive = true; proctorArm();
+    window.__fs = true; document.dispatchEvent(new Event('fullscreenchange'));   // in full screen
+    groupTimes = [65000];                                                       // 65 s on the cards
+    showCertificate();
+    await new Promise(r => setTimeout(r, 800));
+    return { secs: buildResultPayload().timeSeconds, cert: document.getElementById('slide-certificate').classList.contains('active') };
+  });
+  expect(flash).toEqual({ secs: 65, cert: true });
+  // Sentences
+  const sn = info.outputPath('sentences.html');
+  require('fs').writeFileSync(sn, template('SENTENCES_TEMPLATE', { WORDS_JSON: '[]', SENTENCE_COUNT: '1', INSTRUCTIONS_JSON: '""', PICTURE_DATA: '' }));
+  await page.goto('file://' + sn);
+  await page.evaluate(fakeFullScreen);
+  const sent = await page.evaluate(async () => {
+    studentName = 'Alice Test'; sessionActive = true; proctorArm();
+    window.__fs = true; document.dispatchEvent(new Event('fullscreenchange'));
+    showCertificate();
+    await new Promise(r => setTimeout(r, 800));
+    return { warnings: violations, cert: document.getElementById('slide-certificate').classList.contains('active') };
+  });
+  expect(sent).toEqual({ warnings: 0, cert: true });
+});

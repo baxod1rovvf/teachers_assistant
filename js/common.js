@@ -1299,6 +1299,10 @@ const TA_FILE_FIXES = [
     what: 'the microphone doesn\'t turn on on phones' },
   { id: 'dictation', at: '2026-09-30T07:06:00Z', types: /dictation/i, minor: true,
     what: 'students see too high a score when they type extra words (your Results show the right one)' },
+  { id: 'flashtime', at: '2026-10-02T23:59:00Z', types: /flashcard|vocabulary journey/i,
+    what: 'the result often says 0 seconds (the time is lost when the exercise ends), so Results and Top 5 show it wrong' },
+  { id: 'sentencesend', at: '2026-10-02T23:59:00Z', types: /^sentences$|sentence writing/i, minor: true,
+    what: 'when a student finishes, the start screen can come back instead of the certificate, with one extra warning' },
   { id: 'setsave', at: '2026-10-01T17:30:00Z', types: /^(homework|class)$/i,
     what: 'if a student\'s answers fail to upload, the set still counts the exercise as done — you see "Completed" but no answers' }
 ];
@@ -2733,6 +2737,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'How are dictations scored?', a: 'Each missing, wrong or extra word counts as a mistake. 👁 View shows the student\'s text with the mistakes marked where they were typed.' },
     { q: 'How are Homework & Class results different?', a: 'They are grouped by student across the whole set: how many exercises each student finished (e.g. 2/3), their total time (red if under 15 minutes) and their answers.' },
     { q: 'A student shows "Completed" but 👁 says "No result found" — why?', a: 'Their answers didn\'t reach the database (usually a bad connection) while the set still counted the exercise — a problem in sets made before 1 Oct 2026. New sets wait until the answers are saved. Make the set again with "✏️ Use again" in My Exercises and share the new one; ask the student to redo it.' },
+    { q: 'Why does a Flashcard result show "—" (or 00:00) for time?', a: 'Flashcard files made before 3 Oct 2026 lost the time when the student finished, so it was sent as 0. The student did do the exercise. Make the exercise again with "✏️ Use again" in My Exercises and share the new one.' },
     { q: 'Can I download the results?', a: 'Yes — "⬇ Download Results Report (.html)" for a printable report, or "📊 Download for Excel (.csv)" for a spreadsheet.' },
     { q: 'What does "Delete ALL results for this code" do?', a: 'It removes every result of that exercise. Old copies of the file stop counting; only students who use a newly made file appear. Keep a backup first (Settings → 💾 Backup).' },
     { q: 'Why does it say students used an old copy?', a: 'Those results came from a file made before a bug was fixed. Make a new copy with "✏️ Use again" in My Exercises and share that.' }
