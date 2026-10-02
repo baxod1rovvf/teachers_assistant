@@ -188,27 +188,43 @@ test('Homework set: an exercise counts as done only once its answers are saved',
   const roundWrites = await student.frames().find(f => f !== student.mainFrame()).evaluate(() => (window.__writes || []).map(x => x.type));
   expect(roundWrites.filter(t => t === 'Sentences')).toHaveLength(0);
 
-  // round 2, the last: nothing is sent until "Send my answers to my teacher"
+  // round 2 (the last): no connection while saving → "Try again", not counted yet
   await student.click('#hwcNextScreen .ta-btn');
-  await answer();
-  await expect(student.locator('#hwcSendBtn')).toBeVisible({ timeout: 8000 });
-  expect((await writes()).filter(x => x.startsWith('Sentences:r_'))).toHaveLength(1);
-  // no connection → not done, "Try again"
   await student.evaluate(() => { window.__failWrites = 1000; });
-  await student.click('#hwcSendBtn');
-  await expect(student.locator('#hwcSendAnim')).toBeVisible();
+  await answer();
   await expect(student.locator('#hwcRetryBtn')).toBeVisible({ timeout: 25000 });
-  await expect(student.locator('#hwcSavingTitle')).toContainText("haven't reached");
-  w = await writes();
-  expect(w.filter(x => x.startsWith('HWC_PROGRESS'))).toHaveLength(1);
-  // connection back → saved, then the certificate
+  expect((await writes()).filter(x => x.startsWith('HWC_PROGRESS'))).toHaveLength(1);
+  // connection back → saved straight away (the teacher sees the progress), then the send button
   await student.evaluate(() => { window.__failWrites = 0; });
   await student.click('#hwcRetryBtn');
-  await expect(student.locator('#hwcDone')).toHaveClass(/show/, { timeout: 10000 });
-  await expect(student.locator('#hwcDone')).toContainText('Your answers have been sent to your teacher');
+  await expect(student.locator('#hwcSendBtn')).toBeVisible({ timeout: 10000 });
   w = await writes();
   expect(w.filter(x => x.startsWith('Sentences:r_'))).toHaveLength(2);
   expect(w.filter(x => x.startsWith('HWC_PROGRESS'))).toHaveLength(2);
+
+  // "Send my answers": the check finds round 1's answers missing → sent again from this visit
+  await student.evaluate(() => { const i = window.__fakeDocs.findIndex(d => d.type === 'Sentences' && d.code === HWC_ROUNDS[0].code); window.__fakeDocs.splice(i, 1); });
+  await student.click('#hwcSendBtn');
+  await expect(student.locator('#hwcSendAnim')).toBeVisible();
+  await expect(student.locator('#hwcSavingTitle')).toContainText('Checking');
+  await expect(student.locator('#hwcDone')).toHaveClass(/show/, { timeout: 15000 });
+  await expect(student.locator('#hwcDone')).toContainText('All your answers have reached your teacher');
+  expect((await writes()).filter(x => x.startsWith('Sentences:r_'))).toHaveLength(3);
+
+  // checking with no connection → "Try again"
+  await student.evaluate(() => { window.__failReads = 1; hwcSendNow(); });
+  await expect(student.locator('#hwcRetryBtn')).toBeVisible({ timeout: 15000 });
+  // answers from an earlier visit that never arrived (nothing here to send) → do that exercise again
+  await student.evaluate(() => {
+    delete hwcSaved[0];
+    const i = window.__fakeDocs.findIndex(d => d.type === 'Sentences' && d.code === HWC_ROUNDS[0].code);
+    window.__fakeDocs.splice(i, 1);
+  });
+  await student.click('#hwcRetryBtn');
+  await expect(student.locator('#hwcRedoBtn')).toBeVisible({ timeout: 15000 });
+  await expect(student.locator('#hwcSavingSub')).toContainText('Day one');
+  await student.click('#hwcRedoBtn');
+  await expect(student.locator('#hwcStageCount')).toHaveText('Exercise 1 of 2', { timeout: 8000 });
 });
 
 // Finishing leaves full screen. The full-screen guard used to treat that as cheating:
@@ -286,6 +302,8 @@ test('Homework set: after a dictation, students stay on their mistakes until the
   await expect(student.locator('#hwcReviewBar')).toBeVisible();
   await expect(student.locator('#hwcNextScreen')).not.toHaveClass(/show/);
   expect(await student.evaluate(() => window.__writes.filter(w => w.type === 'Dictation').length)).toBe(1); // saved meanwhile
+  // it sent no time of its own: the time the set measured is saved instead (never 00:00)
+  expect(await student.evaluate(() => { const d = window.__fakeDocs.find(x => x.type === 'Dictation' && x.code === '123456'); return d.timeSeconds > 0 && d.timeFromSet === true; })).toBe(true);
   await student.click('#hwcReviewBtn');
   await expect(student.locator('#hwcStageCount')).toHaveText('Exercise 2 of 2', { timeout: 8000 });
   await expect(student.locator('#hwcReviewBar')).not.toBeVisible();

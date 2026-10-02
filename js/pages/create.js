@@ -564,12 +564,13 @@ html,body{margin:0;padding:0;height:100%;background:#101116;font-family:'Inter',
   <p id="hwcSavingSub">Please wait \u2014 your answers are on their way to your teacher.</p>
   <button class="ta-btn" id="hwcSendBtn" style="display:none;" onclick="hwcSendNow()">\ud83d\udce4 Send my answers to my teacher</button>
   <button class="ta-btn" id="hwcRetryBtn" style="display:none;" onclick="hwcRetrySave()">Try again</button>
+  <button class="ta-btn" id="hwcRedoBtn" style="display:none;" onclick="hwcRedoMissing()">Do it again</button>
 </div>
 <div id="hwcReviewBar"><span id="hwcReviewMsg">Look at your mistakes \u2014 take your time.</span><button class="ta-btn" id="hwcReviewBtn" onclick="hwcReviewNext()">Next exercise \u2192</button></div>
 <div class="ta-screen" id="hwcDone">
   <div class="ta-blob ta-blob1"></div>
   <div class="ta-blob ta-blob3"></div>
-  <p class="hwc-sent-note">\u2705 Your answers have been sent to your teacher</p>
+  <p class="hwc-sent-note">\u2705 All your answers have reached your teacher</p>
   <div class="ta-cert-box">
     <div style="font-size:2.2rem;">\ud83c\udfc6</div>
     <h1 style="font-size:1.4rem;">Certificate of Completion</h1>
@@ -582,13 +583,13 @@ html,body{margin:0;padding:0;height:100%;background:#101116;font-family:'Inter',
 <iframe id="hwcFrame" allow="fullscreen" allowfullscreen style="display:none;"></iframe>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-  import { getFirestore, collection, query, where, getDocs, addDoc, serverTimestamp, doc, setDoc, getDocFromServer } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+  import { getFirestore, collection, query, where, getDocs, getDocsFromServer, addDoc, serverTimestamp, doc, setDoc, getDocFromServer } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
   const firebaseConfig = {apiKey: "AIzaSyCefg2YghdSneABh0ZOUu3-snO4soVw0lA", authDomain: "teachers-assistant-app-ccd1a.firebaseapp.com", projectId: "teachers-assistant-app-ccd1a", storageBucket: "teachers-assistant-app-ccd1a.firebasestorage.app", messagingSenderId: "185909682129", appId: "1:185909682129:web:21fd63e09809eac82d8af0", measurementId: "G-7P60GBSYEM"};
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   window.__hwcDb = db; window.__hwcCollection = collection; window.__hwcQuery = query; window.__hwcWhere = where;
   window.__hwcGetDocs = getDocs; window.__hwcAddDoc = addDoc; window.__hwcServerTimestamp = serverTimestamp;
-  window.__hwcDoc = doc; window.__hwcSetDoc = setDoc; window.__hwcGetDocFromServer = getDocFromServer;
+  window.__hwcDoc = doc; window.__hwcSetDoc = setDoc; window.__hwcGetDocFromServer = getDocFromServer; window.__hwcGetDocsFromServer = getDocsFromServer;
   window.__hwcFirebaseReady = true;
 <\/script>
 <script>
@@ -613,18 +614,20 @@ async function hwcLoadProgress() {
     return snap.docs.map(d => d.data()).filter(v => v && v.type === "HWC_PROGRESS" && v.studentId === hwcStudentId);
   } catch (e) { return []; }
 }
+function hwcRoundSeconds() { return hwcRoundStartTs ? Math.max(1, Math.round((Date.now() - hwcRoundStartTs) / 1000)) : 0; }
+async function hwcWriteProgress(idx, timeSeconds) {
+  await window.__hwcAddDoc(window.__hwcCollection(window.__hwcDb, "results"), {
+    v: 1, code: HWC_CODE, boardCode: HWC_BOARD_CODE, type: "HWC_PROGRESS", title: HWC_TITLE, kind: HWC_KIND,
+    studentId: hwcStudentId, name: hwcStudentName,
+    roundIndex: idx, roundLabel: HWC_ROUNDS[idx].label, roundCode: HWC_ROUNDS[idx].code,
+    totalCount: HWC_ROUNDS.length, timeSeconds: timeSeconds,
+    date: new Date().toISOString(), submittedAt: window.__hwcServerTimestamp()
+  });
+}
 async function hwcSaveProgress() {
   if (!window.__hwcFirebaseReady) return;
-  try {
-    const timeSeconds = hwcRoundStartTs ? Math.max(1, Math.round((Date.now() - hwcRoundStartTs) / 1000)) : 0;
-    await window.__hwcAddDoc(window.__hwcCollection(window.__hwcDb, "results"), {
-      v: 1, code: HWC_CODE, boardCode: HWC_BOARD_CODE, type: "HWC_PROGRESS", title: HWC_TITLE, kind: HWC_KIND,
-      studentId: hwcStudentId, name: hwcStudentName,
-      roundIndex: hwcIdx, roundLabel: HWC_ROUNDS[hwcIdx].label, roundCode: HWC_ROUNDS[hwcIdx].code,
-      totalCount: HWC_ROUNDS.length, timeSeconds: timeSeconds,
-      date: new Date().toISOString(), submittedAt: window.__hwcServerTimestamp()
-    });
-  } catch (e) { /* ignore \u2014 student can still finish locally even if a write fails */ }
+  try { await hwcWriteProgress(hwcIdx, hwcRoundSeconds()); }
+  catch (e) { /* ignore \u2014 the check at the end ("Send my answers") writes it again */ }
 }
 function hwcFindRosterName(id) {
   for (let i = 0; i < HWC_ROSTER.length; i++) {
@@ -684,13 +687,19 @@ async function hwcBegin() {
   hwcCompleted = new Array(HWC_ROUNDS.length).fill(false);
   savedRecords.forEach(function(r) { if (typeof r.roundIndex === 'number' && r.roundIndex < hwcCompleted.length) hwcCompleted[r.roundIndex] = true; });
   hwcIdx = hwcCompleted.indexOf(false);
-  if (hwcIdx === -1) { hwcShow("hwcDone"); return; }
+  if (hwcIdx === -1) { hwcIdx = HWC_ROUNDS.length - 1; hwcSavingScreen("ready"); return; } // all done: the check is left
   hwcShow(null);
   hwcLoad(hwcIdx);
 }
+// the next exercise not done yet (after this one, or an earlier one to do again); -1 when none
+function hwcNextTodo() {
+  for (let k = 1; k <= HWC_ROUNDS.length; k++) { const i = (hwcIdx + k) % HWC_ROUNDS.length; if (!hwcCompleted[i]) return i; }
+  return -1;
+}
 function hwcNext() {
-  hwcIdx++;
-  if (hwcIdx >= HWC_ROUNDS.length) { hwcShow("hwcDone"); return; }
+  const i = hwcNextTodo();
+  if (i === -1) { hwcSavingScreen("ready"); return; }
+  hwcIdx = i;
   hwcShow(null);
   hwcLoad(hwcIdx);
 }
@@ -723,14 +732,18 @@ function hwcWithin(promise, ms) {
   return Promise.race([promise, new Promise(function (_, rej) { setTimeout(function () { rej(new Error("timeout")); }, ms); })]);
 }
 /* The end of each exercise:
-   - most exercises: their answers are saved straight away, then "Next exercise";
+   - every exercise's answers are saved as soon as it's finished (the teacher sees
+     the progress straight away), then "Next exercise";
    - a Dictation stays on its page, so the student can look at the mistakes for as
      long as they like, until they press "Next exercise" (hwcReviewBar);
-   - the last exercise: the student presses "Send my answers to my teacher"; an
-     animation plays while they're saved, then "Your answers have been sent". */
+   - at the end, "Send my answers to my teacher" checks with the database that every
+     exercise's answers are there (hwcVerifyAll): what's missing is sent again, or —
+     from an earlier visit, so not here to send — the student does that exercise
+     again. An animation plays meanwhile; then "All your answers have reached your
+     teacher". An exercise that sends 0 seconds gets the time the set measured. */
 let hwcReview = false, hwcPressed = false;
+const hwcSaved = {}; // this visit's saved answers, per exercise: { payload }
 const HWC_APP_URL = "__TA_APP_URL__";
-function hwcIsLast() { return hwcIdx >= HWC_ROUNDS.length - 1; }
 let hwcAnimLoading = false;
 function hwcPlaySendAnim() {
   if (hwcAnimLoading || !/^https?:/.test(HWC_APP_URL)) return; // offline / opened as a file: the moving bar stays
@@ -748,28 +761,40 @@ function hwcPlaySendAnim() {
   lib.onload = go;
   document.head.appendChild(lib);
 }
-// mode: "ready" (send button), "sending" (animation), "failed" (Try again)
+// mode: "ready" (send button), "sending" / "checking" (animation), "failed" (Try again), "missing" (Do it again)
+let hwcMissing = [];
 function hwcSavingScreen(mode) {
   if (mode === true) mode = "failed"; else if (mode === false) mode = "sending";
   const el = id => document.getElementById(id);
-  el("hwcSavingIcon").style.display = mode === "sending" ? "none" : "";
-  el("hwcSavingIcon").textContent = mode === "failed" ? "\u26a0\ufe0f" : "\ud83c\udf89";
-  el("hwcSendAnim").style.display = mode === "sending" ? "flex" : "none";
-  el("hwcSavingTitle").textContent = mode === "ready" ? "You've finished every exercise!" : mode === "failed" ? "Your answers haven't reached your teacher" : "Sending your answers\u2026";
+  const busy = mode === "sending" || mode === "checking";
+  el("hwcSavingIcon").style.display = busy ? "none" : "";
+  el("hwcSavingIcon").textContent = mode === "failed" || mode === "missing" ? "\u26a0\ufe0f" : "\ud83c\udf89";
+  el("hwcSendAnim").style.display = busy ? "flex" : "none";
+  el("hwcSavingTitle").textContent = mode === "ready" ? "You've finished every exercise!"
+    : mode === "checking" ? "Checking your answers\u2026"
+    : mode === "failed" ? "Your answers haven't reached your teacher"
+    : mode === "missing" ? "Some answers didn't reach your teacher"
+    : "Sending your answers\u2026";
   el("hwcSavingSub").textContent = mode === "ready" ? "Press the button to send your answers to your teacher."
+    : mode === "checking" ? "Stay on this page and keep the internet on \u2014 we're making sure your teacher has every answer."
     : mode === "failed" ? "Check your internet connection, then press Try again. Don't close this page \u2014 your answers are still here."
+    : mode === "missing" ? "Please do " + (hwcMissing.length === 1 ? "this exercise" : "these exercises") + " again: " + hwcMissing.map(i => HWC_ROUNDS[i].label).join(", ") + "."
     : "Please wait \u2014 your answers are on their way to your teacher.";
   el("hwcSendBtn").style.display = mode === "ready" ? "" : "none";
   el("hwcRetryBtn").style.display = mode === "failed" ? "" : "none";
-  if (mode === "sending") hwcPlaySendAnim();
+  el("hwcRedoBtn").style.display = mode === "missing" ? "" : "none";
+  if (busy) hwcPlaySendAnim();
   document.getElementById("hwcReviewBar").classList.remove("show");
   hwcShow("hwcSaving");
+}
+function hwcResultId(p) {
+  return "r_" + String(p.code || "") + "_" + String(p.studentId || hwcStudentId || p.name || "").replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 40) + "_" + String(p.date || "").replace(/[^0-9]/g, "");
 }
 // One record per submission (its own id): sending it again can never make a copy.
 async function hwcSaveJob(job) {
   for (let tries = 0; tries < 40 && !window.__hwcFirebaseReady; tries++) await new Promise(r => setTimeout(r, 100));
   const p = job.payload;
-  const rid = "r_" + String(p.code || "") + "_" + String(p.studentId || hwcStudentId || p.name || "").replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 40) + "_" + String(p.date || "").replace(/[^0-9]/g, "");
+  const rid = hwcResultId(p);
   let ok = false;
   for (let attempt = 0; attempt < 3 && !ok && window.__hwcFirebaseReady; attempt++) {
     if (attempt) await new Promise(r => setTimeout(r, 1500 * attempt));
@@ -782,14 +807,15 @@ async function hwcSaveJob(job) {
       try { const snap = await hwcWithin(window.__hwcGetDocFromServer(ref), 10000); if (snap.exists()) ok = true; } catch (e2) { /* still not there */ }
     }
   }
+  if (ok && typeof job.idx === "number") hwcSaved[job.idx] = { payload: p };
   try { job.source && job.source.postMessage({ taMergeEvent: "round-result-saved", id: job.id, status: ok ? "ok" : "failed" }, "*"); } catch (e) { /* ignore */ }
   return ok;
 }
-// every exercise but the last: saved as soon as it's finished
 async function hwcSaveRoundResult() {
   const job = hwcPendingResult;
   if (!job) return;
   hwcResultState = "saving";
+  hwcCheckFailed = false;
   if (hwcGotComplete && (!hwcReview || hwcPressed)) hwcSavingScreen("sending");
   else if (hwcReview) hwcReviewBarState();
   const ok = await hwcSaveJob(job);
@@ -803,54 +829,97 @@ function hwcAfterSave() {
   if (hwcResultState === "failed") { hwcSavingScreen("failed"); return; }
   if (hwcResultState === "ok") hwcRoundDone();
 }
-function hwcRetrySave() { if (hwcIsLast()) hwcSendNow(); else if (hwcPendingResult) hwcSaveRoundResult(); }
+let hwcCheckFailed = false; // "Try again" after the final check, or after saving one exercise
+function hwcRetrySave() {
+  if (hwcCheckFailed || !hwcPendingResult || hwcResultState !== "failed") hwcSendNow();
+  else hwcSaveRoundResult();
+}
 function hwcRoundDone() {
   clearTimeout(hwcWaitTimer);
   hwcCompleted[hwcIdx] = true;
   hwcSaveProgress();
+  const next = hwcNextTodo();
+  if (next === -1) { if (hwcPressed) hwcSendNow(); else hwcSavingScreen("ready"); return; }
   if (hwcPressed) { hwcNext(); return; } // "Next exercise" was pressed on the dictation's page
-  document.getElementById("hwcNextLabel").textContent = HWC_ROUNDS[hwcIdx + 1].label;
-  document.getElementById("hwcNextSub").textContent = "Exercise " + (hwcIdx + 2) + " of " + HWC_ROUNDS.length + " \u2014 press start when you're ready.";
+  document.getElementById("hwcNextLabel").textContent = HWC_ROUNDS[next].label;
+  document.getElementById("hwcNextSub").textContent = "Exercise " + (next + 1) + " of " + HWC_ROUNDS.length + " \u2014 press start when you're ready.";
   hwcShow("hwcNextScreen");
 }
 // the dictation's own page stays, with this bar under it
 function hwcReviewBarState() {
   const bar = document.getElementById("hwcReviewBar"), btn = document.getElementById("hwcReviewBtn"), msg = document.getElementById("hwcReviewMsg");
   bar.classList.add("show");
-  if (hwcIsLast()) { btn.textContent = "\ud83d\udce4 Send my answers to my teacher"; msg.textContent = "Look at your mistakes \u2014 take your time."; return; }
   const failed = hwcResultState === "failed";
-  btn.textContent = failed ? "Try again" : "Next exercise \u2192";
+  const lastOne = hwcCompleted.filter(x => !x).length <= 1;
+  btn.textContent = failed ? "Try again" : (lastOne ? "\ud83d\udce4 Send my answers to my teacher" : "Next exercise \u2192");
   msg.textContent = failed ? "Your answers haven't reached your teacher yet \u2014 check the internet." : "Look at your mistakes \u2014 take your time.";
 }
 function hwcReviewNext() {
-  if (hwcIsLast()) { hwcSendNow(); return; }
   if (hwcResultState === "failed") { hwcSaveRoundResult(); return; }
   hwcPressed = true;
   document.getElementById("hwcReviewBar").classList.remove("show");
   if (hwcResultState === "ok" || !hwcPendingResult) hwcRoundDone();
   else hwcSavingScreen("sending"); // still saving: moves on as soon as it's done
 }
-// the last exercise: "Send my answers to my teacher"
+// "Send my answers to my teacher": make sure the teacher has every exercise's answers
+const hwcNorm = x => String(x || "").trim().toLowerCase();
+async function hwcFindMine(code) {
+  const col = window.__hwcCollection(window.__hwcDb, "results");
+  const get = async (field, value) => (await hwcWithin(window.__hwcGetDocsFromServer(window.__hwcQuery(col, window.__hwcWhere("code", "==", code), window.__hwcWhere(field, "==", value))), 20000)).docs.map(d => d.data());
+  let found = await get("studentId", hwcStudentId);
+  if (!found.length && hwcStudentName) found = await get("name", hwcStudentName);
+  return found.filter(v => v && typeof v.type === "string" && v.type.indexOf("POINTS:") !== 0);
+}
+async function hwcVerifyAll() {
+  for (let tries = 0; tries < 40 && !window.__hwcFirebaseReady; tries++) await new Promise(r => setTimeout(r, 100));
+  if (!window.__hwcFirebaseReady) throw new Error("offline");
+  const missing = [];
+  for (let i = 0; i < HWC_ROUNDS.length; i++) {
+    const code = HWC_ROUNDS[i].code;
+    if (!code) continue;
+    if ((await hwcFindMine(code)).some(v => v.type !== "HWC_PROGRESS")) continue;
+    if (hwcSaved[i]) { // answered on this visit: send it again
+      if (await hwcSaveJob({ payload: hwcSaved[i].payload, idx: i })) continue;
+      throw new Error("offline");
+    }
+    missing.push(i);
+  }
+  // the progress records (what the teacher's list counts) for every exercise that's there
+  const progress = (await hwcFindMine(HWC_CODE)).filter(v => v.type === "HWC_PROGRESS" && hwcNorm(v.studentId) === hwcNorm(hwcStudentId));
+  const have = new Set(progress.map(v => v.roundIndex));
+  for (let i = 0; i < HWC_ROUNDS.length; i++) {
+    if (!have.has(i) && missing.indexOf(i) === -1) await hwcWithin(hwcWriteProgress(i, 0), 15000);
+  }
+  return missing;
+}
 async function hwcSendNow() {
   hwcPressed = true;
-  hwcSavingScreen("sending");
+  hwcSavingScreen("checking");
   const t0 = Date.now();
-  for (let i = 0; i < 30 && !hwcPendingResult; i++) await new Promise(r => setTimeout(r, 100)); // the answers may still be on their way from the exercise
-  let ok = true;
-  if (hwcPendingResult) { hwcResultState = "saving"; ok = await hwcSaveJob(hwcPendingResult); hwcResultState = ok ? "ok" : "failed"; }
-  if (ok) { hwcCompleted[hwcIdx] = true; await hwcWithin(hwcSaveProgress(), 15000).catch(function () { /* progress is saved again next time */ }); }
+  let missing = null;
+  try { missing = await hwcWithin(hwcVerifyAll(), 90000); } catch (e) { missing = null; }
   const rest = 5300 - (Date.now() - t0); // until the animation's bar is full
   if (rest > 0) await new Promise(r => setTimeout(r, rest));
-  if (!ok) { hwcSavingScreen("failed"); return; }
+  hwcCheckFailed = missing === null;
+  if (missing === null) { hwcSavingScreen("failed"); return; }
+  if (missing.length) { hwcMissing = missing; hwcSavingScreen("missing"); return; }
   hwcShow("hwcDone");
+}
+function hwcRedoMissing() {
+  hwcMissing.forEach(i => { hwcCompleted[i] = false; });
+  hwcIdx = hwcMissing[0];
+  hwcShow(null);
+  hwcLoad(hwcIdx);
 }
 window.addEventListener("message", function (e) {
   const d = e && e.data;
   if (!d) return;
   if (d.taMergeEvent === "round-result" && d.payload) {
-    hwcPendingResult = { payload: d.payload, id: d.id, source: e.source };
-    if (d.payload.type === "Dictation") hwcReview = true;
-    if (hwcIsLast()) { hwcResultState = "held"; if (hwcGotComplete && hwcReview) hwcReviewBarState(); return; } // sent with the button
+    const p = Object.assign({}, d.payload);
+    // an exercise that lost its own time: the time the set measured for it
+    if (!(p.timeSeconds > 0)) { const t = hwcRoundSeconds(); p.timeSeconds = t; p.timeDisplay = String(Math.floor(t / 60)).padStart(2, "0") + ":" + String(t % 60).padStart(2, "0"); p.timeFromSet = true; }
+    hwcPendingResult = { payload: p, id: d.id, source: e.source, idx: hwcIdx };
+    if (p.type === "Dictation") hwcReview = true;
     hwcSaveRoundResult();
     return;
   }
@@ -861,7 +930,6 @@ window.addEventListener("message", function (e) {
   // Cover the screen immediately \u2014 this is what keeps the round's own
   // certificate from being shown; only the wrapper's own certificate, at
   // the very end of the whole set, is meant to be seen.
-  if (hwcIsLast()) { hwcSavingScreen("ready"); return; }
   if (hwcResultState === "ok") { hwcRoundDone(); return; }
   hwcSavingScreen(hwcResultState === "failed" ? "failed" : "sending");
   // a round that sends no result of its own moves on after a moment

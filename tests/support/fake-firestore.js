@@ -48,6 +48,11 @@ export function onSnapshot(t, cb) {
   setTimeout(() => { const s = snapOf(w); window.__reads += s.docs.length || 1; cb(s); }, 20);
   return () => { const i = listeners.indexOf(l); if (i !== -1) listeners.splice(i, 1); };
 }
+// window.__failReads — while above 0, reads straight from the server fail (no connection)
+export async function getDocsFromServer(t) {
+  if (window.__failReads > 0) { window.__failReads--; throw Object.assign(new Error('Failed to reach the database.'), { code: 'unavailable' }); }
+  return getDocs(t);
+}
 export async function getDocs(t) { const w = asQuery(t); const s = snapOf(w); window.__reads += s.docs.length || 1; return s; }
 function store(d) {
   if (d.submittedAt && d.submittedAt.__server) d.submittedAt = new Date().toISOString();

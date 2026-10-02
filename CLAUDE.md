@@ -150,12 +150,17 @@ real students' names or results into the repository (it is public).
   still counted as Completed with no answers (seen for 2 of ~15 students in "Present simple";
   `TA_FILE_FIXES` id `setsave` points out the old sets). A round type that sends no result
   moves on after 3 s. `tests/exercises.spec.js` ("Homework set: …").
-- The **last** round's answers are held until the student presses "📤 Send my answers to my
-  teacher" (`hwcSendNow`): `animations/sending-answers.json` plays (lottie from the site, a CSS
-  bar offline) for at least 5.3 s while it saves, then "✅ Your answers have been sent…" + the
-  certificate. A **Dictation** round (label "… — Dictation" or a result of type Dictation)
-  isn't covered when it ends: its page with the mistakes stays, saving in the background,
-  with `#hwcReviewBar` "Next exercise →" (2026-10-02).
+- Every round (the last too) is saved as soon as it's finished, so the teacher sees progress
+  live. At the end the student presses "📤 Send my answers to my teacher" (`hwcSendNow` →
+  `hwcVerifyAll`): for each round it asks the server (`getDocsFromServer`, `code` + `studentId`,
+  else `name`) whether that round's answers are there; missing ones answered on this visit are
+  sent again (`hwcSaved`), missing ones from an earlier visit → "Do it again" (`hwcRedoMissing`);
+  missing progress records are written again. `animations/sending-answers.json` plays (lottie
+  from the site, a CSS bar offline) for at least 5.3 s, then "✅ All your answers have reached
+  your teacher" + the certificate. A result without a time gets the time the set measured
+  (`timeFromSet`), so no 00:00. A **Dictation** round (label "… — Dictation" or a result of type
+  Dictation) isn't covered when it ends: its page with the mistakes stays, saving in the
+  background, with `#hwcReviewBar` "Next exercise →" (2026-10-02).
 
 ## Results kept on the device (keep this in mind when changing how results load)
 
