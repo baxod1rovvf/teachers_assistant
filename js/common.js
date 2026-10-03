@@ -478,9 +478,10 @@ document.addEventListener('keydown', function (e) {
 const TA_APP_URL = /^https?:$/.test(location.protocol) ? new URL('.', location.href).href : '';
 
 /* ---- Exercise links (play.html?x=<uid>) ----
-   Every exercise is also put online for 7 days (js/firebase.js), so students
-   can open it from a link — iPhones can't open exercise files, and a phone
-   only allows the microphone on a web page. Sharing again renews the 7 days.
+   An exercise is put online (js/firebase.js) when the teacher first presses
+   🔗 Copy link, and its link works for 7 days from then, so students can open
+   it from a link — iPhones can't open exercise files, and a phone only allows
+   the microphone on a web page. After the 7 days the link stays expired.
    See CLAUDE.md for the limits this runs into. */
 const TA_PLAY_DAYS = 7;
 function taPlayUrl(uid) { return /^https:/.test(TA_APP_URL) && uid ? TA_APP_URL + 'play.html?x=' + encodeURIComponent(uid) : ''; }
@@ -492,6 +493,15 @@ function taPlayLive(item) {
 function taPlayUntil(item) {
   const t = item && Date.parse(item.playAt || '');
   return t ? new Date(t + TA_PLAY_DAYS * 86400000) : null;
+}
+// The link's own 7 days, from the first 🔗 Copy link (linkAt); after them it stays expired.
+function taLinkUntil(item) {
+  const t = item && Date.parse(item.linkAt || '');
+  return t ? new Date(t + TA_PLAY_DAYS * 86400000) : null;
+}
+function taLinkExpired(item) {
+  const until = taLinkUntil(item);
+  return !!until && Date.now() >= until.getTime();
 }
 async function taPublishPlayable(uid, html) {
   if (!taPlayUrl(uid) || !html) return false;
@@ -509,6 +519,8 @@ async function taPublishPlayable(uid, html) {
 window.taPlayUrl = taPlayUrl;
 window.taPlayLive = taPlayLive;
 window.taPlayUntil = taPlayUntil;
+window.taLinkUntil = taLinkUntil;
+window.taLinkExpired = taLinkExpired;
 window.taPublishPlayable = taPublishPlayable;
 
 /* ---- Database limits: warn the teacher ----
@@ -1172,11 +1184,6 @@ function pushRecentExercise(entry) {
   });
   saveRecentExercises(list.slice(0, 200));
   if (entry.html) cacheExerciseHtml(entry.uid, entry.html);
-  if (entry.html && taPlayUrl(entry.uid)) {
-    setTimeout(() => {
-      if (getRecentExercises().some(e => e.uid === entry.uid)) taPublishPlayable(entry.uid, entry.html);
-    }, 5000);
-  }
   if (window.startPlainCompletionsSync) { clearTimeout(window.__taResyncTimer); window.__taResyncTimer = setTimeout(window.startPlainCompletionsSync, 3000); }
   if (window.renderRecentExercises) window.renderRecentExercises();
 }
@@ -2743,7 +2750,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'What about IELTS?', a: 'IELTS Listening (4 parts), Reading (3 parts) and Writing (Task 1 and 2, checked by AI) build IELTS-style tests. They don\'t affect Statistics or Points and have their own results. Speaking is still to be designed.' }
   ]),
   builder: aiFaq([
-    { q: 'Where does my finished exercise go?', a: 'It downloads to your computer as a ready-to-use file, a copy is saved under "My Exercises", and it is also put online for 7 days so you can share it as a link.' },
+    { q: 'Where does my finished exercise go?', a: 'It downloads to your computer as a ready-to-use file, and a copy is saved under "My Exercises". To share it as a link, tap ⋯ → "🔗 Copy link" on its card.' },
     { q: 'How do I add many words or sentences at once?', a: 'Type or paste them into the box at the top of the list and press Enter. Words split by commas (or one per line) and sentences split at . ! ? each become their own row.' },
     { q: 'Can I use the same words in another exercise?', a: 'Yes — under the list there is a "↪ Use these words in…" bar. Tap another exercise type and it opens with your words already filled in.' },
     { q: 'What if I close the page before finishing?', a: 'Nothing is lost. Your work is saved as a draft while you type; open the same builder again and it offers to bring it back.' },
@@ -2769,9 +2776,9 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'Who is counted in Statistics?', a: 'Only students who entered with an ID from your Students list. Students who typed just a name are left out.' }
   ]),
   myexercises: aiFaq([
-    { q: 'Where are "Use again", "Redownload" and "Copy link"?', a: 'Each exercise is a card. Tap ⋯ next to its title: ✏️ Use again, 📥 Redownload and 🔗 Copy link (copies the link without showing it — it works for 7 days). On a Homework/Class set there is also 📤 Get one exercise. 🗑 and 📊 View Results are at the bottom of the card.' },
-    { q: 'How do I send an exercise to my students?', a: 'Tap ⋯ on its card, then "🔗 Copy link", and paste the link into your class chat. It works for 7 days, also on iPhones. Or "📥 Redownload" the file and send that.' },
-    { q: 'The link has expired — what now?', a: 'Links work for 7 days. Tap ⋯ → "🔗 Copy link" again: the app puts the exercise online again for a new 7 days and copies the link.' },
+    { q: 'Where are "Use again", "Redownload" and "Copy link"?', a: 'Each exercise is a card. Tap ⋯ next to its title: ✏️ Use again, 📥 Redownload and 🔗 Copy link (copies the link without showing it — it works for 7 days from the first time you copy it). On a Homework/Class set there is also 📤 Get one exercise. 🗑 and 📊 View Results are at the bottom of the card.' },
+    { q: 'How do I send an exercise to my students?', a: 'Tap ⋯ on its card, then "🔗 Copy link", and paste the link into your class chat. It works for 7 days from the first time you copy it, also on iPhones. Or "📥 Redownload" the file and send that.' },
+    { q: 'The link has expired — what now?', a: 'A link works for 7 days from the first time you tap "🔗 Copy link"; after that the app says "This link has expired". To share the exercise again, tap ⋯ → "✏️ Use again" to make a new copy (it gets a new link), or "📥 Redownload" the file and send that.' },
     { q: 'What does "⚠️ Made before a fix" mean?', a: 'That file was made before a bug was fixed, so it still has the bug. Tap the line to see what was fixed. Press "✏️ Use again", create a new copy and share that one.' },
     { q: 'How do I take one exercise out of a set?', a: 'On a Homework/Class set tap ⋯, then "📤 Get one exercise". Download one of its exercises, or add it to My Exercises on its own. The set stays as it is.' },
   ]),

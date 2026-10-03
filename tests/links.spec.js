@@ -6,7 +6,7 @@ const DAY = 86400000;
 // The test site is http://localhost; links need the real https address, so pretend.
 const PRETEND_HTTPS = () => { window.taPlayUrl = uid => 'https://example.github.io/teachers_assistant/play.html?x=' + uid; };
 
-test('a new exercise is put online, and Share gives its link and until when it works', async ({ page, context }) => {
+test('an exercise goes online at the first "Copy link"; the link works 7 days from then, then says it has expired', async ({ page, context }) => {
   await prepare(context);
   const errors = watchErrors(page);
   await page.goto('/create.html');
@@ -17,26 +17,41 @@ test('a new exercise is put online, and Share gives its link and until when it w
   await page.fill('#sn-title', 'Link test');
   await page.fill('#sn-instructions', 'Write about your day.');
   await Promise.all([page.waitForEvent('download'), page.click('#panel-sentences .create-btn')]);
-  await expect.poll(() => page.evaluate(() => window.__writes.filter(w => w.type === 'TA_SYNC:PLAY').length), { timeout: 12000 }).toBe(1);
-  const item = await page.evaluate(() => getRecentExercises().find(e => e.title === 'Link test'));
-  expect(item.playParts).toBe(1);
+  // making it doesn't put it online any more
+  await page.waitForTimeout(6500);
+  expect(await page.evaluate(() => window.__writes.filter(w => w.type === 'TA_SYNC:PLAY').length)).toBe(0);
 
   await page.goto('/my-exercises.html');
   await page.waitForTimeout(1200);
   await hideNotices(page);
   await page.evaluate(PRETEND_HTTPS);
-  await page.evaluate(() => shareRecentExercise(getRecentExercises().findIndex(e => e.title === 'Link test')));
-  await expect(page.locator('.share-msg')).toHaveValue(/Open this link/);
-  expect(await page.locator('.share-msg').inputValue()).not.toContain('play.html');   // the link is shown above it instead
-  await expect(page.locator('.share-link-note')).toContainText('The link works until');
-  // the link on its own, with a copy button
-  await expect(page.locator('.share-link')).toHaveValue(new RegExp('play\\.html\\?x=' + item.uid + '$'));
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
-  await page.click('[data-act="copylink"]');
-  await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(new RegExp('play\\.html\\?x=' + item.uid + '$'));
-  // "Copy message" still gives students the link, right after the line that announces it
-  await page.click('[data-act="copy"]');
-  await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(new RegExp('Open this link[^\\n]*\\nhttps?://[^\\n]*play\\.html\\?x=' + item.uid + '\\n'));
+  const idx = () => page.evaluate(() => getRecentExercises().findIndex(e => e.title === 'Link test'));
+  const plays = () => page.evaluate(() => window.__writes.filter(w => w.type === 'TA_SYNC:PLAY').length);
+  const uid = await page.evaluate(() => getRecentExercises().find(e => e.title === 'Link test').uid);
+  // first press: put online, link copied, the 7 days start now
+  await page.evaluate(i => copyRecentExerciseLink(i), await idx());
+  await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(new RegExp('play\\.html\\?x=' + uid + '$'));
+  expect(await plays()).toBe(1);
+  const item = await page.evaluate(() => getRecentExercises().find(e => e.title === 'Link test'));
+  expect(Date.now() - Date.parse(item.linkAt)).toBeLessThan(60000);
+  // 3 days later: the same link, not put online again, the 7 days don't restart
+  const ago = days => page.evaluate(d => {
+    const list = getRecentExercises(); const it = list.find(e => e.title === 'Link test');
+    it.linkAt = it.playAt = new Date(Date.now() - d * 864e5).toISOString(); saveRecentExercises(list);
+  }, days);
+  await ago(3);
+  await page.evaluate(() => navigator.clipboard.writeText('-'));
+  await page.evaluate(i => copyRecentExerciseLink(i), await idx());
+  await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(new RegExp('play\\.html\\?x=' + uid + '$'));
+  expect(await plays()).toBe(1);
+  // 8 days later: "This link has expired", nothing copied or put online
+  await ago(8);
+  await page.evaluate(() => navigator.clipboard.writeText('-'));
+  await page.evaluate(i => copyRecentExerciseLink(i), await idx());
+  await expect(page.locator('.ta-modal')).toContainText('This link has expired');
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('-');
+  expect(await plays()).toBe(1);
   expect(errors).toEqual([]);
 });
 

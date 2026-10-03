@@ -168,20 +168,33 @@ function openMyexMenu(e, idx) {
   document.addEventListener('keydown', myexMenuKey);
   window.addEventListener('scroll', closeMyexMenu, { once: true, capture: true });
 }
-// 🔗 Copy link: only the link is copied (it isn't shown); put online first if it isn't
+// 🔗 Copy link: only the link is copied (it isn't shown). The first press puts the exercise
+// online and starts its 7 days (linkAt); later presses copy the same link, and once the
+// 7 days are over the link stays expired — the teacher is told so instead.
 async function copyRecentExerciseLink(idx) {
   const item = getRecentExercises()[idx];
   if (!item) return;
   const url = taPlayUrl(item.uid);
   if (!url) return;
-  if (!taPlayLive(item)) {
+  if (taLinkExpired(item)) { showLinkExpired(item); return; }
+  if (!item.linkAt) {   // first press: put online now (fresh, even if it was online before), so the 7 days start now
     showToast('⏳ Putting the exercise online…', 'ok');
     const html = await taEnsureExerciseHtml(item);
     if (!html) { showToast('This exercise\'s file isn\'t saved here, so it can\'t be put online. Use ✏️ Use again to make it again.'); return; }
     if (!(await taPublishPlayable(item.uid, html))) { showToast('Couldn\'t put the exercise online — check the internet and try again.'); return; }
+    const list = getRecentExercises();
+    const saved = list.find(e => e.uid === item.uid);
+    if (saved) { saved.linkAt = saved.playAt; saveRecentExercises(list); }
   }
-  const until = taPlayUntil(getRecentExercises().find(e => e.uid === item.uid) || item);
+  const until = taLinkUntil(getRecentExercises().find(e => e.uid === item.uid) || item);
   taCopyText(url, '🔗 Link copied' + (until ? ' — it works until ' + until.toLocaleDateString(undefined, { day: 'numeric', month: 'short' }) : '') + '.');
+}
+function showLinkExpired(item) {
+  const until = taLinkUntil(item);
+  taModal('⌛ This link has expired',
+    '<p>The link of "' + escapeForHtml(item.title || 'this exercise') + '" worked for ' + TA_PLAY_DAYS + ' days after you first copied it' +
+      (until ? ' — until ' + until.toLocaleDateString(undefined, { day: 'numeric', month: 'short' }) : '') + '. It can\'t be used any more.</p>' +
+    '<p>To share this exercise again, use ✏️ Use again to make a new copy (it gets a new link), or 📥 Redownload the file and send that.</p>');
 }
 
 function setMyexTypeFilter(type) {

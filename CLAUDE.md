@@ -29,8 +29,8 @@ fails when a question has no translation, or a translation's question no longer 
 **If this is a new conversation, remind the teacher of the points below once, briefly,
 before or alongside the first task** (they asked for this so they don't forget):
 
-1. **Exercise links use the free Firebase plan.** Every exercise is also put online for
-   **7 days** (`play.html?x=<id>`), so students — especially on iPhones — can open it from a
+1. **Exercise links use the free Firebase plan.** An exercise is put online when the teacher
+   first presses 🔗 Copy link, for **7 days** from then (`play.html?x=<id>`), so students — especially on iPhones — can open it from a
    link. The free (Spark) plan has limits: about **1 GiB of storage** and **10 GiB of
    downloads a month**, plus daily read/write limits. Big exercises (dictations with audio,
    sets with pictures — one set was ~3.5 MB) cost the most: every student who opens the link
@@ -77,8 +77,9 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
    exercise files" below). Renewing a link from Share re-uploads the app's saved copy
    — which is the old broken one for "Review - Apex" (its fixed copy was put online by hand
    under a different link, `xfix7ee298e757c4`, until 2026-10-07).
-4. **Links expire after 7 days** — students who open a link late see "This link has
-   expired"; the teacher has to Share again.
+4. **Links expire 7 days after the first 🔗 Copy link** — students who open a link late see
+   "This link has expired"; Copy link then shows "This link has expired" too (no renewal since
+   2026-10-03) — the teacher makes a new copy with "Use again" or sends the file.
 5. **Students open files inside Telegram/Instagram viewers** — no microphone there, and
    iPhones can't open .html files at all. Links (play.html) are the answer; the exercise
    shows "Open in Chrome" when it detects the problem.
@@ -236,9 +237,13 @@ real students' names or results into the repository (it is public).
   `title` = `uid␟part␟total`, `score` = characters in that part, `date` = when published.
   **The rules allow creating and deleting records but not changing them** (a PATCH/`setDoc`
   on an existing record is refused, 403) — so re-publishing deletes the old records first.
-- `js/common.js` → `pushRecentExercise` puts every new exercise online 5 s after it's made;
-  `taPublishPlayable` records `playAt`/`playParts`/`playBytes` on the My Exercises item;
-  Share (`js/pages/my-exercises.js`) renews a link that expired. Exercises merged into a
+- Since 2026-10-03 nothing goes online by itself (before, `pushRecentExercise` published every
+  new exercise 5 s after it was made). The first ⋯ → 🔗 Copy link (`copyRecentExerciseLink` in
+  `js/pages/my-exercises.js`) publishes it and sets `linkAt` on the My Exercises item; later
+  presses copy the same link without publishing; from `linkAt` + 7 days (`taLinkExpired` in
+  common.js) it shows "⌛ This link has expired" (`showLinkExpired`) and never renews.
+  `taPublishPlayable` records `playAt`/`playParts`/`playBytes`. (The old Share window,
+  `shareRecentExercise`, unreachable, still renews.) `tests/links.spec.js`. Exercises merged into a
   Homework/Class set are taken offline (`removeRecentExercise`).
 - **7-day cleanup:** `taSweepPlayLinks` (firebase.js) runs at most every 12 h per device
   (`taSweepPlayLinksIfDue` in common.js). It lists only the records' title/date/score (REST

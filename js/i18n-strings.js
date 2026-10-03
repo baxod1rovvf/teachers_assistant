@@ -867,9 +867,9 @@ window.TA_ROBOT_I18N = {
     'IELTS Listening (4 части), Reading (3 части) и Writing (Task 1 и 2, проверяет ИИ) создают тесты в стиле IELTS. Они не влияют на Статистику и Баллы, у них свои результаты. Speaking ещё не сделан.'],
   'Where does my finished exercise go?': [
     'Tayyor mashqim qayerga ketadi?',
-    'U kompyuteringizga tayyor fayl boʻlib yuklanadi, nusxasi “Mashqlarim” da saqlanadi va havola orqali ulashishingiz uchun 7 kunga internetga ham qoʻyiladi.',
+    'U kompyuteringizga tayyor fayl boʻlib yuklanadi, nusxasi esa “Mashqlarim” da saqlanadi. Uni havola orqali ulashish uchun kartochkadagi ⋯ → “🔗 Havolani nusxalash” ni bosing.',
     'Куда попадает готовое упражнение?',
-    'Оно скачивается на компьютер готовым файлом, копия сохраняется в «Моих упражнениях», а ещё оно на 7 дней выкладывается в интернет, чтобы им можно было поделиться ссылкой.'],
+    'Оно скачивается на компьютер готовым файлом, а копия сохраняется в «Моих упражнениях». Чтобы поделиться им по ссылке, нажмите ⋯ → «🔗 Скопировать ссылку» на его карточке.'],
   'How do I add many words or sentences at once?': [
     'Koʻp soʻz yoki gapni birdaniga qanday qoʻshaman?',
     'Ularni roʻyxat tepasidagi maydonga yozing yoki joylang va Enter ni bosing. Vergul bilan (yoki har biri yangi qatordan) ajratilgan soʻzlar va . ! ? bilan ajratilgan gaplar har biri alohida qatorga aylanadi.',
@@ -967,9 +967,9 @@ window.TA_ROBOT_I18N = {
     'Только ученики, вошедшие с ID из вашего списка «Ученики». Те, кто ввёл только имя, не учитываются.'],
   'Where are "Use again", "Redownload" and "Copy link"?': [
     '“Qayta ishlatish”, “Qayta yuklab olish” va “Havolani nusxalash” qayerda?',
-    'Har bir mashq — kartochka. Nomi yonidagi ⋯ ni bosing: ✏️ Qayta ishlatish, 📥 Qayta yuklab olish va 🔗 Havolani nusxalash (havolani koʻrsatmasdan nusxalaydi — u 7 kun ishlaydi). Uy vazifasi/Dars toʻplamida 📤 Bitta mashqni olish ham bor. 🗑 va 📊 Natijalarni koʻrish kartochka pastida.',
+    'Har bir mashq — kartochka. Nomi yonidagi ⋯ ni bosing: ✏️ Qayta ishlatish, 📥 Qayta yuklab olish va 🔗 Havolani nusxalash (havolani koʻrsatmasdan nusxalaydi — u birinchi marta nusxalangandan boshlab 7 kun ishlaydi). Uy vazifasi/Dars toʻplamida 📤 Bitta mashqni olish ham bor. 🗑 va 📊 Natijalarni koʻrish kartochka pastida.',
     'Где «Использовать снова», «Скачать снова» и «Скопировать ссылку»?',
-    'Каждое упражнение — карточка. Нажмите ⋯ рядом с названием: ✏️ Использовать снова, 📥 Скачать снова и 🔗 Скопировать ссылку (копирует ссылку, не показывая её, — она работает 7 дней). У набора «Домашнее задание»/«Урок» есть ещё 📤 Взять одно упражнение. 🗑 и 📊 Результаты — внизу карточки.'],
+    'Каждое упражнение — карточка. Нажмите ⋯ рядом с названием: ✏️ Использовать снова, 📥 Скачать снова и 🔗 Скопировать ссылку (копирует ссылку, не показывая её, — она работает 7 дней с первого копирования). У набора «Домашнее задание»/«Урок» есть ещё 📤 Взять одно упражнение. 🗑 и 📊 Результаты — внизу карточки.'],
   'Why does a Flashcard result say "not recorded" for time?': [
     'Nega Kartochkalar natijasida vaqt “not recorded” (yozilmagan) deb turibdi?',
     'Oʻquvchi mashqni tugatgan — natija hammasi bilan birga kelgan. Faqat vaqt yoʻqolgan: 2026-yil 3-oktabrdan oldin yaratilgan Kartochkalar fayllari 0 soniya yuborardi. Uy vazifasi/Dars toʻplami ichida toʻplamning oʻzi oʻlchagan vaqt koʻrsatiladi. Mashqlarim boʻlimida “✏️ Qayta ishlatish” bilan mashqni qayta yarating va yangisini ulashing.',
@@ -987,14 +987,14 @@ window.TA_ROBOT_I18N = {
     '✕ значит, что вы ещё не проверили ответы ученика; нажмите после проверки — станет ✓ (проверено). Нажмите ✓, чтобы вернуть. Проверенные ученики больше не появляются в сообщении о закончивших упражнения при открытии приложения.'],
   'How do I send an exercise to my students?': [
     'Mashqni oʻquvchilarga qanday yuboraman?',
-    'Kartochkadagi ⋯ ni, keyin “🔗 Havolani nusxalash” ni bosing va havolani sinf chatiga joylang. U 7 kun ishlaydi, iPhone’da ham. Yoki “📥 Qayta yuklab olish” bilan faylni olib, uni yuboring.',
+    'Kartochkadagi ⋯ ni, keyin “🔗 Havolani nusxalash” ni bosing va havolani sinf chatiga joylang. U birinchi marta nusxalangandan boshlab 7 kun ishlaydi, iPhone’da ham. Yoki “📥 Qayta yuklab olish” bilan faylni olib, uni yuboring.',
     'Как отправить упражнение ученикам?',
-    'Нажмите ⋯ на карточке, затем «🔗 Скопировать ссылку» и вставьте ссылку в чат класса. Она работает 7 дней, и на iPhone тоже. Или «📥 Скачать снова» и отправьте файл.'],
+    'Нажмите ⋯ на карточке, затем «🔗 Скопировать ссылку» и вставьте ссылку в чат класса. Она работает 7 дней с первого копирования, и на iPhone тоже. Или «📥 Скачать снова» и отправьте файл.'],
   'The link has expired — what now?': [
     'Havolaning muddati tugadi — endi nima qilaman?',
-    'Havolalar 7 kun ishlaydi. Yana ⋯ → “🔗 Havolani nusxalash” ni bosing: ilova mashqni yana 7 kunga internetga qoʻyadi va havolani nusxalaydi.',
+    'Havola “🔗 Havolani nusxalash” birinchi marta bosilgandan boshlab 7 kun ishlaydi; keyin ilova “This link has expired” (havolaning muddati tugadi) deb yozadi. Mashqni yana ulashish uchun ⋯ → “✏️ Qayta ishlatish” bilan yangi nusxa yarating (unga yangi havola beriladi) yoki “📥 Qayta yuklab olish” bilan faylni olib, uni yuboring.',
     'Срок ссылки истёк — что делать?',
-    'Ссылки работают 7 дней. Снова нажмите ⋯ → «🔗 Скопировать ссылку»: приложение выложит упражнение ещё на 7 дней и скопирует ссылку.'],
+    'Ссылка работает 7 дней с первого нажатия «🔗 Скопировать ссылку»; потом приложение пишет «This link has expired» (срок ссылки истёк). Чтобы снова поделиться упражнением, нажмите ⋯ → «✏️ Использовать снова» и создайте новую копию (у неё будет новая ссылка) или «📥 Скачать снова» и отправьте файл.'],
   'What does "⚠️ Made before a fix" mean?': [
     '“⚠️ Made before a fix” nimani bildiradi?',
     'Bu fayl xato tuzatilishidan oldin yaratilgan, shuning uchun unda hali oʻsha xato bor. Nima tuzatilganini koʻrish uchun shu qatorni bosing. “✏️ Qayta ishlatish” ni bosing, yangi nusxa yarating va oʻshani ulashing.',
