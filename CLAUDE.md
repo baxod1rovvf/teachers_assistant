@@ -298,3 +298,19 @@ real students' names or results into the repository (it is public).
   exercise/set code + student, kept in `ta_punished` (synced, in the backup); marked rows turn
   red in the results table, a set's student list and "Didn't do it". My Exercises shows
   Homework/Class sets with a coloured edge and a "📚 Homework set"/"🏫 Class set" label.
+
+## Students & Points, profile, Settings (2026-10-03)
+
+- **Students & Points** (`students.html`, `js/pages/students.js` + `js/pages/points.js`) is one
+  section: groups (with their lesson days/times), students' IDs and points. `points.html` only
+  redirects there; `switchTo('points')` opens `students`. A group's lessons are the
+  `ta_weekly_schedule` entries with the group's **name** — `openGroupEditor`/`saveGroup` keep them
+  in step (rename, ticked days, level; unticked days are archived so "Lessons taught" never
+  drops), deleting a group removes them (Undo puts them back). Inside a group each student is a
+  row: name ✎ (`renameRosterStudent`: name + group) 🗑, ID, − 🪙 + (tap 🪙 → `openStudentPoints`).
+  New points only update the numbers (`renderPointsBoard` → `[data-pts-for]`/`[data-group-pts]`),
+  so the add-student form isn't wiped. `tests/students-points.spec.js`.
+- The lesson plan opens from the group's name on an Upcoming Lesson (Dashboard).
+- **Profile** (sidebar and Dashboard): the picture → `taPickAvatar`, the name → `taOpenProfile`
+  (name + language), the door icon → `taLogout`. **Settings** has only Install, Backup, Status.
+- The robot (lottie `AI_ROBOT_ANIM`) has a small "Smile" shape added to the eyes layer.

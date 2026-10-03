@@ -2196,3 +2196,79 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 /* Create: no descriptions under the sections (Homework & Class, IELTS) or under the exercise names (2026-10-03) */
 #panel-createpicker .picker-section-sub,
 #panel-createpicker .picker-card-sub { display: none; }
+
+/* Profile (sidebar and Dashboard): the picture changes the picture, the name opens
+   name + language, the door logs out (2026-10-03) */
+.sidebar-profile { cursor: default; }
+.sidebar-profile:hover { background: transparent; }
+.avatar-btn {
+  padding: 0; border: none; background: transparent; border-radius: 50%; cursor: pointer; flex-shrink: 0;
+  display: inline-flex; position: relative; transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.avatar-btn:hover { transform: scale(1.06); box-shadow: 0 0 0 2px var(--brand); }
+.sidebar-profile-text, .hero-account-text { cursor: pointer; min-width: 0; }
+.sidebar-profile-text:hover .sidebar-profile-name, .hero-account-text:hover .hero-account-name { color: var(--brand); }
+.sidebar-logout-btn, .hero-logout-btn {
+  margin-left: auto; width: 36px; height: 36px; padding: 0; border-radius: 10px; border: 1.5px solid var(--border);
+  background: transparent; color: var(--ink-soft); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.hero-logout-btn { width: 32px; height: 32px; border-radius: 50%; margin-left: 4px; }
+.sidebar-logout-btn:hover, .hero-logout-btn:hover { border-color: var(--danger); color: var(--danger); }
+.hero-account-chip { cursor: default; padding-right: 6px; }
+.hero-account-chip:hover { border-color: var(--border); }
+.profile-name-input { width: 100%; }
+.profile-lang-pick { justify-content: flex-start; margin-top: 0; }
+.profile-login { margin-top: 14px; }
+
+/* Students & Points: a group's students as Name (✎ 🗑) · ID · Points (2026-10-03) */
+.sp-icon-btn {
+  width: 28px; height: 28px; padding: 0; border-radius: 8px; border: 1.5px solid transparent; background: transparent;
+  color: var(--ink-soft); font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.sp-icon-btn:hover { border-color: var(--border); color: var(--brand); background: var(--surface-sunken); }
+.sp-icon-btn.danger:hover { color: var(--danger); border-color: rgba(232,103,74,0.4); }
+.sp-table { display: flex; flex-direction: column; gap: 6px; }
+.sp-head, .sp-row { display: grid; grid-template-columns: minmax(0, 1fr) 110px 150px; align-items: center; gap: 10px; }
+.sp-head { padding: 0 14px 2px; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.4px; text-transform: uppercase; color: var(--ink-faint); }
+.sp-head span:last-child { text-align: right; }
+.roster-row.sp-row { margin-bottom: 0; padding: 8px 14px; }
+.sp-name { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.sp-name strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-right: 4px; }
+.sp-id { color: var(--ink-soft); font-weight: 600; font-size: 0.86rem; overflow-wrap: anywhere; }
+.sp-row .points-cell { font-weight: 800; color: var(--brand); display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
+.sp-row .pt-adjust-btn { width: 26px; height: 26px; }
+.sp-pts {
+  min-width: 64px; padding: 4px 8px; border-radius: 8px; border: 1.5px solid transparent; background: transparent;
+  color: var(--brand); font: 800 0.9rem 'Inter', sans-serif; cursor: pointer; text-align: center;
+}
+.sp-pts:hover { border-color: var(--border); background: var(--surface-sunken); }
+.group-block-side .sp-icon-btn { width: 30px; height: 30px; }
+.gd-schedule { margin: -4px 0 14px; font-size: 0.88rem; color: var(--ink-soft); font-weight: 600; }
+.gd-schedule .link-btn { border: none; background: none; color: var(--brand); font-weight: 700; cursor: pointer; padding: 0 4px; font-size: 0.86rem; }
+.gd-schedule .link-btn:hover { text-decoration: underline; }
+.sp-danger-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+@media (max-width: 600px) {
+  .sp-head, .sp-row { grid-template-columns: minmax(0, 1fr) 64px 124px; gap: 6px; }
+  .roster-row.sp-row, .sp-head { padding-left: 10px; padding-right: 10px; }
+}
+
+/* Group: lesson days and times */
+.gsched-days { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+.gsched-day {
+  display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 10px;
+  border: 1.5px solid var(--border); cursor: pointer; transition: border-color 0.15s ease, background 0.15s ease;
+}
+.gsched-day.on { border-color: var(--brand); background: var(--brand-soft, rgba(255,255,255,0.04)); }
+.gsched-day .gsched-name { font-weight: 800; font-size: 0.86rem; width: 34px; color: var(--ink); }
+.gsched-day input[type="time"] {
+  flex: 1; min-width: 0; padding: 5px 6px; font: 600 0.84rem 'Inter', sans-serif; border-radius: 8px;
+  border: 1.5px solid var(--border); background: var(--surface-sunken); color: var(--ink); color-scheme: dark;
+}
+.gsched-day input[type="time"]:disabled { opacity: 0.35; }
+.gsched-group-name, .gsched-level { width: 100%; }
+/* an upcoming lesson's group opens its lesson plan */
+.lesson-plan-open { border: none; background: transparent; padding: 4px 6px; margin: -4px -6px; border-radius: 8px; cursor: pointer; font: inherit; text-align: left; }
+.lesson-plan-open:hover { background: var(--surface-sunken); }
+.lesson-plan-hint { font-size: 0.8rem; opacity: 0; transition: opacity 0.15s ease; }
+.lesson-plan-open:hover .lesson-plan-hint { opacity: 0.8; }
+body.light-theme .gsched-day input[type="time"] { color-scheme: light; }

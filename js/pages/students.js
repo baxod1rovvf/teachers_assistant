@@ -1,32 +1,113 @@
-function addStudentGroup() {
-  const groups = getStudentGroups();
-  const suggested = 'Group ' + (groups.length + 1);
-  const name = prompt('Name for the new group:', suggested);
-  if (name === null) return;
-  const clean = name.trim();
-  if (!clean) { showToast('Group name can\'t be empty.'); return; }
-  let n = groups.length + 1, id = 'g' + n;
-  while (groups.some(g => g.id === id)) { n++; id = 'g' + n; }
-  groups.push({ id: id, name: clean });
-  saveStudentGroups(groups);
-  refreshRosterViews();
-  const sel = document.getElementById('pt-student-group');
-  if (sel) sel.value = id;
-  showToast('Added group "' + clean + '".', 'ok');
+/* ================= STUDENTS & POINTS =================
+   One section for groups, their lesson times (Upcoming Lessons on the
+   Dashboard), students' IDs and points (2026-10-03: Points & Rewards and the
+   Settings schedule moved in here). A group's lessons are the weekly-schedule
+   entries with the group's name. */
+const GROUP_DAY_ORDER = [1, 2, 3, 4, 5, 6, 0];
+
+function scheduleEntriesForGroup(name) {
+  const key = String(name || '').trim().toLowerCase();
+  if (!key) return [];
+  return getWeeklySchedule().filter(e => e && String(e.group || '').trim().toLowerCase() === key);
 }
 
-function renameStudentGroup(groupId) {
-  const groups = getStudentGroups();
-  const g = groups.find(x => x.id === groupId);
-  if (!g) return;
-  const name = prompt('Rename group:', g.name);
-  if (name === null) return;
-  const clean = name.trim();
-  if (!clean) { showToast('Group name can\'t be empty.'); return; }
-  g.name = clean;
-  saveStudentGroups(groups);
-  refreshRosterViews();
+function newScheduleEntry(day, time, group, level) {
+  return {
+    id: 'sch_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+    day: day, time: time || '16:00', group: group, level: level || '',
+    plan: { notes: '', exerciseUids: [], materialIds: [] }
+  };
 }
+
+// Adding a group, or ✏️ on one: its name, lesson days and times, and level.
+function openGroupEditor(groupId) {
+  const groups = getStudentGroups();
+  const g = groupId ? groups.find(x => x.id === groupId) : null;
+  if (groupId && !g) return;
+  const entries = g ? scheduleEntriesForGroup(g.name) : [];
+  const byDay = {};
+  entries.forEach(e => { if (!(e.day in byDay)) byDay[e.day] = e; });
+  const anyTime = (entries[0] && entries[0].time) || '16:00';
+  const level = (entries.find(e => e.level) || {}).level || '';
+  const rows = GROUP_DAY_ORDER.map(d => {
+    const on = d in byDay;
+    return '<label class="gsched-day' + (on ? ' on' : '') + '" data-day="' + d + '">' +
+      '<input type="checkbox"' + (on ? ' checked' : '') + '><span class="gsched-name">' + SCHEDULE_DAY_SHORT[d] + '</span>' +
+      '<input type="time" value="' + escapeForHtml(on ? byDay[d].time : anyTime) + '"' + (on ? '' : ' disabled') + '></label>';
+  }).join('');
+  const m = taModal(g ? '✏️ ' + g.name : '➕ New group',
+    '<label class="field-label">Group name</label>' +
+    '<input type="text" class="gsched-group-name" placeholder="e.g. Group A">' +
+    '<label class="field-label" style="margin-top:16px;">📅 Lesson days and times</label>' +
+    '<p class="ta-modal-text">Tick the days this group has lessons. They show in "Upcoming Lessons" on the Dashboard every week.</p>' +
+    '<div class="gsched-days">' + rows + '</div>' +
+    '<label class="field-label" style="margin-top:16px;">Level (optional)</label>' +
+    '<input type="text" class="gsched-level" placeholder="e.g. Intermediate">' +
+    '<div class="ta-modal-btns"><button type="button" class="mini-btn" data-act="cancel">Cancel</button><button type="button" class="mini-btn solid" data-act="ok">' + (g ? 'Save' : '➕ Add group') + '</button></div>',
+    { wide: true });
+  const nameEl = m.body.querySelector('.gsched-group-name');
+  nameEl.value = g ? g.name : 'Group ' + (groups.length + 1);
+  m.body.querySelector('.gsched-level').value = level;
+  m.body.querySelectorAll('.gsched-day').forEach(row => {
+    const box = row.querySelector('input[type="checkbox"]'), time = row.querySelector('input[type="time"]');
+    box.addEventListener('change', () => { time.disabled = !box.checked; row.classList.toggle('on', box.checked); });
+  });
+  m.body.querySelector('[data-act="cancel"]').onclick = m.close;
+  m.body.querySelector('[data-act="ok"]').onclick = () => {
+    const name = nameEl.value.trim();
+    if (!name) { showToast('Group name can\'t be empty.'); nameEl.focus(); return; }
+    if (getStudentGroups().some(x => x.id !== groupId && x.name.trim().toLowerCase() === name.toLowerCase())) {
+      showToast('There is already a group called "' + name + '".'); nameEl.focus(); return;
+    }
+    const days = {};
+    m.body.querySelectorAll('.gsched-day').forEach(row => {
+      if (row.querySelector('input[type="checkbox"]').checked) days[Number(row.dataset.day)] = row.querySelector('input[type="time"]').value || '16:00';
+    });
+    saveGroup(groupId, name, days, m.body.querySelector('.gsched-level').value.trim());
+    m.close();
+  };
+  setTimeout(() => { nameEl.focus(); nameEl.select(); }, 30);
+  return m;
+}
+
+// Saves a group and its lessons. days: { 1: '16:00', 3: '16:00' } (0 = Sunday).
+function saveGroup(groupId, name, days, level) {
+  const groups = getStudentGroups();
+  let g = groupId ? groups.find(x => x.id === groupId) : null;
+  const oldName = g ? g.name : name;
+  if (!g) {
+    let n = groups.length + 1, id = 'g' + n;
+    while (groups.some(x => x.id === id)) { n++; id = 'g' + n; }
+    g = { id: id, name: name };
+    groups.push(g);
+  } else {
+    g.name = name;
+  }
+  saveStudentGroups(groups);
+  // its lessons: keep the ones on days still ticked (and their lesson plans), add new days, take off the rest
+  const key = String(oldName).trim().toLowerCase();
+  const kept = [], usedDay = {};
+  getWeeklySchedule().forEach(e => {
+    if (!e || String(e.group || '').trim().toLowerCase() !== key) { kept.push(e); return; }
+    if (e.day in days && !usedDay[e.day]) {
+      usedDay[e.day] = true;
+      kept.push(Object.assign({}, e, { group: name, time: days[e.day], level: level }));
+    } else if (e.day in days) {
+      kept.push(Object.assign({}, e, { group: name, level: level })); // a second lesson that day stays as it was
+    } else {
+      archiveLessonsTaught(e); // its past lessons still count
+    }
+  });
+  GROUP_DAY_ORDER.forEach(d => { if (d in days && !usedDay[d]) kept.push(newScheduleEntry(d, days[d], name, level)); });
+  saveWeeklySchedule(kept);
+  refreshRosterViews();
+  if (window.renderNextLessons) window.renderNextLessons();
+  showToast((groupId ? 'Saved "' : 'Added group "') + name + '".', 'ok');
+  return g.id;
+}
+
+function addStudentGroup() { return openGroupEditor(null); }
+function renameStudentGroup(groupId) { return openGroupEditor(groupId); }
 
 function deleteStudentGroup(groupId) {
   const groups = getStudentGroups();
@@ -34,10 +115,18 @@ function deleteStudentGroup(groupId) {
   if (!g) return;
   const rosterBefore = getPointsRoster();
   const moved = rosterBefore.filter(s => s.group === groupId).length;
+  // its lessons leave Upcoming Lessons too (lessons already taught still count)
+  const scheduleBefore = getWeeklySchedule();
+  const archivedBefore = localStorage.getItem('ta_lessons_archived');
+  const gKey = g.name.trim().toLowerCase();
+  const lessons = scheduleBefore.filter(e => e && String(e.group || '').trim().toLowerCase() === gKey);
+  lessons.forEach(archiveLessonsTaught);
+  saveWeeklySchedule(scheduleBefore.filter(e => lessons.indexOf(e) === -1));
   saveStudentGroups(groups.filter(x => x.id !== groupId));
   savePointsRoster(rosterBefore.map(s => s.group === groupId ? Object.assign({}, s, { group: '' }) : s));
   if (studentsOpenGroup === groupId) studentsOpenGroup = null;
   refreshRosterViews();
+  if (window.renderNextLessons) window.renderNextLessons();
   // Students left without a group are placed in the first remaining one; note where each went.
   const movedTo = {};
   getPointsRoster().forEach(s => { if (rosterBefore.some(b => b.id === s.id && b.group === groupId)) movedTo[s.id] = s.group; });
@@ -48,9 +137,13 @@ function deleteStudentGroup(groupId) {
       now.splice(Math.min(groups.indexOf(g), now.length), 0, g);
       saveStudentGroups(now);
     }
+    const ids = new Set(getWeeklySchedule().map(e => e.id));
+    saveWeeklySchedule(getWeeklySchedule().concat(lessons.filter(e => !ids.has(e.id))));
+    try { if (archivedBefore === null) localStorage.removeItem('ta_lessons_archived'); else localStorage.setItem('ta_lessons_archived', archivedBefore); } catch (e) { /* ignore */ }
     // put back the students that are still where the delete put them (anyone moved since stays put)
     savePointsRoster(getPointsRoster().map(s => (s.id in movedTo && s.group === movedTo[s.id]) ? Object.assign({}, s, { group: groupId }) : s));
     refreshRosterViews();
+    if (window.renderNextLessons) window.renderNextLessons();
     showToast('"' + g.name + '" is back.', 'ok');
   });
 }
@@ -60,18 +153,33 @@ function moveStudentToGroup(studentId, groupId) {
   refreshRosterViews();
 }
 
+// ✎ next to a student: their name and group (the ID stays the same).
 function renameRosterStudent(studentId) {
-  const roster = getPointsRoster();
-  const st = roster.find(s => s.id === studentId);
+  const st = getPointsRoster().find(s => s.id === studentId);
   if (!st) return;
-  const name = prompt('Student name (their ID ' + st.id + ' stays the same):', st.name);
-  if (name === null) return;
-  const clean = name.trim();
-  if (!clean) { showToast('Name can\'t be empty.'); return; }
-  const oldName = st.name;
-  st.name = clean;
-  savePointsRoster(roster);
-  refreshRosterViews();
+  const groups = getStudentGroups();
+  const m = taModal('✎ ' + st.name,
+    '<label class="field-label">Name</label><input type="text" class="stu-edit-name">' +
+    '<label class="field-label" style="margin-top:14px;">Group</label>' +
+    '<select class="stu-edit-group">' + groups.map(g => '<option value="' + escapeForHtml(g.id) + '">' + escapeForHtml(g.name) + '</option>').join('') +
+      (groups.some(g => g.id === st.group) ? '' : '<option value="">Not in a group</option>') + '</select>' +
+    '<p class="ta-modal-text" style="margin-top:12px;">ID <b>' + escapeForHtml(st.id) + '</b> stays the same, and so do the points.</p>' +
+    '<div class="ta-modal-btns"><button type="button" class="mini-btn" data-act="cancel">Cancel</button><button type="button" class="mini-btn solid" data-act="ok">Save</button></div>');
+  const nameEl = m.body.querySelector('.stu-edit-name'), groupEl = m.body.querySelector('.stu-edit-group');
+  nameEl.value = st.name;
+  groupEl.value = groups.some(g => g.id === st.group) ? st.group : '';
+  const save = () => {
+    const clean = nameEl.value.trim();
+    if (!clean) { showToast('Name can\'t be empty.'); nameEl.focus(); return; }
+    savePointsRoster(getPointsRoster().map(s => s.id === studentId ? Object.assign({}, s, { name: clean, group: groupEl.value }) : s));
+    m.close();
+    refreshRosterViews();
+  };
+  nameEl.addEventListener('keydown', e => { if (e.key === 'Enter') save(); });
+  m.body.querySelector('[data-act="cancel"]').onclick = m.close;
+  m.body.querySelector('[data-act="ok"]').onclick = save;
+  setTimeout(() => { nameEl.focus(); nameEl.select(); }, 30);
+  return m;
 }
 function addPointsStudent() {
   const nameEl = document.getElementById('pt-student-name');
@@ -135,30 +243,34 @@ function renderStudentsList() {
   renderGroupSelect();
   const wrap = document.getElementById('studentsListWrap');
   if (!wrap) return;
-  const groups = getStudentGroups();
   const buckets = getRosterByGroup();
 
   if (studentsOpenGroup !== null && !buckets.some(b => b.id === studentsOpenGroup)) studentsOpenGroup = null;
 
-  /* ---------- one group opened ---------- */
+  /* ---------- one group opened: add students; each one's name (✎ 🗑), ID and points ---------- */
   if (studentsOpenGroup !== null) {
     const b = buckets.find(x => x.id === studentsOpenGroup);
-    const moveOptions = groups.map(g => '<option value="' + escapeForHtml(g.id) + '"' + (g.id === b.id ? ' selected' : '') + '>' + escapeForHtml(g.name) + '</option>').join('') +
-      (b.unassigned ? '<option value="" selected>Not in a group</option>' : '');
+    const info = b.unassigned ? null : scheduleInfoForGroup(b.name);
+    const groupPts = b.students.reduce((a, st) => a + pointsTotalFor(st.id), 0);
     let html = '<div class="group-detail-head">' +
       '<div class="gd-left"><button class="mini-btn" type="button" onclick="closeStudentGroup()">← All groups</button>' +
       '<h3' + (b.unassigned ? '' : ' translate="no"') + '>' + escapeForHtml(b.name) + '</h3>' +
-      '<span class="student-group-count">' + b.students.length + ' student' + (b.students.length === 1 ? '' : 's') + '</span></div>';
+      (b.unassigned ? '' :
+        '<button class="sp-icon-btn" type="button" title="Change name or lesson times" aria-label="Change name or lesson times" onclick="renameStudentGroup(' + jsAttr(b.id) + ')">✎</button>' +
+        '<button class="sp-icon-btn danger" type="button" title="Delete group" aria-label="Delete group" onclick="deleteStudentGroup(' + jsAttr(b.id) + ')">🗑</button>') +
+      '<span class="student-group-count">' + b.students.length + ' student' + (b.students.length === 1 ? '' : 's') + ' · <span data-group-pts="' + escapeForHtml(b.id) + '">🪙 ' + groupPts + '</span></span></div>';
     if (!b.unassigned) {
       const exCount = getRecentExercises().filter(e => e.groupId === b.id).length;
       html += '<div class="gd-actions">' +
         '<button class="mini-btn" type="button" onclick="taNavigate(\'my-exercises.html?group=\' + encodeURIComponent(' + jsAttr(b.id) + '))">📁 ' + exCount + ' exercise' + (exCount === 1 ? '' : 's') + '</button>' +
-        '<button class="mini-btn" type="button" onclick="renameStudentGroup(' + jsAttr(b.id) + ')">✏️ Rename</button>' +
-        '<button class="mini-btn danger" type="button" onclick="deleteStudentGroup(' + jsAttr(b.id) + ')">🗑 Delete group</button>' +
       '</div>';
     }
     html += '</div>';
     if (!b.unassigned) {
+      html += '<div class="gd-schedule">📅 ' + (info && info.days
+          ? escapeForHtml(info.days) + (info.time ? ' · ' + escapeForHtml(info.time) : '') + (info.level ? ' · ' + escapeForHtml(info.level) : '')
+          : 'No lesson times yet') +
+        ' <button class="link-btn" type="button" onclick="renameStudentGroup(' + jsAttr(b.id) + ')">' + (info && info.days ? 'Change' : 'Set lesson times') + '</button></div>';
       html += '<div class="title-field"><div class="roster-form-box">' +
         '<input type="text" id="pt-student-name" placeholder="Student name" style="flex:1; min-width:140px;">' +
         '<input type="text" id="pt-student-id" placeholder="Unique ID (e.g. 101)" style="flex:1; min-width:120px;" onkeydown="if(event.key===\'Enter\') addPointsStudent()">' +
@@ -166,19 +278,22 @@ function renderStudentsList() {
         '<button class="mini-btn solid" type="button" onclick="openBulkAddStudents()" title="Paste a whole class list, or choose a CSV/Excel-saved file">📋 Add many</button>' +
       '</div></div>';
     }
-    html += '<div class="title-field"><label class="field-label">All students</label>';
+    html += '<div class="title-field">';
     html += b.students.length
-      ? b.students.map(s =>
-          '<div class="roster-row" data-student-id="' + escapeForHtml(String(s.id)) + '">' +
-            '<span><strong translate="no">' + escapeForHtml(s.name) + '</strong> — ID ' + escapeForHtml(s.id) + '</span>' +
-            '<span class="roster-pts">🪙 ' + pointsTotalFor(s.id) + ' pts</span>' +
-            '<div class="roster-actions">' +
-              '<select class="group-select" aria-label="Move ' + escapeForHtml(s.name) + ' to another group" title="Move to another group" onchange="moveStudentToGroup(' + jsAttr(s.id) + ', this.value)">' + moveOptions + '</select>' +
-              '<button class="mini-btn" type="button" onclick="renameRosterStudent(' + jsAttr(s.id) + ')">Edit name</button>' +
-              '<button class="mini-btn danger" type="button" onclick="removePointsStudent(' + jsAttr(s.id) + ')">Remove</button>' +
-            '</div>' +
+      ? '<div class="sp-table"><div class="sp-head"><span>Name</span><span>ID</span><span>Points</span></div>' +
+        b.students.map(s =>
+          '<div class="roster-row sp-row" data-student-id="' + escapeForHtml(String(s.id)) + '">' +
+            '<span class="sp-name"><strong translate="no">' + escapeForHtml(s.name) + '</strong>' +
+              '<button class="sp-icon-btn" type="button" title="Change name or group" aria-label="Change name or group" onclick="renameRosterStudent(' + jsAttr(s.id) + ')">✎</button>' +
+              '<button class="sp-icon-btn danger" type="button" title="Delete student" aria-label="Delete student" onclick="removePointsStudent(' + jsAttr(s.id) + ')">🗑</button></span>' +
+            '<span class="sp-id">' + escapeForHtml(s.id) + '</span>' +
+            '<span class="points-cell">' +
+              '<button class="pt-adjust-btn minus" type="button" title="Take points" onclick="showPointsAmountPopover(this, ' + jsAttr(s.id) + ', ' + jsAttr(s.name) + ', -1);">−</button>' +
+              '<button class="pt-adjust-value sp-pts" type="button" title="See their points" data-pts-for="' + escapeForHtml(String(s.id)) + '" onclick="openStudentPoints(' + jsAttr(s.id) + ')">🪙 ' + pointsTotalFor(s.id) + '</button>' +
+              '<button class="pt-adjust-btn plus" type="button" title="Give points" onclick="showPointsAmountPopover(this, ' + jsAttr(s.id) + ', ' + jsAttr(s.name) + ', 1);">+</button>' +
+            '</span>' +
           '</div>'
-        ).join('')
+        ).join('') + '</div>'
       : '<div class="empty-results">No students in this group yet. Add one above.</div>';
     html += '</div>';
     wrap.innerHTML = html;
@@ -191,7 +306,7 @@ function renderStudentsList() {
     '<button class="mini-btn solid" type="button" onclick="addStudentGroup()">➕ Add group</button>' +
   '</div>';
   if (!buckets.length) {
-    wrap.innerHTML = html + '<div class="empty-results">No groups yet. Add a group, then open it to add your students.</div>';
+    wrap.innerHTML = html + '<div class="empty-results">No groups yet. Add a group with its lesson days, then open it to add your students.</div>';
     return;
   }
   html += '<div class="group-block-list">';
@@ -203,24 +318,30 @@ function renderStudentsList() {
       const pal = (typeof lessonColorForId === 'function') ? lessonColorForId(info.colorId) : null;
       pill = '<span class="lesson-level-pill"' + (pal ? ' style="background:' + pal.surface + '; color:' + pal.color + ';"' : '') + '>' + escapeForHtml(info.level) + '</span>';
     }
-    const subParts = [count + ' student(s)'];
+    const subParts = [count + ' student' + (count === 1 ? '' : 's')];
     if (info && info.days) subParts.push(info.days);
     if (info && info.time) subParts.push(info.time);
+    if (!b.unassigned && !(info && info.days)) subParts.push('No lesson times yet');
     const pts = b.students.reduce((a, st) => a + pointsTotalFor(st.id), 0);
     html += '<div class="group-block' + (b.unassigned ? ' unassigned' : '') + '" role="button" tabindex="0" ' +
-        'onclick="openStudentGroup(' + jsAttr(b.id) + ')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();openStudentGroup(' + jsAttr(b.id) + ');}">' +
+        'onclick="openStudentGroup(' + jsAttr(b.id) + ')" onkeydown="if(event.target===this&&(event.key===\'Enter\'||event.key===\' \')){event.preventDefault();openStudentGroup(' + jsAttr(b.id) + ');}">' +
       '<div class="group-block-main">' +
         '<div class="group-block-title"><b' + (b.unassigned ? '' : ' translate="no"') + '>' + escapeForHtml(b.name) + '</b>' + pill + '</div>' +
         '<div class="group-block-sub">' + subParts.map(escapeForHtml).join(' · ') + '</div>' +
       '</div>' +
       '<div class="group-block-side">' +
-        '<span class="group-block-pts">🪙 ' + pts + '</span>' +
-        (b.unassigned ? '' : '<button class="mini-btn" type="button" onclick="event.stopPropagation(); renameStudentGroup(' + jsAttr(b.id) + ')">Edit</button>') +
+        '<span class="group-block-pts" data-group-pts="' + escapeForHtml(b.id) + '">🪙 ' + pts + '</span>' +
+        (b.unassigned ? '' : '<button class="sp-icon-btn" type="button" title="Change name or lesson times" aria-label="Change name or lesson times" onclick="event.stopPropagation(); renameStudentGroup(' + jsAttr(b.id) + ')">✎</button>' +
+          '<button class="sp-icon-btn danger" type="button" title="Delete group" aria-label="Delete group" onclick="event.stopPropagation(); deleteStudentGroup(' + jsAttr(b.id) + ')">🗑</button>') +
         '<span class="group-block-chevron" aria-hidden="true">›</span>' +
       '</div>' +
     '</div>';
   });
   html += '</div>';
+  html += '<div class="sp-danger-row">' +
+    '<button class="mini-btn danger" type="button" onclick="resetAllPoints()">🗑 Reset All Points</button>' +
+    '<button class="mini-btn danger" type="button" onclick="deleteAllPointsEntirely()">🗑 Delete All Entirely</button>' +
+  '</div>';
   wrap.innerHTML = html;
 }
 
@@ -330,5 +451,9 @@ function openBulkAddStudents() {
 }
 
 /* ================= PAGE START ================= */
-taOnTab('students', function () { studentsOpenGroup = null; renderStudentsList(); });
+taOnTab('students', function () {
+  studentsOpenGroup = null;
+  renderStudentsList();
+  if (window.startPointsSync) window.startPointsSync(getPointsBoardCode());
+});
 taStartPage('students');

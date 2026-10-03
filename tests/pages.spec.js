@@ -2,7 +2,7 @@
 const { test, expect } = require('@playwright/test');
 const { prepare, watchErrors, hideNotices } = require('./support/app');
 
-const PAGES = ['index.html', 'create.html', 'statistics.html', 'my-exercises.html', 'students.html', 'results.html', 'points.html', 'settings.html'];
+const PAGES = ['index.html', 'create.html', 'statistics.html', 'my-exercises.html', 'students.html', 'results.html', 'settings.html'];
 
 for (const file of PAGES) {
   test(`${file} opens without errors`, async ({ page, context }) => {

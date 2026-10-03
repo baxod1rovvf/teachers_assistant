@@ -59,7 +59,6 @@ const TA_PAGES = {
   myexercises: 'my-exercises.html',
   students: 'students.html',
   results: 'results.html',
-  points: 'points.html',
   settings: 'settings.html'
 };
 const BUILDER_TABS = ['wordorder', 'makeaword', 'flashcard', 'presentation', 'pronunciation', 'spelling', 'test', 'sentences', 'bilingual', 'engcontent', 'dictation', 'jungle', 'bamboozle', 'ielts-listening', 'ielts-reading', 'ielts-writing', 'ielts-speaking'];
@@ -84,10 +83,9 @@ const MASTHEAD_COPY = {
   main: { eyebrow: "🎓 Teacher's Assistant", title: "Welcome back", sub: "Everything you need to build, share, and track classroom exercises." },
   dashboard: { eyebrow: "📊 Statistics", title: "Your classroom at a glance", sub: "See which exercise types get used the most, updated live from your Points Board." },
   myexercises: { eyebrow: "📁 My Exercises", title: "Everything you've built", sub: "Every exercise you've created — reopen it to make a new version, jump to its results, or turn off its points." },
-  students: { eyebrow: "Students", title: "Your class roster", sub: "Give each student a unique ID so they can earn points without typing a name or code." },
+  students: { eyebrow: "Students & Points", title: "Your groups and students", sub: "Groups, their lesson times, students' IDs and points." },
   results: { eyebrow: "📊 Results", title: "Student Results", sub: "Track your students' progress, view results and help them achieve their goals." },
-  points: { eyebrow: "🏆 Points & Rewards", title: "Track and reward progress", sub: "A live leaderboard for every student, plus the ability to give or take bonus points yourself." },
-  settings: { eyebrow: "⚙️ Settings", title: "Make it yours", sub: "Set your name, add a profile picture, and manage your weekly lesson schedule." }
+  settings: { eyebrow: "⚙️ Settings", title: "Settings", sub: "Install on this device, backup and status." }
 };
 
 function updateMasthead(tab) {
@@ -232,6 +230,7 @@ function toggleSidebar() {
 }
 
 function switchTo(tab) {
+  if (tab === 'points') tab = 'students'; // Points & Rewards is part of Students & Points now
   const panel = document.getElementById('panel-' + tab);
   if (!panel) {
     const page = pageForTab(tab);
@@ -997,6 +996,35 @@ function onAvatarFileChosen(input) {
     img.src = e.target.result;
   };
   reader.readAsDataURL(file);
+}
+
+// Tapping the profile picture (sidebar or Dashboard) changes it.
+function taPickAvatar() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.onchange = () => onAvatarFileChosen(input);
+  input.click();
+}
+
+// Tapping the name (sidebar or Dashboard): your name and the app's language.
+function taOpenProfile() {
+  const login = taCurrentLogin() || '';
+  const m = taModal('👤 Profile',
+    '<label class="field-label">Your name (shown as "Bonus: By Teacher ...")</label>' +
+    '<input type="text" class="profile-name-input" placeholder="Your name">' +
+    '<label class="field-label" style="margin-top:16px;">🌐 Language</label>' +
+    '<p class="ta-modal-text">The app\'s menus and buttons. Exercises for students stay in English.</p>' +
+    '<div class="lang-pick profile-lang-pick">' + taLangPickerHtml() + '</div>' +
+    (login ? '<p class="ta-modal-text profile-login">Signed in as <b translate="no">' + escapeForHtml(login) + '</b></p>' : '') +
+    '<div class="ta-modal-btns"><button type="button" class="mini-btn" data-act="pic">🖼 Change picture</button><button type="button" class="mini-btn solid" data-act="ok">Done</button></div>');
+  const input = m.body.querySelector('.profile-name-input');
+  input.value = getTeacherName();
+  input.addEventListener('input', () => setTeacherName(input.value));
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') m.close(); });
+  m.body.querySelector('[data-act="pic"]').onclick = () => { m.close(); taPickAvatar(); };
+  m.body.querySelector('[data-act="ok"]').onclick = m.close;
+  return m;
 }
 
 let __settingsModalOriginParent = null;
@@ -2237,7 +2265,7 @@ function renderLessonRow(o) {
   return '<div class="lesson-row">' +
     '<div class="lesson-accent" style="background:' + palette.color + ';"></div>' +
     '<div class="lesson-time-col"><div class="lesson-time-val">' + formatTimeDisplay(o.entry.time) + '</div><div class="lesson-day-val">' + SCHEDULE_DAY_SHORT[o.date.getDay()] + '</div>' + soonBadge + '</div>' +
-    '<div class="lesson-group-col"><img class="lesson-group-icon icon-mono" src="images/icons/students.png" alt=""><b>' + escapeForHtml(o.entry.group || 'Untitled group') + '</b></div>' +
+    '<button type="button" class="lesson-group-col lesson-plan-open" title="Lesson plan" onclick="openLessonPlanModal(' + jsAttr(o.entry.id) + ')"><img class="lesson-group-icon icon-mono" src="images/icons/students.png" alt=""><b>' + escapeForHtml(o.entry.group || 'Untitled group') + '</b><span class="lesson-plan-hint">📝</span></button>' +
     '<div class="lesson-level-col">' + levelPill + '</div>' +
     taReadyButtonHtml(o.entry, o.date) +
   '</div>';
@@ -2274,7 +2302,7 @@ function renderNextLessons() {
   if (!wrap) return;
   const next = getNextLessonOccurrences(5);
   if (!next.length) {
-    wrap.innerHTML = '<div class="empty-results">No lessons scheduled yet. <button class="mini-btn" type="button" style="margin-top:8px;" onclick="goToScheduleSettings()">➕ Add your weekly schedule</button></div>';
+    wrap.innerHTML = '<div class="empty-results">No lessons scheduled yet. <button class="mini-btn" type="button" style="margin-top:8px;" onclick="goToScheduleSettings()">➕ Add a group with its lesson days</button></div>';
     return;
   }
   const thisWeekStart = getWeekStartMonday(new Date());
@@ -2381,14 +2409,9 @@ function jumpToExerciseInMyExercises(uid) {
 window.jumpToExerciseInMyExercises = jumpToExerciseInMyExercises;
 
 // Opens Settings and scrolls to the weekly schedule.
+// Each group's lesson days and times are set on Students & Points (✏️ on the group).
 function goToScheduleSettings() {
-  taNavigate('settings.html#schedule');
-}
-function scrollToScheduleSettings() {
-  setTimeout(function () {
-    const el = document.getElementById('settingsScheduleSection');
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 80);
+  taNavigate('students.html');
 }
 
 /* ================= LOTTIE ANIMATIONS ================= */
@@ -2676,10 +2699,10 @@ function aiFaq(items) { return items.concat([AI_ROBOT_CONTACT_ITEM]); }
    When a new feature is added to the app, add a question about it here. */
 const AI_ROBOT_FAQ_BY_TAB = {
   main: aiFaq([
-    { q: 'How do I set up my weekly lesson schedule?', a: 'Tap "⚙️ Manage schedule" (or go to Settings → Weekly Lesson Schedule) and add each class once with its day and time. It repeats every week and shows up here under Upcoming Lessons.' },
+    { q: 'How do I set my lesson schedule?', a: 'Each group has its own lesson days and times. Tap "✏️ Change schedule" (it opens Students & Points), then "➕ Add group" or ✎ on a group, and tick its days and times. They repeat every week and show here under Upcoming Lessons.' },
     { q: 'What does the "Ready" button on a lesson do?', a: 'Tap "Ready" when you have prepared that lesson. Until then, the app reminds you about lessons in the next 24 hours — when you open it, and again every 2 hours.' },
     { q: 'Will I get reminded before a lesson?', a: "Yes — within 24 hours of a lesson you'll get a reminder, and the lesson shows a 'starts soon' badge in Upcoming Lessons. Reminders only work while the app is open." },
-    { q: 'How do I write a plan for a lesson?', a: 'Go to Settings → Weekly Lesson Schedule and tap "📝 Plan" next to the lesson. Write your notes, pick the exercises for it, and tap "💾 Save Plan".' },
+    { q: 'How do I write a plan for a lesson?', a: 'Under Upcoming Lessons tap the group\'s name on the lesson. Write your notes, pick the exercises for it, and tap "💾 Save Plan".' },
     { q: 'How is "Top 5 Active Students" worked out?', a: 'Students are ranked by how well they did, not by how many exercises they finished. Each result becomes a fair 0–100 score (Sentences use the stars you give in Results). Use the group buttons (e.g. Target / Apex) to see one group at a time.' },
     { q: 'What is "Lessons taught"?', a: 'Every lesson on your weekly schedule counts once each time its day and time pass. Removing a lesson from the schedule keeps what it already counted.' },
     { q: 'What is the note about students who finished exercises?', a: 'When you open the app, a note lists your students who finished an exercise in the last 7 days that you haven\'t checked yet. Tap an exercise under a student\'s name (📊) to open that exercise\'s results. The note stays open, so you can open the next student\'s exercise too. Tap "Checked" for one student, or "All checked". Closing it with ✕ only hides it until next time.' },
@@ -2699,9 +2722,9 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'I pressed Reset All by mistake — can I get it back?', a: 'Yes — right after Reset All a message with "Undo" appears for a few seconds. Tap Undo (or press Ctrl+Z).' },
     { q: 'Why does a new exercise start with my old settings?', a: 'The app remembers your usual settings for each type (points, time limit, design…) from the last one you made. Only settings, never the words or title.' },
     { q: 'How do I choose which group an exercise is for?', a: 'Pick the group when you create it (or change it later in My Exercises with the 👥 button). Results then show who in that group didn\'t do it.' },
-    { q: 'How many points does an exercise give?', a: 'Set "Points awarded on completion" in the builder. Students get them on the Points & Rewards board when they finish with their ID.' },
+    { q: 'How many points does an exercise give?', a: 'Set "Points awarded on completion" in the builder. Students get them in Students & Points when they finish with their ID.' },
     { q: 'Can I edit an exercise after creating it?', a: 'Yes — in My Exercises tap "✏️ Use again". The builder opens filled in; change what you need and create a new version. Share the new one.' },
-    { q: 'Do results here count toward Statistics and Points?', a: 'Yes — once students submit results, they flow into Results, Statistics and (if points are on) Points & Rewards automatically.' }
+    { q: 'Do results here count toward Statistics and Points?', a: 'Yes — once students submit results, they flow into Results, Statistics and (if points are on) Students & Points automatically.' }
   ]),
   hwcbuilder: aiFaq([
     { q: 'How do I build a Homework & Class set?', a: 'Pick the exercise type for round 1 and fill it in. Tap "➕ Add Another Exercise" to add the next round, and "Create ⬇" when the set is complete. Give the set a title if you like.' },
@@ -2727,8 +2750,10 @@ const AI_ROBOT_FAQ_BY_TAB = {
   students: aiFaq([
     { q: 'What is the Students list for?', a: 'Give each student a unique ID — this is what they type into an exercise instead of a name. Only students on this list count in Statistics, Top 5 and "Didn\'t do it".' },
     { q: 'How do I add a whole class at once?', a: 'Tap "📋 Add many". Paste a class list (one student per line, "Name, ID", or copied straight from Excel/Google Sheets) or choose a CSV file. Students without an ID get the next free number.' },
-    { q: 'What are groups?', a: 'Every student belongs to one group (for example two classes). Exercises can be made for a group, and Results then show who in that group didn\'t do it.' },
-    { q: 'Do students need an account?', a: 'No — their ID is all they need to submit exercises and appear on the leaderboard.' },
+    { q: 'What are groups?', a: 'Every student belongs to one group (for example two classes). A group has its lesson days and times (set them with "➕ Add group" or ✎ on the group) — they show in Upcoming Lessons on the Dashboard. Exercises can be made for a group, and Results then show who in that group didn\'t do it.' },
+    { q: 'How do points work?', a: 'Students earn points by finishing exercises with their ID. Open a group: each student\'s points are next to their name and ID. Tap the 🪙 points to see where they came from.' },
+    { q: 'How do I give or take points by hand?', a: 'Open the group and tap + or − next to the student\'s points, then type how many. It shows up as "Bonus: By Teacher <your name>" (tap your name in the sidebar to change it).' },
+    { q: 'Do students need an account?', a: 'No — their ID is all they need to submit exercises and get points.' },
     { q: 'A student\'s results are missing — why?', a: 'Usually the student typed a wrong ID or just a name. Their results then show under "Entered with a name only" and are left out of Statistics and Top 5.' }
   ]),
   results: aiFaq([
@@ -2747,12 +2772,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'What does "Delete ALL results for this code" do?', a: 'It removes every result of that exercise. Old copies of the file stop counting; only students who use a newly made file appear. Keep a backup first (Settings → 💾 Backup).' },
     { q: 'Why does it say students used an old copy?', a: 'Those results came from a file made before a bug was fixed. Make a new copy with "✏️ Use again" in My Exercises and share that.' }
   ]),
-  points: aiFaq([
-    { q: 'How do Points & Rewards work?', a: 'Students earn points by finishing exercises with their ID. This page is a live leaderboard by group — tap a group to see its students.' },
-    { q: 'How do I give or take points by hand?', a: 'Tap + or − next to a student and type how many points. It shows up as "Bonus: By Teacher <your name>" (set your name in Settings).' },
-  ]),
   settings: aiFaq([
-    { q: 'How do I set up my weekly lesson schedule?', a: 'Add each class once with its day and time under Weekly Lesson Schedule — it repeats every week. Tap "📝 Plan" next to a lesson to write its plan.' },
     { q: 'How do I make a backup?', a: 'Under 💾 Backup tap "⬇ Download backup". One file holds your students, groups, exercises, schedule and every result. Keep it somewhere safe (not only on this device). The app reminds you every week.' },
     { q: 'How do I bring back deleted results or data?', a: 'Under 💾 Backup tap "⬆ Restore from file" and choose a backup. You can bring back the app\'s data, and/or put back results that were deleted from the database.' },
     { q: 'How do I put the app on my phone or computer?', a: 'Under 📲 Install on this device tap Install (Chrome, Edge, Android). On iPhone/iPad open the app in Safari → Share → Add to Home Screen.' },
@@ -3300,8 +3320,8 @@ document.addEventListener('keydown', e => {
    "/" when not typing, or the 🔍 Search button in the sidebar. */
 const TA_TAB_LABELS = {
   main: ['🎓', 'Dashboard'], createpicker: ['➕', 'Create'], dashboard: ['📊', 'Statistics'],
-  myexercises: ['📁', 'My Exercises'], students: ['👥', 'Students'], results: ['📋', 'Results'],
-  points: ['🏆', 'Points & Rewards'], settings: ['⚙️', 'Settings'],
+  myexercises: ['📁', 'My Exercises'], students: ['👥', 'Students & Points'], results: ['📋', 'Results'],
+  settings: ['⚙️', 'Settings'],
   flashcard: ['🎴', 'Flashcard'], wordorder: ['🧩', 'Word Order'], makeaword: ['🧱', 'Make a Word'],
   spelling: ['🔤', 'Spelling'], sentences: ['✍️', 'Sentences'], bilingual: ['📖', 'Bidirectional Language'],
   engcontent: ['🎬', 'English Content'], dictation: ['🎧', 'Dictation'], jungle: ['🌴', 'Jungle'], bamboozle: ['🎯', 'Bamboozle'], presentation: ['🖥️', 'Presentation'],
@@ -3323,9 +3343,9 @@ function taQuickSearchItems() {
   items.push({ icon: '📚', label: 'Homework', kind: 'New set', go: () => taRunOnPage('create.html', () => openHwcBuilder('homework')) });
   items.push({ icon: '📚', label: 'Class', kind: 'New set', go: () => taRunOnPage('create.html', () => openHwcBuilder('class')) });
   items.push({ icon: '💾', label: 'Backup my data', kind: 'Settings', extra: 'download restore export import file', go: () => taNavigate('settings.html#backup') });
-  items.push({ icon: '🌐', label: 'Language', kind: 'Settings', extra: 'til язык uzbek russian english oʻzbekcha русский', go: () => taNavigate('settings.html#language') });
+  items.push({ icon: '🌐', label: 'Language', kind: 'Profile', extra: 'til язык uzbek russian english oʻzbekcha русский name', go: () => taOpenProfile() });
   items.push({ icon: '📲', label: 'Install the app', kind: 'Settings', extra: 'home screen phone desktop offline pwa', go: () => taNavigate('settings.html#install') });
-  items.push({ icon: '📅', label: 'Weekly lesson schedule', kind: 'Settings', extra: 'lessons timetable', go: () => taNavigate('settings.html#schedule') });
+  items.push({ icon: '📅', label: 'Lesson schedule', kind: 'Students & Points', extra: 'lessons timetable weekly groups', go: () => taNavigate('students.html') });
   getStudentGroups().forEach(g => {
     items.push({ icon: '👥', label: g.name, kind: 'Group', mine: true, go: () => taRunOnPage('students.html', () => openStudentGroup(g.id)) });
   });

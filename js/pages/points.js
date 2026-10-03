@@ -21,107 +21,22 @@ async function deleteAllPointsEntirely() {
     showToast('⚠️ Could not delete — check your internet connection.');
   }
 }
-let __pointsBoardList = [];
-// The leaderboard shows each group as a block; tapping one shows that group's students.
-let pointsOpenGroup = null;
-function openPointsGroup(groupId) { pointsOpenGroup = groupId; renderPointsBoard(); }
-function closePointsGroup() { pointsOpenGroup = null; renderPointsBoard(); }
-
+/* Points live on Students & Points (students.js draws the groups and students).
+   When new points arrive, only the numbers change — a full redraw would wipe
+   what the teacher is typing into the add-student form. */
 function renderPointsBoard() {
-  const codeDisplay = document.getElementById('pointsBoardCodeDisplay');
-  if (codeDisplay) codeDisplay.textContent = getPointsBoardCode();
-  const wrap = document.getElementById('pointsBoardWrap');
-  if (!wrap) return;
-
-  const entries = window.__pointsLedger || [];
-  const byStudent = {};
-  entries.forEach(e => {
-    if (!e || !e.studentId) return;
-    const key = String(e.studentId).trim().toLowerCase();
-    if (!byStudent[key]) byStudent[key] = { total: 0, items: [] };
-    byStudent[key].total += (e.points || 0);
-    byStudent[key].items.push(e);
+  document.querySelectorAll('[data-pts-for]').forEach(el => {
+    el.textContent = '🪙 ' + pointsTotalFor(el.getAttribute('data-pts-for'));
   });
-
-  // Only students currently in the roster are shown — this is what makes
-  // "Remove Student" actually remove them from the table, even though
-  // their historical point entries still exist in Firestore. Each group
-  // gets its own ranking.
-  const buckets = getRosterByGroup();
-  const flat = [];
-  const sections = buckets.map(b => {
-    const list = b.students.map(s => {
-      const earned = byStudent[String(s.id).trim().toLowerCase()];
-      return {
-        id: s.id,
-        displayName: s.name,
-        total: earned ? earned.total : 0,
-        items: earned ? earned.items.slice().sort((a, c) => new Date(a.date || 0) - new Date(c.date || 0)) : []
-      };
-    });
-    list.sort((a, c) => c.total - a.total || a.displayName.localeCompare(c.displayName));
-    return { id: b.id, name: b.name, list: list };
+  document.querySelectorAll('[data-group-pts]').forEach(el => {
+    const gid = el.getAttribute('data-group-pts');
+    const b = getRosterByGroup().find(x => x.id === gid);
+    el.textContent = '🪙 ' + (b ? b.students.reduce((a, st) => a + pointsTotalFor(st.id), 0) : 0);
   });
-  sections.forEach(sec => sec.list.forEach(st => { st.__idx = flat.length; flat.push(st); }));
-  __pointsBoardList = flat;
-
-  if (!flat.length) { wrap.innerHTML = '<div class="empty-results">No students added yet.</div>'; return; }
-
-  if (pointsOpenGroup !== null && !sections.some(sec => sec.id === pointsOpenGroup)) pointsOpenGroup = null;
-
-  /* ---------- one group opened: its students' points ---------- */
-  if (pointsOpenGroup !== null) {
-    const sec = sections.find(x => x.id === pointsOpenGroup);
-    const groupTotal = sec.list.reduce((a, st) => a + st.total, 0);
-    let html = '<div class="group-detail-head"><div class="gd-left">' +
-      '<button class="mini-btn" type="button" onclick="closePointsGroup()">← All groups</button>' +
-      '<h3>' + escapeForHtml(sec.name) + '</h3>' +
-      '<span class="student-group-count">' + sec.list.length + ' student' + (sec.list.length === 1 ? '' : 's') + ' · 🪙 ' + groupTotal + '</span>' +
-    '</div></div>';
-    if (!sec.list.length) {
-      wrap.innerHTML = html + '<div class="empty-results">No students in this group yet.</div>';
-      return;
-    }
-    html += '<div class="points-table">';
-    html += '<div class="points-table-head"><span>Student</span><span>Points</span></div>';
-    sec.list.forEach(st => {
-      const exerciseCount = st.items.filter(it => (it.exerciseType || '') !== 'Bonus' && (it.exerciseType || '') !== 'Removed').length;
-      html += '<div class="points-table-row" onclick="openPointsModal(' + st.__idx + ')">' +
-        '<span>' + escapeForHtml(st.displayName) + '<br><small class="student-exercise-count">✅ ' + exerciseCount + ' exercise' + (exerciseCount === 1 ? '' : 's') + '</small></span>' +
-        '<span class="points-cell">' +
-          '<button class="pt-adjust-btn minus" type="button" onclick="event.stopPropagation(); showPointsAmountPopover(this, ' + jsAttr(st.id) + ', ' + jsAttr(st.displayName) + ', -1);">−</button>' +
-          '<span class="pt-adjust-value">🪙 ' + st.total + '</span>' +
-          '<button class="pt-adjust-btn plus" type="button" onclick="event.stopPropagation(); showPointsAmountPopover(this, ' + jsAttr(st.id) + ', ' + jsAttr(st.displayName) + ', 1);">+</button>' +
-        '</span>' +
-        '</div>';
-    });
-    html += '</div>';
-    wrap.innerHTML = html;
-    return;
-  }
-
-  /* ---------- all groups as blocks ---------- */
-  let html = '<div class="group-block-list">';
-  sections.forEach(sec => {
-    const groupTotal = sec.list.reduce((a, st) => a + st.total, 0);
-    const leader = sec.list[0];
-    const sub = sec.list.length + ' student' + (sec.list.length === 1 ? '' : 's') +
-      (leader && leader.total > 0 ? ' · 🥇 ' + leader.displayName : '');
-    html += '<div class="group-block' + (sec.id === '' ? ' unassigned' : '') + '" role="button" tabindex="0" ' +
-        'onclick="openPointsGroup(' + jsAttr(sec.id) + ')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();openPointsGroup(' + jsAttr(sec.id) + ');}">' +
-      '<div class="group-block-main">' +
-        '<div class="group-block-title"><b>' + escapeForHtml(sec.name) + '</b></div>' +
-        '<div class="group-block-sub">' + escapeForHtml(sub) + '</div>' +
-      '</div>' +
-      '<div class="group-block-side">' +
-        '<span class="group-block-pts">🪙 ' + groupTotal + '</span>' +
-        '<span class="group-block-chevron" aria-hidden="true">›</span>' +
-      '</div>' +
-    '</div>';
-  });
-  html += '</div>';
-  wrap.innerHTML = html;
+  const open = document.getElementById('pointsModalBackdrop');
+  if (open && open.classList.contains('show') && open.dataset.student) openStudentPoints(open.dataset.student);
 }
+window.renderPointsBoard = renderPointsBoard;
 
 let pointsPopoverCtx = null;
 
@@ -215,31 +130,28 @@ async function adjustStudentPoints(id, name, delta) {
   return true;
 }
 
-function openPointsModal(idx) {
-  const s = __pointsBoardList[idx];
-  if (!s) return;
+// A student's points, one line per exercise or teacher's bonus (tap their 🪙 total).
+function openStudentPoints(id) {
+  const st = getPointsRoster().find(s => String(s.id) === String(id));
+  if (!st) return;
   const backdrop = document.getElementById('pointsModalBackdrop');
   const titleEl = document.getElementById('pointsModalTitle');
   const totalEl = document.getElementById('pointsModalTotal');
   const bodyEl = document.getElementById('pointsModalBody');
   if (!backdrop || !titleEl || !totalEl || !bodyEl) return;
-
-  titleEl.textContent = s.displayName + ' — ID ' + s.id;
-  totalEl.textContent = '🪙 ' + s.total + ' points total';
-
-  const rows = taBuildRows(s.items, s.displayName);
-
-  if (!rows.length) {
-    bodyEl.innerHTML = '<div class="empty-results">No points earned yet.</div>' +
-      '<button class="mini-btn danger" type="button" style="margin-top:16px;" onclick="removePointsStudent(' + jsAttr(s.id) + '); closePointsModal();">🗑 Remove Student</button>';
-  } else {
-    bodyEl.innerHTML = rows.map(it => {
-      const sign = it.points >= 0 ? '+' : '';
-      return '<div class="pm-row"><span>' + escapeForHtml(it.label) + '</span><span style="color:var(--brand); font-weight:700; white-space:nowrap;">' + sign + it.points + it.suffix + '</span></div>';
-    }).join('') +
-    '<button class="mini-btn danger" type="button" style="margin-top:16px;" onclick="removePointsStudent(' + jsAttr(s.id) + '); closePointsModal();">🗑 Remove Student</button>';
-  }
-
+  const key = String(st.id).trim().toLowerCase();
+  const items = (window.__pointsLedger || []).filter(e => e && e.studentId && String(e.studentId).trim().toLowerCase() === key)
+    .sort((a, c) => new Date(a.date || 0) - new Date(c.date || 0));
+  backdrop.dataset.student = st.id;
+  titleEl.textContent = st.name + ' — ID ' + st.id;
+  totalEl.textContent = '🪙 ' + items.reduce((a, e) => a + (e.points || 0), 0) + ' points total';
+  const rows = taBuildRows(items, st.name);
+  bodyEl.innerHTML = rows.length
+    ? rows.map(it => {
+        const sign = it.points >= 0 ? '+' : '';
+        return '<div class="pm-row"><span>' + escapeForHtml(it.label) + '</span><span style="color:var(--brand); font-weight:700; white-space:nowrap;">' + sign + it.points + it.suffix + '</span></div>';
+      }).join('')
+    : '<div class="empty-results">No points earned yet.</div>';
   backdrop.classList.add('show');
 }
 
@@ -259,13 +171,5 @@ function taBuildRows(items, fallbackName) {
 
 function closePointsModal() {
   const backdrop = document.getElementById('pointsModalBackdrop');
-  if (backdrop) backdrop.classList.remove('show');
+  if (backdrop) { backdrop.classList.remove('show'); delete backdrop.dataset.student; }
 }
-
-/* ================= PAGE START ================= */
-taOnTab('points', function () {
-  pointsOpenGroup = null;
-  renderPointsBoard();
-  if (window.startPointsSync) window.startPointsSync(getPointsBoardCode());
-});
-taStartPage('points');
