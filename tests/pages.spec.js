@@ -154,8 +154,9 @@ test('top bar: 5 sections in the middle, the one you\'re in has the coloured cir
   await page.waitForTimeout(1500);
   await hideNotices(page);
   await expect(page.locator('#taTopbar .tb-tab .tb-label')).toHaveText(['Dashboard', 'Create', 'My Exercises', 'Statistics', 'Students']);
-  for (const id of ['#quickSearchBtn', '#themeToggleAnim', '#designPickerBtn', '#soundToggleBtn', '#taTopbar [data-tab="settings"]', '#tbAvatarBtn']) await expect(page.locator(id)).toBeVisible();
+  for (const id of ['#quickSearchBtn', '#themeToggleAnim', '#designPickerBtn', '#taTopbar [data-tab="settings"]', '#tbAvatarBtn']) await expect(page.locator(id)).toBeVisible();
   await expect(page.locator('#mainSidebar')).toHaveCount(0);
+  await expect(page.locator('#soundToggleBtn')).toHaveCount(0);   // no sound button
   // in the middle, and fixed at the top
   const nav = await page.locator('#taTabNav').boundingBox();
   expect(Math.abs(nav.x + nav.width / 2 - 650)).toBeLessThan(40);
@@ -186,6 +187,11 @@ test('on a phone, the sections are a tab bar at the bottom', async ({ page, cont
   const nav = await page.locator('#taTabNav').boundingBox();
   expect(nav.y + nav.height).toBeGreaterThan(780);
   expect(nav.width).toBeGreaterThan(380);
+  // the greeting: no animation, and the robot on the same line as the name
+  await expect(page.locator('#heroTaskAnim')).toBeHidden();
+  const name = await page.locator('#mainGreetingName').boundingBox(), robot = await page.locator('#robotHiAnim').boundingBox();
+  expect(Math.abs((robot.y + robot.height / 2) - (name.y + name.height / 2))).toBeLessThan(14);
+  expect(robot.x + robot.width).toBeLessThan(390);
   await page.locator('.tb-tab[data-tab="dashboard"]').click();
   await expect(page.locator('#panel-dashboard')).toHaveClass(/active/, { timeout: 8000 });
 });

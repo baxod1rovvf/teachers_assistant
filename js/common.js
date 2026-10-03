@@ -3433,7 +3433,7 @@ document.addEventListener('keydown', function (e) {
    Fixed at the top, in the page's own colour: the logo; the 5 sections in the
    middle — the one you're in sits in a circle of the design's colour, which
    moves like a drop of liquid when you switch (taMoveTabBlob); and on the
-   right search, day/night, design, sound, Settings and the profile.
+   right search, day/night, design, Settings and the profile.
    Phones (860px and narrower): the 5 sections become a tab bar at the bottom. */
 const TA_TOPBAR_TABS = [
   { tab: 'main', href: 'index.html', label: 'Dashboard', icon: 'images/icons/nav/dashboard.png' },
@@ -3462,7 +3462,6 @@ function taMountTopBar() {
       '<div class="hero-theme-toggle tb-theme" id="themeToggleAnim" onclick="toggleThemeAnimated()" title="Switch day/night mode" role="button" aria-label="Switch day/night mode">🌙</div>' +
       '<div class="hero-design-wrap"><button class="tb-tool hero-design-btn" id="designPickerBtn" type="button" onclick="toggleDesignPicker(event)" title="Change design" aria-label="Change design" aria-expanded="false"><span class="design-dot"></span></button>' +
         '<div class="design-picker" id="designPicker" hidden></div></div>' +
-      '<button class="tb-tool" id="soundToggleBtn" type="button" onclick="setSoundEnabled(!taSoundEnabled())" title="Sound effects: On" aria-label="Sound effects: On">🔊</button>' +
       '<a class="tb-tool tb-link" href="settings.html" data-tab="settings" title="Settings" aria-label="Settings">' +
         '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a>' +
       '<div class="tb-profile-wrap">' +
