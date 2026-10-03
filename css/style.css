@@ -2192,3 +2192,7 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 /* Results isn't in the menu: it opens from My Exercises ("View Results"), with a way back */
 .side-btn[data-tab="results"] { display: none !important; }
 .res-back-btn { margin-bottom: 12px; }
+
+/* Create: no descriptions under the sections (Homework & Class, IELTS) or under the exercise names (2026-10-03) */
+#panel-createpicker .picker-section-sub,
+#panel-createpicker .picker-card-sub { display: none; }
