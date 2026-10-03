@@ -269,6 +269,11 @@ real students' names or results into the repository (it is public).
   browsers reuse a page for ~10 min, which mixed a new section with an old one after an
   update — 2026-10-02), and if the other page's `?v=` stamp differs from the open page's,
   it opens with a full page load instead. `tests/pages.spec.js`.
+- Speed (2026-10-04): every device except "data saver" loads the other sections in the
+  background (`taPreloadSections`). My Exercises used to re-read the whole saved-files store
+  (`ta_exercise_html_cache`, several MB) once per card (~1 s with ~60 exercises): it's now read
+  once per drawing (`taReadHtmlCache`, cleared after the current task and by every writer via
+  `taForgetHtmlCache`). Don't read that key directly in loops — use `getCachedExerciseHtml`.
 - Firebase for the app (js/firebase.js, CP.html) comes from `js/vendor/firebase-10.12.5/`
   (the npm package's browser builds, import of firebase-app pointed at the folder — see its
   README). Exercise files and the downloadable points board still use gstatic.com (they open

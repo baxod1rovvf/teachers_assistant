@@ -95,3 +95,29 @@ test('on a computer, the other sections load in the background, so opening one i
   expect(ms).toBeLessThan(500);
   await expect(page.locator('#panel-students')).toHaveClass(/active/);
 });
+
+test('My Exercises reads the saved exercise files once per drawing, and sees a newly saved one at once', async ({ page, context }) => {
+  await prepare(context);
+  await page.goto('/my-exercises.html');
+  await page.waitForTimeout(1200);
+  const res = await page.evaluate(() => {
+    let reads = 0;
+    const real = Storage.prototype.getItem;
+    Storage.prototype.getItem = function (k) { if (/ta_exercise_html_cache$/.test(k)) reads++; return real.apply(this, arguments); };
+    renderRecentExercises();
+    Storage.prototype.getItem = real;
+    cacheExerciseHtml('udict', '<html>new copy</html>');
+    return { reads, fresh: getCachedExerciseHtml('udict') };
+  });
+  expect(res.reads).toBeLessThanOrEqual(1);
+  expect(res.fresh).toBe('<html>new copy</html>');
+});
+
+test('phones load the other sections in the background too', async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+  await prepare(context);
+  const page = await context.newPage();
+  await page.goto('/index.html');
+  await expect.poll(() => page.evaluate(() => ['panel-myexercises', 'panel-students', 'panel-settings'].every(id => document.getElementById(id))), { timeout: 20000 }).toBe(true);
+  await context.close();
+});

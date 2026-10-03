@@ -412,22 +412,12 @@ async function taPreloadSections() {
     try { await taLoadPage(file); } catch (e) { /* it'll load when it's opened */ }
   }
 }
+// Phones load the other sections in the background too (2026-10-04: opening a section the
+// first time waited ~2 s for its page and scripts); only "data saver" keeps to the pages' text.
 function taPrefetchPages() {
-  if (!TA_LOW_POWER) { taPreloadSections(); return; }
-  const scripts = new Set(Array.from(document.scripts).map(sc => sc.src));
+  if (!(navigator.connection && navigator.connection.saveData)) { taPreloadSections(); return; }
   TA_PAGES_FILES.forEach(file => {
-    if (TA_LOADED_PAGES.has(file)) return;
-    taFetchPage(file).then(html => {
-      if (TA_LOW_POWER) return; // phones: skip ~2 MB of scripts until a section is actually opened
-      new DOMParser().parseFromString(html, 'text/html').querySelectorAll('script[src]:not([type="module"])').forEach(sc => {
-        const src = new URL(sc.getAttribute('src'), location.href).href;
-        if (scripts.has(src)) return;
-        scripts.add(src);
-        const link = document.createElement('link');
-        link.rel = 'prefetch'; link.as = 'script'; link.href = src;
-        document.head.appendChild(link);
-      });
-    }).catch(() => { /* it'll load normally when opened */ });
+    if (!TA_LOADED_PAGES.has(file)) taFetchPage(file).catch(() => { /* it'll load normally when opened */ });
   });
 }
 
@@ -1126,11 +1116,16 @@ function slimSetRounds(list, force) {
 function setRoundHtml(item, i) {
   const r = item.mergedItems && item.mergedItems[i];
   if (r && r.html) return r.html; // sets made before this change
-  const wrapper = getCachedExerciseHtml(item.uid);
-  const m = wrapper && wrapper.match(/const HWC_ROUNDS = (.*);\n/);
-  if (!m) return null;
-  let rounds;
-  try { rounds = JSON.parse(m[1]); } catch (e) { return null; }
+  const memo = taReadHtmlCache().rounds;
+  let rounds = memo.get(item.uid);
+  if (rounds === undefined) {
+    const wrapper = getCachedExerciseHtml(item.uid);
+    const m = wrapper && wrapper.match(/const HWC_ROUNDS = (.*);\n/);
+    rounds = null;
+    if (m) { try { rounds = JSON.parse(m[1]); } catch (e) { rounds = null; } }
+    memo.set(item.uid, rounds);
+  }
+  if (!rounds) return null;
   if (!rounds[i]) return null;
   const pts = Math.max.apply(null, rounds.map(x => Number((x.html.match(/const POINTS_AWARD = (-?\d+(?:\.\d+)?);/) || [])[1]) || 0));
   return rounds[i].html
@@ -1148,7 +1143,7 @@ function taFreeExerciseCacheSpace(list) {
     const unlisted = keys.find(k => order.indexOf(k) === -1);
     const victim = unlisted || keys.sort((a, b) => order.indexOf(b) - order.indexOf(a))[0];
     delete cache[victim];
-    localStorage.setItem(LS_EXERCISE_HTML_CACHE, JSON.stringify(cache));
+    taForgetHtmlCache(); localStorage.setItem(LS_EXERCISE_HTML_CACHE, JSON.stringify(cache));
     return true;
   } catch (e) { return false; }
 }
@@ -1196,7 +1191,7 @@ function removeRecentExercise(uid) {
   try {
     const cache = JSON.parse(localStorage.getItem(LS_EXERCISE_HTML_CACHE) || '{}');
     delete cache[uid];
-    localStorage.setItem(LS_EXERCISE_HTML_CACHE, JSON.stringify(cache));
+    taForgetHtmlCache(); localStorage.setItem(LS_EXERCISE_HTML_CACHE, JSON.stringify(cache));
   } catch (e) { /* ignore */ }
   taDeleteBigFile(uid);
   if (window.renderRecentExercises) window.renderRecentExercises();
@@ -1229,7 +1224,7 @@ function cacheExerciseHtml(uid, html) {
       if (k !== uid && (i >= MAX_CACHED_EXERCISE_HTML || total > MAX_CACHED_EXERCISE_CHARS)) delete cache[k];
     });
     for (;;) {
-      try { localStorage.setItem(LS_EXERCISE_HTML_CACHE, JSON.stringify(cache)); break; }
+      try { taForgetHtmlCache(); localStorage.setItem(LS_EXERCISE_HTML_CACHE, JSON.stringify(cache)); break; }
       catch (e) {
         const oldest = Object.keys(cache).sort((a, b) => rank(b) - rank(a)).find(k => k !== uid);
         if (!oldest) throw e;
@@ -1238,11 +1233,22 @@ function cacheExerciseHtml(uid, html) {
     }
   } catch (e) { if (typeof html === 'string') taPutBigFile(uid, html); /* storage full: keep it in IndexedDB instead */ }
 }
+// The saved copies are one big text (several MB). Drawing My Exercises asks for them once per
+// card, so they're read once and shared until the drawing is done (2026-10-04: reading them
+// again for every card made opening My Exercises take ~1 s).
+let taHtmlCacheMemo = null;
+function taReadHtmlCache() {
+  if (!taHtmlCacheMemo) {
+    let cache = {};
+    try { cache = JSON.parse(localStorage.getItem(LS_EXERCISE_HTML_CACHE) || '{}') || {}; } catch (e) { cache = {}; }
+    taHtmlCacheMemo = { cache: cache, rounds: new Map() };
+    setTimeout(() => { taHtmlCacheMemo = null; }, 0);
+  }
+  return taHtmlCacheMemo;
+}
+function taForgetHtmlCache() { taHtmlCacheMemo = null; }
 function getCachedExerciseHtml(uid) {
-  try {
-    const cache = JSON.parse(localStorage.getItem(LS_EXERCISE_HTML_CACHE) || '{}');
-    return cache[uid] || taBigHtml.get(uid) || null;
-  } catch (e) { return taBigHtml.get(uid) || null; }
+  return taReadHtmlCache().cache[uid] || taBigHtml.get(uid) || null;
 }
 
 /* ---- Big exercise files (over 1 MB: sets with pictures, dictations with audio) ----
@@ -1275,12 +1281,12 @@ function taLoadBigFiles() {
   return taBigReady;
 }
 function taPutBigFile(uid, html) {
-  taBigHtml.set(uid, html);
+  taForgetHtmlCache(); taBigHtml.set(uid, html);
   // keep the newest ones that are still in My Exercises
   const order = getRecentExercises().map(e => e.uid);
   const rank = k => k === uid ? -1 : (order.indexOf(k) === -1 ? 1e9 : order.indexOf(k));
   const drop = Array.from(taBigHtml.keys()).sort((a, b) => rank(a) - rank(b)).filter((k, i) => k !== uid && (i >= MAX_BIG_FILES || order.indexOf(k) === -1));
-  drop.forEach(k => taBigHtml.delete(k));
+  taForgetHtmlCache(); drop.forEach(k => taBigHtml.delete(k));
   taBigDb().then(db => {
     const st = db.transaction('html', 'readwrite').objectStore('html');
     st.put(html, uid);
@@ -1288,6 +1294,7 @@ function taPutBigFile(uid, html) {
   }).catch(() => { /* only kept in memory until the page closes */ });
 }
 function taDeleteBigFile(uid) {
+  taForgetHtmlCache();
   if (!taBigHtml.delete(uid)) return;
   taBigDb().then(db => db.transaction('html', 'readwrite').objectStore('html').delete(uid)).catch(() => {});
 }
