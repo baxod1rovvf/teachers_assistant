@@ -193,41 +193,9 @@ function taConfettiBurst(x, y, count) {
 }
 
 let currentActiveTab = 'main';
-// Computers: the sidebar sits beside the page and starts open on every page;
-// the menu button closes it and the page takes the room.
-// Phones (860px and narrower): it slides in over the page, starts closed, and
-// the backdrop or picking a section closes it.
+// Phones and small tablets (860px and narrower): the top bar's sections become a tab bar at the bottom.
 const TA_PHONE_MQ = window.matchMedia ? window.matchMedia('(max-width: 860px)') : { matches: false };
 function taIsPhone() { return TA_PHONE_MQ.matches; }
-function taCloseSidebar() {
-  const sidebar = document.getElementById('mainSidebar');
-  if (!sidebar || sidebar.classList.contains('collapsed')) return;
-  sidebar.classList.add('collapsed');
-  if (typeof syncSidebarHamburgerIcon === 'function') syncSidebarHamburgerIcon(true);
-}
-function taSetupSidebar() {
-  const sidebar = document.getElementById('mainSidebar');
-  if (!sidebar || document.getElementById('sidebarBackdrop')) return;
-  const back = document.createElement('div');
-  back.className = 'sidebar-backdrop';
-  back.id = 'sidebarBackdrop';
-  back.addEventListener('click', taCloseSidebar);
-  sidebar.after(back);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && taIsPhone()) taCloseSidebar(); });
-  const applyMode = () => {
-    if (taIsPhone()) taCloseSidebar();
-    else sidebar.classList.remove('collapsed');
-    if (typeof syncSidebarHamburgerIcon === 'function') syncSidebarHamburgerIcon(false);
-  };
-  applyMode();
-  if (TA_PHONE_MQ.addEventListener) TA_PHONE_MQ.addEventListener('change', applyMode);
-  else if (TA_PHONE_MQ.addListener) TA_PHONE_MQ.addListener(applyMode);
-}
-function toggleSidebar() {
-  const sidebar = document.getElementById('mainSidebar');
-  if (sidebar) sidebar.classList.toggle('collapsed');
-  if (typeof syncSidebarHamburgerIcon === 'function') syncSidebarHamburgerIcon(true);
-}
 
 function switchTo(tab) {
   if (tab === 'points') tab = 'students'; // Points & Rewards is part of Students & Points now
@@ -244,10 +212,7 @@ function switchTo(tab) {
   if (taStarted && page !== taCurrentPageFile()) history.pushState(null, '', taAddressFor(page));
   if (TA_PAGE_TITLES[page]) document.title = TA_PAGE_TITLES[page];
   document.body.classList.toggle('main-hero-active', tab === 'main');
-  const toggleBtn = document.getElementById('sidebarToggleBtn');
-  if (toggleBtn) toggleBtn.style.visibility = 'visible';
-  if (taIsPhone()) taCloseSidebar(); // phones: picking a section closes the panel
-  document.querySelectorAll('.tab-btn, .side-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-btn, .side-btn, .tb-link').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
 
   document.querySelectorAll('[data-tab="' + tab + '"]').forEach(b => b.classList.add('active'));
@@ -266,6 +231,8 @@ function switchTo(tab) {
   if (CREATE_TABS.indexOf(tab) !== -1 || tab === 'hwcbuilder') {
     document.querySelectorAll('[data-tab="createpicker"]').forEach(b => b.classList.add('active'));
   }
+  if (tab === 'results') document.querySelectorAll('.tb-tab[data-tab="myexercises"]').forEach(b => b.classList.add('active'));
+  taMoveTabBlob(taStarted);
 
   if (TA_TAB_HOOKS[tab]) TA_TAB_HOOKS[tab]();
 
@@ -273,13 +240,13 @@ function switchTo(tab) {
   if (typeof aiRobotBubbleOpen !== 'undefined' && aiRobotBubbleOpen) renderAiRobotQuestionList();
 }
 
-// Builder tabs on the Create page are buttons that switch panels; sidebar
+// Builder tabs on the Create page are buttons that switch panels; top bar
 // entries are links to the other sections, opened in place by taNavigate().
 // Listening on the document also covers sections added later.
 document.addEventListener('click', function (e) {
   const btn = e.target.closest('button.tab-btn[data-tab], button.side-btn[data-tab]');
   if (btn) { switchTo(btn.dataset.tab); return; }
-  const link = e.target.closest('a.side-btn[href]');
+  const link = e.target.closest('a.side-btn[href], a.tb-link[href]');
   if (!link || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
   e.preventDefault();
   taNavigate(link.getAttribute('href'));
@@ -370,7 +337,7 @@ async function taLoadPageNow(file) {
   taInitSectionAnims();
 }
 
-// Animations that live inside one section's panels (not the shared sidebar).
+// Animations that live inside one section's panels (not the shared top bar).
 // taStartPage() only sees the first section's panels, so this runs again each
 // time taLoadPage() adds another section; each init skips a spot already playing.
 function taInitSectionAnims() {
@@ -834,8 +801,10 @@ function getTeacherName() {
 function setTeacherName(v) {
   const name = (v || '').trim() || taDefaultTeacherName();
   try { localStorage.setItem(LS_TEACHER_NAME, name); } catch (e) { /* ignore */ }
-  const sp = document.getElementById('sidebarProfileName');
+  const sp = document.getElementById('tbProfileName');
   if (sp) sp.textContent = name;
+  const fb = document.getElementById('tbAvatarFallback');
+  if (fb) fb.textContent = name.charAt(0).toUpperCase();
   const heroName = document.getElementById('heroAccountName');
   if (heroName) heroName.textContent = name;
   if (window.renderMainGreeting) window.renderMainGreeting();
@@ -1000,7 +969,7 @@ function onAvatarFileChosen(input) {
   reader.readAsDataURL(file);
 }
 
-// Tapping the profile picture (sidebar or Dashboard) changes it.
+// Tapping the profile picture on the Dashboard changes it (the top bar's picture opens a menu).
 function taPickAvatar() {
   const input = document.createElement('input');
   input.type = 'file';
@@ -1009,7 +978,7 @@ function taPickAvatar() {
   input.click();
 }
 
-// Tapping the name (sidebar or Dashboard): your name and the app's language.
+// Tapping the name (top bar menu or Dashboard): your name and the app's language.
 function taOpenProfile() {
   const login = taCurrentLogin() || '';
   const m = taModal('👤 Profile',
@@ -2742,8 +2711,8 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'How is "Top 5 Active Students" worked out?', a: 'Students are ranked by how well they did, not by how many exercises they finished. Each result becomes a fair 0–100 score (Sentences use the stars you give in Results). Use the group buttons (e.g. Target / Apex) to see one group at a time.' },
     { q: 'What is "Lessons taught"?', a: 'Every lesson on your weekly schedule counts once each time its day and time pass. Removing a lesson from the schedule keeps what it already counted.' },
     { q: 'What is the note about students who finished exercises?', a: 'When you open the app, a note lists your students who finished an exercise in the last 7 days that you haven\'t checked yet. Tap an exercise under a student\'s name (📊) to open that exercise\'s results. The note stays open, so you can open the next student\'s exercise too. Tap "Checked" for one student, or "All checked". Closing it with ✕ only hides it until next time.' },
-    { q: 'How do I change the colours or the look?', a: 'Tap the 🎨 button next to the day/night switch. Pick a Style (Classic or Glass) and a colour Design. Four designs are for day and two for night.' },
-    { q: 'How do I find something quickly?', a: 'Tap "🔍 Search" in the sidebar, or press Ctrl+K (⌘K on a Mac). Type a section, an exercise type, a group, a student or an exercise title and jump straight to it.' },
+    { q: 'How do I change the colours or the look?', a: 'In the top bar, tap the 🎨 button next to the day/night switch. Pick a Style (Classic or Glass) and a colour Design. Four designs are for day and two for night.' },
+    { q: 'How do I find something quickly?', a: 'Tap 🔍 in the top bar, or press Ctrl+K (⌘K on a Mac). Type a section, an exercise type, a group, a student or an exercise title and jump straight to it.' },
   ]),
   createpicker: aiFaq([
     { q: 'Can I combine several exercises into one?', a: 'Yes — that\'s Homework & Class on this page. Choose Homework (students do it on their own) or Class (used together in a lesson), build round 1, tap "➕ Add Another Exercise" for the next round, then "Create ⬇".' },
@@ -2788,7 +2757,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'How do I add a whole class at once?', a: 'Tap "📋 Add many". Paste a class list (one student per line, "Name, ID", or copied straight from Excel/Google Sheets) or choose a CSV file. Students without an ID get the next free number.' },
     { q: 'What are groups?', a: 'Every student belongs to one group (for example two classes). A group has its lesson days and times (set them with "➕ Add group" or ✎ on the group) — they show in Upcoming Lessons on the Dashboard. Exercises can be made for a group, and Results then show who in that group didn\'t do it.' },
     { q: 'How do points work?', a: 'Students earn points by finishing exercises with their ID. Open a group: each student\'s points are next to their name and ID. Tap the 🪙 points to see where they came from.' },
-    { q: 'How do I give or take points by hand?', a: 'Open the group and tap + or − next to the student\'s points, then type how many. It shows up as "Bonus: By Teacher <your name>" (tap your name in the sidebar to change it).' },
+    { q: 'How do I give or take points by hand?', a: 'Open the group and tap + or − next to the student\'s points, then type how many. It shows up as "Bonus: By Teacher <your name>" (to change it, tap your picture at the top right, then your name).' },
     { q: 'Do students need an account?', a: 'No — their ID is all they need to submit exercises and get points.' },
     { q: 'A student\'s results are missing — why?', a: 'Usually the student typed a wrong ID or just a name. Their results then show under "Entered with a name only" and are left out of Statistics and Top 5.' }
   ]),
@@ -2813,7 +2782,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'How do I bring back deleted results or data?', a: 'Under 💾 Backup tap "⬆ Restore from file" and choose a backup. You can bring back the app\'s data, and/or put back results that were deleted from the database.' },
     { q: 'How do I put the app on my phone or computer?', a: 'Under 📲 Install on this device tap Install (Chrome, Edge, Android). On iPhone/iPad open the app in Safari → Share → Add to Home Screen.' },
     { q: 'What is 🩺 Status?', a: 'It shows how the app is doing on this device: database, sign-in, results kept, sync, last backup, links space and storage. If something doesn\'t work, a ⚠️ here usually says why.' },
-    { q: 'What is sync?', a: 'Your data is copied (encrypted) to the cloud so other devices show the same things. If the sidebar says "☁️ Sync is off", tap it and enter your password.' },
+    { q: 'What is sync?', a: 'Your data is copied (encrypted) to the cloud so other devices show the same things. If your picture at the top right has a red dot, tap it: when it says "☁️ Sync is off", tap that and enter your password.' },
   ]),
   'ielts-listening': aiFaq([
     { q: 'How do IELTS Listening exercises work?', a: "Full IELTS-style listening tests (build any of the 4 parts; students do the ones you built, in order), tracked separately from your other exercises — they don't affect Statistics or Points." }
@@ -3223,37 +3192,6 @@ function initAiRobotWidget() {
 }
 window.initAiRobotWidget = initAiRobotWidget;
 
-/* ================= SIDEBAR HAMBURGER ANIMATION ================= */
-const HAMBURGER_SEGMENTS = { toX: [0, 45], toHamburger: [45, 75] };
-let sidebarHamburgerLottieAnim = null;
-function initSidebarHamburgerAnim() {
-  const el = document.getElementById('sidebarHamburgerAnim');
-  if (!el || typeof lottie === 'undefined' || sidebarHamburgerLottieAnim) return;
-  try {
-    el.innerHTML = '';
-    sidebarHamburgerLottieAnim = lottie.loadAnimation({
-      container: el, renderer: 'svg', loop: false, autoplay: false, animationData: HAMBURGER_MENU_ANIM
-    });
-    sidebarHamburgerLottieAnim.addEventListener('DOMLoaded', function () {
-      syncSidebarHamburgerIcon(false);
-    });
-  } catch (e) { /* decorative — fail silently */ }
-}
-window.initSidebarHamburgerAnim = initSidebarHamburgerAnim;
-function syncSidebarHamburgerIcon(animate) {
-  if (!sidebarHamburgerLottieAnim) return;
-  const sidebar = document.getElementById('mainSidebar');
-  const isOpen = !!sidebar && !sidebar.classList.contains('collapsed');
-  try {
-    if (animate) {
-      sidebarHamburgerLottieAnim.playSegments(isOpen ? HAMBURGER_SEGMENTS.toX : HAMBURGER_SEGMENTS.toHamburger, true);
-    } else {
-      sidebarHamburgerLottieAnim.goToAndStop(isOpen ? HAMBURGER_SEGMENTS.toX[1] : HAMBURGER_SEGMENTS.toHamburger[1], true);
-    }
-  } catch (e) { /* ignore */ }
-}
-window.syncSidebarHamburgerIcon = syncSidebarHamburgerIcon;
-
 /* ================= RESULTS PERCENTAGE STAT ANIMATIONS ================= */
 function initPercentStatAnim(containerId) {
   const el = document.getElementById(containerId);
@@ -3353,7 +3291,7 @@ document.addEventListener('keydown', e => {
 /* ================= QUICK SEARCH (Ctrl+K) =================
    One box to jump anywhere: a section, an exercise builder, a group, a
    student, or an exercise in My Exercises. Opens with Ctrl+K (⌘K on a Mac),
-   "/" when not typing, or the 🔍 Search button in the sidebar. */
+   "/" when not typing, or the 🔍 button in the top bar. */
 const TA_TAB_LABELS = {
   main: ['🎓', 'Dashboard'], createpicker: ['➕', 'Create'], dashboard: ['📊', 'Statistics'],
   myexercises: ['📁', 'My Exercises'], students: ['👥', 'Students & Points'], results: ['📋', 'Results'],
@@ -3456,7 +3394,6 @@ function openQuickSearch() {
     const it = shown[k];
     if (!it) return;
     m.close();
-    if (taIsPhone()) taCloseSidebar();
     it.go();
   };
   input.addEventListener('input', () => { sel = 0; render(); });
@@ -3481,18 +3418,141 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-function taMountQuickSearch() {
-  const nav = document.querySelector('#mainSidebar nav');
-  if (!nav || document.getElementById('quickSearchBtn')) return;
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.id = 'quickSearchBtn';
-  btn.className = 'quick-search-btn';
+/* ================= TOP BAR (tab bar on phones) =================
+   Fixed at the top, in the page's own colour: the logo; the 5 sections in the
+   middle — the one you're in sits in a circle of the design's colour, which
+   moves like a drop of liquid when you switch (taMoveTabBlob); and on the
+   right search, day/night, design, sound, Settings and the profile.
+   Phones (860px and narrower): the 5 sections become a tab bar at the bottom. */
+const TA_TOPBAR_TABS = [
+  { tab: 'main', href: 'index.html', label: 'Dashboard', icon: 'images/icons/nav/dashboard.png' },
+  { tab: 'createpicker', href: 'create.html', label: 'Create', icon: 'images/icons/nav/create.png' },
+  { tab: 'myexercises', href: 'my-exercises.html', label: 'My Exercises', icon: 'images/icons/nav/my-exercises.png' },
+  { tab: 'dashboard', href: 'statistics.html', label: 'Statistics', icon: 'images/icons/nav/statistics.png' },
+  { tab: 'students', href: 'students.html', label: 'Students', icon: 'images/icons/students.png' }
+];
+function taMountTopBar() {
+  if (document.getElementById('taTopbar')) return;
   const mac = /Mac|iPhone|iPad/.test(navigator.platform || '');
-  btn.innerHTML = '<span>🔍 Search</span><kbd>' + (mac ? '⌘' : 'Ctrl') + ' K</kbd>';
-  btn.onclick = openQuickSearch;
-  nav.parentNode.insertBefore(btn, nav);
+  const bar = document.createElement('header');
+  bar.className = 'ta-topbar';
+  bar.id = 'taTopbar';
+  bar.innerHTML =
+    '<a class="tb-brand tb-link" href="index.html" title="Dashboard" aria-label="Teacher\'s Assistant — Dashboard"><img src="images/app/logo-mark.png" alt=""></a>' +
+    '<nav class="tb-nav" id="taTabNav" aria-label="Sections">' +
+      '<svg class="tb-blob-svg" aria-hidden="true"><path id="taTabBlob" class="tb-blob-path"/></svg>' +
+      TA_TOPBAR_TABS.map(t => '<a class="tb-tab tb-link" href="' + t.href + '" data-tab="' + t.tab + '" title="' + t.label + '">' +
+        '<span class="tb-ic" style="-webkit-mask-image:url(' + t.icon + ');mask-image:url(' + t.icon + ')"></span><span class="tb-label">' + t.label + '</span></a>').join('') +
+    '</nav>' +
+    '<div class="tb-tools">' +
+      '<button class="tb-tool" id="quickSearchBtn" type="button" onclick="openQuickSearch()" title="Search (' + (mac ? '⌘' : 'Ctrl') + ' K)" aria-label="Search">' +
+        '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button>' +
+      '<div class="hero-theme-toggle tb-theme" id="themeToggleAnim" onclick="toggleThemeAnimated()" title="Switch day/night mode" role="button" aria-label="Switch day/night mode">🌙</div>' +
+      '<div class="hero-design-wrap"><button class="tb-tool hero-design-btn" id="designPickerBtn" type="button" onclick="toggleDesignPicker(event)" title="Change design" aria-label="Change design" aria-expanded="false"><span class="design-dot"></span></button>' +
+        '<div class="design-picker" id="designPicker" hidden></div></div>' +
+      '<button class="tb-tool" id="soundToggleBtn" type="button" onclick="setSoundEnabled(!taSoundEnabled())" title="Sound effects: On" aria-label="Sound effects: On">🔊</button>' +
+      '<a class="tb-tool tb-link" href="settings.html" data-tab="settings" title="Settings" aria-label="Settings">' +
+        '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a>' +
+      '<div class="tb-profile-wrap">' +
+        '<button class="tb-avatar avatar-btn" id="tbAvatarBtn" type="button" onclick="taToggleProfileMenu(event)" title="Your profile" aria-label="Your profile" aria-expanded="false">' +
+          '<img class="avatar-img" style="display:none;" alt=""><div class="avatar-fallback" id="tbAvatarFallback">T</div></button>' +
+        '<div class="tb-profile-menu" id="tbProfileMenu" hidden>' +
+          '<button type="button" class="tb-menu-head" onclick="taOpenProfile()" title="Your name and language"><b id="tbProfileName" translate="no">Teacher</b><small id="tbProfileLogin" translate="no"></small></button>' +
+          '<div class="tb-sync-slot" id="tbSyncSlot"></div>' +
+          '<button type="button" class="tb-menu-item" onclick="taPickAvatar()">🖼️ Change profile picture</button>' +
+          '<button type="button" class="tb-menu-item danger" onclick="taLogout()">🚪 Log out</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  document.body.prepend(bar);
+  document.body.classList.add('has-topbar');
+  const fb = document.getElementById('tbAvatarFallback');
+  if (fb) fb.textContent = (getTeacherName() || 'T').trim().charAt(0).toUpperCase() || 'T';
+  if (window.taMountSyncStatus) window.taMountSyncStatus();
+  window.addEventListener('resize', () => taMoveTabBlob(false), { passive: true });
+  if (TA_PHONE_MQ.addEventListener) TA_PHONE_MQ.addEventListener('change', () => taMoveTabBlob(false));
 }
+function taToggleProfileMenu(ev) {
+  if (ev) ev.stopPropagation();
+  const menu = document.getElementById('tbProfileMenu'), btn = document.getElementById('tbAvatarBtn');
+  if (!menu) return;
+  const open = menu.hasAttribute('hidden');
+  if (open) menu.removeAttribute('hidden'); else menu.setAttribute('hidden', '');
+  if (btn) btn.setAttribute('aria-expanded', String(open));
+}
+document.addEventListener('click', e => {
+  const menu = document.getElementById('tbProfileMenu');
+  if (menu && !menu.hasAttribute('hidden') && (!e.target.closest('.tb-profile-wrap') || e.target.closest('.tb-menu-item, .tb-menu-head'))) menu.setAttribute('hidden', '');
+});
+document.addEventListener('keydown', e => {
+  const menu = document.getElementById('tbProfileMenu');
+  if (e.key === 'Escape' && menu && !menu.hasAttribute('hidden')) menu.setAttribute('hidden', '');
+});
+window.taToggleProfileMenu = taToggleProfileMenu;
+
+// Moves the coloured circle to the section you're in. Animated like a drop of liquid
+// (as in the "Liquid Tab Bar" animation): the front races to the new section, the back
+// follows a little later, joined by a narrowing neck — then it wobbles as it settles.
+const TA_BLOB_R = 21;
+let taTabBlobAt = null, taTabBlobRaf = 0;
+function taBlobPath(x1, r1, x2, r2, y, rx, ry) {
+  // one circle (an ellipse while it wobbles)
+  if (Math.abs(x2 - x1) < 0.5) {
+    rx = rx || r2; ry = ry || r2;
+    return 'M' + (x2 - rx) + ',' + y + ' a' + rx + ',' + ry + ' 0 1,0 ' + (2 * rx) + ',0 a' + rx + ',' + ry + ' 0 1,0 ' + (-2 * rx) + ',0 Z';
+  }
+  // back circle (x1, r1) joined to the front circle (x2, r2) by a neck that narrows in the middle
+  const dir = x2 > x1 ? 1 : 0, mx = (x1 + x2) / 2;
+  const waist = Math.max(3, Math.min(r1, r2) * (1 - Math.min(1, Math.abs(x2 - x1) / 260) * 0.55));
+  return 'M' + x1 + ',' + (y - r1) +
+    ' Q' + mx + ',' + (y - waist) + ' ' + x2 + ',' + (y - r2) +
+    ' A' + r2 + ',' + r2 + ' 0 1,' + dir + ' ' + x2 + ',' + (y + r2) +
+    ' Q' + mx + ',' + (y + waist) + ' ' + x1 + ',' + (y + r1) +
+    ' A' + r1 + ',' + r1 + ' 0 1,' + dir + ' ' + x1 + ',' + (y - r1) + ' Z';
+}
+function taMoveTabBlob(animate) {
+  const nav = document.getElementById('taTabNav'), blob = document.getElementById('taTabBlob');
+  if (!nav || !blob) return;
+  cancelAnimationFrame(taTabBlobRaf);
+  const active = nav.querySelector('.tb-tab.active');
+  if (!active) { blob.setAttribute('d', ''); taTabBlobAt = null; return; }
+  const ic = active.querySelector('.tb-ic');
+  const nr = nav.getBoundingClientRect(), ir = ic.getBoundingClientRect();
+  if (!ir.width) return; // not drawn yet
+  const x = ir.left + ir.width / 2 - nr.left, y = ir.top + ir.height / 2 - nr.top;
+  const from = taTabBlobAt;
+  taTabBlobAt = { x: x, y: y };
+  const R = TA_BLOB_R;
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!animate || !from || reduce || Math.abs(from.x - x) < 1) { blob.setAttribute('d', taBlobPath(x, R, x, R, y)); return; }
+  const x0 = from.x, dur = 700, t0 = performance.now();
+  const clamp = v => Math.max(0, Math.min(1, v));
+  const outCubic = v => 1 - Math.pow(1 - v, 3);
+  const inOut = v => v < 0.5 ? 4 * v * v * v : 1 - Math.pow(-2 * v + 2, 3) / 2;
+  const step = now => {
+    const t = clamp((now - t0) / dur);
+    const head = x0 + (x - x0) * outCubic(clamp(t / 0.5));
+    const tp = inOut(clamp((t - 0.1) / 0.55));
+    const tail = x0 + (x - x0) * tp;
+    let d;
+    if (tp < 1) {
+      const rTail = R * (1 - 0.55 * Math.sin(Math.PI * Math.min(1, tp * 1.1)));   // the back thins as it follows
+      const rHead = R * (1 + 0.06 * Math.sin(Math.PI * clamp(t / 0.5)));
+      d = taBlobPath(tail, Math.max(4, rTail), head, rHead, y);
+    } else {
+      // together again: a little wobble that fades out
+      const w = clamp((t - 0.65) / 0.35), k = Math.sin(w * Math.PI * 3) * (1 - w) * 0.14;
+      d = taBlobPath(x, R, x, R, y, R * (1 + k), R * (1 - k));
+    }
+    blob.setAttribute('d', d);
+    if (t < 1) taTabBlobRaf = requestAnimationFrame(step);
+    else blob.setAttribute('d', taBlobPath(x, R, x, R, y));
+  };
+  taTabBlobRaf = requestAnimationFrame(step);
+  // the icon pops in its new circle
+  if (ic.animate) ic.animate([{ transform: 'scale(0.6)' }, { transform: 'scale(1.15)', offset: 0.6 }, { transform: 'scale(1)' }], { duration: 420, delay: 220, easing: 'ease-out', fill: 'backwards' });
+}
+window.taMoveTabBlob = taMoveTabBlob;
 
 /* ================= PAGE START =================
    Each page script calls this last, once all of its own functions exist. */
@@ -3508,13 +3568,12 @@ function taStartPage(defaultTab) {
     history.replaceState(null, '', taAddressFor(taCurrentPageFile(), location.search, location.hash));
   }
   taLoadBigFiles();
-  taSetupSidebar();
-  taMountQuickSearch();
+  taMountTopBar();
   applyTheme();
   updateSoundToggleUI();
   applyAvatar();
-  document.getElementById('sidebarProfileName').textContent = getTeacherName();
-  (function () { const el = document.getElementById('sidebarProfileLogin'); if (el && taCurrentLogin()) el.textContent = '@' + taCurrentLogin(); })();
+  document.getElementById('tbProfileName').textContent = getTeacherName();
+  (function () { const el = document.getElementById('tbProfileLogin'); if (el && taCurrentLogin()) el.textContent = '@' + taCurrentLogin(); })();
   // create.html#flashcard opens the Flashcard builder directly, and so on.
   const hashTab = decodeURIComponent(location.hash.slice(1));
   switchTo(hashTab && document.getElementById('panel-' + hashTab) ? hashTab : defaultTab);
@@ -3523,7 +3582,6 @@ function taStartPage(defaultTab) {
   initCreateIconAnim();
   taInitSectionAnims();
   initAiRobotWidget();
-  initSidebarHamburgerAnim();
 
   setTimeout(showReminderToastIfDue, 900);
   setTimeout(taSweepPlayLinksIfDue, 8000);

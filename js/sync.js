@@ -45,17 +45,19 @@
   function getLocal(k) { return raw.get(ns + k); }
   function setLocal(k, v) { if (v === null || v === undefined) raw.remove(ns + k); else raw.set(ns + k, v); }
 
-  /* ---------- status line (shown in the sidebar) ---------- */
+  /* ---------- status line (in the top bar's profile menu) ---------- */
   var status = { text: '', cls: '' };
   function setStatus(text, cls) {
     status = { text: text, cls: cls || '' };
     var el = document.getElementById('taSyncStatus');
     if (el) { el.textContent = text; el.className = 'sync-status' + (cls ? ' ' + cls : ''); }
+    var bar = document.getElementById('taTopbar');   // a dot on the profile picture when sync needs the teacher
+    if (bar) bar.setAttribute('data-sync', cls || '');
   }
   function mountStatus() {
     if (document.getElementById('taSyncStatus')) return;
-    var profile = document.querySelector('.sidebar-profile');
-    if (!profile) return;
+    var slot = document.getElementById('tbSyncSlot');
+    if (!slot) return;
     var el = document.createElement('button');
     el.type = 'button';
     el.id = 'taSyncStatus';
@@ -64,9 +66,10 @@
       if (status.cls === 'off') askPasswordAndStart();
       else if (status.cls === 'bad') syncNow();
     });
-    profile.parentNode.insertBefore(el, profile);
+    slot.appendChild(el);
     setStatus(status.text, status.cls);
   }
+  window.taMountSyncStatus = mountStatus;   // the top bar calls it once it's there
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountStatus); else mountStatus();
 
   /* ---------- key ---------- */
@@ -359,7 +362,7 @@
     try {
       if (typeof applyTheme === 'function') applyTheme(); // a design chosen on another device
       if (typeof applyAvatar === 'function') applyAvatar();
-      var nameEl = document.getElementById('sidebarProfileName');
+      var nameEl = document.getElementById('tbProfileName');
       if (nameEl && typeof getTeacherName === 'function') nameEl.textContent = getTeacherName();
       if (typeof switchTo === 'function' && typeof currentActiveTab !== 'undefined') switchTo(currentActiveTab);
       if (window.renderRecentExercises) window.renderRecentExercises();

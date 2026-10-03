@@ -1,4 +1,4 @@
-// Every page of the app opens without errors, and the sidebar moves between them.
+// Every page of the app opens without errors, and the top bar moves between them.
 const { test, expect } = require('@playwright/test');
 const { prepare, watchErrors, hideNotices } = require('./support/app');
 
@@ -10,12 +10,12 @@ for (const file of PAGES) {
     const errors = watchErrors(page);
     await page.goto('/' + file);
     await page.waitForTimeout(1500);
-    await expect(page.locator('#mainSidebar')).toBeAttached();
+    await expect(page.locator('#taTopbar')).toBeVisible();
     expect(errors).toEqual([]);
   });
 }
 
-test('the sidebar opens each section without reloading', async ({ page, context }) => {
+test('the top bar opens each section without reloading', async ({ page, context }) => {
   await prepare(context);
   const errors = watchErrors(page);
   await page.goto('/index.html');
@@ -80,7 +80,7 @@ test('Results isn\'t in the menu: it opens from View Results, with a way back to
   await page.goto('/my-exercises.html');
   await page.waitForTimeout(1200);
   await hideNotices(page);
-  await expect(page.locator('.side-btn[data-tab="results"]')).toBeHidden();
+  await expect(page.locator('#taTopbar [data-tab="results"]')).toHaveCount(0);
   await page.locator('.myex-card', { hasText: 'Kitchen' }).locator('.myex-results').click();
   await expect(page.locator('#panel-results')).toHaveClass(/active/, { timeout: 8000 });
   await page.locator('.res-back-btn').click();
@@ -144,4 +144,48 @@ test('the Dashboard opens quickly even with many long dictations (and their scor
   expect(res.ms).toBeLessThan(1500);   // was ~5 s before 2026-10-04
   expect(res.score).toBe(res.slow);
   expect(res.again).toBe(res.score);
+});
+
+test('top bar: 5 sections in the middle, the one you\'re in has the coloured circle; tools and Settings on the right', async ({ page, context }) => {
+  await prepare(context);
+  const errors = watchErrors(page);
+  await page.setViewportSize({ width: 1300, height: 800 });
+  await page.goto('/index.html');
+  await page.waitForTimeout(1500);
+  await hideNotices(page);
+  await expect(page.locator('#taTopbar .tb-tab .tb-label')).toHaveText(['Dashboard', 'Create', 'My Exercises', 'Statistics', 'Students']);
+  for (const id of ['#quickSearchBtn', '#themeToggleAnim', '#designPickerBtn', '#soundToggleBtn', '#taTopbar [data-tab="settings"]', '#tbAvatarBtn']) await expect(page.locator(id)).toBeVisible();
+  await expect(page.locator('#mainSidebar')).toHaveCount(0);
+  // in the middle, and fixed at the top
+  const nav = await page.locator('#taTabNav').boundingBox();
+  expect(Math.abs(nav.x + nav.width / 2 - 650)).toBeLessThan(40);
+  await page.mouse.wheel(0, 600);
+  await page.waitForTimeout(200);
+  expect((await page.locator('#taTopbar').boundingBox()).y).toBe(0);
+  const circleAt = () => page.evaluate(() => { const r = document.getElementById('taTabBlob').getBoundingClientRect(); return Math.round(r.left + r.width / 2); });
+  const iconAt = tab => page.evaluate(t => { const r = document.querySelector('.tb-tab[data-tab="' + t + '"] .tb-ic').getBoundingClientRect(); return Math.round(r.left + r.width / 2); }, tab);
+  await expect(page.locator('.tb-tab[data-tab="main"]')).toHaveClass(/active/);
+  expect(Math.abs(await circleAt() - await iconAt('main'))).toBeLessThan(3);
+  // switching: the circle travels to the new section
+  await page.locator('.tb-tab[data-tab="myexercises"]').click();
+  await expect(page.locator('#panel-myexercises')).toHaveClass(/active/, { timeout: 8000 });
+  await expect(page.locator('.tb-tab[data-tab="myexercises"]')).toHaveClass(/active/);
+  await expect.poll(async () => Math.abs(await circleAt() - await iconAt('myexercises')), { timeout: 3000 }).toBeLessThan(3);
+  // Settings is in the top bar
+  await page.locator('#taTopbar [data-tab="settings"]').click();
+  await expect(page.locator('#panel-settings')).toHaveClass(/active/, { timeout: 8000 });
+  expect(errors).toEqual([]);
+});
+
+test('on a phone, the sections are a tab bar at the bottom', async ({ page, context }) => {
+  await prepare(context);
+  await page.setViewportSize({ width: 390, height: 800 });
+  await page.goto('/index.html');
+  await page.waitForTimeout(1500);
+  await hideNotices(page);
+  const nav = await page.locator('#taTabNav').boundingBox();
+  expect(nav.y + nav.height).toBeGreaterThan(780);
+  expect(nav.width).toBeGreaterThan(380);
+  await page.locator('.tb-tab[data-tab="dashboard"]').click();
+  await expect(page.locator('#panel-dashboard')).toHaveClass(/active/, { timeout: 8000 });
 });

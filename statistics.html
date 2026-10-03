@@ -11,11 +11,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Teacher's Asst">
 <!-- Shared by every page: accounts must load first (it scopes this browser's storage to the signed-in teacher). -->
-<script src="js/accounts.js?v=20261003s"></script>
-<script src="js/i18n.js?v=20261003s"></script>
-<script src="js/sync.js?v=20261003s"></script>
-<script src="js/lottie.min.js?v=20261003s"></script>
-<link rel="stylesheet" href="css/style.css?v=20261003s">
+<script src="js/accounts.js?v=20261003u"></script>
+<script src="js/i18n.js?v=20261003u"></script>
+<script src="js/sync.js?v=20261003u"></script>
+<script src="js/lottie.min.js?v=20261003u"></script>
+<link rel="stylesheet" href="css/style.css?v=20261003u">
 </head>
 <body>
 
@@ -46,34 +46,7 @@
   </div>
 </div>
 
-<button class="sidebar-toggle-btn" id="sidebarToggleBtn" type="button" onclick="toggleSidebar()" title="Show/hide menu">
-  <div class="sidebar-hamburger-anim" id="sidebarHamburgerAnim">☰</div>
-</button>
 <div class="app-shell">
-  <aside class="sidebar collapsed" id="mainSidebar">
-    <div class="sidebar-brand"><span class="brand-tile"><img src="images/app/logo-mark.png" alt=""></span><span class="brand-name" translate="no"><b>Teacher's</b> <span>Assistant</span></span></div>
-    <a class="side-btn sidebar-cta" href="create.html" data-tab="createpicker">➕ Create New Exercise</a>
-    <nav style="display:flex; flex-direction:column; gap:4px;">
-      <a class="side-btn" href="index.html" data-tab="main">🎓 Dashboard</a>
-      <a class="side-btn" href="create.html" data-tab="createpicker"><span class="side-icon-anim" id="createIconAnim">➕</span> Create</a>
-      <a class="side-btn" href="my-exercises.html" data-tab="myexercises">📁 My Exercises</a>
-      <div style="height:8px;"></div>
-      <a class="side-btn" href="statistics.html" data-tab="dashboard"><span class="side-icon-anim" id="statsIconAnim">📊</span> Statistics</a>
-      <a class="side-btn" href="students.html" data-tab="students"><img class="side-icon-img icon-mono" src="images/icons/students.png" alt=""> Students &amp; Points</a>
-      <a class="side-btn" href="results.html" data-tab="results"><img class="side-icon-img" src="data:image/png;base64,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" alt=""> Results</a>
-      <a class="side-btn" href="settings.html" data-tab="settings">⚙️ Settings</a>
-    </nav>
-    <div class="sidebar-spacer"></div>
-    <div class="sidebar-profile">
-      <button type="button" class="avatar-btn" onclick="taPickAvatar()" title="Change profile picture" aria-label="Change profile picture"><img class="avatar-img" id="sidebarAvatarImg" style="display:none;" alt=""><div class="avatar-fallback" id="sidebarAvatarFallback">T</div></button>
-      <div class="sidebar-profile-text" onclick="taOpenProfile()" title="Your name and language">
-        <div class="sidebar-profile-name" id="sidebarProfileName">Toxirjon</div>
-        <div class="sidebar-profile-role" id="sidebarProfileLogin">Teacher</div>
-      </div>
-      <button class="sidebar-logout-btn" type="button" onclick="taLogout();" title="Log out" aria-label="Log out"><svg class="logout-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 7.6V4.6A1.6 1.6 0 0 0 13.4 3H5.2"/><path d="M15 16.4v3a1.6 1.6 0 0 1-1.6 1.6H10"/><path d="M4.9 3.2l3.9 1.2A1.7 1.7 0 0 1 10 6v14.4a1 1 0 0 1-1.3 1l-3.9-1.3A1.7 1.7 0 0 1 3.6 18.5V4.4a1.2 1.2 0 0 1 1.3-1.2z"/><path d="M12.6 12h8.8M18.4 9l3 3-3 3"/></svg></button>
-    </div>
-  </aside>
-
   <div class="main-content">
 <div class="wrap">
   <div class="masthead">
@@ -137,9 +110,9 @@
   </div>
 </div>
 
-<script src="js/animations.js?v=20261003s"></script>
-<script src="js/common.js?v=20261003s"></script>
-<script src="js/pages/statistics.js?v=20261003s"></script>
-<script type="module" src="js/firebase.js?v=20261003s"></script>
+<script src="js/animations.js?v=20261003u"></script>
+<script src="js/common.js?v=20261003u"></script>
+<script src="js/pages/statistics.js?v=20261003u"></script>
+<script type="module" src="js/firebase.js?v=20261003u"></script>
 </body>
 </html>

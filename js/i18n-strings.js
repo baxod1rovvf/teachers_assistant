@@ -60,6 +60,7 @@ window.TA_I18N_ROWS = [
   ['Points & Rewards', 'Ballar va mukofotlar', 'Баллы и награды'],
   ['Settings', 'Sozlamalar', 'Настройки'],
   ['Log out', 'Chiqish', 'Выйти'],
+  ['Your profile', 'Profilingiz', 'Ваш профиль'],
   ['Show/hide menu', 'Menyuni ochish/yopish', 'Показать/скрыть меню'],
   ['Sync is off — tap to turn it on', 'Sinxronlash oʻchiq — yoqish uchun bosing', 'Синхронизация выключена — нажмите, чтобы включить'],
   ['Synced', 'Sinxronlandi', 'Синхронизировано'],
@@ -848,14 +849,14 @@ window.TA_ROBOT_I18N = {
     'При открытии приложения появляется список ваших учеников, которые за последние 7 дней закончили упражнение, а вы его ещё не проверили. Нажмите на упражнение под именем ученика (📊), чтобы открыть результаты этого упражнения. Сообщение остаётся открытым, так что можно сразу открыть упражнение следующего ученика. Нажмите «Checked» для одного ученика или «All checked» для всех. Закрытие крестиком ✕ скрывает его только до следующего раза.'],
   'How do I change the colours or the look?': [
     'Ranglar yoki koʻrinishni qanday oʻzgartiraman?',
-    'Kunduz/tun tugmachasi yonidagi 🎨 tugmasini bosing. Uslubni (Classic yoki Glass) va rang dizaynini tanlang. Toʻrtta dizayn kunduz uchun, ikkitasi tun uchun.',
+    'Yuqori paneldagi kunduz/tun tugmachasi yonidagi 🎨 tugmasini bosing. Uslubni (Classic yoki Glass) va rang dizaynini tanlang. Toʻrtta dizayn kunduz uchun, ikkitasi tun uchun.',
     'Как поменять цвета или внешний вид?',
-    'Нажмите кнопку 🎨 рядом с переключателем день/ночь. Выберите стиль (Classic или Glass) и цветовое оформление. Четыре варианта — дневные, два — ночные.'],
+    'На верхней панели нажмите кнопку 🎨 рядом с переключателем день/ночь. Выберите стиль (Classic или Glass) и цветовое оформление. Четыре варианта — дневные, два — ночные.'],
   'How do I find something quickly?': [
     'Biror narsani tez qanday topaman?',
-    'Yon paneldagi “🔍 Qidirish” ni bosing yoki Ctrl+K (Mac’da ⌘K) ni bosing. Boʻlim, mashq turi, guruh, oʻquvchi yoki mashq nomini yozing va darhol oʻshanga oʻting.',
+    'Yuqori paneldagi 🔍 ni bosing yoki Ctrl+K (Mac’da ⌘K) ni bosing. Boʻlim, mashq turi, guruh, oʻquvchi yoki mashq nomini yozing va darhol oʻshanga oʻting.',
     'Как быстро что-нибудь найти?',
-    'Нажмите «🔍 Поиск» в боковой панели или Ctrl+K (⌘K на Mac). Введите раздел, тип упражнения, группу, ученика или название упражнения — и сразу перейдёте туда.'],
+    'Нажмите 🔍 на верхней панели или Ctrl+K (⌘K на Mac). Введите раздел, тип упражнения, группу, ученика или название упражнения — и сразу перейдёте туда.'],
   'Can I combine several exercises into one?': [
     'Bir nechta mashqni bittaga birlashtirsa boʻladimi?',
     'Ha — bu shu sahifadagi “Uy vazifasi va dars”. Uy vazifasi (oʻquvchilar mustaqil bajaradi) yoki Dars (darsda birga ishlatiladi) ni tanlang, 1-bosqichni tuzing, keyingi bosqich uchun “➕ Yana mashq qoʻshish” ni, oxirida “Yaratish ⬇” ni bosing.',
@@ -1098,9 +1099,9 @@ window.TA_ROBOT_I18N = {
     'Ученики получают баллы, заканчивая упражнения со своим ID. Откройте группу: баллы каждого ученика — рядом с его именем и ID. Нажмите на 🪙 баллы, чтобы увидеть, откуда они.'],
   'How do I give or take points by hand?': [
     'Ballarni qoʻlda qanday beraman yoki olaman?',
-    'Guruhni oching va oʻquvchi ballari yonidagi + yoki − ni bosib, necha ball ekanini yozing. U “Bonus: By Teacher <ismingiz>” boʻlib chiqadi (ismingizni oʻzgartirish uchun yon paneldagi ismingizni bosing).',
+    'Guruhni oching va oʻquvchi ballari yonidagi + yoki − ni bosib, necha ball ekanini yozing. U “Bonus: By Teacher <ismingiz>” boʻlib chiqadi (ismingizni oʻzgartirish uchun yuqori oʻng burchakdagi rasmingizni, keyin ismingizni bosing).',
     'Как вручную начислить или снять баллы?',
-    'Откройте группу, нажмите + или − рядом с баллами ученика и введите количество. Это появится как «Bonus: By Teacher <ваше имя>» (чтобы изменить имя, нажмите на него в боковом меню).'],
+    'Откройте группу, нажмите + или − рядом с баллами ученика и введите количество. Это появится как «Bonus: By Teacher <ваше имя>» (чтобы изменить имя, нажмите на свою картинку вверху справа, затем на имя).'],
   'How do I make a backup?': [
     'Zaxira nusxani qanday olaman?',
     '💾 Zaxira nusxa boʻlimida “⬇ Zaxira nusxani yuklab olish” ni bosing. Bitta faylda oʻquvchilar, guruhlar, mashqlar, jadval va barcha natijalar boʻladi. Uni xavfsiz joyda saqlang (faqat shu qurilmada emas). Ilova har hafta eslatadi.',
@@ -1123,9 +1124,9 @@ window.TA_ROBOT_I18N = {
     'Показывает, как приложение работает на этом устройстве: база, вход, сохранённые результаты, синхронизация, последняя резервная копия, место под ссылки и память. Если что-то не работает, ⚠️ здесь обычно объясняет почему.'],
   'What is sync?': [
     'Sinxronlash nima?',
-    'Maʼlumotlaringiz (shifrlangan holda) bulutga nusxalanadi, shunda boshqa qurilmalarda ham bir xil narsa koʻrinadi. Yon panelda “☁️ Sinxronlash oʻchiq” deb tursa, uni bosing va parolingizni kiriting.',
+    'Maʼlumotlaringiz (shifrlangan holda) bulutga nusxalanadi, shunda boshqa qurilmalarda ham bir xil narsa koʻrinadi. Yuqori oʻng burchakdagi rasmingizda qizil nuqta boʻlsa, uni bosing: “☁️ Sinxronlash oʻchiq” deb tursa, shuni bosing va parolingizni kiriting.',
     'Что такое синхронизация?',
-    'Ваши данные копируются (в зашифрованном виде) в облако, чтобы на других устройствах было то же самое. Если в боковой панели написано «☁️ Синхронизация выключена», нажмите и введите пароль.'],
+    'Ваши данные копируются (в зашифрованном виде) в облако, чтобы на других устройствах было то же самое. Если на вашей картинке вверху справа красная точка, нажмите на неё: если написано «☁️ Синхронизация выключена», нажмите туда и введите пароль.'],
   'How do IELTS Listening exercises work?': [
     'IELTS Listening mashqlari qanday ishlaydi?',
     'Toʻliq IELTS uslubidagi listening testlari (4 qismdan istalganini tuzing; oʻquvchilar siz tuzganlarini tartib bilan bajaradi), boshqa mashqlaringizdan alohida hisoblanadi — Statistika va Ballarga taʼsir qilmaydi.',
