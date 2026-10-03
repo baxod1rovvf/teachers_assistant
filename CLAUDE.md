@@ -307,7 +307,9 @@ real students' names or results into the repository (it is public).
   `ta_weekly_schedule` entries with the group's **name** — `openGroupEditor`/`saveGroup` keep them
   in step (rename, ticked days, level; unticked days are archived so "Lessons taught" never
   drops), deleting a group removes them (Undo puts them back). Inside a group each student is a
-  row: name ✎ (`renameRosterStudent`: name + group) 🗑, ID, − 🪙 + (tap 🪙 → `openStudentPoints`).
+  row: name ✎ (`renameRosterStudent`: name + group) 🗑 ID-chip, then − 🪙 + (tap 🪙 → `openStudentPoints`).
+  "➕ Add student" opens ID then Name (`studentsAddOpen`). Group level is a list (`GROUP_LEVELS`:
+  Beginner … Advanced, IELTS; an old typed level like "A2" stays as a choice).
   New points only update the numbers (`renderPointsBoard` → `[data-pts-for]`/`[data-group-pts]`),
   so the add-student form isn't wiped. `tests/students-points.spec.js`.
 - The lesson plan opens from the group's name on an Upcoming Lesson (Dashboard).

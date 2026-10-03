@@ -31,7 +31,18 @@ test('inside a group: each student\'s name (✎ 🗑), ID and points with − / 
   await page.locator('.group-block', { hasText: 'Target' }).click();
   await expect(page.locator('.sp-head')).toContainText('Name');
   const row = page.locator('.sp-row', { hasText: 'Alice Test' });
-  await expect(row.locator('.sp-id')).toHaveText('10001');
+  await expect(row.locator('.sp-name .sp-id')).toHaveText('10001'); // the ID sits next to the name, after 🗑
+  // "➕ Add student" shows ID, then Name below it
+  await expect(page.locator('#pt-student-id')).toHaveCount(0);
+  await page.locator('.sp-add-row .mini-btn', { hasText: 'Add student' }).click();
+  const idBox = await page.locator('#pt-student-id').boundingBox(), nameBox = await page.locator('#pt-student-name').boundingBox();
+  expect(nameBox.y).toBeGreaterThan(idBox.y);
+  await page.fill('#pt-student-id', '10009');
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('Gulnora Test');
+  await page.keyboard.press('Enter');
+  await expect(page.locator('.sp-row', { hasText: 'Gulnora Test' }).locator('.sp-id')).toHaveText('10009');
+  await expect(page.locator('#pt-student-id')).toBeFocused(); // ready for the next one
   await expect(row.locator('.sp-pts')).toHaveText('🪙 0');
   // give 7 points: the number changes without redrawing the list
   await page.fill('#pt-student-name', 'half-typed');
@@ -66,11 +77,12 @@ test('a new group gets its lesson days and times, which show in Upcoming Lessons
   await page.locator('.gsched-group-name').fill('Evening B1');
   for (const day of ['1', '3']) await page.locator('.gsched-day[data-day="' + day + '"] input[type="checkbox"]').check();
   await page.locator('.gsched-day[data-day="3"] input[type="time"]').fill('18:30');
-  await page.locator('.gsched-level').fill('B1');
+  await expect(page.locator('.gsched-level option')).toContainText(['No level', 'Beginner', 'Elementary', 'Pre-Intermediate', 'Intermediate', 'Upper-Intermediate', 'Advanced', 'IELTS']);
+  await page.locator('.gsched-level').selectOption('Intermediate');
   await page.locator('.ta-modal [data-act="ok"]').click();
   await expect(page.locator('.group-block', { hasText: 'Evening B1' })).toContainText('Mon / Wed');
   const lessons = (await schedule(page)).filter(e => e.group === 'Evening B1').sort((a, b) => a.day - b.day);
-  expect(lessons.map(e => [e.day, e.time, e.level])).toEqual([[1, '16:00', 'B1'], [3, '18:30', 'B1']]);
+  expect(lessons.map(e => [e.day, e.time, e.level])).toEqual([[1, '16:00', 'Intermediate'], [3, '18:30', 'Intermediate']]);
   await page.evaluate(() => switchTo('main'));
   await expect(page.locator('#mainLessonsList')).toContainText('Evening B1');
   // the group's name on a lesson opens its plan

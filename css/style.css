@@ -2228,13 +2228,13 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 .sp-icon-btn:hover { border-color: var(--border); color: var(--brand); background: var(--surface-sunken); }
 .sp-icon-btn.danger:hover { color: var(--danger); border-color: rgba(232,103,74,0.4); }
 .sp-table { display: flex; flex-direction: column; gap: 6px; }
-.sp-head, .sp-row { display: grid; grid-template-columns: minmax(0, 1fr) 110px 150px; align-items: center; gap: 10px; }
+.sp-head, .sp-row { display: grid; grid-template-columns: minmax(0, 1fr) 150px; align-items: center; gap: 10px; }
 .sp-head { padding: 0 14px 2px; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.4px; text-transform: uppercase; color: var(--ink-faint); }
 .sp-head span:last-child { text-align: right; }
 .roster-row.sp-row { margin-bottom: 0; padding: 8px 14px; }
 .sp-name { display: flex; align-items: center; gap: 4px; min-width: 0; }
 .sp-name strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-right: 4px; }
-.sp-id { color: var(--ink-soft); font-weight: 600; font-size: 0.86rem; overflow-wrap: anywhere; }
+.sp-id { margin-left: 6px; padding: 2px 8px; border-radius: 999px; background: var(--surface-sunken); border: 1px solid var(--border); color: var(--ink-soft); font-weight: 700; font-size: 0.78rem; white-space: nowrap; }
 .sp-row .points-cell { font-weight: 800; color: var(--brand); display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
 .sp-row .pt-adjust-btn { width: 26px; height: 26px; }
 .sp-pts {
@@ -2248,7 +2248,7 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 .gd-schedule .link-btn:hover { text-decoration: underline; }
 .sp-danger-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
 @media (max-width: 600px) {
-  .sp-head, .sp-row { grid-template-columns: minmax(0, 1fr) 64px 124px; gap: 6px; }
+  .sp-head, .sp-row { grid-template-columns: minmax(0, 1fr) 124px; gap: 6px; }
   .roster-row.sp-row, .sp-head { padding-left: 10px; padding-right: 10px; }
 }
 
@@ -2272,3 +2272,10 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 .lesson-plan-hint { font-size: 0.8rem; opacity: 0; transition: opacity 0.15s ease; }
 .lesson-plan-open:hover .lesson-plan-hint { opacity: 0.8; }
 body.light-theme .gsched-day input[type="time"] { color-scheme: light; }
+
+/* "➕ Add student" opens ID, then Name below it (2026-10-04) */
+.sp-add-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.roster-form-box.sp-add-form { flex-direction: column; align-items: stretch; gap: 6px; max-width: 420px; }
+.sp-add-form .field-label { margin: 4px 0 0; }
+.sp-add-form input { width: 100%; }
+.sp-add-btns { display: flex; justify-content: flex-end; gap: 8px; margin-top: 6px; }

@@ -19,6 +19,15 @@ function newScheduleEntry(day, time, group, level) {
   };
 }
 
+// A group's level (shown on its lessons). A level typed before 2026-10-04 (e.g. "A2") stays a choice.
+const GROUP_LEVELS = ['Beginner', 'Elementary', 'Pre-Intermediate', 'Intermediate', 'Upper-Intermediate', 'Advanced', 'IELTS'];
+function groupLevelOptions(current) {
+  const list = GROUP_LEVELS.slice();
+  if (current && list.indexOf(current) === -1) list.push(current);
+  return '<option value="">No level</option>' +
+    list.map(l => '<option value="' + escapeForHtml(l) + '"' + (l === current ? ' selected' : '') + '>' + escapeForHtml(l) + '</option>').join('');
+}
+
 // Adding a group, or ✏️ on one: its name, lesson days and times, and level.
 function openGroupEditor(groupId) {
   const groups = getStudentGroups();
@@ -41,13 +50,12 @@ function openGroupEditor(groupId) {
     '<label class="field-label" style="margin-top:16px;">📅 Lesson days and times</label>' +
     '<p class="ta-modal-text">Tick the days this group has lessons. They show in "Upcoming Lessons" on the Dashboard every week.</p>' +
     '<div class="gsched-days">' + rows + '</div>' +
-    '<label class="field-label" style="margin-top:16px;">Level (optional)</label>' +
-    '<input type="text" class="gsched-level" placeholder="e.g. Intermediate">' +
+    '<label class="field-label" style="margin-top:16px;">Level</label>' +
+    '<select class="gsched-level">' + groupLevelOptions(level) + '</select>' +
     '<div class="ta-modal-btns"><button type="button" class="mini-btn" data-act="cancel">Cancel</button><button type="button" class="mini-btn solid" data-act="ok">' + (g ? 'Save' : '➕ Add group') + '</button></div>',
     { wide: true });
   const nameEl = m.body.querySelector('.gsched-group-name');
   nameEl.value = g ? g.name : 'Group ' + (groups.length + 1);
-  m.body.querySelector('.gsched-level').value = level;
   m.body.querySelectorAll('.gsched-day').forEach(row => {
     const box = row.querySelector('input[type="checkbox"]'), time = row.querySelector('input[type="time"]');
     box.addEventListener('change', () => { time.disabled = !box.checked; row.classList.toggle('on', box.checked); });
@@ -199,8 +207,17 @@ function addPointsStudent() {
   const gName = groupNameFor(group);
   showToast('Added ' + name + ' (ID ' + id + ')' + (gName ? ' to ' + gName : '') + '.', 'ok');
   taConfettiBurst(anchor.left, anchor.top, 14);
-  const freshName = document.getElementById('pt-student-name');
-  if (freshName) freshName.focus();
+  const freshId = document.getElementById('pt-student-id');
+  if (freshId) freshId.focus(); // ready for the next student
+}
+
+// "➕ Add student" shows the ID and Name boxes; they stay open for the next student until Cancel.
+let studentsAddOpen = false;
+function toggleAddStudentForm(open) {
+  studentsAddOpen = !!open;
+  renderStudentsList();
+  const idEl = document.getElementById('pt-student-id');
+  if (idEl) idEl.focus();
 }
 
 /* The Students page shows the groups as blocks. Tapping a block opens that
@@ -209,9 +226,8 @@ let studentsOpenGroup = null;
 
 function openStudentGroup(groupId) {
   studentsOpenGroup = groupId;
+  studentsAddOpen = false;
   renderStudentsList();
-  const nameEl = document.getElementById('pt-student-name');
-  if (nameEl) nameEl.focus();
   const panel = document.getElementById('panel-students');
   if (panel && panel.scrollIntoView) panel.scrollIntoView({ block: 'start' });
 }
@@ -271,22 +287,28 @@ function renderStudentsList() {
           ? escapeForHtml(info.days) + (info.time ? ' · ' + escapeForHtml(info.time) : '') + (info.level ? ' · ' + escapeForHtml(info.level) : '')
           : 'No lesson times yet') +
         ' <button class="link-btn" type="button" onclick="renameStudentGroup(' + jsAttr(b.id) + ')">' + (info && info.days ? 'Change' : 'Set lesson times') + '</button></div>';
-      html += '<div class="title-field"><div class="roster-form-box">' +
-        '<input type="text" id="pt-student-name" placeholder="Student name" style="flex:1; min-width:140px;">' +
-        '<input type="text" id="pt-student-id" placeholder="Unique ID (e.g. 101)" style="flex:1; min-width:120px;" onkeydown="if(event.key===\'Enter\') addPointsStudent()">' +
-        '<button class="mini-btn" type="button" onclick="addPointsStudent()">➕ Add Student</button>' +
-        '<button class="mini-btn solid" type="button" onclick="openBulkAddStudents()" title="Paste a whole class list, or choose a CSV/Excel-saved file">📋 Add many</button>' +
-      '</div></div>';
+      html += '<div class="title-field">' + (studentsAddOpen
+        ? '<div class="roster-form-box sp-add-form">' +
+            '<label class="field-label" for="pt-student-id">ID</label>' +
+            '<input type="text" id="pt-student-id" placeholder="Unique ID (e.g. 101)" onkeydown="if(event.key===\'Enter\'){event.preventDefault();document.getElementById(\'pt-student-name\').focus();}">' +
+            '<label class="field-label" for="pt-student-name">Name</label>' +
+            '<input type="text" id="pt-student-name" placeholder="Student name" onkeydown="if(event.key===\'Enter\') addPointsStudent()">' +
+            '<div class="sp-add-btns"><button class="mini-btn" type="button" onclick="toggleAddStudentForm(false)">Cancel</button>' +
+            '<button class="mini-btn solid" type="button" onclick="addPointsStudent()">➕ Add</button></div>' +
+          '</div>'
+        : '<div class="sp-add-row"><button class="mini-btn solid" type="button" onclick="toggleAddStudentForm(true)">➕ Add student</button>' +
+            '<button class="mini-btn" type="button" onclick="openBulkAddStudents()" title="Paste a whole class list, or choose a CSV/Excel-saved file">📋 Add many</button></div>') +
+      '</div>';
     }
     html += '<div class="title-field">';
     html += b.students.length
-      ? '<div class="sp-table"><div class="sp-head"><span>Name</span><span>ID</span><span>Points</span></div>' +
+      ? '<div class="sp-table"><div class="sp-head"><span>Name · ID</span><span>Points</span></div>' +
         b.students.map(s =>
           '<div class="roster-row sp-row" data-student-id="' + escapeForHtml(String(s.id)) + '">' +
             '<span class="sp-name"><strong translate="no">' + escapeForHtml(s.name) + '</strong>' +
               '<button class="sp-icon-btn" type="button" title="Change name or group" aria-label="Change name or group" onclick="renameRosterStudent(' + jsAttr(s.id) + ')">✎</button>' +
-              '<button class="sp-icon-btn danger" type="button" title="Delete student" aria-label="Delete student" onclick="removePointsStudent(' + jsAttr(s.id) + ')">🗑</button></span>' +
-            '<span class="sp-id">' + escapeForHtml(s.id) + '</span>' +
+              '<button class="sp-icon-btn danger" type="button" title="Delete student" aria-label="Delete student" onclick="removePointsStudent(' + jsAttr(s.id) + ')">🗑</button>' +
+              '<span class="sp-id" title="ID">' + escapeForHtml(s.id) + '</span></span>' +
             '<span class="points-cell">' +
               '<button class="pt-adjust-btn minus" type="button" title="Take points" onclick="showPointsAmountPopover(this, ' + jsAttr(s.id) + ', ' + jsAttr(s.name) + ', -1);">−</button>' +
               '<button class="pt-adjust-value sp-pts" type="button" title="See their points" data-pts-for="' + escapeForHtml(String(s.id)) + '" onclick="openStudentPoints(' + jsAttr(s.id) + ')">🪙 ' + pointsTotalFor(s.id) + '</button>' +
