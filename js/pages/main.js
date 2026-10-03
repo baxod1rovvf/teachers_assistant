@@ -2,10 +2,8 @@
 function renderMainGreeting() {
   const nameEl = document.getElementById('mainGreetingName');
   const titleEl = document.getElementById('mainGreetingTitle');
-  const heroName = document.getElementById('heroAccountName');
   const name = getTeacherName();
   if (nameEl) nameEl.textContent = name;
-  if (heroName) heroName.textContent = name;
   const hour = new Date().getHours();
   let greeting;
   if (hour < 5) { greeting = 'Good night'; }

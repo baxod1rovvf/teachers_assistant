@@ -341,6 +341,7 @@ async function taLoadPageNow(file) {
 // taStartPage() only sees the first section's panels, so this runs again each
 // time taLoadPage() adds another section; each init skips a spot already playing.
 function taInitSectionAnims() {
+  initHeroTaskAnim();
   initThemeToggleAnim();
   initCreateHeadingAnim();
   initPercentStatAnims();
@@ -805,8 +806,6 @@ function setTeacherName(v) {
   if (sp) sp.textContent = name;
   const fb = document.getElementById('tbAvatarFallback');
   if (fb) fb.textContent = name.charAt(0).toUpperCase();
-  const heroName = document.getElementById('heroAccountName');
-  if (heroName) heroName.textContent = name;
   if (window.renderMainGreeting) window.renderMainGreeting();
 }
 
@@ -2643,6 +2642,18 @@ function toggleThemeAnimated() {
 window.toggleThemeAnimated = toggleThemeAnimated;
 
 
+// The Dashboard's greeting card: a checklist with a dartboard (the teacher's "task" lottie,
+// without its grey background cloud), loaded from the site only when the Dashboard is there.
+function initHeroTaskAnim() {
+  const el = document.getElementById('heroTaskAnim');
+  if (!el || el.dataset.ready || typeof lottie === 'undefined') return;
+  el.dataset.ready = '1';
+  try {
+    lottie.loadAnimation({ container: el, renderer: 'svg', loop: true, autoplay: true, path: 'animations/teacher-task.json',
+      rendererSettings: { preserveAspectRatio: 'xMidYMid meet' } });
+  } catch (e) { /* decorative — fail silently */ }
+}
+
 function initStatsIconAnim() {
   const el = document.getElementById('statsIconAnim');
   if (!el || typeof lottie === 'undefined') return;
@@ -3438,7 +3449,8 @@ function taMountTopBar() {
   bar.className = 'ta-topbar';
   bar.id = 'taTopbar';
   bar.innerHTML =
-    '<a class="tb-brand tb-link" href="index.html" title="Dashboard" aria-label="Teacher\'s Assistant — Dashboard"><img src="images/app/logo-mark.png" alt=""></a>' +
+    '<a class="tb-brand tb-link" href="index.html" title="Dashboard" aria-label="Teacher\'s Assistant — Dashboard"><img src="images/app/logo-mark.png" alt="">' +
+      '<span class="brand-name" translate="no"><b>Teacher\'s</b> <span>Assistant</span></span></a>' +
     '<nav class="tb-nav" id="taTabNav" aria-label="Sections">' +
       '<svg class="tb-blob-svg" aria-hidden="true"><path id="taTabBlob" class="tb-blob-path"/></svg>' +
       TA_TOPBAR_TABS.map(t => '<a class="tb-tab tb-link" href="' + t.href + '" data-tab="' + t.tab + '" title="' + t.label + '">' +

@@ -118,30 +118,30 @@ test('changing a group renames its lessons and drops unticked days; deleting it 
   await expect(page.locator('.group-block', { hasText: 'Target A2' })).toBeVisible();
 });
 
-test('profile: the picture changes the picture, the name opens name + language, the door logs out', async ({ page, context }) => {
+test('profile: the top bar\'s picture opens a menu — name + language, change picture, log out; the Dashboard shows the task animation', async ({ page, context }) => {
   await prepare(context);
   await open(page, 'index.html');
-  const chooser = page.waitForEvent('filechooser');
-  await page.evaluate(() => document.querySelector('.hero-account-chip .avatar-btn').click());
-  await chooser;
-  await expect(page.locator('.hero-account-chip .hero-logout-btn')).toHaveAttribute('title', 'Log out');
-  await expect(page.locator('.hero-account-chip .logout-icon')).toHaveCount(1);
-  // the top bar's picture opens a menu: name, change picture, log out
+  await expect(page.locator('.hero-account-chip')).toHaveCount(0);
+  await expect(page.locator('#heroTaskAnim svg')).toHaveCount(1, { timeout: 8000 });   // the "task" animation is playing
+  await expect(page.locator('#taTopbar .tb-brand')).toContainText("Teacher's Assistant");
   await page.locator('#tbAvatarBtn').click();
   await expect(page.locator('#tbProfileMenu')).toBeVisible();
   await expect(page.locator('#tbProfileMenu')).toContainText('Log out');
-  const chooser2 = page.waitForEvent('filechooser');
+  const chooser = page.waitForEvent('filechooser');
   await page.locator('#tbProfileMenu .tb-menu-item', { hasText: 'Change profile picture' }).click();
-  await chooser2;
+  await chooser;
   await expect(page.locator('#tbProfileMenu')).toBeHidden();
-  await page.locator('.hero-account-text').click();
+  await page.locator('#tbAvatarBtn').click();
+  await page.locator('#tbProfileMenu .tb-menu-head').click();
   await expect(page.locator('.ta-modal .lang-choice')).not.toHaveCount(0);
   await page.locator('.profile-name-input').fill('Ms Test');
   await page.locator('.ta-modal [data-act="ok"]').click();
   await expect(page.locator('#tbProfileName')).toHaveText('Ms Test');
+  await expect(page.locator('#mainGreetingName')).toHaveText('Ms Test');
   page.once('dialog', d => d.dismiss());
-  await page.locator('.hero-logout-btn').click(); // asks first; dismissed, so still signed in
-  await expect(page.locator('#heroAccountName')).toHaveText('Ms Test');
+  await page.locator('#tbAvatarBtn').click();
+  await page.locator('#tbProfileMenu .tb-menu-item.danger').click(); // asks first; dismissed, so still signed in
+  await expect(page.locator('#tbProfileName')).toHaveText('Ms Test');
 });
 
 test('Settings keeps only Install on this device, Backup and Status', async ({ page, context }) => {

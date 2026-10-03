@@ -303,14 +303,15 @@ real students' names or results into the repository (it is public).
 - Accounts: each teacher's `localStorage` is namespaced (`js/accounts.js`); the admin
   `TOXIRJON` uses un-prefixed keys.
 - **Top bar (no sidebar since 2026-10-03)**: `taMountTopBar` in common.js builds it on every page
-  (`#taTopbar`, fixed, the page's own colour): logo · 5 sections in the middle (`TA_TOPBAR_TABS`:
+  (`#taTopbar`, fixed, no background of its own — the buttons float over the page): logo + "Teacher's
+  Assistant" (logo only on phones) · 5 sections in the middle (`TA_TOPBAR_TABS`:
   Dashboard, Create, My Exercises, Statistics, Students; icons in `images/icons/nav/`, shown with a CSS
   mask so they take the design's colours) · 🔍 search, day/night (`#themeToggleAnim`), 🎨 design,
   sound, ⚙️ Settings, profile picture (red dot when sync needs the teacher, `data-sync`). The section
   you're in sits in a `var(--brand)` circle drawn as an SVG path; `taMoveTabBlob` animates it like the
   teacher's "Liquid Tab Bar" lottie (front races ahead, back follows, a narrowing neck, then a wobble).
-  Results lights up My Exercises. Phones (≤ 860px): the sections are a tab bar at the bottom (the top
-  bar has no blur there — a backdrop-filter would hold the fixed tab bar inside it). Toasts and the
+  Results lights up My Exercises. Phones (≤ 860px): the sections are a tab bar at the bottom (never put
+  a backdrop-filter on `#taTopbar` — it would hold the fixed tab bar inside it). Toasts and the
   top-right notes sit below the bar. `tests/pages.spec.js` ("top bar: …", "on a phone …").
 - **Results isn't in the top bar or the quick search** (2026-10-03): it opens from My Exercises
   ("📊 View Results" on a card, `results.html?exercise=<uid>`), and has "← Back to My Exercises".
@@ -343,7 +344,8 @@ real students' names or results into the repository (it is public).
   type with activity in the last 7 days — a line of completions per day (roster students only),
   today vs yesterday (▲/▼), today's piece of the line dashed (`.sc-tail`), dotted 7-day average.
   Types aren't compared with each other any more. `tests/statistics.spec.js`.
-- **Profile** (Dashboard chip; in the top bar the picture opens a menu `#tbProfileMenu`: name →
-  `taOpenProfile`, the sync status line, Change profile picture, Log out): the picture → `taPickAvatar`,
-  the name → `taOpenProfile` (name + language), the door icon → `taLogout`. **Settings** has only Install, Backup, Status.
+- **Profile**: only in the top bar — the picture opens a menu `#tbProfileMenu`: name →
+  `taOpenProfile` (name + language), the sync status line, Change profile picture (`taPickAvatar`),
+  Log out (`taLogout`). The Dashboard's greeting card has the teacher's "task" lottie instead
+  (`animations/teacher-task.json`, its grey background cloud removed; `initHeroTaskAnim`). **Settings** has only Install, Backup, Status.
 - The robot (lottie `AI_ROBOT_ANIM`) has a small "Smile" shape added to the eyes layer (lowered a little, 2026-10-03).
