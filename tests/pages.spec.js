@@ -153,7 +153,9 @@ test('top bar: 5 sections in the middle, the one you\'re in has the coloured cir
   await page.goto('/index.html');
   await page.waitForTimeout(1500);
   await hideNotices(page);
-  await expect(page.locator('#taTopbar .tb-tab .tb-label')).toHaveText(['Dashboard', 'Create', 'My Exercises', 'Statistics', 'Students']);
+  // icons only (the names show when you point at one)
+  expect(await page.locator('#taTopbar .tb-tab').evaluateAll(l => l.map(a => a.title))).toEqual(['Dashboard', 'Create', 'My Exercises', 'Statistics', 'Students']);
+  await expect(page.locator('#taTopbar .tb-tab')).toHaveText(['', '', '', '', '']);
   for (const id of ['#quickSearchBtn', '#themeToggleAnim', '#designPickerBtn', '#taTopbar [data-tab="settings"]', '#tbAvatarBtn']) await expect(page.locator(id)).toBeVisible();
   await expect(page.locator('#mainSidebar')).toHaveCount(0);
   await expect(page.locator('#soundToggleBtn')).toHaveCount(0);   // no sound button

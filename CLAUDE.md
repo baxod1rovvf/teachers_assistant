@@ -304,7 +304,7 @@ real students' names or results into the repository (it is public).
   `TOXIRJON` uses un-prefixed keys.
 - **Top bar (no sidebar since 2026-10-03)**: `taMountTopBar` in common.js builds it on every page
   (`#taTopbar`, fixed, no background of its own — the buttons float over the page): logo + "Teacher's
-  Assistant" (logo only on phones) · 5 sections in the middle (`TA_TOPBAR_TABS`:
+  Assistant" (logo only on phones) · 5 sections in the middle, icons only — the name is the tooltip (`TA_TOPBAR_TABS`:
   Dashboard, Create, My Exercises, Statistics, Students; icons in `images/icons/nav/`, shown with a CSS
   mask so they take the design's colours) · 🔍 search, day/night (`#themeToggleAnim`), 🎨 design,
   ⚙️ Settings (no sound button since 2026-10-03), profile picture (red dot when sync needs the teacher, `data-sync`). The section
@@ -347,6 +347,7 @@ real students' names or results into the repository (it is public).
 - **Profile**: only in the top bar — the picture opens a menu `#tbProfileMenu`: name →
   `taOpenProfile` (name + language), the sync status line, Change profile picture (`taPickAvatar`),
   Log out (`taLogout`). The Dashboard's greeting card has the teacher's "task" lottie instead
-  (`animations/teacher-task.json`, its grey background cloud removed; `initHeroTaskAnim`) — not on
+  (`animations/teacher-task.json`, its grey background cloud removed and cut to its "standing" part,
+  frames 0–66 — the full file also shrank away and came back; `initHeroTaskAnim`) — not on
   phones, where the greeting + robot stay on one line. **Settings** has only Install, Backup, Status.
 - The robot (lottie `AI_ROBOT_ANIM`) has a small "Smile" shape added to the eyes layer (lowered a little, 2026-10-03).

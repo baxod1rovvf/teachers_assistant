@@ -16,7 +16,7 @@ test('the menu has one "Students & Points" section; the old Points address lands
   await prepare(context);
   const errors = watchErrors(page);
   await open(page, 'index.html');
-  await expect(page.locator('.tb-tab[data-tab="students"]')).toContainText('Students');
+  await expect(page.locator('.tb-tab[data-tab="students"]')).toHaveAttribute('title', 'Students');
   await expect(page.locator('[data-tab="points"]')).toHaveCount(0);
   await page.goto('/points.html');
   await page.waitForURL(/students/);

@@ -2643,7 +2643,8 @@ window.toggleThemeAnimated = toggleThemeAnimated;
 
 
 // The Dashboard's greeting card: a checklist with a dartboard (the teacher's "task" lottie,
-// without its grey background cloud), loaded from the site only when the Dashboard is there.
+// without its grey background cloud, cut to its "standing" part — the checklist bobbing),
+// loaded from the site only when the Dashboard is there.
 function initHeroTaskAnim() {
   const el = document.getElementById('heroTaskAnim');
   if (!el || el.dataset.ready || typeof lottie === 'undefined') return;
@@ -3453,8 +3454,8 @@ function taMountTopBar() {
       '<span class="brand-name" translate="no"><b>Teacher\'s</b> <span>Assistant</span></span></a>' +
     '<nav class="tb-nav" id="taTabNav" aria-label="Sections">' +
       '<svg class="tb-blob-svg" aria-hidden="true"><path id="taTabBlob" class="tb-blob-path"/></svg>' +
-      TA_TOPBAR_TABS.map(t => '<a class="tb-tab tb-link" href="' + t.href + '" data-tab="' + t.tab + '" title="' + t.label + '">' +
-        '<span class="tb-ic" style="-webkit-mask-image:url(' + t.icon + ');mask-image:url(' + t.icon + ')"></span><span class="tb-label">' + t.label + '</span></a>').join('') +
+      TA_TOPBAR_TABS.map(t => '<a class="tb-tab tb-link" href="' + t.href + '" data-tab="' + t.tab + '" title="' + t.label + '" aria-label="' + t.label + '">' +
+        '<span class="tb-ic" style="-webkit-mask-image:url(' + t.icon + ');mask-image:url(' + t.icon + ')"></span></a>').join('') +
     '</nav>' +
     '<div class="tb-tools">' +
       '<button class="tb-tool" id="quickSearchBtn" type="button" onclick="openQuickSearch()" title="Search (' + (mac ? '⌘' : 'Ctrl') + ' K)" aria-label="Search">' +
