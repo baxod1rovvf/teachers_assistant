@@ -121,3 +121,27 @@ test('phones load the other sections in the background too', async ({ browser })
   await expect.poll(() => page.evaluate(() => ['panel-myexercises', 'panel-students', 'panel-settings'].every(id => document.getElementById(id))), { timeout: 20000 }).toBe(true);
   await context.close();
 });
+
+test('the Dashboard opens quickly even with many long dictations (and their scores stay the same)', async ({ page, context }) => {
+  const words = 'every saturday sarah wakes up in her bedroom and then goes to the kitchen to make breakfast'.split(' ');
+  const ref = Array.from({ length: 150 }, (_, i) => words[i % words.length]).join(' ');
+  const roster = Array.from({ length: 30 }, (_, i) => ({ id: String(57000 + i), name: 'Student ' + i, group: 'g1' }));
+  const docs = [], ex = [];
+  for (let e = 0; e < 6; e++) {
+    const code = String(300000 + e);
+    ex.push({ uid: 'u' + e, title: 'Dict ' + e, code, typeLabel: 'Dictation', groupId: 'g1', date: new Date().toISOString() });
+    roster.forEach((st, k) => docs.push({ __id: 'r' + e + '_' + k, v: 1, code, type: 'Dictation', title: 'Dict ' + e, name: st.name, studentId: st.id, score: 100,
+      referenceText: ref, studentText: ref.split(' ').filter((w, i) => (i + k + e) % 7).join(' '), timeSeconds: 60, date: new Date(Date.now() - e * 1e6 - k * 1000).toISOString(), submittedAt: new Date(Date.now() - e * 1e6).toISOString() }));
+  }
+  await prepare(context, { docs, storage: { ta_student_groups: JSON.stringify([{ id: 'g1', name: 'Target' }]), ta_points_roster: JSON.stringify(roster), ta_recent_exercises: JSON.stringify(ex) } });
+  await page.goto('/my-exercises.html');
+  await expect.poll(() => page.evaluate(() => (window.__allResults || []).length), { timeout: 15000 }).toBe(180);
+  const res = await page.evaluate(() => {
+    const t0 = performance.now(); switchTo('main'); const ms = performance.now() - t0;
+    const r = window.__allResults.find(x => x.studentId === '57001' && x.code === '300000');
+    return { ms, score: taResultScore(r), again: taResultScore(r), slow: (() => { const ops = taDictAlign(r.referenceText, r.studentText, taDictNorm); return Math.round(ops.filter(o => o.type === 'ok').length / ops.length * 100); })() };
+  });
+  expect(res.ms).toBeLessThan(1500);   // was ~5 s before 2026-10-04
+  expect(res.score).toBe(res.slow);
+  expect(res.again).toBe(res.score);
+});

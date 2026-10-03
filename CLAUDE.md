@@ -274,6 +274,10 @@ real students' names or results into the repository (it is public).
   (`ta_exercise_html_cache`, several MB) once per card (~1 s with ~60 exercises): it's now read
   once per drawing (`taReadHtmlCache`, cleared after the current task and by every writer via
   `taForgetHtmlCache`). Don't read that key directly in loops — use `getCachedExerciseHtml`.
+  The Dashboard (Top 5 + overall %) re-scored every dictation each time (word-by-word diff,
+  twice per result, twice per drawing — ~2 s+ with many dictations): `taDictAlign` now compares
+  each word pair once, and `taDictDiff` keeps finished answers (`TA_DICT_DIFF_KEPT`; callers must
+  not change the returned list). Test: "the Dashboard opens quickly…" in `tests/pages.spec.js`.
 - Firebase for the app (js/firebase.js, CP.html) comes from `js/vendor/firebase-10.12.5/`
   (the npm package's browser builds, import of firebase-app pointed at the folder — see its
   README). Exercise files and the downloadable points board still use gstatic.com (they open

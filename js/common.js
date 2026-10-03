@@ -1643,10 +1643,19 @@ function taDictAlign(reference, studentText, norm) {
     }
     return prev[y.length];
   };
+  // each pair of words is compared letter by letter only once (2026-10-04: the Dashboard spent
+  // seconds comparing the same words again for every cell)
+  const subSeen = new Map();
   const sub = (x, y) => {
     if (x === y) return 0;
-    const len = Math.max(x.length, y.length) || 1;
-    return (1 - lev(x, y) / len) >= 0.5 ? 0.9 : 2.2; // similar: one wrong word; else missed + extra
+    const key = x + '\u0001' + y;
+    let v = subSeen.get(key);
+    if (v === undefined) {
+      const len = Math.max(x.length, y.length) || 1;
+      v = (1 - lev(x, y) / len) >= 0.5 ? 0.9 : 2.2; // similar: one wrong word; else missed + extra
+      subSeen.set(key, v);
+    }
+    return v;
   };
   const m = a.length, n = b.length, d = [];
   for (let i = 0; i <= m; i++) { d.push(new Array(n + 1).fill(0)); d[i][0] = i; }
@@ -1663,7 +1672,19 @@ function taDictAlign(reference, studentText, norm) {
   }
   return ops.reverse();
 }
-function taDictDiff(reference, studentText) { return taDictAlign(reference, studentText, taDictNorm); }
+// The same texts always give the same answer: kept, so the Dashboard, Statistics and Results
+// don't work out every dictation again each time they're drawn. Don't change the returned list.
+const TA_DICT_DIFF_KEPT = new Map();
+function taDictDiff(reference, studentText) {
+  const key = String(reference) + '\u0000' + String(studentText);
+  let ops = TA_DICT_DIFF_KEPT.get(key);
+  if (!ops) {
+    ops = taDictAlign(reference, studentText, taDictNorm);
+    if (TA_DICT_DIFF_KEPT.size > 5000) TA_DICT_DIFF_KEPT.clear();
+    TA_DICT_DIFF_KEPT.set(key, ops);
+  }
+  return ops;
+}
 // Older results only kept the feedback line: "word [missing: w] said -> right [extra: w] …"
 function taDictParseFeedback(text) {
   const ops = [], re = /\[missing: ([^\]]*)\]|\[extra: ([^\]]*)\]|(\S+) (?:->|→) (\S+)|(\S+)/g;

@@ -67,16 +67,18 @@ function notesWordCount(r) {
 function performanceScores(results) {
   const out = [];
   const byCode = {};
+  const ratings = getSentenceRatings();
   results.forEach(r => {
     const type = String(r.type || '');
     if (/^IELTS/i.test(type)) return;
     if (type === 'Flashcard' || type === 'BilingualReader' || type === 'EnglishContent') {
       (byCode[type + '|' + r.code] = byCode[type + '|' + r.code] || []).push(r);
     } else if (type === 'Sentences') {
-      const stars = sentenceRatingFor(r);
+      const stars = ratings[resultSignature(r)] || 0;
       if (stars) out.push({ r: r, score: stars * 20 });
-    } else if (typeof taResultScore(r) === 'number') {
-      out.push({ r: r, score: Math.max(0, Math.min(100, taResultScore(r))) });
+    } else {
+      const sc = taResultScore(r);
+      if (typeof sc === 'number') out.push({ r: r, score: Math.max(0, Math.min(100, sc)) });
     }
   });
   Object.keys(byCode).forEach(k => {
