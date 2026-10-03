@@ -1720,6 +1720,21 @@ button:active:not(:disabled) { transform: scale(0.97); }
 .stats-chart-title { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; font-size: 1rem; color: var(--ink); margin-bottom: 8px; }
 @media (max-width: 1100px) { .stats-chart-grid { grid-template-columns: 1fr; } }
 .chart-wrap.stats-chart { display: block; padding: 16px 16px 8px; border: 1.5px solid var(--border); border-radius: var(--radius-lg, 16px); background: var(--surface); }
+.sc-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+.sc-head .stats-chart-title { margin-bottom: 0; display: flex; align-items: center; gap: 8px; }
+.sc-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.sc-today { font-size: 0.85rem; color: var(--ink-soft); font-weight: 600; }
+.sc-today b { font-size: 1.15rem; color: var(--ink); }
+.sc-change { margin-left: 6px; font-weight: 700; white-space: nowrap; }
+.sc-change b { font-size: inherit; color: inherit; }
+.sc-change.up { color: #16a34a; }
+.sc-change.down { color: var(--danger, #e8674a); }
+.sc-change.same { color: var(--ink-faint); }
+.sc-svg { width: 100%; height: auto; display: block; overflow: visible; }
+.sc-day .sc-hover { opacity: 0; transition: opacity .15s; }
+.sc-day:hover .sc-hover { opacity: 1; }
+.sc-day:hover circle { r: 7; }
+.sc-week { font-size: 0.78rem; color: var(--ink-faint); font-weight: 600; text-align: right; }
 
 /* "Choose a file" next to the link box in Dictation / English Content */
 .media-pick-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; }

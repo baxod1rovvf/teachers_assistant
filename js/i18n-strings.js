@@ -88,7 +88,7 @@ window.TA_I18N_ROWS = [
   ['Welcome back', 'Xush kelibsiz', 'С возвращением'],
   ['Everything you need to build, share, and track classroom exercises', 'Dars mashqlarini yaratish, ulashish va kuzatish uchun hamma narsa', 'Всё для создания, отправки и отслеживания упражнений'],
   ['Your classroom at a glance', 'Sinfingiz bir qarashda', 'Ваш класс с первого взгляда'],
-  ['See which exercise types get used the most, updated live from your Points Board', 'Qaysi mashq turlari koʻproq bajarilishini koʻring — ballar jadvalidan jonli yangilanadi', 'Какие типы упражнений выполняют чаще всего — обновляется в реальном времени из таблицы баллов'],
+  ['Each exercise type\'s last 7 days, and today compared with yesterday', 'Har bir mashq turining oxirgi 7 kuni va bugun kecha bilan solishtirilgan holda', 'Последние 7 дней каждого типа упражнений и сегодня в сравнении со вчера'],
   ['Everything you\'ve built', 'Siz yaratgan hamma narsa', 'Всё, что вы создали'],
   ['Every exercise you\'ve created — reopen it to make a new version, jump to its results, or turn off its points', 'Yaratgan har bir mashqingiz — yangi variant uchun qayta oching, natijalariga oʻting yoki ballarini oʻchiring', 'Все ваши упражнения — откройте снова для новой версии, перейдите к результатам или отключите баллы'],
   ['Your class roster', 'Oʻquvchilar roʻyxati', 'Список учеников'],
@@ -463,7 +463,13 @@ window.TA_I18N_ROWS = [
   ['Transcribed! Read it over before creating the exercise', 'Yozib olindi! Mashqni yaratishdan oldin oʻqib chiqing', 'Расшифровано! Прочитайте перед созданием упражнения'],
 
   /* ---------- Statistics ---------- */
-  ['Which exercise types your students complete the most, updated live from your Points Board activity. Only students who entered with an ID from your Students list are counted — anyone who typed just a name is left out', 'Oʻquvchilaringiz qaysi mashq turlarini koʻproq bajaradi — ballar jadvalidan jonli yangilanadi. Faqat roʻyxatdagi ID bilan kirgan oʻquvchilar hisoblanadi — faqat ism yozganlar hisobga olinmaydi', 'Какие типы упражнений ученики выполняют чаще всего — обновляется в реальном времени. Учитываются только ученики, вошедшие с ID из вашего списка; те, кто ввёл только имя, не считаются'],
+  ['How many times your students did each type of exercise on each of the last 7 days, and today compared with yesterday. The dashed end of a line is today — the day isn\'t over yet. Updated live. Only students who entered with an ID from your Students list are counted — anyone who typed just a name is left out', 'Oʻquvchilaringiz har bir mashq turini oxirgi 7 kunning har birida necha marta bajargani va bugun kecha bilan solishtirilgan holda. Chiziqning uzuq-uzuq oxiri — bugun, kun hali tugamagan. Jonli yangilanadi. Faqat roʻyxatdagi ID bilan kirgan oʻquvchilar hisoblanadi — faqat ism yozganlar hisobga olinmaydi', 'Сколько раз ваши ученики выполнили каждый тип упражнений в каждый из последних 7 дней, и сегодня в сравнении со вчера. Пунктирный конец линии — сегодня, день ещё не закончился. Обновляется в реальном времени. Учитываются только ученики, вошедшие с ID из вашего списка; те, кто ввёл только имя, не считаются'],
+  ['today', 'bugun', 'сегодня'],
+  ['more than yesterday', 'kechagidan koʻp', 'больше, чем вчера'],
+  ['fewer than yesterday', 'kechagidan kam', 'меньше, чем вчера'],
+  ['same as yesterday', 'kechagidek', 'как вчера'],
+  ['in the last 7 days', 'oxirgi 7 kunda', 'за последние 7 дней'],
+  ['No exercises were done in the last 7 days', 'Oxirgi 7 kunda hech qanday mashq bajarilmagan', 'За последние 7 дней упражнений не выполняли'],
   ['Words & writing', 'Soʻzlar va yozuv', 'Слова и письмо'],
   ['Speaking, reading & listening', 'Gapirish, oʻqish va tinglash', 'Говорение, чтение и аудирование'],
   ['Your students (with ID)', 'Oʻquvchilaringiz (ID bilan)', 'Ваши ученики (с ID)'],
@@ -957,9 +963,9 @@ window.TA_ROBOT_I18N = {
     'В «Моих упражнениях» нажмите «📊 Результаты» у набора. Вы увидите прогресс каждого ученика (например, 2/3), общее время и сможете открыть их ответы.'],
   'How does Statistics work?': [
     'Statistika qanday ishlaydi?',
-    'U oʻquvchilaringiz qaysi mashq turlarini eng koʻp bajarishini koʻrsatadi. Uy vazifasi/Dars toʻplamlari ichidagi mashqlar ham hisoblanadi.',
+    'Har bir mashq turining oʻz grafigi bor: oʻquvchilaringiz uni oxirgi 7 kunning har birida necha marta bajargani. Nomi yonida bugungi son va u kechagidan koʻpmi yoki kammi — koʻrinadi. Chiziqning uzuq-uzuq oxiri — bugun, chunki kun hali tugamagan; koʻndalang nuqtali chiziq — 7 kunlik oʻrtacha. Uy vazifasi/Dars toʻplamlari ichidagi mashqlar ham hisoblanadi.',
     'Как работает Статистика?',
-    'Она показывает, какие типы упражнений ваши ученики выполняют чаще всего. Упражнения внутри наборов «Домашнее задание»/«Урок» тоже учитываются.'],
+    'У каждого типа упражнений свой график: сколько раз ваши ученики выполнили его в каждый из последних 7 дней. Рядом с названием — число за сегодня и больше это или меньше, чем вчера. Пунктирный конец линии — сегодня, ведь день ещё не закончился; точечная линия поперёк — среднее за 7 дней. Упражнения внутри наборов «Домашнее задание»/«Урок» тоже учитываются.'],
   'Who is counted in Statistics?': [
     'Statistikada kimlar hisoblanadi?',
     'Faqat Oʻquvchilar roʻyxatingizdagi ID bilan kirgan oʻquvchilar. Faqat ism yozganlar hisobga olinmaydi.',

@@ -328,6 +328,10 @@ real students' names or results into the repository (it is public).
   New points only update the numbers (`renderPointsBoard` → `[data-pts-for]`/`[data-group-pts]`),
   so the add-student form isn't wiped. `tests/students-points.spec.js`.
 - The lesson plan opens from the group's name on an Upcoming Lesson (Dashboard).
+- **Statistics** (`renderDashboard` in `js/pages/statistics.js`, 2026-10-03): one card per exercise
+  type with activity in the last 7 days — a line of completions per day (roster students only),
+  today vs yesterday (▲/▼), today's piece of the line dashed (`.sc-tail`), dotted 7-day average.
+  Types aren't compared with each other any more. `tests/statistics.spec.js`.
 - **Profile** (sidebar and Dashboard): the picture → `taPickAvatar`, the name → `taOpenProfile`
   (name + language), the door icon → `taLogout`. **Settings** has only Install, Backup, Status.
 - The robot (lottie `AI_ROBOT_ANIM`) has a small "Smile" shape added to the eyes layer (lowered a little, 2026-10-03).

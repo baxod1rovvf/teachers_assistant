@@ -81,7 +81,7 @@ const MASTHEAD_COPY = {
   createpicker: { eyebrow: "➕ Create", title: "Pick an exercise type", sub: "Ready to use, in process, or merge a few together — everything starts here." },
   hwcbuilder: { eyebrow: "📚 Homework & Class", title: "Build your set", sub: "Pick exercises from My Exercises, put them in order, then generate one combined file." },
   main: { eyebrow: "🎓 Teacher's Assistant", title: "Welcome back", sub: "Everything you need to build, share, and track classroom exercises." },
-  dashboard: { eyebrow: "📊 Statistics", title: "Your classroom at a glance", sub: "See which exercise types get used the most, updated live from your Points Board." },
+  dashboard: { eyebrow: "📊 Statistics", title: "Your classroom at a glance", sub: "Each exercise type's last 7 days, and today compared with yesterday." },
   myexercises: { eyebrow: "📁 My Exercises", title: "Everything you've built", sub: "Every exercise you've created — reopen it to make a new version, jump to its results, or turn off its points." },
   students: { eyebrow: "Students & Points", title: "Your groups and students", sub: "Groups, their lesson times, students' IDs and points." },
   results: { eyebrow: "📊 Results", title: "Student Results", sub: "Track your students' progress, view results and help them achieve their goals." },
@@ -2772,7 +2772,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'Where do I see the combined results?', a: 'In My Exercises tap "📊 View Results" on the set. You see each student\'s progress (e.g. 2/3), their total time, and can open their answers.' }
   ]),
   dashboard: aiFaq([
-    { q: 'How does Statistics work?', a: 'It shows which exercise types your students complete the most. Exercises inside Homework/Class sets are counted too.' },
+    { q: 'How does Statistics work?', a: 'Each exercise type has its own chart: how many times your students did it on each of the last 7 days. Next to the name you see today\'s number and whether it is more or fewer than yesterday. The dashed end of the line is today, because the day isn\'t over yet; the dotted line across is the 7-day average. Exercises inside Homework/Class sets are counted too.' },
     { q: 'Who is counted in Statistics?', a: 'Only students who entered with an ID from your Students list. Students who typed just a name are left out.' }
   ]),
   myexercises: aiFaq([
