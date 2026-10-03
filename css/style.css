@@ -2130,3 +2130,13 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 .share-link-row { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; }
 .share-link { flex: 1; min-width: 0; padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--surface-sunken); color: var(--ink); font: 600 0.86rem ui-monospace, Menlo, Consolas, monospace; }
 .share-link-row .mini-btn { flex-shrink: 0; }
+
+/* Each section shows only its own heading ("📁 My Exercises"…): no big page title
+   and description above it, and no description under the heading (2026-10-03) */
+.masthead { display: none !important; }
+#panel-createpicker > .card-head > p,
+#panel-dashboard > .card-head > p,
+#panel-myexercises > .card-head > p,
+#panel-students > .card-head > p,
+#panel-points > .card-head > p,
+#panel-results > .card > .card-head > p { display: none; }
