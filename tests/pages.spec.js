@@ -39,9 +39,7 @@ test('signed out, the login screen shows', async ({ page, context }) => {
 // app (one section new, another old): it opens with a full page load instead.
 test('a section from another version of the app opens with a full page load', async ({ page, context }) => {
   await prepare(context);
-  await page.goto('/my-exercises.html');
-  await page.waitForTimeout(1200);
-  await hideNotices(page);
+  // Results comes from another version of the app (before the background loading reaches it)
   let served = false;
   await page.route(/\/results\.html$/, async route => {
     const res = await route.fetch();
@@ -49,7 +47,11 @@ test('a section from another version of the app opens with a full page load', as
     served = true;
     await route.fulfill({ response: res, body: html });
   });
-  await page.evaluate(() => { window.__noReload = true; delete TA_PAGE_HTML['results.html']; });
+  await page.goto('/my-exercises.html');
+  await page.waitForTimeout(1500);
+  await hideNotices(page);
+  expect(await page.evaluate(() => !document.getElementById('panel-results'))).toBe(true); // not mixed in by the background loading
+  await page.evaluate(() => { window.__noReload = true; });
   await page.evaluate(() => taNavigate('results.html'));
   await page.waitForURL(/results\.html/);
   await expect(page.locator('#panel-results')).toBeVisible({ timeout: 8000 });
@@ -83,4 +85,13 @@ test('Results isn\'t in the menu: it opens from View Results, with a way back to
   await expect(page.locator('#panel-results')).toHaveClass(/active/, { timeout: 8000 });
   await page.locator('.res-back-btn').click();
   await expect(page.locator('#panel-myexercises')).toHaveClass(/active/, { timeout: 8000 });
+});
+
+test('on a computer, the other sections load in the background, so opening one is instant', async ({ page, context }) => {
+  await prepare(context);
+  await page.goto('/index.html');
+  await expect.poll(() => page.evaluate(() => ['panel-myexercises', 'panel-students', 'panel-settings', 'panel-createpicker'].every(id => document.getElementById(id))), { timeout: 15000 }).toBe(true);
+  const ms = await page.evaluate(() => { const t0 = performance.now(); switchTo('students'); return performance.now() - t0; });
+  expect(ms).toBeLessThan(500);
+  await expect(page.locator('#panel-students')).toHaveClass(/active/);
 });

@@ -339,7 +339,16 @@ function taPageStamp(doc) {
   const sc = Array.from(doc.querySelectorAll('script[src]')).map(x => x.getAttribute('src') || '').find(x => /js\/common\.js\?v=/.test(x));
   return sc ? sc.split('?v=')[1] : '';
 }
-async function taLoadPage(file) {
+// one load per section, even when a click and the background loading ask at the same time
+const TA_PAGE_LOADING = {};
+function taLoadPage(file) {
+  if (!TA_PAGE_LOADING[file]) {
+    TA_PAGE_LOADING[file] = taLoadPageNow(file);
+    TA_PAGE_LOADING[file].catch(() => { delete TA_PAGE_LOADING[file]; });
+  }
+  return TA_PAGE_LOADING[file];
+}
+async function taLoadPageNow(file) {
   const doc = new DOMParser().parseFromString(await taFetchPage(file), 'text/html');
   // A newer (or older) version of the app than the page already open: mixing them would
   // show one section new and another old — open that section with a full page load.
@@ -395,7 +404,17 @@ const TA_PAGES_FILES = new Set(Object.values(TA_PAGES));
 window.addEventListener('popstate', function () { taNavigate(location.href, true); });
 
 // Once the app is idle, quietly download the other sections so opening them is instant.
+// Computers also get every section fully loaded in the background, one at a time, so
+// the first click on a section doesn't wait for its page and scripts (2026-10-03).
+async function taPreloadSections() {
+  for (const file of TA_PAGES_FILES) {
+    if (TA_LOADED_PAGES.has(file)) continue;
+    await new Promise(r => (window.requestIdleCallback || setTimeout)(r, { timeout: 2000 }));
+    try { await taLoadPage(file); } catch (e) { /* it'll load when it's opened */ }
+  }
+}
 function taPrefetchPages() {
+  if (!TA_LOW_POWER) { taPreloadSections(); return; }
   const scripts = new Set(Array.from(document.scripts).map(sc => sc.src));
   TA_PAGES_FILES.forEach(file => {
     if (TA_LOADED_PAGES.has(file)) return;
