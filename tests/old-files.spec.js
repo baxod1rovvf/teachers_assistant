@@ -25,11 +25,16 @@ test('My Exercises points out files made before a fix', async ({ page, context }
   await page.waitForTimeout(1500);
   await hideNotices(page);
   const row = uid => page.locator('.recent-exercise-row[data-uid="' + uid + '"]');
-  await expect(row('ubrk01').locator('.old-file-line')).toContainText("doesn't start");
-  await expect(row('umic03').locator('.old-file-line')).toContainText('microphone');
+  // a short line; what was fixed is in its tooltip and opens when tapped
+  await expect(row('ubrk01').locator('.old-file-line')).toHaveText('⚠️ Made before a fix');
+  await expect(row('ubrk01').locator('.old-file-line')).toHaveAttribute('title', /doesn't start/);
+  await expect(row('umic03').locator('.old-file-line')).toHaveAttribute('title', /microphone/);
+  await row('umic03').locator('.old-file-line').click();
+  await expect(page.locator('.ta-modal')).toContainText('microphone');
+  await page.keyboard.press('Escape');
   // a Sentences file that starts fine only has the small (minor) note about the certificate
   await expect(row('ufine2').locator('.old-file-line')).toHaveClass(/minor/);
-  await expect(row('ufine2').locator('.old-file-line')).not.toContainText("doesn't start");
+  await expect(row('ufine2').locator('.old-file-line')).not.toHaveAttribute('title', /doesn't start/);
   await expect(row('unew04').locator('.old-file-line')).toHaveCount(0);
 });
 

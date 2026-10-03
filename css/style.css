@@ -1084,7 +1084,7 @@ table.results-table tr:hover td { background: rgba(244,241,234,0.03); }
 }
 .recent-exercise-row:last-child { margin-bottom: 0; }
 .recent-exercise-title { font-weight: 700; color: var(--ink); font-size: 0.92rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.share-dl-row { display: flex; margin: 8px 0 4px; }
+.share-dl-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 4px; }
 .myex-rename { background: none; border: none; color: var(--ink-faint); cursor: pointer; font-size: 0.9rem; padding: 0 2px; line-height: 1; }
 .myex-rename:hover { color: var(--brand); }
 .myex-rename-input { width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--surface-sunken); color: var(--ink); font: 600 0.95rem 'Inter', sans-serif; }
@@ -2108,7 +2108,10 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 .bz-pts-label .bz-pts { width: 76px; }
 
 /* Old exercise files (made before a fix) */
-.old-file-line { margin-top: 6px; font-size: 0.78rem; line-height: 1.45; color: var(--warning); }
+.old-file-line { display: inline-block; margin-top: 6px; padding: 2px 0; border: none; background: none; cursor: pointer;
+  font: 700 0.78rem 'Inter', sans-serif; line-height: 1.45; color: var(--warning); text-align: left; }
+.old-file-line:hover { text-decoration: underline; }
+.myex-delete { padding-left: 12px; padding-right: 12px; }
 .old-file-line.minor { color: var(--ink-soft); }
 .old-file-note { margin: 0 0 12px; padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(--warning); background: var(--warning-surface); color: var(--ink); font-size: 0.84rem; line-height: 1.5; }
 .old-file-note ul { margin: 4px 0 4px 18px; }

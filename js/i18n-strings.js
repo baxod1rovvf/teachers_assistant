@@ -1024,14 +1024,9 @@ window.TA_ROBOT_I18N = {
     'Открывает упражнение в конструкторе со всем заполненным, чтобы его можно было изменить или сделать новую версию.'],
   'What does "⚠️ Made before a fix" mean?': [
     '“⚠️ Made before a fix” nimani bildiradi?',
-    'Bu fayl xato tuzatilishidan oldin yaratilgan, shuning uchun unda hali oʻsha xato bor. “✏️ Qayta ishlatish” ni bosing, yangi nusxa yarating va oʻshani ulashing.',
+    'Bu fayl xato tuzatilishidan oldin yaratilgan, shuning uchun unda hali oʻsha xato bor. Nima tuzatilganini koʻrish uchun shu qatorni bosing. “✏️ Qayta ishlatish” ni bosing, yangi nusxa yarating va oʻshani ulashing.',
     'Что значит «⚠️ Made before a fix»?',
-    'Этот файл создан до исправления ошибки, поэтому ошибка в нём осталась. Нажмите «✏️ Использовать снова», создайте новую копию и делитесь ею.'],
-  'Can I print an exercise?': [
-    'Mashqni chop etsa boʻladimi?',
-    'Ha — soʻzlar roʻyxatli mashqlarda va Uy vazifasi/Dars toʻplamlarida “🖨 Tarqatma” ni bosing (toʻplamning har bir mashqi ketma-ket; diktant va matnlarning qogʻoz varianti yoʻq). Qogʻoz varianti yangi oynada ochiladi, javoblari alohida sahifada. Chop eting yoki PDF qilib saqlang.',
-    'Можно ли распечатать упражнение?',
-    'Да — нажмите «🖨 Рабочий лист» у упражнений со списком слов и у наборов «Домашнее задание»/«Урок» (упражнения набора идут одно за другим; у диктантов и текстов бумажной версии нет). Бумажная версия откроется в новой вкладке, ответы — на отдельной странице. Распечатайте или сохраните в PDF.'],
+    'Этот файл создан до исправления ошибки, поэтому ошибка в нём осталась. Нажмите на эту строку, чтобы увидеть, что исправлено. Нажмите «✏️ Использовать снова», создайте новую копию и делитесь ею.'],
   'How do I change the group of an exercise?': [
     'Mashqning guruhini qanday oʻzgartiraman?',
     'Mashq nomi ostidagi 👥 tugmasini bosing va guruhni tanlang.',
@@ -1039,14 +1034,14 @@ window.TA_ROBOT_I18N = {
     'Нажмите кнопку 👥 под названием упражнения и выберите группу.'],
   'How do I take one exercise out of a set?': [
     'Toʻplamdan bitta mashqni qanday olaman?',
-    'Uy vazifasi/Dars toʻplamida “📤 Bitta mashqni olish” ni bosing — uni yuklab olish yoki Mashqlarimga qoʻshish mumkin; hammasini koʻrish uchun “🔀 Ajratish” ni bosing.',
+    'Uy vazifasi/Dars toʻplamida “📤 Ulashish” ni, keyin (havola ostidagi) “📤 Bitta mashqni olish” ni bosing. Mashqlaridan birini yuklab oling yoki Mashqlarimga alohida qoʻshing. Toʻplamning oʻzi oʻzgarmaydi.',
     'Как достать одно упражнение из набора?',
-    'У набора нажмите «📤 Взять одно упражнение», чтобы скачать одно из упражнений или добавить его в «Мои упражнения», или «🔀 Разделить», чтобы увидеть все.'],
+    'У набора нажмите «📤 Поделиться», затем «📤 Взять одно упражнение» (под ссылкой). Скачайте одно из упражнений или добавьте его в «Мои упражнения» отдельно. Сам набор не меняется.'],
   'Can I delete an old exercise?': [
     'Eski mashqni oʻchirsa boʻladimi?',
-    'Ha — “🗑 Oʻchirish” ni bosing. Allaqachon yuborilgan natijalarga taʼsir qilmaydi.',
+    'Ha — tugmalari oxiridagi 🗑 ni bosing. Allaqachon yuborilgan natijalarga taʼsir qilmaydi, “Qaytarish” esa bir necha soniya ichida uni qaytaradi.',
     'Можно ли удалить старое упражнение?',
-    'Да — нажмите «🗑 Удалить». Уже отправленные результаты не пострадают.'],
+    'Да — нажмите 🗑 в конце его кнопок. Уже отправленные результаты не пострадают, а «Отменить» вернёт его в течение нескольких секунд.'],
   'How do I download an exercise file again?': [
     'Mashq faylini qayta qanday yuklab olaman?',
     '“📤 Ulashish” ni bosing — “📥 Qayta yuklab olish” havolaning ostida. Katta fayllar (rasm yoki audioli) ham saqlanadi. Fayl bu qurilmada boʻlmasa, ilova uni onlayn havolasidan qaytarib oladi (ulashilgandan keyin 7 kun davomida); undan keyin uni “✏️ Qayta ishlatish” bilan qayta yarating.',

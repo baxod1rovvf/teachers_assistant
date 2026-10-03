@@ -2714,13 +2714,12 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'How do I send an exercise to my students?', a: 'Tap "📤 Share". You get a link (works for 7 days, also on iPhones) with "🔗 Copy link", a ready message to paste into Telegram, the file itself, and "🔢 Show code on screen" for the board.' },
     { q: 'The link has expired — what now?', a: 'Links work for 7 days. Tap "📤 Share" again and the app puts the exercise online again with a new 7 days.' },
     { q: 'What does "✏️ Use again" do?', a: 'It opens the exercise in its builder with everything filled in, so you can change it or make a new version.' },
-    { q: 'What does "⚠️ Made before a fix" mean?', a: 'That file was made before a bug was fixed, so it still has the bug. Press "✏️ Use again", create a new copy and share that one.' },
-    { q: 'Can I print an exercise?', a: 'Yes — tap "🖨 Worksheet" on word-list exercises, and on Homework/Class sets (each exercise of the set one after another; dictations and readings have no paper version). A paper version opens in a new tab with an answer key on its own page. Print it or save it as PDF.' },
+    { q: 'What does "⚠️ Made before a fix" mean?', a: 'That file was made before a bug was fixed, so it still has the bug. Tap the line to see what was fixed. Press "✏️ Use again", create a new copy and share that one.' },
     { q: 'How do I change the group of an exercise?', a: 'Tap the 👥 button under the exercise title and pick a group.' },
     { q: 'Can I turn a Jungle into a Bamboozle?', a: 'Yes — in the Jungle builder tap "🔁 Make it a Bamboozle" (in the Bamboozle builder: "🔁 Make it a Jungle"). The other game opens with the same questions. For a game you made earlier, tap "✏️ Use again" first.' },
-    { q: 'How do I take one exercise out of a set?', a: 'On a Homework/Class set tap "📤 Get one exercise" to download one of its exercises or add it to My Exercises, or "🔀 Separate" to see them all.' },
+    { q: 'How do I take one exercise out of a set?', a: 'On a Homework/Class set tap "📤 Share", then "📤 Get one exercise" (under the link). Download one of its exercises, or add it to My Exercises on its own. The set stays as it is.' },
     { q: 'How do I stop an exercise giving points?', a: 'Choose 0 in "Points awarded on completion" when you create it. For an exercise you already made, tap "✏️ Use again", set the points to 0 and share the new copy.' },
-    { q: 'Can I delete an old exercise?', a: 'Yes — tap "🗑 Delete". Results already submitted are not affected.' },
+    { q: 'Can I delete an old exercise?', a: 'Yes — tap the 🗑 at the end of its buttons. Results already submitted are not affected, and "Undo" brings it back for a few seconds.' },
     { q: 'How do I download an exercise file again?', a: 'Tap "📤 Share" — "📥 Redownload" is right under the link. Big files (with pictures or audio) are kept too. If the file isn\'t on this device, the app gets it back from its online link (for 7 days after sharing); after that, use "✏️ Use again" to make it again.' }
   ]),
   students: aiFaq([
