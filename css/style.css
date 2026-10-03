@@ -2397,8 +2397,8 @@ body.glass-ui .tb-profile-menu { background: color-mix(in srgb, var(--surface) 8
 }
 @media (prefers-reduced-motion: reduce) { .tb-ic { transition: none; } }
 
-/* the Dashboard's greeting card: the "task" animation where the profile chip was */
-.hero-task-anim { width: 240px; height: 152px; margin: -18px -6px -18px 0; flex-shrink: 0; pointer-events: none; }
+/* the Dashboard's greeting card: the laptop animation where the profile chip was */
+.hero-task-anim { width: 236px; height: 177px; margin: -26px -6px -26px 0; flex-shrink: 0; pointer-events: none; }
 /* phones: no animation, and the robot stays next to the name on one line */
 @media (max-width: 700px) {
   .hero-topbar-actions, .hero-task-anim { display: none; }

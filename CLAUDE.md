@@ -346,8 +346,7 @@ real students' names or results into the repository (it is public).
   Types aren't compared with each other any more. `tests/statistics.spec.js`.
 - **Profile**: only in the top bar — the picture opens a menu `#tbProfileMenu`: name →
   `taOpenProfile` (name + language), the sync status line, Change profile picture (`taPickAvatar`),
-  Log out (`taLogout`). The Dashboard's greeting card has the teacher's "task" lottie instead
-  (`animations/teacher-task.json`, its grey background cloud removed and cut to its "standing" part,
-  frames 0–66 — the full file also shrank away and came back; `initHeroTaskAnim`) — not on
-  phones, where the greeting + robot stay on one line. **Settings** has only Install, Backup, Status.
+  Log out (`taLogout`). The Dashboard's greeting card has the teacher's "Programming Computer"
+  lottie instead (`animations/welcome-computer.json`, `#heroTaskAnim`, `initHeroTaskAnim`; before it
+  a "task" lottie) — not on phones, where the greeting + robot stay on one line. **Settings** has only Install, Backup, Status.
 - The robot (lottie `AI_ROBOT_ANIM`) has a small "Smile" shape added to the eyes layer (lowered a little, 2026-10-03).

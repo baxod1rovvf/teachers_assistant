@@ -118,11 +118,11 @@ test('changing a group renames its lessons and drops unticked days; deleting it 
   await expect(page.locator('.group-block', { hasText: 'Target A2' })).toBeVisible();
 });
 
-test('profile: the top bar\'s picture opens a menu — name + language, change picture, log out; the Dashboard shows the task animation', async ({ page, context }) => {
+test('profile: the top bar\'s picture opens a menu — name + language, change picture, log out; the Dashboard shows the laptop animation', async ({ page, context }) => {
   await prepare(context);
   await open(page, 'index.html');
   await expect(page.locator('.hero-account-chip')).toHaveCount(0);
-  await expect(page.locator('#heroTaskAnim svg')).toHaveCount(1, { timeout: 8000 });   // the "task" animation is playing
+  await expect(page.locator('#heroTaskAnim svg')).toHaveCount(1, { timeout: 8000 });   // the laptop animation is playing
   await expect(page.locator('#taTopbar .tb-brand')).toContainText("Teacher's Assistant");
   await page.locator('#tbAvatarBtn').click();
   await expect(page.locator('#tbProfileMenu')).toBeVisible();

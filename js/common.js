@@ -2642,15 +2642,14 @@ function toggleThemeAnimated() {
 window.toggleThemeAnimated = toggleThemeAnimated;
 
 
-// The Dashboard's greeting card: a checklist with a dartboard (the teacher's "task" lottie,
-// without its grey background cloud, cut to its "standing" part — the checklist bobbing),
-// loaded from the site only when the Dashboard is there.
+// The Dashboard's greeting card: a laptop with code on its screen (the teacher's
+// "Programming Computer" lottie), loaded from the site only when the Dashboard is there.
 function initHeroTaskAnim() {
   const el = document.getElementById('heroTaskAnim');
   if (!el || el.dataset.ready || typeof lottie === 'undefined') return;
   el.dataset.ready = '1';
   try {
-    lottie.loadAnimation({ container: el, renderer: 'svg', loop: true, autoplay: true, path: 'animations/teacher-task.json',
+    lottie.loadAnimation({ container: el, renderer: 'svg', loop: true, autoplay: true, path: 'animations/welcome-computer.json',
       rendererSettings: { preserveAspectRatio: 'xMidYMid meet' } });
   } catch (e) { /* decorative — fail silently */ }
 }
