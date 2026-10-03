@@ -1137,11 +1137,6 @@ window.TA_ROBOT_I18N = {
     'Oʻquvchi yonidagi + yoki − ni bosing va necha ball ekanini yozing. U “Bonus: By Teacher <ismingiz>” boʻlib chiqadi (ismingizni Sozlamalarda yozing).',
     'Как вручную начислить или снять баллы?',
     'Нажмите + или − рядом с учеником и введите количество баллов. Это появится как «Bonus: By Teacher <ваше имя>» (имя задаётся в Настройках).'],
-  'How do students see the leaderboard?': [
-    'Oʻquvchilar reytingni qanday koʻradi?',
-    '“⬇ Ulashiladigan reytingni yuklab olish (.html)” ni bosing va faylni ularga yuboring. U jonli yangilanadi, istalgan kishi ismni bosib, qaysi mashqlar ball keltirganini koʻradi.',
-    'Как ученикам увидеть рейтинг?',
-    'Нажмите «⬇ Скачать рейтинг для учеников (.html)» и отправьте им файл. Он обновляется в реальном времени, и любой может нажать на имя и увидеть, за какие упражнения получены баллы.'],
   'What is the Points Board Code?': [
     'Ballar jadvali kodi nima?',
     'U mashqlaringizni shu jadvalga bogʻlaydi va har bir mashqqa avtomatik qoʻyiladi. “🔄 Yangi kod” yangi jadval boshlaydi.',

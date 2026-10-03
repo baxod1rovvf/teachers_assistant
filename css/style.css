@@ -741,7 +741,7 @@ body.light-theme .picker-icon-test { background-image: url(../images/icons/creat
   width: 34px; height: 34px; border-radius: 50%; background: var(--brand); color: #100b28;
   display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; flex-shrink: 0;
 }
-.main-content { flex: 1; min-width: 0; padding: 22px 20px 40px; }
+.main-content { flex: 1; min-width: 0; padding: 40px 20px 40px; } /* a little room at the top */
 /* phones: room for the fixed menu button above each section */
 @media (max-width: 860px) { .main-content { padding-top: 72px; } }
 .theme-choice-btn.active-choice { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
@@ -2140,3 +2140,7 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 #panel-students > .card-head > p,
 #panel-points > .card-head > p,
 #panel-results > .card > .card-head > p { display: none; }
+
+/* Results: the section title above the stat cards (the card's own heading isn't needed then) */
+.section-top-head { margin-bottom: 14px; }
+#panel-results > .card > .card-head { display: none; }

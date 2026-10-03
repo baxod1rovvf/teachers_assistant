@@ -2748,7 +2748,6 @@ const AI_ROBOT_FAQ_BY_TAB = {
   points: aiFaq([
     { q: 'How do Points & Rewards work?', a: 'Students earn points by finishing exercises with their ID. This page is a live leaderboard by group — tap a group to see its students.' },
     { q: 'How do I give or take points by hand?', a: 'Tap + or − next to a student and type how many points. It shows up as "Bonus: By Teacher <your name>" (set your name in Settings).' },
-    { q: 'How do students see the leaderboard?', a: 'Tap "⬇ Download Shareable Leaderboard (.html)" and send the file to them. It updates live, and anyone can tap a name to see which exercises earned the points.' },
     { q: 'What is the Points Board Code?', a: 'It links your exercises to this board and is put into every exercise automatically. "🔄 New Code" starts a new board.' },
     { q: 'Can I reset points?', a: 'Yes — "🗑 Reset All Points" sets everyone back to zero, and "🗑 Delete All Entirely" removes all entries.' }
   ]),
