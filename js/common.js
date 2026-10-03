@@ -2657,7 +2657,6 @@ function aiFaq(items) { return items.concat([AI_ROBOT_CONTACT_ITEM]); }
    When a new feature is added to the app, add a question about it here. */
 const AI_ROBOT_FAQ_BY_TAB = {
   main: aiFaq([
-    { q: "What is Teacher's Assistant?", a: "It's your all-in-one classroom toolkit — build interactive exercises, plan your weekly lessons, track results, and reward your students, all without any coding." },
     { q: 'How do I set up my weekly lesson schedule?', a: 'Tap "⚙️ Manage schedule" (or go to Settings → Weekly Lesson Schedule) and add each class once with its day and time. It repeats every week and shows up here under Upcoming Lessons.' },
     { q: 'What does the "Ready" button on a lesson do?', a: 'Tap "Ready" when you have prepared that lesson. Until then, the app reminds you about lessons in the next 24 hours — when you open it, and again every 2 hours.' },
     { q: 'Will I get reminded before a lesson?', a: "Yes — within 24 hours of a lesson you'll get a reminder, and the lesson shows a 'starts soon' badge in Upcoming Lessons. Reminders only work while the app is open." },
@@ -2665,17 +2664,10 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'How is "Top 5 Active Students" worked out?', a: 'Students are ranked by how well they did, not by how many exercises they finished. Each result becomes a fair 0–100 score (Sentences use the stars you give in Results). Use the group buttons (e.g. Target / Apex) to see one group at a time.' },
     { q: 'What is "Lessons taught"?', a: 'Every lesson on your weekly schedule counts once each time its day and time pass. Removing a lesson from the schedule keeps what it already counted.' },
     { q: 'What is the note about students who finished exercises?', a: 'When you open the app, a note lists your students who finished an exercise in the last 7 days that you haven\'t checked yet. Tap an exercise under a student\'s name (📊) to open that exercise\'s results. The note stays open, so you can open the next student\'s exercise too. Tap "Checked" for one student, or "All checked". Closing it with ✕ only hides it until next time.' },
-    { q: 'Can I switch between day and night mode?', a: 'Yes — tap the toggle switch at the top of this page to flip between light and dark themes any time.' },
     { q: 'How do I change the colours or the look?', a: 'Tap the 🎨 button next to the day/night switch. Pick a Style (Classic or Glass) and a colour Design. Four designs are for day and two for night.' },
-    { q: 'How do I turn sounds off?', a: 'Tap the speaker button at the top of this page. 🔇 means sounds are off; tap it again to turn them back on.' },
     { q: 'How do I find something quickly?', a: 'Tap "🔍 Search" in the sidebar, or press Ctrl+K (⌘K on a Mac). Type a section, an exercise type, a group, a student or an exercise title and jump straight to it.' },
-    { q: 'What is the "Edunest system" button?', a: 'It opens the Edunest teacher page in a new tab.' },
-    { q: 'Can I move the robot?', a: 'Yes — drag me anywhere. Double-tap me and I roll away like a bowling ball. 🤖' }
   ]),
   createpicker: aiFaq([
-    { q: 'How do I create a new exercise?', a: 'Pick a type below — Flashcards, Word Order, Test, Dictation, and more. Fill in your content, press Create, and a ready-to-use file downloads to your computer. A copy is kept in My Exercises.' },
-    { q: "What's the difference between Ready to use and In process?", a: 'Ready to use types are fully built. In process types are newer and still being polished, but you can already try them.' },
-    { q: 'Which exercise types are there?', a: 'Word Order, Make a Word, Flashcard, Presentation, Pronunciation, Spelling, Test, Sentences, Bidirectional Language, English Content, Dictation, and two classroom games: Jungle and Bamboozle. Plus Homework/Class sets and IELTS Listening, Reading and Writing.' },
     { q: 'Can I combine several exercises into one?', a: 'Yes — that\'s Homework & Class on this page. Choose Homework (students do it on their own) or Class (used together in a lesson), build round 1, tap "➕ Add Another Exercise" for the next round, then "Create ⬇".' },
     { q: 'What are Jungle and Bamboozle?', a: 'Two games for the classroom screen, played in teams. Jungle is a board game with dice; Bamboozle is a quiz with numbered cards. They use the same questions, so one can be turned into the other.' },
     { q: 'What about IELTS?', a: 'IELTS Listening (4 parts), Reading (3 parts) and Writing (Task 1 and 2, checked by AI) build IELTS-style tests. They don\'t affect Statistics or Points and have their own results. Speaking is still to be designed.' }
@@ -2707,21 +2699,11 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'Who is counted in Statistics?', a: 'Only students who entered with an ID from your Students list. Students who typed just a name are left out.' }
   ]),
   myexercises: aiFaq([
-    { q: 'What is My Exercises for?', a: "Every exercise you've built lives here — share it, see its results, open it again in its builder, print it, or turn off its points." },
     { q: 'Where are "Use again", "Redownload" and "Copy link"?', a: 'Each exercise is a card. Tap ⋯ next to its title: ✏️ Use again, 📥 Redownload and 🔗 Copy link (copies the link without showing it — it works for 7 days). On a Homework/Class set there is also 📤 Get one exercise. 🗑 and 📊 View Results are at the bottom of the card.' },
-    { q: 'Why do some exercises have a coloured edge?', a: 'Those are sets: 📚 Homework sets have an orange edge and 🏫 Class sets a green one, so they stand out from single exercises.' },
-    { q: 'How do I rename an exercise?', a: 'Tap the ✎ next to its name, type the new name and tap Save. The new name shows in My Exercises and Results. A file you have already sent to students keeps its old name.' },
-    { q: 'How do I find an exercise?', a: 'Type in the search box (title, word or code), or tap the group and type buttons above the list to show only those.' },
     { q: 'How do I send an exercise to my students?', a: 'Tap ⋯ on its card, then "🔗 Copy link", and paste the link into your class chat. It works for 7 days, also on iPhones. Or "📥 Redownload" the file and send that.' },
     { q: 'The link has expired — what now?', a: 'Links work for 7 days. Tap ⋯ → "🔗 Copy link" again: the app puts the exercise online again for a new 7 days and copies the link.' },
-    { q: 'What does "✏️ Use again" do?', a: 'It opens the exercise in its builder with everything filled in, so you can change it or make a new version.' },
     { q: 'What does "⚠️ Made before a fix" mean?', a: 'That file was made before a bug was fixed, so it still has the bug. Tap the line to see what was fixed. Press "✏️ Use again", create a new copy and share that one.' },
-    { q: 'How do I change the group of an exercise?', a: 'Tap the 👥 button under the exercise title and pick a group.' },
-    { q: 'Can I turn a Jungle into a Bamboozle?', a: 'Yes — in the Jungle builder tap "🔁 Make it a Bamboozle" (in the Bamboozle builder: "🔁 Make it a Jungle"). The other game opens with the same questions. For a game you made earlier, tap "✏️ Use again" first.' },
     { q: 'How do I take one exercise out of a set?', a: 'On a Homework/Class set tap ⋯, then "📤 Get one exercise". Download one of its exercises, or add it to My Exercises on its own. The set stays as it is.' },
-    { q: 'How do I stop an exercise giving points?', a: 'Choose 0 in "Points awarded on completion" when you create it. For an exercise you already made, tap "✏️ Use again", set the points to 0 and share the new copy.' },
-    { q: 'Can I delete an old exercise?', a: 'Yes — tap the 🗑 at the end of its buttons. Results already submitted are not affected, and "Undo" brings it back for a few seconds.' },
-    { q: 'How do I download an exercise file again?', a: 'Tap ⋯ on its card, then "📥 Redownload". Big files (with pictures or audio) are kept too. If the file isn\'t on this device, the app gets it back from its online link (for 7 days after sharing); after that, use "✏️ Use again" to make it again.' }
   ]),
   students: aiFaq([
     { q: 'What is the Students list for?', a: 'Give each student a unique ID — this is what they type into an exercise instead of a name. Only students on this list count in Statistics, Top 5 and "Didn\'t do it".' },
@@ -2731,7 +2713,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'A student\'s results are missing — why?', a: 'Usually the student typed a wrong ID or just a name. Their results then show under "Entered with a name only" and are left out of Statistics and Top 5.' }
   ]),
   results: aiFaq([
-    { q: "Where do I see my students' results?", a: 'Right here. In My Exercises tap "📊 View Results" on an exercise, or upload the exercise file here. New results arrive by themselves.' },
+    { q: "Where do I see my students' results?", a: 'In My Exercises tap "📊 View Results" on the exercise\'s card. "← Back to My Exercises" takes you back. New results arrive by themselves.' },
     { q: 'What do ⚖️ and ⚠️ next to a student mean?', a: 'Tap ⚖️ next to a student to mark them "will be punished" — it turns into a red ⚠️ and their row turns red. Tap ⚠️ to take the mark off. It works in the results table, in a set\'s student list and in "Didn\'t do it". The mark is only for that exercise.' },
     { q: 'What do ✓ and ✕ next to a student mean?', a: '✕ means you haven\'t checked the student\'s answers yet; tap it after you have looked at them and it becomes ✓ (checked). Tap ✓ to change it back. Checked students stop appearing in the "finished exercises" note you get when you open the app.' },
     { q: 'Who is in "Didn\'t do it"?', a: 'Students in the exercise\'s group who have no result yet. It only shows for exercises made for a group.' },
@@ -2749,19 +2731,14 @@ const AI_ROBOT_FAQ_BY_TAB = {
   points: aiFaq([
     { q: 'How do Points & Rewards work?', a: 'Students earn points by finishing exercises with their ID. This page is a live leaderboard by group — tap a group to see its students.' },
     { q: 'How do I give or take points by hand?', a: 'Tap + or − next to a student and type how many points. It shows up as "Bonus: By Teacher <your name>" (set your name in Settings).' },
-    { q: 'What is the Points Board Code?', a: 'It links your exercises to this board and is put into every exercise automatically. "🔄 New Code" starts a new board.' },
-    { q: 'Can I reset points?', a: 'Yes — "🗑 Reset All Points" sets everyone back to zero, and "🗑 Delete All Entirely" removes all entries.' }
   ]),
   settings: aiFaq([
     { q: 'How do I set up my weekly lesson schedule?', a: 'Add each class once with its day and time under Weekly Lesson Schedule — it repeats every week. Tap "📝 Plan" next to a lesson to write its plan.' },
-    { q: 'How do I change the language?', a: 'Under 🌐 Language pick English, Oʻzbekcha or Русский. Menus and buttons change; exercises for students stay in English.' },
     { q: 'How do I make a backup?', a: 'Under 💾 Backup tap "⬇ Download backup". One file holds your students, groups, exercises, schedule and every result. Keep it somewhere safe (not only on this device). The app reminds you every week.' },
     { q: 'How do I bring back deleted results or data?', a: 'Under 💾 Backup tap "⬆ Restore from file" and choose a backup. You can bring back the app\'s data, and/or put back results that were deleted from the database.' },
     { q: 'How do I put the app on my phone or computer?', a: 'Under 📲 Install on this device tap Install (Chrome, Edge, Android). On iPhone/iPad open the app in Safari → Share → Add to Home Screen.' },
     { q: 'What is 🩺 Status?', a: 'It shows how the app is doing on this device: database, sign-in, results kept, sync, last backup, links space and storage. If something doesn\'t work, a ⚠️ here usually says why.' },
     { q: 'What is sync?', a: 'Your data is copied (encrypted) to the cloud so other devices show the same things. If the sidebar says "☁️ Sync is off", tap it and enter your password.' },
-    { q: 'Can I share this app with another teacher?', a: 'Yes — use "🔗 Copy App Link" under Share. Your colleague signs in with their own account, so your students, exercises and points stay just yours.' },
-    { q: 'Can I change my name or profile picture?', a: 'Yes — both are right here in Settings. Your name is shown on bonus points ("Bonus: By Teacher …").' }
   ]),
   'ielts-listening': aiFaq([
     { q: 'How do IELTS Listening exercises work?', a: "Full IELTS-style listening tests (build any of the 4 parts; students do the ones you built, in order), tracked separately from your other exercises — they don't affect Statistics or Points." }
@@ -2773,9 +2750,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'How do IELTS Reading exercises work?', a: "Full IELTS-style reading tests: build any of the 3 parts — paste each passage (paragraphs split on blank lines) and add its questions. They don't affect Statistics or Points." }
   ]),
   default: aiFaq([
-    { q: "What is Teacher's Assistant?", a: "It's your all-in-one classroom toolkit — build interactive exercises, plan your weekly lessons, track results, and reward your students, all without any coding." },
-    { q: 'How do I create a new exercise?', a: 'Tap "➕ Create New Exercise" in the sidebar, then pick a type — Flashcards, Word Order, Test, Dictation, and more.' },
-    { q: "Where do I see my students' results?", a: 'Open "Results" in the sidebar, or tap "📊 View Results" on an exercise in My Exercises.' }
+    { q: "Where do I see my students' results?", a: 'In My Exercises tap "📊 View Results" on the exercise\'s card. "← Back to My Exercises" takes you back. New results arrive by themselves.' }
   ])
 };
 /* One exercise type's own questions, shown above the general builder ones. */
@@ -3318,6 +3293,7 @@ const TA_TAB_LABELS = {
 function taQuickSearchItems() {
   const items = [];
   Object.keys(TA_PAGES).forEach(tab => {
+    if (tab === 'results') return; // Results opens from My Exercises ("View Results")
     const l = TA_TAB_LABELS[tab];
     items.push({ icon: l[0], label: l[1], kind: 'Section', go: () => switchTo(tab) });
   });

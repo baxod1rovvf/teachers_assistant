@@ -26,7 +26,8 @@ test('My Exercises points out files made before a fix', async ({ page, context }
   await hideNotices(page);
   const row = uid => page.locator('.recent-exercise-row[data-uid="' + uid + '"]');
   // a short line; what was fixed is in its tooltip and opens when tapped
-  await expect(row('ubrk01').locator('.old-file-line')).toHaveText('⚠️ Made before a fix');
+  // just ⚠️ next to the title
+  await expect(row('ubrk01').locator('.recent-exercise-title .old-file-line')).toHaveText('⚠️');
   await expect(row('ubrk01').locator('.old-file-line')).toHaveAttribute('title', /doesn't start/);
   await expect(row('umic03').locator('.old-file-line')).toHaveAttribute('title', /microphone/);
   await row('umic03').locator('.old-file-line').click();

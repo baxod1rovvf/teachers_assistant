@@ -72,3 +72,15 @@ test('another section is asked for fresh from the server, not the browser\'s sav
   });
   expect(mode).toBe('no-cache');
 });
+
+test('Results isn\'t in the menu: it opens from View Results, with a way back to My Exercises', async ({ page, context }) => {
+  await prepare(context);
+  await page.goto('/my-exercises.html');
+  await page.waitForTimeout(1200);
+  await hideNotices(page);
+  await expect(page.locator('.side-btn[data-tab="results"]')).toBeHidden();
+  await page.locator('.myex-card', { hasText: 'Kitchen' }).locator('.myex-results').click();
+  await expect(page.locator('#panel-results')).toHaveClass(/active/, { timeout: 8000 });
+  await page.locator('.res-back-btn').click();
+  await expect(page.locator('#panel-myexercises')).toHaveClass(/active/, { timeout: 8000 });
+});

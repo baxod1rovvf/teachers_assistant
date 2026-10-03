@@ -25,7 +25,9 @@ test('the robot answers questions about the newest features, found with its sear
   await page.waitForTimeout(1000);
   await hideNotices(page);
   await page.evaluate(() => { aiRobotQuery = ''; toggleAiRobotBubble(); });
-  await expect(page.locator('#aiRobotBubbleBody')).toContainText('coloured edge');
+  await expect(page.locator('#aiRobotBubbleBody')).toContainText('Copy link');
+  // easy questions aren't there any more
+  await expect(page.locator('#aiRobotBubbleBody')).not.toContainText('How do I rename an exercise?');
   expect(errors).toEqual([]);
 });
 
@@ -44,7 +46,7 @@ test('every robot question has its Uzbek and Russian translation', async () => {
 
 test('in Uzbek and Russian the robot answers in that language', async ({ page, context }) => {
   await prepare(context);
-  for (const [lang, q, a, word] of [['uz', 'Robotni surish mumkinmi?', 'bouling', 'jazo'], ['ru', 'Можно ли передвинуть робота?', 'боулинга', 'наказан']]) {
+  for (const [lang, q, a, word] of [['uz', 'Darsdagi “Ready” tugmasi nima qiladi?', 'tayyorlanib', 'jazo'], ['ru', 'Что делает кнопка «Ready» у урока?', 'подготовились', 'наказан']]) {
     await page.addInitScript(l => { try { localStorage.setItem('ta_ui_lang', l); } catch (e) {} }, lang);
     await page.goto('/index.html');
     await page.waitForTimeout(1200);

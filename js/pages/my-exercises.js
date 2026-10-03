@@ -79,34 +79,36 @@ function renderRecentExercises() {
   list.forEach((item, idx) => {
     if (!matches(item)) return;
     shown++;
-    const dateStr = fmtDate(item.date);
+    // "Oct 2, 7:59 PM" — no year
+    const dateStr = (function (d) {
+      if (isNaN(d)) return '';
+      return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + ', ' + d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+    })(new Date(item.date));
     // Homework and Class sets stand out from single exercises
     const setKind = (item.setKind === 'class' || item.typeLabel === 'Class') ? 'class'
       : ((item.setKind === 'homework' || item.typeLabel === 'Homework') ? 'homework' : '');
-    const setBadge = setKind
-      ? '<span class="badge-set ' + setKind + '">' + (setKind === 'class' ? '🏫 Class set' : '📚 Homework set') +
-        (item.mergedItems && item.mergedItems.length ? ' · ' + item.mergedItems.length + ' exercises' : '') + '</span>'
-      : '';
+    const setBadge = setKind ? '<span class="badge-set ' + setKind + '">' + (setKind === 'class' ? 'Class' : 'Homework') + '</span>' : '';
     const disabledBadge = setBadge + (item.disabled
       ? '<span class="badge-type" style="background:rgba(232,103,74,0.14); color:var(--danger);">Points off</span>'
       : (setKind ? '' : '<span class="badge-type">' + escapeForHtml(item.typeLabel) + '</span>'));
     const gName = groupNames[item.groupId];
     const groupBtn = '<button type="button" class="myex-group-btn' + (gName ? '' : ' none') + '" onclick="changeRecentExerciseGroup(' + idx + ')" title="Change which group this is for"' + (gName ? ' translate="no"' : '') + '>👥 ' + escapeForHtml(gName || 'Set group') + '</button>';
     const oldIssues = taOldFileIssues(item);
+    // made before a fix: just ⚠️ next to the title (tap: what was fixed)
     const oldLine = oldIssues.length
-      ? '<button type="button" class="old-file-line' + (oldIssues.every(x => x.fix.minor) ? ' minor' : '') + '" onclick="showOldFileInfo(' + idx + ')" title="' + escapeForHtml('Made before a fix: ' + taOldFileWhat(oldIssues) + '. Press ✏️ Use again to make a new copy, and share that one.') + '">⚠️ Made before a fix</button>'
+      ? '<button type="button" class="old-file-line old-file-icon' + (oldIssues.every(x => x.fix.minor) ? ' minor' : '') + '" onclick="showOldFileInfo(' + idx + ')" title="' + escapeForHtml('Made before a fix: ' + taOldFileWhat(oldIssues) + '. Press ✏️ Use again to make a new copy, and share that one.') + '" aria-label="Made before a fix">⚠️</button>'
       : '';
-    const codeLine = '<div class="recent-exercise-date">' + groupBtn + (item.requiredCode ? 'Code: ' + escapeForHtml(item.requiredCode) : 'No code set') + ' &middot; ' + dateStr + '</div>';
+    const codeLine = '<div class="recent-exercise-date">' + (item.requiredCode ? 'Code: ' + escapeForHtml(item.requiredCode) + ' &middot; ' : '') + dateStr + '</div>';
     // a card: the title (✎ rename, ⋯ more), what it is, then 🗑 and View Results
     html +=
       '<div class="recent-exercise-row myex-card' + (setKind ? ' set-row set-' + setKind : '') + '" data-uid="' + escapeForHtml(item.uid || '') + '">' +
         '<div class="myex-card-head">' +
           '<div class="recent-exercise-title"><span class="myex-card-title" translate="no">' + escapeForHtml(item.title) + '</span>' +
-            '<button type="button" class="myex-rename" onclick="renameRecentExercise(' + idx + ')" title="Rename" aria-label="Rename">✎</button></div>' +
+            '<button type="button" class="myex-rename" onclick="renameRecentExercise(' + idx + ')" title="Rename" aria-label="Rename">✎</button>' + oldLine + '</div>' +
           '<button type="button" class="myex-more" onclick="openMyexMenu(event, ' + idx + ')" title="More" aria-label="More">⋯</button>' +
         '</div>' +
-        '<div class="myex-card-badges">' + disabledBadge + '</div>' +
-        codeLine + oldLine +
+        '<div class="myex-card-badges">' + disabledBadge + groupBtn + '</div>' +
+        codeLine +
         '<div class="recent-exercise-actions myex-card-foot">' +
           '<button class="mini-btn danger myex-delete" type="button" onclick="deleteRecentExercise(' + idx + ')" title="Delete" aria-label="Delete">🗑</button>' +
           '<button class="mini-btn myex-results" type="button" onclick="viewRecentExerciseResults(' + idx + ')">📊 View Results</button>' +

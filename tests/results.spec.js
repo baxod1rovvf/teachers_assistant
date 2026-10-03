@@ -152,7 +152,7 @@ test('My Exercises: Homework and Class sets stand out', async ({ page, context }
   await hideNotices(page);
   const set = page.locator('.recent-exercise-row[data-uid="uset"]');
   await expect(set).toHaveClass(/set-row/);
-  await expect(set.locator('.badge-set')).toContainText('Homework set');
+  await expect(set.locator('.badge-set')).toHaveText('Homework');
   await expect(page.locator('.recent-exercise-row.set-row')).toHaveCount(await page.locator('.badge-set').count());
 });
 

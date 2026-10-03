@@ -9,20 +9,20 @@ through Firebase Firestore (project `teachers-assistant-app-ccd1a`, collection `
 The teacher asks for changes in plain words, often by screenshot, and merges to `main`
 when asked ("merge it"). Explain things simply — they are a teacher, not a developer.
 
-## 🤖 Every new feature goes into the AI robot too (the teacher asked for this)
+## 🤖 New features and the AI robot — ask the teacher (they asked for this)
 
-**Whenever you add or change a feature, option or button, also add (or update) a question +
-answer about it in the AI robot** — the floating help robot on every page. The teacher's
-users ask it how to use things. Where: `AI_ROBOT_FAQ_BY_TAB` (one list per section: `main`,
-`createpicker`, `builder`, `hwcbuilder`, `dashboard` = Statistics, `myexercises`, `students`,
-`results`, `points`, `settings`, IELTS ones) and `AI_ROBOT_TYPE_FAQ` (one list per exercise
-type) in `js/common.js`. Write in plain words with the real button names (e.g. "Tap "📤 Share""),
-and fix answers that a change makes wrong. **Also add the Uzbek and Russian translation** of
-each new or changed question/answer to `TA_ROBOT_I18N` in `js/i18n-strings.js` (keyed by the
-English question; button names as they appear on screen in that language). The robot's search
-box looks through every answer from any page. `tests/robot.spec.js` checks it, and fails when a
-question has no translation. Do this in the same change as the feature —
-don't wait to be asked.
+**Whenever you add a new feature, option or button, ask the teacher (in your reply) whether
+to add a question + answer about it to the AI robot** — the floating help robot on every page.
+They want the robot short: **only useful, not-obvious questions** — no easy ones like "How do I
+rename / find / delete an exercise?" or "Can I switch day/night?" (those were removed
+2026-10-03). **When a feature is removed or changed, remove or fix its questions in the same
+change** (questions about things that no longer exist must never stay). Where: `AI_ROBOT_FAQ_BY_TAB`
+(one list per section: `main`, `createpicker`, `builder`, `hwcbuilder`, `dashboard` = Statistics,
+`myexercises`, `students`, `results`, `points`, `settings`, IELTS ones) and `AI_ROBOT_TYPE_FAQ`
+(one list per exercise type) in `js/common.js`. Plain words, real button names. **Every question
+needs its Uzbek and Russian translation** in `TA_ROBOT_I18N` in `js/i18n-strings.js` (keyed by the
+English question; button names as they appear on screen in that language) — `tests/robot.spec.js`
+fails when a question has no translation, or a translation's question no longer exists.
 
 ## ⚠️ Tell the teacher at the start of a new chat — database limits
 
@@ -288,6 +288,12 @@ real students' names or results into the repository (it is public).
   back with `JSON.stringify(t).replace(/<\//g, '<\\/')`.
 - Accounts: each teacher's `localStorage` is namespaced (`js/accounts.js`); the admin
   `TOXIRJON` uses un-prefixed keys.
+- **Results isn't in the sidebar or the quick search** (2026-10-03): it opens from My Exercises
+  ("📊 View Results" on a card, `results.html?exercise=<uid>`), and has "← Back to My Exercises".
+- My Exercises is a grid of cards (`.myex-grid`, 4 in a row): title ✎ ⚠️(made before a fix) ⋯,
+  type + group, code · date (no year), 🗑 + View Results. ⋯ = Use again, Redownload, Copy link
+  (+ Get one exercise on sets). The Share window code (`shareRecentExercise`) is no longer
+  reachable from the cards.
 - Results → "⚖️ Punish?" / "⚠️ Will be punished" (`taPunishChipHtml` etc. in common.js): per
   exercise/set code + student, kept in `ta_punished` (synced, in the backup); marked rows turn
   red in the results table, a set's student list and "Didn't do it". My Exercises shows

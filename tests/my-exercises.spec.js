@@ -83,6 +83,7 @@ test('a set whose file isn\'t kept here gets it back from its online link (Get o
   await page.goto('/my-exercises.html');
   await page.waitForTimeout(1000);
   await hideNotices(page);
+  await expect(page.locator('.recent-exercise-row[data-uid="uset2"] .badge-set')).toHaveText('Homework'); // just Homework / Class
   // "Get one exercise" is in the set's ⋯ menu (no "Separate" any more)
   const setRow = page.locator('.recent-exercise-row[data-uid="uset2"]');
   await expect(setRow.locator('.recent-exercise-actions')).not.toContainText('Separate');
@@ -111,6 +112,9 @@ test('My Exercises shows cards, 4 in a row: title ✎ ⋯, then 🗑 and View Re
   await card.locator('.myex-more').click();
   await expect(page.locator('#myexMenu button')).toHaveText(['✏️ Use again', '📥 Redownload']); // + 🔗 Copy link on the real site
   await expect(page.locator('.recent-exercise-daygroup')).toHaveCount(0); // no headings by date
+  // short card: type and group on one line, a date without the year
+  await expect(card.locator('.myex-card-badges')).toContainText('Spelling');
+  await expect(card.locator('.recent-exercise-date')).not.toContainText(String(new Date().getFullYear()));
   await page.keyboard.press('Escape');
   await expect(page.locator('#myexMenu')).toHaveCount(0);
   await card.locator('.myex-more').click();
