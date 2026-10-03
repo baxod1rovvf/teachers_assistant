@@ -317,6 +317,7 @@ real students' names or results into the repository (it is public).
   in step (rename, ticked days, level; unticked days are archived so "Lessons taught" never
   drops), deleting a group removes them (Undo puts them back). Inside a group each student is a
   row: name ✎ (`renameRosterStudent`: name + group) 🗑 ID-chip, then − 🪙 + (tap 🪙 → `openStudentPoints`).
+  Every name gets the longest name's width (`alignStudentNames`, `--sp-name-w`), so ✎ 🗑 ID stand in columns.
   "➕ Add student" opens ID then Name (`studentsAddOpen`). Group level is a list (`GROUP_LEVELS`:
   Beginner … Advanced, IELTS; an old typed level like "A2" stays as a choice).
   New points only update the numbers (`renderPointsBoard` → `[data-pts-for]`/`[data-group-pts]`),
@@ -324,4 +325,4 @@ real students' names or results into the repository (it is public).
 - The lesson plan opens from the group's name on an Upcoming Lesson (Dashboard).
 - **Profile** (sidebar and Dashboard): the picture → `taPickAvatar`, the name → `taOpenProfile`
   (name + language), the door icon → `taLogout`. **Settings** has only Install, Backup, Status.
-- The robot (lottie `AI_ROBOT_ANIM`) has a small "Smile" shape added to the eyes layer.
+- The robot (lottie `AI_ROBOT_ANIM`) has a small "Smile" shape added to the eyes layer (lowered a little, 2026-10-03).

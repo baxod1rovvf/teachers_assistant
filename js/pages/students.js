@@ -255,6 +255,22 @@ function scheduleInfoForGroup(name) {
   };
 }
 
+/* Every name gets the width of the longest one, so ✎, 🗑 and the IDs stand in straight columns. */
+function alignStudentNames(wrap) {
+  const table = wrap.querySelector('.sp-table');
+  const names = table ? table.querySelectorAll('.sp-name strong') : [];
+  if (!names.length) return;
+  const ctx = (alignStudentNames.canvas || (alignStudentNames.canvas = document.createElement('canvas'))).getContext('2d');
+  ctx.font = getComputedStyle(names[0]).font;
+  let widest = 0;
+  names.forEach(n => { widest = Math.max(widest, ctx.measureText(n.textContent).width); });
+  table.style.setProperty('--sp-name-w', Math.ceil(widest + 2) + 'px');
+  if (document.fonts && !alignStudentNames.fontsWaited) {
+    alignStudentNames.fontsWaited = true;
+    document.fonts.ready.then(() => { if (table.isConnected) alignStudentNames(wrap); });
+  }
+}
+
 function renderStudentsList() {
   renderGroupSelect();
   const wrap = document.getElementById('studentsListWrap');
@@ -319,6 +335,7 @@ function renderStudentsList() {
       : '<div class="empty-results">No students in this group yet. Add one above.</div>';
     html += '</div>';
     wrap.innerHTML = html;
+    alignStudentNames(wrap);
     return;
   }
 

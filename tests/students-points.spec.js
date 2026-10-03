@@ -146,3 +146,16 @@ test('Settings keeps only Install on this device, Backup and Status', async ({ p
   await expect(page.locator('#panel-settings')).not.toContainText('Share Teacher');
   await expect(page.locator('#panel-settings')).not.toContainText('Weekly Lesson Schedule');
 });
+
+test('in a group, every student\'s ✎, 🗑 and ID stand in straight columns', async ({ page, context }) => {
+  await prepare(context);
+  await open(page, 'students.html');
+  await page.evaluate(() => {
+    const g = getRosterByGroup().find(b => b.students.length);
+    openStudentGroup(g.id);
+  });
+  const rows = page.locator('.sp-table .sp-row');
+  expect(await rows.count()).toBeGreaterThan(1);
+  const lefts = await rows.evaluateAll(list => list.map(r => [...r.querySelectorAll('.sp-icon-btn, .sp-id')].map(el => Math.round(el.getBoundingClientRect().left))));
+  for (const l of lefts) expect(l).toEqual(lefts[0]);
+});

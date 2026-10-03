@@ -2233,7 +2233,7 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 .sp-head span:last-child { text-align: right; }
 .roster-row.sp-row { margin-bottom: 0; padding: 8px 14px; }
 .sp-name { display: flex; align-items: center; gap: 4px; min-width: 0; }
-.sp-name strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-right: 4px; }
+.sp-name strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-right: 4px; flex: 0 1 auto; width: var(--sp-name-w, auto); }
 .sp-id { margin-left: 6px; padding: 2px 8px; border-radius: 999px; background: var(--surface-sunken); border: 1px solid var(--border); color: var(--ink-soft); font-weight: 700; font-size: 0.78rem; white-space: nowrap; }
 .sp-row .points-cell { font-weight: 800; color: var(--brand); display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
 .sp-row .pt-adjust-btn { width: 26px; height: 26px; }
