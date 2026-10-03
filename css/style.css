@@ -1703,6 +1703,19 @@ button:active:not(:disabled) { transform: scale(0.97); }
 }
 .lesson-row { border-radius: var(--radius-md); }
 .lesson-row:hover { background: var(--surface-sunken); }
+/* Upcoming Lessons: a lesson in the next 24 hours stands out */
+.lesson-row.lesson-soon, body.glass-ui .lesson-row.lesson-soon {
+  margin: 4px 0; padding: 14px 12px; border: 1.5px solid color-mix(in srgb, var(--lesson-c) 70%, transparent);
+  background: color-mix(in srgb, var(--lesson-c) 13%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--lesson-c) 12%, transparent), 0 6px 18px color-mix(in srgb, var(--lesson-c) 22%, transparent);
+}
+.lesson-row.lesson-soon:last-child { border-bottom: 1.5px solid color-mix(in srgb, var(--lesson-c) 70%, transparent); }
+.lesson-row.lesson-soon:hover { background: color-mix(in srgb, var(--lesson-c) 19%, transparent); }
+.lesson-row.lesson-soon .lesson-accent { width: 6px; animation: lessonSoonGlow 1.8s ease-in-out infinite; }
+.lesson-row.lesson-soon .lesson-time-val { font-size: 1.02rem; }
+.lesson-row.lesson-soon .lesson-group-col b { font-size: 1rem; }
+@keyframes lessonSoonGlow { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--lesson-c) 0%, transparent); } 50% { box-shadow: 0 0 10px 2px var(--lesson-c); } }
+@media (prefers-reduced-motion: reduce) { .lesson-row.lesson-soon .lesson-accent { animation: none; } }
 @media (prefers-reduced-motion: reduce) {
   .dash-stats-grid .results-stat-card:hover, .lesson-row:hover, .quick-action-btn:hover, .picker-card:hover,
   .group-block:hover, .roster-row:hover, .points-table-row:hover { transform: none; }

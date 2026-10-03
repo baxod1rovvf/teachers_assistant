@@ -327,7 +327,8 @@ real students' names or results into the repository (it is public).
   Beginner … Advanced, IELTS; an old typed level like "A2" stays as a choice).
   New points only update the numbers (`renderPointsBoard` → `[data-pts-for]`/`[data-group-pts]`),
   so the add-student form isn't wiped. `tests/students-points.spec.js`.
-- The lesson plan opens from the group's name on an Upcoming Lesson (Dashboard).
+- The lesson plan opens from the group's name on an Upcoming Lesson (Dashboard). Lessons in the next
+  24 hours stand out there (`.lesson-row.lesson-soon`, tinted in the group's colour `--lesson-c`).
 - **Statistics** (`renderDashboard` in `js/pages/statistics.js`, 2026-10-03): one card per exercise
   type with activity in the last 7 days — a line of completions per day (roster students only),
   today vs yesterday (▲/▼), today's piece of the line dashed (`.sc-tail`), dotted 7-day average.

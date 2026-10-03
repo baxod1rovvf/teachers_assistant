@@ -823,9 +823,9 @@ window.TA_ROBOT_I18N = {
     'Нажмите «Ready», когда подготовились к уроку. До этого приложение напоминает об уроках в ближайшие 24 часа — при открытии и потом каждые 2 часа.'],
   'Will I get reminded before a lesson?': [
     'Darsdan oldin eslatma boʻladimi?',
-    'Ha — darsga 24 soat qolganda eslatma chiqadi, “Yaqinlashayotgan darslar” da esa dars yonida “tez orada” belgisi paydo boʻladi. Eslatmalar faqat ilova ochiq turganda ishlaydi.',
+    'Ha — darsga 24 soat qolganda eslatma chiqadi, “Yaqinlashayotgan darslar” da esa bu dars ajralib turadi — guruh rangida boʻyaladi, cheti yonib turadi va boshlanishiga qancha qolgani koʻrinadi. Eslatmalar faqat ilova ochiq turganda ishlaydi.',
     'Будут ли напоминания перед уроком?',
-    'Да — за 24 часа до урока появится напоминание, а в «Ближайших уроках» у урока будет значок «скоро». Напоминания работают, только пока приложение открыто.'],
+    'Да — за 24 часа до урока появится напоминание, а в «Ближайших уроках» этот урок выделяется — окрашен в цвет группы, с подсвеченным краем и временем до начала. Напоминания работают, только пока приложение открыто.'],
   'How do I write a plan for a lesson?': [
     'Dars rejasini qanday yozaman?',
     '“Yaqinlashayotgan darslar” da darsdagi guruh nomini bosing. Izohlaringizni yozing, unga mashqlarni tanlang va “💾 Save Plan” ni bosing.',

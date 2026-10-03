@@ -2297,7 +2297,8 @@ function renderLessonRow(o) {
     : '';
   const withinDay = (o.date.getTime() - Date.now()) <= (24 * 60 * 60 * 1000);
   const soonBadge = withinDay ? '<div class="lesson-soon-badge">⏰ ' + formatTimeUntil(o.date) + '</div>' : '';
-  return '<div class="lesson-row">' +
+  // lessons in the next 24 hours stand out: tinted in the group's colour, with a glowing edge
+  return '<div class="lesson-row' + (withinDay ? ' lesson-soon' : '') + '"' + (withinDay ? ' style="--lesson-c:' + palette.color + ';"' : '') + '>' +
     '<div class="lesson-accent" style="background:' + palette.color + ';"></div>' +
     '<div class="lesson-time-col"><div class="lesson-time-val">' + formatTimeDisplay(o.entry.time) + '</div><div class="lesson-day-val">' + SCHEDULE_DAY_SHORT[o.date.getDay()] + '</div>' + soonBadge + '</div>' +
     '<button type="button" class="lesson-group-col lesson-plan-open" title="Lesson plan" onclick="openLessonPlanModal(' + jsAttr(o.entry.id) + ')"><img class="lesson-group-icon icon-mono" src="images/icons/students.png" alt=""><b>' + escapeForHtml(o.entry.group || 'Untitled group') + '</b><span class="lesson-plan-hint">📝</span></button>' +
@@ -2736,7 +2737,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
   main: aiFaq([
     { q: 'How do I set my lesson schedule?', a: 'Each group has its own lesson days and times. Tap "✏️ Change schedule" (it opens Students & Points), then "➕ Add group" or ✎ on a group, and tick its days and times. They repeat every week and show here under Upcoming Lessons.' },
     { q: 'What does the "Ready" button on a lesson do?', a: 'Tap "Ready" when you have prepared that lesson. Until then, the app reminds you about lessons in the next 24 hours — when you open it, and again every 2 hours.' },
-    { q: 'Will I get reminded before a lesson?', a: "Yes — within 24 hours of a lesson you'll get a reminder, and the lesson shows a 'starts soon' badge in Upcoming Lessons. Reminders only work while the app is open." },
+    { q: 'Will I get reminded before a lesson?', a: "Yes — within 24 hours of a lesson you'll get a reminder, and in Upcoming Lessons the lesson stands out — tinted in its group's colour, with a glowing edge and how long until it starts. Reminders only work while the app is open." },
     { q: 'How do I write a plan for a lesson?', a: 'Under Upcoming Lessons tap the group\'s name on the lesson. Write your notes, pick the exercises for it, and tap "💾 Save Plan".' },
     { q: 'How is "Top 5 Active Students" worked out?', a: 'Students are ranked by how well they did, not by how many exercises they finished. Each result becomes a fair 0–100 score (Sentences use the stars you give in Results). Use the group buttons (e.g. Target / Apex) to see one group at a time.' },
     { q: 'What is "Lessons taught"?', a: 'Every lesson on your weekly schedule counts once each time its day and time pass. Removing a lesson from the schedule keeps what it already counted.' },

@@ -67,3 +67,15 @@ test('each exercise in the "finished exercises" note opens that exercise\'s own 
   await expect(page.locator('#activeCodeValue')).toHaveText('Sep test', { timeout: 8000 });
   await expect(page.locator('.hwc-student-row', { hasText: 'Dilya Test' })).toBeVisible();
 });
+
+test('Upcoming Lessons: lessons in the next 24 hours stand out, later ones don\'t', async ({ page, context }) => {
+  await prepare(context, { storage: { ta_weekly_schedule: JSON.stringify(lessonsFromNow([3, 20, 72])) } });
+  await page.goto('/index.html');
+  await page.waitForTimeout(1200);
+  await hideNotices(page);
+  const rows = page.locator('#mainLessonsList .lesson-row');
+  await expect(rows).toHaveCount(5);   // the next 5 lessons
+  await expect(page.locator('#mainLessonsList .lesson-row.lesson-soon')).toHaveCount(2);
+  await expect(rows.nth(0)).toHaveClass(/lesson-soon/);
+  await expect(rows.nth(2)).not.toHaveClass(/lesson-soon/);
+});
