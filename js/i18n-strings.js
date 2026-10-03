@@ -663,6 +663,8 @@ window.TA_I18N_ROWS = [
   ['Your password', 'Parolingiz', 'Ваш пароль'],
   /* ---------- My Exercises: rename; finished-exercises note ---------- */
   ['Save', 'Saqlash', 'Сохранить'],
+  ['More', 'Yana', 'Ещё'],
+  ['Copy link', 'Havolani nusxalash', 'Скопировать ссылку'],
   ['All results', 'Barcha natijalar', 'Все результаты'],
   ['Open the results of this exercise', 'Shu mashq natijalarini ochish', 'Открыть результаты этого упражнения'],
   ['New name', 'Yangi nom', 'Новое название'],
@@ -967,6 +969,11 @@ window.TA_ROBOT_I18N = {
     'Siz tuzgan barcha mashqlar shu yerda — ularni ulashing, natijalarini koʻring, tuzuvchida qayta oching, chop eting yoki ballarini oʻchiring.',
     'Для чего «Мои упражнения»?',
     'Здесь все созданные вами упражнения — делитесь ими, смотрите результаты, открывайте снова в конструкторе, печатайте или отключайте баллы.'],
+  'Where are "Use again", "Redownload", "Copy link" and "Share"?': [
+    '“Qayta ishlatish”, “Qayta yuklab olish”, “Havolani nusxalash” va “Ulashish” qayerda?',
+    'Har bir mashq — kartochka. Nomi yonidagi ⋯ ni bosing: ✏️ Qayta ishlatish, 📥 Qayta yuklab olish, 🔗 Havolani nusxalash (havolani koʻrsatmasdan nusxalaydi — u 7 kun ishlaydi), 📊 Natijalarni koʻrish va 📤 Ulashish… (oʻquvchilar uchun xabar, fayl, kodni ekranda koʻrsatish va toʻplamdan “Bitta mashqni olish”). 🗑 va 📊 Natijalarni koʻrish kartochka pastida ham bor.',
+    'Где «Использовать снова», «Скачать снова», «Скопировать ссылку» и «Поделиться»?',
+    'Каждое упражнение — карточка. Нажмите ⋯ рядом с названием: ✏️ Использовать снова, 📥 Скачать снова, 🔗 Скопировать ссылку (копирует ссылку, не показывая её, — она работает 7 дней), 📊 Результаты и 📤 Поделиться… (сообщение для учеников, файл, код на экране и «Взять одно упражнение» для набора). 🗑 и 📊 Результаты есть и внизу карточки.'],
   'Why do some exercises have a coloured edge?': [
     'Nega baʼzi mashqlarning cheti rangli?',
     'Bular toʻplamlar: 📚 Uy vazifasi toʻplamlari toʻq sariq, 🏫 Dars toʻplamlari yashil chetli — ular yakka mashqlardan ajralib turishi uchun.',
@@ -1009,9 +1016,9 @@ window.TA_ROBOT_I18N = {
     'Введите в поле поиска (название, слово или код) или нажмите кнопки групп и типов над списком, чтобы показать только их.'],
   'How do I send an exercise to my students?': [
     'Mashqni oʻquvchilarga qanday yuboraman?',
-    '“📤 Ulashish” ni bosing. Havola (7 kun ishlaydi, iPhone’da ham) va “🔗 Copy link” tugmasi, Telegram’ga joylash uchun tayyor xabar, faylning oʻzi va doska uchun “🔢 Kodni ekranda koʻrsatish” chiqadi.',
+    '“📤 Ulashish” ni bosing. Havola (7 kun ishlaydi, iPhone’da ham) va “🔗 Havolani nusxalash” tugmasi, Telegram’ga joylash uchun tayyor xabar, faylning oʻzi va doska uchun “🔢 Kodni ekranda koʻrsatish” chiqadi.',
     'Как отправить упражнение ученикам?',
-    'Нажмите «📤 Поделиться». Вы получите ссылку (работает 7 дней, и на iPhone тоже) с кнопкой «🔗 Copy link», готовое сообщение для Telegram, сам файл и «🔢 Показать код на экране» для доски.'],
+    'Нажмите «📤 Поделиться». Вы получите ссылку (работает 7 дней, и на iPhone тоже) с кнопкой «🔗 Скопировать ссылку», готовое сообщение для Telegram, сам файл и «🔢 Показать код на экране» для доски.'],
   'The link has expired — what now?': [
     'Havolaning muddati tugadi — endi nima qilaman?',
     'Havolalar 7 kun ishlaydi. “📤 Ulashish” ni yana bosing — ilova mashqni yana 7 kunga internetga qoʻyadi.',

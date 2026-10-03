@@ -2144,3 +2144,37 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 /* Results: the section title above the stat cards (the card's own heading isn't needed then) */
 .section-top-head { margin-bottom: 14px; }
 #panel-results > .card > .card-head { display: none; }
+
+/* My Exercises: cards, 4 in a row (fewer on smaller screens) */
+.myex-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 8px; }
+@media (max-width: 1250px) { .myex-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 1000px) { .myex-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .myex-grid { grid-template-columns: minmax(0, 1fr); } }
+.myex-grid .recent-exercise-row.myex-card {
+  display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 6px;
+  margin: 0; padding: 14px 14px 12px; min-width: 0;
+}
+.myex-grid .recent-exercise-row.set-row { padding: 14px 14px 12px 12px; }
+.myex-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; }
+.myex-card .recent-exercise-title { flex-wrap: nowrap; align-items: flex-start; gap: 4px; min-width: 0; }
+.myex-card-title { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+.myex-more {
+  flex-shrink: 0; width: 30px; height: 28px; border-radius: 8px; border: 1.5px solid var(--border); background: transparent;
+  color: var(--ink); font-size: 1.1rem; line-height: 1; cursor: pointer;
+}
+.myex-more:hover { border-color: var(--brand); color: var(--brand); }
+.myex-card-badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.myex-card .recent-exercise-date { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin-top: 0; }
+.myex-card .old-file-line { margin-top: 0; }
+.myex-card-foot { margin-top: auto; padding-top: 6px; display: flex; gap: 8px; flex-wrap: nowrap; }
+.myex-card-foot .myex-results { flex: 1; justify-content: center; }
+.myex-menu {
+  position: fixed; z-index: 9000; min-width: 190px; padding: 6px; border-radius: 12px;
+  background: var(--surface); border: 1.5px solid var(--border); box-shadow: var(--shadow-lg);
+  display: flex; flex-direction: column;
+}
+.myex-menu button {
+  text-align: left; padding: 9px 12px; border: none; border-radius: 8px; background: transparent;
+  color: var(--ink); font: 600 0.86rem 'Inter', sans-serif; cursor: pointer;
+}
+.myex-menu button:hover { background: var(--surface-sunken); }

@@ -2708,6 +2708,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
   ]),
   myexercises: aiFaq([
     { q: 'What is My Exercises for?', a: "Every exercise you've built lives here — share it, see its results, open it again in its builder, print it, or turn off its points." },
+    { q: 'Where are "Use again", "Redownload", "Copy link" and "Share"?', a: 'Each exercise is a card. Tap ⋯ next to its title: ✏️ Use again, 📥 Redownload, 🔗 Copy link (copies the link without showing it — it works for 7 days), 📊 View Results and 📤 Share… (the message for students, the file, the code on screen, and a set\'s "Get one exercise"). 🗑 and 📊 View Results are also at the bottom of the card.' },
     { q: 'Why do some exercises have a coloured edge?', a: 'Those are sets: 📚 Homework sets have an orange edge and 🏫 Class sets a green one, so they stand out from single exercises.' },
     { q: 'How do I rename an exercise?', a: 'Tap the ✎ next to its name, type the new name and tap Save. The new name shows in My Exercises and Results. A file you have already sent to students keeps its old name.' },
     { q: 'How do I find an exercise?', a: 'Type in the search box (title, word or code), or tap the group and type buttons above the list to show only those.' },

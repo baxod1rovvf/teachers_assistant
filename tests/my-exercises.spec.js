@@ -48,7 +48,8 @@ test('Redownload is inside Share, under the link', async ({ page, context }) => 
   await hideNotices(page);
   const row = page.locator('.recent-exercise-row[data-uid="uw1"]');
   await expect(row.locator('.recent-exercise-actions')).not.toContainText('Redownload');
-  await row.locator('button', { hasText: 'Share' }).click();
+  await row.locator('.myex-more').click();
+  await page.locator('#myexMenu button', { hasText: 'Share' }).click();
   const dl = page.locator('[data-act="redownload"]');
   await expect(dl).toBeVisible();
   // right under the link (there's no link on this test address), above the message
@@ -94,10 +95,33 @@ test('a set whose file isn\'t kept here gets it back from its online link (Get o
   const setRow = page.locator('.recent-exercise-row[data-uid="uset2"]');
   await expect(setRow.locator('.recent-exercise-actions')).not.toContainText('Separate');
   await expect(setRow.locator('.recent-exercise-actions')).not.toContainText('Get one exercise');
-  await setRow.locator('button', { hasText: 'Share' }).click();
+  await setRow.locator('.myex-more').click();
+  await page.locator('#myexMenu button', { hasText: 'Share' }).click();
   await page.locator('[data-act="getone"]').click();
   await expect(page.locator('.set-round-row')).toHaveCount(2, { timeout: 8000 });
   expect(fetched).toBe(2);
   // kept from now on: no second download
   expect(await page.evaluate(() => (getCachedExerciseHtml('uset2') || '').length)).toBe(setHtml.length);
+});
+
+test('My Exercises shows cards, 4 in a row: title ✎ ⋯, then 🗑 and View Results; ⋯ has the rest', async ({ page, context }) => {
+  const items = [1, 2, 3, 4, 5].map(n => ({ uid: 'uc' + n, title: 'Card ' + n, typeLabel: 'Spelling', code: '10000' + n, date: new Date().toISOString(),
+    builderTab: 'spelling', builderState: { v: 1, fields: {}, rows: [['house', []]] } }));
+  await prepare(context, { storage: { ta_recent_exercises: JSON.stringify(items), ta_exercise_html_cache: JSON.stringify({ uc1: '<html><body>x</body></html>' }) } });
+  await page.setViewportSize({ width: 1500, height: 900 });
+  await page.goto('/my-exercises.html');
+  await page.waitForTimeout(1000);
+  await hideNotices(page);
+  const tops = await page.locator('.myex-card').evaluateAll(els => els.map(e => Math.round(e.getBoundingClientRect().top)));
+  expect(tops.slice(0, 4).every(t => t === tops[0])).toBe(true);   // 4 side by side
+  expect(tops[4]).toBeGreaterThan(tops[0]);                        // the 5th on the next line
+  const card = page.locator('.myex-card[data-uid="uc1"]');
+  await expect(card.locator('.myex-card-foot button')).toHaveText(['🗑', '📊 View Results']);
+  await card.locator('.myex-more').click();
+  await expect(page.locator('#myexMenu button')).toHaveText(['✏️ Use again', '📥 Redownload', '📊 View Results', '📤 Share…']); // 🔗 Copy link only on the real site
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#myexMenu')).toHaveCount(0);
+  await card.locator('.myex-more').click();
+  const [download] = await Promise.all([page.waitForEvent('download'), page.locator('#myexMenu button', { hasText: 'Redownload' }).click()]);
+  expect(download.suggestedFilename()).toBe('Card_1.html');
 });

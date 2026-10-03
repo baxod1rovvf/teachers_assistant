@@ -82,8 +82,9 @@ function renderRecentExercises() {
     shown++;
     const groupLabel = getRelativeDayLabel(item.date);
     if (groupLabel !== currentGroup) {
+      if (currentGroup !== null) html += '</div>'; // the cards of the day before
       currentGroup = groupLabel;
-      html += '<div class="recent-exercise-daygroup">' + escapeForHtml(groupLabel) + '</div>';
+      html += '<div class="recent-exercise-daygroup">' + escapeForHtml(groupLabel) + '</div><div class="myex-grid">';
     }
     const dateStr = fmtDate(item.date);
     // Homework and Class sets stand out from single exercises
@@ -103,24 +104,23 @@ function renderRecentExercises() {
       ? '<button type="button" class="old-file-line' + (oldIssues.every(x => x.fix.minor) ? ' minor' : '') + '" onclick="showOldFileInfo(' + idx + ')" title="' + escapeForHtml('Made before a fix: ' + taOldFileWhat(oldIssues) + '. Press ✏️ Use again to make a new copy, and share that one.') + '">⚠️ Made before a fix</button>'
       : '';
     const codeLine = '<div class="recent-exercise-date">' + groupBtn + (item.requiredCode ? 'Code: ' + escapeForHtml(item.requiredCode) : 'No code set') + ' &middot; ' + dateStr + '</div>';
-    const againBtn = exerciseLoadFor(item)
-      ? '<button class="mini-btn solid" type="button" onclick="useRecentExerciseAgain(' + idx + ')" title="Open this exercise in its builder, filled in, to change it or make a new version">✏️ Use again</button>'
-      : '';
+    // a card: the title (✎ rename, ⋯ more), what it is, then 🗑 and View Results
     html +=
-      '<div class="recent-exercise-row' + (setKind ? ' set-row set-' + setKind : '') + '" data-uid="' + escapeForHtml(item.uid || '') + '">' +
-        '<div class="recent-exercise-info">' +
-          '<div class="recent-exercise-title"><span translate="no">' + escapeForHtml(item.title) + '</span>' +
-            '<button type="button" class="myex-rename" onclick="renameRecentExercise(' + idx + ')" title="Rename" aria-label="Rename">✎</button> ' + disabledBadge + '</div>' +
-          codeLine + oldLine +
+      '<div class="recent-exercise-row myex-card' + (setKind ? ' set-row set-' + setKind : '') + '" data-uid="' + escapeForHtml(item.uid || '') + '">' +
+        '<div class="myex-card-head">' +
+          '<div class="recent-exercise-title"><span class="myex-card-title" translate="no">' + escapeForHtml(item.title) + '</span>' +
+            '<button type="button" class="myex-rename" onclick="renameRecentExercise(' + idx + ')" title="Rename" aria-label="Rename">✎</button></div>' +
+          '<button type="button" class="myex-more" onclick="openMyexMenu(event, ' + idx + ')" title="More" aria-label="More">⋯</button>' +
         '</div>' +
-        '<div class="recent-exercise-actions">' +
-          againBtn +
-          '<button class="mini-btn" type="button" onclick="shareRecentExercise(' + idx + ')" title="Message and file to send to students, or show the code on the board">📤 Share</button>' +
-          '<button class="mini-btn" type="button" onclick="viewRecentExerciseResults(' + idx + ')">📊 View Results</button>' +
+        '<div class="myex-card-badges">' + disabledBadge + '</div>' +
+        codeLine + oldLine +
+        '<div class="recent-exercise-actions myex-card-foot">' +
           '<button class="mini-btn danger myex-delete" type="button" onclick="deleteRecentExercise(' + idx + ')" title="Delete" aria-label="Delete">🗑</button>' +
+          '<button class="mini-btn myex-results" type="button" onclick="viewRecentExerciseResults(' + idx + ')">📊 View Results</button>' +
         '</div>' +
       '</div>';
   });
+  if (currentGroup !== null) html += '</div>';
   const countEl = document.getElementById('myexCount');
   const filtered = words.length || myexTypeFilter || myexGroupFilter !== null;
   if (countEl) countEl.textContent = filtered ? shown + ' of ' + list.length : list.length + ' exercise' + (list.length === 1 ? '' : 's');
@@ -129,6 +129,65 @@ function renderRecentExercises() {
     : '<div class="empty-results">Nothing matches' + (words.length ? ' “' + escapeForHtml(searchEl.value.trim()) + '”' : '') + (myexTypeFilter ? ' in ' + escapeForHtml(myexTypeFilter) : '') +
       (myexGroupFilter !== null ? ' for ' + escapeForHtml(groupNames[myexGroupFilter] || 'no group') : '') + '. ' +
       '<button class="mini-btn" type="button" onclick="clearMyexFilters()">Show all</button></div>';
+}
+
+/* ---------- ⋯ on a card ---------- */
+function closeMyexMenu() {
+  const m = document.getElementById('myexMenu');
+  if (m) m.remove();
+  document.removeEventListener('keydown', myexMenuKey);
+}
+function myexMenuKey(e) { if (e.key === 'Escape') closeMyexMenu(); }
+function openMyexMenu(e, idx) {
+  e.stopPropagation();
+  const was = document.getElementById('myexMenu');
+  closeMyexMenu();
+  if (was && was.dataset.idx === String(idx)) return; // a second tap closes it
+  const item = getRecentExercises()[idx];
+  if (!item) return;
+  const items = [
+    exerciseLoadFor(item) ? ['✏️ Use again', () => useRecentExerciseAgain(idx)] : null,
+    ['📥 Redownload', () => redownloadRecentExercise(idx)],
+    taPlayUrl(item.uid) ? ['🔗 Copy link', () => copyRecentExerciseLink(idx)] : null,
+    ['📊 View Results', () => viewRecentExerciseResults(idx)],
+    ['📤 Share…', () => shareRecentExercise(idx)]
+  ].filter(Boolean);
+  const menu = document.createElement('div');
+  menu.className = 'myex-menu';
+  menu.id = 'myexMenu';
+  menu.dataset.idx = String(idx);
+  menu.setAttribute('role', 'menu');
+  items.forEach(([label, fn]) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('role', 'menuitem');
+    b.textContent = label;
+    b.onclick = ev => { ev.stopPropagation(); closeMyexMenu(); fn(); };
+    menu.appendChild(b);
+  });
+  document.body.appendChild(menu);
+  const r = e.currentTarget.getBoundingClientRect();
+  const w = menu.offsetWidth, h = menu.offsetHeight;
+  menu.style.left = Math.max(8, Math.min(r.right - w, window.innerWidth - w - 8)) + 'px';
+  menu.style.top = (r.bottom + 6 + h > window.innerHeight - 8 ? Math.max(8, r.top - h - 6) : r.bottom + 6) + 'px';
+  setTimeout(() => document.addEventListener('click', closeMyexMenu, { once: true }), 0);
+  document.addEventListener('keydown', myexMenuKey);
+  window.addEventListener('scroll', closeMyexMenu, { once: true, capture: true });
+}
+// 🔗 Copy link: only the link is copied (it isn't shown); put online first if it isn't
+async function copyRecentExerciseLink(idx) {
+  const item = getRecentExercises()[idx];
+  if (!item) return;
+  const url = taPlayUrl(item.uid);
+  if (!url) return;
+  if (!taPlayLive(item)) {
+    showToast('⏳ Putting the exercise online…', 'ok');
+    const html = await taEnsureExerciseHtml(item);
+    if (!html) { showToast('This exercise\'s file isn\'t saved here, so it can\'t be put online. Use ✏️ Use again to make it again.'); return; }
+    if (!(await taPublishPlayable(item.uid, html))) { showToast('Couldn\'t put the exercise online — check the internet and try again.'); return; }
+  }
+  const until = taPlayUntil(getRecentExercises().find(e => e.uid === item.uid) || item);
+  taCopyText(url, '🔗 Link copied' + (until ? ' — it works until ' + until.toLocaleDateString(undefined, { day: 'numeric', month: 'short' }) : '') + '.');
 }
 
 function setMyexTypeFilter(type) {
