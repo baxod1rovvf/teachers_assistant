@@ -2708,20 +2708,20 @@ const AI_ROBOT_FAQ_BY_TAB = {
   ]),
   myexercises: aiFaq([
     { q: 'What is My Exercises for?', a: "Every exercise you've built lives here — share it, see its results, open it again in its builder, print it, or turn off its points." },
-    { q: 'Where are "Use again", "Redownload", "Copy link" and "Share"?', a: 'Each exercise is a card. Tap ⋯ next to its title: ✏️ Use again, 📥 Redownload, 🔗 Copy link (copies the link without showing it — it works for 7 days), 📊 View Results and 📤 Share… (the message for students, the file, the code on screen, and a set\'s "Get one exercise"). 🗑 and 📊 View Results are also at the bottom of the card.' },
+    { q: 'Where are "Use again", "Redownload" and "Copy link"?', a: 'Each exercise is a card. Tap ⋯ next to its title: ✏️ Use again, 📥 Redownload and 🔗 Copy link (copies the link without showing it — it works for 7 days). On a Homework/Class set there is also 📤 Get one exercise. 🗑 and 📊 View Results are at the bottom of the card.' },
     { q: 'Why do some exercises have a coloured edge?', a: 'Those are sets: 📚 Homework sets have an orange edge and 🏫 Class sets a green one, so they stand out from single exercises.' },
     { q: 'How do I rename an exercise?', a: 'Tap the ✎ next to its name, type the new name and tap Save. The new name shows in My Exercises and Results. A file you have already sent to students keeps its old name.' },
     { q: 'How do I find an exercise?', a: 'Type in the search box (title, word or code), or tap the group and type buttons above the list to show only those.' },
-    { q: 'How do I send an exercise to my students?', a: 'Tap "📤 Share". You get a link (works for 7 days, also on iPhones) with "🔗 Copy link", a ready message to paste into Telegram, the file itself, and "🔢 Show code on screen" for the board.' },
-    { q: 'The link has expired — what now?', a: 'Links work for 7 days. Tap "📤 Share" again and the app puts the exercise online again with a new 7 days.' },
+    { q: 'How do I send an exercise to my students?', a: 'Tap ⋯ on its card, then "🔗 Copy link", and paste the link into your class chat. It works for 7 days, also on iPhones. Or "📥 Redownload" the file and send that.' },
+    { q: 'The link has expired — what now?', a: 'Links work for 7 days. Tap ⋯ → "🔗 Copy link" again: the app puts the exercise online again for a new 7 days and copies the link.' },
     { q: 'What does "✏️ Use again" do?', a: 'It opens the exercise in its builder with everything filled in, so you can change it or make a new version.' },
     { q: 'What does "⚠️ Made before a fix" mean?', a: 'That file was made before a bug was fixed, so it still has the bug. Tap the line to see what was fixed. Press "✏️ Use again", create a new copy and share that one.' },
     { q: 'How do I change the group of an exercise?', a: 'Tap the 👥 button under the exercise title and pick a group.' },
     { q: 'Can I turn a Jungle into a Bamboozle?', a: 'Yes — in the Jungle builder tap "🔁 Make it a Bamboozle" (in the Bamboozle builder: "🔁 Make it a Jungle"). The other game opens with the same questions. For a game you made earlier, tap "✏️ Use again" first.' },
-    { q: 'How do I take one exercise out of a set?', a: 'On a Homework/Class set tap "📤 Share", then "📤 Get one exercise" (under the link). Download one of its exercises, or add it to My Exercises on its own. The set stays as it is.' },
+    { q: 'How do I take one exercise out of a set?', a: 'On a Homework/Class set tap ⋯, then "📤 Get one exercise". Download one of its exercises, or add it to My Exercises on its own. The set stays as it is.' },
     { q: 'How do I stop an exercise giving points?', a: 'Choose 0 in "Points awarded on completion" when you create it. For an exercise you already made, tap "✏️ Use again", set the points to 0 and share the new copy.' },
     { q: 'Can I delete an old exercise?', a: 'Yes — tap the 🗑 at the end of its buttons. Results already submitted are not affected, and "Undo" brings it back for a few seconds.' },
-    { q: 'How do I download an exercise file again?', a: 'Tap "📤 Share" — "📥 Redownload" is right under the link. Big files (with pictures or audio) are kept too. If the file isn\'t on this device, the app gets it back from its online link (for 7 days after sharing); after that, use "✏️ Use again" to make it again.' }
+    { q: 'How do I download an exercise file again?', a: 'Tap ⋯ on its card, then "📥 Redownload". Big files (with pictures or audio) are kept too. If the file isn\'t on this device, the app gets it back from its online link (for 7 days after sharing); after that, use "✏️ Use again" to make it again.' }
   ]),
   students: aiFaq([
     { q: 'What is the Students list for?', a: 'Give each student a unique ID — this is what they type into an exercise instead of a name. Only students on this list count in Statistics, Top 5 and "Didn\'t do it".' },
@@ -2810,7 +2810,7 @@ const AI_ROBOT_TYPE_FAQ = {
   ],
   pronunciation: [
     { q: 'How does Pronunciation work?', a: 'Type only the words — the app works out the pronunciation. Students say each word into the microphone and see a percentage plus which sounds were right (green) and wrong (red). Works best in Chrome with the internet on.' },
-    { q: 'The microphone doesn\'t work on phones — why?', a: 'Phones only allow the microphone on a web page, and not inside Telegram or Instagram. Send students the link from "📤 Share" and tell them to open it in Chrome (or Safari).' }
+    { q: 'The microphone doesn\'t work on phones — why?', a: 'Phones only allow the microphone on a web page, and not inside Telegram or Instagram. In My Exercises tap ⋯ → "🔗 Copy link", send students that link and tell them to open it in Chrome (or Safari).' }
   ],
   presentation: [
     { q: 'How does Presentation work?', a: 'Each slide is its own section: add text blocks, drag them anywhere and colour each one. Download the deck to show in class.' }

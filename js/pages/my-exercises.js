@@ -75,17 +75,10 @@ function renderRecentExercises() {
   };
 
   let html = '';
-  let currentGroup = null;
   let shown = 0;
   list.forEach((item, idx) => {
     if (!matches(item)) return;
     shown++;
-    const groupLabel = getRelativeDayLabel(item.date);
-    if (groupLabel !== currentGroup) {
-      if (currentGroup !== null) html += '</div>'; // the cards of the day before
-      currentGroup = groupLabel;
-      html += '<div class="recent-exercise-daygroup">' + escapeForHtml(groupLabel) + '</div><div class="myex-grid">';
-    }
     const dateStr = fmtDate(item.date);
     // Homework and Class sets stand out from single exercises
     const setKind = (item.setKind === 'class' || item.typeLabel === 'Class') ? 'class'
@@ -120,7 +113,7 @@ function renderRecentExercises() {
         '</div>' +
       '</div>';
   });
-  if (currentGroup !== null) html += '</div>';
+  html = '<div class="myex-grid">' + html + '</div>'; // one grid, newest first (no headings by date)
   const countEl = document.getElementById('myexCount');
   const filtered = words.length || myexTypeFilter || myexGroupFilter !== null;
   if (countEl) countEl.textContent = filtered ? shown + ' of ' + list.length : list.length + ' exercise' + (list.length === 1 ? '' : 's');
@@ -149,8 +142,7 @@ function openMyexMenu(e, idx) {
     exerciseLoadFor(item) ? ['✏️ Use again', () => useRecentExerciseAgain(idx)] : null,
     ['📥 Redownload', () => redownloadRecentExercise(idx)],
     taPlayUrl(item.uid) ? ['🔗 Copy link', () => copyRecentExerciseLink(idx)] : null,
-    ['📊 View Results', () => viewRecentExerciseResults(idx)],
-    ['📤 Share…', () => shareRecentExercise(idx)]
+    item.mergedItems && item.mergedItems.length ? ['📤 Get one exercise', () => getOneFromSet(idx)] : null
   ].filter(Boolean);
   const menu = document.createElement('div');
   menu.className = 'myex-menu';

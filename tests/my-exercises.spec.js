@@ -38,7 +38,7 @@ test('My Exercises has no "Disable Points", "Make it a…", "Worksheet" or "Answ
   await expect(page.locator('.recent-exercise-row').first().locator('.myex-delete')).toHaveText('🗑');
 });
 
-test('Redownload is inside Share, under the link', async ({ page, context }) => {
+test('Redownload is in the ⋯ menu (not a button on the card)', async ({ page, context }) => {
   await prepare(context, { storage: {
     ta_recent_exercises: JSON.stringify([{ uid: 'uw1', title: 'Animals', typeLabel: 'Word Order', code: '123456', date: new Date().toISOString() }]),
     ta_exercise_html_cache: JSON.stringify({ uw1: '<html><body>exercise</body></html>' })
@@ -49,15 +49,7 @@ test('Redownload is inside Share, under the link', async ({ page, context }) => 
   const row = page.locator('.recent-exercise-row[data-uid="uw1"]');
   await expect(row.locator('.recent-exercise-actions')).not.toContainText('Redownload');
   await row.locator('.myex-more').click();
-  await page.locator('#myexMenu button', { hasText: 'Share' }).click();
-  const dl = page.locator('[data-act="redownload"]');
-  await expect(dl).toBeVisible();
-  // right under the link (there's no link on this test address), above the message
-  const around = await page.evaluate(() => { const d = document.querySelector('.share-dl-row');
-    return [d.previousElementSibling ? d.previousElementSibling.className : '', d.nextElementSibling.textContent]; });
-  expect(around[0]).toMatch(/^(share-link-row|)$/);
-  expect(around[1]).toContain('Message for your students');
-  const [download] = await Promise.all([page.waitForEvent('download'), dl.click()]);
+  const [download] = await Promise.all([page.waitForEvent('download'), page.locator('#myexMenu button', { hasText: 'Redownload' }).click()]);
   expect(download.suggestedFilename()).toBe('Animals.html');
 });
 
@@ -91,13 +83,12 @@ test('a set whose file isn\'t kept here gets it back from its online link (Get o
   await page.goto('/my-exercises.html');
   await page.waitForTimeout(1000);
   await hideNotices(page);
-  // "Get one exercise" is inside Share (no "Separate" any more)
+  // "Get one exercise" is in the set's ⋯ menu (no "Separate" any more)
   const setRow = page.locator('.recent-exercise-row[data-uid="uset2"]');
   await expect(setRow.locator('.recent-exercise-actions')).not.toContainText('Separate');
   await expect(setRow.locator('.recent-exercise-actions')).not.toContainText('Get one exercise');
   await setRow.locator('.myex-more').click();
-  await page.locator('#myexMenu button', { hasText: 'Share' }).click();
-  await page.locator('[data-act="getone"]').click();
+  await page.locator('#myexMenu button', { hasText: 'Get one exercise' }).click();
   await expect(page.locator('.set-round-row')).toHaveCount(2, { timeout: 8000 });
   expect(fetched).toBe(2);
   // kept from now on: no second download
@@ -118,7 +109,8 @@ test('My Exercises shows cards, 4 in a row: title ✎ ⋯, then 🗑 and View Re
   const card = page.locator('.myex-card[data-uid="uc1"]');
   await expect(card.locator('.myex-card-foot button')).toHaveText(['🗑', '📊 View Results']);
   await card.locator('.myex-more').click();
-  await expect(page.locator('#myexMenu button')).toHaveText(['✏️ Use again', '📥 Redownload', '📊 View Results', '📤 Share…']); // 🔗 Copy link only on the real site
+  await expect(page.locator('#myexMenu button')).toHaveText(['✏️ Use again', '📥 Redownload']); // + 🔗 Copy link on the real site
+  await expect(page.locator('.recent-exercise-daygroup')).toHaveCount(0); // no headings by date
   await page.keyboard.press('Escape');
   await expect(page.locator('#myexMenu')).toHaveCount(0);
   await card.locator('.myex-more').click();

@@ -746,9 +746,9 @@ window.TA_ROBOT_I18N = {
     'Напишите только слова — произношение приложение определит само. Ученики произносят каждое слово в микрофон и видят процент и какие звуки были верными (зелёные) и неверными (красные). Лучше всего работает в Chrome с включённым интернетом.'],
   'The microphone doesn\'t work on phones — why?': [
     'Telefonda mikrofon ishlamayapti — nega?',
-    'Telefonlar mikrofonni faqat veb-sahifada ruxsat beradi, Telegram yoki Instagram ichida emas. Oʻquvchilarga “📤 Ulashish” dagi havolani yuboring va uni Chrome’da (yoki Safari’da) ochishni ayting.',
+    'Telefonlar mikrofonni faqat veb-sahifada ruxsat beradi, Telegram yoki Instagram ichida emas. Mashqlarim boʻlimida ⋯ → “🔗 Havolani nusxalash” ni bosing, oʻquvchilarga shu havolani yuboring va uni Chrome’da (yoki Safari’da) ochishni ayting.',
     'На телефоне не работает микрофон — почему?',
-    'Телефоны разрешают микрофон только на веб-странице, а не внутри Telegram или Instagram. Отправьте ученикам ссылку из «📤 Поделиться» и попросите открыть её в Chrome (или Safari).'],
+    'Телефоны разрешают микрофон только на веб-странице, а не внутри Telegram или Instagram. В «Моих упражнениях» нажмите ⋯ → «🔗 Скопировать ссылку», отправьте ученикам эту ссылку и попросите открыть её в Chrome (или Safari).'],
   'How does Presentation work?': [
     '“Taqdimot” qanday ishlaydi?',
     'Har bir slayd alohida boʻlim: matn bloklarini qoʻshing, istalgan joyga suring va har birini oʻz rangiga boʻyang. Darsda koʻrsatish uchun taqdimotni yuklab oling.',
@@ -969,11 +969,11 @@ window.TA_ROBOT_I18N = {
     'Siz tuzgan barcha mashqlar shu yerda — ularni ulashing, natijalarini koʻring, tuzuvchida qayta oching, chop eting yoki ballarini oʻchiring.',
     'Для чего «Мои упражнения»?',
     'Здесь все созданные вами упражнения — делитесь ими, смотрите результаты, открывайте снова в конструкторе, печатайте или отключайте баллы.'],
-  'Where are "Use again", "Redownload", "Copy link" and "Share"?': [
-    '“Qayta ishlatish”, “Qayta yuklab olish”, “Havolani nusxalash” va “Ulashish” qayerda?',
-    'Har bir mashq — kartochka. Nomi yonidagi ⋯ ni bosing: ✏️ Qayta ishlatish, 📥 Qayta yuklab olish, 🔗 Havolani nusxalash (havolani koʻrsatmasdan nusxalaydi — u 7 kun ishlaydi), 📊 Natijalarni koʻrish va 📤 Ulashish… (oʻquvchilar uchun xabar, fayl, kodni ekranda koʻrsatish va toʻplamdan “Bitta mashqni olish”). 🗑 va 📊 Natijalarni koʻrish kartochka pastida ham bor.',
-    'Где «Использовать снова», «Скачать снова», «Скопировать ссылку» и «Поделиться»?',
-    'Каждое упражнение — карточка. Нажмите ⋯ рядом с названием: ✏️ Использовать снова, 📥 Скачать снова, 🔗 Скопировать ссылку (копирует ссылку, не показывая её, — она работает 7 дней), 📊 Результаты и 📤 Поделиться… (сообщение для учеников, файл, код на экране и «Взять одно упражнение» для набора). 🗑 и 📊 Результаты есть и внизу карточки.'],
+  'Where are "Use again", "Redownload" and "Copy link"?': [
+    '“Qayta ishlatish”, “Qayta yuklab olish” va “Havolani nusxalash” qayerda?',
+    'Har bir mashq — kartochka. Nomi yonidagi ⋯ ni bosing: ✏️ Qayta ishlatish, 📥 Qayta yuklab olish va 🔗 Havolani nusxalash (havolani koʻrsatmasdan nusxalaydi — u 7 kun ishlaydi). Uy vazifasi/Dars toʻplamida 📤 Bitta mashqni olish ham bor. 🗑 va 📊 Natijalarni koʻrish kartochka pastida.',
+    'Где «Использовать снова», «Скачать снова» и «Скопировать ссылку»?',
+    'Каждое упражнение — карточка. Нажмите ⋯ рядом с названием: ✏️ Использовать снова, 📥 Скачать снова и 🔗 Скопировать ссылку (копирует ссылку, не показывая её, — она работает 7 дней). У набора «Домашнее задание»/«Урок» есть ещё 📤 Взять одно упражнение. 🗑 и 📊 Результаты — внизу карточки.'],
   'Why do some exercises have a coloured edge?': [
     'Nega baʼzi mashqlarning cheti rangli?',
     'Bular toʻplamlar: 📚 Uy vazifasi toʻplamlari toʻq sariq, 🏫 Dars toʻplamlari yashil chetli — ular yakka mashqlardan ajralib turishi uchun.',
@@ -1016,14 +1016,14 @@ window.TA_ROBOT_I18N = {
     'Введите в поле поиска (название, слово или код) или нажмите кнопки групп и типов над списком, чтобы показать только их.'],
   'How do I send an exercise to my students?': [
     'Mashqni oʻquvchilarga qanday yuboraman?',
-    '“📤 Ulashish” ni bosing. Havola (7 kun ishlaydi, iPhone’da ham) va “🔗 Havolani nusxalash” tugmasi, Telegram’ga joylash uchun tayyor xabar, faylning oʻzi va doska uchun “🔢 Kodni ekranda koʻrsatish” chiqadi.',
+    'Kartochkadagi ⋯ ni, keyin “🔗 Havolani nusxalash” ni bosing va havolani sinf chatiga joylang. U 7 kun ishlaydi, iPhone’da ham. Yoki “📥 Qayta yuklab olish” bilan faylni olib, uni yuboring.',
     'Как отправить упражнение ученикам?',
-    'Нажмите «📤 Поделиться». Вы получите ссылку (работает 7 дней, и на iPhone тоже) с кнопкой «🔗 Скопировать ссылку», готовое сообщение для Telegram, сам файл и «🔢 Показать код на экране» для доски.'],
+    'Нажмите ⋯ на карточке, затем «🔗 Скопировать ссылку» и вставьте ссылку в чат класса. Она работает 7 дней, и на iPhone тоже. Или «📥 Скачать снова» и отправьте файл.'],
   'The link has expired — what now?': [
     'Havolaning muddati tugadi — endi nima qilaman?',
-    'Havolalar 7 kun ishlaydi. “📤 Ulashish” ni yana bosing — ilova mashqni yana 7 kunga internetga qoʻyadi.',
+    'Havolalar 7 kun ishlaydi. Yana ⋯ → “🔗 Havolani nusxalash” ni bosing: ilova mashqni yana 7 kunga internetga qoʻyadi va havolani nusxalaydi.',
     'Срок ссылки истёк — что делать?',
-    'Ссылки работают 7 дней. Снова нажмите «📤 Поделиться», и приложение выложит упражнение ещё на 7 дней.'],
+    'Ссылки работают 7 дней. Снова нажмите ⋯ → «🔗 Скопировать ссылку»: приложение выложит упражнение ещё на 7 дней и скопирует ссылку.'],
   'What does "✏️ Use again" do?': [
     '“✏️ Qayta ishlatish” nima qiladi?',
     'U mashqni hamma narsasi toʻldirilgan holda tuzuvchida ochadi — uni oʻzgartirishingiz yoki yangi versiyasini yaratishingiz mumkin.',
@@ -1041,9 +1041,9 @@ window.TA_ROBOT_I18N = {
     'Нажмите кнопку 👥 под названием упражнения и выберите группу.'],
   'How do I take one exercise out of a set?': [
     'Toʻplamdan bitta mashqni qanday olaman?',
-    'Uy vazifasi/Dars toʻplamida “📤 Ulashish” ni, keyin (havola ostidagi) “📤 Bitta mashqni olish” ni bosing. Mashqlaridan birini yuklab oling yoki Mashqlarimga alohida qoʻshing. Toʻplamning oʻzi oʻzgarmaydi.',
+    'Uy vazifasi/Dars toʻplamida ⋯ ni, keyin “📤 Bitta mashqni olish” ni bosing. Mashqlaridan birini yuklab oling yoki Mashqlarimga alohida qoʻshing. Toʻplamning oʻzi oʻzgarmaydi.',
     'Как достать одно упражнение из набора?',
-    'У набора нажмите «📤 Поделиться», затем «📤 Взять одно упражнение» (под ссылкой). Скачайте одно из упражнений или добавьте его в «Мои упражнения» отдельно. Сам набор не меняется.'],
+    'У набора нажмите ⋯, затем «📤 Взять одно упражнение». Скачайте одно из упражнений или добавьте его в «Мои упражнения» отдельно. Сам набор не меняется.'],
   'Can I delete an old exercise?': [
     'Eski mashqni oʻchirsa boʻladimi?',
     'Ha — tugmalari oxiridagi 🗑 ni bosing. Allaqachon yuborilgan natijalarga taʼsir qilmaydi, “Qaytarish” esa bir necha soniya ichida uni qaytaradi.',
@@ -1051,9 +1051,9 @@ window.TA_ROBOT_I18N = {
     'Да — нажмите 🗑 в конце его кнопок. Уже отправленные результаты не пострадают, а «Отменить» вернёт его в течение нескольких секунд.'],
   'How do I download an exercise file again?': [
     'Mashq faylini qayta qanday yuklab olaman?',
-    '“📤 Ulashish” ni bosing — “📥 Qayta yuklab olish” havolaning ostida. Katta fayllar (rasm yoki audioli) ham saqlanadi. Fayl bu qurilmada boʻlmasa, ilova uni onlayn havolasidan qaytarib oladi (ulashilgandan keyin 7 kun davomida); undan keyin uni “✏️ Qayta ishlatish” bilan qayta yarating.',
+    'Kartochkadagi ⋯ ni, keyin “📥 Qayta yuklab olish” ni bosing. Katta fayllar (rasm yoki audioli) ham saqlanadi. Fayl bu qurilmada boʻlmasa, ilova uni onlayn havolasidan qaytarib oladi (ulashilgandan keyin 7 kun davomida); undan keyin uni “✏️ Qayta ishlatish” bilan qayta yarating.',
     'Как снова скачать файл упражнения?',
-    'Нажмите «📤 Поделиться» — «📥 Скачать снова» прямо под ссылкой. Большие файлы (с картинками или аудио) тоже сохраняются. Если файла нет на этом устройстве, приложение заберёт его по онлайн-ссылке (7 дней после публикации); после этого сделайте его заново через «✏️ Использовать снова».'],
+    'Нажмите ⋯ на карточке, затем «📥 Скачать снова». Большие файлы (с картинками или аудио) тоже сохраняются. Если файла нет на этом устройстве, приложение заберёт его по онлайн-ссылке (7 дней после публикации); после этого сделайте его заново через «✏️ Использовать снова».'],
   'What is the Students list for?': [
     'Oʻquvchilar roʻyxati nima uchun?',
     'Har bir oʻquvchiga alohida ID bering — ular mashqda ism oʻrniga shuni yozadi. Faqat shu roʻyxatdagi oʻquvchilar Statistika, Top 5 va “Didn\'t do it” da hisoblanadi.',
