@@ -322,7 +322,7 @@ real students' names or results into the repository (it is public).
 - My Exercises is a grid of cards (`.myex-grid`, 4 in a row): the type's Create-page picture (`myexTypeIconHtml`,
   `MYEX_TYPE_ICONS` typeLabel → `picker-icon-*`; sets show Homework/Class; also small on the type filter chips — as `<i>`, since a
   chip's `<span>` is its count and the class `chip` is taken), title ✎ ⚠️(made before a fix) ⋯,
-  🗑 + View Results (chart icon). ⋯ (since 2026-10-04) starts with what it is — type + group (👥 changes it),
+  🗑 + View Results — both with the teacher's coloured pictures (`myexPicHtml`: `myex/delete.png`, `myex/view-results.png`). ⋯ (since 2026-10-04) starts with what it is — type + group (👥 changes it),
   code · date (no year) (`myexInfoHtml`) — then Use again, Get one exercise (sets), Copy link, Redownload, each with the teacher's line icon (`images/icons/myex/`, `myexIconHtml`, CSS mask in the design's colour). The Share window code (`shareRecentExercise`) is no longer
   reachable from the cards.
 - Results → "⚖️ Punish?" / "⚠️ Will be punished" (`taPunishChipHtml` etc. in common.js): per

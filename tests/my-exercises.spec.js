@@ -35,7 +35,7 @@ test('My Exercises has no "Disable Points", "Make it a…", "Worksheet" or "Answ
   // no Worksheet or Answers either; Delete is just 🗑
   await expect(page.locator('.recent-exercise-actions', { hasText: 'Worksheet' })).toHaveCount(0);
   await expect(page.locator('.recent-exercise-actions', { hasText: 'Answers' })).toHaveCount(0);
-  await expect(page.locator('.recent-exercise-row').first().locator('.myex-delete')).toHaveText('🗑');
+  await expect(page.locator('.recent-exercise-row').first().locator('.myex-delete .myex-pic')).toHaveAttribute('style', /icons\/myex\/delete\.png/);   // the teacher's bin picture
 });
 
 test('Redownload is in the ⋯ menu (not a button on the card)', async ({ page, context }) => {
@@ -108,8 +108,8 @@ test('My Exercises shows cards, 4 in a row: title ✎ ⋯, then 🗑 and View Re
   expect(tops.slice(0, 4).every(t => t === tops[0])).toBe(true);   // 4 side by side
   expect(tops[4]).toBeGreaterThan(tops[0]);                        // the 5th on the next line
   const card = page.locator('.myex-card[data-uid="uc1"]');
-  await expect(card.locator('.myex-card-foot button')).toHaveText(['🗑', 'View Results']);
-  await expect(card.locator('.myex-results .myex-ic')).toHaveCount(1);   // the teacher's chart icon
+  await expect(card.locator('.myex-card-foot button')).toHaveText(['', 'View Results']);
+  await expect(card.locator('.myex-results .myex-pic')).toHaveAttribute('style', /icons\/myex\/view-results\.png/);
   await card.locator('.myex-more').click();
   await expect(page.locator('#myexMenu .myex-menu-item')).toHaveText(['Use again', 'Redownload']);
   await expect(page.locator('#myexMenu .myex-menu-item .myex-ic')).toHaveCount(2);   // each with its icon // + 🔗 Copy link on the real site

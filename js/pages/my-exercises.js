@@ -126,8 +126,8 @@ function renderRecentExercises() {
           '<button type="button" class="myex-more" onclick="openMyexMenu(event, ' + idx + ')" title="More" aria-label="More">⋯</button>' +
         '</div>' +
         '<div class="recent-exercise-actions myex-card-foot">' +
-          '<button class="mini-btn danger myex-delete" type="button" onclick="deleteRecentExercise(' + idx + ')" title="Delete" aria-label="Delete">🗑</button>' +
-          '<button class="mini-btn myex-results" type="button" onclick="viewRecentExerciseResults(' + idx + ')">' + myexIconHtml('results') + '<span>View Results</span></button>' +
+          '<button class="mini-btn danger myex-delete" type="button" onclick="deleteRecentExercise(' + idx + ')" title="Delete" aria-label="Delete">' + myexPicHtml('delete') + '</button>' +
+          '<button class="mini-btn myex-results" type="button" onclick="viewRecentExerciseResults(' + idx + ')">' + myexPicHtml('view-results') + '<span>View Results</span></button>' +
         '</div>' +
       '</div>';
   });
@@ -143,6 +143,10 @@ function renderRecentExercises() {
 }
 
 // The teacher's line icons (images/icons/myex/), drawn in the design's colours with a CSS mask
+// the teacher's coloured pictures (Delete, View Results), shown in their own colours
+function myexPicHtml(name) {
+  return '<span class="myex-pic" aria-hidden="true" style="background-image:url(images/icons/myex/' + name + '.png)"></span>';
+}
 function myexIconHtml(name) {
   const url = 'images/icons/myex/' + name + '.png';
   return '<span class="myex-ic" aria-hidden="true" style="-webkit-mask-image:url(' + url + ');mask-image:url(' + url + ')"></span>';
