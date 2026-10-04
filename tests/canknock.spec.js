@@ -42,7 +42,9 @@ test('Can Knockdown: built from words + translations; the student types the tran
   await expect(student.locator('#slide-welcome .tip-line')).toHaveText('Knock them all down! "Go" <now> $&');
   await expect(student.locator('#ckRoundLabel')).toHaveText('Round 1 / 2');
   await expect(student.locator('#ckShelf .ck-can')).toHaveCount(6);
-  await expect(student.locator('#ckShelf .ck-can span')).toHaveText(['4', '5', '6', '2', '3', '1']); // 1 on top, then 2 3, then 4 5 6 (left to right)
+  // the order they fall in: 1 on top, then 2 3, then 4 5 6 (left to right)
+  expect(await student.locator('#ckShelf .ck-can').evaluateAll(l => l.map(c => c.dataset.n))).toEqual(['4', '5', '6', '2', '3', '1']);
+  expect(await student.locator('#ckShelf .ck-can').evaluateAll(l => l.every(c => /ck-k[123]/.test(c.className)))).toBe(true); // the teacher's can pictures
   await expect(student.locator('#ckInput')).toBeVisible();
   await expect(student.locator('#ckLeft')).toHaveText('6');
 
