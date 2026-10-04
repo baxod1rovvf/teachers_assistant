@@ -285,7 +285,8 @@ const MYEX_SUMMARY_BUILDERS = {
   'Spelling': { tab: 'spelling', p: 'sp', row: line => [line, []] },
   'Pronunciation': { tab: 'pronunciation', p: 'pr', row: line => [line, '', ''] },
   'Test': { tab: 'test', p: 'ts', row: line => ({ s: line, gap: -1, wrongs: [] }) },
-  'Flashcard': { tab: 'flashcard', p: 'fc', row: line => { const i = line.indexOf(' - '); return i === -1 ? [line, ''] : [line.slice(0, i), line.slice(i + 3)]; } }
+  'Flashcard': { tab: 'flashcard', p: 'fc', row: line => { const i = line.indexOf(' - '); return i === -1 ? [line, ''] : [line.slice(0, i), line.slice(i + 3)]; } },
+  'Can Knockdown': { tab: 'canknock', p: 'ck', row: line => { const i = line.indexOf(' - '); return i === -1 ? [line, ''] : [line.slice(0, i), line.slice(i + 3)]; } }
 };
 
 function exerciseLoadFor(item) {

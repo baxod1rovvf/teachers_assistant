@@ -46,7 +46,7 @@ function renderDashboard() {
   };
   const colors = {
     'Word Order': '#4f7df3', 'Make a Word': '#14b8a6', 'Flashcard': '#f97316',
-    'Pronunciation': '#22c55e', 'Spelling': '#8b7bf7', 'Test': '#ef5f74',
+    'Pronunciation': '#22c55e', 'Spelling': '#8b7bf7', 'Can Knockdown': '#f03a52', 'Test': '#ef5f74',
     'Sentences': '#4f9de0', 'BilingualReader': '#2f6fd6', 'EnglishContent': '#e14e4e', 'Dictation': '#8b5cf6'
   };
   const dayLabel = i => i === DAYS - 1 ? 'Today' : i === DAYS - 2 ? 'Yesterday' : dayStart(i).toLocaleDateString(undefined, { weekday: 'short' });

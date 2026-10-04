@@ -94,6 +94,7 @@ function renumberRows(container) {
   if (container.id === 'wo-rows') document.getElementById('wo-count').innerText = container.children.length;
   if (container.id === 'maw-rows') document.getElementById('maw-count').innerText = container.children.length;
   if (container.id === 'fc-rows') document.getElementById('fc-count').innerText = container.children.length;
+  if (container.id === 'ck-rows') document.getElementById('ck-count').innerText = container.children.length;
   if (container.id === 'sn-rows') document.getElementById('sn-count-display').innerText = container.children.length;
 }
 
@@ -197,6 +198,53 @@ async function autoTranslateFlashcards() {
   else showToast('The translation service isn\'t answering right now — check your internet connection, or type them by hand.');
 }
 
+/* ================= CAN KNOCKDOWN ROWS (word + translation) ================= */
+const ckRows = document.getElementById('ck-rows');
+function addCanKnockRow() { makePairRow(ckRows, 'Word (e.g. hello)', 'Translation (e.g. salom)'); }
+function addCanKnockRowFilled(line) {
+  const parts = line.split(/\s*[-–—:]\s*/);
+  const [inputA, inputB] = makePairRow(ckRows, 'Word (e.g. hello)', 'Translation (e.g. salom)');
+  inputA.value = (parts[0] || '').trim();
+  inputB.value = (parts.slice(1).join(' - ') || '').trim();
+}
+function resetCanKnockForm() {
+  document.getElementById('ck-title').value = '';
+  document.getElementById('ck-instructions').value = '';
+  document.getElementById('ck-points').value = '10';
+  document.getElementById('ck-code').value = '';
+  document.getElementById('ck-timer').value = '';
+  const ckCompose = document.getElementById('ck-compose'); if (ckCompose) ckCompose.value = '';
+  ckRows.innerHTML = '';
+  renumberRows(ckRows);
+}
+// the same machine translation as Flashcard, into the boxes of this builder
+async function autoTranslateCanKnock() {
+  const lang = document.getElementById('ck-tr-lang').value;
+  const btn = document.getElementById('ck-translate-btn');
+  const todo = Array.from(ckRows.querySelectorAll('.row-item')).map(r => r.querySelectorAll('input'))
+    .filter(inp => inp[0].value.trim() && !inp[1].value.trim());
+  if (!todo.length) { showToast(ckRows.querySelector('.row-item') ? 'Every word already has a translation.' : 'Type some words first.'); return; }
+  btn.disabled = true;
+  const label = btn.textContent;
+  btn.textContent = '🌐 Translating…';
+  let ok = 0, fail = 0;
+  for (let i = 0; i < todo.length; i += 40) {
+    const batch = todo.slice(i, i + 40);
+    let lines = null;
+    const joined = await mtTranslateBuilder(batch.map(inp => inp[0].value.trim()).join('\n'), lang);
+    if (joined !== null) { lines = joined.split('\n').map(x => x.trim()); if (lines.length !== batch.length) lines = null; }
+    for (let j = 0; j < batch.length; j++) {
+      const tr = lines ? lines[j] : await mtTranslateBuilder(batch[j][0].value.trim(), lang);
+      if (tr && !batch[j][1].value.trim()) { batch[j][1].value = tr; ok++; } else if (!tr) fail++;
+    }
+  }
+  btn.disabled = false;
+  btn.textContent = label;
+  if (!fail) showToast('✅ Translated ' + ok + ' word' + (ok === 1 ? '' : 's') + '. Check them — machine translation can be wrong.', 'ok');
+  else if (ok) showToast('⚠️ Translated ' + ok + ', but ' + fail + ' failed — type those by hand.');
+  else showToast('The translation service isn\'t answering right now — check your internet connection, or type them by hand.');
+}
+
 /* ================= FLASHCARD MODE HINT ================= */
 function onQuizModeChange() {
   const mode = document.getElementById('fc-quiz-mode').value;
@@ -218,6 +266,7 @@ const HWC_TYPES = [
   { key: 'flashcard', label: 'Flashcard', icon: '\ud83c\udfb4', color: '#fb923c', img: 'flashcard', createFn: 'createFlashcard' },
   { key: 'pronunciation', label: 'Pronunciation', icon: '\ud83c\udf99\ufe0f', color: '#34d399', img: 'pronunciation', createFn: 'createPronunciation' },
   { key: 'spelling', label: 'Spelling', icon: '\ud83d\udd24', color: '#8b7bf7', img: 'spelling', createFn: 'createSpelling' },
+  { key: 'canknock', label: 'Can Knockdown', icon: '\ud83e\udd6b', color: '#f03a52', img: 'canknock', createFn: 'createCanKnockdown' },
   { key: 'test', label: 'Test', icon: '\u2705', color: '#ef5f74', img: 'test', createFn: 'createTest' },
   { key: 'sentences', label: 'Sentences', icon: '\u270d\ufe0f', color: '#4f9de0', img: 'sentences', createFn: 'createSentences' },
   { key: 'bilingual', label: 'Bidirectional Language', icon: '\ud83d\udcd6', color: '#2f6fd6', img: 'bilingual', createFn: 'createBilingualReader' },
@@ -237,7 +286,7 @@ let hwcRoundOriginNext = null;
    round 1. Later rounds hide those fields and are built with the set's
    values; in the student file every round gives 0 points except the last,
    which gives the set's points once the whole set is finished. */
-const HWC_PREFIX = { wordorder: 'wo', makeaword: 'maw', flashcard: 'fc', pronunciation: 'pr', spelling: 'sp', test: 'ts',
+const HWC_PREFIX = { wordorder: 'wo', makeaword: 'maw', flashcard: 'fc', pronunciation: 'pr', spelling: 'sp', canknock: 'ck', test: 'ts',
   sentences: 'sn', bilingual: 'br', engcontent: 'ec', dictation: 'dc', 'ielts-listening': 'il', 'ielts-reading': 'ir' };
 function hwcSetPoints() {
   const m = hwcRounds.length ? hwcRounds[0].html.match(/const POINTS_AWARD = (-?\d+(?:\.\d+)?);/) : null;
@@ -2956,6 +3005,71 @@ function createSpelling() {
   showToast('"' + title + '" downloaded!' + (mode === 'code' ? ' Class code: ' + classCode : ''), 'ok');
 }
 
+/* ================= CAN KNOCKDOWN =================
+   Built on the quiz template (mode "canknock"): each item is a translation
+   (the prompt on the sign) and 3 English words — the right one and two others
+   from the same list. The game itself is in QUIZ_TEMPLATE. */
+function createCanKnockdown() {
+  const title = document.getElementById('ck-title').value.trim();
+  if (!title) { showToast('Please enter a title for the exercise.'); return; }
+  const pairs = [];
+  let missing = 0;
+  Array.from(ckRows.querySelectorAll('.row-item')).forEach(row => {
+    const inp = row.querySelectorAll('input');
+    const word = inp[0].value.trim(), tr = inp[1].value.trim();
+    if (!word && !tr) return;
+    if (!word || !tr) { missing++; return; }
+    if (!pairs.some(p => p.word.toLowerCase() === word.toLowerCase())) pairs.push({ word: word, tr: tr });
+  });
+  if (pairs.length < 3) { showToast('Please add at least 3 words, each with its translation.'); return; }
+  if (missing) showToast(missing + ' word(s) were skipped — they need both the word and its translation.');
+  const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
+  const items = pairs.map(p => {
+    const others = shuffle(pairs.filter(o => o !== p).map(o => o.word)).slice(0, 2);
+    const options = shuffle(others.concat([p.word]));
+    return { word: p.word, prompt: p.tr, options: options, answer: options.indexOf(p.word) };
+  });
+
+  const mode = 'nocode';
+  const classCode = setActiveClassCode(generateClassCode());
+  const points = readPointsAward('ck');
+  let html = QUIZ_TEMPLATE;
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
+  html = html.split('__TYPE_LABEL__').join('Can Knockdown');
+  html = html.split('__QUIZ_MODE__').join('canknock');
+  html = html.split('__ITEM_COUNT__').join(String(items.length));
+  html = html.split('__ITEMS_JSON__').join(JSON.stringify(items).replace(/<\//g, '<\\/'));
+  html = html.split('__SPEECH_LANG__').join(document.getElementById('ck-lang').value);
+  html = html.split('__DEFAULT_VOICE__').join(document.getElementById('ck-voice').value);
+  html = html.split('__EXERCISE_CODE__').join(classCode);
+  html = html.split('__FILE_BUILT_AT__').join(new Date().toISOString());
+  html = html.split('__ACCESS_MODE__').join(mode);
+  html = html.split('__ACCESS_ID_MODE__').join('unified');
+  const requiredCode = (document.getElementById('ck-code') || { value: '' }).value.trim();
+  html = html.split('__REQUIRED_CODE__').join(escapeForHtml(requiredCode));
+  html = html.split('__POINTS_AWARD__').join(String(points));
+  const uid = generateExerciseUid();
+  html = html.split('__EXERCISE_UID__').join(uid);
+  html = html.split('__BOARD_CODE__').join(getPointsBoardCode());
+  html = html.split('__ROSTER_JSON__').join(JSON.stringify(getPointsRoster()));
+  html = html.split('__POINTS_TYPE_LABEL__').join('Can Knockdown');
+  html = html.split('__HAS_MATCHING_ROUND__').join('false');
+  const timerMin = parseFloat((document.getElementById('ck-timer') || { value: '' }).value);
+  html = html.split('__TIME_LIMIT_MINUTES__').join(isNaN(timerMin) || timerMin <= 0 ? '0' : String(timerMin));
+
+  // the teacher's instructions replace the tip under Start on the student's first screen
+  const instructions = document.getElementById('ck-instructions').value.trim();
+  if (instructions) {
+    const tipScript = '<script>(function () { var tip = document.querySelector("#slide-welcome .tip-line"); if (tip) { tip.innerText = ' +
+      JSON.stringify(instructions).replace(/</g, '\\u003c') + '; tip.style.whiteSpace = "pre-line"; } })();<\/script>\n</body>';
+    html = html.replace('</body>', () => tipScript);
+  }
+  pushRecentExercise({ title: title, typeLabel: 'Can Knockdown', code: classCode, uid: uid, html: html, requiredCode: requiredCode,
+    contentSummary: pairs.map(p => p.word + ' - ' + p.tr).join('\n') });
+  downloadFile(typedFilename('Can Knockdown', title, 'canknock'), html);
+  showToast('"' + title + '" downloaded!', 'ok');
+}
+
 /* ================= TEST PANEL ================= */
 const tsRows = document.getElementById('ts-rows');
 
@@ -4642,6 +4756,18 @@ const TA_BUILDER_ROWS = {
       renumberRows(fcRows);
     }
   },
+  canknock: {
+    get: () => taRowInputs(ckRows, '.row-item').map(r => Array.from(r.querySelectorAll('input')).map(i => i.value)),
+    set: v => {
+      ckRows.innerHTML = '';
+      (v || []).forEach(pair => {
+        const inputs = makePairRow(ckRows, 'Word (e.g. hello)', 'Translation (e.g. salom)');
+        inputs[0].value = pair[0] || '';
+        inputs[1].value = pair[1] || '';
+      });
+      renumberRows(ckRows);
+    }
+  },
   spelling: {
     get: () => taRowInputs(spRows, '.sp-row').map(r => [r.querySelector('.sp-word').value, taRowInputs(r, '.sp-wrong').map(i => i.value)]),
     set: v => {
@@ -5066,7 +5192,7 @@ window.taSnapshotForMyExercises = function () {
   ['presentation', 'resetPresentationForm'], ['pronunciation', 'resetPronunciationForm'], ['sentences', 'resetSentencesForm'],
   ['bilingual', 'resetBilingualForm'], ['engcontent', 'resetEnglishContentForm'], ['dictation', 'resetDictationForm'], ['jungle', 'resetJungleForm'], ['bamboozle', 'resetBamboozleForm'],
   ['ielts-listening', 'resetIeltsListeningForm'], ['ielts-reading', 'resetIeltsReadingForm'], ['ielts-writing', 'resetIeltsWritingForm'],
-  ['spelling', 'resetSpellingForm'], ['test', 'resetTestForm']
+  ['spelling', 'resetSpellingForm'], ['canknock', 'resetCanKnockForm'], ['test', 'resetTestForm']
 ].forEach(function (pair) {
   const tab = pair[0], reset = window[pair[1]];
   window[pair[1]] = function () {
@@ -5099,6 +5225,7 @@ window.taSnapshotForMyExercises = function () {
 const TA_JUMP = {
   flashcard:     { p: 'fc', kind: 'word',     noun: 'words',     read: r => ({ w: r[0], tr: r[1] }), row: it => [it.w, it.tr || ''] },
   spelling:      { p: 'sp', kind: 'word',     noun: 'words',     read: r => ({ w: r[0] }),           row: it => [it.w, []] },
+  canknock:      { p: 'ck', kind: 'word',     noun: 'words',     read: r => ({ w: r[0], tr: r[1] }), row: it => [it.w, it.tr || ''] },
   makeaword:     { p: 'maw', kind: 'word',    noun: 'words',     read: r => ({ w: r }),              row: it => it.w },
   pronunciation: { p: 'pr', kind: 'word',     noun: 'words',     read: r => ({ w: r[0] }),           row: it => [it.w, '', ''] },
   sentences:     { p: 'sn', kind: 'word',     noun: 'words',     read: r => ({ w: r }),              row: it => it.w },
@@ -5145,7 +5272,7 @@ function taJumpTo(from, to) {
   const skipped = items.length - adding.length;
   let msg = '↪ ' + adding.length + ' ' + (adding.length === 1 ? target.noun.slice(0, -1) : target.noun) + ' added to ' + label +
     (skipped ? ' (' + skipped + ' already there)' : '') + '.';
-  const untranslated = to === 'flashcard' ? adding.filter(it => !it.tr).length : 0;
+  const untranslated = (to === 'flashcard' || to === 'canknock') ? adding.filter(it => !it.tr).length : 0;
   if (untranslated) msg += ' Press 🌐 Fill empty translations to add ' + (untranslated === 1 ? 'its translation.' : 'the translations.');
   showUndoToast(msg, function () {
     taRestoreBuilder(to, before);
@@ -5183,7 +5310,7 @@ function taHwcJumpTo(from, to) {
   const label = TA_TAB_LABELS[to][1];
   let msg = 'Round ' + roundNum + ' added. Round ' + (roundNum + 1) + ': ' + label + ' with the same ' + unique.length + ' ' +
     (unique.length === 1 ? target.noun.slice(0, -1) : target.noun) + '.';
-  if (to === 'flashcard' && unique.some(it => !it.tr)) msg += ' Press 🌐 Fill empty translations to add the translations.';
+  if ((to === 'flashcard' || to === 'canknock') && unique.some(it => !it.tr)) msg += ' Press 🌐 Fill empty translations to add the translations.';
   showUndoToast(msg, function () {
     // back to the round that was just added, as it was
     hwcRestoreCard();

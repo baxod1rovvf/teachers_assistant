@@ -353,4 +353,15 @@ real students' names or results into the repository (it is public).
   Log out (`taLogout`). The Dashboard's greeting card has the teacher's "Programming Computer"
   lottie instead (`animations/welcome-computer.json`, `#heroTaskAnim`, `initHeroTaskAnim`; before it
   a "task" lottie) — not on phones, where the greeting + robot stay on one line. **Settings** has only Install, Backup, Status.
+- **Can Knockdown** (2026-10-04, tab `canknock`, prefix `ck`, type label "Can Knockdown", icon
+  `images/icons/create/canknock.png`): the teacher writes word + translation (Flashcard-style rows, 🌐 fill
+  translations, at least 3). `createCanKnockdown` builds on **QUIZ_TEMPLATE with `QUIZ_MODE` "canknock"**
+  (items `{word, prompt: translation, options: 3 words from the same list, answer}`). The student file
+  (`#slide-cans`, `ck*` functions in the template) deals the words into rounds of 6 cans (3+2+1 on wooden
+  boards under a striped awning); the sign shows the translation; right → a ball knocks the top can down
+  (+ the word is read aloud); wrong → the ball misses, the right word shows, and the word comes back later
+  in the round; the next round only when every can is down. Only the first try counts (`answers[i]`).
+  Teacher's instructions replace the tip on the start screen. Also in Homework/Class sets, "Use these
+  words in…", Use again. `tests/canknock.spec.js`. Spelling/Test files are unchanged (all `ck` code is
+  behind `QUIZ_MODE === 'canknock'`).
 - The robot (lottie `AI_ROBOT_ANIM`) has a small "Smile" shape added to the eyes layer (lowered a little, 2026-10-03).
