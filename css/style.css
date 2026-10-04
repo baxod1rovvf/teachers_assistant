@@ -2207,6 +2207,10 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
   color: var(--ink); font: 600 0.86rem 'Inter', sans-serif; cursor: pointer;
 }
 .myex-menu .myex-menu-item:hover { background: var(--surface-sunken); }
+.myex-menu .myex-menu-item { display: flex; align-items: center; gap: 10px; }
+.myex-ic { display: inline-block; width: 18px; height: 18px; flex-shrink: 0; background: currentColor;
+  -webkit-mask-position: center; mask-position: center; -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+.myex-results { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
 /* the top of the menu: what the exercise is (type, group) and when it was made */
 .myex-menu-info { display: flex; flex-direction: column; gap: 6px; padding: 8px 10px 10px; margin-bottom: 4px; border-bottom: 1px solid var(--border); }
 .myex-menu-info .recent-exercise-date { margin: 0; font-size: 0.78rem; color: var(--ink-faint); }

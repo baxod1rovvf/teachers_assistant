@@ -108,9 +108,11 @@ test('My Exercises shows cards, 4 in a row: title ✎ ⋯, then 🗑 and View Re
   expect(tops.slice(0, 4).every(t => t === tops[0])).toBe(true);   // 4 side by side
   expect(tops[4]).toBeGreaterThan(tops[0]);                        // the 5th on the next line
   const card = page.locator('.myex-card[data-uid="uc1"]');
-  await expect(card.locator('.myex-card-foot button')).toHaveText(['🗑', '📊 View Results']);
+  await expect(card.locator('.myex-card-foot button')).toHaveText(['🗑', 'View Results']);
+  await expect(card.locator('.myex-results .myex-ic')).toHaveCount(1);   // the teacher's chart icon
   await card.locator('.myex-more').click();
-  await expect(page.locator('#myexMenu .myex-menu-item')).toHaveText(['✏️ Use again', '📥 Redownload']); // + 🔗 Copy link on the real site
+  await expect(page.locator('#myexMenu .myex-menu-item')).toHaveText(['Use again', 'Redownload']);
+  await expect(page.locator('#myexMenu .myex-menu-item .myex-ic')).toHaveCount(2);   // each with its icon // + 🔗 Copy link on the real site
   await expect(page.locator('.recent-exercise-daygroup')).toHaveCount(0); // no headings by date
   // the card shows only the title; type, group and date (without the year) are at the top of ⋯
   await expect(card.locator('.myex-card-badges, .recent-exercise-date')).toHaveCount(0);

@@ -111,7 +111,7 @@ function renderRecentExercises() {
         '</div>' +
         '<div class="recent-exercise-actions myex-card-foot">' +
           '<button class="mini-btn danger myex-delete" type="button" onclick="deleteRecentExercise(' + idx + ')" title="Delete" aria-label="Delete">🗑</button>' +
-          '<button class="mini-btn myex-results" type="button" onclick="viewRecentExerciseResults(' + idx + ')">📊 View Results</button>' +
+          '<button class="mini-btn myex-results" type="button" onclick="viewRecentExerciseResults(' + idx + ')">' + myexIconHtml('results') + '<span>View Results</span></button>' +
         '</div>' +
       '</div>';
   });
@@ -124,6 +124,12 @@ function renderRecentExercises() {
     : '<div class="empty-results">Nothing matches' + (words.length ? ' “' + escapeForHtml(searchEl.value.trim()) + '”' : '') + (myexTypeFilter ? ' in ' + escapeForHtml(myexTypeFilter) : '') +
       (myexGroupFilter !== null ? ' for ' + escapeForHtml(groupNames[myexGroupFilter] || 'no group') : '') + '. ' +
       '<button class="mini-btn" type="button" onclick="clearMyexFilters()">Show all</button></div>';
+}
+
+// The teacher's line icons (images/icons/myex/), drawn in the design's colours with a CSS mask
+function myexIconHtml(name) {
+  const url = 'images/icons/myex/' + name + '.png';
+  return '<span class="myex-ic" aria-hidden="true" style="-webkit-mask-image:url(' + url + ');mask-image:url(' + url + ')"></span>';
 }
 
 /* ---------- ⋯ on a card ---------- */
@@ -142,10 +148,10 @@ function openMyexMenu(e, idx) {
   const item = getRecentExercises()[idx];
   if (!item) return;
   const items = [
-    exerciseLoadFor(item) ? ['✏️ Use again', () => useRecentExerciseAgain(idx)] : null,
-    ['📥 Redownload', () => redownloadRecentExercise(idx)],
-    taPlayUrl(item.uid) ? ['🔗 Copy link', () => copyRecentExerciseLink(idx)] : null,
-    item.mergedItems && item.mergedItems.length ? ['📤 Get one exercise', () => getOneFromSet(idx)] : null
+    exerciseLoadFor(item) ? ['use-again', 'Use again', () => useRecentExerciseAgain(idx)] : null,
+    item.mergedItems && item.mergedItems.length ? ['get-one', 'Get one exercise', () => getOneFromSet(idx)] : null,
+    taPlayUrl(item.uid) ? ['copy-link', 'Copy link', () => copyRecentExerciseLink(idx)] : null,
+    ['redownload', 'Redownload', () => redownloadRecentExercise(idx)]
   ].filter(Boolean);
   const menu = document.createElement('div');
   menu.className = 'myex-menu';
@@ -153,12 +159,12 @@ function openMyexMenu(e, idx) {
   menu.dataset.idx = String(idx);
   menu.setAttribute('role', 'menu');
   if (myexInfoHtml[idx]) menu.insertAdjacentHTML('beforeend', myexInfoHtml[idx]);
-  items.forEach(([label, fn]) => {
+  items.forEach(([icon, label, fn]) => {
     const b = document.createElement('button');
     b.type = 'button';
     b.className = 'myex-menu-item';
     b.setAttribute('role', 'menuitem');
-    b.textContent = label;
+    b.innerHTML = myexIconHtml(icon) + '<span>' + escapeForHtml(label) + '</span>';
     b.onclick = ev => { ev.stopPropagation(); closeMyexMenu(); fn(); };
     menu.appendChild(b);
   });
