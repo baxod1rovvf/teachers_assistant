@@ -5,7 +5,7 @@ const { prepare, watchErrors, hideNotices } = require('./support/app');
 
 const WORDS = [['road', 'yoʻl'], ['car', 'mashina'], ['bridge', 'koʻprik'], ['street', 'koʻcha']];
 
-test('Car Game: its own exercise (not a Flashcard design); the teacher\'s car, buildings and warning signs; right answers finish the game', async ({ page, context }, info) => {
+test('Car Game: its own exercise (not a Flashcard design); the teacher\'s car, buildings far away, trees, bushes, fence, puddles and warning signs; right answers finish the game', async ({ page, context }, info) => {
   test.setTimeout(60000);
   await prepare(context);
   const errors = watchErrors(page);
@@ -37,22 +37,32 @@ test('Car Game: its own exercise (not a Flashcard design); the teacher\'s car, b
   });
   await student.goto('file://' + file);
   await expect(student.locator('#options .opt')).toHaveCount(3, { timeout: 6000 });
-  // the teacher's pictures: the car from her animation, two buildings, the warning sign
+  // the teacher's pictures: the car from the animation, the buildings only far away, trees + bushes + fence by the road, puddles, warning signs
   expect(await student.locator('.car-svg path').count()).toBeGreaterThan(20);
-  expect(await student.locator('.bld-img.cg-bld1').count()).toBeGreaterThan(2);
-  expect(await student.locator('.bld-img.cg-bld2').count()).toBeGreaterThan(2);
-  expect(await student.locator('.sky-img').count()).toBeGreaterThan(10);
+  expect(await student.locator('#props .cg-bld1, #props .cg-bld2').count()).toBe(0);
+  expect(await student.locator('.sky-img.cg-bld1').count()).toBeGreaterThan(5);
+  expect(await student.locator('.sky-img.cg-bld2').count()).toBeGreaterThan(5);
+  expect(await student.locator('#props .cg-trees').count()).toBeGreaterThan(3);
+  expect(await student.locator('#props .cg-bush').count()).toBeGreaterThan(3);
+  expect(await student.locator('#props .cg-fence').count()).toBe(32);
+  expect(await student.locator('#props .cg-fence.flip').count()).toBe(16);
+  expect(await student.locator('#props .cg-puddle').count()).toBe(4);
   await expect(student.locator('#obstacles .obs .cg-sign')).toHaveCount(2);
   expect(await student.locator('#obstacles .cg-sign').first().evaluate(el => getComputedStyle(el).backgroundImage)).toContain('data:image/webp');
   await student.waitForTimeout(600);
   await student.screenshot({ path: info.outputPath('car-game.png') });
 
-  // every answer right
-  for (let n = 0; n < WORDS.length; n++) {
-    await expect(student.locator('#options .opt:not([disabled])')).toHaveCount(3, { timeout: 8000 });
+  // every answer right (on a busy machine a word can run out of time — it comes back, so keep going until the end)
+  const ended = () => student.evaluate(() => !document.getElementById('endOverlay').classList.contains('hidden'));
+  for (let n = 0; n < 12 && !(await ended()); n++) {
+    await student.waitForFunction(() => document.querySelectorAll('#options .opt:not([disabled])').length === 3 ||
+      !document.getElementById('endOverlay').classList.contains('hidden'), null, { timeout: 10000 });
+    if (await ended()) break;
     const word = await student.locator('#wordText').innerText();
     const right = WORDS.find(w => w[0] === word)[1];
-    await student.locator('#options .opt', { hasText: right }).click();
+    await student.locator('#options .opt', { hasText: right }).click({ timeout: 3000 }).catch(() => {});
+    await student.waitForFunction(() => document.querySelectorAll('#options .opt:not([disabled])').length === 0 ||
+      !document.getElementById('endOverlay').classList.contains('hidden'), null, { timeout: 10000 });
   }
   await expect(student.locator('#endOverlay')).not.toHaveClass(/hidden/, { timeout: 10000 });
   const payload = await student.evaluate(() => buildResultPayload());

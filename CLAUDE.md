@@ -375,9 +375,10 @@ real students' names or results into the repository (it is public).
 - **Car Game** (2026-10-04, tab `cargame`, prefix `cg`, type label "Car Game", icon `images/icons/create/cargame.png`): until
   then Flashcard's "Car game" design (Flashcard no longer has a Design choice). `createCarGame` builds `CAR_GAME_TEMPLATE`
   (word + translation rows, at least 4; Seconds to answer, Driving speed) and adds `CARGAME_IMAGES_CSS` (the teacher's two
-  buildings `.cg-bld1/.cg-bld2` and the warning sign `.cg-sign`, webp, ~40 KB — only in these files). The player's car is the
-  teacher's "Car on track" lottie car as an inline SVG; warning signs stand in two lanes (no oncoming cars); the buildings line the
-  road and the skyline. Results have `type: 'Car Game'` (old car-design files still say Flashcard). "Use again" on an old
+  buildings `.cg-bld1/.cg-bld2`, the warning sign `.cg-sign`, fence, trees, bush, puddle — webp, ~90 KB — only in these files). The player's car is the
+  teacher's "Car on track" lottie car as an inline SVG; warning signs stand in two lanes (no oncoming cars); the buildings stand in the
+  far skyline only; by the road: the teacher's trees/bush (`.cg-trees/.cg-bush`), the fence picture (`.cg-fence`, mirrored on
+  the left), lamps, green grass; coloured puddles (`.cg-puddle`) lie flat on the road (`placeFlat`). Results have `type: 'Car Game'` (old car-design files still say Flashcard). "Use again" on an old
   Flashcard file made with the car design opens the Car Game builder (`carGameFromFlashcard` in my-exercises.js). Headless
   Chromium without GPU doesn't draw the player's car (3D) — screenshots need `--enable-gpu --use-angle=swiftshader`.
   `tests/cargame.spec.js`.
