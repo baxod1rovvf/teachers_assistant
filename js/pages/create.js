@@ -3006,9 +3006,9 @@ function createSpelling() {
 }
 
 /* ================= CAN KNOCKDOWN =================
-   Built on the quiz template (mode "canknock"): each item is a word (shown on
-   the paper) and its translation (what the student types; "a / b" accepts
-   either). The game itself is in QUIZ_TEMPLATE. */
+   Built on the quiz template (mode "canknock"): each item is an English word
+   (what the student types; "a / b" accepts either) and its translation (shown
+   on the paper). The game itself is in QUIZ_TEMPLATE. */
 function createCanKnockdown() {
   const title = document.getElementById('ck-title').value.trim();
   if (!title) { showToast('Please enter a title for the exercise.'); return; }
@@ -3023,7 +3023,7 @@ function createCanKnockdown() {
   });
   if (pairs.length < 2) { showToast('Please add at least 2 words, each with its translation.'); return; }
   if (missing) showToast(missing + ' word(s) were skipped — they need both the word and its translation.');
-  // the student sees the word and types its translation (a translation may list several, split by /)
+  // the student sees the translation and types the English word (a word may list several, split by /)
   const items = pairs.map(p => ({ word: p.word, prompt: p.tr, options: [p.tr], answer: 0 }));
 
   const mode = 'nocode';

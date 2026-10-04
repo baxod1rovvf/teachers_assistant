@@ -1,12 +1,12 @@
-// Can Knockdown: the teacher writes words + translations; students see a word on a paper and
-// type its translation — every right answer knocks down a can, 6 cans a round.
+// Can Knockdown: the teacher writes words + translations; students see the translation on a paper and
+// type the English word — every right answer knocks down a can, 6 cans a round.
 const { test, expect } = require('@playwright/test');
 const { prepare, watchErrors, hideNotices } = require('./support/app');
 
-const WORDS = [['hello', 'salom / assalomu alaykum'], ['kitchen', 'oshxona'], ['apple', 'olma'], ['book', 'kitob'],
+const WORDS = [['hi / hello', 'salom'], ['kitchen', 'oshxona'], ['apple', 'olma'], ['book', 'kitob'],
   ['water', 'suv'], ['house', 'uy'], ['school', 'maktab'], ['street', 'koʻcha']];
 
-test('Can Knockdown: built from words + translations; the student types the translation; a right answer knocks a can down, a missed word comes back; 6 cans a round', async ({ page, context }, info) => {
+test('Can Knockdown: built from words + translations; the student types the English word; a right answer knocks a can down, a missed word comes back; 6 cans a round', async ({ page, context }, info) => {
   await prepare(context);
   const errors = watchErrors(page);
   await page.goto('/create.html');
@@ -56,16 +56,16 @@ test('Can Knockdown: built from words + translations; the student types the tran
   };
   // the paper shows the English word; a wrong translation: no can falls, the right one is shown, the word comes back
   const missed = await current();
-  await expect(student.locator('#ckPrompt')).toHaveText(missed.word);
+  await expect(student.locator('#ckPrompt')).toHaveText(missed.prompt);   // the translation on the paper
   await type('nothing like it');
   await expect(student.locator('#ckVerdict')).toContainText('Missed');
-  await expect(student.locator('#ckVerdict')).toContainText(missed.prompt.split(' / ')[0]);
+  await expect(student.locator('#ckVerdict')).toContainText(missed.word.split(' / ')[0]);
   await expect(student.locator('#ckLeft')).toHaveText('6');
   // then every translation right — capitals and another apostrophe don't matter: a can falls each time
   for (let left = 5; left >= 0; left--) {
     await expect(student.locator('#ckInput')).toBeEnabled({ timeout: 4000 });
     const c = await current();
-    await type(c.prompt.split(' / ').pop().toUpperCase().replace(/ʻ/g, "'"));
+    await type(c.word.split(' / ').pop().toUpperCase());
     await expect(student.locator('#ckLeft')).toHaveText(String(left));
   }
   await expect(student.locator('#ckCleared')).toBeVisible({ timeout: 4000 });
@@ -77,7 +77,7 @@ test('Can Knockdown: built from words + translations; the student types the tran
   for (let left = 1; left >= 0; left--) {
     await expect(student.locator('#ckInput')).toBeEnabled({ timeout: 4000 });
     const c = await current();
-    await type(c.prompt.split(' / ')[0]);
+    await type(c.word.split(' / ')[0]);
     await expect(student.locator('#ckLeft')).toHaveText(String(left));
   }
   await expect(student.locator('#ckCleared')).toContainText('All the cans are down', { timeout: 4000 });
@@ -88,6 +88,6 @@ test('Can Knockdown: built from words + translations; the student types the tran
   const payload = await student.evaluate(() => buildResultPayload());
   expect(payload.type).toBe('Can Knockdown');
   expect(payload.correct).toBe(7);
-  expect(payload.mistakes).toContain(missed.word + ' = ' + missed.prompt + ' → nothing like it');
+  expect(payload.mistakes).toContain(missed.prompt + ' = ' + missed.word + ' → nothing like it');
   expect(studentErrors.filter(e => !/module|import|Failed to fetch/i.test(e))).toEqual([]);
 });

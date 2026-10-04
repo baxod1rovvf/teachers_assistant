@@ -359,16 +359,16 @@ real students' names or results into the repository (it is public).
   (items `{word, prompt: translation, options: [translation], answer: 0}`). The student file (`#slide-cans`,
   `ck*` functions in the template) fills the whole screen with the teacher's room photo
   (`images/canknock/room-wide.jpg` — its baked "Cans left: 6" box blurred out — and `room-tall.jpg` for
-  portrait; loaded from the site via `APP_URL_FOR_CK` = `__TA_APP_URL__`, a dark-room gradient offline;
+  portrait; pinned to the top so the title on it is never cut; loaded from the site via `APP_URL_FOR_CK` = `__TA_APP_URL__`, a dark-room gradient offline;
   `ckLayout` puts the cans on the photo's table line). Six cans — the teacher's three can pictures, mixed,
   given depth with masked shading/shine and shadows — stand on the table (1 on top · 2 3 · 4 5 6, each on the
-  lids below; the numbers only set which falls next); the English word is handwritten (Caveat, OFL, from
+  lids below; the numbers only set which falls next); the translation (e.g. Uzbek) is handwritten (Caveat, OFL, from
   `fonts/caveat-700.woff2` on the site, else Google Fonts) on a paper with the teacher's blue scribble
   under it (right; above the cans on phones); the student types
-  the translation in the bottom bar and presses Hit/Enter (`ckAccepts`: "a / b" accepts either; case,
+  the English word in the bottom bar and presses Hit/Enter — no voice (`ckAccepts`: "a / b" accepts either; case,
   ʻ ' ’ and one wrong letter in words of 5+ letters don't matter). Right → the teacher's tennis ball
   (`CANKNOCK_IMAGES_CSS` — ball, cans, scribble, ~40 KB — only in these files) knocks the lowest-numbered can down; wrong → miss, the right
-  translation shows, the word comes back later in the round; next round only when every can is down.
+  English word shows, the word comes back later in the round; next round only when every can is down.
   Only the first try counts (`answers[i]` 0/1, typed text in `ckTyped` → the result's mistakes). Teacher's
   instructions replace the tip on the start screen. Also in Homework/Class sets, "Use these words in…",
   Use again. `tests/canknock.spec.js`. Spelling/Test files are unchanged (all `ck` code is behind
