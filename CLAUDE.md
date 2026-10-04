@@ -372,6 +372,15 @@ real students' names or results into the repository (it is public).
   Only the first try counts (`answers[i]` 0/1, typed text in `ckTyped` → the result's mistakes). Also in Homework/Class sets, "Use these words in…",
   Use again. `tests/canknock.spec.js`. Spelling/Test files are unchanged (all `ck` code is behind
   `QUIZ_MODE === 'canknock'`).
+- **Car Game** (2026-10-04, tab `cargame`, prefix `cg`, type label "Car Game", icon `images/icons/create/cargame.png`): until
+  then Flashcard's "Car game" design (Flashcard no longer has a Design choice). `createCarGame` builds `CAR_GAME_TEMPLATE`
+  (word + translation rows, at least 4; Seconds to answer, Driving speed) and adds `CARGAME_IMAGES_CSS` (the teacher's two
+  buildings `.cg-bld1/.cg-bld2` and the warning sign `.cg-sign`, webp, ~40 KB — only in these files). The player's car is the
+  teacher's "Car on track" lottie car as an inline SVG; warning signs stand in two lanes (no oncoming cars); the buildings line the
+  road and the skyline. Results have `type: 'Car Game'` (old car-design files still say Flashcard). "Use again" on an old
+  Flashcard file made with the car design opens the Car Game builder (`carGameFromFlashcard` in my-exercises.js). Headless
+  Chromium without GPU doesn't draw the player's car (3D) — screenshots need `--enable-gpu --use-angle=swiftshader`.
+  `tests/cargame.spec.js`.
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
   too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except

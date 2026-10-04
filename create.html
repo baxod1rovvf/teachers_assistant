@@ -11,11 +11,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Teacher's Asst">
 <!-- Shared by every page: accounts must load first (it scopes this browser's storage to the signed-in teacher). -->
-<script src="js/accounts.js?v=20261004q"></script>
-<script src="js/i18n.js?v=20261004q"></script>
-<script src="js/sync.js?v=20261004q"></script>
-<script src="js/lottie.min.js?v=20261004q"></script>
-<link rel="stylesheet" href="css/style.css?v=20261004q">
+<script src="js/accounts.js?v=20261004t"></script>
+<script src="js/i18n.js?v=20261004t"></script>
+<script src="js/sync.js?v=20261004t"></script>
+<script src="js/lottie.min.js?v=20261004t"></script>
+<link rel="stylesheet" href="css/style.css?v=20261004t">
 </head>
 <body>
 
@@ -64,6 +64,7 @@
       <button class="tab-btn" data-tab="makeaword"><span class="exercise-badge" style="background:var(--category-teal);">🧱</span> Make a Word</button>
       <button class="tab-btn" data-tab="spelling"><span class="exercise-badge" style="background:var(--category-violet);">🔤</span> Spelling</button>
       <button class="tab-btn" data-tab="canknock"><span class="exercise-badge picker-icon picker-icon-canknock" aria-hidden="true"></span> Can Knockdown</button>
+      <button class="tab-btn" data-tab="cargame"><span class="exercise-badge picker-icon picker-icon-cargame" aria-hidden="true"></span> Car Game</button>
       <button class="tab-btn" data-tab="sentences"><span class="exercise-badge" style="background:var(--category-orange);">✍️</span> Sentences</button>
       <button class="tab-btn" data-tab="bilingual"><span class="exercise-badge" style="background:var(--category-violet);">📖</span> Bidirectional Language</button>
       <button class="tab-btn" data-tab="engcontent"><span class="exercise-badge" style="background:var(--category-orange);">🎬</span> English Content</button>
@@ -107,6 +108,10 @@
         <button class="picker-card" type="button" onclick="switchTo('canknock')">
           <span class="exercise-badge picker-icon picker-icon-canknock" aria-hidden="true"></span>
           <div><div class="picker-card-title">Can Knockdown</div><div class="picker-card-sub">Type the English word, knock down a can</div></div>
+        </button>
+        <button class="picker-card" type="button" onclick="switchTo('cargame')">
+          <span class="exercise-badge picker-icon picker-icon-cargame" aria-hidden="true"></span>
+          <div><div class="picker-card-title">Car Game</div><div class="picker-card-sub">Pick the meaning, drive past the signs</div></div>
         </button>
         <button class="picker-card" type="button" onclick="switchTo('sentences')">
           <span class="exercise-badge picker-icon picker-icon-sentences" aria-hidden="true"></span>
@@ -532,40 +537,6 @@
             </div>
           </div>
 
-          <div class="group-select-row">
-            <div>
-              <label class="field-label">Design</label>
-              <select id="fc-design" onchange="onFlashcardDesignChange()">
-                <option value="cards" selected>1 — Usual flashcards (learn + exercise)</option>
-                <option value="runner">2 — Car game (dodge the traffic)</option>
-              </select>
-            </div>
-          </div>
-
-          <div id="fc-runner-settings" style="display:none;">
-            <div class="group-select-row">
-              <div>
-                <label class="field-label">Seconds to answer</label>
-                <select id="fc-seconds">
-                  <option value="2">2 seconds — very fast</option>
-                  <option value="3">3 seconds</option>
-                  <option value="4" selected>4 seconds</option>
-                  <option value="5">5 seconds</option>
-                  <option value="6">6 seconds — relaxed</option>
-                </select>
-              </div>
-              <div>
-                <label class="field-label">Driving speed</label>
-                <select id="fc-speed">
-                  <option value="auto" selected>Automatic — matched to the answer time</option>
-                  <option value="slow">Slow</option>
-                  <option value="normal">Normal</option>
-                  <option value="fast">Fast</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
           <div id="fc-card-settings">
           <div class="group-select-row">
             <div>
@@ -955,6 +926,102 @@
       <div class="builder-actions">
         <button class="reset-btn" type="button" onclick="resetCanKnockForm()">🔄 Reset All</button>
         <button class="create-btn" onclick="createCanKnockdown()">Create "Can Knockdown" ⬇</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CAR GAME ================= -->
+  <div class="panel" id="panel-cargame">
+    <div class="card">
+      <div class="card-head">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🚗 Car Game</h2></div>
+      </div>
+
+      <div class="builder-grid">
+        <div class="builder-left">
+          <div class="title-field">
+            <label class="field-label">Exercise Title</label>
+            <input type="text" id="cg-title" placeholder="e.g. Unit 5 — Travel words">
+          </div>
+
+          <div class="title-field" id="cg-points-block">
+            <label class="field-label">Points</label>
+            <select id="cg-points">
+              <option value="0">0 — no points</option>
+              <option value="5">5 points</option>
+              <option value="10" selected>10 points</option>
+              <option value="15">15 points</option>
+              <option value="20">20 points</option>
+              <option value="25">25 points</option>
+              <option value="50">50 points</option>
+              <option value="100">100 points</option>
+            </select>
+          </div>
+          <div class="title-field">
+            <label class="field-label">Class code</label>
+            <input type="text" id="cg-code" placeholder="4 digits — leave blank for none" maxlength="4" inputmode="numeric">
+          </div>
+          <div class="title-field">
+            <label class="field-label">Time limit</label>
+            <input type="number" id="cg-timer" placeholder="Minutes — leave blank for no limit" min="1" max="180">
+          </div>
+          <div class="group-select-row">
+            <div>
+              <label class="field-label">Seconds to answer</label>
+              <select id="cg-seconds">
+                <option value="2">2 seconds — very fast</option>
+                <option value="3">3 seconds</option>
+                <option value="4" selected>4 seconds</option>
+                <option value="5">5 seconds</option>
+                <option value="6">6 seconds — relaxed</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">Driving speed</label>
+              <select id="cg-speed">
+                <option value="auto" selected>Automatic — matched to the answer time</option>
+                <option value="slow">Slow</option>
+                <option value="normal">Normal</option>
+                <option value="fast">Fast</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="builder-right">
+          <div class="rows-label-row">
+            <label class="field-label">Vocabulary (word + translation)</label>
+            <span class="rows-count"><span id="cg-count">0</span> words</span>
+          </div>
+          <div class="translate-row">
+            <button class="mini-btn solid" type="button" id="cg-translate-btn" onclick="autoTranslateCarGame()">🌐 Fill empty translations</button>
+            <label class="translate-lang">into
+              <select id="cg-tr-lang" aria-label="Translate into">
+                <option value="uz" selected>Uzbek</option>
+                <option value="ru">Russian</option>
+                <option value="kk">Kazakh</option>
+                <option value="ky">Kyrgyz</option>
+                <option value="tg">Tajik</option>
+                <option value="tr">Turkish</option>
+                <option value="ar">Arabic</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="zh-CN">Chinese</option>
+              </select>
+            </label>
+          </div>
+          <div class="compose-row">
+            <textarea id="cg-compose" class="compose-box" rows="1" placeholder="Type: word - translation..." onkeydown="handleComposeKeydown(event, 'cg-compose', 'line', addCarGameRowFilled)"></textarea>
+            <button class="compose-enter-btn" type="button" onclick="commitComposeBox('cg-compose', 'line', addCarGameRowFilled)">⏎ Enter</button>
+          </div>
+          <div class="rows" id="cg-rows"></div>
+        </div>
+      </div>
+
+      <div class="builder-actions">
+        <button class="reset-btn" type="button" onclick="resetCarGameForm()">🔄 Reset All</button>
+        <button class="create-btn" onclick="createCarGame()">Create "Car Game" ⬇</button>
       </div>
     </div>
   </div>
@@ -1448,10 +1515,10 @@
   </div>
 </div>
 
-<script src="js/animations.js?v=20261004q"></script>
-<script src="js/common.js?v=20261004q"></script>
-<script src="js/exercise-templates.js?v=20261004q"></script>
-<script src="js/pages/create.js?v=20261004q"></script>
-<script type="module" src="js/firebase.js?v=20261004q"></script>
+<script src="js/animations.js?v=20261004t"></script>
+<script src="js/common.js?v=20261004t"></script>
+<script src="js/exercise-templates.js?v=20261004t"></script>
+<script src="js/pages/create.js?v=20261004t"></script>
+<script type="module" src="js/firebase.js?v=20261004t"></script>
 </body>
 </html>

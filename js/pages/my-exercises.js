@@ -292,14 +292,23 @@ const MYEX_SUMMARY_BUILDERS = {
   'Pronunciation': { tab: 'pronunciation', p: 'pr', row: line => [line, '', ''] },
   'Test': { tab: 'test', p: 'ts', row: line => ({ s: line, gap: -1, wrongs: [] }) },
   'Flashcard': { tab: 'flashcard', p: 'fc', row: line => { const i = line.indexOf(' - '); return i === -1 ? [line, ''] : [line.slice(0, i), line.slice(i + 3)]; } },
-  'Can Knockdown': { tab: 'canknock', p: 'ck', row: line => { const i = line.indexOf(' - '); return i === -1 ? [line, ''] : [line.slice(0, i), line.slice(i + 3)]; } }
+  'Can Knockdown': { tab: 'canknock', p: 'ck', row: line => { const i = line.indexOf(' - '); return i === -1 ? [line, ''] : [line.slice(0, i), line.slice(i + 3)]; } },
+  'Car Game': { tab: 'cargame', p: 'cg', row: line => { const i = line.indexOf(' - '); return i === -1 ? [line, ''] : [line.slice(0, i), line.slice(i + 3)]; } }
 };
+
+// Flashcard's old "Car game" design is its own exercise since 2026-10-04: open those in the Car Game builder.
+function carGameFromFlashcard(state) {
+  const f = state.fields || {}, fields = {};
+  ['title', 'points', 'code', 'timer', 'seconds', 'speed', 'tr-lang'].forEach(k => { if (f['fc-' + k] !== undefined) fields['cg-' + k] = f['fc-' + k]; });
+  return { tab: 'cargame', state: { v: 1, fields: fields, rows: state.rows } };
+}
 
 function exerciseLoadFor(item) {
   if (!item) return null;
   if (item.builderRounds && item.builderRounds.length) {
     return { set: true, kind: item.setKind || (item.typeLabel === 'Class' ? 'class' : 'homework'), rounds: item.builderRounds, setTitle: item.setTitle || '' };
   }
+  if (item.builderTab === 'flashcard' && item.builderState && (item.builderState.fields || {})['fc-design'] === 'runner') return carGameFromFlashcard(item.builderState);
   if (item.builderTab && item.builderState) return { tab: item.builderTab, state: item.builderState };
   const b = MYEX_SUMMARY_BUILDERS[item.typeLabel];
   const lines = String(item.contentSummary || '').split('\n').map(s => s.trim()).filter(Boolean);

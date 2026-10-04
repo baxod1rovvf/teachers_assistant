@@ -95,6 +95,7 @@ function renumberRows(container) {
   if (container.id === 'maw-rows') document.getElementById('maw-count').innerText = container.children.length;
   if (container.id === 'fc-rows') document.getElementById('fc-count').innerText = container.children.length;
   if (container.id === 'ck-rows') document.getElementById('ck-count').innerText = container.children.length;
+  if (container.id === 'cg-rows') document.getElementById('cg-count').innerText = container.children.length;
   if (container.id === 'sn-rows') document.getElementById('sn-count-display').innerText = container.children.length;
 }
 
@@ -147,15 +148,11 @@ function resetFlashcardForm() {
   const fcIns = document.getElementById('fc-instructions'); if (fcIns) fcIns.value = '';
   document.getElementById('fc-points').value = '10';
   document.getElementById('fc-groups').value = '3';
-  document.getElementById('fc-design').value = 'cards';
-  document.getElementById('fc-seconds').value = '4';
-  document.getElementById('fc-speed').value = 'auto';
   document.getElementById('fc-quiz-mode').value = 'choice';
   document.getElementById('fc-direction').value = 'uz2en';
   document.getElementById('fc-lose-progress').value = 'true';
   document.getElementById('fc-keep-progress-on-back').value = 'true';
   const fcCompose = document.getElementById('fc-compose'); if (fcCompose) fcCompose.value = '';
-  if (window.onFlashcardDesignChange) onFlashcardDesignChange();
   if (window.onQuizModeChange) onQuizModeChange();
   fcRows.innerHTML = '';
   renumberRows(fcRows);
@@ -244,6 +241,54 @@ async function autoTranslateCanKnock() {
   else showToast('The translation service isn\'t answering right now — check your internet connection, or type them by hand.');
 }
 
+/* ================= CAR GAME ROWS (word + translation) ================= */
+const cgRows = document.getElementById('cg-rows');
+function addCarGameRow() { makePairRow(cgRows, 'Word (e.g. road)', 'Translation (e.g. yo\'l)'); }
+function addCarGameRowFilled(line) {
+  const parts = line.split(/\s*[-–—:]\s*/);
+  const [inputA, inputB] = makePairRow(cgRows, 'Word (e.g. road)', 'Translation (e.g. yo\'l)');
+  inputA.value = (parts[0] || '').trim();
+  inputB.value = (parts.slice(1).join(' - ') || '').trim();
+}
+function resetCarGameForm() {
+  document.getElementById('cg-title').value = '';
+  document.getElementById('cg-points').value = '10';
+  document.getElementById('cg-code').value = '';
+  document.getElementById('cg-timer').value = '';
+  document.getElementById('cg-seconds').value = '4';
+  document.getElementById('cg-speed').value = 'auto';
+  const cgCompose = document.getElementById('cg-compose'); if (cgCompose) cgCompose.value = '';
+  cgRows.innerHTML = '';
+  renumberRows(cgRows);
+}
+// the same machine translation as Flashcard, into the boxes of this builder
+async function autoTranslateCarGame() {
+  const lang = document.getElementById('cg-tr-lang').value;
+  const btn = document.getElementById('cg-translate-btn');
+  const todo = Array.from(cgRows.querySelectorAll('.row-item')).map(r => r.querySelectorAll('input'))
+    .filter(inp => inp[0].value.trim() && !inp[1].value.trim());
+  if (!todo.length) { showToast(cgRows.querySelector('.row-item') ? 'Every word already has a translation.' : 'Type some words first.'); return; }
+  btn.disabled = true;
+  const label = btn.textContent;
+  btn.textContent = '🌐 Translating…';
+  let ok = 0, fail = 0;
+  for (let i = 0; i < todo.length; i += 40) {
+    const batch = todo.slice(i, i + 40);
+    let lines = null;
+    const joined = await mtTranslateBuilder(batch.map(inp => inp[0].value.trim()).join('\n'), lang);
+    if (joined !== null) { lines = joined.split('\n').map(x => x.trim()); if (lines.length !== batch.length) lines = null; }
+    for (let j = 0; j < batch.length; j++) {
+      const tr = lines ? lines[j] : await mtTranslateBuilder(batch[j][0].value.trim(), lang);
+      if (tr && !batch[j][1].value.trim()) { batch[j][1].value = tr; ok++; } else if (!tr) fail++;
+    }
+  }
+  btn.disabled = false;
+  btn.textContent = label;
+  if (!fail) showToast('✅ Translated ' + ok + ' word' + (ok === 1 ? '' : 's') + '. Check them — machine translation can be wrong.', 'ok');
+  else if (ok) showToast('⚠️ Translated ' + ok + ', but ' + fail + ' failed — type those by hand.');
+  else showToast('The translation service isn\'t answering right now — check your internet connection, or type them by hand.');
+}
+
 /* ================= FLASHCARD MODE HINT ================= */
 function onQuizModeChange() {
   const mode = document.getElementById('fc-quiz-mode').value;
@@ -266,6 +311,7 @@ const HWC_TYPES = [
   { key: 'pronunciation', label: 'Pronunciation', icon: '\ud83c\udf99\ufe0f', color: '#34d399', img: 'pronunciation', createFn: 'createPronunciation' },
   { key: 'spelling', label: 'Spelling', icon: '\ud83d\udd24', color: '#8b7bf7', img: 'spelling', createFn: 'createSpelling' },
   { key: 'canknock', label: 'Can Knockdown', icon: '\ud83e\udd6b', color: '#f03a52', img: 'canknock', createFn: 'createCanKnockdown' },
+  { key: 'cargame', label: 'Car Game', icon: '\ud83d\ude97', color: '#e0a526', img: 'cargame', createFn: 'createCarGame' },
   { key: 'test', label: 'Test', icon: '\u2705', color: '#ef5f74', img: 'test', createFn: 'createTest' },
   { key: 'sentences', label: 'Sentences', icon: '\u270d\ufe0f', color: '#4f9de0', img: 'sentences', createFn: 'createSentences' },
   { key: 'bilingual', label: 'Bidirectional Language', icon: '\ud83d\udcd6', color: '#2f6fd6', img: 'bilingual', createFn: 'createBilingualReader' },
@@ -285,7 +331,7 @@ let hwcRoundOriginNext = null;
    round 1. Later rounds hide those fields and are built with the set's
    values; in the student file every round gives 0 points except the last,
    which gives the set's points once the whole set is finished. */
-const HWC_PREFIX = { wordorder: 'wo', makeaword: 'maw', flashcard: 'fc', pronunciation: 'pr', spelling: 'sp', canknock: 'ck', test: 'ts',
+const HWC_PREFIX = { wordorder: 'wo', makeaword: 'maw', flashcard: 'fc', pronunciation: 'pr', spelling: 'sp', canknock: 'ck', cargame: 'cg', test: 'ts',
   sentences: 'sn', bilingual: 'br', engcontent: 'ec', dictation: 'dc', 'ielts-listening': 'il', 'ielts-reading': 'ir' };
 function hwcSetPoints() {
   const m = hwcRounds.length ? hwcRounds[0].html.match(/const POINTS_AWARD = (-?\d+(?:\.\d+)?);/) : null;
@@ -1171,45 +1217,6 @@ function createMakeAWord() {
 }
 
 /* ================= CREATE: FLASHCARD ================= */
-function onFlashcardDesignChange() {
-  const runner = document.getElementById('fc-design').value === 'runner';
-  document.getElementById('fc-runner-settings').style.display = runner ? 'block' : 'none';
-  document.getElementById('fc-card-settings').style.display = runner ? 'none' : 'block';
-}
-
-function createFlashcardRunner(title, mode, code, pairs) {
-  if (pairs.length < 4) { showToast('The car game needs at least 4 words, so every question has three different options.'); return; }
-
-  const words = pairs.map(p => ({ w: p.en, t: p.uz }));
-  const classCode = setActiveClassCode(code);
-  const points = readPointsAward('fc');
-
-  let html = FLASHCARD_GAME_TEMPLATE;
-  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
-  html = html.split('__WORD_COUNT__').join(String(words.length));
-  html = html.split('__WORDS_JSON__').join(JSON.stringify(words));
-  html = html.split('__ANSWER_SECONDS__').join(document.getElementById('fc-seconds').value);
-  html = html.split('__SPEED_MODE__').join(document.getElementById('fc-speed').value);
-  html = html.split('__EXERCISE_CODE__').join(classCode);
-  html = html.split('__FILE_BUILT_AT__').join(new Date().toISOString());
-  html = html.split('__ACCESS_MODE__').join(mode);
-  html = html.split('__ACCESS_ID_MODE__').join('unified');
-  const __requiredCode_fc = (document.getElementById('fc-code') || {value:''}).value.trim();
-  html = html.split('__REQUIRED_CODE__').join(escapeForHtml(__requiredCode_fc));
-  const __timerMin_fc = parseFloat((document.getElementById('fc-timer') || {value:''}).value);
-  html = html.split('__TIME_LIMIT_MINUTES__').join(isNaN(__timerMin_fc) || __timerMin_fc <= 0 ? '0' : String(__timerMin_fc));
-  html = html.split('__POINTS_AWARD__').join(String(points));
-  const __uid = generateExerciseUid();
-  html = html.split('__EXERCISE_UID__').join(__uid);
-  html = html.split('__BOARD_CODE__').join(getPointsBoardCode());
-  html = html.split('__ROSTER_JSON__').join(JSON.stringify(getPointsRoster()));
-  html = html.split('__POINTS_TYPE_LABEL__').join('Flashcard');
-
-  pushRecentExercise({ title: title, typeLabel: 'Flashcard', code: classCode, uid: __uid, html: html, requiredCode: __requiredCode_fc, contentSummary: pairs.map(p => p.en + ' - ' + p.uz).join('\n') });
-  downloadFile(typedFilename('Flashcard', title, 'car-game'), html);
-  showToast('"' + title + '" downloaded!' + (mode === 'code' ? ' Class code: ' + classCode : ''), 'ok');
-}
-
 function createFlashcard() {
   const title = document.getElementById('fc-title').value.trim();
   if (!title) { showToast('Please enter a title for the exercise.'); return; }
@@ -1224,10 +1231,6 @@ function createFlashcard() {
     return { en: inputs[0].value.trim(), uz: inputs[1].value.trim() };
   }).filter(p => p.en && p.uz);
 
-  if (document.getElementById('fc-design').value === 'runner') {
-    createFlashcardRunner(title, mode, code, pairs);
-    return;
-  }
 
   if (pairs.length < groupCount) {
     showToast('Please enter at least ' + groupCount + ' words to split into ' + groupCount + ' groups.');
@@ -3059,6 +3062,52 @@ function createCanKnockdown() {
   showToast('"' + title + '" downloaded!', 'ok');
 }
 
+/* ================= CAR GAME =================
+   The student drives down a city road; a word floats above it with three
+   meanings, and the right one steers the car past the warning signs.
+   (Until 2026-10-04 this was Flashcard's "Car game" design.) */
+function createCarGame() {
+  const title = document.getElementById('cg-title').value.trim();
+  if (!title) { showToast('Please enter a title for the exercise.'); return; }
+  const mode = 'nocode';
+  const code = generateClassCode();
+  const pairs = Array.from(cgRows.querySelectorAll('.row-item')).map(row => {
+    const inputs = row.querySelectorAll('input');
+    return { en: inputs[0].value.trim(), uz: inputs[1].value.trim() };
+  }).filter(p => p.en && p.uz);
+  if (pairs.length < 4) { showToast('The car game needs at least 4 words, so every question has three different options.'); return; }
+
+  const words = pairs.map(p => ({ w: p.en, t: p.uz }));
+  const classCode = setActiveClassCode(code);
+  const points = readPointsAward('cg');
+
+  let html = CAR_GAME_TEMPLATE;
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
+  html = html.split('__WORD_COUNT__').join(String(words.length));
+  html = html.split('__WORDS_JSON__').join(JSON.stringify(words));
+  html = html.split('__ANSWER_SECONDS__').join(document.getElementById('cg-seconds').value);
+  html = html.split('__SPEED_MODE__').join(document.getElementById('cg-speed').value);
+  html = html.split('__EXERCISE_CODE__').join(classCode);
+  html = html.split('__FILE_BUILT_AT__').join(new Date().toISOString());
+  html = html.split('__ACCESS_MODE__').join(mode);
+  html = html.split('__ACCESS_ID_MODE__').join('unified');
+  const __requiredCode_cg = (document.getElementById('cg-code') || {value:''}).value.trim();
+  html = html.split('__REQUIRED_CODE__').join(escapeForHtml(__requiredCode_cg));
+  const __timerMin_cg = parseFloat((document.getElementById('cg-timer') || {value:''}).value);
+  html = html.split('__TIME_LIMIT_MINUTES__').join(isNaN(__timerMin_cg) || __timerMin_cg <= 0 ? '0' : String(__timerMin_cg));
+  html = html.split('__POINTS_AWARD__').join(String(points));
+  const __uid = generateExerciseUid();
+  html = html.split('__EXERCISE_UID__').join(__uid);
+  html = html.split('__BOARD_CODE__').join(getPointsBoardCode());
+  html = html.split('__ROSTER_JSON__').join(JSON.stringify(getPointsRoster()));
+  html = html.split('__POINTS_TYPE_LABEL__').join('Car Game');
+
+  html = html.replace('</head>', () => '<style>\n' + CARGAME_IMAGES_CSS + '\n</style>\n</head>');   // the buildings and the warning sign
+  pushRecentExercise({ title: title, typeLabel: 'Car Game', code: classCode, uid: __uid, html: html, requiredCode: __requiredCode_cg, contentSummary: pairs.map(p => p.en + ' - ' + p.uz).join('\n') });
+  downloadFile(typedFilename('Car Game', title, 'car-game'), html);
+  showToast('"' + title + '" downloaded!' + (mode === 'code' ? ' Class code: ' + classCode : ''), 'ok');
+}
+
 /* ================= TEST PANEL ================= */
 const tsRows = document.getElementById('ts-rows');
 
@@ -3355,7 +3404,6 @@ function createSentences() {
   showToast('"' + title + '" downloaded!', 'ok');
 }
 
-onFlashcardDesignChange();
 
 /* ================= BILINGUAL READER ================= */
 let brParagraphs = []; // [{ letter, sentences: [{ en, tr }] }]
@@ -4757,6 +4805,18 @@ const TA_BUILDER_ROWS = {
       renumberRows(ckRows);
     }
   },
+  cargame: {
+    get: () => taRowInputs(cgRows, '.row-item').map(r => Array.from(r.querySelectorAll('input')).map(i => i.value)),
+    set: v => {
+      cgRows.innerHTML = '';
+      (v || []).forEach(pair => {
+        const inputs = makePairRow(cgRows, 'Word (e.g. road)', 'Translation (e.g. yo\'l)');
+        inputs[0].value = pair[0] || '';
+        inputs[1].value = pair[1] || '';
+      });
+      renumberRows(cgRows);
+    }
+  },
   spelling: {
     get: () => taRowInputs(spRows, '.sp-row').map(r => [r.querySelector('.sp-word').value, taRowInputs(r, '.sp-wrong').map(i => i.value)]),
     set: v => {
@@ -5181,7 +5241,7 @@ window.taSnapshotForMyExercises = function () {
   ['presentation', 'resetPresentationForm'], ['pronunciation', 'resetPronunciationForm'], ['sentences', 'resetSentencesForm'],
   ['bilingual', 'resetBilingualForm'], ['engcontent', 'resetEnglishContentForm'], ['dictation', 'resetDictationForm'], ['jungle', 'resetJungleForm'], ['bamboozle', 'resetBamboozleForm'],
   ['ielts-listening', 'resetIeltsListeningForm'], ['ielts-reading', 'resetIeltsReadingForm'], ['ielts-writing', 'resetIeltsWritingForm'],
-  ['spelling', 'resetSpellingForm'], ['canknock', 'resetCanKnockForm'], ['test', 'resetTestForm']
+  ['spelling', 'resetSpellingForm'], ['canknock', 'resetCanKnockForm'], ['cargame', 'resetCarGameForm'], ['test', 'resetTestForm']
 ].forEach(function (pair) {
   const tab = pair[0], reset = window[pair[1]];
   window[pair[1]] = function () {
@@ -5215,6 +5275,7 @@ const TA_JUMP = {
   flashcard:     { p: 'fc', kind: 'word',     noun: 'words',     read: r => ({ w: r[0], tr: r[1] }), row: it => [it.w, it.tr || ''] },
   spelling:      { p: 'sp', kind: 'word',     noun: 'words',     read: r => ({ w: r[0] }),           row: it => [it.w, []] },
   canknock:      { p: 'ck', kind: 'word',     noun: 'words',     read: r => ({ w: r[0], tr: r[1] }), row: it => [it.w, it.tr || ''] },
+  cargame:       { p: 'cg', kind: 'word',     noun: 'words',     read: r => ({ w: r[0], tr: r[1] }), row: it => [it.w, it.tr || ''] },
   makeaword:     { p: 'maw', kind: 'word',    noun: 'words',     read: r => ({ w: r }),              row: it => it.w },
   pronunciation: { p: 'pr', kind: 'word',     noun: 'words',     read: r => ({ w: r[0] }),           row: it => [it.w, '', ''] },
   sentences:     { p: 'sn', kind: 'word',     noun: 'words',     read: r => ({ w: r }),              row: it => it.w },
@@ -5261,7 +5322,7 @@ function taJumpTo(from, to) {
   const skipped = items.length - adding.length;
   let msg = '↪ ' + adding.length + ' ' + (adding.length === 1 ? target.noun.slice(0, -1) : target.noun) + ' added to ' + label +
     (skipped ? ' (' + skipped + ' already there)' : '') + '.';
-  const untranslated = (to === 'flashcard' || to === 'canknock') ? adding.filter(it => !it.tr).length : 0;
+  const untranslated = (to === 'flashcard' || to === 'canknock' || to === 'cargame') ? adding.filter(it => !it.tr).length : 0;
   if (untranslated) msg += ' Press 🌐 Fill empty translations to add ' + (untranslated === 1 ? 'its translation.' : 'the translations.');
   showUndoToast(msg, function () {
     taRestoreBuilder(to, before);
@@ -5299,7 +5360,7 @@ function taHwcJumpTo(from, to) {
   const label = TA_TAB_LABELS[to][1];
   let msg = 'Round ' + roundNum + ' added. Round ' + (roundNum + 1) + ': ' + label + ' with the same ' + unique.length + ' ' +
     (unique.length === 1 ? target.noun.slice(0, -1) : target.noun) + '.';
-  if ((to === 'flashcard' || to === 'canknock') && unique.some(it => !it.tr)) msg += ' Press 🌐 Fill empty translations to add the translations.';
+  if ((to === 'flashcard' || to === 'canknock' || to === 'cargame') && unique.some(it => !it.tr)) msg += ' Press 🌐 Fill empty translations to add the translations.';
   showUndoToast(msg, function () {
     // back to the round that was just added, as it was
     hwcRestoreCard();
