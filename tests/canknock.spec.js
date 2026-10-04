@@ -16,7 +16,6 @@ test('Can Knockdown: built from words + translations; the student types the Engl
   await page.locator('.picker-card', { hasText: 'Can Knockdown' }).click();
   await expect(page.locator('#panel-canknock')).toHaveClass(/active/);
   await page.fill('#ck-title', 'Unit 1 words');
-  await page.fill('#ck-instructions', 'Knock them all down! "Go" <now> $&');
   for (const [w, t] of WORDS) {
     await page.fill('#ck-compose', w + ' - ' + t);
     await page.press('#ck-compose', 'Enter');
@@ -39,7 +38,6 @@ test('Can Knockdown: built from words + translations; the student types the Engl
   });
   await student.goto('file://' + file);
   await expect(student.locator('#slide-cans')).toHaveClass(/active/, { timeout: 6000 });
-  await expect(student.locator('#slide-welcome .tip-line')).toHaveText('Knock them all down! "Go" <now> $&');
   await expect(student.locator('#ckRoundLabel')).toHaveText('Round 1 / 2');
   await expect(student.locator('#ckShelf .ck-can')).toHaveCount(6);
   // the order they fall in: 1 on top, then 2 3, then 4 5 6 (left to right)
@@ -90,4 +88,21 @@ test('Can Knockdown: built from words + translations; the student types the Engl
   expect(payload.correct).toBe(7);
   expect(payload.mistakes).toContain(missed.prompt + ' = ' + missed.word + ' → nothing like it');
   expect(studentErrors.filter(e => !/module|import|Failed to fetch/i.test(e))).toEqual([]);
+});
+
+test('builders are short: no description or chips under the title, short labels, no optional instructions box', async ({ page, context }) => {
+  await prepare(context);
+  await page.goto('/create.html');
+  await page.waitForTimeout(1200);
+  await hideNotices(page);
+  await page.evaluate(() => switchTo('canknock'));
+  const panel = page.locator('#panel-canknock');
+  await expect(panel.locator('.card-head p, .deco-chips')).toHaveCount(0);
+  await expect(panel.locator('.field-label')).toContainText(['Exercise Title', 'Group', 'Points', 'Class code', 'Time limit']);
+  await expect(page.locator('#ck-instructions, #wo-instructions, #sp-instructions, #fc-instructions')).toHaveCount(0);
+  await expect(page.locator('#sn-instructions')).toHaveCount(1);   // Sentences keeps its own (part of the exercise)
+  await expect(page.locator('#panel-create .deco-chips, .panel .deco-chips')).toHaveCount(0);
+  // the robot explains it
+  await page.evaluate(() => { aiRobotQuery = ''; toggleAiRobotBubble(); });
+  await expect(page.locator('#aiRobotBubbleBody')).toContainText('What is the Can Knockdown exercise?');
 });

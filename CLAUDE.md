@@ -369,8 +369,11 @@ real students' names or results into the repository (it is public).
   ʻ ' ’ and one wrong letter in words of 5+ letters don't matter). Right → the teacher's tennis ball
   (`CANKNOCK_IMAGES_CSS` — ball, cans, scribble, ~40 KB — only in these files) knocks the lowest-numbered can down; wrong → miss, the right
   English word shows, the word comes back later in the round; next round only when every can is down.
-  Only the first try counts (`answers[i]` 0/1, typed text in `ckTyped` → the result's mistakes). Teacher's
-  instructions replace the tip on the start screen. Also in Homework/Class sets, "Use these words in…",
+  Only the first try counts (`answers[i]` 0/1, typed text in `ckTyped` → the result's mistakes). Also in Homework/Class sets, "Use these words in…",
   Use again. `tests/canknock.spec.js`. Spelling/Test files are unchanged (all `ck` code is behind
   `QUIZ_MODE === 'canknock'`).
+- **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
+  too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
+  code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except
+  Sentences (used when there are no words) and Jungle (shown on the board), which are part of the exercise.
 - The robot (lottie `AI_ROBOT_ANIM`) has a small "Smile" shape added to the eyes layer (lowered a little, 2026-10-03).

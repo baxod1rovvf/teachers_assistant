@@ -209,7 +209,6 @@ function addCanKnockRowFilled(line) {
 }
 function resetCanKnockForm() {
   document.getElementById('ck-title').value = '';
-  document.getElementById('ck-instructions').value = '';
   document.getElementById('ck-points').value = '10';
   document.getElementById('ck-code').value = '';
   document.getElementById('ck-timer').value = '';
@@ -3054,13 +3053,6 @@ function createCanKnockdown() {
   html = html.split('__TIME_LIMIT_MINUTES__').join(isNaN(timerMin) || timerMin <= 0 ? '0' : String(timerMin));
 
   html = html.replace('</head>', () => '<style>\n' + CANKNOCK_IMAGES_CSS + '\n</style>\n</head>');   // the cans and the ball
-  // the teacher's instructions replace the tip under Start on the student's first screen
-  const instructions = document.getElementById('ck-instructions').value.trim();
-  if (instructions) {
-    const tipScript = '<script>(function () { var tip = document.querySelector("#slide-welcome .tip-line"); if (tip) { tip.innerText = ' +
-      JSON.stringify(instructions).replace(/</g, '\\u003c') + '; tip.style.whiteSpace = "pre-line"; } })();<\/script>\n</body>';
-    html = html.replace('</body>', () => tipScript);
-  }
   pushRecentExercise({ title: title, typeLabel: 'Can Knockdown', code: classCode, uid: uid, html: html, requiredCode: requiredCode,
     contentSummary: pairs.map(p => p.word + ' - ' + p.tr).join('\n') });
   downloadFile(typedFilename('Can Knockdown', title, 'canknock'), html);
@@ -5096,7 +5088,7 @@ function taMountGroupPickers() {
     if (!field || document.getElementById(taGroupSelectId(tab))) return;
     const box = document.createElement('div');
     box.className = 'title-field';
-    box.innerHTML = '<label class="field-label" for="' + taGroupSelectId(tab) + '">For group (optional)</label>' +
+    box.innerHTML = '<label class="field-label" for="' + taGroupSelectId(tab) + '">Group</label>' +
       '<select id="' + taGroupSelectId(tab) + '" class="ta-no-remember ta-group-select"></select>';
     field.after(box);
     taFillGroupSelect(tab);

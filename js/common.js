@@ -2692,7 +2692,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'I pressed Reset All by mistake — can I get it back?', a: 'Yes — right after Reset All a message with "Undo" appears for a few seconds. Tap Undo (or press Ctrl+Z).' },
     { q: 'Why does a new exercise start with my old settings?', a: 'The app remembers your usual settings for each type (points, time limit, design…) from the last one you made. Only settings, never the words or title.' },
     { q: 'How do I choose which group an exercise is for?', a: 'Pick the group when you create it (or change it later in My Exercises: tap ⋯ on its card, then 👥). Results then show who in that group didn\'t do it.' },
-    { q: 'How many points does an exercise give?', a: 'Set "Points awarded on completion" in the builder. Students get them in Students & Points when they finish with their ID.' },
+    { q: 'How many points does an exercise give?', a: 'Choose "Points" in the builder. Students get them in Students & Points when they finish with their ID.' },
     { q: 'Can I edit an exercise after creating it?', a: 'Yes — in My Exercises tap "✏️ Use again". The builder opens filled in; change what you need and create a new version. Share the new one.' },
     { q: 'Do results here count toward Statistics and Points?', a: 'Yes — once students submit results, they flow into Results, Statistics and (if points are on) Students & Points automatically.' }
   ]),
@@ -2759,6 +2759,9 @@ const AI_ROBOT_FAQ_BY_TAB = {
 };
 /* One exercise type's own questions, shown above the general builder ones. */
 const AI_ROBOT_TYPE_FAQ = {
+  canknock: [
+    { q: 'What is the Can Knockdown exercise?', a: 'A game in a real-looking room: cans stand on a table and the paper shows a word in Uzbek (the translation you wrote). Students type the English word and press Hit — a right answer throws a ball and knocks a can down. 6 cans make a round; a missed word comes back, so they reach the next round only when all 6 are found. Write two answers like "hi / hello" to accept either. Only the first try counts for the score.' }
+  ],
   flashcard: [
     { q: 'How do Flashcards work?', a: 'Add words with their translations (the app can fill the translations in). Students flip through the cards for each group, then take a short multiple-choice check before the next group.' }
   ],

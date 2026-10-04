@@ -11,11 +11,11 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Teacher's Asst">
 <!-- Shared by every page: accounts must load first (it scopes this browser's storage to the signed-in teacher). -->
-<script src="js/accounts.js?v=20261004n"></script>
-<script src="js/i18n.js?v=20261004n"></script>
-<script src="js/sync.js?v=20261004n"></script>
-<script src="js/lottie.min.js?v=20261004n"></script>
-<link rel="stylesheet" href="css/style.css?v=20261004n">
+<script src="js/accounts.js?v=20261004o"></script>
+<script src="js/i18n.js?v=20261004o"></script>
+<script src="js/sync.js?v=20261004o"></script>
+<script src="js/lottie.min.js?v=20261004o"></script>
+<link rel="stylesheet" href="css/style.css?v=20261004o">
 </head>
 <body>
 
@@ -197,7 +197,6 @@
     <div class="card-head" style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap;">
       <div>
         <h2>🎧 IELTS Listening</h2>
-        <p>Build any of the 4 parts — students only go through the ones you've built, in order. Doesn't affect Statistics or Points; this has its own results.</p>
       </div>
       <button class="mini-btn" type="button" onclick="switchTo('createpicker')">← Back to Create</button>
     </div>
@@ -207,12 +206,12 @@
       <input type="text" id="il-title" placeholder="e.g. Listening Practice Test 3">
     </div>
     <div class="title-field">
-      <label class="field-label">4-digit class code (optional — leave blank for none)</label>
-      <input type="text" id="il-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+      <label class="field-label">Class code</label>
+      <input type="text" id="il-code" placeholder="4 digits — leave blank for none" maxlength="4" inputmode="numeric">
     </div>
     <div class="title-field">
-      <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
-      <input type="number" id="il-timer" placeholder="Leave blank for no limit" min="1" max="180">
+      <label class="field-label">Time limit</label>
+      <input type="number" id="il-timer" placeholder="Minutes — leave blank for no limit" min="1" max="180">
     </div>
 
     <div id="il-parts-wrap">
@@ -230,7 +229,6 @@
     <div class="card-head" style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap;">
       <div>
         <h2>📖 IELTS Reading</h2>
-        <p>Build any of the 3 parts — students only go through the ones you've built, in order. Doesn't affect Statistics or Points; this has its own results.</p>
       </div>
       <button class="mini-btn" type="button" onclick="switchTo('createpicker')">← Back to Create</button>
     </div>
@@ -240,12 +238,12 @@
       <input type="text" id="ir-title" placeholder="e.g. Reading Practice Test 3">
     </div>
     <div class="title-field">
-      <label class="field-label">4-digit class code (optional — leave blank for none)</label>
-      <input type="text" id="ir-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+      <label class="field-label">Class code</label>
+      <input type="text" id="ir-code" placeholder="4 digits — leave blank for none" maxlength="4" inputmode="numeric">
     </div>
     <div class="title-field">
-      <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
-      <input type="number" id="ir-timer" placeholder="Leave blank for no limit" min="1" max="180">
+      <label class="field-label">Time limit</label>
+      <input type="number" id="ir-timer" placeholder="Minutes — leave blank for no limit" min="1" max="180">
     </div>
 
     <div id="ir-parts-wrap">
@@ -263,7 +261,6 @@
     <div class="card-head" style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap;">
       <div>
         <h2>✍️ IELTS Writing</h2>
-        <p>Task 1 and Task 2 prompts, checked by AI once the student submits. Doesn't affect Statistics or Points — this has its own results.</p>
       </div>
       <button class="mini-btn" type="button" onclick="switchTo('createpicker')">← Back to Create</button>
     </div>
@@ -273,12 +270,12 @@
       <input type="text" id="iw-title" placeholder="e.g. Writing Practice Test 3">
     </div>
     <div class="title-field">
-      <label class="field-label">4-digit class code (optional — leave blank for none)</label>
-      <input type="text" id="iw-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+      <label class="field-label">Class code</label>
+      <input type="text" id="iw-code" placeholder="4 digits — leave blank for none" maxlength="4" inputmode="numeric">
     </div>
     <div class="title-field">
-      <label class="field-label">Time limit (optional, in minutes, for both tasks combined) — auto-submits when time runs out</label>
-      <input type="number" id="iw-timer" placeholder="Leave blank for no limit" min="1" max="180">
+      <label class="field-label">Time limit</label>
+      <input type="number" id="iw-timer" placeholder="Minutes — leave blank for no limit" min="1" max="180">
     </div>
 
     <div class="title-field">
@@ -368,13 +365,6 @@
     <div class="card">
       <div class="card-head">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🔤 Word Order</h2></div>
-        <p>Students drag scrambled words into the correct sentence order. Each sentence must be completed before the exercise can finish.</p>
-        <div class="deco-chips">
-          <span class="deco-chip" style="background:#4f7df3; --tilt:-4deg;">I</span>
-          <span class="deco-chip" style="background:#8b7bf7; --tilt:3deg;">love</span>
-          <span class="deco-chip" style="background:#fb923c; --tilt:-2deg;">English</span>
-          <span class="deco-spark">🧩✨</span>
-        </div>
       </div>
 
       <div class="builder-grid">
@@ -385,7 +375,7 @@
           </div>
 
           <div class="title-field" id="wo-points-block">
-            <label class="field-label">Points awarded on completion (Points tab tracks this per student ID)</label>
+            <label class="field-label">Points</label>
             <select id="wo-points">
               <option value="0">0 — no points</option>
               <option value="5">5 points</option>
@@ -398,19 +388,15 @@
             </select>
           </div>
           <div class="title-field">
-            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
-            <input type="text" id="wo-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+            <label class="field-label">Class code</label>
+            <input type="text" id="wo-code" placeholder="4 digits — leave blank for none" maxlength="4" inputmode="numeric">
           </div>
           <div class="title-field">
-            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
-            <input type="number" id="wo-timer" placeholder="Leave blank for no limit" min="1" max="180">
+            <label class="field-label">Time limit</label>
+            <input type="number" id="wo-timer" placeholder="Minutes — leave blank for no limit" min="1" max="180">
           </div>
 
 
-          <div class="title-field">
-            <label class="field-label">Instructions for Students (optional)</label>
-            <textarea id="wo-instructions" placeholder="e.g. Put the words in the correct order to make a complete sentence. 🙂"></textarea>
-          </div>
         </div>
 
         <div class="builder-right">
@@ -438,13 +424,6 @@
     <div class="card">
       <div class="card-head">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🧩 Make a Word</h2></div>
-        <p>Students drag scrambled letters into slots to spell each word correctly.</p>
-        <div class="deco-chips">
-          <span class="deco-chip" style="background:#2dd4bf; --tilt:-3deg;">C</span>
-          <span class="deco-chip" style="background:#fb923c; --tilt:4deg;">A</span>
-          <span class="deco-chip" style="background:#4f7df3; --tilt:-2deg;">T</span>
-          <span class="deco-spark">🧱🐱</span>
-        </div>
       </div>
 
       <div class="builder-grid">
@@ -455,7 +434,7 @@
           </div>
 
           <div class="title-field" id="maw-points-block">
-            <label class="field-label">Points awarded on completion (Points tab tracks this per student ID)</label>
+            <label class="field-label">Points</label>
             <select id="maw-points">
               <option value="0">0 — no points</option>
               <option value="5">5 points</option>
@@ -468,19 +447,15 @@
             </select>
           </div>
           <div class="title-field">
-            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
-            <input type="text" id="maw-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+            <label class="field-label">Class code</label>
+            <input type="text" id="maw-code" placeholder="4 digits — leave blank for none" maxlength="4" inputmode="numeric">
           </div>
           <div class="title-field">
-            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
-            <input type="number" id="maw-timer" placeholder="Leave blank for no limit" min="1" max="180">
+            <label class="field-label">Time limit</label>
+            <input type="number" id="maw-timer" placeholder="Minutes — leave blank for no limit" min="1" max="180">
           </div>
 
 
-          <div class="title-field">
-            <label class="field-label">Instructions for Students (optional)</label>
-            <textarea id="maw-instructions" placeholder="e.g. Drag the letters into the boxes to spell each word. 🙂"></textarea>
-          </div>
         </div>
 
         <div class="builder-right">
@@ -508,12 +483,6 @@
     <div class="card">
       <div class="card-head">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🗂️ Flashcard</h2></div>
-        <p>Students flip through flashcards for each group, then take a short multiple-choice check before moving to the next group.</p>
-        <div class="deco-chips">
-          <span class="deco-chip" style="background:#fb923c; --tilt:-3deg;">🎴 Flip</span>
-          <span class="deco-chip" style="background:#8b7bf7; --tilt:3deg;">Match!</span>
-          <span class="deco-spark">✨</span>
-        </div>
       </div>
 
       <div class="builder-grid">
@@ -524,7 +493,7 @@
           </div>
 
           <div class="title-field" id="fc-points-block">
-            <label class="field-label">Points awarded on completion (Points tab tracks this per student ID)</label>
+            <label class="field-label">Points</label>
             <select id="fc-points">
               <option value="0">0 — no points</option>
               <option value="5">5 points</option>
@@ -537,19 +506,15 @@
             </select>
           </div>
           <div class="title-field">
-            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
-            <input type="text" id="fc-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+            <label class="field-label">Class code</label>
+            <input type="text" id="fc-code" placeholder="4 digits — leave blank for none" maxlength="4" inputmode="numeric">
           </div>
           <div class="title-field">
-            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
-            <input type="number" id="fc-timer" placeholder="Leave blank for no limit" min="1" max="180">
+            <label class="field-label">Time limit</label>
+            <input type="number" id="fc-timer" placeholder="Minutes — leave blank for no limit" min="1" max="180">
           </div>
 
 
-          <div class="title-field">
-            <label class="field-label">Instructions for Students (optional)</label>
-            <textarea id="fc-instructions" placeholder="e.g. Flip through the cards, then answer the quiz. 🙂"></textarea>
-          </div>
 
           <button class="mini-btn" type="button" onclick="openSettingsModal('fc')">⚙️ Additional Settings</button>
 
@@ -664,12 +629,6 @@
     <div class="card">
       <div class="card-head">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🎬 Presentation</h2></div>
-        <p>Every slide is its own separate section — open a slide, add as many text blocks as you want, drag them wherever you like, and colour each one on its own. Nothing you do on one slide touches another.</p>
-        <div class="deco-chips">
-          <span class="deco-chip" style="background:#f0729c; --tilt:-3deg;">🖥️ Slide 1</span>
-          <span class="deco-chip" style="background:#4f7df3; --tilt:3deg;">▶ Play</span>
-          <span class="deco-spark">🎬</span>
-        </div>
       </div>
 
       <div class="title-field">
@@ -677,10 +636,6 @@
         <input type="text" id="pres-title" placeholder="e.g. Speaking — Daily Life Questions">
       </div>
 
-      <div class="title-field">
-        <label class="field-label">Instructions for Students (optional)</label>
-        <textarea id="pres-instructions" placeholder="e.g. Read through the slides, then we'll discuss them together. 🙂"></textarea>
-      </div>
 
       <div class="group-select-row">
         <div>
@@ -747,12 +702,6 @@
     <div class="card">
       <div class="card-head">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🗣️ Pronunciation</h2></div>
-        <p>Type only the words — the app works out the pronunciation itself. Students say each word out loud, and they instantly see a percentage plus exactly which sounds were right (green) and wrong (red).</p>
-        <div class="deco-chips">
-          <span class="deco-chip" style="background:#34d399; --tilt:-3deg;">🎙️ Say it!</span>
-          <span class="deco-chip" style="background:#8b7bf7; --tilt:3deg;">🔊 98%</span>
-          <span class="deco-spark">👏</span>
-        </div>
       </div>
 
       <div class="builder-grid">
@@ -762,19 +711,15 @@
             <input type="text" id="pr-title" placeholder="e.g. Unit 3 — Tricky Sounds">
           </div>
           <div class="title-field">
-            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
-            <input type="text" id="pr-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+            <label class="field-label">Class code</label>
+            <input type="text" id="pr-code" placeholder="4 digits — leave blank for none" maxlength="4" inputmode="numeric">
           </div>
           <div class="title-field">
-            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
-            <input type="number" id="pr-timer" placeholder="Leave blank for no limit" min="1" max="180">
+            <label class="field-label">Time limit</label>
+            <input type="number" id="pr-timer" placeholder="Minutes — leave blank for no limit" min="1" max="180">
           </div>
 
 
-          <div class="title-field">
-            <label class="field-label">Instructions for Students (optional)</label>
-            <textarea id="pr-instructions" placeholder="e.g. Say each word out loud when you hear the beep. 🙂"></textarea>
-          </div>
 
           <button class="mini-btn" type="button" onclick="openSettingsModal('pr')">⚙️ Additional Settings</button>
 
@@ -877,12 +822,6 @@
     <div class="card">
       <div class="card-head">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🔤 Spelling</h2></div>
-        <p>Type a word and three convincing misspellings are written for you. Students see all four, shuffled, and pick the right one — with a voice that can read the word aloud first.</p>
-        <div class="deco-chips">
-          <span class="deco-chip" style="background:#8b7bf7; --tilt:-3deg;">S-P-E-L-L</span>
-          <span class="deco-chip" style="background:#34d399; --tilt:3deg;">✓ Correct</span>
-          <span class="deco-spark">🔤</span>
-        </div>
       </div>
 
       <div class="builder-grid">
@@ -893,7 +832,7 @@
           </div>
 
           <div class="title-field" id="sp-points-block">
-            <label class="field-label">Points awarded on completion (Points tab tracks this per student ID)</label>
+            <label class="field-label">Points</label>
             <select id="sp-points">
               <option value="0">0 — no points</option>
               <option value="5">5 points</option>
@@ -906,19 +845,15 @@
             </select>
           </div>
           <div class="title-field">
-            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
-            <input type="text" id="sp-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+            <label class="field-label">Class code</label>
+            <input type="text" id="sp-code" placeholder="4 digits — leave blank for none" maxlength="4" inputmode="numeric">
           </div>
           <div class="title-field">
-            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
-            <input type="number" id="sp-timer" placeholder="Leave blank for no limit" min="1" max="180">
+            <label class="field-label">Time limit</label>
+            <input type="number" id="sp-timer" placeholder="Minutes — leave blank for no limit" min="1" max="180">
           </div>
 
 
-          <div class="title-field">
-            <label class="field-label">Instructions for Students (optional)</label>
-            <textarea id="sp-instructions" placeholder="e.g. Pick the spelling that looks correct. 🙂"></textarea>
-          </div>
 
           <input type="hidden" id="sp-voice" value="female">
           <input type="hidden" id="sp-lang" value="en-US">
@@ -952,12 +887,6 @@
     <div class="card">
       <div class="card-head">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🥫 Can Knockdown</h2></div>
-        <p>Cans on a table in a real-looking room. Students see the translation on a paper (e.g. "salom") and type the English word (e.g. "hello"). Every right answer throws a ball and knocks down a can. 6 cans make a round — they reach the next round only when all 6 words are found (a missed word comes back). An English word written like "hi / hello" accepts either.</p>
-        <div class="deco-chips">
-          <span class="deco-chip" style="background:#f03a52; --tilt:-3deg;">🥫 × 6</span>
-          <span class="deco-chip" style="background:#34d399; --tilt:3deg;">💥 Hit!</span>
-          <span class="deco-spark">🎯</span>
-        </div>
       </div>
 
       <div class="builder-grid">
@@ -968,7 +897,7 @@
           </div>
 
           <div class="title-field" id="ck-points-block">
-            <label class="field-label">Points awarded on completion (Points tab tracks this per student ID)</label>
+            <label class="field-label">Points</label>
             <select id="ck-points">
               <option value="0">0 — no points</option>
               <option value="5">5 points</option>
@@ -981,16 +910,12 @@
             </select>
           </div>
           <div class="title-field">
-            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
-            <input type="text" id="ck-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+            <label class="field-label">Class code</label>
+            <input type="text" id="ck-code" placeholder="4 digits — leave blank for none" maxlength="4" inputmode="numeric">
           </div>
           <div class="title-field">
-            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
-            <input type="number" id="ck-timer" placeholder="Leave blank for no limit" min="1" max="180">
-          </div>
-          <div class="title-field">
-            <label class="field-label">Instructions for Students (optional)</label>
-            <textarea id="ck-instructions" placeholder="e.g. Type the English word and knock all the cans down! 🥫"></textarea>
+            <label class="field-label">Time limit</label>
+            <input type="number" id="ck-timer" placeholder="Minutes — leave blank for no limit" min="1" max="180">
           </div>
           <input type="hidden" id="ck-voice" value="female">
           <input type="hidden" id="ck-lang" value="en-US">
@@ -1039,12 +964,6 @@
     <div class="card">
       <div class="card-head">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>📝 Test</h2></div>
-        <p>Write the whole sentence, then click the word that should be hidden. The wrong options are written for you — grammatically wrong versions of the same word.</p>
-        <div class="deco-chips">
-          <span class="deco-chip" style="background:#ef5f74; --tilt:-3deg;">✅ Quiz</span>
-          <span class="deco-chip" style="background:#fb923c; --tilt:3deg;">💯 100%</span>
-          <span class="deco-spark">📝</span>
-        </div>
       </div>
 
       <div class="builder-grid">
@@ -1055,7 +974,7 @@
           </div>
 
           <div class="title-field" id="ts-points-block">
-            <label class="field-label">Points awarded on completion (Points tab tracks this per student ID)</label>
+            <label class="field-label">Points</label>
             <select id="ts-points">
               <option value="0">0 — no points</option>
               <option value="5">5 points</option>
@@ -1068,19 +987,15 @@
             </select>
           </div>
           <div class="title-field">
-            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
-            <input type="text" id="ts-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+            <label class="field-label">Class code</label>
+            <input type="text" id="ts-code" placeholder="4 digits — leave blank for none" maxlength="4" inputmode="numeric">
           </div>
           <div class="title-field">
-            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
-            <input type="number" id="ts-timer" placeholder="Leave blank for no limit" min="1" max="180">
+            <label class="field-label">Time limit</label>
+            <input type="number" id="ts-timer" placeholder="Minutes — leave blank for no limit" min="1" max="180">
           </div>
 
 
-          <div class="title-field">
-            <label class="field-label">Instructions for Students (optional)</label>
-            <textarea id="ts-instructions" placeholder="e.g. Pick the word that correctly fills the gap. 🙂"></textarea>
-          </div>
 
           <button class="mini-btn" type="button" onclick="openSettingsModal('ts')">⚙️ Additional Settings</button>
 
@@ -1128,12 +1043,6 @@
     <div class="card">
       <div class="card-head">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>✍️ Sentences</h2></div>
-        <p>Students write their own sentences. Give specific words to build sentences around, or leave the words blank and just say how many sentences to write and about what.</p>
-        <div class="deco-chips">
-          <span class="deco-chip" style="background:#4f9de0; --tilt:-3deg;">✍️ Write</span>
-          <span class="deco-chip" style="background:#8b7bf7; --tilt:3deg;">💬 Sentences</span>
-          <span class="deco-spark">📝</span>
-        </div>
       </div>
 
       <div class="builder-grid">
@@ -1157,7 +1066,7 @@
           </div>
 
           <div class="title-field" id="sn-points-block">
-            <label class="field-label">Points awarded on completion (Points tab tracks this per student ID)</label>
+            <label class="field-label">Points</label>
             <select id="sn-points">
               <option value="0">0 — no points</option>
               <option value="5">5 points</option>
@@ -1170,12 +1079,12 @@
             </select>
           </div>
           <div class="title-field">
-            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
-            <input type="text" id="sn-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+            <label class="field-label">Class code</label>
+            <input type="text" id="sn-code" placeholder="4 digits — leave blank for none" maxlength="4" inputmode="numeric">
           </div>
           <div class="title-field">
-            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
-            <input type="number" id="sn-timer" placeholder="Leave blank for no limit" min="1" max="180">
+            <label class="field-label">Time limit</label>
+            <input type="number" id="sn-timer" placeholder="Minutes — leave blank for no limit" min="1" max="180">
           </div>
 
 
@@ -1215,12 +1124,6 @@
     <div class="card">
       <div class="card-head">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>📖 Bidirectional Language</h2></div>
-        <p>Paste an English reading text, choose a language, and translate it (automatically, or by hand). Students see both side by side — hovering or tapping a sentence highlights it in both columns, and clicking any English word looks it up.</p>
-        <div class="deco-chips">
-          <span class="deco-chip" style="background:#2f6fd6; --tilt:-3deg;">📖 Read</span>
-          <span class="deco-chip" style="background:#4f9de0; --tilt:3deg;">🌍 Translate</span>
-          <span class="deco-spark">🔤</span>
-        </div>
         <div class="title-field" style="margin-top:12px; background:rgba(79,157,224,0.08); border-radius:12px; padding:12px 14px;">
           <p style="font-size:0.8rem; color:var(--ink-soft); margin:0;">⚠️ Auto-translation uses a free, unofficial service and isn't guaranteed to always work. You can always edit or type any translation by hand before creating the file.</p>
         </div>
@@ -1233,12 +1136,12 @@
             <input type="text" id="br-title" placeholder="e.g. Do Animals Dream?">
           </div>
           <div class="title-field">
-            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
-            <input type="text" id="br-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+            <label class="field-label">Class code</label>
+            <input type="text" id="br-code" placeholder="4 digits — leave blank for none" maxlength="4" inputmode="numeric">
           </div>
           <div class="title-field">
-            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
-            <input type="number" id="br-timer" placeholder="Leave blank for no limit" min="1" max="180">
+            <label class="field-label">Time limit</label>
+            <input type="number" id="br-timer" placeholder="Minutes — leave blank for no limit" min="1" max="180">
           </div>
 
 
@@ -1286,12 +1189,6 @@
     <div class="card">
       <div class="card-head">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🎬 English Content</h2></div>
-        <p>Paste a YouTube video link. Students watch it on one side and take notes on the other, downloaded as a PDF when they finish.</p>
-        <div class="deco-chips">
-          <span class="deco-chip" style="background:#e14e4e; --tilt:-3deg;">🎬 Watch</span>
-          <span class="deco-chip" style="background:#f2c14e; --tilt:3deg;">📝 Notes</span>
-          <span class="deco-spark">🎥</span>
-        </div>
       </div>
 
       <div class="builder-grid">
@@ -1314,13 +1211,13 @@
 
         <div class="builder-right">
           <div class="title-field">
-            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
-            <input type="text" id="ec-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+            <label class="field-label">Class code</label>
+            <input type="text" id="ec-code" placeholder="4 digits — leave blank for none" maxlength="4" inputmode="numeric">
             <p style="font-size:0.8rem; color:var(--ink-soft); margin-top:6px;">If you set a code, students must enter it before their name/ID. If left blank, no code is needed.</p>
           </div>
           <div class="title-field">
-            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
-            <input type="number" id="ec-timer" placeholder="Leave blank for no limit" min="1" max="180">
+            <label class="field-label">Time limit</label>
+            <input type="number" id="ec-timer" placeholder="Minutes — leave blank for no limit" min="1" max="180">
           </div>
         </div>
       </div>
@@ -1337,12 +1234,6 @@
     <div class="card">
       <div class="card-head">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🌴 Jungle</h2></div>
-        <p>A board game for the classroom screen. The class splits into 2, 3 or 4 teams, each with its own token. A team rolls the dice and moves that many squares: rolling 6 means question 6, then rolling 3 next time means question 9. Every square is one of your questions, and a question can have a picture under it.</p>
-        <div class="deco-chips">
-          <span class="deco-chip" style="background:#16a34a; --tilt:-3deg;">🎲 6</span>
-          <span class="deco-chip" style="background:#f59e0b; --tilt:3deg;">🦁 Question 6</span>
-          <span class="deco-spark">🐒🌴</span>
-        </div>
       </div>
 
       <div class="builder-grid">
@@ -1386,12 +1277,6 @@
     <div class="card">
       <div class="card-head">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🎯 Bamboozle</h2></div>
-        <p>A team quiz for the classroom screen, played with you (no student IDs). The class splits into 2–4 teams: red, blue, green and yellow. Numbered cards hide your questions and their points. A team picks a card, answers, and you press Correct or Incorrect. Then it's the next team's turn and their colour spreads across the screen. When every card is used, the winner is shown.</p>
-        <div class="deco-chips">
-          <span class="deco-chip" style="background:#d93030; --tilt:-3deg;">Red 25</span>
-          <span class="deco-chip" style="background:#1e63d6; --tilt:3deg;">Blue 30</span>
-          <span class="deco-spark">🎯🏆</span>
-        </div>
       </div>
 
       <div class="builder-grid">
@@ -1449,12 +1334,6 @@
     <div class="card">
       <div class="card-head">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;"><h2>🎧 Dictation</h2></div>
-        <p>Students listen to audio and write what they hear — either freely, or by filling in blanks in a transcript.</p>
-        <div class="deco-chips">
-          <span class="deco-chip" style="background:#8b5cf6; --tilt:-3deg;">🎧 Listen</span>
-          <span class="deco-chip" style="background:#4f9de0; --tilt:3deg;">✍️ Write</span>
-          <span class="deco-spark">🎵</span>
-        </div>
       </div>
 
       <div class="builder-grid">
@@ -1495,7 +1374,7 @@
 
         <div class="builder-right">
           <div class="title-field">
-            <label class="field-label">Points awarded on completion</label>
+            <label class="field-label">Points</label>
             <select id="dc-points">
               <option value="0">0 — no points</option>
               <option value="5">5 points</option>
@@ -1508,12 +1387,12 @@
             </select>
           </div>
           <div class="title-field">
-            <label class="field-label">4-digit class code (optional — leave blank for none)</label>
-            <input type="text" id="dc-code" placeholder="e.g. 5366" maxlength="4" inputmode="numeric">
+            <label class="field-label">Class code</label>
+            <input type="text" id="dc-code" placeholder="4 digits — leave blank for none" maxlength="4" inputmode="numeric">
           </div>
           <div class="title-field">
-            <label class="field-label">Time limit (optional, in minutes) — auto-submits when time runs out</label>
-            <input type="number" id="dc-timer" placeholder="Leave blank for no limit" min="1" max="180">
+            <label class="field-label">Time limit</label>
+            <input type="number" id="dc-timer" placeholder="Minutes — leave blank for no limit" min="1" max="180">
           </div>
         </div>
       </div>
@@ -1569,10 +1448,10 @@
   </div>
 </div>
 
-<script src="js/animations.js?v=20261004n"></script>
-<script src="js/common.js?v=20261004n"></script>
-<script src="js/exercise-templates.js?v=20261004n"></script>
-<script src="js/pages/create.js?v=20261004n"></script>
-<script type="module" src="js/firebase.js?v=20261004n"></script>
+<script src="js/animations.js?v=20261004o"></script>
+<script src="js/common.js?v=20261004o"></script>
+<script src="js/exercise-templates.js?v=20261004o"></script>
+<script src="js/pages/create.js?v=20261004o"></script>
+<script type="module" src="js/firebase.js?v=20261004o"></script>
 </body>
 </html>
