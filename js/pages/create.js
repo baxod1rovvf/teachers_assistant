@@ -3006,9 +3006,9 @@ function createSpelling() {
 }
 
 /* ================= CAN KNOCKDOWN =================
-   Built on the quiz template (mode "canknock"): each item is a translation
-   (the prompt on the sign) and 3 English words — the right one and two others
-   from the same list. The game itself is in QUIZ_TEMPLATE. */
+   Built on the quiz template (mode "canknock"): each item is a word (shown on
+   the paper) and its translation (what the student types; "a / b" accepts
+   either). The game itself is in QUIZ_TEMPLATE. */
 function createCanKnockdown() {
   const title = document.getElementById('ck-title').value.trim();
   if (!title) { showToast('Please enter a title for the exercise.'); return; }
@@ -3021,14 +3021,10 @@ function createCanKnockdown() {
     if (!word || !tr) { missing++; return; }
     if (!pairs.some(p => p.word.toLowerCase() === word.toLowerCase())) pairs.push({ word: word, tr: tr });
   });
-  if (pairs.length < 3) { showToast('Please add at least 3 words, each with its translation.'); return; }
+  if (pairs.length < 2) { showToast('Please add at least 2 words, each with its translation.'); return; }
   if (missing) showToast(missing + ' word(s) were skipped — they need both the word and its translation.');
-  const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
-  const items = pairs.map(p => {
-    const others = shuffle(pairs.filter(o => o !== p).map(o => o.word)).slice(0, 2);
-    const options = shuffle(others.concat([p.word]));
-    return { word: p.word, prompt: p.tr, options: options, answer: options.indexOf(p.word) };
-  });
+  // the student sees the word and types its translation (a translation may list several, split by /)
+  const items = pairs.map(p => ({ word: p.word, prompt: p.tr, options: [p.tr], answer: 0 }));
 
   const mode = 'nocode';
   const classCode = setActiveClassCode(generateClassCode());

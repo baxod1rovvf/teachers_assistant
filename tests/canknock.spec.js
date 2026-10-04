@@ -1,12 +1,12 @@
-// Can Knockdown: the teacher writes words + translations; students see a translation and
-// pick the English word from 3 — every right answer knocks down a can, 6 cans a round.
+// Can Knockdown: the teacher writes words + translations; students see a word on a paper and
+// type its translation — every right answer knocks down a can, 6 cans a round.
 const { test, expect } = require('@playwright/test');
 const { prepare, watchErrors, hideNotices } = require('./support/app');
 
-const WORDS = [['hello', 'salom'], ['kitchen', 'oshxona'], ['apple', 'olma'], ['book', 'kitob'],
-  ['water', 'suv'], ['house', 'uy'], ['school', 'maktab'], ['bread', 'non']];
+const WORDS = [['hello', 'salom / assalomu alaykum'], ['kitchen', 'oshxona'], ['apple', 'olma'], ['book', 'kitob'],
+  ['water', 'suv'], ['house', 'uy'], ['school', 'maktab'], ['street', 'koʻcha']];
 
-test('Can Knockdown: built from words + translations; a right answer knocks a can down, a missed word comes back; 6 cans a round', async ({ page, context }, info) => {
+test('Can Knockdown: built from words + translations; the student types the translation; a right answer knocks a can down, a missed word comes back; 6 cans a round', async ({ page, context }, info) => {
   await prepare(context);
   const errors = watchErrors(page);
   await page.goto('/create.html');
@@ -42,27 +42,29 @@ test('Can Knockdown: built from words + translations; a right answer knocks a ca
   await expect(student.locator('#slide-welcome .tip-line')).toHaveText('Knock them all down! "Go" <now> $&');
   await expect(student.locator('#ckRoundLabel')).toHaveText('Round 1 / 2');
   await expect(student.locator('#ckShelf .ck-can')).toHaveCount(6);
-  await expect(student.locator('#ckOptions .opt')).toHaveCount(3);
-  await expect(student.locator('#ckLeft')).toHaveText('🥫 6 left');
+  await expect(student.locator('#ckShelf .ck-can span')).toHaveText(['4', '5', '6', '2', '3', '1']); // 1 on top, then 2 3, then 4 5 6 (left to right)
+  await expect(student.locator('#ckInput')).toBeVisible();
+  await expect(student.locator('#ckLeft')).toHaveText('6');
 
   const current = () => student.evaluate(() => ({ prompt: ITEMS[idx].prompt, word: ITEMS[idx].word, idx }));
-  const pick = async (right) => {
-    const c = await current();
-    const all = await student.locator('#ckOptions .opt').allTextContents();
-    const n = all.findIndex(t => (t.slice(1) === c.word) === right);
-    await student.locator('#ckOptions .opt').nth(n).click();
-    return c;
+  const type = async (text) => {
+    await expect(student.locator('#ckInput')).toBeEnabled({ timeout: 4000 });
+    await student.fill('#ckInput', text);
+    await student.press('#ckInput', 'Enter');
   };
-  // a miss: no can falls, the word is shown and comes back later
-  const missed = await pick(false);
+  // the paper shows the English word; a wrong translation: no can falls, the right one is shown, the word comes back
+  const missed = await current();
+  await expect(student.locator('#ckPrompt')).toHaveText(missed.word);
+  await type('nothing like it');
   await expect(student.locator('#ckVerdict')).toContainText('Missed');
-  await expect(student.locator('#ckVerdict')).toContainText(missed.word);
-  await expect(student.locator('#ckLeft')).toHaveText('🥫 6 left');
-  // then every word right: a can falls each time
+  await expect(student.locator('#ckVerdict')).toContainText(missed.prompt.split(' / ')[0]);
+  await expect(student.locator('#ckLeft')).toHaveText('6');
+  // then every translation right — capitals and another apostrophe don't matter: a can falls each time
   for (let left = 5; left >= 0; left--) {
-    await expect(student.locator('#ckOptions .opt').first()).toBeEnabled({ timeout: 4000 });
-    await pick(true);
-    await expect(student.locator('#ckLeft')).toHaveText('🥫 ' + left + ' left');
+    await expect(student.locator('#ckInput')).toBeEnabled({ timeout: 4000 });
+    const c = await current();
+    await type(c.prompt.split(' / ').pop().toUpperCase().replace(/ʻ/g, "'"));
+    await expect(student.locator('#ckLeft')).toHaveText(String(left));
   }
   await expect(student.locator('#ckCleared')).toBeVisible({ timeout: 4000 });
   await expect(student.locator('#ckCleared')).toContainText('Round 1 cleared');
@@ -71,9 +73,10 @@ test('Can Knockdown: built from words + translations; a right answer knocks a ca
   await expect(student.locator('#ckRoundLabel')).toHaveText('Round 2 / 2');
   await expect(student.locator('#ckShelf .ck-can')).toHaveCount(2);
   for (let left = 1; left >= 0; left--) {
-    await expect(student.locator('#ckOptions .opt').first()).toBeEnabled({ timeout: 4000 });
-    await pick(true);
-    await expect(student.locator('#ckLeft')).toHaveText('🥫 ' + left + ' left');
+    await expect(student.locator('#ckInput')).toBeEnabled({ timeout: 4000 });
+    const c = await current();
+    await type(c.prompt.split(' / ')[0]);
+    await expect(student.locator('#ckLeft')).toHaveText(String(left));
   }
   await expect(student.locator('#ckCleared')).toContainText('All the cans are down', { timeout: 4000 });
   await student.locator('#ckClearedBtn').click();
@@ -83,6 +86,6 @@ test('Can Knockdown: built from words + translations; a right answer knocks a ca
   const payload = await student.evaluate(() => buildResultPayload());
   expect(payload.type).toBe('Can Knockdown');
   expect(payload.correct).toBe(7);
-  expect(payload.mistakes).toContain(missed.prompt + ' = ' + missed.word);
+  expect(payload.mistakes).toContain(missed.word + ' = ' + missed.prompt + ' → nothing like it');
   expect(studentErrors.filter(e => !/module|import|Failed to fetch/i.test(e))).toEqual([]);
 });

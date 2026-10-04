@@ -355,14 +355,19 @@ real students' names or results into the repository (it is public).
   a "task" lottie) — not on phones, where the greeting + robot stay on one line. **Settings** has only Install, Backup, Status.
 - **Can Knockdown** (2026-10-04, tab `canknock`, prefix `ck`, type label "Can Knockdown", icon
   `images/icons/create/canknock.png`): the teacher writes word + translation (Flashcard-style rows, 🌐 fill
-  translations, at least 3). `createCanKnockdown` builds on **QUIZ_TEMPLATE with `QUIZ_MODE` "canknock"**
-  (items `{word, prompt: translation, options: 3 words from the same list, answer}`). The student file
-  (`#slide-cans`, `ck*` functions in the template) deals the words into rounds of 6 cans (3+2+1 on wooden
-  boards under a striped awning; the teacher's three can pictures, mixed, and tennis ball — PNGs in
-  `CANKNOCK_IMAGES_CSS` in exercise-templates.js, added only to Can Knockdown files, ~23 KB); the sign shows the translation; right → a ball knocks the top can down
-  (+ the word is read aloud); wrong → the ball misses, the right word shows, and the word comes back later
-  in the round; the next round only when every can is down. Only the first try counts (`answers[i]`).
-  Teacher's instructions replace the tip on the start screen. Also in Homework/Class sets, "Use these
-  words in…", Use again. `tests/canknock.spec.js`. Spelling/Test files are unchanged (all `ck` code is
-  behind `QUIZ_MODE === 'canknock'`).
+  translations, at least 2). `createCanKnockdown` builds on **QUIZ_TEMPLATE with `QUIZ_MODE` "canknock"**
+  (items `{word, prompt: translation, options: [translation], answer: 0}`). The student file (`#slide-cans`,
+  `ck*` functions in the template) fills the whole screen with the teacher's room photo
+  (`images/canknock/room-wide.jpg` — its baked "Cans left: 6" box blurred out — and `room-tall.jpg` for
+  portrait; loaded from the site via `APP_URL_FOR_CK` = `__TA_APP_URL__`, a dark-room gradient offline;
+  `ckLayout` puts the cans on the photo's table line). Six CSS tin cans numbered 1 (top) · 2 3 · 4 5 6
+  stand on the table; the English word is on a paper (right; above the cans on phones); the student types
+  the translation in the bottom bar and presses Hit/Enter (`ckAccepts`: "a / b" accepts either; case,
+  ʻ ' ’ and one wrong letter in words of 5+ letters don't matter). Right → the teacher's tennis ball
+  (`CANKNOCK_IMAGES_CSS`, only in these files) knocks the lowest-numbered can down; wrong → miss, the right
+  translation shows, the word comes back later in the round; next round only when every can is down.
+  Only the first try counts (`answers[i]` 0/1, typed text in `ckTyped` → the result's mistakes). Teacher's
+  instructions replace the tip on the start screen. Also in Homework/Class sets, "Use these words in…",
+  Use again. `tests/canknock.spec.js`. Spelling/Test files are unchanged (all `ck` code is behind
+  `QUIZ_MODE === 'canknock'`).
 - The robot (lottie `AI_ROBOT_ANIM`) has a small "Smile" shape added to the eyes layer (lowered a little, 2026-10-03).
