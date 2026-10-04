@@ -83,12 +83,12 @@ test('a set whose file isn\'t kept here gets it back from its online link (Get o
   await page.goto('/my-exercises.html');
   await page.waitForTimeout(1000);
   await hideNotices(page);
-  await expect(page.locator('.recent-exercise-row[data-uid="uset2"] .badge-set')).toHaveText('Homework'); // just Homework / Class
   // "Get one exercise" is in the set's ⋯ menu (no "Separate" any more)
   const setRow = page.locator('.recent-exercise-row[data-uid="uset2"]');
   await expect(setRow.locator('.recent-exercise-actions')).not.toContainText('Separate');
   await expect(setRow.locator('.recent-exercise-actions')).not.toContainText('Get one exercise');
   await setRow.locator('.myex-more').click();
+  await expect(page.locator('#myexMenu .badge-set')).toHaveText('Homework'); // just Homework / Class, at the top of ⋯
   await page.locator('#myexMenu button', { hasText: 'Get one exercise' }).click();
   await expect(page.locator('.set-round-row')).toHaveCount(2, { timeout: 8000 });
   expect(fetched).toBe(2);
@@ -96,7 +96,7 @@ test('a set whose file isn\'t kept here gets it back from its online link (Get o
   expect(await page.evaluate(() => (getCachedExerciseHtml('uset2') || '').length)).toBe(setHtml.length);
 });
 
-test('My Exercises shows cards, 4 in a row: title ✎ ⋯, then 🗑 and View Results; ⋯ has the rest', async ({ page, context }) => {
+test('My Exercises shows cards, 4 in a row: title ✎ ⋯, then 🗑 and View Results; ⋯ has the type, group, date and the rest', async ({ page, context }) => {
   const items = [1, 2, 3, 4, 5].map(n => ({ uid: 'uc' + n, title: 'Card ' + n, typeLabel: 'Spelling', code: '10000' + n, date: new Date().toISOString(),
     builderTab: 'spelling', builderState: { v: 1, fields: {}, rows: [['house', []]] } }));
   await prepare(context, { storage: { ta_recent_exercises: JSON.stringify(items), ta_exercise_html_cache: JSON.stringify({ uc1: '<html><body>x</body></html>' }) } });
@@ -110,11 +110,13 @@ test('My Exercises shows cards, 4 in a row: title ✎ ⋯, then 🗑 and View Re
   const card = page.locator('.myex-card[data-uid="uc1"]');
   await expect(card.locator('.myex-card-foot button')).toHaveText(['🗑', '📊 View Results']);
   await card.locator('.myex-more').click();
-  await expect(page.locator('#myexMenu button')).toHaveText(['✏️ Use again', '📥 Redownload']); // + 🔗 Copy link on the real site
+  await expect(page.locator('#myexMenu .myex-menu-item')).toHaveText(['✏️ Use again', '📥 Redownload']); // + 🔗 Copy link on the real site
   await expect(page.locator('.recent-exercise-daygroup')).toHaveCount(0); // no headings by date
-  // short card: type and group on one line, a date without the year
-  await expect(card.locator('.myex-card-badges')).toContainText('Spelling');
-  await expect(card.locator('.recent-exercise-date')).not.toContainText(String(new Date().getFullYear()));
+  // the card shows only the title; type, group and date (without the year) are at the top of ⋯
+  await expect(card.locator('.myex-card-badges, .recent-exercise-date')).toHaveCount(0);
+  await expect(page.locator('#myexMenu .myex-menu-info')).toContainText('Spelling');
+  await expect(page.locator('#myexMenu .myex-group-btn')).toBeVisible();
+  await expect(page.locator('#myexMenu .recent-exercise-date')).not.toContainText(String(new Date().getFullYear()));
   await page.keyboard.press('Escape');
   await expect(page.locator('#myexMenu')).toHaveCount(0);
   await card.locator('.myex-more').click();

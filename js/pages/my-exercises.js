@@ -99,7 +99,9 @@ function renderRecentExercises() {
       ? '<button type="button" class="old-file-line old-file-icon' + (oldIssues.every(x => x.fix.minor) ? ' minor' : '') + '" onclick="showOldFileInfo(' + idx + ')" title="' + escapeForHtml('Made before a fix: ' + taOldFileWhat(oldIssues) + '. Press ✏️ Use again to make a new copy, and share that one.') + '" aria-label="Made before a fix">⚠️</button>'
       : '';
     const codeLine = '<div class="recent-exercise-date">' + (item.requiredCode ? 'Code: ' + escapeForHtml(item.requiredCode) + ' &middot; ' : '') + dateStr + '</div>';
-    // a card: the title (✎ rename, ⋯ more), what it is, then 🗑 and View Results
+    // what it is (type, group) and when it was made: shown at the top of its ⋯ menu
+    myexInfoHtml[idx] = '<div class="myex-menu-info"><div class="myex-card-badges">' + disabledBadge + groupBtn + '</div>' + codeLine + '</div>';
+    // a card: the title (✎ rename, ⋯ more), then 🗑 and View Results
     html +=
       '<div class="recent-exercise-row myex-card' + (setKind ? ' set-row set-' + setKind : '') + '" data-uid="' + escapeForHtml(item.uid || '') + '">' +
         '<div class="myex-card-head">' +
@@ -107,8 +109,6 @@ function renderRecentExercises() {
             '<button type="button" class="myex-rename" onclick="renameRecentExercise(' + idx + ')" title="Rename" aria-label="Rename">✎</button>' + oldLine + '</div>' +
           '<button type="button" class="myex-more" onclick="openMyexMenu(event, ' + idx + ')" title="More" aria-label="More">⋯</button>' +
         '</div>' +
-        '<div class="myex-card-badges">' + disabledBadge + groupBtn + '</div>' +
-        codeLine +
         '<div class="recent-exercise-actions myex-card-foot">' +
           '<button class="mini-btn danger myex-delete" type="button" onclick="deleteRecentExercise(' + idx + ')" title="Delete" aria-label="Delete">🗑</button>' +
           '<button class="mini-btn myex-results" type="button" onclick="viewRecentExerciseResults(' + idx + ')">📊 View Results</button>' +
@@ -127,6 +127,7 @@ function renderRecentExercises() {
 }
 
 /* ---------- ⋯ on a card ---------- */
+const myexInfoHtml = {};   // index → the type / group / date shown at the top of its ⋯ menu
 function closeMyexMenu() {
   const m = document.getElementById('myexMenu');
   if (m) m.remove();
@@ -151,9 +152,11 @@ function openMyexMenu(e, idx) {
   menu.id = 'myexMenu';
   menu.dataset.idx = String(idx);
   menu.setAttribute('role', 'menu');
+  if (myexInfoHtml[idx]) menu.insertAdjacentHTML('beforeend', myexInfoHtml[idx]);
   items.forEach(([label, fn]) => {
     const b = document.createElement('button');
     b.type = 'button';
+    b.className = 'myex-menu-item';
     b.setAttribute('role', 'menuitem');
     b.textContent = label;
     b.onclick = ev => { ev.stopPropagation(); closeMyexMenu(); fn(); };

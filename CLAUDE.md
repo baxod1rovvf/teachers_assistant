@@ -320,13 +320,13 @@ real students' names or results into the repository (it is public).
 - **Results isn't in the top bar or the quick search** (2026-10-03): it opens from My Exercises
   ("📊 View Results" on a card, `results.html?exercise=<uid>`), and has "← Back to My Exercises".
 - My Exercises is a grid of cards (`.myex-grid`, 4 in a row): title ✎ ⚠️(made before a fix) ⋯,
-  type + group, code · date (no year), 🗑 + View Results. ⋯ = Use again, Redownload, Copy link
-  (+ Get one exercise on sets). The Share window code (`shareRecentExercise`) is no longer
+  🗑 + View Results. ⋯ (since 2026-10-04) starts with what it is — type + group (👥 changes it),
+  code · date (no year) (`myexInfoHtml`) — then Use again, Redownload, Copy link (+ Get one exercise on sets). The Share window code (`shareRecentExercise`) is no longer
   reachable from the cards.
 - Results → "⚖️ Punish?" / "⚠️ Will be punished" (`taPunishChipHtml` etc. in common.js): per
   exercise/set code + student, kept in `ta_punished` (synced, in the backup); marked rows turn
   red in the results table, a set's student list and "Didn't do it". My Exercises shows
-  Homework/Class sets with a coloured edge and a "📚 Homework set"/"🏫 Class set" label.
+  Homework/Class sets with a coloured edge (their Homework/Class label is at the top of ⋯).
 
 ## Students & Points, profile, Settings (2026-10-03)
 

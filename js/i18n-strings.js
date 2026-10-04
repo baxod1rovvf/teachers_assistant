@@ -873,9 +873,9 @@ window.TA_ROBOT_I18N = {
     'Приложение запоминает ваши обычные настройки для каждого типа (баллы, ограничение времени, оформление…) по последнему созданному упражнению. Только настройки — никогда не слова и не название.'],
   'How do I choose which group an exercise is for?': [
     'Mashq qaysi guruh uchun ekanini qanday tanlayman?',
-    'Yaratayotganda guruhni tanlang (yoki keyinroq Mashqlarim boʻlimida 👥 tugmasi bilan oʻzgartiring). Shunda Natijalar oʻsha guruhda kim bajarmaganini koʻrsatadi.',
+    'Yaratayotganda guruhni tanlang (yoki keyinroq Mashqlarim boʻlimida oʻzgartiring: kartochkadagi ⋯ ni, keyin 👥 ni bosing). Shunda Natijalar oʻsha guruhda kim bajarmaganini koʻrsatadi.',
     'Как выбрать, для какой группы упражнение?',
-    'Выберите группу при создании (или поменяйте позже в «Моих упражнениях» кнопкой 👥). Тогда «Результаты» покажут, кто в этой группе его не сделал.'],
+    'Выберите группу при создании (или поменяйте позже в «Моих упражнениях»: нажмите ⋯ на карточке, затем 👥). Тогда «Результаты» покажут, кто в этой группе его не сделал.'],
   'How many points does an exercise give?': [
     'Mashq necha ball beradi?',
     'Mashq tuzayotganda “Bajargani uchun beriladigan ball” ni belgilang. Oʻquvchilar IDsi bilan tugatganda ballar “Oʻquvchilar va ballar” boʻlimiga tushadi.',

@@ -152,8 +152,11 @@ test('My Exercises: Homework and Class sets stand out', async ({ page, context }
   await hideNotices(page);
   const set = page.locator('.recent-exercise-row[data-uid="uset"]');
   await expect(set).toHaveClass(/set-row/);
-  await expect(set.locator('.badge-set')).toHaveText('Homework');
-  await expect(page.locator('.recent-exercise-row.set-row')).toHaveCount(await page.locator('.badge-set').count());
+  await set.locator('.myex-more').click();
+  await expect(page.locator('#myexMenu .badge-set')).toHaveText('Homework');   // the label is at the top of ⋯
+  await page.keyboard.press('Escape');
+  const sets = await page.evaluate(() => getRecentExercises().filter(e => e.setKind || /^(Homework|Class)$/.test(e.typeLabel)).length);
+  await expect(page.locator('.recent-exercise-row.set-row')).toHaveCount(sets);
 });
 
 test('a set\'s rounds a student hasn\'t done yet still show their names', async ({ page, context }) => {
