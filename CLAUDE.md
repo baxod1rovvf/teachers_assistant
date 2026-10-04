@@ -306,8 +306,8 @@ real students' names or results into the repository (it is public).
   (`#taTopbar`, fixed, no background of its own — the buttons float over the page): logo + "Teacher's
   Assistant" (logo only on phones) · 5 sections in the middle, icons only — the name is the tooltip (`TA_TOPBAR_TABS`:
   Dashboard, Create, My Exercises, Statistics, Students; icons in `images/icons/nav/`, shown with a CSS
-  mask so they take the design's colours) · 🔍 search, design (the teacher's pen-tool icon,
-  `nav/design.png`, shown with a mask like Settings; picking a design also picks day/night — no day/night switch since 2026-10-04),
+  mask so they take the design's colours) · 🔍 search, design (the teacher's three-coloured-circles icon,
+  `nav/design.png`, in its own colours; picking a design also picks day/night — no day/night switch since 2026-10-04),
   ⚙️ Settings (sliders icon `nav/settings.png`; no sound button since 2026-10-03), profile picture (red dot when sync needs the teacher, `data-sync`). The section
   you're in sits in a `var(--brand)` circle drawn as an SVG path; `taMoveTabBlob` animates it like the
   teacher's "Liquid Tab Bar" lottie (front races ahead, back follows, a narrowing neck, then a wobble).

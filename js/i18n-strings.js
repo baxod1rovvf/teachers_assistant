@@ -848,9 +848,9 @@ window.TA_ROBOT_I18N = {
     'При открытии приложения появляется список ваших учеников, которые за последние 7 дней закончили упражнение, а вы его ещё не проверили. Нажмите на упражнение под именем ученика (📊), чтобы открыть результаты этого упражнения. Сообщение остаётся открытым, так что можно сразу открыть упражнение следующего ученика. Нажмите «Checked» для одного ученика или «All checked» для всех. Закрытие крестиком ✕ скрывает его только до следующего раза.'],
   'How do I change the colours or the look?': [
     'Ranglar yoki koʻrinishni qanday oʻzgartiraman?',
-    'Yuqori paneldagi dizayn tugmasini bosing (pero, 🔍 yonida). Uslubni (Classic yoki Glass) va rang dizaynini tanlang. Toʻrtta dizayn kunduz uchun, ikkitasi tun uchun — birini tanlash kunduz yoki tunni ham almashtiradi.',
+    'Yuqori paneldagi dizayn tugmasini bosing (uchta rangli doira, 🔍 yonida). Uslubni (Classic yoki Glass) va rang dizaynini tanlang. Toʻrtta dizayn kunduz uchun, ikkitasi tun uchun — birini tanlash kunduz yoki tunni ham almashtiradi.',
     'Как поменять цвета или внешний вид?',
-    'На верхней панели нажмите кнопку оформления (перо, рядом с 🔍). Выберите стиль (Classic или Glass) и цветовое оформление. Четыре варианта — дневные, два — ночные; выбор варианта заодно переключает день или ночь.'],
+    'На верхней панели нажмите кнопку оформления (три цветных круга, рядом с 🔍). Выберите стиль (Classic или Glass) и цветовое оформление. Четыре варианта — дневные, два — ночные; выбор варианта заодно переключает день или ночь.'],
   'How do I find something quickly?': [
     'Biror narsani tez qanday topaman?',
     'Yuqori paneldagi 🔍 ni bosing yoki Ctrl+K (Mac’da ⌘K) ni bosing. Boʻlim, mashq turi, guruh, oʻquvchi yoki mashq nomini yozing va darhol oʻshanga oʻting.',

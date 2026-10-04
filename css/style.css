@@ -2348,6 +2348,7 @@ body.light-theme .gsched-day input[type="time"] { color-scheme: light; }
 .tb-tool:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); color: var(--ink); }
 .tb-tool.muted { opacity: 0.6; }
 .tb-tool.active { background: var(--brand); color: var(--on-brand); }
+.tb-design-img { width: 22px; height: 22px; object-fit: contain; display: block; }
 .tb-tool-ic { display: block; width: 20px; height: 20px; background: currentColor;
   -webkit-mask-position: center; mask-position: center; -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
 .tb-profile-wrap { position: relative; margin-left: 4px; }
