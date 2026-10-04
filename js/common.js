@@ -2682,7 +2682,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'How is "Top 5 Active Students" worked out?', a: 'Students are ranked by how well they did, not by how many exercises they finished. Each result becomes a fair 0–100 score (Sentences use the stars you give in Results). Use the group buttons (e.g. Target / Apex) to see one group at a time.' },
     { q: 'What is "Lessons taught"?', a: 'Every lesson on your weekly schedule counts once each time its day and time pass. Removing a lesson from the schedule keeps what it already counted.' },
     { q: 'What is the note about students who finished exercises?', a: 'When you open the app, a note lists your students who finished an exercise in the last 7 days that you haven\'t checked yet. Tap an exercise under a student\'s name (📊) to open that exercise\'s results. The note stays open, so you can open the next student\'s exercise too. Tap "Checked" for one student, or "All checked". Closing it with ✕ only hides it until next time.' },
-    { q: 'How do I change the colours or the look?', a: 'In the top bar, tap the design button (a pen in a frame, next to 🔍). Pick a Style (Classic or Glass) and a colour Design. Four designs are for day and two for night — picking one also switches day or night.' },
+    { q: 'How do I change the colours or the look?', a: 'In the top bar, tap the design button (a pen, next to 🔍). Pick a Style (Classic or Glass) and a colour Design. Four designs are for day and two for night — picking one also switches day or night.' },
     { q: 'How do I find something quickly?', a: 'Tap 🔍 in the top bar, or press Ctrl+K (⌘K on a Mac). Type a section, an exercise type, a group, a student or an exercise title and jump straight to it.' },
   ]),
   createpicker: aiFaq([
@@ -3419,7 +3419,7 @@ function taMountTopBar() {
     '<div class="tb-tools">' +
       '<button class="tb-tool" id="quickSearchBtn" type="button" onclick="openQuickSearch()" title="Search (' + (mac ? '⌘' : 'Ctrl') + ' K)" aria-label="Search">' +
         '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button>' +
-      '<div class="hero-design-wrap"><button class="tb-tool hero-design-btn" id="designPickerBtn" type="button" onclick="toggleDesignPicker(event)" title="Change design" aria-label="Change design" aria-expanded="false"><img class="tb-design-img" src="images/icons/nav/design.png" alt=""></button>' +
+      '<div class="hero-design-wrap"><button class="tb-tool hero-design-btn" id="designPickerBtn" type="button" onclick="toggleDesignPicker(event)" title="Change design" aria-label="Change design" aria-expanded="false"><span class="tb-tool-ic" style="-webkit-mask-image:url(images/icons/nav/design.png);mask-image:url(images/icons/nav/design.png)"></span></button>' +
         '<div class="design-picker" id="designPicker" hidden></div></div>' +
       '<a class="tb-tool tb-link" href="settings.html" data-tab="settings" title="Settings" aria-label="Settings">' +
         '<span class="tb-tool-ic" style="-webkit-mask-image:url(images/icons/nav/settings.png);mask-image:url(images/icons/nav/settings.png)"></span></a>' +
