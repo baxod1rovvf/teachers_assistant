@@ -44,9 +44,11 @@ test('Car Game: its own exercise (not a Flashcard design); the teacher\'s car, b
   expect(await student.locator('.sky-img.cg-bld2').count()).toBeGreaterThan(5);
   expect(await student.locator('#props .cg-trees').count()).toBeGreaterThan(3);
   expect(await student.locator('#props .cg-bush').count()).toBeGreaterThan(3);
-  expect(await student.locator('#props .cg-fence').count()).toBe(32);
-  expect(await student.locator('#props .cg-fence.flip').count()).toBe(16);
-  expect(await student.locator('#props .cg-puddle').count()).toBe(4);
+  expect(await student.locator('#props .fence-wall.cg-fence').count()).toBe(2);   // one straight fence along each edge of the road
+  // the puddles lie on the grass, beside the road (more than half the road's width from the middle)
+  const puddleX = await student.locator('#props .cg-puddle').evaluateAll(l => l.map(el => Math.abs(parseFloat(el.style.transform.match(/translate3d\(([-\d.]+)px/)[1]))));
+  expect(puddleX.length).toBe(6);
+  expect(puddleX.every(x => x > 180)).toBe(true);
   await expect(student.locator('#obstacles .obs .cg-sign')).toHaveCount(2);
   expect(await student.locator('#obstacles .cg-sign').first().evaluate(el => getComputedStyle(el).backgroundImage)).toContain('data:image/webp');
   await student.waitForTimeout(600);
