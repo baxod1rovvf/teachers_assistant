@@ -67,7 +67,6 @@ window.TA_I18N_ROWS = [
   ['Syncing…', 'Sinxronlanmoqda…', 'Синхронизация…'],
   ['Saving…', 'Saqlanmoqda…', 'Сохранение…'],
   ['Your data is kept in step across your devices', 'Maʼlumotlaringiz barcha qurilmalaringizda bir xil saqlanadi', 'Ваши данные одинаковы на всех ваших устройствах'],
-  ['Switch day/night mode', 'Kunduzgi/tungi rejim', 'Дневной/ночной режим'],
   ['Change design', 'Dizaynni oʻzgartirish', 'Сменить оформление'],
   ['Sound effects: On', 'Tovush effektlari: yoqilgan', 'Звуковые эффекты: вкл'],
   ['Sound effects: Off', 'Tovush effektlari: oʻchirilgan', 'Звуковые эффекты: выкл'],
@@ -849,9 +848,9 @@ window.TA_ROBOT_I18N = {
     'При открытии приложения появляется список ваших учеников, которые за последние 7 дней закончили упражнение, а вы его ещё не проверили. Нажмите на упражнение под именем ученика (📊), чтобы открыть результаты этого упражнения. Сообщение остаётся открытым, так что можно сразу открыть упражнение следующего ученика. Нажмите «Checked» для одного ученика или «All checked» для всех. Закрытие крестиком ✕ скрывает его только до следующего раза.'],
   'How do I change the colours or the look?': [
     'Ranglar yoki koʻrinishni qanday oʻzgartiraman?',
-    'Yuqori paneldagi kunduz/tun tugmachasi yonidagi 🎨 tugmasini bosing. Uslubni (Classic yoki Glass) va rang dizaynini tanlang. Toʻrtta dizayn kunduz uchun, ikkitasi tun uchun.',
+    'Yuqori paneldagi dizayn tugmasini bosing (ramkadagi pero, 🔍 yonida). Uslubni (Classic yoki Glass) va rang dizaynini tanlang. Toʻrtta dizayn kunduz uchun, ikkitasi tun uchun — birini tanlash kunduz yoki tunni ham almashtiradi.',
     'Как поменять цвета или внешний вид?',
-    'На верхней панели нажмите кнопку 🎨 рядом с переключателем день/ночь. Выберите стиль (Classic или Glass) и цветовое оформление. Четыре варианта — дневные, два — ночные.'],
+    'На верхней панели нажмите кнопку оформления (перо в рамке, рядом с 🔍). Выберите стиль (Classic или Glass) и цветовое оформление. Четыре варианта — дневные, два — ночные; выбор варианта заодно переключает день или ночь.'],
   'How do I find something quickly?': [
     'Biror narsani tez qanday topaman?',
     'Yuqori paneldagi 🔍 ni bosing yoki Ctrl+K (Mac’da ⌘K) ni bosing. Boʻlim, mashq turi, guruh, oʻquvchi yoki mashq nomini yozing va darhol oʻshanga oʻting.',

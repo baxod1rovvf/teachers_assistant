@@ -342,7 +342,6 @@ async function taLoadPageNow(file) {
 // time taLoadPage() adds another section; each init skips a spot already playing.
 function taInitSectionAnims() {
   initHeroTaskAnim();
-  initThemeToggleAnim();
   initCreateHeadingAnim();
   initPercentStatAnims();
 }
@@ -833,11 +832,11 @@ function applyTheme() {
 }
 
 /* ================= DESIGNS =================
-   Six colour designs (css/style.css, "DESIGNS"), picked from the 🎨 button
-   next to the day/night switch. Four are day designs and two (Dragon Fruit,
-   Lime Spark) are night designs: picking one switches to its mode. The last
-   day design and the last night design are remembered separately, so the
-   day/night switch brings each back (Burnt Orange / Dragon Fruit at first). */
+   Six colour designs (css/style.css, "DESIGNS"), picked from the design button
+   in the top bar (there's no separate day/night switch since 2026-10-04). Four are
+   day designs and two (Dragon Fruit, Lime Spark) are night designs: picking one
+   switches to its mode. The last day design and the last night design are
+   remembered separately (Burnt Orange / Dragon Fruit at first). */
 const LS_DESIGN_DAY = 'ta_design_day';
 const LS_DESIGN_NIGHT = 'ta_design_night';
 const TA_DESIGNS = [{"key": "signal", "name": "Signal Blue", "accent": "#0057FF", "base": "#F8F7F4", "mode": "day"}, {"key": "emerald", "name": "Emerald Ink", "accent": "#064E3B", "base": "#F8E7C9", "mode": "day"}, {"key": "dragonfruit", "name": "Dragon Fruit", "accent": "#FF4696", "base": "#1E1033", "mode": "night"}, {"key": "lime", "name": "Lime Spark", "accent": "#B6FF2E", "base": "#23262F", "mode": "night"}, {"key": "ultraviolet", "name": "Ultra Violet", "accent": "#6A00F4", "base": "#FFD6A5", "mode": "day"}, {"key": "burntorange", "name": "Burnt Orange", "accent": "#FC6C26", "base": "#FFF4D6", "mode": "day"}];
@@ -865,8 +864,7 @@ function setDesign(key) {
   try { localStorage.setItem(d.mode === 'day' ? LS_DESIGN_DAY : LS_DESIGN_NIGHT, key); } catch (e) { /* ignore */ }
   const wantLight = d.mode === 'day';
   if ((getTheme() === 'light') !== wantLight) {
-    // switch mode the same way the day/night switch does (with its animation)
-    if (typeof toggleThemeAnimated === 'function') toggleThemeAnimated(); else setTheme(wantLight ? 'light' : 'dark');
+    setTheme(wantLight ? 'light' : 'dark');   // switch day/night to the design's mode
   } else applyTheme();
   renderDesignPicker();
 }
@@ -2602,44 +2600,6 @@ window.taCloudCheck = taCloudCheck;
 
 /* ================= LOTTIE ANIMATIONS: toggle, brand, statistics ================= */
 
-const THEME_TOGGLE_SEGMENTS = { dayIdle: [0, 20], dayToNight: [20, 81], nightIdle: [81, 119], nightToDay: [120, 200] };
-let themeToggleLottieAnim = null;
-function initThemeToggleAnim() {
-  const el = document.getElementById('themeToggleAnim');
-  if (!el || typeof lottie === 'undefined' || themeToggleLottieAnim) return;
-  try {
-    el.innerHTML = '';
-    themeToggleLottieAnim = lottie.loadAnimation({
-      container: el,
-      renderer: 'svg',
-      loop: false,
-      autoplay: false,
-      animationData: THEME_TOGGLE_ANIM
-    });
-    themeToggleLottieAnim.addEventListener('DOMLoaded', function () { setThemeToggleIdleSegment(); });
-    themeToggleLottieAnim.addEventListener('complete', function () { setThemeToggleIdleSegment(); });
-  } catch (e) { /* decorative — fail silently */ }
-}
-window.initThemeToggleAnim = initThemeToggleAnim;
-
-function setThemeToggleIdleSegment() {
-  if (!themeToggleLottieAnim) return;
-  const seg = getTheme() === 'light' ? THEME_TOGGLE_SEGMENTS.dayIdle : THEME_TOGGLE_SEGMENTS.nightIdle;
-  themeToggleLottieAnim.loop = true;
-  themeToggleLottieAnim.playSegments(seg, true);
-}
-
-function toggleThemeAnimated() {
-  const current = getTheme();
-  const next = current === 'light' ? 'dark' : 'light';
-  setTheme(next);
-  if (themeToggleLottieAnim) {
-    themeToggleLottieAnim.loop = false;
-    const seg = current === 'light' ? THEME_TOGGLE_SEGMENTS.dayToNight : THEME_TOGGLE_SEGMENTS.nightToDay;
-    themeToggleLottieAnim.playSegments(seg, true);
-  }
-}
-window.toggleThemeAnimated = toggleThemeAnimated;
 
 
 // The Dashboard's greeting card: a laptop with code on its screen (the teacher's
@@ -2722,7 +2682,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'How is "Top 5 Active Students" worked out?', a: 'Students are ranked by how well they did, not by how many exercises they finished. Each result becomes a fair 0–100 score (Sentences use the stars you give in Results). Use the group buttons (e.g. Target / Apex) to see one group at a time.' },
     { q: 'What is "Lessons taught"?', a: 'Every lesson on your weekly schedule counts once each time its day and time pass. Removing a lesson from the schedule keeps what it already counted.' },
     { q: 'What is the note about students who finished exercises?', a: 'When you open the app, a note lists your students who finished an exercise in the last 7 days that you haven\'t checked yet. Tap an exercise under a student\'s name (📊) to open that exercise\'s results. The note stays open, so you can open the next student\'s exercise too. Tap "Checked" for one student, or "All checked". Closing it with ✕ only hides it until next time.' },
-    { q: 'How do I change the colours or the look?', a: 'In the top bar, tap the 🎨 button next to the day/night switch. Pick a Style (Classic or Glass) and a colour Design. Four designs are for day and two for night.' },
+    { q: 'How do I change the colours or the look?', a: 'In the top bar, tap the design button (a pen in a frame, next to 🔍). Pick a Style (Classic or Glass) and a colour Design. Four designs are for day and two for night — picking one also switches day or night.' },
     { q: 'How do I find something quickly?', a: 'Tap 🔍 in the top bar, or press Ctrl+K (⌘K on a Mac). Type a section, an exercise type, a group, a student or an exercise title and jump straight to it.' },
   ]),
   createpicker: aiFaq([
@@ -3433,7 +3393,7 @@ document.addEventListener('keydown', function (e) {
    Fixed at the top, in the page's own colour: the logo; the 5 sections in the
    middle — the one you're in sits in a circle of the design's colour, which
    moves like a drop of liquid when you switch (taMoveTabBlob); and on the
-   right search, day/night, design, Settings and the profile.
+   right search, design (which also picks day or night), Settings and the profile.
    Phones (860px and narrower): the 5 sections become a tab bar at the bottom. */
 const TA_TOPBAR_TABS = [
   { tab: 'main', href: 'index.html', label: 'Dashboard', icon: 'images/icons/nav/dashboard.png' },
@@ -3459,11 +3419,10 @@ function taMountTopBar() {
     '<div class="tb-tools">' +
       '<button class="tb-tool" id="quickSearchBtn" type="button" onclick="openQuickSearch()" title="Search (' + (mac ? '⌘' : 'Ctrl') + ' K)" aria-label="Search">' +
         '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button>' +
-      '<div class="hero-theme-toggle tb-theme" id="themeToggleAnim" onclick="toggleThemeAnimated()" title="Switch day/night mode" role="button" aria-label="Switch day/night mode">🌙</div>' +
-      '<div class="hero-design-wrap"><button class="tb-tool hero-design-btn" id="designPickerBtn" type="button" onclick="toggleDesignPicker(event)" title="Change design" aria-label="Change design" aria-expanded="false"><span class="design-dot"></span></button>' +
+      '<div class="hero-design-wrap"><button class="tb-tool hero-design-btn" id="designPickerBtn" type="button" onclick="toggleDesignPicker(event)" title="Change design" aria-label="Change design" aria-expanded="false"><img class="tb-design-img" src="images/icons/nav/design.png" alt=""></button>' +
         '<div class="design-picker" id="designPicker" hidden></div></div>' +
       '<a class="tb-tool tb-link" href="settings.html" data-tab="settings" title="Settings" aria-label="Settings">' +
-        '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></a>' +
+        '<span class="tb-tool-ic" style="-webkit-mask-image:url(images/icons/nav/settings.png);mask-image:url(images/icons/nav/settings.png)"></span></a>' +
       '<div class="tb-profile-wrap">' +
         '<button class="tb-avatar avatar-btn" id="tbAvatarBtn" type="button" onclick="taToggleProfileMenu(event)" title="Your profile" aria-label="Your profile" aria-expanded="false">' +
           '<img class="avatar-img" style="display:none;" alt=""><div class="avatar-fallback" id="tbAvatarFallback">T</div></button>' +

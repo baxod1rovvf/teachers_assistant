@@ -156,9 +156,17 @@ test('top bar: 5 sections in the middle, the one you\'re in has the coloured cir
   // icons only (the names show when you point at one)
   expect(await page.locator('#taTopbar .tb-tab').evaluateAll(l => l.map(a => a.title))).toEqual(['Dashboard', 'Create', 'My Exercises', 'Statistics', 'Students']);
   await expect(page.locator('#taTopbar .tb-tab')).toHaveText(['', '', '', '', '']);
-  for (const id of ['#quickSearchBtn', '#themeToggleAnim', '#designPickerBtn', '#taTopbar [data-tab="settings"]', '#tbAvatarBtn']) await expect(page.locator(id)).toBeVisible();
+  for (const id of ['#quickSearchBtn', '#designPickerBtn', '#taTopbar [data-tab="settings"]', '#tbAvatarBtn']) await expect(page.locator(id)).toBeVisible();
   await expect(page.locator('#mainSidebar')).toHaveCount(0);
   await expect(page.locator('#soundToggleBtn')).toHaveCount(0);   // no sound button
+  await expect(page.locator('#themeToggleAnim')).toHaveCount(0);  // no day/night switch: the design picks it
+  await page.locator('#designPickerBtn').click();
+  await page.locator('.design-option', { hasText: 'Signal Blue' }).click();
+  await expect(page.locator('body')).toHaveClass(/light-theme/);
+  await page.locator('#designPickerBtn').click();
+  await page.locator('.design-option', { hasText: 'Dragon Fruit' }).click();
+  await expect(page.locator('body')).not.toHaveClass(/light-theme/);
+  await page.keyboard.press('Escape');
   // in the middle, and fixed at the top
   const nav = await page.locator('#taTabNav').boundingBox();
   expect(Math.abs(nav.x + nav.width / 2 - 650)).toBeLessThan(40);
