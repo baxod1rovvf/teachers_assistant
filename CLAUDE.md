@@ -358,7 +358,7 @@ real students' names or results into the repository (it is public).
   translations, at least 2). `createCanKnockdown` builds on **QUIZ_TEMPLATE with `QUIZ_MODE` "canknock"**
   (items `{word, prompt: translation, options: [translation], answer: 0}`). The student file (`#slide-cans`,
   `ck*` functions in the template) fills the whole screen with the teacher's room photo
-  (`images/canknock/room-wide.jpg` — its baked "Cans left: 6" box blurred out — and `room-tall.jpg` for
+  (`images/canknock/room-wide.webp` 2560 px — its baked "Cans left: 6" box blurred out — and `room-tall.webp` 1536 px for
   portrait; pinned to the top so the title on it is never cut; loaded from the site via `APP_URL_FOR_CK` = `__TA_APP_URL__`, a dark-room gradient offline;
   `ckLayout` puts the cans on the photo's table line). Six cans — the teacher's three can pictures, mixed,
   given depth with masked shading/shine and shadows — stand on the table (1 on top · 2 3 · 4 5 6, each on the
