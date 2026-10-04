@@ -125,3 +125,18 @@ test('My Exercises shows cards, 4 in a row: title ✎ ⋯, then 🗑 and View Re
   const [download] = await Promise.all([page.waitForEvent('download'), page.locator('#myexMenu button', { hasText: 'Redownload' }).click()]);
   expect(download.suggestedFilename()).toBe('Card_1.html');
 });
+
+test('every card and type chip shows the exercise type\'s picture (the Create page\'s icons)', async ({ page, context }, info) => {
+  await prepare(context);
+  await page.goto('/my-exercises.html');
+  await page.waitForTimeout(1000);
+  await hideNotices(page);
+  const cards = page.locator('.myex-card');
+  const n = await cards.count();
+  expect(n).toBeGreaterThan(0);
+  expect(await page.locator('.myex-card .myex-card-head > .myex-type-ic').count()).toBe(n);
+  const bg = await page.locator('.myex-card .myex-type-ic').first().evaluate(el => getComputedStyle(el).backgroundImage);
+  expect(bg).toContain('images/icons/create/');
+  expect(await page.locator('.myex-card[data-uid="uset"] .myex-type-ic').getAttribute('class')).toMatch(/picker-icon-(homework|class)/);
+  await page.screenshot({ path: info.outputPath('my-exercises.png') });
+});

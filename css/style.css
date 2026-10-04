@@ -2225,6 +2225,11 @@ body.glass-ui .design-picker { background: color-mix(in srgb, var(--surface) 72%
 .myex-grid .recent-exercise-row.myex-card { gap: 5px; padding: 12px 12px 10px; }
 .myex-grid .recent-exercise-row.set-row { padding: 12px 12px 10px 10px; }
 .myex-card-foot { padding-top: 4px; }
+/* the exercise type's picture on each card and filter chip (the Create page's icons) */
+.myex-type-ic { flex-shrink: 0; width: 40px; height: 40px; background-size: contain; background-repeat: no-repeat; background-position: center; }
+.myex-card-head .recent-exercise-title { flex: 1; align-self: center; }
+.myex-type-ic.in-chip { width: 18px; height: 18px; margin-right: 5px; vertical-align: -4px; display: inline-block; }
+.myex-type-chip { display: inline-flex; align-items: center; }
 
 /* Results isn't in the menu: it opens from My Exercises ("View Results"), with a way back */
 .side-btn[data-tab="results"] { display: none !important; }

@@ -19,6 +19,21 @@ function getRelativeDayLabel(iso) {
 let myexTypeFilter = ''; // '' = every type
 let myexGroupFilter = null; // null = every group, '' = no group, else a group id
 
+// the exercise type's picture (the same as on the Create page), for its card and its filter chip
+const MYEX_TYPE_ICONS = {
+  'Flashcard': 'flashcard', 'Word Order': 'wordorder', 'Make a Word': 'makeaword', 'Spelling': 'spelling',
+  'Can Knockdown': 'canknock', 'Car Game': 'cargame', 'Sentences': 'sentences', 'Bidirectional Language': 'bilingual',
+  'English Content': 'engcontent', 'Dictation': 'listening', 'Jungle': 'jungle', 'Bamboozle': 'bamboozle',
+  'Presentation': 'presentation', 'Pronunciation': 'pronunciation', 'Test': 'test',
+  'IELTS Listening': 'listening', 'IELTS Reading': 'reading', 'IELTS Writing': 'sentences',
+  'Homework': 'homework', 'Class': 'class'
+};
+function myexTypeIconHtml(typeLabel, extraClass) {
+  const key = MYEX_TYPE_ICONS[typeLabel];
+  const tag = extraClass === 'in-chip' ? 'i' : 'span';   // a chip's <span> is its count
+  return key ? '<' + tag + ' class="myex-type-ic picker-icon-' + key + (extraClass ? ' ' + extraClass : '') + '" aria-hidden="true"></' + tag + '>' : '';
+}
+
 function renderRecentExercises() {
   const wrap = document.getElementById('recentExercisesWrap');
   if (!wrap) return;
@@ -41,7 +56,7 @@ function renderRecentExercises() {
     chipsEl.innerHTML = types.length > 1
       ? ['', ...types].map(t =>
           '<button type="button" class="myex-type-chip' + (t === myexTypeFilter ? ' active' : '') + '" onclick="setMyexTypeFilter(' + jsAttr(t) + ')">' +
-            escapeForHtml(t || 'All') + '<span class="n">' + (t ? typeCounts[t] : list.length) + '</span></button>'
+            (t ? myexTypeIconHtml(t, 'in-chip') : '') + escapeForHtml(t || 'All') + '<span class="n">' + (t ? typeCounts[t] : list.length) + '</span></button>'
         ).join('')
       : '';
   }
@@ -105,6 +120,7 @@ function renderRecentExercises() {
     html +=
       '<div class="recent-exercise-row myex-card' + (setKind ? ' set-row set-' + setKind : '') + '" data-uid="' + escapeForHtml(item.uid || '') + '">' +
         '<div class="myex-card-head">' +
+          myexTypeIconHtml(setKind ? (setKind === 'class' ? 'Class' : 'Homework') : item.typeLabel) +
           '<div class="recent-exercise-title"><span class="myex-card-title" translate="no">' + escapeForHtml(item.title) + '</span>' +
             '<button type="button" class="myex-rename" onclick="renameRecentExercise(' + idx + ')" title="Rename" aria-label="Rename">✎</button>' + oldLine + '</div>' +
           '<button type="button" class="myex-more" onclick="openMyexMenu(event, ' + idx + ')" title="More" aria-label="More">⋯</button>' +
