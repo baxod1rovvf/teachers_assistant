@@ -11,7 +11,9 @@ test('the robot answers questions about the newest features, found with its sear
   await hideNotices(page);
   await page.evaluate(() => toggleAiRobotBubble());
   const body = page.locator('#aiRobotBubbleBody');
-  await expect(body).toContainText('Ready');
+  // the Dashboard keeps only the questions the teacher chose
+  await expect(body.locator('.ai-robot-q-item')).toContainText(['How do I change the colours or the look?', 'What is the note about students who finished exercises?', 'How do I change the language?']);
+  await expect(body).not.toContainText('Lessons taught');
   // a Results question, searched for from the Dashboard
   await body.locator('.ai-robot-search').fill('punish');
   await body.locator('.ai-robot-q-item', { hasText: '⚖️' }).click();
@@ -25,7 +27,8 @@ test('the robot answers questions about the newest features, found with its sear
   await page.waitForTimeout(1000);
   await hideNotices(page);
   await page.evaluate(() => { aiRobotQuery = ''; toggleAiRobotBubble(); });
-  await expect(page.locator('#aiRobotBubbleBody')).toContainText('Copy link');
+  await expect(page.locator('#aiRobotBubbleBody')).toContainText('Can I get the link of an exercise?');
+  await expect(page.locator('#aiRobotBubbleBody')).not.toContainText('Made before a fix');
   // easy questions aren't there any more
   await expect(page.locator('#aiRobotBubbleBody')).not.toContainText('How do I rename an exercise?');
   expect(errors).toEqual([]);
@@ -46,7 +49,7 @@ test('every robot question has its Uzbek and Russian translation', async () => {
 
 test('in Uzbek and Russian the robot answers in that language', async ({ page, context }) => {
   await prepare(context);
-  for (const [lang, q, a, word] of [['uz', 'Darsdagi “Ready” tugmasi nima qiladi?', 'tayyorlanib', 'jazo'], ['ru', 'Что делает кнопка «Ready» у урока?', 'подготовились', 'наказан']]) {
+  for (const [lang, q, a, word] of [['uz', 'Tilni qanday oʻzgartiraman?', 'rasmingizni', 'jazo'], ['ru', 'Как поменять язык?', 'картинку', 'наказан']]) {
     await page.addInitScript(l => { try { localStorage.setItem('ta_ui_lang', l); } catch (e) {} }, lang);
     await page.goto('/index.html');
     await page.waitForTimeout(1200);

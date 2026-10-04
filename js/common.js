@@ -2675,15 +2675,9 @@ function aiFaq(items) { return items.concat([AI_ROBOT_CONTACT_ITEM]); }
    When a new feature is added to the app, add a question about it here. */
 const AI_ROBOT_FAQ_BY_TAB = {
   main: aiFaq([
-    { q: 'How do I set my lesson schedule?', a: 'Each group has its own lesson days and times. Tap "✏️ Change schedule" (it opens Students & Points), then "➕ Add group" or ✎ on a group, and tick its days and times. They repeat every week and show here under Upcoming Lessons.' },
-    { q: 'What does the "Ready" button on a lesson do?', a: 'Tap "Ready" when you have prepared that lesson. Until then, the app reminds you about lessons in the next 24 hours — when you open it, and again every 2 hours.' },
-    { q: 'Will I get reminded before a lesson?', a: "Yes — within 24 hours of a lesson you'll get a reminder, and in Upcoming Lessons the lesson stands out — tinted in its group's colour, with a glowing edge and how long until it starts. Reminders only work while the app is open." },
-    { q: 'How do I write a plan for a lesson?', a: 'Under Upcoming Lessons tap the group\'s name on the lesson. Write your notes, pick the exercises for it, and tap "💾 Save Plan".' },
-    { q: 'How is "Top 5 Active Students" worked out?', a: 'Students are ranked by how well they did, not by how many exercises they finished. Each result becomes a fair 0–100 score (Sentences use the stars you give in Results). Use the group buttons (e.g. Target / Apex) to see one group at a time.' },
-    { q: 'What is "Lessons taught"?', a: 'Every lesson on your weekly schedule counts once each time its day and time pass. Removing a lesson from the schedule keeps what it already counted.' },
-    { q: 'What is the note about students who finished exercises?', a: 'When you open the app, a note lists your students who finished an exercise in the last 7 days that you haven\'t checked yet. Tap an exercise under a student\'s name (📊) to open that exercise\'s results. The note stays open, so you can open the next student\'s exercise too. Tap "Checked" for one student, or "All checked". Closing it with ✕ only hides it until next time.' },
     { q: 'How do I change the colours or the look?', a: 'In the top bar, tap the design button (three coloured circles, next to 🔍). Pick a Style (Classic or Glass) and a colour Design. Four designs are for day and two for night — picking one also switches day or night.' },
-    { q: 'How do I find something quickly?', a: 'Tap 🔍 in the top bar, or press Ctrl+K (⌘K on a Mac). Type a section, an exercise type, a group, a student or an exercise title and jump straight to it.' },
+    { q: 'What is the note about students who finished exercises?', a: 'When you open the app, a note lists your students who finished an exercise in the last 7 days that you haven\'t checked yet. Tap an exercise under a student\'s name (📊) to open that exercise\'s results. The note stays open, so you can open the next student\'s exercise too. Tap "Checked" for one student, or "All checked". Closing it with ✕ only hides it until next time.' },
+    { q: 'How do I change the language?', a: 'Tap your picture at the top right, then your name. Under 🌐 Language pick English, Oʻzbekcha or Русский. Only the app\'s menus and buttons change — exercises for students stay in English.' }
   ]),
   createpicker: aiFaq([
     { q: 'Can I combine several exercises into one?', a: 'Yes — that\'s Homework & Class on this page. Choose Homework (students do it on their own) or Class (used together in a lesson), build round 1, tap "➕ Add Another Exercise" for the next round, then "Create ⬇".' },
@@ -2717,17 +2711,12 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'Who is counted in Statistics?', a: 'Only students who entered with an ID from your Students list. Students who typed just a name are left out.' }
   ]),
   myexercises: aiFaq([
-    { q: 'Where are "Use again", "Redownload" and "Copy link"?', a: 'Each exercise is a card. Tap ⋯ next to its title: ✏️ Use again, 📥 Redownload and 🔗 Copy link (copies the link without showing it — it works for 7 days from the first time you copy it). On a Homework/Class set there is also 📤 Get one exercise. 🗑 and 📊 View Results are at the bottom of the card.' },
-    { q: 'How do I send an exercise to my students?', a: 'Tap ⋯ on its card, then "🔗 Copy link", and paste the link into your class chat. It works for 7 days from the first time you copy it, also on iPhones. Or "📥 Redownload" the file and send that.' },
-    { q: 'The link has expired — what now?', a: 'A link works for 7 days from the first time you tap "🔗 Copy link"; after that the app says "This link has expired". To share the exercise again, tap ⋯ → "✏️ Use again" to make a new copy (it gets a new link), or "📥 Redownload" the file and send that.' },
-    { q: 'What does "⚠️ Made before a fix" mean?', a: 'That file was made before a bug was fixed, so it still has the bug. Tap the line to see what was fixed. Press "✏️ Use again", create a new copy and share that one.' },
-    { q: 'How do I take one exercise out of a set?', a: 'On a Homework/Class set tap ⋯, then "📤 Get one exercise". Download one of its exercises, or add it to My Exercises on its own. The set stays as it is.' },
+    { q: 'Can I get the link of an exercise?', a: 'Yes — tap ⋯ on its card, then "🔗 Copy link", and paste the link into your class chat (it also works on iPhones). The link works for 7 days from the first time you copy it; after that the app says "This link has expired". To share it again, tap ⋯ → "✏️ Use again" to make a new copy (it gets a new link), or "📥 Redownload" the file and send that.' },
+    { q: 'How do I take one exercise out of a set?', a: 'On a Homework/Class set tap ⋯, then "📤 Get one exercise". Download one of its exercises, or add it to My Exercises on its own. The set stays as it is.' }
   ]),
   students: aiFaq([
     { q: 'What is the Students list for?', a: 'Give each student a unique ID — this is what they type into an exercise instead of a name. Only students on this list count in Statistics, Top 5 and "Didn\'t do it".' },
     { q: 'How do I add a whole class at once?', a: 'Tap "📋 Add many". Paste a class list (one student per line, "Name, ID", or copied straight from Excel/Google Sheets) or choose a CSV file. Students without an ID get the next free number.' },
-    { q: 'What are groups?', a: 'Every student belongs to one group (for example two classes). A group has its lesson days and times (set them with "➕ Add group" or ✎ on the group) — they show in Upcoming Lessons on the Dashboard. Exercises can be made for a group, and Results then show who in that group didn\'t do it.' },
-    { q: 'How do points work?', a: 'Students earn points by finishing exercises with their ID. Open a group: each student\'s points are next to their name and ID. Tap the 🪙 points to see where they came from.' },
     { q: 'How do I give or take points by hand?', a: 'Open the group and tap + or − next to the student\'s points, then type how many. It shows up as "Bonus: By Teacher <your name>" (to change it, tap your picture at the top right, then your name).' },
     { q: 'Do students need an account?', a: 'No — their ID is all they need to submit exercises and get points.' },
     { q: 'A student\'s results are missing — why?', a: 'Usually the student typed a wrong ID or just a name. Their results then show under "Entered with a name only" and are left out of Statistics and Top 5.' }

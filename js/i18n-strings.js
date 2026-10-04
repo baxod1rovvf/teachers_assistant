@@ -811,51 +811,21 @@ window.TA_ROBOT_I18N = {
     'Sinf ekrani uchun jamoaviy viktorina, siz bilan oʻynaladi (oʻquvchi IDsi kerak emas). 2–4 jamoa raqamli kartalarni tanlaydi — ular ortida savollaringiz va ballari yashiringan. Xuddi shu savollarni Jungli’da ishlatish uchun “🔁 Make it a Jungle” ni bosing.',
     'Как работает Bamboozle?',
     'Командная викторина для экрана в классе, играется вместе с вами (ID учеников не нужны). 2–4 команды выбирают пронумерованные карточки, за которыми спрятаны ваши вопросы и их баллы. Чтобы использовать те же вопросы в «Джунглях», нажмите «🔁 Make it a Jungle».'],
-  'How do I set my lesson schedule?': [
-    'Dars jadvalini qanday belgilayman?',
-    'Har bir guruhning oʻz dars kunlari va vaqtlari bor. “✏️ Jadvalni oʻzgartirish” ni bosing (Oʻquvchilar va ballar ochiladi), soʻng “➕ Guruh qoʻshish” yoki guruhdagi ✎ ni bosib, kunlari va vaqtlarini belgilang. Ular har hafta takrorlanadi va shu yerda “Yaqinlashayotgan darslar” da chiqadi.',
-    'Как задать расписание уроков?',
-    'У каждой группы свои дни и время уроков. Нажмите «✏️ Изменить расписание» (откроется «Ученики и баллы»), затем «➕ Добавить группу» или ✎ у группы и отметьте дни и время. Они повторяются каждую неделю и показываются здесь в «Ближайших уроках».'],
-  'What does the "Ready" button on a lesson do?': [
-    'Darsdagi “Ready” tugmasi nima qiladi?',
-    'Darsga tayyorlanib boʻlganingizda “Ready” ni bosing. Shu paytgacha ilova keyingi 24 soat ichidagi darslarni eslatib turadi — ochganingizda va har 2 soatda.',
-    'Что делает кнопка «Ready» у урока?',
-    'Нажмите «Ready», когда подготовились к уроку. До этого приложение напоминает об уроках в ближайшие 24 часа — при открытии и потом каждые 2 часа.'],
-  'Will I get reminded before a lesson?': [
-    'Darsdan oldin eslatma boʻladimi?',
-    'Ha — darsga 24 soat qolganda eslatma chiqadi, “Yaqinlashayotgan darslar” da esa bu dars ajralib turadi — guruh rangida boʻyaladi, cheti yonib turadi va boshlanishiga qancha qolgani koʻrinadi. Eslatmalar faqat ilova ochiq turganda ishlaydi.',
-    'Будут ли напоминания перед уроком?',
-    'Да — за 24 часа до урока появится напоминание, а в «Ближайших уроках» этот урок выделяется — окрашен в цвет группы, с подсвеченным краем и временем до начала. Напоминания работают, только пока приложение открыто.'],
-  'How do I write a plan for a lesson?': [
-    'Dars rejasini qanday yozaman?',
-    '“Yaqinlashayotgan darslar” da darsdagi guruh nomini bosing. Izohlaringizni yozing, unga mashqlarni tanlang va “💾 Save Plan” ni bosing.',
-    'Как написать план урока?',
-    'В «Ближайших уроках» нажмите на название группы у урока. Напишите заметки, выберите упражнения и нажмите «💾 Save Plan».'],
-  'How is "Top 5 Active Students" worked out?': [
-    '“Eng faol 5 oʻquvchi” qanday hisoblanadi?',
-    'Oʻquvchilar nechta mashq qilgani boʻyicha emas, qanchalik yaxshi bajargani boʻyicha saralanadi. Har bir natija adolatli 0–100 ballga aylantiriladi (Gaplar uchun Natijalarda bergan yulduzchalaringiz olinadi). Bir vaqtda bitta guruhni koʻrish uchun guruh tugmalaridan (masalan, Target / Apex) foydalaning.',
-    'Как считается «Топ-5 активных учеников»?',
-    'Учеников ранжируют по тому, насколько хорошо они справились, а не по количеству упражнений. Каждый результат превращается в честную оценку 0–100 (для «Предложений» — по звёздам, которые вы ставите в «Результатах»). Кнопками групп (например, Target / Apex) смотрите по одной группе.'],
-  'What is "Lessons taught"?': [
-    '“Oʻtilgan darslar” nima?',
-    'Haftalik jadvalingizdagi har bir dars kuni va vaqti oʻtgan sari bir martadan hisoblanadi. Darsni jadvaldan olib tashlasangiz ham, u hisoblagani saqlanib qoladi.',
-    'Что такое «Проведено уроков»?',
-    'Каждый урок из недельного расписания засчитывается каждый раз, когда проходят его день и время. Если убрать урок из расписания, уже посчитанное сохраняется.'],
   'What is the note about students who finished exercises?': [
     'Mashqni tugatgan oʻquvchilar haqidagi eslatma nima?',
     'Ilovani ochganingizda, oxirgi 7 kunda mashqni tugatgan, lekin siz hali tekshirmagan oʻquvchilar roʻyxati chiqadi. Oʻquvchi ismi ostidagi mashqni (📊) bossangiz, oʻsha mashq natijalari ochiladi. Eslatma ochiq qoladi, shuning uchun keyingi oʻquvchining mashqini ham ochishingiz mumkin. Bitta oʻquvchi uchun “Checked” ni yoki hammasi uchun “All checked” ni bosing. ✕ bilan yopsangiz, u faqat keyingi safargacha yashirinadi.',
     'Что за сообщение об учениках, закончивших упражнения?',
     'При открытии приложения появляется список ваших учеников, которые за последние 7 дней закончили упражнение, а вы его ещё не проверили. Нажмите на упражнение под именем ученика (📊), чтобы открыть результаты этого упражнения. Сообщение остаётся открытым, так что можно сразу открыть упражнение следующего ученика. Нажмите «Checked» для одного ученика или «All checked» для всех. Закрытие крестиком ✕ скрывает его только до следующего раза.'],
+  'How do I change the language?': [
+    'Tilni qanday oʻzgartiraman?',
+    'Yuqori oʻng burchakdagi rasmingizni, keyin ismingizni bosing. “🌐 Til” ostida English, Oʻzbekcha yoki Русский ni tanlang. Faqat ilovaning menyulari va tugmalari oʻzgaradi — oʻquvchilar uchun mashqlar ingliz tilida qoladi.',
+    'Как поменять язык?',
+    'Нажмите на свою картинку вверху справа, затем на имя. В разделе «🌐 Язык» выберите English, Oʻzbekcha или Русский. Меняются только меню и кнопки приложения — упражнения для учеников остаются на английском.'],
   'How do I change the colours or the look?': [
     'Ranglar yoki koʻrinishni qanday oʻzgartiraman?',
     'Yuqori paneldagi dizayn tugmasini bosing (uchta rangli doira, 🔍 yonida). Uslubni (Classic yoki Glass) va rang dizaynini tanlang. Toʻrtta dizayn kunduz uchun, ikkitasi tun uchun — birini tanlash kunduz yoki tunni ham almashtiradi.',
     'Как поменять цвета или внешний вид?',
     'На верхней панели нажмите кнопку оформления (три цветных круга, рядом с 🔍). Выберите стиль (Classic или Glass) и цветовое оформление. Четыре варианта — дневные, два — ночные; выбор варианта заодно переключает день или ночь.'],
-  'How do I find something quickly?': [
-    'Biror narsani tez qanday topaman?',
-    'Yuqori paneldagi 🔍 ni bosing yoki Ctrl+K (Mac’da ⌘K) ni bosing. Boʻlim, mashq turi, guruh, oʻquvchi yoki mashq nomini yozing va darhol oʻshanga oʻting.',
-    'Как быстро что-нибудь найти?',
-    'Нажмите 🔍 на верхней панели или Ctrl+K (⌘K на Mac). Введите раздел, тип упражнения, группу, ученика или название упражнения — и сразу перейдёте туда.'],
   'Can I combine several exercises into one?': [
     'Bir nechta mashqni bittaga birlashtirsa boʻladimi?',
     'Ha — bu shu sahifadagi “Uy vazifasi va dars”. Uy vazifasi (oʻquvchilar mustaqil bajaradi) yoki Dars (darsda birga ishlatiladi) ni tanlang, 1-bosqichni tuzing, keyingi bosqich uchun “➕ Yana mashq qoʻshish” ni, oxirida “Yaratish ⬇” ni bosing.',
@@ -971,11 +941,6 @@ window.TA_ROBOT_I18N = {
     'Faqat Oʻquvchilar roʻyxatingizdagi ID bilan kirgan oʻquvchilar. Faqat ism yozganlar hisobga olinmaydi.',
     'Кто учитывается в Статистике?',
     'Только ученики, вошедшие с ID из вашего списка «Ученики». Те, кто ввёл только имя, не учитываются.'],
-  'Where are "Use again", "Redownload" and "Copy link"?': [
-    '“Qayta ishlatish”, “Qayta yuklab olish” va “Havolani nusxalash” qayerda?',
-    'Har bir mashq — kartochka. Nomi yonidagi ⋯ ni bosing: ✏️ Qayta ishlatish, 📥 Qayta yuklab olish va 🔗 Havolani nusxalash (havolani koʻrsatmasdan nusxalaydi — u birinchi marta nusxalangandan boshlab 7 kun ishlaydi). Uy vazifasi/Dars toʻplamida 📤 Bitta mashqni olish ham bor. 🗑 va 📊 Natijalarni koʻrish kartochka pastida.',
-    'Где «Использовать снова», «Скачать снова» и «Скопировать ссылку»?',
-    'Каждое упражнение — карточка. Нажмите ⋯ рядом с названием: ✏️ Использовать снова, 📥 Скачать снова и 🔗 Скопировать ссылку (копирует ссылку, не показывая её, — она работает 7 дней с первого копирования). У набора «Домашнее задание»/«Урок» есть ещё 📤 Взять одно упражнение. 🗑 и 📊 Результаты — внизу карточки.'],
   'Why does a Flashcard result say "not recorded" for time?': [
     'Nega Kartochkalar natijasida vaqt “not recorded” (yozilmagan) deb turibdi?',
     'Oʻquvchi mashqni tugatgan — natija hammasi bilan birga kelgan. Faqat vaqt yoʻqolgan: 2026-yil 3-oktabrdan oldin yaratilgan Kartochkalar fayllari 0 soniya yuborardi. Uy vazifasi/Dars toʻplami ichida toʻplamning oʻzi oʻlchagan vaqt koʻrsatiladi. Mashqlarim boʻlimida “✏️ Qayta ishlatish” bilan mashqni qayta yarating va yangisini ulashing.',
@@ -991,21 +956,11 @@ window.TA_ROBOT_I18N = {
     '✕ — oʻquvchining javoblarini hali tekshirmagansiz degani; koʻrib chiqqaningizdan keyin bosing, u ✓ (tekshirildi) ga aylanadi. Qaytarish uchun ✓ ni bosing. Tekshirilgan oʻquvchilar ilovani ochganda chiqadigan “mashqni tugatganlar” eslatmasida boshqa koʻrinmaydi.',
     'Что значат ✓ и ✕ рядом с учеником?',
     '✕ значит, что вы ещё не проверили ответы ученика; нажмите после проверки — станет ✓ (проверено). Нажмите ✓, чтобы вернуть. Проверенные ученики больше не появляются в сообщении о закончивших упражнения при открытии приложения.'],
-  'How do I send an exercise to my students?': [
-    'Mashqni oʻquvchilarga qanday yuboraman?',
-    'Kartochkadagi ⋯ ni, keyin “🔗 Havolani nusxalash” ni bosing va havolani sinf chatiga joylang. U birinchi marta nusxalangandan boshlab 7 kun ishlaydi, iPhone’da ham. Yoki “📥 Qayta yuklab olish” bilan faylni olib, uni yuboring.',
-    'Как отправить упражнение ученикам?',
-    'Нажмите ⋯ на карточке, затем «🔗 Скопировать ссылку» и вставьте ссылку в чат класса. Она работает 7 дней с первого копирования, и на iPhone тоже. Или «📥 Скачать снова» и отправьте файл.'],
-  'The link has expired — what now?': [
-    'Havolaning muddati tugadi — endi nima qilaman?',
-    'Havola “🔗 Havolani nusxalash” birinchi marta bosilgandan boshlab 7 kun ishlaydi; keyin ilova “This link has expired” (havolaning muddati tugadi) deb yozadi. Mashqni yana ulashish uchun ⋯ → “✏️ Qayta ishlatish” bilan yangi nusxa yarating (unga yangi havola beriladi) yoki “📥 Qayta yuklab olish” bilan faylni olib, uni yuboring.',
-    'Срок ссылки истёк — что делать?',
-    'Ссылка работает 7 дней с первого нажатия «🔗 Скопировать ссылку»; потом приложение пишет «This link has expired» (срок ссылки истёк). Чтобы снова поделиться упражнением, нажмите ⋯ → «✏️ Использовать снова» и создайте новую копию (у неё будет новая ссылка) или «📥 Скачать снова» и отправьте файл.'],
-  'What does "⚠️ Made before a fix" mean?': [
-    '“⚠️ Made before a fix” nimani bildiradi?',
-    'Bu fayl xato tuzatilishidan oldin yaratilgan, shuning uchun unda hali oʻsha xato bor. Nima tuzatilganini koʻrish uchun shu qatorni bosing. “✏️ Qayta ishlatish” ni bosing, yangi nusxa yarating va oʻshani ulashing.',
-    'Что значит «⚠️ Made before a fix»?',
-    'Этот файл создан до исправления ошибки, поэтому ошибка в нём осталась. Нажмите на эту строку, чтобы увидеть, что исправлено. Нажмите «✏️ Использовать снова», создайте новую копию и делитесь ею.'],
+  'Can I get the link of an exercise?': [
+    'Mashqning havolasini olsam boʻladimi?',
+    'Ha — kartochkadagi ⋯ ni, keyin “🔗 Havolani nusxalash” ni bosing va havolani sinf chatiga joylang (iPhone’da ham ishlaydi). Havola birinchi marta nusxalangandan boshlab 7 kun ishlaydi; keyin ilova “This link has expired” (havolaning muddati tugadi) deb yozadi. Yana ulashish uchun ⋯ → “✏️ Qayta ishlatish” bilan yangi nusxa yarating (unga yangi havola beriladi) yoki “📥 Qayta yuklab olish” bilan faylni olib, uni yuboring.',
+    'Можно получить ссылку на упражнение?',
+    'Да — нажмите ⋯ на карточке, затем «🔗 Скопировать ссылку» и вставьте ссылку в чат класса (работает и на iPhone). Ссылка работает 7 дней с первого копирования; потом приложение пишет «This link has expired» (срок ссылки истёк). Чтобы поделиться снова, нажмите ⋯ → «✏️ Использовать снова» и создайте новую копию (у неё будет новая ссылка) или «📥 Скачать снова» и отправьте файл.'],
   'How do I take one exercise out of a set?': [
     'Toʻplamdan bitta mashqni qanday olaman?',
     'Uy vazifasi/Dars toʻplamida ⋯ ni, keyin “📤 Bitta mashqni olish” ni bosing. Mashqlaridan birini yuklab oling yoki Mashqlarimga alohida qoʻshing. Toʻplamning oʻzi oʻzgarmaydi.',
@@ -1021,11 +976,6 @@ window.TA_ROBOT_I18N = {
     '“📋 Koʻp qoʻshish” ni bosing. Sinf roʻyxatini joylang (har qatorda bitta oʻquvchi, “Ism, ID” yoki toʻgʻridan-toʻgʻri Excel/Google Sheets’dan nusxalangan) yoki CSV faylni tanlang. IDsi yoʻq oʻquvchilarga keyingi boʻsh raqam beriladi.',
     'Как добавить сразу весь класс?',
     'Нажмите «📋 Добавить списком». Вставьте список класса (по ученику в строке, «Имя, ID» или прямо из Excel/Google Таблиц) или выберите CSV-файл. Ученики без ID получат следующий свободный номер.'],
-  'What are groups?': [
-    'Guruhlar nima?',
-    'Har bir oʻquvchi bitta guruhga tegishli (masalan, ikki xil sinf). Guruhning dars kunlari va vaqtlari bor (“➕ Guruh qoʻshish” yoki guruhdagi ✎ orqali belgilanadi) — ular Bosh sahifadagi “Yaqinlashayotgan darslar” da chiqadi. Mashqlarni guruh uchun tuzish mumkin, shunda Natijalar oʻsha guruhda kim bajarmaganini koʻrsatadi.',
-    'Что такое группы?',
-    'Каждый ученик состоит в одной группе (например, два разных класса). У группы есть дни и время уроков (задаются через «➕ Добавить группу» или ✎ у группы) — они показываются в «Ближайших уроках» на Главной. Упражнения можно делать для группы, и тогда «Результаты» показывают, кто в ней их не сделал.'],
   'Do students need an account?': [
     'Oʻquvchilarga hisob kerakmi?',
     'Yoʻq — mashq yuborish va ball olish uchun ularga faqat ID kerak.',
@@ -1091,11 +1041,6 @@ window.TA_ROBOT_I18N = {
     'Bu natijalar xato tuzatilishidan oldin yaratilgan fayldan kelgan. Mashqlarim boʻlimida “✏️ Qayta ishlatish” bilan yangi nusxa yarating va oʻshani ulashing.',
     'Почему написано, что ученики использовали старую копию?',
     'Эти результаты пришли из файла, созданного до исправления ошибки. Создайте новую копию через «✏️ Использовать снова» в «Моих упражнениях» и делитесь ею.'],
-  'How do points work?': [
-    'Ballar qanday ishlaydi?',
-    'Oʻquvchilar IDsi bilan mashqlarni tugatib ball yigʻadi. Guruhni oching: har bir oʻquvchining ballari ismi va IDsi yonida turadi. Ballar qayerdan kelganini koʻrish uchun 🪙 ballarni bosing.',
-    'Как работают баллы?',
-    'Ученики получают баллы, заканчивая упражнения со своим ID. Откройте группу: баллы каждого ученика — рядом с его именем и ID. Нажмите на 🪙 баллы, чтобы увидеть, откуда они.'],
   'How do I give or take points by hand?': [
     'Ballarni qoʻlda qanday beraman yoki olaman?',
     'Guruhni oching va oʻquvchi ballari yonidagi + yoki − ni bosib, necha ball ekanini yozing. U “Bonus: By Teacher <ismingiz>” boʻlib chiqadi (ismingizni oʻzgartirish uchun yuqori oʻng burchakdagi rasmingizni, keyin ismingizni bosing).',

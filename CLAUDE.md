@@ -15,7 +15,10 @@ when asked ("merge it"). Explain things simply — they are a teacher, not a dev
 to add a question + answer about it to the AI robot** — the floating help robot on every page.
 They want the robot short: **only useful, not-obvious questions** — no easy ones like "How do I
 rename / find / delete an exercise?" or "Can I switch day/night?" (those were removed
-2026-10-03). **When a feature is removed or changed, remove or fix its questions in the same
+2026-10-03). On 2026-10-04 the teacher picked what stays: Dashboard (`main`) — colours/look, the note
+about students who finished, language; My Exercises — the link, one exercise out of a set; Students —
+all but "What are groups?" and "How do points work?"; Create and Statistics as they were. Don't
+add questions back unless the teacher agrees. **When a feature is removed or changed, remove or fix its questions in the same
 change** (questions about things that no longer exist must never stay). Where: `AI_ROBOT_FAQ_BY_TAB`
 (one list per section: `main`, `createpicker`, `builder`, `hwcbuilder`, `dashboard` = Statistics,
 `myexercises`, `students`, `results`, `points`, `settings`, IELTS ones) and `AI_ROBOT_TYPE_FAQ`
