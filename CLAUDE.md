@@ -358,7 +358,8 @@ real students' names or results into the repository (it is public).
   translations, at least 3). `createCanKnockdown` builds on **QUIZ_TEMPLATE with `QUIZ_MODE` "canknock"**
   (items `{word, prompt: translation, options: 3 words from the same list, answer}`). The student file
   (`#slide-cans`, `ck*` functions in the template) deals the words into rounds of 6 cans (3+2+1 on wooden
-  boards under a striped awning); the sign shows the translation; right → a ball knocks the top can down
+  boards under a striped awning; the teacher's three can pictures, mixed, and tennis ball — PNGs in
+  `CANKNOCK_IMAGES_CSS` in exercise-templates.js, added only to Can Knockdown files, ~23 KB); the sign shows the translation; right → a ball knocks the top can down
   (+ the word is read aloud); wrong → the ball misses, the right word shows, and the word comes back later
   in the round; the next round only when every can is down. Only the first try counts (`answers[i]`).
   Teacher's instructions replace the tip on the start screen. Also in Homework/Class sets, "Use these

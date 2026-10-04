@@ -3057,6 +3057,7 @@ function createCanKnockdown() {
   const timerMin = parseFloat((document.getElementById('ck-timer') || { value: '' }).value);
   html = html.split('__TIME_LIMIT_MINUTES__').join(isNaN(timerMin) || timerMin <= 0 ? '0' : String(timerMin));
 
+  html = html.replace('</head>', () => '<style>\n' + CANKNOCK_IMAGES_CSS + '\n</style>\n</head>');   // the cans and the ball
   // the teacher's instructions replace the tip under Start on the student's first screen
   const instructions = document.getElementById('ck-instructions').value.trim();
   if (instructions) {
