@@ -1331,7 +1331,12 @@ const TA_FILE_FIXES = [
   { id: 'sentencesend', at: '2026-10-02T17:14:00Z', types: /^sentences$|sentence writing/i, minor: true,
     what: 'when a student finishes, the start screen can come back instead of the certificate, with one extra warning' },
   { id: 'setsave', at: '2026-10-01T17:30:00Z', types: /^(homework|class)$/i,
-    what: 'if a student\'s answers fail to upload, the set still counts the exercise as done — you see "Completed" but no answers' }
+    what: 'if a student\'s answers fail to upload, the set still counts the exercise as done — you see "Completed" but no answers' },
+  // Pressing Start read every points record (~430) and a set read every student's progress: the free daily read limit ran out (2026-10-05)
+  { id: 'reads', at: '2026-10-05T07:56:00Z', types: /^(homework|class)$/i,
+    what: 'each student who opens it uses hundreds of database reads (every round reads all the points records), which can use up the free daily limit — then results stop showing until the next day' },
+  { id: 'readsone', at: '2026-10-05T07:56:00Z', types: /./, minor: true,
+    what: 'pressing Start reads all the points records (hundreds of database reads each time) — recreate the ones students still use' }
 ];
 const taScriptCheckCache = new Map();
 // true when one of the file's own scripts can't even be read (so nothing on the page works)

@@ -308,3 +308,29 @@ test('Homework set: after a dictation, students stay on their mistakes until the
   await expect(student.locator('#hwcStageCount')).toHaveText('Exercise 2 of 2', { timeout: 8000 });
   await expect(student.locator('#hwcReviewBar')).not.toBeVisible();
 });
+
+test('pressing Start checks only this student\'s points (not the whole points board) — the daily read limit', async ({ page, context }, info) => {
+  // 400 points records on the board from other students and exercises (the real board had ~430)
+  const docs = [];
+  for (let i = 0; i < 400; i++) docs.push({ __id: 'pt' + i, v: 1, code: '654321', type: 'POINTS:Spelling', title: 'Old␟u' + i + '␟' + (20000 + i), name: 'S' + i, score: 10, date: new Date().toISOString(), submittedAt: new Date().toISOString() });
+  docs.push({ __id: 'off1', v: 1, code: '654321', type: 'POINTS:DISABLE', title: 'Off␟999999', name: '', score: 0, date: new Date().toISOString() });
+  await prepare(context, { docs });
+  const file = info.outputPath('spelling.html');
+  fs.writeFileSync(file, template('QUIZ_TEMPLATE', { TYPE_LABEL: 'Spelling', QUIZ_MODE: 'spelling', ITEM_COUNT: '1', HAS_MATCHING_ROUND: 'false', POINTS_AWARD: '10',
+    ITEMS_JSON: JSON.stringify([{ word: 'apple', prompt: 'apple', options: ['apple', 'aple'], answer: 0 }]) }));
+  await page.goto('file://' + file);
+  await page.waitForFunction(() => typeof window.taCheckAward === 'function');
+  const r = await page.evaluate(async () => {
+    const before = window.__reads;
+    const fresh = await taCheckAward(BOARD_CODE, EXERCISE_UID, '10001', EXERCISE_CODE);
+    const used = window.__reads - before;
+    // the award now carries the exercise and the student, so the next Start finds it
+    taStudentId = '10001'; studentName = 'Alice Test';
+    await taMaybeAwardPoints();
+    const again = await taCheckAward(BOARD_CODE, EXERCISE_UID, '10001', EXERCISE_CODE);
+    const other = await taCheckAward(BOARD_CODE, EXERCISE_UID, '10002', EXERCISE_CODE);
+    const off = await taCheckAward(BOARD_CODE, EXERCISE_UID, '10002', '999999');
+    return { fresh, used, again, other, off };
+  });
+  expect(r).toEqual({ fresh: 'none', used: 2, again: 'awarded', other: 'none', off: 'disabled' });
+});

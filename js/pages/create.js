@@ -703,7 +703,8 @@ async function hwcLoadProgress() {
   for (let tries = 0; tries < 40 && !window.__hwcFirebaseReady; tries++) await new Promise(r => setTimeout(r, 50));
   if (!window.__hwcFirebaseReady) return [];
   try {
-    const q = window.__hwcQuery(window.__hwcCollection(window.__hwcDb, "results"), window.__hwcWhere("code", "==", HWC_CODE));
+    // only this student's progress (not every student's, which cost a read per record each time a set opened)
+    const q = window.__hwcQuery(window.__hwcCollection(window.__hwcDb, "results"), window.__hwcWhere("code", "==", HWC_CODE), window.__hwcWhere("studentId", "==", hwcStudentId));
     const snap = await window.__hwcGetDocs(q);
     return snap.docs.map(d => d.data()).filter(v => v && v.type === "HWC_PROGRESS" && v.studentId === hwcStudentId);
   } catch (e) { return []; }

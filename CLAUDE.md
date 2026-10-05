@@ -66,6 +66,14 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
    and only new ones are read (by server time `submittedAt`), plus a full re-read once a week
    per device and once per new exercise code. Still possible on a busy day with many teachers,
    new devices, or cleared browsers (each starts with one full read).
+   **2026-10-05: the limit ran out (55 K reads, only 224 writes).** Cause: exercise files, on every
+   Start, read the whole points board (`taCheckAward`: `code == board`, ~430 records) — and a
+   Homework/Class set does that for every round, and also read every student's progress
+   (`hwcLoadProgress`). Fixed in the templates: awards now carry `uid` + `studentId`, the check
+   reads `code+uid+studentId` and `code+type==POINTS:DISABLE` (2 reads); the set reads only its
+   student's progress. **Old files still do the full read** (`TA_FILE_FIXES` `reads`/`readsone`)
+   — the sets students still use must be recreated. Database then: 2 202 records (29 synced,
+   32 link, 21 account, 432 points). Never read a whole code/board from an exercise file.
 2. **Monthly download limit (10 GiB)** from exercise links — heavy for audio/picture
    exercises (dictation audio is now shrunk, ~0.4 MB per minute of audio; sets with many
    pictures are still heavy).
