@@ -172,7 +172,8 @@ real students' names or results into the repository (it is public).
   your teacher" + the certificate. A result without a time gets the time the set measured
   (`timeFromSet`), so no 00:00. A **Dictation** round (label "… — Dictation" or a result of type
   Dictation) isn't covered when it ends: its page with the mistakes stays, saving in the
-  background, with `#hwcReviewBar` "Next exercise →" (2026-10-02).
+  background, with `#hwcReviewBar` "Next exercise →" (2026-10-02); since 2026-10-05 its button waits
+  30 s with a countdown (`HWC_LOOK_SECONDS`, `hwcReviewSince`) so students look at their mistakes first.
 - **A round counts as done when its answers are there** (2026-10-05): a Dictation's progress record used to be written
   only when the student pressed the button under the mistakes — 2 students closed the page first, so the teacher saw 5/6
   though the dictation answers had arrived. Now the set writes it as soon as the answers are saved (`hwcProgressSent`, no

@@ -267,7 +267,7 @@ test('finishing an exercise in full screen keeps its time and its certificate (F
 });
 
 // A dictation inside a set: its page (with the mistakes) stays until "Next exercise".
-test('Homework set: after a dictation, students stay on their mistakes until they press Next exercise', async ({ page, context }, info) => {
+test('Homework set: after a dictation, students stay on their mistakes (at least 30 s) until they press Next exercise', async ({ page, context }, info) => {
   test.setTimeout(60000);
   await prepare(context);
   await page.goto('/create.html');
@@ -306,6 +306,14 @@ test('Homework set: after a dictation, students stay on their mistakes until the
   await expect.poll(() => student.evaluate(() => window.__fakeDocs.filter(w => w.type === 'HWC_PROGRESS' && w.roundIndex === 0 && w.studentId === '10001').length)).toBe(1);
   // it sent no time of its own: the time the set measured is saved instead (never 00:00)
   expect(await student.evaluate(() => { const d = window.__fakeDocs.find(x => x.type === 'Dictation' && x.code === '123456'); return d.timeSeconds > 0 && d.timeFromSet === true; })).toBe(true);
+  // the button waits 30 seconds (a countdown on it), so they look at their mistakes first
+  await expect(student.locator('#hwcReviewBtn')).toBeDisabled();
+  await expect(student.locator('#hwcReviewBtn')).toHaveText(/Next exercise → \(\d+ s\)/);
+  await student.evaluate(() => { hwcReviewNext(); });   // pressing early does nothing
+  await expect(student.locator('#hwcReviewBar')).toBeVisible();
+  await student.evaluate(() => { hwcReviewSince = Date.now() - 31000; });   // 30 seconds later
+  await expect(student.locator('#hwcReviewBtn')).toBeEnabled({ timeout: 3000 });
+  await expect(student.locator('#hwcReviewBtn')).toHaveText('Next exercise →');
   await student.click('#hwcReviewBtn');
   await expect(student.locator('#hwcStageCount')).toHaveText('Exercise 2 of 2', { timeout: 8000 });
   await expect(student.locator('#hwcReviewBar')).not.toBeVisible();

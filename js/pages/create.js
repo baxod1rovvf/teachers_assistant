@@ -597,6 +597,7 @@ html,body{margin:0;padding:0;height:100%;background:#101116;font-family:'Inter',
 #hwcReviewBar{position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;padding:12px 16px;background:rgba(16,17,22,.94);color:#fff;font-weight:700;box-shadow:0 -8px 24px rgba(0,0,0,.35);}
 #hwcReviewBar.show{display:flex;}
 #hwcReviewBar .ta-btn{padding:12px 18px;font-size:.98rem;}
+#hwcReviewBar .ta-btn:disabled{opacity:.55;cursor:default;}
 .ta-screen{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;background:#101116;color:#fff;text-align:center;padding:24px;overflow:hidden;}
 .ta-screen.show{display:flex;}
 .ta-screen .ta-blob{position:absolute;border-radius:50%;opacity:.75;pointer-events:none;}
@@ -768,6 +769,7 @@ function hwcLoad(i) {
   hwcRoundStartTs = Date.now();
   hwcGotComplete = false; hwcResultState = null; hwcPendingResult = null; hwcPressed = false;
   hwcReview = /\u2014 Dictation$/.test(HWC_ROUNDS[i].label || ""); // a dictation's mistakes stay on screen
+  hwcReviewSince = 0;
   document.getElementById("hwcReviewBar").classList.remove("show");
   clearTimeout(hwcWaitTimer);
 }
@@ -948,17 +950,27 @@ function hwcRoundDone() {
   document.getElementById("hwcNextSub").textContent = "Exercise " + (next + 1) + " of " + HWC_ROUNDS.length + " \u2014 press start when you're ready.";
   hwcShow("hwcNextScreen");
 }
-// the dictation's own page stays, with this bar under it
+// the dictation's own page stays, with this bar under it; its button waits HWC_LOOK_SECONDS,
+// so students look at their mistakes before moving on (a countdown shows on it)
+const HWC_LOOK_SECONDS = 30;
+let hwcReviewSince = 0, hwcReviewTimer = 0;
 function hwcReviewBarState() {
   const bar = document.getElementById("hwcReviewBar"), btn = document.getElementById("hwcReviewBtn"), msg = document.getElementById("hwcReviewMsg");
   bar.classList.add("show");
+  if (!hwcReviewSince) hwcReviewSince = Date.now();
+  clearTimeout(hwcReviewTimer);
   const failed = hwcResultState === "failed";
   const lastOne = hwcCompleted.filter(x => !x).length <= 1;
-  btn.textContent = failed ? "Try again" : (lastOne ? "\ud83d\udce4 Send my answers to my teacher" : "Next exercise \u2192");
+  const wait = failed ? 0 : Math.ceil(HWC_LOOK_SECONDS - (Date.now() - hwcReviewSince) / 1000);
+  const label = failed ? "Try again" : (lastOne ? "\ud83d\udce4 Send my answers to my teacher" : "Next exercise \u2192");
+  btn.disabled = wait > 0;
+  btn.textContent = wait > 0 ? label + " (" + wait + " s)" : label;
   msg.textContent = failed ? "Your answers haven't reached your teacher yet \u2014 check the internet." : "Look at your mistakes \u2014 take your time.";
+  if (wait > 0) hwcReviewTimer = setTimeout(function () { if (bar.classList.contains("show")) hwcReviewBarState(); }, 1000);
 }
 function hwcReviewNext() {
   if (hwcResultState === "failed") { hwcSaveRoundResult(); return; }
+  if (Date.now() - hwcReviewSince < HWC_LOOK_SECONDS * 1000) return; // still looking at the mistakes
   hwcPressed = true;
   document.getElementById("hwcReviewBar").classList.remove("show");
   if (hwcResultState === "ok" || !hwcPendingResult) hwcRoundDone();
