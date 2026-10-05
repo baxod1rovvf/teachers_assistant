@@ -248,6 +248,10 @@ real students' names or results into the repository (it is public).
   `title` = `uid␟part␟total`, `score` = characters in that part, `date` = when published.
   **The rules allow creating and deleting records but not changing them** (a PATCH/`setDoc`
   on an existing record is refused, 403) — so re-publishing deletes the old records first.
+- **Exception (2026-10-05):** an exercise whose file has "Open in Chrome" (`taOpenChrome` — Pronunciation, or a set
+  with a Pronunciation round) goes online as soon as it's made (`taPutOnlineNow` in `pushRecentExercise`, sets `linkAt`),
+  or the button led to "This exercise isn't online". In a set, a round's button opens the set's link (`buildAndDownloadHwc`
+  rewrites the round's `play.html?x=`). Older such files: press ⋯ → Copy link once and their button works.
 - Since 2026-10-03 nothing goes online by itself (before, `pushRecentExercise` published every
   new exercise 5 s after it was made). The first ⋯ → 🔗 Copy link (`copyRecentExerciseLink` in
   `js/pages/my-exercises.js`) publishes it and sets `linkAt` on the My Exercises item; later

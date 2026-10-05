@@ -1150,8 +1150,21 @@ function pushRecentExercise(entry) {
   });
   saveRecentExercises(list.slice(0, 200));
   if (entry.html) cacheExerciseHtml(entry.uid, entry.html);
+  // An exercise with a microphone (Pronunciation, or a set with one) offers "Open in Chrome" with its link,
+  // so it goes online right away — its 7 days start now, and Copy link gives the same link.
+  if (entry.html && entry.html.indexOf('taOpenChrome') !== -1) taPutOnlineNow(entry.uid, entry.html);
   if (window.startPlainCompletionsSync) { clearTimeout(window.__taResyncTimer); window.__taResyncTimer = setTimeout(window.startPlainCompletionsSync, 3000); }
   if (window.renderRecentExercises) window.renderRecentExercises();
+}
+
+async function taPutOnlineNow(uid, html) {
+  if (!(await taPublishPlayable(uid, html))) {
+    showToast('⚠️ Couldn\'t put this exercise online, so its "Open in Chrome" button won\'t work yet. Press ⋯ → Copy link in My Exercises when you\'re online.');
+    return;
+  }
+  const list = getRecentExercises();
+  const item = list.find(e => e.uid === uid);
+  if (item && !item.linkAt) { item.linkAt = item.playAt; saveRecentExercises(list); }
 }
 
 /* Used when an exercise is moved into a Homework/Class set \u2014 it should

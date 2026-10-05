@@ -114,3 +114,21 @@ test('when Firebase refuses a request for a reached limit, the teacher is warned
   await expect(page.locator('#taDbLimitWarn')).toBeVisible();
   await expect(page.locator('#taDbLimitWarn')).toContainText('reached a limit');
 });
+
+test('a Pronunciation exercise goes online as soon as it is made, so its "Open in Chrome" button works', async ({ page, context }) => {
+  await prepare(context);
+  await page.goto('/create.html');
+  await page.waitForTimeout(1200);
+  await hideNotices(page);
+  await page.evaluate(PRETEND_HTTPS);
+  await page.evaluate(() => switchTo('pronunciation'));
+  await page.fill('#pr-title', 'Mic test');
+  for (const w of ['apple', 'banana']) await page.evaluate(w => addPronRowFilled(w), w);
+  await Promise.all([page.waitForEvent('download'), page.click('#panel-pronunciation .create-btn')]);
+  await expect.poll(() => page.evaluate(() => window.__writes.filter(w => w.type === 'TA_SYNC:PLAY').length), { timeout: 15000 }).toBeGreaterThan(0);
+  const item = await page.evaluate(() => getRecentExercises().find(e => e.title === 'Mic test'));
+  expect(item.typeLabel).toBe('Pronunciation');
+  await expect.poll(() => page.evaluate(() => (getRecentExercises().find(e => e.title === 'Mic test') || {}).linkAt || ''), { timeout: 5000 }).not.toBe('');
+  // the online copy is this exercise's own link
+  expect(await page.evaluate(uid => window.__writes.some(w => w.type === 'TA_SYNC:PLAY' && String(w.title).indexOf(uid) === 0), item.uid)).toBe(true);
+});
