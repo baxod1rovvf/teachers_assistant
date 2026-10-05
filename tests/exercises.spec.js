@@ -302,11 +302,15 @@ test('Homework set: after a dictation, students stay on their mistakes until the
   await expect(student.locator('#hwcReviewBar')).toBeVisible();
   await expect(student.locator('#hwcNextScreen')).not.toHaveClass(/show/);
   expect(await student.evaluate(() => window.__writes.filter(w => w.type === 'Dictation').length)).toBe(1); // saved meanwhile
+  // … and it already counts as done for the teacher, even if the student closes the page now
+  await expect.poll(() => student.evaluate(() => window.__fakeDocs.filter(w => w.type === 'HWC_PROGRESS' && w.roundIndex === 0 && w.studentId === '10001').length)).toBe(1);
   // it sent no time of its own: the time the set measured is saved instead (never 00:00)
   expect(await student.evaluate(() => { const d = window.__fakeDocs.find(x => x.type === 'Dictation' && x.code === '123456'); return d.timeSeconds > 0 && d.timeFromSet === true; })).toBe(true);
   await student.click('#hwcReviewBtn');
   await expect(student.locator('#hwcStageCount')).toHaveText('Exercise 2 of 2', { timeout: 8000 });
   await expect(student.locator('#hwcReviewBar')).not.toBeVisible();
+  // pressing the button doesn't write it twice
+  expect(await student.evaluate(() => window.__fakeDocs.filter(w => w.type === 'HWC_PROGRESS' && w.roundIndex === 0 && w.studentId === '10001').length)).toBe(1);
 });
 
 test('pressing Start checks only this student\'s points (not the whole points board) — the daily read limit', async ({ page, context }, info) => {

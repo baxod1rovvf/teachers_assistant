@@ -173,6 +173,12 @@ real students' names or results into the repository (it is public).
   (`timeFromSet`), so no 00:00. A **Dictation** round (label "… — Dictation" or a result of type
   Dictation) isn't covered when it ends: its page with the mistakes stays, saving in the
   background, with `#hwcReviewBar` "Next exercise →" (2026-10-02).
+- **A round counts as done when its answers are there** (2026-10-05): a Dictation's progress record used to be written
+  only when the student pressed the button under the mistakes — 2 students closed the page first, so the teacher saw 5/6
+  though the dictation answers had arrived. Now the set writes it as soon as the answers are saved (`hwcProgressSent`, no
+  duplicate on the press), and the teacher's view (`rsDeriveHwc` in firebase.js) marks a round done when the student's
+  answers for its code exist even without a progress record (codes from other progress records or the set's `mergedItems`,
+  which are also loaded). `tests/results.spec.js` ("a set: a Dictation whose answers…").
 
 ## Results kept on the device (keep this in mind when changing how results load)
 

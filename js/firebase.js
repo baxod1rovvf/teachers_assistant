@@ -477,6 +477,26 @@ function rsDeriveHwc() {
     }
     if (!entry.lastActive || new Date(r.date) > new Date(entry.lastActive)) entry.lastActive = r.date;
   });
+  // A round whose answers are there counts as done even without its progress record: a
+  // Dictation's record was only written when the student pressed the button under their
+  // mistakes, and some closed the page first (2026-10-05).
+  const codeAt = [];
+  records.forEach(r => { if (typeof r.roundIndex === 'number' && r.roundCode) codeAt[r.roundIndex] = r.roundCode; });
+  const setItem = (window.getRecentExercises ? window.getRecentExercises() : []).find(e => e && e.code === hwcCode);
+  ((setItem && setItem.mergedItems) || []).forEach((m, i) => { if (!codeAt[i] && m && m.code) codeAt[i] = m.code; });
+  const norm = x => String(x || '').trim().toLowerCase();
+  Object.values(byStudent).forEach(entry => {
+    for (let i = 0; i < entry.totalCount; i++) {
+      if (entry.completedFlags[i] || !codeAt[i]) continue;
+      const answer = rsByCode(codeAt[i]).find(v => v && typeof v.type === 'string' && v.type !== 'HWC_PROGRESS' && v.type.indexOf('POINTS:') !== 0 &&
+        ((entry.studentId && norm(v.studentId) === norm(entry.studentId)) || (!v.studentId && norm(v.name) === norm(entry.studentName))));
+      if (!answer) continue;
+      entry.completedFlags[i] = true;
+      entry.roundCodes[i] = codeAt[i];
+      entry.roundTimeSeconds[i] = typeof answer.timeSeconds === 'number' ? answer.timeSeconds : 0;
+      if (answer.date && (!entry.lastActive || new Date(answer.date) > new Date(entry.lastActive))) entry.lastActive = answer.date;
+    }
+  });
   window.__hwcProgressDocs = Object.values(byStudent).map(e => ({
     studentId: e.studentId, studentName: e.studentName,
     totalCount: e.totalCount, completedCount: e.completedFlags.filter(Boolean).length,
@@ -503,7 +523,9 @@ window.taListenHwcProgress = function (code) {
     }
     rsDeriveHwc();
     // the set's exercises too (answers, Checked / Not checked)
-    rsEnsureCodes(rsByCode(code).filter(v => v && v.type === 'HWC_PROGRESS' && v.roundCode).map(v => v.roundCode)).then(rsChanged);
+    const setItem = (window.getRecentExercises ? window.getRecentExercises() : []).find(e => e && e.code === code);
+    rsEnsureCodes(rsByCode(code).filter(v => v && v.type === 'HWC_PROGRESS' && v.roundCode).map(v => v.roundCode)
+      .concat(((setItem && setItem.mergedItems) || []).map(m => m && m.code).filter(Boolean))).then(rsChanged);
   });
 };
 

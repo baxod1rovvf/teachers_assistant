@@ -721,10 +721,13 @@ async function hwcWriteProgress(idx, timeSeconds) {
     date: new Date().toISOString(), submittedAt: window.__hwcServerTimestamp()
   });
 }
+const hwcProgressSent = {}; // rounds whose progress record was written on this visit
 async function hwcSaveProgress() {
-  if (!window.__hwcFirebaseReady) return;
-  try { await hwcWriteProgress(hwcIdx, hwcRoundSeconds()); }
-  catch (e) { /* ignore \u2014 the check at the end ("Send my answers") writes it again */ }
+  if (!window.__hwcFirebaseReady || hwcProgressSent[hwcIdx]) return;
+  const idx = hwcIdx;
+  hwcProgressSent[idx] = true;
+  try { await hwcWriteProgress(idx, hwcRoundSeconds()); }
+  catch (e) { hwcProgressSent[idx] = false; /* the check at the end ("Send my answers") writes it again */ }
 }
 function hwcFindRosterName(id) {
   for (let i = 0; i < HWC_ROSTER.length; i++) {
@@ -918,6 +921,9 @@ async function hwcSaveRoundResult() {
   const ok = await hwcSaveJob(job);
   if (job !== hwcPendingResult) return; // a newer round took over
   hwcResultState = ok ? "ok" : "failed";
+  // a Dictation's answers are saved while the student looks at the mistakes: it counts as done
+  // now, even if they close the page before pressing the button under it
+  if (ok && hwcReview) hwcSaveProgress();
   hwcAfterSave();
 }
 function hwcAfterSave() {

@@ -217,3 +217,15 @@ test('Top 5: every exercise given to the group counts — one not done counts as
     { name: 'Cora Test', pct: 20, did: 1, given: 4 }
   ]);
 });
+
+test('a set: a Dictation whose answers are there counts as done, even without its progress record (closed before pressing the button)', async ({ page, context }) => {
+  // Eldor's dictation answers arrived, but not the record that says the round is done
+  const docs = data.results(Date.now()).filter(d => !(d.type === 'HWC_PROGRESS' && d.studentId === '20002' && d.roundIndex === 2));
+  await prepare(context, { docs });
+  await page.goto('/results.html');
+  await page.waitForTimeout(1500);
+  await hideNotices(page);
+  await page.evaluate(() => showExerciseResults('uset'));
+  const eldor = page.locator('.hwc-student-row', { hasText: 'Eldor Test' });
+  await expect(eldor).toContainText('3/3');
+});
