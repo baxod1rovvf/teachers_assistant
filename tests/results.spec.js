@@ -191,3 +191,29 @@ test('a Flashcard result with 0 seconds inside a set shows the time the set meas
   await page.evaluate(() => { document.getElementById('res-code-input').value = '700099'; onResultsCodeInput(); });
   await expect(page.locator('.results-table tbody tr', { hasText: 'Alice Test' })).toContainText('16:04', { timeout: 8000 });
 });
+
+test('Top 5: every exercise given to the group counts — one not done counts as 0%, so 3 good + 1 bad beats 1 good', async ({ page, context }) => {
+  const ex = (n, groupId) => ({ uid: 'utop' + n, title: 'Top ' + n, code: 'T0000' + n, typeLabel: 'Spelling', groupId, date: new Date().toISOString() });
+  await prepare(context, { storage: { ta_recent_exercises: JSON.stringify([1, 2, 3, 4].map(n => ex(n, 'g1'))) } });
+  await page.goto('/index.html');
+  await page.waitForTimeout(2000);
+  const top = await page.evaluate(() => {
+    let t = Date.now();
+    const r = (code, id, name, score) => ({ code, type: 'Spelling', title: 'x', name, studentId: id, score, date: new Date(t -= 60000).toISOString() });
+    const saved = window.__allResults;
+    window.__allResults = [
+      r('T00001', '10001', 'Alice Test', 100),                                   // Alice: 1 of 4, perfect
+      r('T00001', '10002', 'Bobur Test', 90), r('T00002', '10002', 'Bobur Test', 90),
+      r('T00003', '10002', 'Bobur Test', 90), r('T00004', '10002', 'Bobur Test', 30),   // Bobur: all 4, one bad
+      r('T00001', '10003', 'Cora Test', 40), r('T00001', '10003', 'Cora Test', 80)       // Cora: tried one twice — the best try counts
+    ];
+    const out = getTopActiveStudents(5, 'g1').map(s => ({ name: s.name, pct: Math.round(s.avg), did: s.did, given: s.given }));
+    window.__allResults = saved;
+    return out;
+  });
+  expect(top).toEqual([
+    { name: 'Bobur Test', pct: 75, did: 4, given: 4 },
+    { name: 'Alice Test', pct: 25, did: 1, given: 4 },
+    { name: 'Cora Test', pct: 20, did: 1, given: 4 }
+  ]);
+});

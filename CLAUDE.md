@@ -356,6 +356,12 @@ real students' names or results into the repository (it is public).
   Beginner … Advanced, IELTS; an old typed level like "A2" stays as a choice).
   New points only update the numbers (`renderPointsBoard` → `[data-pts-for]`/`[data-group-pts]`),
   so the add-student form isn't wiped. `tests/students-points.spec.js`.
+- **Top 5 Active Students** (Dashboard, `getTopActiveStudents` in `js/pages/main.js`, 2026-10-05): per group, the average
+  over the exercises given to that group (`taAssignedCodesByGroup`: My Exercises items with that `groupId`; a set's rounds
+  one by one) plus any others the student did — best try per exercise, **not done = 0%** (the teacher asked: one good
+  exercise mustn't beat three good + one bad). Done-but-unscored (unrated Sentences) is left out; IELTS and code-less games
+  (Jungle, Bamboozle) don't count; students who did nothing aren't listed. Shows "N of M exercises done".
+  `tests/results.spec.js` ("Top 5: …").
 - The lesson plan opens from the group's name on an Upcoming Lesson (Dashboard). Lessons in the next
   24 hours stand out there (`.lesson-row.lesson-soon`, tinted in the group's colour `--lesson-c`).
 - **Statistics** (`renderDashboard` in `js/pages/statistics.js`, 2026-10-03): one card per exercise

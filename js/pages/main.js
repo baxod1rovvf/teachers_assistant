@@ -28,9 +28,14 @@ window.renderMainGreeting = renderMainGreeting;
      compared only with the others on the same exercise (more is better).
    - Sentences: the teacher's 1–5 star rating (not counted until rated).
    - IELTS tests are separate and never count.
-   A student's rating is the average of their scores, pulled a little toward
-   the middle when they have only a few results, so one lucky exercise
-   doesn't outrank steady good work. */
+   A student's rating is the average over the exercises given to their group
+   (an exercise's group, chosen when it was made or in My Exercises): one
+   score per exercise (their best try), and an exercise they haven't done
+   counts as 0 — so doing one exercise well doesn't beat doing four.
+   Exercises they did that weren't given to their group count too.
+   A Homework/Class set counts each of its rounds. Exercises without results
+   of their own (Jungle, Bamboozle) and IELTS don't count; a Sentences answer
+   that isn't rated yet is left out until it is. */
 function getAllScoredResultsCombined() {
   const combined = getStoredResults().concat(window.__liveResults || [], window.__allResults || []);
   const seen = new Set();
@@ -93,26 +98,55 @@ function performanceScores(results) {
   return out;
 }
 
+// The exercise codes given to each group: { groupId: Set of codes } (a set's rounds one by one).
+function taAssignedCodesByGroup() {
+  const out = {};
+  (getRecentExercises() || []).forEach(e => {
+    if (!e || !e.groupId) return;
+    const codes = e.mergedItems && e.mergedItems.length
+      ? e.mergedItems.filter(m => m && !/IELTS/i.test(m.typeLabel || m.title || '')).map(m => m.code)
+      : (/IELTS/i.test(e.typeLabel || '') ? [] : [e.code]);
+    codes.forEach(c => { if (c) (out[e.groupId] = out[e.groupId] || new Set()).add(c); });
+  });
+  return out;
+}
+
 // groupId: only that group's students (Top 5 of Target, of Apex…); left out: everyone.
 function getTopActiveStudents(limit, groupId) {
-  const byId = {};
   const rosterIdx = taRosterIndex();
-  // compare everyone who did an exercise, but only rank students from the Students list
-  performanceScores(getAllScoredResultsCombined()).forEach(({ r, score }) => {
+  const results = getAllScoredResultsCombined();
+  const keyOf = st => String(st.id).trim().toLowerCase();
+  const students = {};   // key -> { st, best: {code: score}, done: Set of codes }
+  const studentFor = st => students[keyOf(st)] || (students[keyOf(st)] = { st: st, best: {}, done: new Set() });
+  const inGroup = st => !!st && (groupId === undefined || st.group === groupId);
+  getPointsRoster().forEach(st => { if (inGroup(st)) studentFor(st); });
+  // every exercise a student did (even one without a score yet, like an unrated Sentences)
+  results.forEach(r => {
+    if (!r || !r.code || /^IELTS/i.test(String(r.type || ''))) return;
     const st = rosterStudentForResult(r, rosterIdx);
-    if (!st) return;
-    if (groupId !== undefined && st.group !== groupId) return;
-    const key = String(st.id).trim().toLowerCase();
-    if (!byId[key]) byId[key] = { name: st.name, total: 0, count: 0 };
-    byId[key].total += score;
-    byId[key].count += 1;
+    if (inGroup(st)) studentFor(st).done.add(r.code);
   });
-  const PRIOR = 60, WEIGHT = 2; // a few results count a little less than many
-  const arr = Object.keys(byId).map(k => {
-    const s = byId[k];
-    return { name: s.name, avg: (s.total + PRIOR * WEIGHT) / (s.count + WEIGHT), plain: s.total / s.count, count: s.count };
+  // their best score in each
+  performanceScores(results).forEach(({ r, score }) => {
+    const st = rosterStudentForResult(r, rosterIdx);
+    if (!inGroup(st) || !r.code) return;
+    const s = studentFor(st);
+    if (!(r.code in s.best) || score > s.best[r.code]) s.best[r.code] = score;
   });
-  arr.sort((a, b) => (b.avg - a.avg) || (b.count - a.count));
+  const assigned = taAssignedCodesByGroup();
+  const arr = [];
+  Object.keys(students).forEach(k => {
+    const s = students[k];
+    const codes = new Set([...(assigned[s.st.group] || []), ...Object.keys(s.best)]);
+    let total = 0, count = 0, did = 0;
+    codes.forEach(c => {
+      if (c in s.best) { total += s.best[c]; count++; did++; }
+      else if (!s.done.has(c)) count++;          // not done: counts as 0
+    });
+    if (!did) return;   // "active": did at least one
+    arr.push({ name: s.st.name, avg: total / count, did: did, given: count });
+  });
+  arr.sort((a, b) => (b.avg - a.avg) || (b.did - a.did));
   return arr.slice(0, limit);
 }
 const RANK_ICONS = ['images/icons/rank/rank-1.png', 'images/icons/rank/rank-2.png', 'images/icons/rank/rank-3.png'];
@@ -128,8 +162,8 @@ function topStudentRowsHtml(top) {
     return '<div class="top-student-row">' +
       '<span class="top-student-rank">' + rankIcon + '</span>' +
       '<span class="res-avatar" style="background:' + avatarColor + ';">' + escapeForHtml(initials) + '</span>' +
-      '<div class="top-student-name"><span translate="no">' + escapeForHtml(s.name) + '</span><span class="top-student-count">' + s.count + ' result' + (s.count === 1 ? '' : 's') + '</span></div>' +
-      '<div class="top-student-score" style="color:' + scoreColor + ';" title="Average of how well they did in each exercise">' + pct + '%</div>' +
+      '<div class="top-student-name"><span translate="no">' + escapeForHtml(s.name) + '</span><span class="top-student-count">' + s.did + ' of ' + s.given + ' exercise' + (s.given === 1 ? '' : 's') + ' done</span></div>' +
+      '<div class="top-student-score" style="color:' + scoreColor + ';" title="Average over the exercises given to their group — an exercise not done counts as 0%">' + pct + '%</div>' +
     '</div>';
   }).join('');
 }
