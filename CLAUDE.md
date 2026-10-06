@@ -416,13 +416,17 @@ real students' names or results into the repository (it is public).
   choice; it keeps Pass score, no "Tries per word"). Same word + pronunciation + icon rows (`makePronRow(rkRows)`, 🔎 look up);
   Pass score, Accent, Strictness. `createRocketGame` builds `ROCKET_GAME_TEMPLATE` and adds `ROCKETGAME_IMAGES_CSS` (the teacher's
   rocket, Earth, Jupiter (yellow), Mars (red), stars and laser pictures, webp, ~36 KB — only in these files). The teacher's design
-  (same day): the whole screen is the game — no box in the middle; a still background (stars twinkle; Jupiter, the Earth and Mars stay put at
-  the sides, in proportion Jupiter > Earth > Mars — the Earth is **not** under the rocket, the teacher asked); the rocket flies **bottom → top** (`rocketTo('home'|'above'|'below')`); for each word a laser on the
+  (same day): the whole screen is the game — no box in the middle; the stars stream down while playing (`.sky`, two copies for a seamless loop, Web
+  Animations `skyAnim` — `skySpeed(1)` cruising, 9 while flying through a gap, 0 when not playing) but Jupiter, the Earth and
+  Mars stay put at the sides, in proportion Jupiter > Earth > Mars — the Earth is **not** under the rocket, the teacher asked); the rocket flies **bottom → top** (`rocketTo('home'|'above'|'below')`); for each word a laser on the
   left and one on the right (`#laserRow`, right one mirrored) with a red sparkling beam between them (`#beam`) and the word above
   it — said right (≥ pass score) → the beam switches off, the rocket flies out of the top and the next one rises from the bottom.
   **3 hearts** (`HEARTS`): a wrong try (not silence) costs one and the laser stays; none left → "💔 Out of hearts", result sent
-  (`heartsLeft`). **The microphone is tapped once** (`micPress` → `listenLoop` keeps listening for every word; results while no
-  laser is on, or 1.3 s after a wrong try, are ignored). Results have `type: 'Rocket Game'`. It has "Open in Chrome", so it goes
+  (`heartsLeft`). **Press and hold 🎤 while speaking** (teacher, 2026-10-06; the space bar works too): the microphone is
+  off otherwise — after the first screen gets the permission it's let go (`rkMicRest`); `micDown` starts the engine and collects
+  what's heard (`rkArm`), `micUp` stops it and `holdDone` marks it 0.45 s later (1.5 s if nothing arrived yet — the last words
+  come just after letting go); pressing again first checks the waiting try. No pressing while no laser is on, or 1.3 s after a
+  wrong try. Results have `type: 'Rocket Game'`. It has "Open in Chrome", so it goes
   online as soon as it's made (like Pronunciation). "Use again" on an old Pronunciation file with `pr-design: 'game'` opens the
   Rocket Game builder (`rocketFromPronunciation` / `builderFormNow` in my-exercises.js, set rounds too). `tests/rocket.spec.js`.
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS

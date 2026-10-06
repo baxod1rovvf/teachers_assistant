@@ -11,7 +11,7 @@ const FAKE_SPEECH = `(() => {
   window.SpeechRecognition = window.webkitSpeechRecognition = Rec;
 })();`;
 
-test('Rocket Game: its own exercise (not a Pronunciation design), lasers left and right with a red beam, 3 hearts, the rocket flies up, the microphone is pressed once', async ({ page, context }, info) => {
+test('Rocket Game: its own exercise (not a Pronunciation design), lasers left and right with a red beam, 3 hearts, the rocket flies up past a moving sky, the microphone is held while speaking', async ({ page, context }, info) => {
   test.setTimeout(60000);
   await prepare(context);
   const errors = watchErrors(page);
@@ -72,13 +72,25 @@ test('Rocket Game: its own exercise (not a Pronunciation design), lasers left an
   await student.waitForTimeout(800);
   await student.screenshot({ path: info.outputPath('rocket-game.png') });
 
-  // the microphone is pressed once, at the start — then every word is heard without pressing again
+  // the microphone is off until 🎤 is held down; it listens only while held
   await expect(student.locator('#micBtn')).toHaveClass(/ask/);
-  await student.click('#micBtn');
-  await expect(student.locator('#micBtn')).toHaveClass(/live/);
-  const say = async w => {
-    await student.waitForFunction(() => !!pendingListen && accepting, null, { timeout: 10000 });
-    await student.evaluate(w => settleListen('ok', [{ transcript: w, confidence: 0.95 }]), w);
+  expect(await student.evaluate(() => recKeepAlive)).toBe(false);
+  // the sky streams down (the rocket is flying), the planets stay where they are
+  const skyY = () => student.evaluate(() => new DOMMatrix(getComputedStyle(document.querySelector('.sky')).transform).m42);
+  const y1 = await skyY(); await student.waitForTimeout(700); const y2 = await skyY();
+  expect(y2).toBeGreaterThan(y1);
+  const jupiterBefore = (await student.locator('.rk-jupiter').boundingBox()).y;
+  const btn = (await student.locator('#micBtn').boundingBox());
+  const say = async (w, afterLettingGo) => {
+    await student.waitForFunction(() => accepting && !holding, null, { timeout: 10000 });
+    await student.mouse.move(btn.x + btn.width / 2, btn.y + btn.height / 2);
+    await student.mouse.down();
+    await expect(student.locator('#micBtn')).toHaveClass(/live/);
+    expect(await student.evaluate(() => recKeepAlive)).toBe(true);
+    if (!afterLettingGo) await student.evaluate(w => settleListen('ok', [{ transcript: w, confidence: 0.95 }]), w);
+    await student.mouse.up();
+    if (afterLettingGo) await student.evaluate(w => settleListen('ok', [{ transcript: w, confidence: 0.95 }]), w);   // the words can arrive just after letting go
+    expect(await student.evaluate(() => recKeepAlive)).toBe(false);   // let go → the microphone is off
   };
   // a wrong word: the rocket loses a heart and the laser stays on
   await say('banana');
@@ -86,11 +98,12 @@ test('Rocket Game: its own exercise (not a Pronunciation design), lasers left an
   await expect(student.locator('#beam')).not.toHaveClass(/off/);
   for (let n = 0; n < WORDS.length; n++) {
     await expect(student.locator('#gateWord')).toHaveText(WORDS[n]);
-    await say(WORDS[n]);
+    await say(WORDS[n], n === 1);
     await expect(student.locator('#scoreLine')).toHaveClass(/good/);
   }
   await expect(student.locator('#endOverlay')).not.toHaveClass(/hidden/, { timeout: 10000 });
   await expect(student.locator('#endTitle')).toHaveText(/Mission complete/);
+  expect((await student.locator('.rk-jupiter').boundingBox()).y).toBe(jupiterBefore);
   const payload = await student.evaluate(() => buildResultPayload());
   expect(payload.type).toBe('Rocket Game');
   expect(payload.heartsLeft).toBe(2);
@@ -105,10 +118,12 @@ test('Rocket Game: its own exercise (not a Pronunciation design), lasers left an
   });
   await again.goto('file://' + file);
   await expect(again.locator('#laserRow')).toBeVisible({ timeout: 6000 });
-  await again.click('#micBtn');
   for (let n = 0; n < 3; n++) {
-    await again.waitForFunction(() => !!pendingListen && accepting, null, { timeout: 10000 });
+    await again.waitForFunction(() => accepting && !holding, null, { timeout: 10000 });
+    await again.locator('#micBtn').dispatchEvent('pointerdown');
     await again.evaluate(() => settleListen('ok', [{ transcript: 'banana', confidence: 0.95 }]));
+    await again.locator('#micBtn').dispatchEvent('pointerup');
+    await expect(again.locator('#hudHearts span:not(.lost)')).toHaveCount(2 - n);
   }
   await expect(again.locator('#endOverlay')).not.toHaveClass(/hidden/, { timeout: 10000 });
   await expect(again.locator('#endTitle')).toHaveText(/Out of hearts/);

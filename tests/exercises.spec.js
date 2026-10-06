@@ -72,8 +72,8 @@ const ANDROID = 'Mozilla/5.0 (Linux; Android 13; SM-A145F) AppleWebKit/537.36 (K
 test.describe('Pronunciation microphone', () => {
   for (const tpl of ['PRONUNCIATION_FLASH_TEMPLATE', 'ROCKET_GAME_TEMPLATE']) {
     for (const [mode, ua, expected] of [
-      ['desktop', undefined, /Microphone is on/],
-      ['android', ANDROID, /Microphone is on/],            // the phone bug fixed on 2026-09-30
+      ['desktop', undefined, /Microphone (is on|allowed)/],
+      ['android', ANDROID, /Microphone (is on|allowed)/],            // the phone bug fixed on 2026-09-30
       ['none', undefined, /can't listen to speech/]]) {
       test(`${tpl.replace('_TEMPLATE', '').toLowerCase()} on ${mode}`, async ({ browser }, info) => {
         const ctx = await browser.newContext(ua ? { userAgent: ua } : {});
