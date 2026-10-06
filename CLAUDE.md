@@ -412,7 +412,7 @@ real students' names or results into the repository (it is public).
   Chromium without GPU doesn't draw the player's car (3D) — screenshots need `--enable-gpu --use-angle=swiftshader`.
   `tests/cargame.spec.js`.
 - **Rocket Game** (2026-10-06, tab `rocket`, prefix `rk`, type label "Rocket Game", icon `images/icons/create/rocket.png`, in the
-  "In process" group next to Pronunciation): until then Pronunciation's "Rocket game" design (Pronunciation no longer has a Design
+  "Ready to use" group after Car Game, with Pronunciation — both moved there from "In process" on 2026-10-06): until then Pronunciation's "Rocket game" design (Pronunciation no longer has a Design
   choice; it keeps Pass score, no "Tries per word"). Same word + pronunciation + icon rows (`makePronRow(rkRows)`, 🔎 look up);
   Pass score, Accent, Strictness. `createRocketGame` builds `ROCKET_GAME_TEMPLATE` and adds `ROCKETGAME_IMAGES_CSS` (the teacher's
   rocket, Earth, Jupiter (yellow), Mars (red), stars and laser pictures, webp, ~36 KB — only in these files). The teacher's design

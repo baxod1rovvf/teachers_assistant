@@ -19,6 +19,11 @@ test('Rocket Game: its own exercise (not a Pronunciation design), lasers left an
   await page.waitForTimeout(1200);
   await hideNotices(page);
   await expect(page.locator('#pr-design')).toHaveCount(0);   // Pronunciation has no "Design" choice any more
+  // Pronunciation and Rocket Game are in "Ready to use" (moved from "In process" on 2026-10-06)
+  const ready = page.locator('.picker-section', { hasText: 'Ready to use' });
+  await expect(ready.locator('.picker-card', { hasText: 'Rocket Game' })).toHaveCount(1);
+  await expect(ready.locator('.picker-card', { hasText: 'Pronunciation' })).toHaveCount(1);
+  await expect(page.locator('.picker-section', { hasText: 'In process' }).locator('.picker-card', { hasText: /Rocket Game|Pronunciation/ })).toHaveCount(0);
   await page.locator('.picker-card', { hasText: 'Rocket Game' }).click();
   await expect(page.locator('#panel-rocket')).toHaveClass(/active/);
   await page.fill('#rk-title', 'Space words');

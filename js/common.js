@@ -62,8 +62,8 @@ const TA_PAGES = {
   settings: 'settings.html'
 };
 const BUILDER_TABS = ['wordorder', 'makeaword', 'flashcard', 'presentation', 'pronunciation', 'spelling', 'canknock', 'cargame', 'rocket', 'test', 'sentences', 'bilingual', 'engcontent', 'dictation', 'jungle', 'bamboozle', 'ielts-listening', 'ielts-reading', 'ielts-writing', 'ielts-speaking'];
-const READY_TABS = ['flashcard', 'wordorder', 'makeaword', 'spelling', 'canknock', 'cargame', 'sentences', 'bilingual', 'engcontent', 'dictation', 'jungle', 'bamboozle'];
-const INPROCESS_TABS = ['presentation', 'pronunciation', 'rocket', 'test'];
+const READY_TABS = ['flashcard', 'wordorder', 'makeaword', 'spelling', 'canknock', 'cargame', 'pronunciation', 'rocket', 'sentences', 'bilingual', 'engcontent', 'dictation', 'jungle', 'bamboozle'];
+const INPROCESS_TABS = ['presentation', 'test'];
 const CREATE_TABS = READY_TABS.concat(INPROCESS_TABS);
 
 function pageForTab(tab) {
