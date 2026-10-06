@@ -1,5 +1,5 @@
-// Rocket Game (until 2026-10-06 Pronunciation's "Rocket game" design): the rocket takes off from the Earth;
-// each word blocks the way and the student says it into the microphone to fly on.
+// Rocket Game (until 2026-10-06 Pronunciation's "Rocket game" design): a red laser beam between two lasers blocks
+// the rocket's way up; the student says the word to switch it off. 3 hearts: a wrong try costs one.
 const { test, expect } = require('@playwright/test');
 const { prepare, watchErrors, hideNotices } = require('./support/app');
 
@@ -11,7 +11,7 @@ const FAKE_SPEECH = `(() => {
   window.SpeechRecognition = window.webkitSpeechRecognition = Rec;
 })();`;
 
-test('Rocket Game: its own exercise (not a Pronunciation design), with the teacher\'s rocket, Earth, planets and stars; saying every word finishes the flight', async ({ page, context }, info) => {
+test('Rocket Game: its own exercise (not a Pronunciation design), lasers left and right with a red beam, 3 hearts, the rocket flies up, the microphone is pressed once', async ({ page, context }, info) => {
   test.setTimeout(60000);
   await prepare(context);
   const errors = watchErrors(page);
@@ -44,31 +44,68 @@ test('Rocket Game: its own exercise (not a Pronunciation design), with the teach
     if (!window.__named) { window.__named = 1; window.name = 'ta_merge_identity:' + JSON.stringify({ id: '10001', name: 'Alice Test', code: '' }); }
   });
   await student.goto('file://' + file);
-  await expect(student.locator('#gate')).toBeVisible({ timeout: 6000 });
-  // the teacher's pictures: the rocket, the Earth it takes off from (falling behind), planets and stars drifting by
-  for (const sel of ['#rocket .rk-img-rocket', '#rkEarth.rk-img-earth', '#burst.rk-img-stars'])
-    expect(await student.locator(sel).evaluate(el => getComputedStyle(el).backgroundImage), sel).toContain('data:image/webp');
-  await expect(student.locator('#rkEarth')).toHaveClass(/away/);
-  expect(await student.locator('#planetLayer .rk-img-planet').count()).toBeGreaterThan(0);
-  expect(await student.locator('#planetLayer .rk-img-mars').count()).toBeGreaterThan(0);
-  expect(await student.locator('#starLayer .star').count()).toBeGreaterThan(20);
+  await expect(student.locator('#laserRow')).toBeVisible({ timeout: 6000 });
+  // laser ——— laser: the teacher's laser on the left and on the right, a red beam between them, the word above it
+  await expect(student.locator('#laserRow .laser')).toHaveCount(2);
+  await expect(student.locator('#beam')).toBeVisible();
+  await expect(student.locator('#gateWord')).toHaveText('moon');
+  const lasers = await student.locator('#laserRow .laser').evaluateAll(l => l.map(el => el.getBoundingClientRect()));
+  const vw = await student.evaluate(() => innerWidth);
+  expect(lasers[0].left).toBeLessThan(30);
+  expect(lasers[1].right).toBeGreaterThan(vw - 30);
+  // the teacher's pictures; no big box in the middle; a still background; 3 hearts
+  for (const sel of ['#rocket .rk-img-rocket', '#rkEarth.rk-img-earth', '#burst.rk-img-stars', '#laserRow .laser.left', '.rk-p1', '.rk-p2'])
+    expect(await student.locator(sel).first().evaluate(el => getComputedStyle(el).backgroundImage), sel).toContain('data:image/webp');
+  await expect(student.locator('#gate, .track, .drifter')).toHaveCount(0);
+  await expect(student.locator('#hudHearts span:not(.lost)')).toHaveCount(3);
   await expect(student.locator('#modeBtn')).toHaveCount(0);   // always space: no day/night button
-  await student.waitForTimeout(2600);
+  // the rocket is below the laser (it flies from the bottom to the top)
+  const rocketY = (await student.locator('#rocket').boundingBox()).y;
+  expect(rocketY).toBeGreaterThan((await student.locator('#beam').boundingBox()).y);
+  await student.waitForTimeout(800);
   await student.screenshot({ path: info.outputPath('rocket-game.png') });
 
-  // say every word right
+  // the microphone is pressed once, at the start — then every word is heard without pressing again
+  await expect(student.locator('#micBtn')).toHaveClass(/ask/);
+  await student.click('#micBtn');
+  await expect(student.locator('#micBtn')).toHaveClass(/live/);
+  const say = async w => {
+    await student.waitForFunction(() => !!pendingListen && accepting, null, { timeout: 10000 });
+    await student.evaluate(w => settleListen('ok', [{ transcript: w, confidence: 0.95 }]), w);
+  };
+  // a wrong word: the rocket loses a heart and the laser stays on
+  await say('banana');
+  await expect(student.locator('#hudHearts span:not(.lost)')).toHaveCount(2);
+  await expect(student.locator('#beam')).not.toHaveClass(/off/);
   for (let n = 0; n < WORDS.length; n++) {
-    await student.waitForFunction(() => typeof pendingListen !== 'undefined' && !!pendingListen, null, { timeout: 10000 });
-    const word = await student.locator('#gateWord').innerText();
-    expect(word).toBe(WORDS[n]);
-    await student.evaluate(w => settleListen('ok', [{ transcript: w, confidence: 0.95 }]), word);
+    await expect(student.locator('#gateWord')).toHaveText(WORDS[n]);
+    await say(WORDS[n]);
     await expect(student.locator('#scoreLine')).toHaveClass(/good/);
   }
   await expect(student.locator('#endOverlay')).not.toHaveClass(/hidden/, { timeout: 10000 });
+  await expect(student.locator('#endTitle')).toHaveText(/Mission complete/);
   const payload = await student.evaluate(() => buildResultPayload());
   expect(payload.type).toBe('Rocket Game');
+  expect(payload.heartsLeft).toBe(2);
   expect(payload.score).toBeGreaterThanOrEqual(70);
   expect(studentErrors.filter(e => !/module|import|Failed to fetch|lottie|fonts/i.test(e))).toEqual([]);
+
+  // three wrong tries: no hearts left, the flight ends
+  const again = await context.newPage();
+  await again.addInitScript(FAKE_SPEECH);
+  await again.addInitScript(() => {
+    if (!window.__named) { window.__named = 1; window.name = 'ta_merge_identity:' + JSON.stringify({ id: '10002', name: 'Bob Test', code: '' }); }
+  });
+  await again.goto('file://' + file);
+  await expect(again.locator('#laserRow')).toBeVisible({ timeout: 6000 });
+  await again.click('#micBtn');
+  for (let n = 0; n < 3; n++) {
+    await again.waitForFunction(() => !!pendingListen && accepting, null, { timeout: 10000 });
+    await again.evaluate(() => settleListen('ok', [{ transcript: 'banana', confidence: 0.95 }]));
+  }
+  await expect(again.locator('#endOverlay')).not.toHaveClass(/hidden/, { timeout: 10000 });
+  await expect(again.locator('#endTitle')).toHaveText(/Out of hearts/);
+  expect(await again.evaluate(() => buildResultPayload().heartsLeft)).toBe(0);
 });
 
 test('Rocket Game: "Use again" on an old Pronunciation file made with the rocket design opens the Rocket Game builder', async ({ page, context }) => {
@@ -78,7 +115,7 @@ test('Rocket Game: "Use again" on an old Pronunciation file made with the rocket
   const load = await page.evaluate(() => exerciseLoadFor({ typeLabel: 'Pronunciation', title: 'Old', builderTab: 'pronunciation',
     builderState: { v: 1, fields: { 'pr-title': 'Old', 'pr-design': 'game', 'pr-pass': '80', 'pr-tries': '5', 'pr-learn': 'on' }, rows: [['tree', 'triː', '🌳']] } }));
   expect(load.tab).toBe('rocket');
-  expect(load.state.fields).toEqual({ 'rk-title': 'Old', 'rk-pass': '80', 'rk-tries': '5' });
+  expect(load.state.fields).toEqual({ 'rk-title': 'Old', 'rk-pass': '80' });
   expect(load.state.rows).toEqual([['tree', 'triː', '🌳']]);
   // the usual design stays a Pronunciation exercise
   const usual = await page.evaluate(() => exerciseLoadFor({ typeLabel: 'Pronunciation', title: 'U', builderTab: 'pronunciation',

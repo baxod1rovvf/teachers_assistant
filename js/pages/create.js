@@ -2615,7 +2615,8 @@ function resetPronunciationForm() {
    student says it into the microphone — clear enough and it bursts into
    stars and the rocket flies on. Pictures: the teacher's rocket, Earth,
    planets and stars (ROCKETGAME_IMAGES_CSS). Until 2026-10-06 this was
-   Pronunciation's "Rocket game" design. Same words + pronunciation rows. */
+   Pronunciation's "Rocket game" design. Same words + pronunciation rows.
+   A red laser beam blocks the way for each word; 3 hearts, a wrong try costs one. */
 const rkRows = document.getElementById('rk-rows');
 function addRocketRowFilled(word) {
   const input = makePronRow(rkRows);
@@ -2634,7 +2635,6 @@ function resetRocketForm() {
   document.getElementById('rk-code').value = '';
   document.getElementById('rk-timer').value = '';
   document.getElementById('rk-pass').value = '70';
-  document.getElementById('rk-tries').value = '3';
   document.getElementById('rk-lang').value = 'en-US';
   document.getElementById('rk-strict').value = 'normal';
   const rkCompose = document.getElementById('rk-compose'); if (rkCompose) rkCompose.value = '';
@@ -2660,7 +2660,6 @@ function createRocketGame() {
   html = html.split('__WORDS_JSON__').join(JSON.stringify(words));
   html = html.split('__PASS_SCORE__').join(document.getElementById('rk-pass').value);
   html = html.split('__SPEECH_LANG__').join(document.getElementById('rk-lang').value);
-  html = html.split('__MAX_TRIES__').join(document.getElementById('rk-tries').value);
   html = html.split('__STRICTNESS__').join(document.getElementById('rk-strict').value);
   html = html.split('__EXERCISE_CODE__').join(classCode);
   html = html.split('__FILE_BUILT_AT__').join(new Date().toISOString());

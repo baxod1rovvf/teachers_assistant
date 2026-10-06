@@ -389,7 +389,6 @@ window.TA_I18N_ROWS = [
   ['Marking strictness', 'Baholash qatʼiyligi', 'Строгость оценки'],
   ['Lenient — beginners', 'Yumshoq — boshlovchilar uchun', 'Мягко — для начинающих'],
   ['Strict — exam practice', 'Qatʼiy — imtihonga tayyorgarlik', 'Строго — подготовка к экзамену'],
-  ['Tries per word', 'Har bir soʻz uchun urinishlar', 'Попыток на слово'],
   ['tries', 'urinish', 'попытки'],
   ['Unlimited (must pass)', 'Cheksiz (oʻtish shart)', 'Без ограничений (нужно пройти)'],
   ['Word (you type this)', 'Soʻz (buni siz yozasiz)', 'Слово (вводите вы)'],

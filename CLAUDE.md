@@ -414,13 +414,17 @@ real students' names or results into the repository (it is public).
 - **Rocket Game** (2026-10-06, tab `rocket`, prefix `rk`, type label "Rocket Game", icon `images/icons/create/rocket.png`, in the
   "In process" group next to Pronunciation): until then Pronunciation's "Rocket game" design (Pronunciation no longer has a Design
   choice; it keeps Pass score, no "Tries per word"). Same word + pronunciation + icon rows (`makePronRow(rkRows)`, 🔎 look up);
-  Pass score, Tries per word, Accent, Strictness. `createRocketGame` builds `ROCKET_GAME_TEMPLATE` (the old game, always space —
-  no day/night, clouds or birds) and adds `ROCKETGAME_IMAGES_CSS` (the teacher's rocket, Earth, yellow planet, red planet and stars
-  pictures, webp, ~33 KB — only in these files): the rocket (picture points up; turned 90° on a computer, a CSS flame under it) takes
-  off from the Earth (`#rkEarth`, falls behind at Start, `.away`), planets and the stars picture drift by, a cleared word bursts into
-  the stars picture. Results have `type: 'Rocket Game'`. It has "Open in Chrome", so it goes online as soon as it's made (like
-  Pronunciation). "Use again" on an old Pronunciation file with `pr-design: 'game'` opens the Rocket Game builder
-  (`rocketFromPronunciation` / `builderFormNow` in my-exercises.js, set rounds too). `tests/rocket.spec.js`.
+  Pass score, Accent, Strictness. `createRocketGame` builds `ROCKET_GAME_TEMPLATE` and adds `ROCKETGAME_IMAGES_CSS` (the teacher's
+  rocket, Earth, yellow planet, red planet, stars and laser pictures, webp, ~34 KB — only in these files). The teacher's design
+  (same day): the whole screen is the game — no box in the middle; a still background (stars twinkle, planets stay put, the Earth's
+  top fades in at the bottom); the rocket flies **bottom → top** (`rocketTo('home'|'above'|'below')`); for each word a laser on the
+  left and one on the right (`#laserRow`, right one mirrored) with a red sparkling beam between them (`#beam`) and the word above
+  it — said right (≥ pass score) → the beam switches off, the rocket flies out of the top and the next one rises from the bottom.
+  **3 hearts** (`HEARTS`): a wrong try (not silence) costs one and the laser stays; none left → "💔 Out of hearts", result sent
+  (`heartsLeft`). **The microphone is tapped once** (`micPress` → `listenLoop` keeps listening for every word; results while no
+  laser is on, or 1.3 s after a wrong try, are ignored). Results have `type: 'Rocket Game'`. It has "Open in Chrome", so it goes
+  online as soon as it's made (like Pronunciation). "Use again" on an old Pronunciation file with `pr-design: 'game'` opens the
+  Rocket Game builder (`rocketFromPronunciation` / `builderFormNow` in my-exercises.js, set rounds too). `tests/rocket.spec.js`.
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
   too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except

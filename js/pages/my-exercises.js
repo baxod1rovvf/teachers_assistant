@@ -326,7 +326,7 @@ function carGameFromFlashcard(state) {
 // Pronunciation's old "Rocket game" design is its own exercise since 2026-10-06: open those in the Rocket Game builder.
 function rocketFromPronunciation(state) {
   const f = state.fields || {}, fields = {};
-  ['title', 'code', 'timer', 'pass', 'tries', 'lang', 'strict'].forEach(k => { if (f['pr-' + k] !== undefined) fields['rk-' + k] = f['pr-' + k]; });
+  ['title', 'code', 'timer', 'pass', 'lang', 'strict'].forEach(k => { if (f['pr-' + k] !== undefined) fields['rk-' + k] = f['pr-' + k]; });
   return { tab: 'rocket', state: { v: 1, fields: fields, rows: state.rows } };
 }
 // a saved builder form, opened in the builder it belongs to today
