@@ -54,9 +54,16 @@ test('Rocket Game: its own exercise (not a Pronunciation design), lasers left an
   expect(lasers[0].left).toBeLessThan(30);
   expect(lasers[1].right).toBeGreaterThan(vw - 30);
   // the teacher's pictures; no big box in the middle; a still background; 3 hearts
-  for (const sel of ['#rocket .rk-img-rocket', '#rkEarth.rk-img-earth', '#burst.rk-img-stars', '#laserRow .laser.left', '.rk-p1', '.rk-p2'])
+  for (const sel of ['#rocket .rk-img-rocket', '#rkEarth.rk-img-earth', '#burst.rk-img-stars', '#laserRow .laser.left', '.rk-jupiter.rk-img-jupiter', '.rk-mars.rk-img-mars'])
     expect(await student.locator(sel).first().evaluate(el => getComputedStyle(el).backgroundImage), sel).toContain('data:image/webp');
   await expect(student.locator('#gate, .track, .drifter')).toHaveCount(0);
+  // the Earth isn't under the rocket (it's a planet at the side), and the planets are in proportion: Jupiter > Earth > Mars
+  const box = async sel => student.locator(sel).boundingBox();
+  const [earth, rocket0, jupiter, mars] = [await box('#rkEarth'), await box('#rocket'), await box('.rk-jupiter'), await box('.rk-mars')];
+  expect(earth.x > rocket0.x + rocket0.width || earth.x + earth.width < rocket0.x).toBe(true);
+  expect(jupiter.width).toBeGreaterThan(earth.width);
+  expect(earth.width).toBeGreaterThan(mars.width);
+  expect(mars.width).toBeGreaterThan(60);
   await expect(student.locator('#hudHearts span:not(.lost)')).toHaveCount(3);
   await expect(student.locator('#modeBtn')).toHaveCount(0);   // always space: no day/night button
   // the rocket is below the laser (it flies from the bottom to the top)

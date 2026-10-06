@@ -415,9 +415,9 @@ real students' names or results into the repository (it is public).
   "In process" group next to Pronunciation): until then Pronunciation's "Rocket game" design (Pronunciation no longer has a Design
   choice; it keeps Pass score, no "Tries per word"). Same word + pronunciation + icon rows (`makePronRow(rkRows)`, 🔎 look up);
   Pass score, Accent, Strictness. `createRocketGame` builds `ROCKET_GAME_TEMPLATE` and adds `ROCKETGAME_IMAGES_CSS` (the teacher's
-  rocket, Earth, yellow planet, red planet, stars and laser pictures, webp, ~34 KB — only in these files). The teacher's design
-  (same day): the whole screen is the game — no box in the middle; a still background (stars twinkle, planets stay put, the Earth's
-  top fades in at the bottom); the rocket flies **bottom → top** (`rocketTo('home'|'above'|'below')`); for each word a laser on the
+  rocket, Earth, Jupiter (yellow), Mars (red), stars and laser pictures, webp, ~36 KB — only in these files). The teacher's design
+  (same day): the whole screen is the game — no box in the middle; a still background (stars twinkle; Jupiter, the Earth and Mars stay put at
+  the sides, in proportion Jupiter > Earth > Mars — the Earth is **not** under the rocket, the teacher asked); the rocket flies **bottom → top** (`rocketTo('home'|'above'|'below')`); for each word a laser on the
   left and one on the right (`#laserRow`, right one mirrored) with a red sparkling beam between them (`#beam`) and the word above
   it — said right (≥ pass score) → the beam switches off, the rocket flies out of the top and the next one rises from the bottom.
   **3 hearts** (`HEARTS`): a wrong try (not silence) costs one and the laser stays; none left → "💔 Out of hearts", result sent
