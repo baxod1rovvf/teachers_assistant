@@ -96,6 +96,7 @@ function renumberRows(container) {
   if (container.id === 'fc-rows') document.getElementById('fc-count').innerText = container.children.length;
   if (container.id === 'ck-rows') document.getElementById('ck-count').innerText = container.children.length;
   if (container.id === 'cg-rows') document.getElementById('cg-count').innerText = container.children.length;
+  if (container.id === 'rk-rows') document.getElementById('rk-count').innerText = container.children.length;
   if (container.id === 'sn-rows') document.getElementById('sn-count-display').innerText = container.children.length;
 }
 
@@ -311,6 +312,7 @@ const HWC_TYPES = [
   { key: 'pronunciation', label: 'Pronunciation', icon: '\ud83c\udf99\ufe0f', color: '#34d399', img: 'pronunciation', createFn: 'createPronunciation' },
   { key: 'spelling', label: 'Spelling', icon: '\ud83d\udd24', color: '#8b7bf7', img: 'spelling', createFn: 'createSpelling' },
   { key: 'canknock', label: 'Can Knockdown', icon: '\ud83e\udd6b', color: '#f03a52', img: 'canknock', createFn: 'createCanKnockdown' },
+  { key: 'rocket', label: 'Rocket Game', icon: '\ud83d\ude80', color: '#5b7cfa', img: 'rocket', createFn: 'createRocketGame' },
   { key: 'cargame', label: 'Car Game', icon: '\ud83d\ude97', color: '#e0a526', img: 'cargame', createFn: 'createCarGame' },
   { key: 'test', label: 'Test', icon: '\u2705', color: '#ef5f74', img: 'test', createFn: 'createTest' },
   { key: 'sentences', label: 'Sentences', icon: '\u270d\ufe0f', color: '#4f9de0', img: 'sentences', createFn: 'createSentences' },
@@ -331,7 +333,7 @@ let hwcRoundOriginNext = null;
    round 1. Later rounds hide those fields and are built with the set's
    values; in the student file every round gives 0 points except the last,
    which gives the set's points once the whole set is finished. */
-const HWC_PREFIX = { wordorder: 'wo', makeaword: 'maw', flashcard: 'fc', pronunciation: 'pr', spelling: 'sp', canknock: 'ck', cargame: 'cg', test: 'ts',
+const HWC_PREFIX = { wordorder: 'wo', makeaword: 'maw', flashcard: 'fc', pronunciation: 'pr', spelling: 'sp', canknock: 'ck', cargame: 'cg', rocket: 'rk', test: 'ts',
   sentences: 'sn', bilingual: 'br', engcontent: 'ec', dictation: 'dc', 'ielts-listening': 'il', 'ielts-reading': 'ir' };
 function hwcSetPoints() {
   const m = hwcRounds.length ? hwcRounds[0].html.match(/const POINTS_AWARD = (-?\d+(?:\.\d+)?);/) : null;
@@ -2503,10 +2505,6 @@ function updatePronCount() {
   if (el) el.innerText = prRows.querySelectorAll('.pron-row').length;
 }
 
-function onPronDesignChange() {
-  /* design hint text removed; function kept for the onchange wiring */
-}
-
 function readPronRows() {
   return Array.from(prRows.querySelectorAll('.pron-row')).map(row => ({
     w: row.querySelector('.pr-word').value.trim(),
@@ -2516,8 +2514,8 @@ function readPronRows() {
 }
 
 /* Optional: pull the real dictionary pronunciation for every word. */
-async function autoFillPronunciation() {
-  const rows = Array.from(prRows.querySelectorAll('.pron-row'))
+async function autoFillPronunciation(container) {
+  const rows = Array.from((container || prRows).querySelectorAll('.pron-row'))
     .filter(r => r.querySelector('.pr-word').value.trim());
   if (rows.length === 0) { showToast('Type some words first.'); return; }
 
@@ -2565,8 +2563,8 @@ function createPronunciation() {
   }));
   if (words.length < 2) { showToast('Please enter at least 2 words.'); return; }
 
-  const design = document.getElementById('pr-design').value;
-  let html = (design === 'game') ? PRONUNCIATION_GAME_TEMPLATE : PRONUNCIATION_FLASH_TEMPLATE;
+  // (until 2026-10-06 it also had a "Rocket game" design — that is the Rocket Game builder now)
+  let html = PRONUNCIATION_FLASH_TEMPLATE;
   const classCode = setActiveClassCode(code);
 
   html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
@@ -2574,7 +2572,7 @@ function createPronunciation() {
   html = html.split('__WORDS_JSON__').join(JSON.stringify(words));
   html = html.split('__PASS_SCORE__').join(document.getElementById('pr-pass').value);
   html = html.split('__SPEECH_LANG__').join(document.getElementById('pr-lang').value);
-  html = html.split('__MAX_TRIES__').join(document.getElementById('pr-tries').value);
+  html = html.split('__MAX_TRIES__').join('3');
   html = html.split('__STRICTNESS__').join(document.getElementById('pr-strict').value);
   html = html.split('__LEARN_STAGE__').join(document.getElementById('pr-learn').value);
   html = html.split('__DEFAULT_VOICE__').join(document.getElementById('pr-voice').value);
@@ -2598,23 +2596,91 @@ function createPronunciation() {
   showToast('"' + title + '" downloaded!' + (mode === 'code' ? ' Class code: ' + classCode : ''), 'ok');
 }
 
-onPronDesignChange();
-
 function resetPronunciationForm() {
   document.getElementById('pr-title').value = '';
   const prIns = document.getElementById('pr-instructions'); if (prIns) prIns.value = '';
-  document.getElementById('pr-design').value = 'flash';
   document.getElementById('pr-pass').value = '70';
   document.getElementById('pr-lang').value = 'en-US';
   document.getElementById('pr-learn').value = 'on';
   document.getElementById('pr-voice').value = 'female';
   document.getElementById('pr-strict').value = 'normal';
-  document.getElementById('pr-tries').value = '3';
   const prCompose = document.getElementById('pr-compose'); if (prCompose) prCompose.value = '';
-  onPronDesignChange();
   prRows.innerHTML = '';
   renumberRows(prRows);
   updatePronCount();
+}
+
+/* ================= ROCKET GAME =================
+   The rocket takes off from the Earth; each word blocks the way and the
+   student says it into the microphone — clear enough and it bursts into
+   stars and the rocket flies on. Pictures: the teacher's rocket, Earth,
+   planets and stars (ROCKETGAME_IMAGES_CSS). Until 2026-10-06 this was
+   Pronunciation's "Rocket game" design. Same words + pronunciation rows. */
+const rkRows = document.getElementById('rk-rows');
+function addRocketRowFilled(word) {
+  const input = makePronRow(rkRows);
+  input.value = word;
+  input.dispatchEvent(new Event('input'));
+}
+function readRocketRows() {
+  return Array.from(rkRows.querySelectorAll('.pron-row')).map(row => ({
+    w: row.querySelector('.pr-word').value.trim(),
+    ipa: row.querySelector('.pr-ipa').value.trim().replace(/^\/|\/$/g, ''),
+    icon: row.querySelector('.pr-icon').value.trim()
+  })).filter(x => x.w);
+}
+function resetRocketForm() {
+  document.getElementById('rk-title').value = '';
+  document.getElementById('rk-code').value = '';
+  document.getElementById('rk-timer').value = '';
+  document.getElementById('rk-pass').value = '70';
+  document.getElementById('rk-tries').value = '3';
+  document.getElementById('rk-lang').value = 'en-US';
+  document.getElementById('rk-strict').value = 'normal';
+  const rkCompose = document.getElementById('rk-compose'); if (rkCompose) rkCompose.value = '';
+  rkRows.innerHTML = '';
+  renumberRows(rkRows);
+}
+
+function createRocketGame() {
+  const title = document.getElementById('rk-title').value.trim();
+  if (!title) { showToast('Please enter a title for the exercise.'); return; }
+  const mode = 'nocode';
+  const code = generateClassCode();
+  const words = readRocketRows().map(x => ({
+    w: x.w,
+    ipa: x.ipa || ipaOfText(x.w),
+    icon: x.icon || guessPronIcon(x.w)
+  }));
+  if (words.length < 2) { showToast('Please enter at least 2 words.'); return; }
+
+  const classCode = setActiveClassCode(code);
+  let html = ROCKET_GAME_TEMPLATE;
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
+  html = html.split('__WORDS_JSON__').join(JSON.stringify(words));
+  html = html.split('__PASS_SCORE__').join(document.getElementById('rk-pass').value);
+  html = html.split('__SPEECH_LANG__').join(document.getElementById('rk-lang').value);
+  html = html.split('__MAX_TRIES__').join(document.getElementById('rk-tries').value);
+  html = html.split('__STRICTNESS__').join(document.getElementById('rk-strict').value);
+  html = html.split('__EXERCISE_CODE__').join(classCode);
+  html = html.split('__FILE_BUILT_AT__').join(new Date().toISOString());
+  html = html.split('__ACCESS_MODE__').join(mode);
+  html = html.split('__ACCESS_ID_MODE__').join('unified');
+  const __requiredCode_rk = (document.getElementById('rk-code') || {value:''}).value.trim();
+  html = html.split('__REQUIRED_CODE__').join(escapeForHtml(__requiredCode_rk));
+  const __timerMin_rk = parseFloat((document.getElementById('rk-timer') || {value:''}).value);
+  html = html.split('__TIME_LIMIT_MINUTES__').join(isNaN(__timerMin_rk) || __timerMin_rk <= 0 ? '0' : String(__timerMin_rk));
+  html = html.split('__POINTS_AWARD__').join('0');
+  const __uid = generateExerciseUid();
+  html = html.split('__EXERCISE_UID__').join(__uid);
+  html = html.split('__BOARD_CODE__').join(getPointsBoardCode());
+  html = html.split('__ROSTER_JSON__').join(JSON.stringify(getPointsRoster()));
+  html = html.split('__POINTS_TYPE_LABEL__').join('Rocket Game');
+
+  html = html.replace('</head>', () => '<style>\n' + ROCKETGAME_IMAGES_CSS + '\n</style>\n</head>');   // the rocket, Earth, planets and stars
+  pushRecentExercise({ title: title, typeLabel: 'Rocket Game', code: classCode, uid: __uid, html: html, requiredCode: __requiredCode_rk, contentSummary: words.map(w => w.w).join('\n') });
+  downloadFile(typedFilename('Rocket Game', title, 'rocket-game'), html);
+  showToast('"' + title + '" downloaded!', 'ok');
 }
 
 /* ================= SPELLING + TEST BUILDERS ================= */
@@ -4856,6 +4922,14 @@ const TA_BUILDER_ROWS = {
       updatePronCount();
     }
   },
+  rocket: {
+    get: () => taRowInputs(rkRows, '.pron-row').map(r => [r.querySelector('.pr-word').value, r.querySelector('.pr-ipa').value, r.querySelector('.pr-icon').value]),
+    set: v => {
+      rkRows.innerHTML = '';
+      (v || []).forEach(r => taFillAfterWord(makePronRow(rkRows), '.pron-row', ['.pr-ipa', '.pr-icon'], r));
+      renumberRows(rkRows);
+    }
+  },
   test: {
     get: () => taRowInputs(tsRows, '.test-row').map(r => ({
       s: r.querySelector('.ts-sentence').value,
@@ -5262,7 +5336,7 @@ window.taSnapshotForMyExercises = function () {
   ['presentation', 'resetPresentationForm'], ['pronunciation', 'resetPronunciationForm'], ['sentences', 'resetSentencesForm'],
   ['bilingual', 'resetBilingualForm'], ['engcontent', 'resetEnglishContentForm'], ['dictation', 'resetDictationForm'], ['jungle', 'resetJungleForm'], ['bamboozle', 'resetBamboozleForm'],
   ['ielts-listening', 'resetIeltsListeningForm'], ['ielts-reading', 'resetIeltsReadingForm'], ['ielts-writing', 'resetIeltsWritingForm'],
-  ['spelling', 'resetSpellingForm'], ['canknock', 'resetCanKnockForm'], ['cargame', 'resetCarGameForm'], ['test', 'resetTestForm']
+  ['spelling', 'resetSpellingForm'], ['canknock', 'resetCanKnockForm'], ['cargame', 'resetCarGameForm'], ['rocket', 'resetRocketForm'], ['test', 'resetTestForm']
 ].forEach(function (pair) {
   const tab = pair[0], reset = window[pair[1]];
   window[pair[1]] = function () {
@@ -5299,6 +5373,7 @@ const TA_JUMP = {
   cargame:       { p: 'cg', kind: 'word',     noun: 'words',     read: r => ({ w: r[0], tr: r[1] }), row: it => [it.w, it.tr || ''] },
   makeaword:     { p: 'maw', kind: 'word',    noun: 'words',     read: r => ({ w: r }),              row: it => it.w },
   pronunciation: { p: 'pr', kind: 'word',     noun: 'words',     read: r => ({ w: r[0] }),           row: it => [it.w, '', ''] },
+  rocket:        { p: 'rk', kind: 'word',     noun: 'words',     read: r => ({ w: r[0] }),           row: it => [it.w, '', ''] },
   sentences:     { p: 'sn', kind: 'word',     noun: 'words',     read: r => ({ w: r }),              row: it => it.w },
   wordorder:     { p: 'wo', kind: 'sentence', noun: 'sentences', read: r => ({ w: r }),              row: it => it.w },
   test:          { p: 'ts', kind: 'sentence', noun: 'sentences', read: r => ({ w: r.s }),            row: it => ({ s: it.w, gap: -1, wrongs: [] }) }

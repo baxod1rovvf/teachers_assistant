@@ -411,6 +411,16 @@ real students' names or results into the repository (it is public).
   Flashcard file made with the car design opens the Car Game builder (`carGameFromFlashcard` in my-exercises.js). Headless
   Chromium without GPU doesn't draw the player's car (3D) — screenshots need `--enable-gpu --use-angle=swiftshader`.
   `tests/cargame.spec.js`.
+- **Rocket Game** (2026-10-06, tab `rocket`, prefix `rk`, type label "Rocket Game", icon `images/icons/create/rocket.png`, in the
+  "In process" group next to Pronunciation): until then Pronunciation's "Rocket game" design (Pronunciation no longer has a Design
+  choice; it keeps Pass score, no "Tries per word"). Same word + pronunciation + icon rows (`makePronRow(rkRows)`, 🔎 look up);
+  Pass score, Tries per word, Accent, Strictness. `createRocketGame` builds `ROCKET_GAME_TEMPLATE` (the old game, always space —
+  no day/night, clouds or birds) and adds `ROCKETGAME_IMAGES_CSS` (the teacher's rocket, Earth, yellow planet, red planet and stars
+  pictures, webp, ~33 KB — only in these files): the rocket (picture points up; turned 90° on a computer, a CSS flame under it) takes
+  off from the Earth (`#rkEarth`, falls behind at Start, `.away`), planets and the stars picture drift by, a cleared word bursts into
+  the stars picture. Results have `type: 'Rocket Game'`. It has "Open in Chrome", so it goes online as soon as it's made (like
+  Pronunciation). "Use again" on an old Pronunciation file with `pr-design: 'game'` opens the Rocket Game builder
+  (`rocketFromPronunciation` / `builderFormNow` in my-exercises.js, set rounds too). `tests/rocket.spec.js`.
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
   too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except

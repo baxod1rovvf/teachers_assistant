@@ -22,7 +22,7 @@ let myexGroupFilter = null; // null = every group, '' = no group, else a group i
 // the exercise type's picture (the same as on the Create page), for its card and its filter chip
 const MYEX_TYPE_ICONS = {
   'Flashcard': 'flashcard', 'Word Order': 'wordorder', 'Make a Word': 'makeaword', 'Spelling': 'spelling',
-  'Can Knockdown': 'canknock', 'Car Game': 'cargame', 'Sentences': 'sentences', 'Bidirectional Language': 'bilingual',
+  'Can Knockdown': 'canknock', 'Car Game': 'cargame', 'Rocket Game': 'rocket', 'Sentences': 'sentences', 'Bidirectional Language': 'bilingual',
   'English Content': 'engcontent', 'Dictation': 'listening', 'Jungle': 'jungle', 'Bamboozle': 'bamboozle',
   'Presentation': 'presentation', 'Pronunciation': 'pronunciation', 'Test': 'test',
   'IELTS Listening': 'listening', 'IELTS Reading': 'reading', 'IELTS Writing': 'sentences',
@@ -313,7 +313,8 @@ const MYEX_SUMMARY_BUILDERS = {
   'Test': { tab: 'test', p: 'ts', row: line => ({ s: line, gap: -1, wrongs: [] }) },
   'Flashcard': { tab: 'flashcard', p: 'fc', row: line => { const i = line.indexOf(' - '); return i === -1 ? [line, ''] : [line.slice(0, i), line.slice(i + 3)]; } },
   'Can Knockdown': { tab: 'canknock', p: 'ck', row: line => { const i = line.indexOf(' - '); return i === -1 ? [line, ''] : [line.slice(0, i), line.slice(i + 3)]; } },
-  'Car Game': { tab: 'cargame', p: 'cg', row: line => { const i = line.indexOf(' - '); return i === -1 ? [line, ''] : [line.slice(0, i), line.slice(i + 3)]; } }
+  'Car Game': { tab: 'cargame', p: 'cg', row: line => { const i = line.indexOf(' - '); return i === -1 ? [line, ''] : [line.slice(0, i), line.slice(i + 3)]; } },
+  'Rocket Game': { tab: 'rocket', p: 'rk', row: line => [line, '', ''] }
 };
 
 // Flashcard's old "Car game" design is its own exercise since 2026-10-04: open those in the Car Game builder.
@@ -322,14 +323,27 @@ function carGameFromFlashcard(state) {
   ['title', 'points', 'code', 'timer', 'seconds', 'speed', 'tr-lang'].forEach(k => { if (f['fc-' + k] !== undefined) fields['cg-' + k] = f['fc-' + k]; });
   return { tab: 'cargame', state: { v: 1, fields: fields, rows: state.rows } };
 }
+// Pronunciation's old "Rocket game" design is its own exercise since 2026-10-06: open those in the Rocket Game builder.
+function rocketFromPronunciation(state) {
+  const f = state.fields || {}, fields = {};
+  ['title', 'code', 'timer', 'pass', 'tries', 'lang', 'strict'].forEach(k => { if (f['pr-' + k] !== undefined) fields['rk-' + k] = f['pr-' + k]; });
+  return { tab: 'rocket', state: { v: 1, fields: fields, rows: state.rows } };
+}
+// a saved builder form, opened in the builder it belongs to today
+function builderFormNow(tab, state) {
+  const f = (state && state.fields) || {};
+  if (tab === 'flashcard' && f['fc-design'] === 'runner') return carGameFromFlashcard(state);
+  if (tab === 'pronunciation' && f['pr-design'] === 'game') return rocketFromPronunciation(state);
+  return { tab: tab, state: state };
+}
 
 function exerciseLoadFor(item) {
   if (!item) return null;
   if (item.builderRounds && item.builderRounds.length) {
-    return { set: true, kind: item.setKind || (item.typeLabel === 'Class' ? 'class' : 'homework'), rounds: item.builderRounds, setTitle: item.setTitle || '' };
+    return { set: true, kind: item.setKind || (item.typeLabel === 'Class' ? 'class' : 'homework'),
+      rounds: item.builderRounds.map(r => r && r.state ? builderFormNow(r.tab, r.state) : r), setTitle: item.setTitle || '' };
   }
-  if (item.builderTab === 'flashcard' && item.builderState && (item.builderState.fields || {})['fc-design'] === 'runner') return carGameFromFlashcard(item.builderState);
-  if (item.builderTab && item.builderState) return { tab: item.builderTab, state: item.builderState };
+  if (item.builderTab && item.builderState) return builderFormNow(item.builderTab, item.builderState);
   const b = MYEX_SUMMARY_BUILDERS[item.typeLabel];
   const lines = String(item.contentSummary || '').split('\n').map(s => s.trim()).filter(Boolean);
   if (!b || !lines.length) return null;
@@ -385,17 +399,18 @@ function deleteRecentExercise(idx) {
    the class code in big numbers for the classroom screen. */
 // Every exercise can be shared as a link (online for 7 days): iPhones can't open
 // exercise files, and a phone only allows the microphone on a web page.
+function myexUsesMic(item) { return item.typeLabel === 'Pronunciation' || item.typeLabel === 'Rocket Game'; }
 function sharesAsLink(item, html) { return !!(item && taPlayUrl(item.uid) && (taPlayLive(item) || html)); }
 // withLink false: the message as shown, without the link (the Share window shows the link above it)
 function shareMessageFor(item, html, withLink) {
   const lines = ['📘 ' + item.title + ' (' + item.typeLabel + ')'];
   if (item.requiredCode) lines.push('🔑 Code: ' + item.requiredCode);
   if (sharesAsLink(item, html)) {
-    lines.push(item.typeLabel === 'Pronunciation'
+    lines.push(myexUsesMic(item)
       ? '🎤 Open this link in Google Chrome (on an iPhone: Safari) — the microphone only works there:'
       : '🔗 Open this link (works on any phone, iPhone too):');
     if (withLink !== false) lines.push(taPlayUrl(item.uid));
-    lines.push('Type your student ID' + (item.requiredCode ? ' and the code' : '') + (item.typeLabel === 'Pronunciation' ? ', allow the microphone,' : '') + ' and start. Good luck! 🍀');
+    lines.push('Type your student ID' + (item.requiredCode ? ' and the code' : '') + (myexUsesMic(item) ? ', allow the microphone,' : '') + ' and start. Good luck! 🍀');
   } else lines.push('Open the file, type your student ID' + (item.requiredCode ? ' and the code' : '') + ', and start. Good luck! 🍀');
   return lines.join('\n');
 }
@@ -452,7 +467,7 @@ async function shareRecentExercise(idx) {
     if (!note) return;
     const until = taPlayUntil(it);
     note.innerHTML = '🔗 <b>The link works until ' + (until ? until.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }) : '—') + '</b> (7 days), on any phone — iPhones too. ' +
-      (it.typeLabel === 'Pronunciation' ? 'Pronunciation needs the microphone, which only works from the link (in Chrome), so send the message rather than the file. ' : '') +
+      (myexUsesMic(it) ? it.typeLabel + ' needs the microphone, which only works from the link (in Chrome), so send the message rather than the file. ' : '') +
       'After that it\'s deleted; share again for a new one.';
   };
   let online = Promise.resolve(true);

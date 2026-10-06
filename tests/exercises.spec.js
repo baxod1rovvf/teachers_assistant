@@ -70,7 +70,7 @@ const FAKE_SPEECH = `(() => {
 const ANDROID = 'Mozilla/5.0 (Linux; Android 13; SM-A145F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Mobile Safari/537.36';
 
 test.describe('Pronunciation microphone', () => {
-  for (const tpl of ['PRONUNCIATION_FLASH_TEMPLATE', 'PRONUNCIATION_GAME_TEMPLATE']) {
+  for (const tpl of ['PRONUNCIATION_FLASH_TEMPLATE', 'ROCKET_GAME_TEMPLATE']) {
     for (const [mode, ua, expected] of [
       ['desktop', undefined, /Microphone is on/],
       ['android', ANDROID, /Microphone is on/],            // the phone bug fixed on 2026-09-30
