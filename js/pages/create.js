@@ -97,6 +97,7 @@ function renumberRows(container) {
   if (container.id === 'ck-rows') document.getElementById('ck-count').innerText = container.children.length;
   if (container.id === 'cg-rows') document.getElementById('cg-count').innerText = container.children.length;
   if (container.id === 'rk-rows') document.getElementById('rk-count').innerText = container.children.length;
+  if (container.id === 'mz-rows') document.getElementById('mz-count').innerText = container.children.length;
   if (container.id === 'sn-rows') document.getElementById('sn-count-display').innerText = container.children.length;
 }
 
@@ -313,6 +314,7 @@ const HWC_TYPES = [
   { key: 'spelling', label: 'Spelling', icon: '\ud83d\udd24', color: '#8b7bf7', img: 'spelling', createFn: 'createSpelling' },
   { key: 'canknock', label: 'Can Knockdown', icon: '\ud83e\udd6b', color: '#f03a52', img: 'canknock', createFn: 'createCanKnockdown' },
   { key: 'rocket', label: 'Rocket Game', icon: '\ud83d\ude80', color: '#5b7cfa', img: 'rocket', createFn: 'createRocketGame' },
+  { key: 'maze', label: 'Maze', icon: '\ud83c\udf00', color: '#c9a35a', img: 'maze', createFn: 'createMaze' },
   { key: 'cargame', label: 'Car Game', icon: '\ud83d\ude97', color: '#e0a526', img: 'cargame', createFn: 'createCarGame' },
   { key: 'test', label: 'Test', icon: '\u2705', color: '#ef5f74', img: 'test', createFn: 'createTest' },
   { key: 'sentences', label: 'Sentences', icon: '\u270d\ufe0f', color: '#4f9de0', img: 'sentences', createFn: 'createSentences' },
@@ -333,7 +335,7 @@ let hwcRoundOriginNext = null;
    round 1. Later rounds hide those fields and are built with the set's
    values; in the student file every round gives 0 points except the last,
    which gives the set's points once the whole set is finished. */
-const HWC_PREFIX = { wordorder: 'wo', makeaword: 'maw', flashcard: 'fc', pronunciation: 'pr', spelling: 'sp', canknock: 'ck', cargame: 'cg', rocket: 'rk', test: 'ts',
+const HWC_PREFIX = { wordorder: 'wo', makeaword: 'maw', flashcard: 'fc', pronunciation: 'pr', spelling: 'sp', canknock: 'ck', cargame: 'cg', rocket: 'rk', maze: 'mz', test: 'ts',
   sentences: 'sn', bilingual: 'br', engcontent: 'ec', dictation: 'dc', 'ielts-listening': 'il', 'ielts-reading': 'ir' };
 function hwcSetPoints() {
   const m = hwcRounds.length ? hwcRounds[0].html.match(/const POINTS_AWARD = (-?\d+(?:\.\d+)?);/) : null;
@@ -2682,6 +2684,90 @@ function createRocketGame() {
   showToast('"' + title + '" downloaded!', 'ok');
 }
 
+/* ================= MAZE =================
+   A quiz in a 3D labyrinth: the teacher writes questions, each with a right
+   and a wrong answer. The student sees the labyrinth from above (a light in
+   the centre), then walks it; at every turn a question waits, its answers
+   point left and right — the right one leads on, the wrong one into a dead
+   end (game over). Every try has a new order and a new labyrinth. */
+const mzRows = document.getElementById('mz-rows');
+function makeMazeRow(values) {
+  values = values || [];
+  const row = document.createElement('div');
+  row.className = 'row-item maze-row';
+  const idx = document.createElement('div');
+  idx.className = 'idx';
+  const fields = document.createElement('div');
+  fields.className = 'maze-fields';
+  const q = document.createElement('input');
+  q.type = 'text'; q.className = 'mz-q'; q.placeholder = 'Question (e.g. Past of "go"?)'; q.value = values[0] || '';
+  const answers = document.createElement('div');
+  answers.className = 'maze-answers';
+  const a = document.createElement('input');
+  a.type = 'text'; a.className = 'mz-right'; a.placeholder = '✅ Right answer (e.g. went)'; a.value = values[1] || '';
+  const b = document.createElement('input');
+  b.type = 'text'; b.className = 'mz-wrong'; b.placeholder = '❌ Wrong answer (e.g. goed)'; b.value = values[2] || '';
+  answers.appendChild(a); answers.appendChild(b);
+  fields.appendChild(q); fields.appendChild(answers);
+  const removeBtn = document.createElement('button');
+  removeBtn.className = 'remove-btn'; removeBtn.type = 'button'; removeBtn.innerHTML = '&times;';
+  removeBtn.onclick = () => { row.remove(); renumberRows(mzRows); };
+  row.appendChild(idx); row.appendChild(fields); row.appendChild(removeBtn);
+  mzRows.appendChild(row);
+  renumberRows(mzRows);
+  return q;
+}
+function addMazeRow() { makeMazeRow().focus(); }
+function readMazeRows() {
+  return Array.from(mzRows.querySelectorAll('.maze-row')).map(r => ({
+    q: r.querySelector('.mz-q').value.trim(),
+    a: r.querySelector('.mz-right').value.trim(),
+    b: r.querySelector('.mz-wrong').value.trim()
+  }));
+}
+function resetMazeForm() {
+  document.getElementById('mz-title').value = '';
+  document.getElementById('mz-points').value = '10';
+  document.getElementById('mz-code').value = '';
+  document.getElementById('mz-timer').value = '';
+  mzRows.innerHTML = '';
+  for (let i = 0; i < 3; i++) makeMazeRow();
+}
+resetMazeForm();
+
+function createMaze() {
+  const title = document.getElementById('mz-title').value.trim();
+  if (!title) { showToast('Please enter a title for the exercise.'); return; }
+  const rows = readMazeRows().filter(r => r.q || r.a || r.b);
+  const half = rows.findIndex(r => !r.q || !r.a || !r.b);
+  if (half !== -1) { showToast('Question ' + (half + 1) + ' needs the question, a right answer and a wrong answer.'); return; }
+  if (rows.length < 2) { showToast('Please write at least 2 questions.'); return; }
+  const mode = 'nocode';
+  const classCode = setActiveClassCode(generateClassCode());
+  let html = MAZE_TEMPLATE;
+  html = html.split('__EXERCISE_TITLE__').join(escapeForTemplateText(title));
+  // "<" written as <, so a question can never end the file's <script> early
+  html = html.split('__QUESTIONS_JSON__').join(JSON.stringify(rows).replace(/</g, '\\u003c'));
+  html = html.split('__EXERCISE_CODE__').join(classCode);
+  html = html.split('__FILE_BUILT_AT__').join(new Date().toISOString());
+  html = html.split('__ACCESS_MODE__').join(mode);
+  html = html.split('__ACCESS_ID_MODE__').join('unified');
+  const __requiredCode_mz = (document.getElementById('mz-code') || {value:''}).value.trim();
+  html = html.split('__REQUIRED_CODE__').join(escapeForHtml(__requiredCode_mz));
+  const __timerMin_mz = parseFloat((document.getElementById('mz-timer') || {value:''}).value);
+  html = html.split('__TIME_LIMIT_MINUTES__').join(isNaN(__timerMin_mz) || __timerMin_mz <= 0 ? '0' : String(__timerMin_mz));
+  html = html.split('__POINTS_AWARD__').join(String(readPointsAward('mz')));
+  const __uid = generateExerciseUid();
+  html = html.split('__EXERCISE_UID__').join(__uid);
+  html = html.split('__BOARD_CODE__').join(getPointsBoardCode());
+  html = html.split('__ROSTER_JSON__').join(JSON.stringify(getPointsRoster()));
+  html = html.split('__POINTS_TYPE_LABEL__').join('Maze');
+  pushRecentExercise({ title: title, typeLabel: 'Maze', code: classCode, uid: __uid, html: html, requiredCode: __requiredCode_mz,
+    contentSummary: rows.map(r => r.q + ' | ' + r.a + ' | ' + r.b).join('\n') });
+  downloadFile(typedFilename('Maze', title, 'maze'), html);
+  showToast('"' + title + '" downloaded!', 'ok');
+}
+
 /* ================= SPELLING + TEST BUILDERS ================= */
 
 /* ---------- plausible misspellings ---------- */
@@ -4921,6 +5007,14 @@ const TA_BUILDER_ROWS = {
       updatePronCount();
     }
   },
+  maze: {
+    get: () => readMazeRows().map(r => [r.q, r.a, r.b]),
+    set: v => {
+      mzRows.innerHTML = '';
+      (v || []).forEach(r => makeMazeRow(r));
+      renumberRows(mzRows);
+    }
+  },
   rocket: {
     get: () => taRowInputs(rkRows, '.pron-row').map(r => [r.querySelector('.pr-word').value, r.querySelector('.pr-ipa').value, r.querySelector('.pr-icon').value]),
     set: v => {
@@ -5335,7 +5429,7 @@ window.taSnapshotForMyExercises = function () {
   ['presentation', 'resetPresentationForm'], ['pronunciation', 'resetPronunciationForm'], ['sentences', 'resetSentencesForm'],
   ['bilingual', 'resetBilingualForm'], ['engcontent', 'resetEnglishContentForm'], ['dictation', 'resetDictationForm'], ['jungle', 'resetJungleForm'], ['bamboozle', 'resetBamboozleForm'],
   ['ielts-listening', 'resetIeltsListeningForm'], ['ielts-reading', 'resetIeltsReadingForm'], ['ielts-writing', 'resetIeltsWritingForm'],
-  ['spelling', 'resetSpellingForm'], ['canknock', 'resetCanKnockForm'], ['cargame', 'resetCarGameForm'], ['rocket', 'resetRocketForm'], ['test', 'resetTestForm']
+  ['spelling', 'resetSpellingForm'], ['canknock', 'resetCanKnockForm'], ['cargame', 'resetCarGameForm'], ['rocket', 'resetRocketForm'], ['maze', 'resetMazeForm'], ['test', 'resetTestForm']
 ].forEach(function (pair) {
   const tab = pair[0], reset = window[pair[1]];
   window[pair[1]] = function () {

@@ -575,6 +575,15 @@ body.light-theme .picker-icon-test { background-image: url(../images/icons/creat
 .picker-icon-canknock { background-image: url(../images/icons/create/canknock.png); }
 .picker-icon-cargame { background-image: url(../images/icons/create/cargame.png); }
 .picker-icon-rocket { background-image: url(../images/icons/create/rocket.png); }
+.picker-icon-maze { background-image: url(../images/icons/create/maze.png); }
+/* Maze builder: a question, then its right and wrong answer */
+.row-item.maze-row { align-items: flex-start; }
+.row-item.maze-row .maze-fields { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.row-item.maze-row .maze-answers { display: flex; gap: 8px; }
+.row-item.maze-row .maze-answers input { flex: 1; min-width: 0; }
+.row-item.maze-row input.mz-right { border-color: rgba(14,125,107,.55); }
+.row-item.maze-row input.mz-wrong { border-color: rgba(194,43,62,.5); }
+@media (max-width: 560px) { .row-item.maze-row .maze-answers { flex-direction: column; } }
 .picker-icon-bamboozle { background-image: url(../images/icons/create/bamboozle.png); }
 .tab-btn .exercise-badge.picker-icon { background-color: transparent !important; background-size: contain; background-repeat: no-repeat; background-position: center; box-shadow: none; }
 .picker-card-sub { font-size: 0.78rem; color: var(--ink-faint); margin-top: 2px; }

@@ -193,6 +193,7 @@ window.TA_I18N_ROWS = [
   ['Drag words into the right order', 'Soʻzlarni toʻgʻri tartibga qoʻyish', 'Расставь слова в правильном порядке'],
   ['Drag letters to spell each word', 'Harflardan soʻz yasash', 'Собери слово из букв'],
   ['Pick the correct spelling', 'Toʻgʻri yozilishini tanlash', 'Выбери правильное написание'],
+  ['Answer at each turn, find the light', 'Har burilishda javob ber, nurni top', 'Отвечай на каждом повороте — найди свет'],
   ['Say each word to fly the rocket on', 'Har bir soʻzni ayt — raketa uchib ketsin', 'Произнеси слово — и ракета летит дальше'],
   ['Pick the meaning, drive past the signs', 'Maʼnosini tanla, belgilar yonidan oʻt', 'Выбери значение — объезжай знаки'],
   ['Students write their own sentences', 'Oʻquvchilar oʻz gaplarini yozadi', 'Ученики пишут свои предложения'],

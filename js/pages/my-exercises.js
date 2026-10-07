@@ -22,7 +22,7 @@ let myexGroupFilter = null; // null = every group, '' = no group, else a group i
 // the exercise type's picture (the same as on the Create page), for its card and its filter chip
 const MYEX_TYPE_ICONS = {
   'Flashcard': 'flashcard', 'Word Order': 'wordorder', 'Make a Word': 'makeaword', 'Spelling': 'spelling',
-  'Can Knockdown': 'canknock', 'Car Game': 'cargame', 'Rocket Game': 'rocket', 'Sentences': 'sentences', 'Bidirectional Language': 'bilingual',
+  'Can Knockdown': 'canknock', 'Car Game': 'cargame', 'Rocket Game': 'rocket', 'Maze': 'maze', 'Sentences': 'sentences', 'Bidirectional Language': 'bilingual',
   'English Content': 'engcontent', 'Dictation': 'listening', 'Jungle': 'jungle', 'Bamboozle': 'bamboozle',
   'Presentation': 'presentation', 'Pronunciation': 'pronunciation', 'Test': 'test',
   'IELTS Listening': 'listening', 'IELTS Reading': 'reading', 'IELTS Writing': 'sentences',
@@ -314,7 +314,8 @@ const MYEX_SUMMARY_BUILDERS = {
   'Flashcard': { tab: 'flashcard', p: 'fc', row: line => { const i = line.indexOf(' - '); return i === -1 ? [line, ''] : [line.slice(0, i), line.slice(i + 3)]; } },
   'Can Knockdown': { tab: 'canknock', p: 'ck', row: line => { const i = line.indexOf(' - '); return i === -1 ? [line, ''] : [line.slice(0, i), line.slice(i + 3)]; } },
   'Car Game': { tab: 'cargame', p: 'cg', row: line => { const i = line.indexOf(' - '); return i === -1 ? [line, ''] : [line.slice(0, i), line.slice(i + 3)]; } },
-  'Rocket Game': { tab: 'rocket', p: 'rk', row: line => [line, '', ''] }
+  'Rocket Game': { tab: 'rocket', p: 'rk', row: line => [line, '', ''] },
+  'Maze': { tab: 'maze', p: 'mz', row: line => line.split(' | ') }
 };
 
 // Flashcard's old "Car game" design is its own exercise since 2026-10-04: open those in the Car Game builder.

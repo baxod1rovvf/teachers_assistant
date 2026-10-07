@@ -429,6 +429,21 @@ real students' names or results into the repository (it is public).
   wrong try. Results have `type: 'Rocket Game'`. It has "Open in Chrome", so it goes
   online as soon as it's made (like Pronunciation). "Use again" on an old Pronunciation file with `pr-design: 'game'` opens the
   Rocket Game builder (`rocketFromPronunciation` / `builderFormNow` in my-exercises.js, set rounds too). `tests/rocket.spec.js`.
+- **Maze** (2026-10-07, tab `maze`, prefix `mz`, type label "Maze", icon `images/icons/create/maze.png` — drawn by Claude, the
+  teacher may send their own; "Ready to use", after Rocket Game): a quiz in a 3D labyrinth. Builder: questions, each with a
+  ✅ right and a ❌ wrong answer (`makeMazeRow`, 3 empty rows to start, at least 2). `createMaze` builds `MAZE_TEMPLATE`
+  (questions as `__QUESTIONS_JSON__` `[{q,a,b}]`, `<` written as `\u003c`). The file draws with **three.js r128**, loaded from the
+  teacher's site (`js/vendor/three-0.128.0/three.min.js`, MIT) via `APP_URL_FOR_MZ`, else cdnjs/jsdelivr; without it or without
+  WebGL the game still works (questions only, `#mzNoGl` note). `buildMaze(N)` makes a new labyrinth every try: a cell grid
+  (centre = the light), the route built backwards from the centre — straight piece, turn, … one T-turn per question, the way
+  straight on (backwards) a 1-cell dead end, then straight out to the edge (the entrance); the rest is ordinary maze passages that
+  never open onto the route. Seen from above (slow orbit, also behind the start screen), then `flyToStart` swoops to the entrance;
+  the player walks on rails to just before each turn (`goToJunction`, 2.2 before the cell): the question on the wall ahead, the two
+  answers on the walls left/right (canvas-text planes) + HTML banner/buttons (`#mzQuestion`, `#mzOptL/R`, ← → keys). Right → turn,
+  walk on; wrong → turn into the dead end, "GAME OVER" on its wall → end screen with the right answer and "🔄 Try again — new
+  order" (`newOrder` never repeats the last order). Every finished try sends a result (`type: 'Maze'`, `score` = right answers ÷
+  questions, `won`, `attempt`, `mistakes`); points only for a win. `window.__mzFast` speeds the animations (tests).
+  `tests/maze.spec.js` (also checks 16 labyrinths' shape).
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
   too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except

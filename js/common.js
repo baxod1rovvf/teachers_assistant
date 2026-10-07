@@ -61,8 +61,8 @@ const TA_PAGES = {
   results: 'results.html',
   settings: 'settings.html'
 };
-const BUILDER_TABS = ['wordorder', 'makeaword', 'flashcard', 'presentation', 'pronunciation', 'spelling', 'canknock', 'cargame', 'rocket', 'test', 'sentences', 'bilingual', 'engcontent', 'dictation', 'jungle', 'bamboozle', 'ielts-listening', 'ielts-reading', 'ielts-writing', 'ielts-speaking'];
-const READY_TABS = ['flashcard', 'wordorder', 'makeaword', 'spelling', 'canknock', 'cargame', 'pronunciation', 'rocket', 'sentences', 'bilingual', 'engcontent', 'dictation', 'jungle', 'bamboozle'];
+const BUILDER_TABS = ['wordorder', 'makeaword', 'flashcard', 'presentation', 'pronunciation', 'spelling', 'canknock', 'cargame', 'rocket', 'maze', 'test', 'sentences', 'bilingual', 'engcontent', 'dictation', 'jungle', 'bamboozle', 'ielts-listening', 'ielts-reading', 'ielts-writing', 'ielts-speaking'];
+const READY_TABS = ['flashcard', 'wordorder', 'makeaword', 'spelling', 'canknock', 'cargame', 'pronunciation', 'rocket', 'maze', 'sentences', 'bilingual', 'engcontent', 'dictation', 'jungle', 'bamboozle'];
 const INPROCESS_TABS = ['presentation', 'test'];
 const CREATE_TABS = READY_TABS.concat(INPROCESS_TABS);
 
@@ -2822,7 +2822,7 @@ const AI_ROBOT_TYPE_FAQ = {
     { q: 'How does Bamboozle work?', a: 'A team quiz for the classroom screen, played with you (no student IDs). 2–4 teams pick numbered cards that hide your questions and their points. Tap "🔁 Make it a Jungle" to use the same questions in Jungle.' }
   ]
 };
-const AI_ROBOT_BUILDER_TABS = ['flashcard', 'wordorder', 'makeaword', 'spelling', 'canknock', 'cargame', 'sentences', 'bilingual', 'engcontent', 'dictation', 'jungle', 'bamboozle', 'presentation', 'pronunciation', 'rocket', 'test'];
+const AI_ROBOT_BUILDER_TABS = ['flashcard', 'wordorder', 'makeaword', 'spelling', 'canknock', 'cargame', 'sentences', 'bilingual', 'engcontent', 'dictation', 'jungle', 'bamboozle', 'presentation', 'pronunciation', 'rocket', 'maze', 'test'];
 function getAiRobotFaqForTab(tab) {
   if (tab === 'hwcround') tab = 'hwcbuilder';
   if (AI_ROBOT_FAQ_BY_TAB[tab]) return AI_ROBOT_FAQ_BY_TAB[tab];
@@ -3280,7 +3280,7 @@ const TA_TAB_LABELS = {
   flashcard: ['🎴', 'Flashcard'], wordorder: ['🧩', 'Word Order'], makeaword: ['🧱', 'Make a Word'],
   spelling: ['🔤', 'Spelling'], canknock: ['🥫', 'Can Knockdown'], cargame: ['🚗', 'Car Game'], sentences: ['✍️', 'Sentences'], bilingual: ['📖', 'Bidirectional Language'],
   engcontent: ['🎬', 'English Content'], dictation: ['🎧', 'Dictation'], jungle: ['🌴', 'Jungle'], bamboozle: ['🎯', 'Bamboozle'], presentation: ['🖥️', 'Presentation'],
-  pronunciation: ['🎙️', 'Pronunciation'], rocket: ['🚀', 'Rocket Game'], test: ['✅', 'Test'], 'ielts-listening': ['🎧', 'IELTS Listening'],
+  pronunciation: ['🎙️', 'Pronunciation'], rocket: ['🚀', 'Rocket Game'], maze: ['🌀', 'Maze'], test: ['✅', 'Test'], 'ielts-listening': ['🎧', 'IELTS Listening'],
   'ielts-reading': ['📗', 'IELTS Reading'], 'ielts-writing': ['✍️', 'IELTS Writing']
 };
 
