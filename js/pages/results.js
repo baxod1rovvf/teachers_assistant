@@ -500,6 +500,8 @@ function renderResultsTable(codeOverride) {
           '<button type="button" class="sentence-rate-chip' + (stars ? ' rated' : '') + '" data-key="' + escapeForHtml(resultSignature(r)) + '" onclick="viewSentenceResult(' + idx + ')" title="Rate these sentences (1–5 stars)">' + (stars ? '★ ' + stars + '/5' : '☆ Rate') + '</button>';
       } else if ((r.type === 'BilingualReader' || r.type === 'EnglishContent') && typeof r.notes === 'string' && r.notes.trim()) {
         viewBtn = '<button class="res-view-btn" type="button" onclick="viewNotesResult(' + idx + ')">👁 View Notes</button>';
+      } else if (r.type === 'Maze' && Array.isArray(r.tries) && r.tries.length) {
+        viewBtn = '<button class="res-view-btn" type="button" onclick="viewMazeResult(' + idx + ')">👁 ' + r.tries.length + (r.tries.length === 1 ? ' attempt' : ' attempts') + '</button>';
       } else if (r.type === 'Dictation' && typeof r.dictationFeedback === 'string' && r.dictationFeedback.trim()) {
         viewBtn = '<button class="res-view-btn" type="button" onclick="viewDictationResult(' + idx + ')">👁 View</button>';
       }

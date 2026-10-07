@@ -1611,6 +1611,39 @@ function viewNotesResult(idx) {
   modal.classList.add('show');
 }
 
+/* ================= MAZE: EVERY TRY =================
+   A Maze result is sent once, when the student ends the maze (found the light,
+   stopped, or ran out of time), with each try in it: how far it got and the
+   question that ended it. */
+function taMazeTriesHtml(r) {
+  const fmt = s => { s = Math.max(0, Math.round(s || 0)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); };
+  const tries = Array.isArray(r.tries) ? r.tries : [];
+  const won = tries.some(t => t.won);
+  return '<div class="mz-tries-head">' +
+      '<span class="dd-chip mistakes">' + tries.length + (tries.length === 1 ? ' attempt' : ' attempts') + '</span>' +
+      '<span class="dd-chip ' + (won ? 'ok' : 'wrong') + '">' + (won ? '🏆 Found the light' : '🚪 Didn\'t reach the light') + '</span>' +
+    '</div>' +
+    '<ol class="mz-tries">' + tries.map(t => {
+      const how = t.won ? '🏆 Found the light'
+        : t.end === 'time' ? '⏰ Time ran out'
+        : '💀 Game over at “' + escapeForHtml(t.q || '') + '” — chose <b>' + escapeForHtml(t.chose || '') + '</b> (right: <b>' + escapeForHtml(t.right || '') + '</b>)';
+      return '<li class="' + (t.won ? 'won' : 'lost') + '"><span class="mz-try-n">Attempt ' + (t.n || '') + '</span>' +
+        '<span class="mz-try-how">' + how + '</span>' +
+        '<span class="mz-try-score">' + (t.correct || 0) + ' / ' + (t.total || 0) + ' · ' + fmt(t.seconds) + '</span></li>';
+    }).join('') + '</ol>';
+}
+function viewMazeResult(idx) {
+  const r = (window.__lastResultsMatches || [])[idx];
+  if (!r) return;
+  const modal = document.getElementById('sentenceViewModal');
+  const title = document.getElementById('sentenceViewTitle');
+  const body = document.getElementById('sentenceViewBody');
+  if (!modal || !title || !body) return;
+  title.textContent = (r.name || 'Student') + ' — ' + (r.title || 'Maze');
+  body.innerHTML = taMazeTriesHtml(r);
+  modal.classList.add('show');
+}
+
 /* ================= DICTATION ANSWERS, READABLE =================
    The original text with the student's mistakes marked on it: correct words
    plain, a wrong word shows the right word with what the student typed above

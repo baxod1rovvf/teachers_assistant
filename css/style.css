@@ -2434,3 +2434,13 @@ body.glass-ui .tb-profile-menu { background: color-mix(in srgb, var(--surface) 8
   .hero-content h1 span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .hero-robot-anim { width: 40px; height: 40px; }
 }
+
+/* Maze results: each attempt (👁 in Results) */
+.mz-tries-head { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.mz-tries { list-style: none; display: flex; flex-direction: column; gap: 8px; padding: 0; margin: 0; }
+.mz-tries li { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 10px 14px; border-radius: 12px;
+  background: var(--surface-2, rgba(128,128,128,.08)); border-left: 4px solid var(--danger, #C22B3E); font-size: .92rem; }
+.mz-tries li.won { border-left-color: var(--success, #0E7D6B); }
+.mz-try-n { font-weight: 800; white-space: nowrap; }
+.mz-try-score { font-weight: 700; color: var(--ink-faint); white-space: nowrap; }
+@media (max-width: 560px) { .mz-tries li { grid-template-columns: 1fr; gap: 4px; } }
