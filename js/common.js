@@ -2766,7 +2766,8 @@ const AI_ROBOT_FAQ_BY_TAB = {
   main: aiFaq([
     { q: 'How do I change the colours or the look?', a: 'In the top bar, tap the design button (three coloured circles, next to 🔍). Pick a Style (Classic or Glass) and a colour Design. Four designs are for day and two for night — picking one also switches day or night.' },
     { q: 'What is the note about students who finished exercises?', a: 'When you open the app, a note lists your students who finished an exercise in the last 7 days that you haven\'t checked yet. Tap an exercise under a student\'s name (📊) to open that exercise\'s results. The note stays open, so you can open the next student\'s exercise too. Tap "Checked" for one student, or "All checked". Closing it with ✕ only hides it until next time.' },
-    { q: 'How do I change the language?', a: 'Tap your picture at the top right, then your name. Under 🌐 Language pick English, Oʻzbekcha or Русский. Only the app\'s menus and buttons change — exercises for students stay in English.' }
+    { q: 'How do I change the language?', a: 'Tap your picture at the top right, then your name. Under 🌐 Language pick English, Oʻzbekcha or Русский. Only the app\'s menus and buttons change — exercises for students stay in English.' },
+    { q: 'How do I refresh the app on my phone?', a: 'Tap ⟳ at the top of the screen, next to 🔍. It saves anything still waiting and loads the newest version. On a computer press Ctrl+R (or F5).' }
   ]),
   createpicker: aiFaq([
     { q: 'Can I combine several exercises into one?', a: 'Yes — that\'s Homework & Class on this page. Choose Homework (students do it on their own) or Class (used together in a lesson), build round 1, tap "➕ Add Another Exercise" for the next round, then "Create ⬇".' },
@@ -2801,7 +2802,8 @@ const AI_ROBOT_FAQ_BY_TAB = {
   ]),
   myexercises: aiFaq([
     { q: 'Can I get the link of an exercise?', a: 'Yes — tap ⋯ on its card, then "🔗 Copy link", and paste the link into your class chat (it also works on iPhones). The link works for 7 days from the first time you copy it; after that the app says "This link has expired". To share it again, tap ⋯ → "✏️ Use again" to make a new copy (it gets a new link), or "📥 Redownload" the file and send that.' },
-    { q: 'How do I take one exercise out of a set?', a: 'On a Homework/Class set tap ⋯, then "📤 Get one exercise". Download one of its exercises, or add it to My Exercises on its own. The set stays as it is.' }
+    { q: 'How do I take one exercise out of a set?', a: 'On a Homework/Class set tap ⋯, then "📤 Get one exercise". Download one of its exercises, or add it to My Exercises on its own. The set stays as it is.' },
+    { q: 'Why are my exercises under dates?', a: 'They are grouped by the day you made them — Today, Yesterday, then each earlier day — newest first. The 🔍 search and the type and group buttons still work across all days.' }
   ]),
   students: aiFaq([
     { q: 'What is the Students list for?', a: 'Give each student a unique ID — this is what they type into an exercise instead of a name. Only students on this list count in Statistics, Top 5 and "Didn\'t do it".' },
@@ -2882,6 +2884,12 @@ const AI_ROBOT_TYPE_FAQ = {
   pronunciation: [
     { q: 'How does Pronunciation work?', a: 'Type only the words — the app works out the pronunciation. Students say each word into the microphone and see a percentage plus which sounds were right (green) and wrong (red). Works best in Chrome with the internet on.' },
     { q: 'The microphone doesn\'t work on phones — why?', a: 'Phones only allow the microphone on a web page, and not inside Telegram or Instagram. In My Exercises tap ⋯ → "🔗 Copy link", send students that link and tell them to open it in Chrome (or Safari).' }
+  ],
+  rocket: [
+    { q: 'How does Rocket Game work?', a: 'Type the words — the pronunciation fills in by itself. For each word a red laser blocks the rocket: students hold 🎤 and say the word; said right, the laser switches off and the rocket flies on. They have 3 hearts — each wrong try costs one. Send the link and tell them to open it in Chrome.' }
+  ],
+  maze: [
+    { q: 'How does Maze work?', a: 'Write questions, each with a right and a wrong answer. Students see the labyrinth from above, then walk it: at every turn the two answers point left and right. The right one leads on towards the light in the centre; the wrong one ends in GAME OVER, and they can try again with a new order. You get one result when they finish — 👁 in Results shows every attempt.' }
   ],
   presentation: [
     { q: 'How does Presentation work?', a: 'Each slide is its own section: add text blocks, drag them anywhere and colour each one. Download the deck to show in class.' }

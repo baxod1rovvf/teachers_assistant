@@ -731,6 +731,26 @@ window.TA_I18N_ROWS = [
    newer buttons are only in English for now). tests/robot.spec.js checks that
    every question has its translations. */
 window.TA_ROBOT_I18N = {
+  'How do I refresh the app on my phone?': [
+    'Telefonda ilovani qanday yangilayman?',
+    'Ekranning yuqorisidagi ⟳ tugmasini bosing (🔍 yonida). U kutib turgan narsalarni saqlaydi va eng yangi versiyani ochadi. Kompyuterda Ctrl+R (yoki F5) ni bosing.',
+    'Как обновить приложение на телефоне?',
+    'Нажмите ⟳ вверху экрана, рядом с 🔍. Приложение сохранит всё, что ещё не отправлено, и загрузит новую версию. На компьютере нажмите Ctrl+R (или F5).'],
+  'Why are my exercises under dates?': [
+    'Nega mashqlarim sanalar boʻyicha joylashgan?',
+    'Ular yaratilgan kuniga koʻra guruhlangan — Bugun, Kecha, keyin oldingi har bir kun — eng yangisi birinchi. 🔍 qidiruv va tur hamda guruh tugmalari barcha kunlar boʻyicha ishlayveradi.',
+    'Почему мои упражнения разделены по датам?',
+    'Они сгруппированы по дню создания — Сегодня, Вчера, затем каждый прошлый день — новые сверху. 🔍 поиск и кнопки типа и группы работают по всем дням.'],
+  'How does Rocket Game work?': [
+    '“Raketa oʻyini” qanday ishlaydi?',
+    'Soʻzlarni yozing — talaffuzi oʻzi toʻldiriladi. Har bir soʻz uchun qizil lazer raketani toʻsadi: oʻquvchilar 🎤 ni bosib turib soʻzni aytadi; toʻgʻri aytilsa, lazer oʻchadi va raketa uchib ketadi. Ularda 3 ta yurak bor — har bir notoʻgʻri urinish bittasini oladi. Havolani yuboring va Chrome’da ochishni ayting.',
+    'Как работает «Ракета»?',
+    'Напишите слова — произношение заполнится само. Для каждого слова ракете мешает красный лазер: ученики удерживают 🎤 и произносят слово; если правильно, лазер выключается и ракета летит дальше. У них 3 сердца — каждая ошибка забирает одно. Отправьте ссылку и попросите открыть её в Chrome.'],
+  'How does Maze work?': [
+    '“Labirint” qanday ishlaydi?',
+    'Savollarni yozing, har biriga bitta toʻgʻri va bitta notoʻgʻri javob. Oʻquvchilar labirintni avval yuqoridan koʻradi, keyin ichida yuradi: har bir burilishda ikki javob chap va oʻngni koʻrsatadi. Toʻgʻrisi markazdagi nurga olib boradi; notoʻgʻrisi GAME OVER bilan tugaydi va ular yangi tartibda qayta urinishi mumkin. Tugatganda sizga bitta natija keladi — Natijalardagi 👁 har bir urinishni koʻrsatadi.',
+    'Как работает «Лабиринт»?',
+    'Напишите вопросы, у каждого один правильный и один неправильный ответ. Ученики сначала видят лабиринт сверху, затем идут по нему: на каждом повороте два ответа указывают налево и направо. Правильный ведёт к свету в центре; неправильный заканчивается GAME OVER, и можно попробовать снова в новом порядке. Когда ученик закончит, вам придёт один результат — 👁 в «Результатах» показывает каждую попытку.'],
   'How do Flashcards work?': [
     'Kartochkalar qanday ishlaydi?',
     'Soʻzlarni tarjimasi bilan qoʻshing (tarjimalarni ilova oʻzi ham toʻldira oladi). Oʻquvchilar har bir guruh kartochkalarini varaqlab chiqadi, keyin keyingi guruhdan oldin qisqa test topshiradi.',
