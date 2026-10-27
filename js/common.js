@@ -1296,7 +1296,7 @@ const TA_FILE_FIXES = [
   { id: 'sentencesend', at: '2026-10-02T17:14:00Z', types: /^sentences$|sentence writing/i, minor: true,
     what: 'when a student finishes, the start screen can come back instead of the certificate, with one extra warning' },
   // Each round showed its own ID screen and certificate for ~2 s inside the set (2026-10-27)
-  { id: 'setflash', at: '2026-10-27T23:00:00Z', types: /^(homework|class)$/i, minor: true,
+  { id: 'setflash', at: '2026-10-27T10:01:00Z', types: /^(homework|class)$/i, minor: true,
     what: 'each exercise shows its own ID screen and certificate for a moment, which confuses students' },
   // A round in full screen covered the set's "Next exercise" screen on phones: students saw the round's certificate (2026-10)
   { id: 'setfull', at: '2026-10-27T09:14:00Z', types: /^(homework|class)$/i,
