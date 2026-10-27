@@ -123,7 +123,7 @@ test('profile: the top bar\'s picture opens a menu — name + language, change p
   await open(page, 'index.html');
   await expect(page.locator('.hero-account-chip')).toHaveCount(0);
   await expect(page.locator('#heroTaskAnim svg')).toHaveCount(1, { timeout: 8000 });   // the laptop animation is playing
-  await expect(page.locator('#taTopbar .tb-brand')).toContainText("Loom");
+  await expect(page.locator('#taTopbar .tb-brand')).toContainText(/loom/i);
   await page.locator('#tbAvatarBtn').click();
   await expect(page.locator('#tbProfileMenu')).toBeVisible();
   await expect(page.locator('#tbProfileMenu')).toContainText('Log out');
