@@ -158,6 +158,10 @@ test('Homework set: an exercise counts as done only once its answers are saved',
   await fillRound('Day one');
   await page.evaluate(() => hwcAddExercise());
   await fillRound('Day two');
+  // while filling in round 2, the set's exercises so far are listed above it
+  await expect(page.locator('#hwcInSet .hwc-in-set-chip')).toHaveCount(2);
+  await expect(page.locator('#hwcInSet .hwc-in-set-chip').first()).toContainText('Day one');
+  await expect(page.locator('#hwcInSet .hwc-in-set-chip.now')).toContainText('filling in now');
   const [download] = await Promise.all([page.waitForEvent('download'), page.evaluate(() => hwcFinishAndCreate())]);
   const file = info.outputPath('set.html');
   await download.saveAs(file);
@@ -178,6 +182,9 @@ test('Homework set: an exercise counts as done only once its answers are saved',
   };
   const writes = () => student.evaluate(() => window.__writes.map(w => w.type + ':' + w.id));
 
+  // inside a set a round never goes full screen (on phones it covered the set's "Next exercise" screen)
+  await expect(round.locator('#slide-sentences')).toHaveClass(/active/, { timeout: 8000 });
+  expect(await student.frames().find(f => f.url() === 'about:srcdoc').evaluate(() => !!Element.prototype.requestFullscreen.__taNoop)).toBe(true);
   // round 1: saved by the set itself, then marked done
   await answer();
   await expect(student.locator('#hwcNextScreen')).toHaveClass(/show/, { timeout: 8000 });

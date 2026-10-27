@@ -416,6 +416,17 @@ function renderHwcRoundsBanner() {
     hwcRounds.map((r, i) => '<span class="badge-type hwc-round-badge">' + (i + 1) + '. ' + escapeForHtml(r.label) +
       '<button type="button" class="hwc-round-remove" onclick="hwcRemoveRound(' + i + ')" title="Take this exercise out of the set" aria-label="Remove round ' + (i + 1) + '">✕</button></span>').join('') +
     '</div></div>';
+  renderHwcInSet();
+}
+
+// While filling in a round: what the set has so far, and this one (the teacher asked to see it here too)
+function renderHwcInSet() {
+  const box = document.getElementById('hwcInSet');
+  if (!box) return;
+  const now = hwcCurrentType ? hwcCurrentType.label : '';
+  box.innerHTML = '<span class="hwc-in-set-label">In this ' + (hwcKind === 'class' ? 'class' : 'homework') + ':</span>' +
+    hwcRounds.map((r, i) => '<span class="hwc-in-set-chip">' + (i + 1) + '. ' + escapeForHtml(r.label) + '</span>').join('') +
+    (now ? '<span class="hwc-in-set-chip now">' + (hwcRounds.length + 1) + '. ' + escapeForHtml(now) + ' — filling in now</span>' : '');
 }
 
 function hwcRemoveRound(i) {
@@ -460,6 +471,7 @@ function selectHwcType(key) {
   if (typeof taFillGroupSelect === 'function') taFillGroupSelect(type.key);
   hwcMarkSetFields(card, hwcRounds.length > 0);
   renderHwcSetNote();
+  renderHwcInSet();
   switchTo('hwcround');
 }
 
@@ -833,6 +845,12 @@ function hwcRoundHook() {
     });
   }
   try { Object.defineProperty(window, 'submitResultToFirebase', { configurable: true, get: function () { return viaSet; }, set: function () {} }); } catch (err) { /* ignore */ }
+  // The set is in full screen already. A round that put itself in full screen covered the set's own
+  // screens on phones — its certificate stayed, and "Next exercise" was hidden until the phone's back
+  // button (2026-10). Inside a set a round never goes full screen.
+  var noFull = function () { return Promise.resolve(); };
+  noFull.__taNoop = true;
+  try { ['requestFullscreen', 'webkitRequestFullscreen', 'msRequestFullscreen', 'mozRequestFullScreen'].forEach(function (k) { if (Element.prototype[k]) Element.prototype[k] = noFull; }); } catch (err) { /* ignore */ }
 }
 function hwcWithin(promise, ms) {
   return Promise.race([promise, new Promise(function (_, rej) { setTimeout(function () { rej(new Error("timeout")); }, ms); })]);
