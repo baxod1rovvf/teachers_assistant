@@ -465,6 +465,15 @@ real students' names or results into the repository (it is public).
   (`listTitles` REST select title → `getByIds` only for items whose newest version ≠ `ta_sync_seen`; other open devices learn of a
   change from small `TA_SYNC:<login>:SIG` records via `listenSig`, own signals skipped, older than 1 h deleted; on any error the old
   full listener runs). `tests/phone.spec.js`, `tests/sync-light.spec.js`.
+- **One look for every student exercise (2026-10-27)**: `js/student-theme.js` (`TA_STUDENT_THEME_CSS`, loaded on the Create page)
+  is added once to every student exercise file (has `.ta-login-stage`) and every set (`hwcBegin`) by `taApplyStudentTheme` in
+  common.js — in `downloadFile`, `pushRecentExercise` and each round of `buildAndDownloadHwc` (`<style id="ta-student-theme">`
+  before `</body>`, so it comes last). It styles only what all exercises share: the start card (`.ta-login-form` title/`.headline`,
+  one type chip — `.eyebrow` hidden —, 54 px name box, a gradient Start button; `:is(#ta-theme, …)` gives rules an id's weight over
+  templates' own `!important` colours; never `display` on `.ta-input-wrap` — a hidden class-code box must stay hidden), the top-bar
+  toggles, the finish cards (`.certificate-card`, `.certificate-box`, `#endOverlay .panel-card`, `.ta-cert-box`) and a set's screens
+  (light `.ta-screen`, `.ta-btn`, `#hwcBar`, `#hwcReviewBar`). Games' own pictures are untouched; the name tag is hidden on phones.
+  Files made before keep the old look. `tests/student-theme.spec.js`.
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
   too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except

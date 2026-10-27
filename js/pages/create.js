@@ -577,7 +577,7 @@ function buildAndDownloadHwc() {
   const hwcUid = generateExerciseUid();
   const rounds = hwcRounds.map((r, i) => ({
     label: r.label,
-    html: r.html.replace(/const REQUIRED_CODE = "[^"]*";/, 'const REQUIRED_CODE = "";')
+    html: taApplyStudentTheme(r.html).replace(/const REQUIRED_CODE = "[^"]*";/, 'const REQUIRED_CODE = "";')
       // "Open in Chrome" (Pronunciation) opens the whole set's link: the round alone isn't online
       .replace(/(play\.html\?x=' \+ encodeURIComponent\(")[^"]*("\))/g, '$1' + hwcUid + '$2')
       // one points value for the whole set, given by the last round

@@ -602,7 +602,18 @@ function taSweepPlayLinksIfDue() {
   }).catch(() => { /* try again next time */ });
 }
 
+// One look for every student exercise (js/student-theme.js, loaded on the Create page): added to a
+// student's exercise file (its start screen has .ta-login-stage) or a Homework/Class set, once.
+function taApplyStudentTheme(html) {
+  if (typeof html !== 'string' || typeof TA_STUDENT_THEME_CSS === 'undefined') return html;
+  if (html.indexOf('id="ta-student-theme"') !== -1) return html;
+  if (html.indexOf('ta-login-stage') === -1 && html.indexOf('hwcBegin') === -1) return html;
+  const at = html.lastIndexOf('</body>');
+  const style = '<style id="ta-student-theme">' + TA_STUDENT_THEME_CSS + '</style>\n';
+  return at === -1 ? html + style : html.slice(0, at) + style + html.slice(at);
+}
 function downloadFile(filename, content) {
+  content = taApplyStudentTheme(content);
   content = content.split('__TA_APP_URL__').join(TA_APP_URL);
   const blob = new Blob([content], { type: 'text/html' });
   const url = URL.createObjectURL(blob);
@@ -1149,6 +1160,7 @@ function taFreeExerciseCacheSpace(list) {
 }
 
 function pushRecentExercise(entry) {
+  if (entry.html) entry = Object.assign({}, entry, { html: taApplyStudentTheme(entry.html) });
   const list = getRecentExercises();
   const snap = (window.taSnapshotForMyExercises && !entry.mergedItems) ? window.taSnapshotForMyExercises() : null;
   list.unshift({
