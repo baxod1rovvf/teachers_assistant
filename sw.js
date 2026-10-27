@@ -59,8 +59,12 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  // A file with ?v=… never changes (a new version gets a new ?v=): the saved
+  // copy is used as it is, nothing is downloaded again (before 2026-10-27 every visit re-downloaded ~3 MB on phones).
+  const fixed = /[?&]v=/.test(url.search);
   event.respondWith(caches.open(CACHE).then(async cache => {
     const saved = await cache.match(req);
+    if (saved && fixed) return saved;
     const fresh = fetch(req).then(res => { event.waitUntil(saveCopy(req, res.clone())); return res; });
     if (saved) { fresh.catch(() => {}); return saved; }
     return fresh;

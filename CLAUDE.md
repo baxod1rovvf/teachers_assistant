@@ -456,6 +456,15 @@ real students' names or results into the repository (it is public).
   seconds}]`, `attempts`), `score` = 100 if the light was reached, else the best try's %; points only for reaching the light.
   Results → "👁 N attempts" (`viewMazeResult` / `taMazeTriesHtml` in common.js) lists each try. `window.__mzFast` speeds the animations (tests).
   `tests/maze.spec.js` (also checks 16 labyrinths' shape).
+- **Phones (2026-10-27)**: the glass design has no blur on phones (`--glass-blur: none`, more solid panes — dozens of blurred
+  layers made scrolling lag/flicker); ⟳ in the top bar on phones / the installed app (`taRefreshApp`: sends what's waiting, reloads);
+  the installed app opens the section the teacher was on in the last 6 h (`taRememberPage`/`taResumeLastPage`, `ta_last_page`);
+  the hero lottie isn't even downloaded on phones; `sw.js` uses a saved `?v=` file as it is (no background re-download — every
+  visit re-downloaded ~3 MB); Results rows are cards (`td.res-c-*`), a set's student rows put name + "4/4 · %" on one line; the notice
+  stack fits the screen and scrolls; no tap highlight in the top bar; `html, body { overflow-x: clip }`. **Light sync**
+  (`listTitles` REST select title → `getByIds` only for items whose newest version ≠ `ta_sync_seen`; other open devices learn of a
+  change from small `TA_SYNC:<login>:SIG` records via `listenSig`, own signals skipped, older than 1 h deleted; on any error the old
+  full listener runs). `tests/phone.spec.js`, `tests/sync-light.spec.js`.
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
   too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except

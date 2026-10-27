@@ -211,6 +211,9 @@
      and the older versions of that item are deleted once it's saved. */
   var SYNC_CODE = 'TAUSER';
   var SYNC_TYPE = 'TA_SYNC:' + login;
+  var SIG_TYPE = SYNC_TYPE + ':SIG';     // small "something changed" records (the light way, below)
+  var ownVers = {};                      // versions this device uploaded (its own signals are skipped)
+  var sigDocs = {};                      // signal records seen: id -> date
   var cloudVersions = {}; // key -> { ver: { ts, ids: [record ids] } } from the latest cloud read
 
   var uploading = null, failures = 0, retryTimer = null;
@@ -260,7 +263,19 @@
       ids.push(id);
     }
     seen[k] = ver;
+    ownVers[ver] = true;
     saveSeen();
+    // tell the other devices that are open: a small record (they then read only what changed)
+    if (backend.listenSig) {
+      backend.put('tasig_' + (login + '_' + ver).replace(/[^A-Za-z0-9_.-]/g, '-'), {
+        v: 1, code: SYNC_CODE, builtAt: '', type: SIG_TYPE, title: [k, ver, ts].join(SEP),
+        name: '', data: '', score: 0, warnings: 0, timeSeconds: 0, timeDisplay: '00:00', date: new Date().toISOString()
+      }).catch(function () { /* the others still see it at their next visit */ });
+      // signals older than an hour have done their job
+      Object.keys(sigDocs).forEach(function (id) {
+        if (Date.now() - sigDocs[id] > 3600000) { delete sigDocs[id]; backend.remove(id).catch(function () { /* gone */ }); }
+      });
+    }
     // (not "synced" yet: the other devices haven't seen it until it comes back as the cloud's copy)
     // the new version is complete: remove this item's older versions (never a newer one from another device)
     var old = cloudVersions[k] || {};
@@ -369,10 +384,70 @@
     } catch (e) { console.error(e); }
   }
 
+  /* The light way: the names of the cloud records first (a few bytes each), then the full records
+     only of the items whose newest version this device hasn't got yet. */
+  async function lightRead() {
+    var metas = await backend.listTitles(SYNC_CODE, SYNC_TYPE);
+    var best = readCloud(metas);            // without data, every version counts as complete…
+    var need = [];
+    Object.keys(best).forEach(function (k) { if (best[k].ver !== seen[k]) need = need.concat(best[k].ids); });
+    var full = need.length ? await backend.getByIds(need) : [];
+    lastLight = { titles: metas.length, fetched: need.length, at: Date.now() };
+    if (full.some(function (d) { return !d; })) throw new Error('a record went away meanwhile');
+    var byId = {};
+    full.forEach(function (d) { byId[d.__id] = d; });
+    return metas.map(function (m) { return byId[m.__id] || m; });   // …and the changed ones carry their data
+  }
+  var lastLight = null;   // what the last light read did (Settings → Status, tests)
+  var lightTimer = null, lightBusy = false;
+  function lightUpdate() {
+    clearTimeout(lightTimer);
+    lightTimer = setTimeout(async function () {
+      if (lightBusy) { lightUpdate(); return; }
+      lightBusy = true;
+      try {
+        var changed = await merge(await lightRead(), false);
+        if (changed) { refreshScreen(); if (typeof showToast === 'function') showToast('☁️ Updated from your other device', 'ok'); }
+        if (Object.keys(dirty).length) { if (!failures) flush(); } else if (!failures) setStatus('☁️ Synced', 'ok');
+      } catch (e) { console.error('Sync update failed:', e); }
+      lightBusy = false;
+    }, 1500);
+  }
+  async function lightStart() {
+    var docs = await lightRead();
+    var changed = await merge(docs, true);
+    ready = true;
+    await flush();
+    var guard = Number(raw.sessionGet('ta_sync_reloaded_at')) || 0;
+    if (changed && Date.now() - guard > 30000) {
+      raw.sessionSet('ta_sync_reloaded_at', String(Date.now()));
+      location.reload();
+      return;
+    }
+    if (changed) refreshScreen();
+    if (Object.keys(dirty).length) { if (!failures) flush(); } else if (!failures) setStatus('☁️ Synced', 'ok');
+    var firstSig = true;
+    backend.listenSig(SYNC_CODE, SIG_TYPE, function (added, all) {
+      all.forEach(function (d) { sigDocs[d.__id] = Date.parse(d.date) || 0; });
+      if (firstSig) { firstSig = false; return; }   // already covered by the read above
+      var foreign = added.filter(function (d) { var ver = String(d.title || '').split(SEP)[1]; return !ownVers[ver]; });
+      if (foreign.length) lightUpdate();
+    }, function (err) { console.error('Sync signals failed:', err); });
+    // back on the page after a while (a phone that slept): check once
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden && Date.now() - lastLightCheck > 5 * 60000) { lastLightCheck = Date.now(); lightUpdate(); }
+    });
+  }
+  var lastLightCheck = Date.now();
+
   async function start() {
     setStatus('☁️ Syncing…', 'busy');
     backend = await waitBackend();
     if (!backend) { ready = true; setStatus('☁️ Offline — will sync when connected', 'bad'); return; }
+    if (backend.listTitles && backend.getByIds && backend.listenSig) {
+      try { await lightStart(); return; }
+      catch (e) { console.warn('Light sync didn\'t work — reading everything instead:', e); }
+    }
     var first = true;
     backend.listen(SYNC_CODE, SYNC_TYPE, async function (docs) {
       var wasFirst = first; first = false;
@@ -401,6 +476,6 @@
   }
   function syncNow() { failures = 0; clearTimeout(retryTimer); setStatus('☁️ Syncing…', 'busy'); SYNC_KEYS.forEach(function (k) { if (getLocal(k) !== null) dirty[k] = true; }); flush(); }
 
-  window.taSync = { flush: flush, now: syncNow, turnOn: askPasswordAndStart, status: function () { return status; } };
+  window.taSync = { flush: flush, now: syncNow, turnOn: askPasswordAndStart, status: function () { return status; }, light: function () { return lastLight; } };
   if (user.sk) useKey(user.sk);
 })();

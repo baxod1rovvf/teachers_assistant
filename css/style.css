@@ -676,13 +676,20 @@ body.light-theme .picker-icon-test { background-image: url(../images/icons/creat
 .hwc-col-status .res-status-pill { width: fit-content; }
 .hwc-chevron { color: var(--ink-faint); font-size: 0.7rem; flex-shrink: 0; }
 .hwc-student-head .res-score-cell { width: 100%; }
+/* phones: name and "4/4 · 100%" on the first line; ID, checked, punish, time and last seen together on the second */
 @media (max-width: 860px) {
-  .hwc-student-head { grid-template-columns: 1fr; row-gap: 8px; }
   .hwc-list-head { display: none; }
-  .hwc-col-status { justify-content: flex-start; }
-  .hwc-time, .hwc-chevron { justify-self: start; }
-  .hwc-student-head .hwc-total-time, .hwc-student-head .hwc-time { text-align: left; }
+  .hwc-student-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding: 12px 14px; }
+  .hwc-student-head .hwc-col-name { order: 1; flex: 1 1 0; }
+  .hwc-student-head .hwc-col-progress { order: 2; flex: 0 0 auto; width: auto; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+  .hwc-student-head .hwc-col-progress .res-score-bar-track { width: 74px; }
+  .hwc-student-head .hwc-chevron { order: 3; }
+  .hwc-student-head .hwc-col-id { order: 4; flex: 1 1 100%; font-size: .74rem; margin-top: -4px; padding-left: 42px; }
+  .hwc-student-head .hwc-col-status { order: 5; }
+  .hwc-student-head .hwc-col-punish { order: 6; }
+  .hwc-student-head .hwc-total-time { order: 7; font-size: .78rem; text-align: left; }
   .hwc-student-head .hwc-total-time:empty { display: none; }
+  .hwc-student-head .hwc-time { order: 8; margin-left: auto; text-align: right; }
 }
 .wheel-winner-card {
   background: var(--surface-page); border: 1.5px solid var(--border); border-radius: 20px; padding: 36px 46px;
@@ -2450,3 +2457,47 @@ body.glass-ui .tb-profile-menu { background: color-mix(in srgb, var(--surface) 8
 .hwc-in-set-label { font-size: .8rem; font-weight: 800; color: var(--ink-faint); margin-right: 2px; }
 .hwc-in-set-chip { font-size: .8rem; font-weight: 700; padding: 5px 11px; border-radius: 999px; background: var(--surface-sunken); color: var(--ink); }
 .hwc-in-set-chip.now { background: var(--brand); color: #fff; }
+
+/* Results on a phone: each result is a small card — name and score on top, the rest on one line under it */
+@media (max-width: 640px) {
+  .results-table-wrap { overflow: visible; }
+  table.results-table, table.results-table tbody { display: block; }
+  table.results-table thead { display: none; }
+  table.results-table tr { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 10px 12px; margin-bottom: 8px;
+    border: 1.5px solid var(--border); border-radius: 14px; background: var(--surface); }
+  table.results-table td { display: block; padding: 0; border: none; background: none !important; font-size: .8rem; }
+  table.results-table td.res-c-student { order: 1; flex: 1 1 0; min-width: 0; font-size: .88rem; }
+  table.results-table td.res-c-score { order: 2; flex: 0 0 auto; }
+  table.results-table td.res-c-score .res-score-cell { width: 80px; }
+  table.results-table td.res-c-type { order: 3; flex-basis: 100%; height: 0; overflow: hidden; }   /* the type is the same for the whole list */
+  table.results-table td.res-c-time { order: 4; color: var(--ink-soft); }
+  table.results-table td.res-c-time::before { content: '⏱ '; }
+  table.results-table td.res-c-check { order: 5; }
+  table.results-table td.res-c-punish { order: 6; }
+  table.results-table td.res-c-date { order: 7; color: var(--ink-faint); margin-left: auto; }
+  table.results-table td.res-c-view { order: 8; }
+  table.results-table td.res-c-view:has(> span) { display: none; }   /* no 👁 for this kind: no dash */
+  table.results-table tr.punished { border-color: var(--danger); background: var(--danger-surface); }
+  table.results-table tr.punished td:first-child { box-shadow: none; }
+}
+/* phones: notes in the top-right never run past the screen (their buttons stay reachable), no blue flash on taps */
+@media (max-width: 860px) {
+  .notice-stack { left: 10px; right: 10px; width: auto; max-height: calc(100dvh - 68px - 92px); overflow-y: auto; overscroll-behavior: contain; }
+  .done-warn-list { max-height: 30vh; }
+  .done-warn-foot button, .done-warn-foot a.done-warn-results { padding: 10px 14px; font-size: .85rem; }
+}
+html, body { overflow-x: clip; }
+#taTopbar, #taTopbar *, button, a, .tab-btn, .picker-card, .chip { -webkit-tap-highlight-color: transparent; }
+#taTopbar { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+#taTopbar button:focus:not(:focus-visible) { outline: none; }
+
+/* ⟳ refresh: phones and the installed app only (computers have Ctrl+R / F5) */
+.tb-refresh { display: none; }
+@media (max-width: 860px), (display-mode: standalone) { .tb-refresh { display: inline-flex; } }
+.tb-refresh.spinning svg { animation: tbSpin .8s linear infinite; }
+@keyframes tbSpin { to { transform: rotate(360deg); } }
+/* phones: the glass design without its blur — dozens of blurred layers made scrolling lag and flicker (2026-10-27) */
+@media (max-width: 860px), (pointer: coarse) {
+  body.glass-ui { --glass-blur: none; --glass-bg: color-mix(in srgb, var(--surface) 90%, transparent); --glass-bg-hover: color-mix(in srgb, var(--surface) 95%, transparent); }
+  body.glass-ui *, body.glass-ui *::before, body.glass-ui *::after { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}

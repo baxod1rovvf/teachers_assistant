@@ -364,8 +364,30 @@ async function taNavigate(url, fromHistory) {
   const defaultTab = Object.keys(TA_PAGES).find(t => TA_PAGES[t] === file);
   switchTo(hashTab && document.getElementById('panel-' + hashTab) ? hashTab : defaultTab);
   if (!fromHistory) window.scrollTo(0, 0);
+  taRememberPage(file);
 }
 const TA_PAGES_FILES = new Set(Object.values(TA_PAGES));
+/* The installed app (on a phone) opens where the teacher left off, if that was in the last 6 hours —
+   like a phone's own apps (the teacher asked the app to "remember the last visit", 2026-10-27). */
+const LS_LAST_PAGE = 'ta_last_page';
+function taRememberPage(file) {
+  try { localStorage.setItem(LS_LAST_PAGE, JSON.stringify({ file: file, at: Date.now() })); } catch (e) { /* ignore */ }
+}
+function taResumeLastPage() {
+  let standalone = false;
+  try { standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; } catch (e) { /* ignore */ }
+  const here = taPageFileFromPath(location.pathname);
+  let last = null;
+  try { last = JSON.parse(localStorage.getItem(LS_LAST_PAGE) || 'null'); } catch (e) { /* ignore */ }
+  if (standalone && here === 'index.html' && !location.search && !location.hash && !sessionStorage.getItem('ta_resumed') &&
+      last && last.file && last.file !== 'index.html' && TA_PAGES_FILES.has(last.file) && Date.now() - last.at < 6 * 3600000) {
+    try { sessionStorage.setItem('ta_resumed', '1'); } catch (e) { /* ignore */ }
+    taNavigate(last.file);
+    return;
+  }
+  try { sessionStorage.setItem('ta_resumed', '1'); } catch (e) { /* ignore */ }
+  taRememberPage(here);
+}
 
 window.addEventListener('popstate', function () { taNavigate(location.href, true); });
 
@@ -2661,6 +2683,7 @@ window.taCloudCheck = taCloudCheck;
 function initHeroTaskAnim() {
   const el = document.getElementById('heroTaskAnim');
   if (!el || el.dataset.ready || typeof lottie === 'undefined') return;
+  if (TA_PHONE_MQ.matches) return;   // hidden on phones: don't even download it
   el.dataset.ready = '1';
   try {
     lottie.loadAnimation({ container: el, renderer: 'svg', loop: true, autoplay: true, path: 'animations/welcome-computer.json',
@@ -3463,6 +3486,8 @@ function taMountTopBar() {
         '<span class="tb-ic" style="-webkit-mask-image:url(' + t.icon + ');mask-image:url(' + t.icon + ')"></span></a>').join('') +
     '</nav>' +
     '<div class="tb-tools">' +
+      '<button class="tb-tool tb-refresh" id="taRefreshBtn" type="button" onclick="taRefreshApp(this)" title="Refresh" aria-label="Refresh">' +
+        '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button>' +
       '<button class="tb-tool" id="quickSearchBtn" type="button" onclick="openQuickSearch()" title="Search (' + (mac ? '⌘' : 'Ctrl') + ' K)" aria-label="Search">' +
         '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button>' +
       '<div class="hero-design-wrap"><button class="tb-tool hero-design-btn" id="designPickerBtn" type="button" onclick="toggleDesignPicker(event)" title="Change design" aria-label="Change design" aria-expanded="false"><img class="tb-design-img" src="images/icons/nav/design.png" alt=""></button>' +
@@ -3488,6 +3513,13 @@ function taMountTopBar() {
   window.addEventListener('resize', () => taMoveTabBlob(false), { passive: true });
   if (TA_PHONE_MQ.addEventListener) TA_PHONE_MQ.addEventListener('change', () => taMoveTabBlob(false));
 }
+// ⟳ in the top bar (phones and the installed app have no Ctrl+R): saves what's waiting, then reloads
+async function taRefreshApp(btn) {
+  if (btn) btn.classList.add('spinning');
+  try { if (window.taSync && window.taSync.flush) await Promise.race([window.taSync.flush(), new Promise(r => setTimeout(r, 2500))]); } catch (e) { /* reload anyway */ }
+  location.reload();
+}
+window.taRefreshApp = taRefreshApp;
 function taToggleProfileMenu(ev) {
   if (ev) ev.stopPropagation();
   const menu = document.getElementById('tbProfileMenu'), btn = document.getElementById('tbAvatarBtn');
@@ -3614,4 +3646,5 @@ function taStartPage(defaultTab) {
 
   const idle = window.requestIdleCallback || function (fn) { setTimeout(fn, 1500); };
   idle(taPrefetchPages);
+  taResumeLastPage();
 }

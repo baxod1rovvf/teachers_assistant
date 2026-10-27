@@ -1,6 +1,6 @@
 import { initializeApp } from "./vendor/firebase-10.12.5/firebase-app.js";
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "./vendor/firebase-10.12.5/firebase-auth.js";
-import { getFirestore, collection, query, where, onSnapshot, getDocs, getDocsFromServer, deleteDoc, updateDoc, doc, addDoc, setDoc, serverTimestamp, Timestamp } from "./vendor/firebase-10.12.5/firebase-firestore.js";
+import { getFirestore, collection, query, where, onSnapshot, getDocs, getDocsFromServer, deleteDoc, updateDoc, doc, addDoc, setDoc, serverTimestamp, Timestamp, getDocFromServer } from "./vendor/firebase-10.12.5/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCefg2YghdSneABh0ZOUu3-snO4soVw0lA",
@@ -44,7 +44,26 @@ if (db) {
     listen: (code, type, onData, onErr) => onSnapshot(query(collection(db, 'results'), where('code', '==', code), where('type', '==', type)),
       snap => { if (!snap.metadata.hasPendingWrites) onData(snap.docs.map(d => Object.assign({ __id: d.id }, d.data()))); }, e => { taReportDbError(e); if (onErr) onErr(e); }),
     put: (id, data) => setDoc(doc(db, 'results', id), data).catch(e => { taReportDbError(e); throw e; }),
-    remove: id => deleteDoc(doc(db, 'results', id))
+    remove: id => deleteDoc(doc(db, 'results', id)),
+    /* The light way (2026-10-27 — phones re-downloaded every synced item, several MB, at every visit):
+       first only the records' names (title), then the full records of the items that changed. */
+    listTitles: async (code, type) => {
+      const url = 'https://firestore.googleapis.com/v1/projects/' + firebaseConfig.projectId + '/databases/(default)/documents:runQuery?key=' + firebaseConfig.apiKey;
+      const eq = (f, v) => ({ fieldFilter: { field: { fieldPath: f }, op: 'EQUAL', value: { stringValue: v } } });
+      const body = { structuredQuery: { from: [{ collectionId: 'results' }], select: { fields: [{ fieldPath: 'title' }] },
+        where: { compositeFilter: { op: 'AND', filters: [eq('code', code), eq('type', type)] } } } };
+      const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      if (!r.ok) { if (r.status === 429) taReportDbError({ code: 'resource-exhausted' }); throw new Error('titles ' + r.status); }
+      const rows = await r.json();
+      return rows.filter(row => row && row.document).map(row => ({ __id: row.document.name.split('/').pop(), type: type,
+        title: ((row.document.fields || {}).title || {}).stringValue || '' }));
+    },
+    getByIds: ids => Promise.all(ids.map(id => getDocFromServer(doc(db, 'results', id))
+      .then(snap => snap.exists() ? Object.assign({ __id: id }, snap.data()) : null))),
+    // the small "something changed" records other devices leave (only what's added after the first answer matters)
+    listenSig: (code, type, onAdded, onErr) => onSnapshot(query(collection(db, 'results'), where('code', '==', code), where('type', '==', type)),
+      snap => onAdded(snap.docChanges().filter(c => c.type === 'added').map(c => Object.assign({ __id: c.doc.id }, c.doc.data())),
+        snap.docs.map(d => Object.assign({ __id: d.id }, d.data()))), e => { taReportDbError(e); if (onErr) onErr(e); })
   };
 }
 

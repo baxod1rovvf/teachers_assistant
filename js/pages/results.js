@@ -520,14 +520,14 @@ function renderResultsTable(codeOverride) {
       }
       const punishKey = taPunishKey(r.code, st ? st.id : r.name);
       html += '<tr' + (taIsPunished(punishKey) ? ' class="punished"' : '') + '>' +
-        '<td><div class="res-student-cell"><span class="res-avatar" style="background:' + avatarColor + ';">' + escapeForHtml(initials) + '</span><span>' + escapeForHtml(r.name || '—') + (st ? '<span class="res-id-tag">ID ' + escapeForHtml(st.id) + (groupNameFor(st.group) ? ' · ' + escapeForHtml(groupNameFor(st.group)) : '') + '</span>' : '') + '</span></div></td>' +
-        '<td><span class="badge-type">' + escapeForHtml(r.type || '—') + '</span></td>' +
-        '<td>' + scoreCell + '</td>' +
-        '<td>' + escapeForHtml(taTimeText(r)) + '</td>' +
-        '<td>' + taCheckChipHtml([taCompletionKey(r)], taIsChecked(r)) + '</td>' +
-        '<td>' + taPunishChipHtml(punishKey) + '</td>' +
-        '<td>' + fmtDate(r.date) + '</td>' +
-        '<td>' + viewBtn + '</td>' +
+        '<td class="res-c-student"><div class="res-student-cell"><span class="res-avatar" style="background:' + avatarColor + ';">' + escapeForHtml(initials) + '</span><span>' + escapeForHtml(r.name || '—') + (st ? '<span class="res-id-tag">ID ' + escapeForHtml(st.id) + (groupNameFor(st.group) ? ' · ' + escapeForHtml(groupNameFor(st.group)) : '') + '</span>' : '') + '</span></div></td>' +
+        '<td class="res-c-type"><span class="badge-type">' + escapeForHtml(r.type || '—') + '</span></td>' +
+        '<td class="res-c-score">' + scoreCell + '</td>' +
+        '<td class="res-c-time">' + escapeForHtml(taTimeText(r)) + '</td>' +
+        '<td class="res-c-check">' + taCheckChipHtml([taCompletionKey(r)], taIsChecked(r)) + '</td>' +
+        '<td class="res-c-punish">' + taPunishChipHtml(punishKey) + '</td>' +
+        '<td class="res-c-date">' + fmtDate(r.date) + '</td>' +
+        '<td class="res-c-view">' + viewBtn + '</td>' +
         '</tr>';
     });
     html += '</tbody></table>';
