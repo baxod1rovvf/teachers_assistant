@@ -559,14 +559,18 @@ body:not(.light-theme) .dash-card-icon-img.icon-mono { filter: invert(1); }
 .picker-card-title { font-weight: 800; font-size: 1rem; }
 /* Custom icons for the Create picker cards (night variant by default, day variant under .light-theme) */
 .picker-card .exercise-badge.picker-icon { background-color: transparent !important; background-size: contain; background-repeat: no-repeat; background-position: center; box-shadow: none; }
-.picker-icon-flashcard { background-image: url(../images/icons/create/flashcard-night.png); }
-body.light-theme .picker-icon-flashcard { background-image: url(../images/icons/create/flashcard.png); }
-.picker-icon-wordorder { background-image: url(../images/icons/create/wordorder-night.png); }
-body.light-theme .picker-icon-wordorder { background-image: url(../images/icons/create/wordorder.png); }
-.picker-icon-makeaword { background-image: url(../images/icons/create/makeaword-night.png); }
-body.light-theme .picker-icon-makeaword { background-image: url(../images/icons/create/makeaword.png); }
-.picker-icon-spelling { background-image: url(../images/icons/create/spelling-night.png); }
-body.light-theme .picker-icon-spelling { background-image: url(../images/icons/create/spelling.png); }
+/* The teacher's minimal line icons (2026-10-27): one black shape, drawn as a mask in the app's
+   own colours so it shows on the black Night page and the light Day page alike.
+   :is(#ta-mono, …) gives it an id's weight, above the "transparent background" rules of the badges. */
+.picker-icon-flashcard { --mono-ic: url(../images/icons/create/flashcard.png); }
+.picker-icon-wordorder { --mono-ic: url(../images/icons/create/wordorder.png); }
+.picker-icon-makeaword { --mono-ic: url(../images/icons/create/makeaword.png); }
+.picker-icon-spelling { --mono-ic: url(../images/icons/create/spelling.png); }
+.picker-icon-canknock { --mono-ic: url(../images/icons/create/canknock.png); }
+:is(#ta-mono, .picker-icon-flashcard, .picker-icon-wordorder, .picker-icon-makeaword, .picker-icon-spelling, .picker-icon-canknock) {
+  background: var(--grad-brand) !important; box-shadow: none !important;
+  -webkit-mask: var(--mono-ic) center / contain no-repeat; mask: var(--mono-ic) center / contain no-repeat;
+}
 .picker-icon-sentences { background-image: url(../images/icons/create/sentences-night.png); }
 body.light-theme .picker-icon-sentences { background-image: url(../images/icons/create/sentences.png); }
 .picker-icon-bilingual { background-image: url(../images/icons/create/bilingual-night.png); }
@@ -591,7 +595,6 @@ body.light-theme .picker-icon-pronunciation { background-image: url(../images/ic
 body.light-theme .picker-icon-test { background-image: url(../images/icons/create/test.png); }
 /* Jungle and Bamboozle: one icon for day and night */
 .picker-icon-jungle { background-image: url(../images/icons/create/jungle.png); }
-.picker-icon-canknock { background-image: url(../images/icons/create/canknock.png); }
 .picker-icon-cargame { background-image: url(../images/icons/create/cargame.png); }
 .picker-icon-rocket { background-image: url(../images/icons/create/rocket.png); }
 .picker-icon-maze { background-image: url(../images/icons/create/maze.png); }
