@@ -1,6 +1,6 @@
 import { initializeApp } from "./vendor/firebase-10.12.5/firebase-app.js";
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "./vendor/firebase-10.12.5/firebase-auth.js";
-import { getFirestore, collection, query, where, onSnapshot, getDocs, deleteDoc, updateDoc, doc, addDoc, setDoc, serverTimestamp, Timestamp } from "./vendor/firebase-10.12.5/firebase-firestore.js";
+import { getFirestore, collection, query, where, onSnapshot, getDocs, getDocsFromServer, deleteDoc, updateDoc, doc, addDoc, setDoc, serverTimestamp, Timestamp } from "./vendor/firebase-10.12.5/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCefg2YghdSneABh0ZOUu3-snO4soVw0lA",
@@ -137,11 +137,19 @@ window.taFetchAccounts = async function () {
      be safe; the same query keeps listening while the app is open;
    - every result of an exercise code not read before (once);
    - everything again once a week, so results deleted on another device go.
+     The old copy stays until the new read has worked: on 2026-10-2x the weekly
+     read ran with no internet — the database answered "nothing" from its empty
+     offline memory instead of failing, that "nothing" was kept, and a student's
+     "21 of 24 done" became "4 of 21". Reads now come from the server only
+     (getDocsFromServer: no connection = an error, nothing is kept), a failed code
+     is read again when the internet is back, and RS_VERSION 2 makes every device
+     that kept such an empty copy read everything again once.
    Everything else (Results, Statistics, Points, Top 5…) is worked out from
    the copy kept here. Without IndexedDB it simply reads everything, as before. */
 const RS_OVERLAP = 10 * 60 * 1000;
 const RS_FULL_EVERY = 7 * 86400000;
-const rs = { docs: new Map(), loaded: new Set(), mark: 0, fullAt: 0, ready: null, deltaUnsub: null };
+const RS_VERSION = 2;
+const rs = { docs: new Map(), loaded: new Set(), failed: new Set(), mark: 0, fullAt: 0, ready: null, deltaUnsub: null };
 function rsDbName() { return 'ta_results_cache' + (window.__TA_NS ? '__' + String(window.__TA_NS).replace(/[^a-z0-9_]/gi, '_') : ''); }
 function rsIdb() {
   return new Promise(resolve => {
@@ -175,10 +183,12 @@ rs.ready = (async function () {
     } catch (e) { resolve(null); }
   });
   if (!state) return;
-  if (Date.now() - (state.fullAt || 0) > RS_FULL_EVERY) { rs.fullAt = 0; return; } // time for a full refresh
-  (state.docs || []).forEach(([id, v]) => rs.docs.set(id, v));
-  (state.loaded || []).forEach(c => rs.loaded.add(c));
+  (state.docs || []).forEach(([id, v]) => rs.docs.set(id, v));   // shown straight away, even while a new read runs
   rs.mark = state.mark || 0;
+  // time for a full refresh (or a copy kept by an older version): every code is read again, and
+  // each code's results are replaced only when its new read has worked
+  if (state.v !== RS_VERSION || Date.now() - (state.fullAt || 0) > RS_FULL_EVERY) { rs.fullAt = 0; return; }
+  (state.loaded || []).forEach(c => rs.loaded.add(c));
   rs.fullAt = state.fullAt || 0;
 })();
 let rsSaveTimer = 0;
@@ -188,7 +198,7 @@ function rsSave() {
     if (!rs.idb) return;
     try {
       rs.idb.transaction('kv', 'readwrite').objectStore('kv').put(
-        { docs: Array.from(rs.docs.entries()), loaded: Array.from(rs.loaded), mark: rs.mark, fullAt: rs.fullAt }, 'state');
+        { v: RS_VERSION, docs: Array.from(rs.docs.entries()), loaded: Array.from(rs.loaded), mark: rs.mark, fullAt: rs.fullAt }, 'state');
     } catch (e) { console.error('Could not keep the results on this device:', e); }
   }, 800);
 }
@@ -201,14 +211,18 @@ async function rsEnsureCodes(codes) {
   const waits = [...new Set(codes)].filter(c => rsLoading.has(c)).map(c => rsLoading.get(c));
   for (let i = 0; i < fresh.length; i += 30) {
     const chunk = fresh.slice(i, i + 30);
-    const job = getDocs(query(collection(db, 'results'), where('code', 'in', chunk))).then(snap => {
+    // from the server only: offline this fails instead of answering "no results" from an empty memory
+    const job = getDocsFromServer(query(collection(db, 'results'), where('code', 'in', chunk))).then(snap => {
       // replace what's kept for these codes (results deleted meanwhile go)
       rs.docs.forEach((v, id) => { if (v && chunk.indexOf(v.code) !== -1) rs.docs.delete(id); });
       snap.docs.forEach(d => rsPut(d.id, rsPlain(d.data())));
-      chunk.forEach(c => rs.loaded.add(c));
+      chunk.forEach(c => { rs.loaded.add(c); rs.failed.delete(c); });
       if (!rs.fullAt) rs.fullAt = Date.now();
       rsSave();
-    }).catch(e => { taReportDbError(e); console.error('Loading results failed:', e); })
+    }).catch(e => {
+      chunk.forEach(c => rs.failed.add(c));   // read again when the internet is back (the old copy stays meanwhile)
+      taReportDbError(e); console.error('Loading results failed:', e);
+    })
       .finally(() => chunk.forEach(c => rsLoading.delete(c)));
     chunk.forEach(c => rsLoading.set(c, job));
     waits.push(job);
@@ -216,6 +230,11 @@ async function rsEnsureCodes(codes) {
   await Promise.all(waits);
   rsStartDelta();
 }
+// Back online: read what couldn't be read, and listen for new results again.
+window.addEventListener('online', () => {
+  if (!rs.deltaUnsub) rsStartDelta();
+  if (rs.failed.size) rsEnsureCodes([...rs.failed]).then(rsChanged);
+});
 // New results as they arrive (any exercise), from the newest one kept here.
 function rsStartDelta() {
   if (rs.deltaUnsub || !db) return;
@@ -394,7 +413,7 @@ window.taRestoreResults = async function (list) {
   // what the database still has, read fresh (and each code's "all results deleted" time)
   const have = new Set(), cutoff = Object.assign({}, window.getLocalResets ? window.getLocalResets() : {});
   for (let i = 0; i < codes.length; i += 30) {
-    const snap = await getDocs(query(collection(db, 'results'), where('code', 'in', codes.slice(i, i + 30))));
+    const snap = await getDocsFromServer(query(collection(db, 'results'), where('code', 'in', codes.slice(i, i + 30))));
     snap.docs.forEach(d => {
       have.add(d.id);
       const v = d.data() || {};
@@ -555,7 +574,9 @@ window.deleteAllPointsForBoard = async function (boardCode) {
   try {
     const SEP = '\u241F';
     const q = query(collection(db, 'results'), where('code', '==', boardCode));
-    const snap = await getDocs(q);
+    // live from the database: offline this fails, so nothing is queued (2026-10: resets pressed with
+    // no internet waited on the phone, then all arrived together the next day — totals went to −120)
+    const snap = await getDocsFromServer(q);
     // We never update or delete existing point records — the security rules
     // only allow creating new documents, and deleting/editing would also
     // erase "this student completed this exercise" history (which the
@@ -577,8 +598,8 @@ window.deleteAllPointsForBoard = async function (boardCode) {
       if (v.name) totals[studentId].name = v.name;
     });
 
-    const teacherName = (window.getTeacherName ? window.getTeacherName() : '') || 'Teacher';
-    const toReset = Object.keys(totals).filter(id => totals[id].total > 0);
+    // every total that isn't 0 goes to exactly 0 — below zero too (that mends the doubled resets)
+    const toReset = Object.keys(totals).filter(id => totals[id].total !== 0);
     await Promise.all(toReset.map(studentId => {
       const info = totals[studentId];
       return addDoc(collection(db, 'results'), {
@@ -605,7 +626,7 @@ window.deleteAllPointsEntirelyForBoard = async function (boardCode) {
   if (!db || !boardCode) return { ok: false, count: 0 };
   try {
     const q = query(collection(db, 'results'), where('code', '==', boardCode));
-    const snap = await getDocs(q);
+    const snap = await getDocsFromServer(q);
     const pointsDocs = snap.docs.filter(d => {
       const v = d.data() || {};
       return typeof v.type === 'string' && v.type.indexOf('POINTS:') === 0;
@@ -625,7 +646,7 @@ window.deleteLiveResultsForCode = async function (code, resetAt) {
   if (!db || !code) return { ok: false, count: 0 };
   try {
     const q = query(collection(db, 'results'), where('code', '==', code));
-    const snap = await getDocs(q);
+    const snap = await getDocsFromServer(q);
     const realCount = snap.docs.filter(d => (d.data() || {}).kind !== 'ta-reset').length;
     await Promise.all(snap.docs.map(d => deleteDoc(doc(db, 'results', d.id))));
     rsForget(snap.docs.map(d => d.id));

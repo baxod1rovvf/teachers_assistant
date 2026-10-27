@@ -1,16 +1,22 @@
+// One reset at a time, and only online: a reset needs the database's live totals (pressed offline,
+// each press waited on the phone and they all arrived the next day — totals went below zero).
+let pointsResetBusy = false;
 async function resetAllPoints() {
+  if (pointsResetBusy) { showToast('Resetting… please wait.'); return; }
+  if (navigator.onLine === false) { showToast('⚠️ No internet — points can only be reset online.'); return; }
   if (!confirm('Reset ALL points for every student on this board? The leaderboard will go back to zero, but the Dashboard\'s exercise-completion counts stay — only the point totals reset.')) return;
   if (!window.deleteAllPointsForBoard) { showToast('Still connecting — try again in a moment.'); return; }
+  pointsResetBusy = true;
   showToast('Resetting…', 'ok');
-  const res = await window.deleteAllPointsForBoard(getPointsBoardCode());
-  if (res.ok) {
-    showToast('✅ Reset ' + res.count + ' point record' + (res.count === 1 ? '' : 's') + ' to 0.', 'ok');
-  } else {
-    showToast('⚠️ Could not reset points — check your internet connection.');
-  }
+  try {
+    const res = await window.deleteAllPointsForBoard(getPointsBoardCode());
+    if (res.ok) showToast(res.count ? '✅ ' + res.count + ' student' + (res.count === 1 ? '' : 's') + ' set to 0 points.' : '✅ Every student already has 0 points.', 'ok');
+    else showToast('⚠️ Could not reset points — check your internet connection. Nothing was changed.');
+  } finally { pointsResetBusy = false; }
 }
 
 async function deleteAllPointsEntirely() {
+  if (navigator.onLine === false) { showToast('⚠️ No internet — points can only be deleted online.'); return; }
   if (!confirm('Delete ALL points records entirely for every student on this board? This is permanent — unlike Reset, this also brings exercise-completion counts and Statistics back to 0. This cannot be undone.')) return;
   if (!window.deleteAllPointsEntirelyForBoard) { showToast('Still connecting — try again in a moment.'); return; }
   showToast('Deleting…', 'ok');

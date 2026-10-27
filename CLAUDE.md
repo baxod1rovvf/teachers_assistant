@@ -95,6 +95,14 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
    iPhones can't open .html files at all. Links (play.html) are the answer; the exercise
    shows "Open in Chrome" when it detects the problem.
 
+6b. **Working with no internet** (fixed 2026-10-27, after it hurt): the weekly re-read of results ran offline,
+   the database answered "nothing" from its empty memory and that was kept → Top 5 dropped ("21 of 24" → "4 of 21");
+   "Reset All Points" pressed offline queued on the phone and every press arrived the next day → −120. Now reads that
+   decide anything use `getDocsFromServer` (offline = error, nothing kept/written), the old results copy stays until
+   a re-read works (`rs.failed` re-read on `online`, `RS_VERSION` 2 forced one full re-read everywhere), Reset needs
+   the internet, runs once at a time and sets every total — below zero too — to 0. Other teacher writes (bonus +/−)
+   still queue offline and arrive later — that's intended. `tests/data-safety.spec.js`.
+
 **Less likely (< 20 %) but serious**
 18. **"Delete all results"** — its marker is allowed since the lock (2026-09-30). A deletion made on one device reaches the others' kept copy only at their weekly full re-read.
 6. **The database lock is on (rules published 2026-09-30; CP showed "🟢 The database is
