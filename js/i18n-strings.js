@@ -71,7 +71,7 @@ window.TA_I18N_ROWS = [
   ['Syncing…', 'Sinxronlanmoqda…', 'Синхронизация…'],
   ['Saving…', 'Saqlanmoqda…', 'Сохранение…'],
   ['Your data is kept in step across your devices', 'Maʼlumotlaringiz barcha qurilmalaringizda bir xil saqlanadi', 'Ваши данные одинаковы на всех ваших устройствах'],
-  ['Change design', 'Dizaynni oʻzgartirish', 'Сменить оформление'],
+  ['Day mode', 'Kunduzgi rejim', 'Дневной режим'], ['Night mode', 'Tungi rejim', 'Ночной режим'],
   ['Sound effects: On', 'Tovush effektlari: yoqilgan', 'Звуковые эффекты: вкл'],
   ['Sound effects: Off', 'Tovush effektlari: oʻchirilgan', 'Звуковые эффекты: выкл'],
   ['Ask the assistant', 'Yordamchidan soʻrash', 'Спросить помощника'],
@@ -836,11 +836,6 @@ window.TA_ROBOT_I18N = {
     'Yuqori oʻng burchakdagi rasmingizni, keyin ismingizni bosing. “🌐 Til” ostida English, Oʻzbekcha yoki Русский ni tanlang. Faqat ilovaning menyulari va tugmalari oʻzgaradi — oʻquvchilar uchun mashqlar ingliz tilida qoladi.',
     'Как поменять язык?',
     'Нажмите на свою картинку вверху справа, затем на имя. В разделе «🌐 Язык» выберите English, Oʻzbekcha или Русский. Меняются только меню и кнопки приложения — упражнения для учеников остаются на английском.'],
-  'How do I change the colours or the look?': [
-    'Ranglar yoki koʻrinishni qanday oʻzgartiraman?',
-    'Yuqori paneldagi dizayn tugmasini bosing (uchta rangli doira, 🔍 yonida). Uslubni (Classic yoki Glass) va rang dizaynini tanlang. Toʻrtta dizayn kunduz uchun, ikkitasi tun uchun — birini tanlash kunduz yoki tunni ham almashtiradi.',
-    'Как поменять цвета или внешний вид?',
-    'На верхней панели нажмите кнопку оформления (три цветных круга, рядом с 🔍). Выберите стиль (Classic или Glass) и цветовое оформление. Четыре варианта — дневные, два — ночные; выбор варианта заодно переключает день или ночь.'],
   'Can I combine several exercises into one?': [
     'Bir nechta mashqni bittaga birlashtirsa boʻladimi?',
     'Ha — bu shu sahifadagi “Uy vazifasi va dars”. Uy vazifasi (oʻquvchilar mustaqil bajaradi) yoki Dars (darsda birga ishlatiladi) ni tanlang, 1-bosqichni tuzing, keyingi bosqich uchun “➕ Yana mashq qoʻshish” ni, oxirida “Yaratish ⬇” ni bosing.',

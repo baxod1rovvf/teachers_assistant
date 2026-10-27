@@ -856,107 +856,25 @@ function setTheme(t) {
 function applyTheme() {
   const t = getTheme();
   document.body.classList.toggle('light-theme', t === 'light');
-  document.body.dataset.design = getDesign();
-  document.body.classList.toggle('glass-ui', getUiStyle() === 'glass');
-  // the phone's status bar (installed app) takes the design's page colour
-  const d = taDesignByKey(getDesign());
+  document.body.classList.add('glass-ui');   // the glass look, always (the Classic style is gone, 2026-10-27)
+  // the phone's status bar (installed app) takes the page colour
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta && d) meta.setAttribute('content', d.base);
+  if (meta) meta.setAttribute('content', t === 'light' ? '#F5F3FF' : '#0E0B22');
+  const btn = document.getElementById('themeToggleBtn');
+  if (btn) {
+    btn.innerHTML = t === 'light' ? TA_MOON_SVG : TA_SUN_SVG;
+    btn.title = t === 'light' ? 'Night mode' : 'Day mode';
+    btn.setAttribute('aria-label', btn.title);
+  }
 }
 
-/* ================= DESIGNS =================
-   Six colour designs (css/style.css, "DESIGNS"), picked from the design button
-   in the top bar (there's no separate day/night switch since 2026-10-04). Four are
-   day designs and two (Dragon Fruit, Lime Spark) are night designs: picking one
-   switches to its mode. The last day design and the last night design are
-   remembered separately (Burnt Orange / Dragon Fruit at first). */
-const LS_DESIGN_DAY = 'ta_design_day';
-const LS_DESIGN_NIGHT = 'ta_design_night';
-const TA_DESIGNS = [{"key": "signal", "name": "Signal Blue", "accent": "#0057FF", "base": "#F8F7F4", "mode": "day"}, {"key": "emerald", "name": "Emerald Ink", "accent": "#064E3B", "base": "#F8E7C9", "mode": "day"}, {"key": "dragonfruit", "name": "Dragon Fruit", "accent": "#FF4696", "base": "#1E1033", "mode": "night"}, {"key": "lime", "name": "Lime Spark", "accent": "#B6FF2E", "base": "#23262F", "mode": "night"}, {"key": "ultraviolet", "name": "Ultra Violet", "accent": "#6A00F4", "base": "#FFD6A5", "mode": "day"}, {"key": "burntorange", "name": "Burnt Orange", "accent": "#FC6C26", "base": "#FFF4D6", "mode": "day"}];
-const TA_DEFAULT_DESIGN = { day: 'burntorange', night: 'dragonfruit' };
-function taDesignByKey(key) { return TA_DESIGNS.find(x => x.key === key) || null; }
-function getDesign() {
-  const mode = getTheme() === 'light' ? 'day' : 'night';
-  let key = '';
-  try {
-    // one-time move of the earlier single choice into its mode's slot
-    const old = localStorage.getItem('ta_design');
-    if (old) {
-      const d = taDesignByKey(old);
-      if (d) localStorage.setItem(d.mode === 'day' ? LS_DESIGN_DAY : LS_DESIGN_NIGHT, old);
-      localStorage.removeItem('ta_design');
-    }
-    key = localStorage.getItem(mode === 'day' ? LS_DESIGN_DAY : LS_DESIGN_NIGHT) || '';
-  } catch (e) { /* ignore */ }
-  const d = taDesignByKey(key);
-  return d && d.mode === mode ? key : TA_DEFAULT_DESIGN[mode];
-}
-function setDesign(key) {
-  const d = taDesignByKey(key);
-  if (!d) return;
-  try { localStorage.setItem(d.mode === 'day' ? LS_DESIGN_DAY : LS_DESIGN_NIGHT, key); } catch (e) { /* ignore */ }
-  const wantLight = d.mode === 'day';
-  if ((getTheme() === 'light') !== wantLight) {
-    setTheme(wantLight ? 'light' : 'dark');   // switch day/night to the design's mode
-  } else applyTheme();
-  renderDesignPicker();
-}
-/* Style: the classic solid blocks, or glassmorphism (frosted, see-through
-   blocks over a soft colour backdrop, css/style.css "GLASS STYLE"). It goes
-   with every colour design, day and night, and is picked in the same 🎨 box. */
-const LS_UI_STYLE = 'ta_ui_style';
-function getUiStyle() {
-  try { return localStorage.getItem(LS_UI_STYLE) === 'glass' ? 'glass' : 'classic'; } catch (e) { return 'classic'; }
-}
-function setUiStyle(style) {
-  try { localStorage.setItem(LS_UI_STYLE, style === 'glass' ? 'glass' : 'classic'); } catch (e) { /* ignore */ }
-  applyTheme();
-  renderDesignPicker();
-}
-window.setUiStyle = setUiStyle;
-function renderDesignPicker() {
-  const box = document.getElementById('designPicker');
-  if (!box) return;
-  const cur = getDesign();
-  const style = getUiStyle();
-  const styleBtn = (key, label) => '<button type="button" class="style-option' + (style === key ? ' active' : '') + '" onclick="setUiStyle(\'' + key + '\')" aria-pressed="' + (style === key) + '">' + label + '</button>';
-  box.innerHTML = '<div class="design-picker-title">✨ Style</div>' +
-    '<div class="style-choice">' + styleBtn('classic', '<span class="style-swatch classic"></span>Classic') + styleBtn('glass', '<span class="style-swatch glass"></span>Glass') + '</div>' +
-    '<div class="design-picker-title">🎨 Design</div>' + TA_DESIGNS.map(d =>
-    '<button type="button" class="design-option' + (d.key === cur ? ' active' : '') + '" onclick="setDesign(\'' + d.key + '\')" aria-pressed="' + (d.key === cur) + '">' +
-      '<span class="design-swatch" style="background:conic-gradient(' + d.accent + ' 0 50%, ' + d.base + ' 50% 100%)"></span>' +
-      '<span>' + escapeForHtml(d.name) + '<small class="design-mode">' + (d.mode === 'day' ? '☀️ Day' : '🌙 Night') + '</small></span>' +
-    '</button>').join('');
-}
-function toggleDesignPicker(ev) {
-  if (ev) ev.stopPropagation();
-  const box = document.getElementById('designPicker');
-  const btn = document.getElementById('designPickerBtn');
-  if (!box) return;
-  const open = box.hasAttribute('hidden');
-  if (open) {
-    renderDesignPicker();
-    box.removeAttribute('hidden');
-    const r = btn.getBoundingClientRect(), w = box.offsetWidth;
-    box.style.top = (r.bottom + 10) + 'px';
-    box.style.left = Math.max(8, Math.min(window.innerWidth - w - 8, r.right - w)) + 'px';
-  } else box.setAttribute('hidden', '');
-  if (btn) btn.setAttribute('aria-expanded', String(open));
-}
-document.addEventListener('click', e => {
-  const box = document.getElementById('designPicker');
-  if (box && !box.hasAttribute('hidden') && !e.target.closest('.hero-design-wrap')) box.setAttribute('hidden', '');
-});
-document.addEventListener('keydown', e => {
-  const box = document.getElementById('designPicker');
-  if (e.key === 'Escape' && box && !box.hasAttribute('hidden')) box.setAttribute('hidden', '');
-});
-['scroll', 'resize'].forEach(ev => window.addEventListener(ev, () => {
-  const box = document.getElementById('designPicker');
-  if (box && !box.hasAttribute('hidden')) box.setAttribute('hidden', '');
-}, { passive: true }));
-window.setDesign = setDesign;
-window.toggleDesignPicker = toggleDesignPicker;
+/* ================= DAY / NIGHT =================
+   Only two looks since 2026-10-27 — the teacher removed the six colour designs and the
+   Classic style: the ☀️/🌙 button in the top bar switches Day and Night (css/style.css). */
+const TA_SUN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>';
+const TA_MOON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg>';
+function toggleDayNight() { setTheme(getTheme() === 'light' ? 'dark' : 'light'); }
+window.toggleDayNight = toggleDayNight;
 
 /* ================= PROFILE PICTURE ================= */
 const LS_AVATAR = 'ta_avatar';
@@ -2767,7 +2685,6 @@ function aiFaq(items) { return items.concat([AI_ROBOT_CONTACT_ITEM]); }
    When a new feature is added to the app, add a question about it here. */
 const AI_ROBOT_FAQ_BY_TAB = {
   main: aiFaq([
-    { q: 'How do I change the colours or the look?', a: 'In the top bar, tap the design button (three coloured circles, next to 🔍). Pick a Style (Classic or Glass) and a colour Design. Four designs are for day and two for night — picking one also switches day or night.' },
     { q: 'What is the note about students who finished exercises?', a: 'When you open the app, a note lists your students who finished an exercise in the last 7 days that you haven\'t checked yet. Tap an exercise under a student\'s name (📊) to open that exercise\'s results. The note stays open, so you can open the next student\'s exercise too. Tap "Checked" for one student, or "All checked". Closing it with ✕ only hides it until next time.' },
     { q: 'How do I change the language?', a: 'Tap your picture at the top right, then your name. Under 🌐 Language pick English, Oʻzbekcha or Русский. Only the app\'s menus and buttons change — exercises for students stay in English.' },
     { q: 'How do I refresh the app on my phone?', a: 'Tap ⟳ at the top of the screen, next to 🔍. It saves anything still waiting and loads the newest version. On a computer press Ctrl+R (or F5).' }
@@ -3513,8 +3430,7 @@ function taMountTopBar() {
         '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button>' +
       '<button class="tb-tool" id="quickSearchBtn" type="button" onclick="openQuickSearch()" title="Search (' + (mac ? '⌘' : 'Ctrl') + ' K)" aria-label="Search">' +
         '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button>' +
-      '<div class="hero-design-wrap"><button class="tb-tool hero-design-btn" id="designPickerBtn" type="button" onclick="toggleDesignPicker(event)" title="Change design" aria-label="Change design" aria-expanded="false"><img class="tb-design-img" src="images/icons/nav/design.png" alt=""></button>' +
-        '<div class="design-picker" id="designPicker" hidden></div></div>' +
+      '<button class="tb-tool tb-theme" id="themeToggleBtn" type="button" onclick="toggleDayNight()" title="Day / night" aria-label="Day / night"></button>' +
       '<a class="tb-tool tb-link" href="settings.html" data-tab="settings" title="Settings" aria-label="Settings">' +
         '<span class="tb-tool-ic" style="-webkit-mask-image:url(images/icons/nav/settings.png);mask-image:url(images/icons/nav/settings.png)"></span></a>' +
       '<div class="tb-profile-wrap">' +

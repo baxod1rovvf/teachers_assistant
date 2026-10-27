@@ -345,8 +345,8 @@ real students' names or results into the repository (it is public).
   (`#taTopbar`, fixed, no background of its own — the buttons float over the page): logo + "Teacher's
   Assistant" (logo only on phones) · 5 sections in the middle, icons only — the name is the tooltip (`TA_TOPBAR_TABS`:
   Dashboard, Create, My Exercises, Statistics, Students; icons in `images/icons/nav/`, shown with a CSS
-  mask so they take the design's colours) · 🔍 search, design (the teacher's three-coloured-circles icon,
-  `nav/design.png`, in its own colours; picking a design also picks day/night — no day/night switch since 2026-10-04),
+  mask so they take the page's colours) · 🔍 search, ☀️/🌙 Day/Night (`#themeToggleBtn`, `toggleDayNight`; since 2026-10-27
+  the six colour designs, the design picker and the Classic style are gone — only Day and Night, always the glass look),
   ⚙️ Settings (sliders icon `nav/settings.png`; no sound button since 2026-10-03), profile picture (red dot when sync needs the teacher, `data-sync`). The section
   you're in sits in a `var(--brand)` circle drawn as an SVG path; `taMoveTabBlob` animates it like the
   teacher's "Liquid Tab Bar" lottie (front races ahead, back follows, a narrowing neck, then a wobble).
@@ -483,6 +483,12 @@ real students' names or results into the repository (it is public).
   toggles, the finish cards (`.certificate-card`, `.certificate-box`, `#endOverlay .panel-card`, `.ta-cert-box`) and a set's screens
   (light `.ta-screen`, `.ta-btn`, `#hwcBar`, `#hwcReviewBar`). Games' own pictures are untouched; the name tag is hidden on phones.
   Files made before keep the old look. `tests/student-theme.spec.js`.
+- **Colours (teacher's rules, 2026-10-27)**: only Day (`body.light-theme`) and Night (`:root`), both always `glass-ui`. Every
+  gradient uses neighbouring hues only — indigo/blue/violet within 60° (night `--mesh-1..4` ≈226°–272°, day ≈213°–270°) — and
+  is a **mesh** (layered `radial-gradient`s placed along the 135° diagonal, top-left → bottom-right): the page (`--mesh-page`),
+  buttons (`--grad-brand`), glass sheens. **No `linear-gradient` in css/style.css** (a test checks; the lesson page's ruled lines
+  are an SVG). Headlines (`h1`, `h2`, `.dash-card-title`, `.picker-section-title`) are gradient text (`--grad-text`, background-clip).
+  The student theme's buttons and the set's/Maze's progress bars follow the same rule.
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
   too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except

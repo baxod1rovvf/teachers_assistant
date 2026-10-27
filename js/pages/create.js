@@ -607,7 +607,7 @@ html,body{margin:0;padding:0;height:100%;background:#101116;font-family:'Inter',
 #hwcFrame{width:100%;height:calc(100% - 40px);border:none;display:block;position:relative;z-index:10;}
 .hwc-send-anim{position:relative;z-index:2;width:min(440px,86vw);height:calc(min(440px,86vw) * 0.185);display:none;align-items:center;justify-content:center;}
 .hwc-send-anim svg{width:100% !important;height:100% !important;}
-.hwc-send-bar{width:80%;height:12px;border-radius:999px;background:linear-gradient(90deg,#4F46E5,#EC4899,#4F46E5);background-size:200% 100%;animation:hwcBar 1.2s linear infinite;}
+.hwc-send-bar{width:80%;height:12px;border-radius:999px;background:radial-gradient(40% 220% at 25% 50%,#818CF8 0%,transparent 70%),radial-gradient(40% 220% at 75% 50%,#8B5CF6 0%,transparent 70%),#5B4BF5;background-size:200% 100%;animation:hwcBar 1.2s linear infinite;}
 @keyframes hwcBar{from{background-position:200% 0}to{background-position:0 0}}
 .hwc-sent-note{position:relative;z-index:2;color:#3FD6B4 !important;font-weight:800;font-size:1.05rem !important;}
 #hwcReviewBar{position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;padding:12px 16px;background:rgba(16,17,22,.94);color:#fff;font-weight:700;box-shadow:0 -8px 24px rgba(0,0,0,.35);}

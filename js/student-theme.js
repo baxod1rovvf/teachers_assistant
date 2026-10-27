@@ -11,7 +11,8 @@ const TA_STUDENT_THEME_CSS = `
   --tas-brand: #4F46E5; --tas-brand-2: #7C3AED; --tas-ink: #14151F; --tas-soft: #5B5E73; --tas-faint: #8A8DA3;
   --tas-line: rgba(20,21,31,.10); --tas-field: #F1F2F8; --tas-card: #FFFFFF; --tas-ok: #0E9F6E; --tas-bad: #E11D48;
   --tas-radius: 24px; --tas-shadow: 0 26px 60px -26px rgba(30,27,75,.5), 0 2px 8px rgba(30,27,75,.06);
-  --tas-grad: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+  /* a mesh of neighbouring hues (indigo → violet), top-left → bottom-right — no linear gradients (2026-10-27) */
+  --tas-grad: radial-gradient(130% 130% at 0% 0%, #818CF8 0%, transparent 55%), radial-gradient(130% 130% at 100% 100%, #8B5CF6 0%, transparent 60%), #5B4BF5;
 }
 html { -webkit-text-size-adjust: 100%; }
 

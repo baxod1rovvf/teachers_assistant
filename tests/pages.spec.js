@@ -156,17 +156,21 @@ test('top bar: 5 sections in the middle, the one you\'re in has the coloured cir
   // icons only (the names show when you point at one)
   expect(await page.locator('#taTopbar .tb-tab').evaluateAll(l => l.map(a => a.title))).toEqual(['Dashboard', 'Create', 'My Exercises', 'Statistics', 'Students']);
   await expect(page.locator('#taTopbar .tb-tab')).toHaveText(['', '', '', '', '']);
-  for (const id of ['#quickSearchBtn', '#designPickerBtn', '#taTopbar [data-tab="settings"]', '#tbAvatarBtn']) await expect(page.locator(id)).toBeVisible();
+  for (const id of ['#quickSearchBtn', '#themeToggleBtn', '#taTopbar [data-tab="settings"]', '#tbAvatarBtn']) await expect(page.locator(id)).toBeVisible();
   await expect(page.locator('#mainSidebar')).toHaveCount(0);
   await expect(page.locator('#soundToggleBtn')).toHaveCount(0);   // no sound button
-  await expect(page.locator('#themeToggleAnim')).toHaveCount(0);  // no day/night switch: the design picks it
-  await page.locator('#designPickerBtn').click();
-  await page.locator('.design-option', { hasText: 'Signal Blue' }).click();
-  await expect(page.locator('body')).toHaveClass(/light-theme/);
-  await page.locator('#designPickerBtn').click();
-  await page.locator('.design-option', { hasText: 'Dragon Fruit' }).click();
+  // only Day and Night (2026-10-27): no designs, no Classic style — always the glass look
+  await expect(page.locator('#designPickerBtn, .design-option, .style-option')).toHaveCount(0);
+  await expect(page.locator('body')).toHaveClass(/glass-ui/);
   await expect(page.locator('body')).not.toHaveClass(/light-theme/);
-  await page.keyboard.press('Escape');
+  await page.locator('#themeToggleBtn').click();
+  await expect(page.locator('body')).toHaveClass(/light-theme/);
+  await expect(page.locator('#themeToggleBtn')).toHaveAttribute('title', 'Night mode');
+  await page.locator('#themeToggleBtn').click();
+  await expect(page.locator('body')).not.toHaveClass(/light-theme/);
+  // headlines are a gradient (a mesh — no linear gradients anywhere in the app's style)
+  expect(await page.locator('h2').first().evaluate(el => getComputedStyle(el).backgroundImage)).toContain('radial-gradient');
+  expect(require('fs').readFileSync(require('path').join(__dirname, '../css/style.css'), 'utf8')).not.toContain('linear-gradient');
   // in the middle, and fixed at the top
   const nav = await page.locator('#taTabNav').boundingBox();
   expect(Math.abs(nav.x + nav.width / 2 - 650)).toBeLessThan(40);

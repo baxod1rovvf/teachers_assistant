@@ -12,7 +12,8 @@ test('the robot answers questions about the newest features, found with its sear
   await page.evaluate(() => toggleAiRobotBubble());
   const body = page.locator('#aiRobotBubbleBody');
   // the Dashboard keeps only the questions the teacher chose
-  await expect(body.locator('.ai-robot-q-item')).toContainText(['How do I change the colours or the look?', 'What is the note about students who finished exercises?', 'How do I change the language?']);
+  await expect(body.locator('.ai-robot-q-item')).toContainText(['What is the note about students who finished exercises?', 'How do I change the language?', 'How do I refresh the app on my phone?']);
+  await expect(body).not.toContainText('colours or the look');   // the designs are gone (2026-10-27)
   await expect(body).not.toContainText('Lessons taught');
   // a Results question, searched for from the Dashboard
   await body.locator('.ai-robot-search').fill('punish');

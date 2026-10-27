@@ -38,7 +38,7 @@ test('a new exercise (and a set, with its rounds) carries the shared design; on 
   await s.goto('file://' + file);
   await s.waitForTimeout(800);
   const start = s.locator('.ta-login-form button', { hasText: 'Start' }).first();
-  expect(await start.evaluate(el => getComputedStyle(el).backgroundImage)).toContain('linear-gradient');
+  expect(await start.evaluate(el => getComputedStyle(el).backgroundImage)).toContain('radial-gradient');   // a mesh gradient (no linear ones)
   expect((await start.boundingBox()).height).toBeGreaterThanOrEqual(54);
   expect(await s.locator('.ta-login-form .eyebrow').evaluateAll(l => l.every(el => getComputedStyle(el).display === 'none'))).toBe(true);
   expect((await s.locator('#studentNameInput').boundingBox()).height).toBeGreaterThanOrEqual(50);
