@@ -1377,6 +1377,9 @@ const TA_FILE_FIXES = [
     what: 'the result often says 0 seconds (the time is lost when the exercise ends), so Results and Top 5 show it wrong' },
   { id: 'sentencesend', at: '2026-10-02T17:14:00Z', types: /^sentences$|sentence writing/i, minor: true,
     what: 'when a student finishes, the start screen can come back instead of the certificate, with one extra warning' },
+  // Each round showed its own ID screen and certificate for ~2 s inside the set (2026-10-27)
+  { id: 'setflash', at: '2026-10-27T23:00:00Z', types: /^(homework|class)$/i, minor: true,
+    what: 'each exercise shows its own ID screen and certificate for a moment, which confuses students' },
   // A round in full screen covered the set's "Next exercise" screen on phones: students saw the round's certificate (2026-10)
   { id: 'setfull', at: '2026-10-27T09:14:00Z', types: /^(homework|class)$/i,
     what: 'on phones, students see each exercise\'s certificate and can only move on with the phone\'s back button' },

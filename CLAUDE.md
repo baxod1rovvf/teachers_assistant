@@ -189,6 +189,15 @@ real students' names or results into the repository (it is public).
   answers for its code exist even without a progress record (codes from other progress records or the set's `mergedItems`,
   which are also loaded). `tests/results.spec.js` ("a set: a Dictation whose answers…").
 
+- **No ID screen and no certificate inside a set** (teacher, 2026-10-27 — each flashed ~2 s and confused students):
+  `hwcRoundHook` gives the round a ready answer for `taCheckAward` (the set checks the last round's points once at
+  `hwcBegin`, `hwcCheckSetAward`, and passes `award` in the identity), so it starts at once; a style in the round never
+  draws its start screen (`#startOverlay`, `#slide-welcome`, overlays with `.ta-login-stage`) or its certificate
+  (`#certModal`, `#slide-certificate`, `#slide-thanks`, `#endOverlay`, `.certificate-card`); a MutationObserver posts
+  `round-finishing` the moment one would show, and the set covers the round with "Sending your answers…" (not a dictation —
+  its mistakes stay). Rounds never go full screen inside a set (`noFull`). Maze in a set: after GAME OVER a new try starts by
+  itself (no result screen there). Old sets: `TA_FILE_FIXES` `setflash`, `setfull`.
+
 ## Results kept on the device (keep this in mind when changing how results load)
 
 - `js/firebase.js` keeps every result it has read in IndexedDB (`ta_results_cache…`, per

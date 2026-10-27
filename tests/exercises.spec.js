@@ -185,8 +185,14 @@ test('Homework set: an exercise counts as done only once its answers are saved',
   // inside a set a round never goes full screen (on phones it covered the set's "Next exercise" screen)
   await expect(round.locator('#slide-sentences')).toHaveClass(/active/, { timeout: 8000 });
   expect(await student.frames().find(f => f.url() === 'about:srcdoc').evaluate(() => !!Element.prototype.requestFullscreen.__taNoop)).toBe(true);
+  // no ID screen inside the set: it's never drawn (and the round started at once)
+  const roundFrame = () => student.frames().find(f => f.url() === 'about:srcdoc');
+  expect(await roundFrame().evaluate(() => [...document.querySelectorAll('.ta-login-stage')].every(el => !el.offsetParent && el.getClientRects().length === 0))).toBe(true);
   // round 1: saved by the set itself, then marked done
   await answer();
+  // no certificate either: the round's is never drawn, the set covers the round at once
+  await expect(student.locator('#hwcSaving.show, #hwcNextScreen.show')).toHaveCount(1, { timeout: 3000 });
+  expect(await roundFrame().evaluate(() => [...document.querySelectorAll('#slide-certificate, #slide-thanks, .certificate-card')].every(el => el.getClientRects().length === 0))).toBe(true);
   await expect(student.locator('#hwcNextScreen')).toHaveClass(/show/, { timeout: 8000 });
   let w = await writes();
   expect(w.filter(x => x.startsWith('Sentences:r_'))).toHaveLength(1);

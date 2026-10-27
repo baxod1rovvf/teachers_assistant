@@ -718,6 +718,21 @@ let hwcCompleted = [];
 let hwcStudentId = "";
 let hwcStudentName = "";
 let hwcRoundStartTs = 0;
+let hwcAward = "none";   // the last exercise's points check, done by the set once (so no round waits on it)
+// The same check an exercise does at its start (2 reads), done once by the set for its last exercise
+// (the one that gives the set's points): rounds then start at once, with no ID screen showing meanwhile.
+async function hwcCheckSetAward() {
+  const last = HWC_ROUNDS[HWC_ROUNDS.length - 1] || {};
+  const uid = (last.html.match(/const EXERCISE_UID = "([^"]*)"/) || [])[1] || "";
+  if (!uid || !window.__hwcFirebaseReady) return "none";
+  try {
+    const col = window.__hwcCollection(window.__hwcDb, "results");
+    const mine = await window.__hwcGetDocs(window.__hwcQuery(col, window.__hwcWhere("code", "==", HWC_BOARD_CODE), window.__hwcWhere("uid", "==", uid), window.__hwcWhere("studentId", "==", hwcStudentId)));
+    if (mine.docs.some(d => { const v = d.data(); return v && typeof v.type === "string" && v.type.indexOf("POINTS:") === 0; })) return "awarded";
+    const off = await window.__hwcGetDocs(window.__hwcQuery(col, window.__hwcWhere("code", "==", HWC_BOARD_CODE), window.__hwcWhere("type", "==", "POINTS:DISABLE")));
+    return off.docs.some(d => { const v = d.data() || {}; return typeof v.title === "string" && v.title.split("\u241F")[1] === last.code; }) ? "disabled" : "none";
+  } catch (e) { return "none"; }
+}
 async function hwcLoadProgress() {
   for (let tries = 0; tries < 40 && !window.__hwcFirebaseReady; tries++) await new Promise(r => setTimeout(r, 50));
   if (!window.__hwcFirebaseReady) return [];
@@ -774,7 +789,7 @@ function hwcLoad(i) {
   } else document.body.appendChild(frame);
   frame.id = "hwcFrame";
   // The student's code and ID go into the round itself, so it never asks for them again.
-  const identity = "ta_merge_identity:" + JSON.stringify({ id: hwcStudentId, name: hwcStudentName, code: HWC_REQUIRED_CODE });
+  const identity = "ta_merge_identity:" + JSON.stringify({ id: hwcStudentId, name: hwcStudentName, code: HWC_REQUIRED_CODE, award: i === HWC_ROUNDS.length - 1 ? hwcAward : "none" });
   const carry = "<script>window.name = " + JSON.stringify(identity).replace(/</g, "\\\\u003c") + ";(" + hwcRoundHook.toString() + ")();<\\/script>";
   const html = HWC_ROUNDS[i].html;
   const at = html.search(/<head[^>]*>/i);
@@ -802,6 +817,7 @@ async function hwcBegin() {
   const req = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
   if (req) { try { req.call(el).catch(function(){}); } catch (e) {} }
   const savedRecords = await hwcLoadProgress();
+  hwcAward = await hwcCheckSetAward();
   hwcCompleted = new Array(HWC_ROUNDS.length).fill(false);
   savedRecords.forEach(function(r) { if (typeof r.roundIndex === 'number' && r.roundIndex < hwcCompleted.length) hwcCompleted[r.roundIndex] = true; });
   hwcIdx = hwcCompleted.indexOf(false);
@@ -845,6 +861,28 @@ function hwcRoundHook() {
     });
   }
   try { Object.defineProperty(window, 'submitResultToFirebase', { configurable: true, get: function () { return viaSet; }, set: function () {} }); } catch (err) { /* ignore */ }
+  // Inside a set there is no ID screen and no certificate (the teacher: they flashed for ~2 s and confused
+  // students, 2026-10-27). The set knows the student and did the points check: the round starts at once…
+  var ident = {};
+  try { ident = JSON.parse(String(window.name).replace(/^ta_merge_identity:/, '')); } catch (err) { /* ignore */ }
+  var award = function () { return Promise.resolve(ident.award || 'none'); };
+  try { Object.defineProperty(window, 'taCheckAward', { configurable: true, get: function () { return award; }, set: function () {} }); } catch (err) { /* ignore */ }
+  // …its start screen and its certificate are never drawn (the set shows its own screens)…
+  var css = document.createElement('style');
+  css.textContent = '#startOverlay, #slide-welcome, .overlay:has(.ta-login-stage), .modal-overlay:has(.ta-login-stage), ' +
+    '#certModal, #slide-certificate, #slide-thanks, #endOverlay, .modal-overlay:has(.certificate-box), .slide:has(.certificate-card) { display: none !important; }';
+  (document.head || document.documentElement).appendChild(css);
+  // …and the moment it finishes, the set covers it ("Sending your answers…", then "Next exercise")
+  var told = false;
+  var finished = function () {
+    return document.querySelector('#certModal:not(.hidden), #slide-certificate.active, #slide-thanks.active, #endOverlay:not(.hidden), .slide.active:has(.certificate-card)');
+  };
+  var watch = function () {
+    new MutationObserver(function () {
+      if (!told && finished()) { told = true; try { parent.postMessage({ taMergeEvent: 'round-finishing' }, '*'); } catch (err) { /* ignore */ } }
+    }).observe(document.body, { subtree: true, attributes: true, attributeFilter: ['class', 'style'] });
+  };
+  if (document.body) watch(); else document.addEventListener('DOMContentLoaded', watch);
   // The set is in full screen already. A round that put itself in full screen covered the set's own
   // screens on phones — its certificate stayed, and "Next exercise" was hidden until the phone's back
   // button (2026-10). Inside a set a round never goes full screen.
@@ -1060,6 +1098,8 @@ window.addEventListener("message", function (e) {
     hwcSaveRoundResult();
     return;
   }
+  // the round has just finished: cover it straight away (its certificate is never drawn; a dictation keeps its mistakes)
+  if (d.taMergeEvent === "round-finishing") { if (!hwcGotComplete && !hwcReview) hwcSavingScreen(hwcResultState === "failed" ? "failed" : "sending"); return; }
   if (d.taMergeEvent !== "round-complete" || hwcGotComplete) return;
   if (d.identity && d.identity.name) hwcStudentName = d.identity.name;
   hwcGotComplete = true;
