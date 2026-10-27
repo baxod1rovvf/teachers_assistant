@@ -492,7 +492,8 @@ real students' names or results into the repository (it is public).
   are an SVG). Headlines (`h1`, `h2`, `.dash-card-title`, `.picker-section-title`) are gradient text (`--grad-text`, background-clip).
   The student theme's buttons and the set's/Maze's progress bars follow the same rule.
 - **Minimal line icons (2026-10-27)**: the teacher is moving the exercise-type icons to simple black line drawings. So far:
-  Flashcard, Word Order, Make a Word, Spelling, Can Knockdown (`images/icons/create/<type>.png`, 256 px, black on transparent,
+  Flashcard, Word Order, Make a Word, Spelling, Can Knockdown, Car Game, Pronunciation, Rocket Game, Sentences,
+  Bidirectional Language (`images/icons/create/<type>.png`, 256 px, black on transparent,
   no `-night` copy). They're drawn as a CSS mask filled with `--grad-brand` (`--mono-ic` + the `:is(#ta-mono, …)` rule in
   css/style.css), so they show on the black Night page and the light Day page and appear wherever `picker-icon-<type>` is used
   (Create picker + tab row, My Exercises cards/chips, the set builder's type grid). A new line icon: save it there, set

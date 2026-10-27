@@ -567,14 +567,16 @@ body:not(.light-theme) .dash-card-icon-img.icon-mono { filter: invert(1); }
 .picker-icon-makeaword { --mono-ic: url(../images/icons/create/makeaword.png); }
 .picker-icon-spelling { --mono-ic: url(../images/icons/create/spelling.png); }
 .picker-icon-canknock { --mono-ic: url(../images/icons/create/canknock.png); }
-:is(#ta-mono, .picker-icon-flashcard, .picker-icon-wordorder, .picker-icon-makeaword, .picker-icon-spelling, .picker-icon-canknock) {
+.picker-icon-cargame { --mono-ic: url(../images/icons/create/cargame.png); }
+.picker-icon-pronunciation { --mono-ic: url(../images/icons/create/pronunciation.png); }
+.picker-icon-rocket { --mono-ic: url(../images/icons/create/rocket.png); }
+.picker-icon-sentences { --mono-ic: url(../images/icons/create/sentences.png); }
+.picker-icon-bilingual { --mono-ic: url(../images/icons/create/bilingual.png); }
+:is(#ta-mono, .picker-icon-flashcard, .picker-icon-wordorder, .picker-icon-makeaword, .picker-icon-spelling, .picker-icon-canknock,
+    .picker-icon-cargame, .picker-icon-pronunciation, .picker-icon-rocket, .picker-icon-sentences, .picker-icon-bilingual) {
   background: var(--grad-brand) !important; box-shadow: none !important;
   -webkit-mask: var(--mono-ic) center / contain no-repeat; mask: var(--mono-ic) center / contain no-repeat;
 }
-.picker-icon-sentences { background-image: url(../images/icons/create/sentences-night.png); }
-body.light-theme .picker-icon-sentences { background-image: url(../images/icons/create/sentences.png); }
-.picker-icon-bilingual { background-image: url(../images/icons/create/bilingual-night.png); }
-body.light-theme .picker-icon-bilingual { background-image: url(../images/icons/create/bilingual.png); }
 .picker-icon-engcontent { background-image: url(../images/icons/create/engcontent-night.png); }
 body.light-theme .picker-icon-engcontent { background-image: url(../images/icons/create/engcontent.png); }
 .picker-icon-listening { background-image: url(../images/icons/create/listening-night.png); }
@@ -589,14 +591,10 @@ body.light-theme .picker-icon-speaking { background-image: url(../images/icons/c
 body.light-theme .picker-icon-reading { background-image: url(../images/icons/create/reading.png); }
 .picker-icon-presentation { background-image: url(../images/icons/create/presentation-night.png); }
 body.light-theme .picker-icon-presentation { background-image: url(../images/icons/create/presentation.png); }
-.picker-icon-pronunciation { background-image: url(../images/icons/create/pronunciation-night.png); }
-body.light-theme .picker-icon-pronunciation { background-image: url(../images/icons/create/pronunciation.png); }
 .picker-icon-test { background-image: url(../images/icons/create/test-night.png); }
 body.light-theme .picker-icon-test { background-image: url(../images/icons/create/test.png); }
 /* Jungle and Bamboozle: one icon for day and night */
 .picker-icon-jungle { background-image: url(../images/icons/create/jungle.png); }
-.picker-icon-cargame { background-image: url(../images/icons/create/cargame.png); }
-.picker-icon-rocket { background-image: url(../images/icons/create/rocket.png); }
 .picker-icon-maze { background-image: url(../images/icons/create/maze.png); }
 /* Maze builder: a question, then its right and wrong answer */
 .row-item.maze-row { align-items: flex-start; }
