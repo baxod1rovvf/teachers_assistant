@@ -1378,7 +1378,7 @@ const TA_FILE_FIXES = [
   { id: 'sentencesend', at: '2026-10-02T17:14:00Z', types: /^sentences$|sentence writing/i, minor: true,
     what: 'when a student finishes, the start screen can come back instead of the certificate, with one extra warning' },
   // A round in full screen covered the set's "Next exercise" screen on phones: students saw the round's certificate (2026-10)
-  { id: 'setfull', at: '2026-10-27T12:00:00Z', types: /^(homework|class)$/i,
+  { id: 'setfull', at: '2026-10-27T09:14:00Z', types: /^(homework|class)$/i,
     what: 'on phones, students see each exercise\'s certificate and can only move on with the phone\'s back button' },
   { id: 'setsave', at: '2026-10-01T17:30:00Z', types: /^(homework|class)$/i,
     what: 'if a student\'s answers fail to upload, the set still counts the exercise as done — you see "Completed" but no answers' },
