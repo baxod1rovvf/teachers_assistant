@@ -77,10 +77,10 @@ const TA_TAB_HOOKS = {};
 function taOnTab(tab, fn) { TA_TAB_HOOKS[tab] = fn; }
 
 const MASTHEAD_COPY = {
-  builderDefault: { eyebrow: "✎ Teacher's Assistant", title: "Build exercises in minutes", sub: "Type your content, hit create, and a ready-to-use interactive exercise downloads straight to your computer — no coding required." },
+  builderDefault: { eyebrow: "✎ Loom", title: "Build exercises in minutes", sub: "Type your content, hit create, and a ready-to-use interactive exercise downloads straight to your computer — no coding required." },
   createpicker: { eyebrow: "➕ Create", title: "Pick an exercise type", sub: "Ready to use, in process, or merge a few together — everything starts here." },
   hwcbuilder: { eyebrow: "📚 Homework & Class", title: "Build your set", sub: "Pick exercises from My Exercises, put them in order, then generate one combined file." },
-  main: { eyebrow: "🎓 Teacher's Assistant", title: "Welcome back", sub: "Everything you need to build, share, and track classroom exercises." },
+  main: { eyebrow: "🎓 Loom", title: "Welcome back", sub: "Everything you need to build, share, and track classroom exercises." },
   dashboard: { eyebrow: "📊 Statistics", title: "Your classroom at a glance", sub: "Each exercise type's last 7 days, and today compared with yesterday." },
   myexercises: { eyebrow: "📁 My Exercises", title: "Everything you've built", sub: "Every exercise you've created — reopen it to make a new version, jump to its results, or turn off its points." },
   students: { eyebrow: "Students & Points", title: "Your groups and students", sub: "Groups, their lesson times, students' IDs and points." },
@@ -3210,7 +3210,7 @@ window.addEventListener('beforeinstallprompt', function (e) {
 window.addEventListener('appinstalled', function () {
   taInstallPrompt = null;
   if (window.renderInstallSection) window.renderInstallSection();
-  showToast('📲 Installed! Open Teacher\'s Assistant from your home screen or apps.', 'ok');
+  showToast('📲 Installed! Open Loom from your home screen or apps.', 'ok');
 });
 function taIsInstalled() {
   return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
@@ -3418,8 +3418,8 @@ function taMountTopBar() {
   bar.className = 'ta-topbar';
   bar.id = 'taTopbar';
   bar.innerHTML =
-    '<a class="tb-brand tb-link" href="index.html" title="Dashboard" aria-label="Teacher\'s Assistant — Dashboard"><img src="images/app/logo-mark.png" alt="">' +
-      '<span class="brand-name" translate="no"><b>Teacher\'s</b> <span>Assistant</span></span></a>' +
+    '<a class="tb-brand tb-link" href="index.html" title="Dashboard" aria-label="Loom — Dashboard"><img src="images/app/logo-mark.png" alt="">' +
+      '<span class="brand-name" translate="no"><b>loom</b></span></a>' +
     '<nav class="tb-nav" id="taTabNav" aria-label="Sections">' +
       '<svg class="tb-blob-svg" aria-hidden="true"><path id="taTabBlob" class="tb-blob-path"/></svg>' +
       TA_TOPBAR_TABS.map(t => '<a class="tb-tab tb-link" href="' + t.href + '" data-tab="' + t.tab + '" title="' + t.label + '" aria-label="' + t.label + '">' +

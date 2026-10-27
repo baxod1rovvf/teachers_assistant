@@ -1,5 +1,5 @@
 rules_version = '2';
-// Teacher's Assistant — database rules (Firebase console → Firestore → Rules).
+// Loom — database rules (Firebase console → Firestore → Rules).
 // The Control Panel (CP.html → "Database lock") shows this text with the
 // administrator's id filled in, ready to copy. See CLAUDE.md.
 service cloud.firestore {

@@ -1,7 +1,7 @@
 {
   "name": "teachers-assistant",
   "private": true,
-  "description": "Teacher's Assistant \u2014 only used to run the automatic tests (the site itself needs no build).",
+  "description": "Loom \u2014 only used to run the automatic tests (the site itself needs no build).",
   "scripts": {
     "test": "playwright test",
     "stamp": "node tools/bump-version.js"

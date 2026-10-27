@@ -1,6 +1,6 @@
-# Teacher's Assistant — notes for Claude
+# Loom (formerly Teacher's Assistant) — notes for Claude
 
-A teacher's web app (static site on GitHub Pages: `https://baxod1rovvf.github.io/teachers_assistant/`,
+A teacher's web app called **Loom** (renamed from "Teacher's Assistant" 2026-10-27; logo in `images/app/`; the site address and repo name stay `teachers_assistant` — don't change them, risk 11) (static site on GitHub Pages: `https://baxod1rovvf.github.io/teachers_assistant/`,
 deployed from `main`). Plain HTML/CSS/JS, no build step. The teacher (the owner of this
 repo) builds exercises on the Create page; each exercise is a single self-contained HTML
 file (templates in `js/exercise-templates.js`) that students open, and results come back

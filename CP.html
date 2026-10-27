@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teacher's Assistant — Control Panel</title>
+<title>Loom — Control Panel</title>
 <link rel="icon" href="images/app/favicon-ta-64.png" type="image/png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap');
@@ -164,7 +164,7 @@ function taCloudIdentity(login, password) {
 /* Teacher passwords are kept so the administrator can look them up here. They
    are stored encrypted (AES-GCM) with a key made from the administrator's own
    password, which is never stored anywhere, so only someone signed in to this
-   Control Panel can read them. The Teacher's Assistant app itself only ever
+   Control Panel can read them. The Loom app itself only ever
    checks the separate one-way hash. */
 const PW_KEY_STORE = 'ta_ctrl_pwkey';
 let ctrlPwKey = null;
@@ -225,7 +225,7 @@ async function ctrlDecryptPw(sealed) {
 
   <div class="card">
     <h2>Add a teacher</h2>
-    <p class="sub">The teacher signs in to Teacher's Assistant with this login and password. Their students, groups, exercises, results and points are kept apart from everyone else's.</p>
+    <p class="sub">The teacher signs in to Loom with this login and password. Their students, groups, exercises, results and points are kept apart from everyone else's.</p>
     <form class="add-grid" id="addForm" novalidate>
       <label class="field"><span>Login</span><input type="text" id="addLogin" placeholder="e.g. MALIKA" autocapitalize="characters" spellcheck="false" maxlength="24"></label>
       <label class="field"><span>Teacher's name</span><input type="text" id="addName" placeholder="e.g. Malika Karimova" maxlength="40"></label>
@@ -263,7 +263,7 @@ async function ctrlDecryptPw(sealed) {
   <div class="card">
     <h2>How teachers get started</h2>
     <ol class="howto">
-      <li>Send them the same Teacher's Assistant file you use.</li>
+      <li>Send them the same Loom file you use.</li>
       <li>Tell them their login and password from this page.</li>
       <li>They open the file and sign in. Everything they create stays in their own account.</li>
     </ol>

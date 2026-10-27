@@ -147,7 +147,7 @@ async function taDeriveSyncKey(login, password) {
   } catch (e) { console.error('Sync key failed:', e); return ''; }
 }
 function taLogout(skipConfirm) {
-  if (!skipConfirm && !confirm('Log out of Teacher\'s Assistant?')) return;
+  if (!skipConfirm && !confirm('Log out of Loom?')) return;
   function out() {
     window.taRaw.sessionRemove(TA_SESSION_KEY);
     window.taRaw.remove(TA_REMEMBER_KEY);

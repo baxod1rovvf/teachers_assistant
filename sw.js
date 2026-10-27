@@ -1,4 +1,4 @@
-/* Teacher's Assistant service worker: lets the app be installed and open
+/* Loom service worker: lets the app be installed and open
    quickly (or without a connection) from what it has already loaded.
    - Pages, the app manifest and icons: the network first, so a teacher
      always gets the newest version; the saved copy only when offline.

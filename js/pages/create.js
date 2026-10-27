@@ -1116,7 +1116,7 @@ window.addEventListener("message", function (e) {
 <!-- ================= LOGIN ANIMATION =================
      Start screen layout: animation on the left, ID / password on the right.
      In a narrow start card they stack, and in a very thin one the animation hides. The animation and its player load from the
-     Teacher's Assistant site this file was made on; offline, the 🔐 stays. -->
+     Loom site this file was made on; offline, the 🔐 stays. -->
 <style>
 .ta-login-card { max-width: 1100px !important; width: min(1100px, 94vw) !important; }
 .deck-container:has(> #slide-welcome.active) { max-width: min(1100px, 94vw) !important; }

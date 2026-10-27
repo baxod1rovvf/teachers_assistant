@@ -118,7 +118,7 @@
   /* Messages with names or numbers in them. Each: [regex on the English, fn(match) -> translation]. */
   var UZ = lang === 'uz';
   var PATTERNS = [
-    [/^(.+) — Teacher's Assistant$/, function (m) { return trName(m[1]) + ' — Teacher\'s Assistant'; }],
+    [/^(.+) — Loom$/, function (m) { return trName(m[1]) + ' — Loom'; }],
     [/^Create "(.+)"$/, function (m) { return UZ ? '“' + trName(m[1]) + '” yaratish' : 'Создать «' + trName(m[1]) + '»'; }],
     [/^([a-z]{2}(?:-[A-Z]{2})?) — (.+)$/, function (m) { return m[1] + ' — ' + trName(m[2]); }],
     [/^(\d+) (words?|sentences?|students?|exercises?|slides?|groups?|points?|items?|rounds?|tries|seconds?|student\(s\))$/, function (m) {

@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "Teacher's Assistant",
-  "short_name": "Teacher's Asst",
-  "description": "Build classroom exercises in minutes, and track your students' results and points.",
+  "name": "Loom",
+  "short_name": "Loom",
+  "description": "Loom — build classroom exercises in minutes, and track your students' results and points.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

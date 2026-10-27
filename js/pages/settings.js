@@ -7,12 +7,12 @@ function renderInstallSection() {
   if (taIsInstalled()) {
     el.innerHTML = p('✅ You\'re using the installed app.');
   } else if (taInstallPrompt) {
-    el.innerHTML = p('Add Teacher\'s Assistant to your home screen or desktop. It opens in its own window, starts faster, and still opens without internet (sync catches up once you\'re back online).') +
+    el.innerHTML = p('Add Loom to your home screen or desktop. It opens in its own window, starts faster, and still opens without internet (sync catches up once you\'re back online).') +
       '<button class="mini-btn solid" type="button" onclick="taInstallApp()">📲 Install the app</button>';
   } else if (ios) {
     el.innerHTML = p('On iPhone or iPad: open this site in <b>Safari</b>, tap the <b>Share</b> button (the square with an arrow), then <b>Add to Home Screen</b>.');
   } else {
-    el.innerHTML = p('In Chrome or Edge, use the install icon at the right end of the address bar, or the browser menu → <b>Install Teacher\'s Assistant</b> (on Android: menu → <b>Add to Home screen</b>). The button appears here when your browser is ready to install.');
+    el.innerHTML = p('In Chrome or Edge, use the install icon at the right end of the address bar, or the browser menu → <b>Install Loom</b> (on Android: menu → <b>Add to Home screen</b>). The button appears here when your browser is ready to install.');
   }
 }
 window.renderInstallSection = renderInstallSection;
@@ -39,7 +39,7 @@ function buildBackup() {
 function backupFilename(when) {
   const d = new Date(when);
   const pad = n => String(n).padStart(2, '0');
-  return 'TeachersAssistant_backup_' + (taCurrentLogin() || 'me') + '_' + d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + '_' + pad(d.getHours()) + pad(d.getMinutes()) + '.json';
+  return 'Loom_backup_' + (taCurrentLogin() || 'me') + '_' + d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + '_' + pad(d.getHours()) + pad(d.getMinutes()) + '.json';
 }
 
 function saveBackupFile(backup, suffix) {
@@ -97,7 +97,7 @@ function onBackupFileChosen(input) {
     let backup = null;
     try { backup = JSON.parse(reader.result); } catch (e) { backup = null; }
     if (!backup || backup.app !== 'teachers-assistant' || backup.kind !== 'backup' || !backup.data || typeof backup.data !== 'object') {
-      showToast('That file isn\'t a Teacher\'s Assistant backup.');
+      showToast('That file isn\'t a Loom backup.');
       return;
     }
     const data = {};
