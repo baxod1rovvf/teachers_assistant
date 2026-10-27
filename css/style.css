@@ -572,15 +572,17 @@ body:not(.light-theme) .dash-card-icon-img.icon-mono { filter: invert(1); }
 .picker-icon-rocket { --mono-ic: url(../images/icons/create/rocket.png); }
 .picker-icon-sentences { --mono-ic: url(../images/icons/create/sentences.png); }
 .picker-icon-bilingual { --mono-ic: url(../images/icons/create/bilingual.png); }
+.picker-icon-engcontent { --mono-ic: url(../images/icons/create/engcontent.png); }
+.picker-icon-listening { --mono-ic: url(../images/icons/create/listening.png); }
+.picker-icon-jungle { --mono-ic: url(../images/icons/create/jungle.png); }
+.picker-icon-bamboozle { --mono-ic: url(../images/icons/create/bamboozle.png); }
+.picker-icon-presentation { --mono-ic: url(../images/icons/create/presentation.png); }
 :is(#ta-mono, .picker-icon-flashcard, .picker-icon-wordorder, .picker-icon-makeaword, .picker-icon-spelling, .picker-icon-canknock,
-    .picker-icon-cargame, .picker-icon-pronunciation, .picker-icon-rocket, .picker-icon-sentences, .picker-icon-bilingual) {
+    .picker-icon-cargame, .picker-icon-pronunciation, .picker-icon-rocket, .picker-icon-sentences, .picker-icon-bilingual,
+    .picker-icon-engcontent, .picker-icon-listening, .picker-icon-jungle, .picker-icon-bamboozle, .picker-icon-presentation) {
   background: var(--grad-brand) !important; box-shadow: none !important;
   -webkit-mask: var(--mono-ic) center / contain no-repeat; mask: var(--mono-ic) center / contain no-repeat;
 }
-.picker-icon-engcontent { background-image: url(../images/icons/create/engcontent-night.png); }
-body.light-theme .picker-icon-engcontent { background-image: url(../images/icons/create/engcontent.png); }
-.picker-icon-listening { background-image: url(../images/icons/create/listening-night.png); }
-body.light-theme .picker-icon-listening { background-image: url(../images/icons/create/listening.png); }
 .picker-icon-homework { background-image: url(../images/icons/create/homework-night.png); }
 body.light-theme .picker-icon-homework { background-image: url(../images/icons/create/homework.png); }
 .picker-icon-class { background-image: url(../images/icons/create/class-night.png); }
@@ -589,12 +591,8 @@ body.light-theme .picker-icon-class { background-image: url(../images/icons/crea
 body.light-theme .picker-icon-speaking { background-image: url(../images/icons/create/speaking.png); }
 .picker-icon-reading { background-image: url(../images/icons/create/reading-night.png); }
 body.light-theme .picker-icon-reading { background-image: url(../images/icons/create/reading.png); }
-.picker-icon-presentation { background-image: url(../images/icons/create/presentation-night.png); }
-body.light-theme .picker-icon-presentation { background-image: url(../images/icons/create/presentation.png); }
 .picker-icon-test { background-image: url(../images/icons/create/test-night.png); }
 body.light-theme .picker-icon-test { background-image: url(../images/icons/create/test.png); }
-/* Jungle and Bamboozle: one icon for day and night */
-.picker-icon-jungle { background-image: url(../images/icons/create/jungle.png); }
 .picker-icon-maze { background-image: url(../images/icons/create/maze.png); }
 /* Maze builder: a question, then its right and wrong answer */
 .row-item.maze-row { align-items: flex-start; }
@@ -604,7 +602,6 @@ body.light-theme .picker-icon-test { background-image: url(../images/icons/creat
 .row-item.maze-row input.mz-right { border-color: rgba(14,125,107,.55); }
 .row-item.maze-row input.mz-wrong { border-color: rgba(194,43,62,.5); }
 @media (max-width: 560px) { .row-item.maze-row .maze-answers { flex-direction: column; } }
-.picker-icon-bamboozle { background-image: url(../images/icons/create/bamboozle.png); }
 .tab-btn .exercise-badge.picker-icon { background-color: transparent !important; background-size: contain; background-repeat: no-repeat; background-position: center; box-shadow: none; }
 .picker-card-sub { font-size: 0.78rem; color: var(--ink-faint); margin-top: 2px; }
 .hwc-avail-row {
