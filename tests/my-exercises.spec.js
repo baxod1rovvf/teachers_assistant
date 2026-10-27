@@ -135,7 +135,7 @@ test('every card and type chip shows the exercise type\'s picture (the Create pa
   const n = await cards.count();
   expect(n).toBeGreaterThan(0);
   expect(await page.locator('.myex-card .myex-card-head > .myex-type-ic').count()).toBe(n);
-  const bg = await page.locator('.myex-card .myex-type-ic').first().evaluate(el => getComputedStyle(el).backgroundImage);
+  const bg = await page.locator('.myex-card .myex-type-ic').first().evaluate(el => { const c = getComputedStyle(el); return c.webkitMaskImage || c.maskImage; });   // line icons: a mask in the theme's colour
   expect(bg).toContain('images/icons/create/');
   expect(await page.locator('.myex-card[data-uid="uset"] .myex-type-ic').getAttribute('class')).toMatch(/picker-icon-(homework|class)/);
   await page.screenshot({ path: info.outputPath('my-exercises.png') });

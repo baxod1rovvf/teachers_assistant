@@ -484,16 +484,19 @@ real students' names or results into the repository (it is public).
   (light `.ta-screen`, `.ta-btn`, `#hwcBar`, `#hwcReviewBar`). Games' own pictures are untouched; the name tag is hidden on phones.
   Files made before keep the old look. `tests/student-theme.spec.js`.
 - **Colours (teacher's rules, 2026-10-27)**: only Day (`body.light-theme`) and Night (`:root`), both always `glass-ui`. **Night: a plain
-  black page (`#050507`, no mesh) with graphite blocks (`#1C1C22`, glass `rgba(28,28,34,.88)`); Day: a very light blue page
+  black page (`#050507`, no mesh) with graphite blocks (`#1C1C22`, glass `rgba(28,28,34,.88)`) and RED accents (teacher: "black + red,
+  not black + blue" — `--brand #FF4D5E`, gradients crimson → coral ≈345°–10°, neutral grey text); Day: a very light blue page
   (`#EAF2FF`, a faint light-blue mesh) with white blocks** — the teacher found a blue page under blue blocks odd. Every
-  gradient uses neighbouring hues only — indigo/blue/violet within 60° (night `--mesh-1..4` ≈226°–272°, day ≈213°–270°) — and
+  gradient uses neighbouring hues only, within 60° (night red ≈345°–10°; day indigo/blue/violet ≈213°–270°). Brand tints are
+  `color-mix(in srgb, var(--brand) N%, transparent)`, so they follow the theme — and
   is a **mesh** (layered `radial-gradient`s placed along the 135° diagonal, top-left → bottom-right): the page (`--mesh-page`),
   buttons (`--grad-brand`), glass sheens. **No `linear-gradient` in css/style.css** (a test checks; the lesson page's ruled lines
   are an SVG). Headlines (`h1`, `h2`, `.dash-card-title`, `.picker-section-title`) are gradient text (`--grad-text`, background-clip).
   The student theme's buttons and the set's/Maze's progress bars follow the same rule.
-- **Minimal line icons (2026-10-27)**: the teacher is moving the exercise-type icons to simple black line drawings. So far:
+- **Minimal line icons (2026-10-27)**: every exercise type has a simple black line drawing. The teacher's own:
   Flashcard, Word Order, Make a Word, Spelling, Can Knockdown, Car Game, Pronunciation, Rocket Game, Sentences,
-  Bidirectional Language, English Content, Dictation (`listening`, also IELTS Listening), Jungle, Bamboozle, Presentation (`images/icons/create/<type>.png`, 256 px, black on transparent,
+  Bidirectional Language, English Content, Dictation (`listening`, also IELTS Listening), Jungle, Bamboozle, Presentation; drawn by Claude in the same style (thick round lines, the teacher asked): Maze, Test, Homework,
+  Class, IELTS Speaking, IELTS Reading (`images/icons/create/<type>.png`, 256 px, black on transparent,
   no `-night` copy). They're drawn as a CSS mask filled with `--grad-brand` (`--mono-ic` + the `:is(#ta-mono, …)` rule in
   css/style.css), so they show on the black Night page and the light Day page and appear wherever `picker-icon-<type>` is used
   (Create picker + tab row, My Exercises cards/chips, the set builder's type grid). A new line icon: save it there, set
