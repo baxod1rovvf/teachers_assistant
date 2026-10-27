@@ -4,18 +4,20 @@
   /* NIGHT (2026-10-27: only Day and Night, always the glass look). Every colour of a gradient is a
      neighbouring hue — indigo, blue and violet, within 60° on the colour wheel (≈226°–272°) — and
      gradients are mesh gradients (soft colour spots, not lines) laid along the 135° diagonal. */
-  --surface-page: #0E0B22;
-  --surface: #18143A;
-  --surface-sunken: #0A0819;
-  --border: rgba(226, 222, 255, 0.14);
-  --border-line: rgba(226, 222, 255, 0.08);
+  /* the page is black and the blocks are graphite (the teacher, 2026-10-27: a blue page under blue blocks looked odd);
+     indigo/violet stays for buttons, headlines and highlights */
+  --surface-page: #050507;
+  --surface: #1C1C22;
+  --surface-sunken: #0E0E12;
+  --border: rgba(255, 255, 255, 0.10);
+  --border-line: rgba(255, 255, 255, 0.06);
   --ink: #EEEBFF;
   --ink-soft: #B6B0DB;
   --ink-faint: #8D88B3;
   --brand: #8B7CFF;
   --brand-strong: #6D5CF6;
   --on-brand: #0E0B22;
-  --mesh-1: #3730A3; --mesh-2: #5B21B6; --mesh-3: #1E40AF; --mesh-4: #6B21A8;
+  --mesh-1: transparent; --mesh-2: transparent; --mesh-3: transparent; --mesh-4: transparent;   /* the page stays plain black */
   /* buttons and headlines: mesh gradients, top-left → bottom-right */
   --grad-brand: radial-gradient(130% 130% at 0% 0%, #A5B4FC 0%, transparent 55%), radial-gradient(130% 130% at 100% 100%, #7C3AED 0%, transparent 60%), #6D5CF6;
   --grad-text: radial-gradient(140% 170% at 0% 0%, #C7D2FE 0%, transparent 60%), radial-gradient(140% 170% at 100% 100%, #C4B5FD 0%, transparent 62%), #A78BFA;
@@ -70,9 +72,10 @@ body {
 
 body.light-theme {
   /* DAY — the same neighbouring hues, light (≈213°–270°) */
-  --surface-page: #F5F3FF;
+  /* a very light blue page with white blocks (the teacher, 2026-10-27) */
+  --surface-page: #EAF2FF;
   --surface: #FFFFFF;
-  --surface-sunken: #ECE9FB;
+  --surface-sunken: #E3ECFB;
   --border: rgba(30, 24, 80, 0.12);
   --border-line: rgba(30, 24, 80, 0.07);
   --ink: #17142E;
@@ -81,7 +84,7 @@ body.light-theme {
   --brand: #5B4BF5;
   --brand-strong: #4535D9;
   --on-brand: #FFFFFF;
-  --mesh-1: #C7D2FE; --mesh-2: #DDD6FE; --mesh-3: #BFDBFE; --mesh-4: #E9D5FF;
+  --mesh-1: #D6E6FF; --mesh-2: #DDE9FF; --mesh-3: #CFE3FF; --mesh-4: #E0EAFF;   /* light blues only (≈213°–222°) */
   --grad-brand: radial-gradient(130% 130% at 0% 0%, #818CF8 0%, transparent 55%), radial-gradient(130% 130% at 100% 100%, #8B5CF6 0%, transparent 60%), #5B4BF5;
   --grad-text: radial-gradient(140% 170% at 0% 0%, #4F46E5 0%, transparent 60%), radial-gradient(140% 170% at 100% 100%, #7C3AED 0%, transparent 62%), #5B4BF5;
   --shadow-brand: 0 10px 26px -8px rgba(91,75,245,0.45);
@@ -1813,23 +1816,25 @@ input:disabled::placeholder { color: var(--ink-faint); font-style: italic; }
    (::before), not on the block itself, so pop-ups inside a block (like the
    🎨 box in the welcome card) aren't cut off by it. */
 body.glass-ui {
-  --glass-bg: rgba(255,255,255,0.05);
-  --glass-bg-hover: rgba(255,255,255,0.14);
-  --glass-sheen: rgba(255,255,255,0.2);
-  --glass-border: rgba(255,255,255,0.22);
-  --glass-edge: rgba(255,255,255,0.4);
+  /* night: graphite glass over the black page */
+  --glass-bg: rgba(28,28,34,0.88);
+  --glass-bg-hover: rgba(40,40,48,0.94);
+  --glass-sheen: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.10);
+  --glass-edge: rgba(255,255,255,0.12);
   --glass-shadow: 0 16px 40px -12px rgba(0,0,0,0.6);
   --glass-blur: blur(30px) saturate(200%);
   background: var(--mesh-page);
   background-attachment: fixed;
 }
 body.glass-ui.light-theme {
-  --glass-bg: rgba(255,255,255,0.28);
-  --glass-bg-hover: rgba(255,255,255,0.5);
-  --glass-sheen: rgba(255,255,255,0.7);
-  --glass-border: rgba(255,255,255,0.8);
+  /* day: white blocks over the light blue page */
+  --glass-bg: rgba(255,255,255,0.94);
+  --glass-bg-hover: rgba(255,255,255,1);
+  --glass-sheen: rgba(255,255,255,0.9);
+  --glass-border: rgba(40,80,160,0.10);
   --glass-edge: rgba(255,255,255,1);
-  --glass-shadow: 0 16px 40px -14px rgba(40,30,80,0.3);
+  --glass-shadow: 0 12px 32px -16px rgba(40,80,160,0.28);
 }
 body.glass-ui::before { opacity: 0.15; }
 

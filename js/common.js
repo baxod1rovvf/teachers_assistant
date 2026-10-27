@@ -859,7 +859,7 @@ function applyTheme() {
   document.body.classList.add('glass-ui');   // the glass look, always (the Classic style is gone, 2026-10-27)
   // the phone's status bar (installed app) takes the page colour
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', t === 'light' ? '#F5F3FF' : '#0E0B22');
+  if (meta) meta.setAttribute('content', t === 'light' ? '#EAF2FF' : '#050507');
   const btn = document.getElementById('themeToggleBtn');
   if (btn) {
     btn.innerHTML = t === 'light' ? TA_MOON_SVG : TA_SUN_SVG;

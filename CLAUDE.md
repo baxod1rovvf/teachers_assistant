@@ -483,7 +483,9 @@ real students' names or results into the repository (it is public).
   toggles, the finish cards (`.certificate-card`, `.certificate-box`, `#endOverlay .panel-card`, `.ta-cert-box`) and a set's screens
   (light `.ta-screen`, `.ta-btn`, `#hwcBar`, `#hwcReviewBar`). Games' own pictures are untouched; the name tag is hidden on phones.
   Files made before keep the old look. `tests/student-theme.spec.js`.
-- **Colours (teacher's rules, 2026-10-27)**: only Day (`body.light-theme`) and Night (`:root`), both always `glass-ui`. Every
+- **Colours (teacher's rules, 2026-10-27)**: only Day (`body.light-theme`) and Night (`:root`), both always `glass-ui`. **Night: a plain
+  black page (`#050507`, no mesh) with graphite blocks (`#1C1C22`, glass `rgba(28,28,34,.88)`); Day: a very light blue page
+  (`#EAF2FF`, a faint light-blue mesh) with white blocks** — the teacher found a blue page under blue blocks odd. Every
   gradient uses neighbouring hues only — indigo/blue/violet within 60° (night `--mesh-1..4` ≈226°–272°, day ≈213°–270°) — and
   is a **mesh** (layered `radial-gradient`s placed along the 135° diagonal, top-left → bottom-right): the page (`--mesh-page`),
   buttons (`--grad-brand`), glass sheens. **No `linear-gradient` in css/style.css** (a test checks; the lesson page's ruled lines
