@@ -2501,3 +2501,9 @@ html, body { overflow-x: clip; }
   body.glass-ui { --glass-blur: none; --glass-bg: color-mix(in srgb, var(--surface) 90%, transparent); --glass-bg-hover: color-mix(in srgb, var(--surface) 95%, transparent); }
   body.glass-ui *, body.glass-ui *::before, body.glass-ui *::after { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 }
+
+/* My Exercises: one block per day, under its date */
+.myex-day { font-family: 'Space Grotesk', sans-serif; font-size: .82rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--ink-faint); margin: 20px 2px 10px; display: flex; align-items: center; gap: 10px; }
+.myex-day::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.myex-day:first-child { margin-top: 4px; }

@@ -91,9 +91,15 @@ function renderRecentExercises() {
 
   let html = '';
   let shown = 0;
+  let dayOpen = null;   // the teacher asked for the exercises to be separated by date (2026-10-27)
   list.forEach((item, idx) => {
     if (!matches(item)) return;
     shown++;
+    const day = myexDayLabel(item.date);
+    if (day !== dayOpen) {
+      html += (dayOpen !== null ? '</div>' : '') + '<h3 class="myex-day">' + escapeForHtml(day) + '</h3><div class="myex-grid">';
+      dayOpen = day;
+    }
     // "Oct 2, 7:59 PM" — no year
     const dateStr = (function (d) {
       if (isNaN(d)) return '';
@@ -131,7 +137,7 @@ function renderRecentExercises() {
         '</div>' +
       '</div>';
   });
-  html = '<div class="myex-grid">' + html + '</div>'; // one grid, newest first (no headings by date)
+  if (dayOpen !== null) html += '</div>';   // a grid per day, newest first, each under its date
   const countEl = document.getElementById('myexCount');
   const filtered = words.length || myexTypeFilter || myexGroupFilter !== null;
   if (countEl) countEl.textContent = filtered ? shown + ' of ' + list.length : list.length + ' exercise' + (list.length === 1 ? '' : 's');
@@ -140,6 +146,18 @@ function renderRecentExercises() {
     : '<div class="empty-results">Nothing matches' + (words.length ? ' “' + escapeForHtml(searchEl.value.trim()) + '”' : '') + (myexTypeFilter ? ' in ' + escapeForHtml(myexTypeFilter) : '') +
       (myexGroupFilter !== null ? ' for ' + escapeForHtml(groupNames[myexGroupFilter] || 'no group') : '') + '. ' +
       '<button class="mini-btn" type="button" onclick="clearMyexFilters()">Show all</button></div>';
+}
+
+// "Today", "Yesterday", "Monday, Oct 20" (this week), "Oct 12" (this year), "Oct 12, 2025"
+function myexDayLabel(iso) {
+  const d = new Date(iso);
+  if (isNaN(d)) return 'Earlier';
+  const start = x => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+  const days = Math.round((start(new Date()) - start(d)) / 86400000);
+  if (days <= 0) return 'Today';
+  if (days === 1) return 'Yesterday';
+  if (days < 7) return d.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' });
+  return d.toLocaleDateString(undefined, d.getFullYear() === new Date().getFullYear() ? { month: 'long', day: 'numeric' } : { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
 // The teacher's line icons (images/icons/myex/), drawn in the design's colours with a CSS mask

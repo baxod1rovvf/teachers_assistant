@@ -113,7 +113,7 @@ test('My Exercises shows cards, 4 in a row: title ✎ ⋯, then 🗑 and View Re
   await card.locator('.myex-more').click();
   await expect(page.locator('#myexMenu .myex-menu-item')).toHaveText(['Use again', 'Redownload']);
   await expect(page.locator('#myexMenu .myex-menu-item .myex-ic')).toHaveCount(2);   // each with its icon // + 🔗 Copy link on the real site
-  await expect(page.locator('.recent-exercise-daygroup')).toHaveCount(0); // no headings by date
+  await expect(page.locator('.myex-day')).toHaveText(['Today']);   // all made today: one date heading
   // the card shows only the title; type, group and date (without the year) are at the top of ⋯
   await expect(card.locator('.myex-card-badges, .recent-exercise-date')).toHaveCount(0);
   await expect(page.locator('#myexMenu .myex-menu-info')).toContainText('Spelling');
@@ -139,4 +139,20 @@ test('every card and type chip shows the exercise type\'s picture (the Create pa
   expect(bg).toContain('images/icons/create/');
   expect(await page.locator('.myex-card[data-uid="uset"] .myex-type-ic').getAttribute('class')).toMatch(/picker-icon-(homework|class)/);
   await page.screenshot({ path: info.outputPath('my-exercises.png') });
+});
+
+test('My Exercises is separated by dates: Today, Yesterday, then each earlier day', async ({ page, context }) => {
+  const day = 86400000, at = n => new Date(Date.now() - n * day).toISOString();
+  const items = [['a', 0], ['b', 0], ['c', 1], ['d', 3], ['e', 30]].map(([id, n]) => ({ uid: 'ud' + id, title: 'Ex ' + id, typeLabel: 'Spelling', code: '20000' + id.charCodeAt(0), date: at(n) }));
+  await prepare(context, { storage: { ta_recent_exercises: JSON.stringify(items) } });
+  await page.goto('/my-exercises.html');
+  await page.waitForTimeout(1000);
+  await hideNotices(page);
+  const heads = page.locator('.myex-day');
+  await expect(heads).toHaveCount(4);
+  await expect(heads.nth(0)).toHaveText('Today');
+  await expect(heads.nth(1)).toHaveText('Yesterday');
+  // each day's exercises are in the block under its heading
+  expect(await page.locator('.myex-day + .myex-grid').nth(0).locator('.myex-card').count()).toBe(2);
+  expect(await page.locator('.myex-day + .myex-grid').nth(1).locator('.myex-card').count()).toBe(1);
 });
