@@ -54,6 +54,8 @@ function showPointsAmountPopover(btnEl, id, name, sign) {
   if (!pop || !input || !label) return;
 
   label.textContent = (sign > 0 ? 'Give points to ' : 'Take points from ') + name;
+  const ok = document.getElementById('pointsAmountOk');
+  if (ok) ok.textContent = sign > 0 ? 'Give' : 'Take';
   input.value = '5';
 
   const rect = btnEl.getBoundingClientRect();

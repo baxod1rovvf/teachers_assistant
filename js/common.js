@@ -2580,7 +2580,7 @@ function taAskCloudPassword() {
     '<p>The database is now locked, so only teachers can save and delete things. Enter your password so this device can save your data, exercise links and points.</p>' +
     '<input type="password" autocomplete="current-password" placeholder="Your password">' +
     '<div class="sync-unlock-err" role="alert"></div>' +
-    '<div class="sync-unlock-btns"><button type="button" class="sync-unlock-cancel">Not now</button><button type="submit" class="sync-unlock-ok">Continue</button></div>' +
+    '<div class="sync-unlock-btns"><button type="button" class="sync-unlock-cancel">Not now</button><button type="submit" class="sync-unlock-ok">Unlock</button></div>' +
     '</form>';
   document.body.appendChild(wrap);
   const form = wrap.querySelector('form'), input = wrap.querySelector('input'), err = wrap.querySelector('.sync-unlock-err'), ok = wrap.querySelector('.sync-unlock-ok');

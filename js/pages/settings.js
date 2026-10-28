@@ -128,7 +128,7 @@ function onBackupFileChosen(input) {
         if (r.failed) parts.push(r.failed + ' refused by the database');
         await new Promise(res => {
           const done = taModal(r.failed ? '⚠️ Results partly put back' : '✅ Results put back', '<p class="ta-modal-text" id="restoreResultsInfo">' + escapeForHtml(parts.join(' · ')) + '.</p>' +
-            '<div class="ta-modal-btns"><button type="button" class="mini-btn solid" data-act="ok">OK</button></div>', { onClose: res });
+            '<div class="ta-modal-btns"><button type="button" class="mini-btn solid" data-act="ok">Close</button></div>', { onClose: res });
           done.body.querySelector('[data-act="ok"]').onclick = done.close;
         });
         if (!doData) return;

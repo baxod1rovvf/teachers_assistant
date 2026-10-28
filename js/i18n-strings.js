@@ -79,6 +79,10 @@ window.TA_I18N_ROWS = [
   ['Close', 'Yopish', 'Закрыть'],
   ['Cancel', 'Bekor qilish', 'Отмена'],
   ['OK', 'OK', 'ОК'],
+  ['Give', 'Berish', 'Начислить'],
+  ['Take', 'Ayirish', 'Снять'],
+  ['Unlock', 'Ochish', 'Разблокировать'],
+  ['Search results', 'Natijalarni qidirish', 'Поиск по результатам'],
   ['Undo', 'Qaytarish', 'Отменить'],
   ['Teacher', 'Oʻqituvchi', 'Учитель'],
 
