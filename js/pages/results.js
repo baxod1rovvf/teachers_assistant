@@ -130,7 +130,7 @@ function renderHwcResultsList() {
       const totalSec = d.totalTimeSeconds % 60;
       const totalTimeText = totalMin + 'm ' + (totalSec < 10 ? '0' : '') + totalSec + 's';
       const timeColor = d.totalTimeSeconds < 900 ? 'var(--danger)' : 'var(--success)';
-      totalTimeHtml = '<span class="hwc-total-time" style="font-weight:800; color:' + timeColor + ';">\u23f1 ' + totalTimeText + '</span>';
+      totalTimeHtml = '<span class="hwc-total-time" style="font-weight:700; color:' + timeColor + ';">\u23f1 ' + totalTimeText + '</span>';
     }
     const roundsHtml = isExpanded ? (d.roundLabels || []).map((label, i) => {
       const roundDone = !!(d.completedFlags && d.completedFlags[i]);

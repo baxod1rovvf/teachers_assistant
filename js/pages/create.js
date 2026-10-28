@@ -3661,7 +3661,7 @@ function renderBilingualRows() {
   let total = 0;
   brParagraphs.forEach((p, pi) => {
     const letterEl = document.createElement('div');
-    letterEl.style.cssText = 'font-weight:800; color:var(--brand); margin-top:6px;';
+    letterEl.style.cssText = 'font-weight:700; color:var(--brand); margin-top:6px;';
     letterEl.textContent = 'Paragraph ' + p.letter;
     wrap.appendChild(letterEl);
     p.sentences.forEach((s, si) => {

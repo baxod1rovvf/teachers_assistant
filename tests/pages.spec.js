@@ -209,3 +209,40 @@ test('on a phone, the sections are a tab bar at the bottom', async ({ page, cont
   await page.locator('.tb-tab[data-tab="dashboard"]').click();
   await expect(page.locator('#panel-dashboard')).toHaveClass(/active/, { timeout: 8000 });
 });
+
+test('buttons show the app\'s own tooltip (mouse and keyboard), small buttons are easy to tap, the robot waits in the corner', async ({ page, context }) => {
+  await prepare(context);
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto('/index.html');
+  await page.waitForTimeout(1500);
+  await hideNotices(page);
+  // mouse: after a moment the label shows the title and the shortcut; the title comes back afterwards
+  await page.hover('#quickSearchBtn');
+  await expect(page.locator('#taTip')).toBeVisible();
+  await expect(page.locator('#taTip')).toContainText('Search');
+  await expect(page.locator('#taTip kbd')).toHaveText(/K$/);
+  await page.mouse.move(600, 500);
+  await expect(page.locator('#taTip')).toBeHidden();
+  await expect(page.locator('#quickSearchBtn')).toHaveAttribute('title', 'Search');
+  // keyboard: at once on focus
+  await page.locator('#themeToggleBtn').focus();
+  await page.keyboard.press('Shift+Tab');
+  await page.keyboard.press('Tab');
+  await expect(page.locator('#taTip')).toBeVisible();
+  // tap areas: the top bar's buttons are 44 px; small ones reach 44 px with their invisible edge
+  const box = await page.locator('#quickSearchBtn').boundingBox();
+  expect(Math.round(box.width)).toBeGreaterThanOrEqual(44);
+  const hit = await page.evaluate(() => {
+    const b = document.querySelector('.tb-avatar'); const s = getComputedStyle(b, '::before');
+    return [parseFloat(s.width), parseFloat(s.height)];
+  });
+  expect(hit[0]).toBeGreaterThanOrEqual(44);
+  expect(hit[1]).toBeGreaterThanOrEqual(44);
+  // the robot: bottom-right corner, and it stays there
+  const r1 = await page.locator('#aiRobotWidget').boundingBox();
+  expect(r1.x + r1.width).toBeGreaterThan(1280 - 40);
+  expect(r1.y + r1.height).toBeGreaterThan(800 - 40);
+  await page.waitForTimeout(3000);
+  const r2 = await page.locator('#aiRobotWidget').boundingBox();
+  expect([r2.x, r2.y]).toEqual([r1.x, r1.y]);
+});

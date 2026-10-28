@@ -506,3 +506,11 @@ real students' names or results into the repository (it is public).
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except
   Sentences (used when there are no words) and Jungle (shown on the board), which are part of the exercise.
 - The robot (lottie `AI_ROBOT_ANIM`) has a small "Smile" shape added to the eyes layer (lowered a little, 2026-10-03).
+- **Look rules from the design check (teacher, 2026-10-28)**: no font weight above 700 in the app (the Inter 800 import is gone;
+  exercise files keep theirs); no text under 12 px; buttons say what they do (no "OK"/"Continue").
+  **Tooltips**: buttons/links with a `title` show the app's own label (`#taTip`, end of common.js) after 300 ms under the mouse
+  or at once on keyboard focus; the title is lent to it and put back, so i18n and `getByTitle` still work; `data-kbd` adds a key
+  (search: Ctrl K / ⌘ K). **Tap areas**: top-bar tools 44 px; small buttons get an invisible 44 × 44 `::before`
+  (the `:where(…)` list at the end of css/style.css — add new small buttons there). **The robot** stays in the bottom-right
+  corner (`TA_ROBOT_WANDERS = false`; still draggable), 132 px on computers, only its circle takes clicks; pages have
+  104 px room at the bottom on computers so nothing stays under it. `tests/pages.spec.js` ("buttons show the app's own tooltip…").

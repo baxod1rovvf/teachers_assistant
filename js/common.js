@@ -2882,20 +2882,25 @@ function playAiRobotOnce(name) {
 let aiRobotWanderTimer = null;
 let aiRobotWanderPaused = false;
 const AI_ROBOT_MARGIN = 10;
+const TA_ROBOT_WANDERS = false;
 function aiRobotBounds() {
   const widget = document.getElementById('aiRobotWidget');
   const w = widget ? widget.offsetWidth : 76;
   const h = widget ? widget.offsetHeight : 76;
+  // the robot is drawn in the middle 48% of its square (css: .ai-robot-widget::before), so the
+  // empty edge of the square may go off the screen and the robot itself sits close to the corner
+  const ex = Math.round(w * 0.26) - AI_ROBOT_MARGIN, ey = Math.round(h * 0.26) - AI_ROBOT_MARGIN;
   return {
-    minX: AI_ROBOT_MARGIN, minY: AI_ROBOT_MARGIN,
-    maxX: Math.max(AI_ROBOT_MARGIN, window.innerWidth - w - AI_ROBOT_MARGIN),
-    maxY: Math.max(AI_ROBOT_MARGIN, window.innerHeight - h - AI_ROBOT_MARGIN)
+    minX: AI_ROBOT_MARGIN - ex, minY: AI_ROBOT_MARGIN - ey,
+    maxX: Math.max(AI_ROBOT_MARGIN, window.innerWidth - w - AI_ROBOT_MARGIN + ex),
+    maxY: Math.max(AI_ROBOT_MARGIN, window.innerHeight - h - AI_ROBOT_MARGIN + ey)
   };
 }
 function aiRobotScheduleWander() {
   clearTimeout(aiRobotWanderTimer);
-  // Phones: the robot stays put (wandering moves it with left/top, which re-lays out the page every frame).
-  if (aiRobotWanderPaused || TA_LOW_POWER) return;
+  // It stays put in its corner (2026-10-28: walking around, it covered the page on computers;
+  // on phones it moved with left/top, which re-laid out the page every frame). It can still be dragged.
+  if (aiRobotWanderPaused || TA_LOW_POWER || !TA_ROBOT_WANDERS) return;
   const pause = 2500 + Math.random() * 5000;
   aiRobotWanderTimer = setTimeout(aiRobotWanderStep, pause);
 }
@@ -3163,9 +3168,9 @@ function initAiRobotWidget() {
   if (!widget) return;
   const b = aiRobotBounds();
   widget.classList.add('no-transition');
-  // phones: park it in the bottom-right corner, out of the way of the content
-  widget.style.left = (TA_LOW_POWER ? b.maxX : Math.min(60, b.maxX)) + 'px';
-  widget.style.top = (TA_LOW_POWER ? Math.max(b.minY, b.maxY - 70) : Math.min(170, b.maxY)) + 'px';
+  // park it in the bottom-right corner, out of the way of the content (on phones above the tab bar)
+  widget.style.left = b.maxX + 'px';
+  widget.style.top = (TA_LOW_POWER ? Math.max(b.minY, b.maxY - 70) : b.maxY) + 'px';
   initAiRobotAnimPlayer();
   aiRobotInitDrag();
   aiRobotScheduleWander();
@@ -3428,7 +3433,7 @@ function taMountTopBar() {
     '<div class="tb-tools">' +
       '<button class="tb-tool tb-refresh" id="taRefreshBtn" type="button" onclick="taRefreshApp(this)" title="Refresh" aria-label="Refresh">' +
         '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button>' +
-      '<button class="tb-tool" id="quickSearchBtn" type="button" onclick="openQuickSearch()" title="Search (' + (mac ? '⌘' : 'Ctrl') + ' K)" aria-label="Search">' +
+      '<button class="tb-tool" id="quickSearchBtn" type="button" onclick="openQuickSearch()" title="Search" data-kbd="' + (mac ? '⌘ K' : 'Ctrl K') + '" aria-label="Search">' +
         '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button>' +
       '<button class="tb-tool tb-theme" id="themeToggleBtn" type="button" onclick="toggleDayNight()" title="Day / night" aria-label="Day / night"></button>' +
       '<a class="tb-tool tb-link" href="settings.html" data-tab="settings" title="Settings" aria-label="Settings">' +
@@ -3587,3 +3592,73 @@ function taStartPage(defaultTab) {
   idle(taPrefetchPages);
   taResumeLastPage();
 }
+
+/* ================= TOOLTIPS (2026-10-28) =================
+   Buttons and links with a title show it in the app's own small label — after a
+   moment under the mouse, at once when reached with the keyboard (Tab) — instead of
+   the browser's slow one. A shortcut (data-kbd) shows as a key. The title is lent to
+   the label while it shows and put back after (i18n.js translates titles). */
+(function () {
+  if (window.__taTipReady) return;
+  window.__taTipReady = true;
+  const SEL = 'button[title], a[title], [role="button"][title]';
+  let tip = null, owner = null, timer = null;
+  function box() {
+    if (!tip) {
+      tip = document.createElement('div');
+      tip.id = 'taTip'; tip.className = 'ta-tip'; tip.setAttribute('role', 'tooltip');
+      document.body.appendChild(tip);
+    }
+    return tip;
+  }
+  function show(t) {
+    const text = t.getAttribute('title');
+    if (!text) return;
+    hide();
+    owner = t;
+    t.dataset.taTip = text;
+    t.removeAttribute('title');
+    if (!t.hasAttribute('aria-label') && !t.textContent.trim()) t.setAttribute('aria-label', text);
+    const b = box();
+    b.textContent = text;
+    if (t.dataset.kbd) { const k = document.createElement('kbd'); k.textContent = t.dataset.kbd; b.appendChild(k); }
+    b.classList.add('show');
+    const r = t.getBoundingClientRect(), w = b.offsetWidth, h = b.offsetHeight;
+    let top = r.bottom + 8;
+    if (top + h > window.innerHeight - 8) top = r.top - h - 8;
+    const left = Math.max(8, Math.min(window.innerWidth - w - 8, r.left + r.width / 2 - w / 2));
+    b.style.left = left + 'px';
+    b.style.top = Math.max(8, top) + 'px';
+  }
+  function hide() {
+    clearTimeout(timer);
+    if (owner) {
+      if (owner.dataset.taTip && !owner.hasAttribute('title')) owner.setAttribute('title', owner.dataset.taTip);
+      delete owner.dataset.taTip;
+      owner = null;
+    }
+    if (tip) tip.classList.remove('show');
+  }
+  document.addEventListener('pointerover', function (e) {
+    if (e.pointerType !== 'mouse') return;
+    if (owner && owner.contains(e.target)) return;
+    const t = e.target.closest && e.target.closest(SEL);
+    clearTimeout(timer);
+    if (!t) { hide(); return; }
+    timer = setTimeout(function () { if (t.isConnected) show(t); }, 300);
+  });
+  document.addEventListener('pointerout', function (e) {
+    if (e.pointerType !== 'mouse') return;
+    const to = e.relatedTarget;
+    if (owner && to && owner.contains(to)) return;
+    if (owner || timer) hide();
+  });
+  document.addEventListener('focusin', function (e) {
+    const t = e.target.closest && e.target.closest(SEL);
+    if (t && t.matches(':focus-visible')) show(t);
+  });
+  document.addEventListener('focusout', function () { if (owner) hide(); });
+  document.addEventListener('pointerdown', hide, true);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && owner) hide(); });
+  window.addEventListener('scroll', function () { if (owner) hide(); }, true);
+})();
