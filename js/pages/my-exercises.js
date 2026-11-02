@@ -162,12 +162,13 @@ function myexDayLabel(iso) {
 
 // The teacher's line icons (images/icons/myex/), drawn in the design's colours with a CSS mask
 // the teacher's coloured pictures (Delete, View Results), shown in their own colours
+// emojis since the playful redesign (2026-11-02) — the old pictures stay in images/icons/myex/
+const MYEX_EMOJI = { 'delete': '🗑️', 'view-results': '📊', 'use-again': '♻️', 'get-one': '🎯', 'copy-link': '🔗', 'redownload': '⬇️' };
 function myexPicHtml(name) {
-  return '<span class="myex-pic" aria-hidden="true" style="background-image:url(images/icons/myex/' + name + '.png)"></span>';
+  return '<span class="myex-pic" aria-hidden="true" data-emo="' + (MYEX_EMOJI[name] || '✨') + '"></span>';
 }
 function myexIconHtml(name) {
-  const url = 'images/icons/myex/' + name + '.png';
-  return '<span class="myex-ic" aria-hidden="true" style="-webkit-mask-image:url(' + url + ');mask-image:url(' + url + ')"></span>';
+  return '<span class="myex-ic" aria-hidden="true" data-emo="' + (MYEX_EMOJI[name] || '✨') + '"></span>';
 }
 
 /* ---------- ⋯ on a card ---------- */

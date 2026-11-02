@@ -737,9 +737,9 @@ window.TA_I18N_ROWS = [
 window.TA_ROBOT_I18N = {
   'How do I refresh the app on my phone?': [
     'Telefonda ilovani qanday yangilayman?',
-    'Ekranning yuqorisidagi ⟳ tugmasini bosing (🔍 yonida). U kutib turgan narsalarni saqlaydi va eng yangi versiyani ochadi. Kompyuterda Ctrl+R (yoki F5) ni bosing.',
+    'Ekranning yuqorisidagi 🔄 tugmasini bosing (🔍 yonida). U kutib turgan narsalarni saqlaydi va eng yangi versiyani ochadi. Kompyuterda Ctrl+R (yoki F5) ni bosing.',
     'Как обновить приложение на телефоне?',
-    'Нажмите ⟳ вверху экрана, рядом с 🔍. Приложение сохранит всё, что ещё не отправлено, и загрузит новую версию. На компьютере нажмите Ctrl+R (или F5).'],
+    'Нажмите 🔄 вверху экрана, рядом с 🔍. Приложение сохранит всё, что ещё не отправлено, и загрузит новую версию. На компьютере нажмите Ctrl+R (или F5).'],
   'Why are my exercises under dates?': [
     'Nega mashqlarim sanalar boʻyicha joylashgan?',
     'Ular yaratilgan kuniga koʻra guruhlangan — Bugun, Kecha, keyin oldingi har bir kun — eng yangisi birinchi. 🔍 qidiruv va tur hamda guruh tugmalari barcha kunlar boʻyicha ishlayveradi.',

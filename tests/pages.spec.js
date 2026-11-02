@@ -159,18 +159,20 @@ test('top bar: 5 sections in the middle, the one you\'re in has the coloured cir
   for (const id of ['#quickSearchBtn', '#themeToggleBtn', '#taTopbar [data-tab="settings"]', '#tbAvatarBtn']) await expect(page.locator(id)).toBeVisible();
   await expect(page.locator('#mainSidebar')).toHaveCount(0);
   await expect(page.locator('#soundToggleBtn')).toHaveCount(0);   // no sound button
-  // only Day and Night (2026-10-27): no designs, no Classic style — always the glass look
+  // only Day and Night: no design picker; the playful look (2026-11-02) — the sections are emojis
   await expect(page.locator('#designPickerBtn, .design-option, .style-option')).toHaveCount(0);
-  await expect(page.locator('body')).toHaveClass(/glass-ui/);
+  await expect(page.locator('body')).toHaveClass(/loom-fun/);
+  await expect(page.locator('body')).not.toHaveClass(/glass-ui/);
+  expect(await page.locator('#taTopbar .tb-ic').evaluateAll(l => l.map(e => getComputedStyle(e, '::before').content.replace(/"/g, '')))).toEqual(['🏠', '✨', '📚', '📊', '🧑‍🎓']);
   await expect(page.locator('body')).not.toHaveClass(/light-theme/);
   await page.locator('#themeToggleBtn').click();
   await expect(page.locator('body')).toHaveClass(/light-theme/);
   await expect(page.locator('#themeToggleBtn')).toHaveAttribute('title', 'Night mode');
   await page.locator('#themeToggleBtn').click();
   await expect(page.locator('body')).not.toHaveClass(/light-theme/);
-  // headlines are a gradient (a mesh — no linear gradients anywhere in the app's style)
-  expect(await page.locator('h2').first().evaluate(el => getComputedStyle(el).backgroundImage)).toContain('radial-gradient');
-  expect(require('fs').readFileSync(require('path').join(__dirname, '../css/style.css'), 'utf8')).not.toContain('linear-gradient');
+  // playful: rounded Fredoka headlines, stickers with a thick outline
+  expect(await page.locator('h2').first().evaluate(el => getComputedStyle(el).fontFamily)).toContain('Fredoka');
+  expect(await page.locator('.dash-card').first().evaluate(el => parseFloat(getComputedStyle(el).borderTopWidth))).toBeGreaterThanOrEqual(2);
   // in the middle, and fixed at the top
   const nav = await page.locator('#taTabNav').boundingBox();
   expect(Math.abs(nav.x + nav.width / 2 - 650)).toBeLessThan(40);

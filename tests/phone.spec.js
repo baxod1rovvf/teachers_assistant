@@ -42,11 +42,10 @@ test.describe('on a phone', () => {
     expect(Math.abs(time.y - check.y)).toBeLessThan(24);           // …together
   });
 
-  test('the glass design has no blur on phones (it made scrolling lag)', async ({ page, context }) => {
+  test('nothing is blurred on phones (blur made scrolling lag)', async ({ page, context }) => {
     await prepare(context);
     await page.goto('/index.html');
     await page.waitForTimeout(1500);
-    await page.evaluate(() => document.body.classList.add('glass-ui'));
     const blurred = await page.evaluate(() => [...document.querySelectorAll('body *')].filter(el =>
       [getComputedStyle(el), getComputedStyle(el, '::before')].some(cs => (cs.backdropFilter || 'none') !== 'none')).length);
     expect(blurred).toBe(0);

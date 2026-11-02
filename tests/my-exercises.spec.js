@@ -35,7 +35,7 @@ test('My Exercises has no "Disable Points", "Make it a…", "Worksheet" or "Answ
   // no Worksheet or Answers either; Delete is just 🗑
   await expect(page.locator('.recent-exercise-actions', { hasText: 'Worksheet' })).toHaveCount(0);
   await expect(page.locator('.recent-exercise-actions', { hasText: 'Answers' })).toHaveCount(0);
-  await expect(page.locator('.recent-exercise-row').first().locator('.myex-delete .myex-pic')).toHaveAttribute('style', /icons\/myex\/delete\.png/);   // the teacher's bin picture
+  await expect(page.locator('.recent-exercise-row').first().locator('.myex-delete .myex-pic')).toHaveAttribute('data-emo', '🗑️');   // an emoji since the playful design (2026-11-02)
 });
 
 test('Redownload is in the ⋯ menu (not a button on the card)', async ({ page, context }) => {
@@ -109,7 +109,7 @@ test('My Exercises shows cards, 4 in a row: title ✎ ⋯, then 🗑 and View Re
   expect(tops[4]).toBeGreaterThan(tops[0]);                        // the 5th on the next line
   const card = page.locator('.myex-card[data-uid="uc1"]');
   await expect(card.locator('.myex-card-foot button')).toHaveText(['', 'View Results']);
-  await expect(card.locator('.myex-results .myex-pic')).toHaveAttribute('style', /icons\/myex\/view-results\.png/);
+  await expect(card.locator('.myex-results .myex-pic')).toHaveAttribute('data-emo', '📊');
   await card.locator('.myex-more').click();
   await expect(page.locator('#myexMenu .myex-menu-item')).toHaveText(['Use again', 'Redownload']);
   await expect(page.locator('#myexMenu .myex-menu-item .myex-ic')).toHaveCount(2);   // each with its icon // + 🔗 Copy link on the real site
@@ -126,7 +126,7 @@ test('My Exercises shows cards, 4 in a row: title ✎ ⋯, then 🗑 and View Re
   expect(download.suggestedFilename()).toBe('Card_1.html');
 });
 
-test('every card and type chip shows the exercise type\'s picture (the Create page\'s icons)', async ({ page, context }, info) => {
+test('every card and type chip shows the exercise type\'s emoji (as on the Create page)', async ({ page, context }, info) => {
   await prepare(context);
   await page.goto('/my-exercises.html');
   await page.waitForTimeout(1000);
@@ -135,8 +135,10 @@ test('every card and type chip shows the exercise type\'s picture (the Create pa
   const n = await cards.count();
   expect(n).toBeGreaterThan(0);
   expect(await page.locator('.myex-card .myex-card-head > .myex-type-ic').count()).toBe(n);
-  const bg = await page.locator('.myex-card .myex-type-ic').first().evaluate(el => { const c = getComputedStyle(el); return c.webkitMaskImage || c.maskImage; });   // line icons: a mask in the theme's colour
-  expect(bg).toContain('images/icons/create/');
+  // each type has its own emoji on a sticker of its own colour (playful design, 2026-11-02)
+  const emo = await page.locator('.myex-card .myex-type-ic').first().evaluate(el => getComputedStyle(el, '::before').content);
+  expect(emo).toMatch(/\p{Extended_Pictographic}/u);
+  expect(await page.locator('.myex-type-chip .myex-type-ic').first().evaluate(el => getComputedStyle(el, '::before').content)).toMatch(/\p{Extended_Pictographic}/u);
   expect(await page.locator('.myex-card[data-uid="uset"] .myex-type-ic').getAttribute('class')).toMatch(/picker-icon-(homework|class)/);
   await page.screenshot({ path: info.outputPath('my-exercises.png') });
 });

@@ -149,13 +149,13 @@ function getTopActiveStudents(limit, groupId) {
   arr.sort((a, b) => (b.avg - a.avg) || (b.did - a.did));
   return arr.slice(0, limit);
 }
-const RANK_ICONS = ['images/icons/rank/rank-1.png', 'images/icons/rank/rank-2.png', 'images/icons/rank/rank-3.png'];
+const RANK_ICONS = ['🥇', '🥈', '🥉'];
 function topStudentRowsHtml(top) {
   return top.map((s, i) => {
     const initials = initialsForName(s.name);
     const avatarColor = avatarColorForName(s.name);
     const rankIcon = RANK_ICONS[i]
-      ? '<img class="top-student-rank-img" src="' + RANK_ICONS[i] + '" alt="#' + (i + 1) + '">'
+      ? '<span class="top-student-rank-img" role="img" aria-label="#' + (i + 1) + '">' + RANK_ICONS[i] + '</span>'
       : '#' + (i + 1);
     const pct = Math.round(s.avg);
     const scoreColor = pct >= 80 ? 'var(--success)' : (pct >= 50 ? 'var(--warning)' : 'var(--danger)');

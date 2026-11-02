@@ -856,10 +856,10 @@ function setTheme(t) {
 function applyTheme() {
   const t = getTheme();
   document.body.classList.toggle('light-theme', t === 'light');
-  document.body.classList.add('glass-ui');   // the glass look, always (the Classic style is gone, 2026-10-27)
+  document.body.classList.add('loom-fun');   // the playful look (2026-11-02; the glass look is gone)
   // the phone's status bar (installed app) takes the page colour
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', t === 'light' ? '#EAF2FF' : '#050507');
+  if (meta) meta.setAttribute('content', t === 'light' ? '#FFF6E5' : '#1A1433');
   const btn = document.getElementById('themeToggleBtn');
   if (btn) {
     btn.innerHTML = t === 'light' ? TA_MOON_SVG : TA_SUN_SVG;
@@ -871,8 +871,8 @@ function applyTheme() {
 /* ================= DAY / NIGHT =================
    Only two looks since 2026-10-27 — the teacher removed the six colour designs and the
    Classic style: the ☀️/🌙 button in the top bar switches Day and Night (css/style.css). */
-const TA_SUN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>';
-const TA_MOON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg>';
+const TA_SUN_SVG = '<span class="tb-emo" aria-hidden="true">☀️</span>';
+const TA_MOON_SVG = '<span class="tb-emo" aria-hidden="true">🌙</span>';
 function toggleDayNight() { setTheme(getTheme() === 'light' ? 'dark' : 'light'); }
 window.toggleDayNight = toggleDayNight;
 
@@ -2276,7 +2276,7 @@ function renderLessonRow(o) {
   return '<div class="lesson-row' + (withinDay ? ' lesson-soon' : '') + '"' + (withinDay ? ' style="--lesson-c:' + palette.color + ';"' : '') + '>' +
     '<div class="lesson-accent" style="background:' + palette.color + ';"></div>' +
     '<div class="lesson-time-col"><div class="lesson-time-val">' + formatTimeDisplay(o.entry.time) + '</div><div class="lesson-day-val">' + SCHEDULE_DAY_SHORT[o.date.getDay()] + '</div>' + soonBadge + '</div>' +
-    '<button type="button" class="lesson-group-col lesson-plan-open" title="Lesson plan" onclick="openLessonPlanModal(' + jsAttr(o.entry.id) + ')"><img class="lesson-group-icon icon-mono" src="images/icons/students.png" alt=""><b>' + escapeForHtml(o.entry.group || 'Untitled group') + '</b><span class="lesson-plan-hint">📝</span></button>' +
+    '<button type="button" class="lesson-group-col lesson-plan-open" title="Lesson plan" onclick="openLessonPlanModal(' + jsAttr(o.entry.id) + ')"><span class="lesson-group-icon" aria-hidden="true">👥</span><b>' + escapeForHtml(o.entry.group || 'Untitled group') + '</b><span class="lesson-plan-hint">📝</span></button>' +
     '<div class="lesson-level-col">' + levelPill + '</div>' +
     taReadyButtonHtml(o.entry, o.date) +
   '</div>';
@@ -2687,7 +2687,7 @@ const AI_ROBOT_FAQ_BY_TAB = {
   main: aiFaq([
     { q: 'What is the note about students who finished exercises?', a: 'When you open the app, a note lists your students who finished an exercise in the last 7 days that you haven\'t checked yet. Tap an exercise under a student\'s name (📊) to open that exercise\'s results. The note stays open, so you can open the next student\'s exercise too. Tap "Checked" for one student, or "All checked". Closing it with ✕ only hides it until next time.' },
     { q: 'How do I change the language?', a: 'Tap your picture at the top right, then your name. Under 🌐 Language pick English, Oʻzbekcha or Русский. Only the app\'s menus and buttons change — exercises for students stay in English.' },
-    { q: 'How do I refresh the app on my phone?', a: 'Tap ⟳ at the top of the screen, next to 🔍. It saves anything still waiting and loads the newest version. On a computer press Ctrl+R (or F5).' }
+    { q: 'How do I refresh the app on my phone?', a: 'Tap 🔄 at the top of the screen, next to 🔍. It saves anything still waiting and loads the newest version. On a computer press Ctrl+R (or F5).' }
   ]),
   createpicker: aiFaq([
     { q: 'Can I combine several exercises into one?', a: 'Yes — that\'s Homework & Class on this page. Choose Homework (students do it on their own) or Class (used together in a lesson), build round 1, tap "➕ Add Another Exercise" for the next round, then "Create ⬇".' },
@@ -3410,11 +3410,11 @@ document.addEventListener('keydown', function (e) {
    right search, design (which also picks day or night), Settings and the profile.
    Phones (860px and narrower): the 5 sections become a tab bar at the bottom. */
 const TA_TOPBAR_TABS = [
-  { tab: 'main', href: 'index.html', label: 'Dashboard', icon: 'images/icons/nav/dashboard.png' },
-  { tab: 'createpicker', href: 'create.html', label: 'Create', icon: 'images/icons/nav/create.png' },
-  { tab: 'myexercises', href: 'my-exercises.html', label: 'My Exercises', icon: 'images/icons/nav/my-exercises.png' },
-  { tab: 'dashboard', href: 'statistics.html', label: 'Statistics', icon: 'images/icons/nav/statistics.png' },
-  { tab: 'students', href: 'students.html', label: 'Students', icon: 'images/icons/students.png' }
+  { tab: 'main', href: 'index.html', label: 'Dashboard', emoji: '🏠', color: '#FF6B6B' },
+  { tab: 'createpicker', href: 'create.html', label: 'Create', emoji: '✨', color: '#FFB020' },
+  { tab: 'myexercises', href: 'my-exercises.html', label: 'My Exercises', emoji: '📚', color: '#22C58B' },
+  { tab: 'dashboard', href: 'statistics.html', label: 'Statistics', emoji: '📊', color: '#3D8BFF' },
+  { tab: 'students', href: 'students.html', label: 'Students', emoji: '🧑‍🎓', color: '#A25CF5' }
 ];
 function taMountTopBar() {
   if (document.getElementById('taTopbar')) return;
@@ -3423,21 +3423,21 @@ function taMountTopBar() {
   bar.className = 'ta-topbar';
   bar.id = 'taTopbar';
   bar.innerHTML =
-    '<a class="tb-brand tb-link" href="index.html" title="Dashboard" aria-label="Loom — Dashboard"><img src="images/app/logo-mark.png" alt="">' +
-      '<span class="brand-name" translate="no"><b>loom</b></span></a>' +
+    '<a class="tb-brand tb-link" href="index.html" title="Dashboard" aria-label="Loom — Dashboard"><span class="tb-brand-emoji" aria-hidden="true">🧶</span>' +
+      '<span class="brand-name" translate="no"><b><i>l</i><i>o</i><i>o</i><i>m</i></b></span></a>' +
     '<nav class="tb-nav" id="taTabNav" aria-label="Sections">' +
       '<svg class="tb-blob-svg" aria-hidden="true"><path id="taTabBlob" class="tb-blob-path"/></svg>' +
       TA_TOPBAR_TABS.map(t => '<a class="tb-tab tb-link" href="' + t.href + '" data-tab="' + t.tab + '" title="' + t.label + '" aria-label="' + t.label + '">' +
-        '<span class="tb-ic" style="-webkit-mask-image:url(' + t.icon + ');mask-image:url(' + t.icon + ')"></span></a>').join('') +
+        '<span class="tb-ic" aria-hidden="true" data-emo="' + t.emoji + '" style="--tab-c:' + t.color + '"></span></a>').join('') +
     '</nav>' +
     '<div class="tb-tools">' +
       '<button class="tb-tool tb-refresh" id="taRefreshBtn" type="button" onclick="taRefreshApp(this)" title="Refresh" aria-label="Refresh">' +
-        '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button>' +
+        '<span class="tb-emo" aria-hidden="true">🔄</span></button>' +
       '<button class="tb-tool" id="quickSearchBtn" type="button" onclick="openQuickSearch()" title="Search" data-kbd="' + (mac ? '⌘ K' : 'Ctrl K') + '" aria-label="Search">' +
-        '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button>' +
+        '<span class="tb-emo" aria-hidden="true">🔍</span></button>' +
       '<button class="tb-tool tb-theme" id="themeToggleBtn" type="button" onclick="toggleDayNight()" title="Day / night" aria-label="Day / night"></button>' +
       '<a class="tb-tool tb-link" href="settings.html" data-tab="settings" title="Settings" aria-label="Settings">' +
-        '<span class="tb-tool-ic" style="-webkit-mask-image:url(images/icons/nav/settings.png);mask-image:url(images/icons/nav/settings.png)"></span></a>' +
+        '<span class="tb-emo" aria-hidden="true">⚙️</span></a>' +
       '<div class="tb-profile-wrap">' +
         '<button class="tb-avatar avatar-btn" id="tbAvatarBtn" type="button" onclick="taToggleProfileMenu(event)" title="Your profile" aria-label="Your profile" aria-expanded="false">' +
           '<img class="avatar-img" style="display:none;" alt=""><div class="avatar-fallback" id="tbAvatarFallback">T</div></button>' +
@@ -3457,7 +3457,7 @@ function taMountTopBar() {
   window.addEventListener('resize', () => taMoveTabBlob(false), { passive: true });
   if (TA_PHONE_MQ.addEventListener) TA_PHONE_MQ.addEventListener('change', () => taMoveTabBlob(false));
 }
-// ⟳ in the top bar (phones and the installed app have no Ctrl+R): saves what's waiting, then reloads
+// 🔄 in the top bar (phones and the installed app have no Ctrl+R): saves what's waiting, then reloads
 async function taRefreshApp(btn) {
   if (btn) btn.classList.add('spinning');
   try { if (window.taSync && window.taSync.flush) await Promise.race([window.taSync.flush(), new Promise(r => setTimeout(r, 2500))]); } catch (e) { /* reload anyway */ }
@@ -3509,6 +3509,7 @@ function taMoveTabBlob(animate) {
   const active = nav.querySelector('.tb-tab.active');
   if (!active) { blob.setAttribute('d', ''); taTabBlobAt = null; return; }
   const ic = active.querySelector('.tb-ic');
+  nav.style.setProperty('--blob-c', ic.style.getPropertyValue('--tab-c') || 'var(--brand)');   // each section has its own colour
   const nr = nav.getBoundingClientRect(), ir = ic.getBoundingClientRect();
   if (!ir.width) return; // not drawn yet
   const x = ir.left + ir.width / 2 - nr.left, y = ir.top + ir.height / 2 - nr.top;

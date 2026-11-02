@@ -342,13 +342,11 @@ real students' names or results into the repository (it is public).
 - Accounts: each teacher's `localStorage` is namespaced (`js/accounts.js`); the admin
   `TOXIRJON` uses un-prefixed keys.
 - **Top bar (no sidebar since 2026-10-03)**: `taMountTopBar` in common.js builds it on every page
-  (`#taTopbar`, fixed, no background of its own — the buttons float over the page): logo + "Teacher's
-  Assistant" (logo only on phones) · 5 sections in the middle, icons only — the name is the tooltip (`TA_TOPBAR_TABS`:
-  Dashboard, Create, My Exercises, Statistics, Students; icons in `images/icons/nav/`, shown with a CSS
-  mask so they take the page's colours) · 🔍 search, ☀️/🌙 Day/Night (`#themeToggleBtn`, `toggleDayNight`; since 2026-10-27
-  the six colour designs, the design picker and the Classic style are gone — only Day and Night, always the glass look),
-  ⚙️ Settings (sliders icon `nav/settings.png`; no sound button since 2026-10-03), profile picture (red dot when sync needs the teacher, `data-sync`). The section
-  you're in sits in a `var(--brand)` circle drawn as an SVG path; `taMoveTabBlob` animates it like the
+  (`#taTopbar`, fixed, no background of its own — the buttons float over the page): 🧶 loom (emoji only on phones) ·
+  5 sections in the middle as emojis in a sticker pill — the name is the tooltip (`TA_TOPBAR_TABS`:
+  Dashboard 🏠, Create ✨, My Exercises 📚, Statistics 📊, Students 🧑‍🎓) · 🔍 search, ☀️/🌙 Day/Night (`#themeToggleBtn`,
+  `toggleDayNight`; only Day and Night), ⚙️ Settings (no sound button since 2026-10-03), profile picture (red dot when sync needs the teacher, `data-sync`). The section
+  you're in sits in a circle of that section's colour drawn as an SVG path; `taMoveTabBlob` animates it like the
   teacher's "Liquid Tab Bar" lottie (front races ahead, back follows, a narrowing neck, then a wobble).
   Results lights up My Exercises. Phones (≤ 860px): the sections float at the bottom (no background; never put
   a backdrop-filter on `#taTopbar` — it would hold the fixed tab bar inside it). Toasts and the
@@ -483,24 +481,20 @@ real students' names or results into the repository (it is public).
   toggles, the finish cards (`.certificate-card`, `.certificate-box`, `#endOverlay .panel-card`, `.ta-cert-box`) and a set's screens
   (light `.ta-screen`, `.ta-btn`, `#hwcBar`, `#hwcReviewBar`). Games' own pictures are untouched; the name tag is hidden on phones.
   Files made before keep the old look. `tests/student-theme.spec.js`.
-- **Colours (teacher's rules, 2026-10-27)**: only Day (`body.light-theme`) and Night (`:root`), both always `glass-ui`. **Night: a plain
-  black page (`#050507`, no mesh) with graphite blocks (`#1C1C22`, glass `rgba(28,28,34,.88)`) and RED accents (teacher: "black + red,
-  not black + blue" — `--brand #FF4D5E`, gradients crimson → coral ≈345°–10°, neutral grey text); Day: a very light blue page
-  (`#EAF2FF`, a faint light-blue mesh) with white blocks** — the teacher found a blue page under blue blocks odd. Every
-  gradient uses neighbouring hues only, within 60° (night red ≈345°–10°; day indigo/blue/violet ≈213°–270°). Brand tints are
-  `color-mix(in srgb, var(--brand) N%, transparent)`, so they follow the theme — and
-  is a **mesh** (layered `radial-gradient`s placed along the 135° diagonal, top-left → bottom-right): the page (`--mesh-page`),
-  buttons (`--grad-brand`), glass sheens. **No `linear-gradient` in css/style.css** (a test checks; the lesson page's ruled lines
-  are an SVG). Headlines (`h1`, `h2`, `.dash-card-title`, `.picker-section-title`) are gradient text (`--grad-text`, background-clip).
-  The student theme's buttons and the set's/Maze's progress bars follow the same rule.
-- **Minimal line icons (2026-10-27)**: every exercise type has a simple black line drawing. The teacher's own:
-  Flashcard, Word Order, Make a Word, Spelling, Can Knockdown, Car Game, Pronunciation, Rocket Game, Sentences,
-  Bidirectional Language, English Content, Dictation (`listening`, also IELTS Listening), Jungle, Bamboozle, Presentation; drawn by Claude in the same style (thick round lines, the teacher asked): Maze, Test, Homework,
-  Class, IELTS Speaking, IELTS Reading (`images/icons/create/<type>.png`, 256 px, black on transparent,
-  no `-night` copy). They're drawn as a CSS mask filled with `--grad-brand` (`--mono-ic` + the `:is(#ta-mono, …)` rule in
-  css/style.css), so they show on the black Night page and the light Day page and appear wherever `picker-icon-<type>` is used
-  (Create picker + tab row, My Exercises cards/chips, the set builder's type grid). A new line icon: save it there, set
-  `--mono-ic` for its class and add the class to that `:is(…)` list.
+- **Playful design (teacher, 2026-11-02: "change Loom's design entirely, build it from 0 — colourful, playful,
+  satisfying, use emojis")** — replaces the 2026-10-27 glass/black+red look and the line icons. The look lives in the
+  "LOOM — PLAYFUL DESIGN" layer at the end of css/style.css (tokens in `:root` = Night, `body.light-theme` = Day); the
+  rules above it only place things. Recipe: candy colours (`--c-red/orange/yellow/green/teal/blue/purple/pink`), every
+  block is a "sticker" — 2.5 px dark outline `--line` + a hard shadow under it that the block sinks into when pressed
+  (`--shadow-md` = `0 5px 0 var(--line)`), bouncy motion (`--bounce`), Fredoka headings + Nunito text, confetti dots on the
+  page. Night = deep plum page `#1B1535`, Day = cream `#FFF5E1`; body class `loom-fun` (no more `glass-ui`). Gradients are
+  allowed again. **Icons are emojis**: the top bar's sections (`TA_TOPBAR_TABS` `emoji` + `color` — the moving circle takes
+  the section's colour, `--blob-c`), tools 🔍 ☀️/🌙 ⚙️ 🔄, logo 🧶 + "loom" in four colours; every exercise type's
+  `picker-icon-<type>` gets an emoji (`--te`) on a sticker of its colour (`--tc`) from one CSS list
+  (`:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-x), .picker-icon-x`) — a new type: add a line
+  there. My Exercises' buttons use `MYEX_EMOJI`; emojis that sit inside buttons are drawn from `data-emo` (`::before`) so the
+  button's text stays its words. The old pictures are still in `images/icons/` (unused). Exercise files (student side) are
+  unchanged. `tests/pages.spec.js` ("top bar: …"), `tests/my-exercises.spec.js`.
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
   too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except
