@@ -6,7 +6,7 @@ const { prepare, watchErrors, hideNotices } = require('./support/app');
 
 const PRETEND_HTTPS = () => { window.taPlayUrl = uid => 'https://example.github.io/teachers_assistant/play.html?x=' + uid; };
 
-test('the course map: every block is 5 lessons + review + exam and covers all four skills; Lesson 1 is ready', async ({ page, context }) => {
+test('the course map: every block is 5 lessons + review + exam and covers all four skills; all of Block 1 is ready', async ({ page, context }) => {
   await prepare(context);
   const errors = watchErrors(page);
   await page.goto('/index.html');
@@ -23,13 +23,23 @@ test('the course map: every block is 5 lessons + review + exam and covers all fo
     await expect(blocks.nth(i).locator('.course-stop.k-exam')).toHaveCount(1);
     await expect(blocks.nth(i).locator('.course-skills span')).toHaveCount(4);   // 🎧 📖 ✍️ 🗣️
   }
-  // every ready lesson has warm-ups, slides, a handout and exactly 20 questions with 3 wrong answers each
-  const check = await page.evaluate(() => TA_COURSES.flatMap(c => c.blocks.flatMap(b => b.lessons)).filter(l => l.slides).map(l => ({
-    id: l.id, warm: (l.warmups || []).length, slides: l.slides.length, handout: !!(l.handout && l.handout.sections.length),
-    test: l.test.length, ok: l.test.every(t => t.q.indexOf('_____') !== -1 && t.wrong.length === 3 && t.wrong.indexOf(t.a) === -1)
-  })));
-  expect(check).toEqual([{ id: 'b1l1', warm: 2, slides: 12, handout: true, test: 20, ok: true }]);
-  await expect(page.locator('.course-stop.ready')).toHaveCount(1);
+  // every ready meeting: slides, a handout, a test whose questions have a gap and 3 wrong answers (never the right one);
+  // lessons and the review have warm-ups; anything with a listening exercise has a text to read aloud
+  const check = await page.evaluate(() => courseStops(TA_COURSES[0]).filter(s => s.lesson.slides).map(s => {
+    const l = s.lesson;
+    return { id: s.id, warm: (l.warmups || []).length >= 2, slides: l.slides.length >= 6, handout: !!(l.handout && l.handout.sections.length),
+      test: l.test.length, ok: l.test.every(t => t.q.indexOf('_____') !== -1 && t.wrong.length === 3 && t.wrong.indexOf(t.a) === -1 && new Set(t.wrong).size === 3),
+      listen: !l.handout.sections.some(x => x.skill === 'listening') || !!(l.listen && l.listen.length) };
+  }));
+  expect(check.map(c => c.id)).toEqual(['b1l1', 'b1l2', 'b1l3', 'b1l4', 'b1l5', 'b1review', 'b1exam']);
+  check.forEach(c => {
+    expect(c, c.id).toMatchObject({ slides: true, handout: true, ok: true, listen: true, warm: c.id !== 'b1exam' });
+    expect(c.test, c.id).toBe(/l\d$/.test(c.id) ? 20 : 30);
+  });
+  // the Beginner exam: grammar, listening and reading online (12 + 8 + 10), writing on paper — no speaking
+  expect(await page.evaluate(() => { const e = TA_COURSES[0].blocks[0].exam; return ['grammar', 'listening', 'reading'].map(p => e.test.filter(t => t.part === p).length).concat([e.writing.max, e.skills.indexOf('speaking')]); }))
+    .toEqual([12, 8, 10, 10, -1]);
+  await expect(page.locator('.course-stop.ready')).toHaveCount(7);
   await expect(page.locator('.course-stop.next')).toHaveCount(1);   // the first group's next lesson glows
   expect(errors).toEqual([]);
 });
@@ -76,7 +86,7 @@ test('a lesson: mark it taught, present the slides and change their text (kept),
   // the handout opens in a new tab, ready to print, with the teacher's page
   const [popup] = await Promise.all([page.waitForEvent('popup'), page.getByRole('button', { name: /Open & print/ }).click()]);
   await expect(popup.locator('section.ex')).toHaveCount(6);
-  await expect(popup.locator('.teacher')).toContainText('Listening script');
+  await expect(popup.locator('.teacher')).toContainText('Number one: E.');   // the listening texts are on the teacher's page too
   expect(errors).toEqual([]);
 });
 
@@ -122,4 +132,50 @@ test('on a phone the course path goes down the screen', async ({ page, context }
   const b = await page.locator('.course-block').first().locator('.course-stop').nth(1).boundingBox();
   expect(b.y).toBeGreaterThan(a.y + 20);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+});
+
+test('the exam: the online part keeps its order (grammar → listening → reading); marks = online score + the writing mark', async ({ page, context }) => {
+  await prepare(context);
+  const errors = watchErrors(page);
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.goto('/course.html');
+  await page.waitForTimeout(1200);
+  await hideNotices(page);
+  await page.evaluate(PRETEND_HTTPS);
+  await page.locator('.course-stop[data-stop="b1exam"]').click();
+  await expect(page.locator('.course-lesson-head h3')).toHaveText('Block 1 exam');
+  await expect(page.locator('.course-listen')).toHaveCount(2);              // the two listening texts, read aloud
+  await expect(page.locator('.course-marks-table tbody tr')).toHaveCount(3); // Target's three students
+  await expect(page.locator('.course-marks-table .course-online').first()).toContainText('not yet');
+  await page.getByRole('button', { name: /Copy the link for/ }).click();
+  await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(/play\.html\?x=/);
+  const item = await page.evaluate(() => getRecentExercises()[0]);
+  expect(item.title).toBe('Block 1 exam — online part (Target)');
+  expect(item.contentSummary.split('\n')[0]).toMatch(/^Grammar 1\./);
+  expect(item.contentSummary.split('\n')[29]).toMatch(/^Reading 30\./);
+  // Alice finishes it twice (24 and 27 right) — the better try counts
+  await page.evaluate(code => {
+    window.__allResults = (window.__allResults || []).concat([
+      { code, type: 'Test', name: 'Alice Test', studentId: '10001', correct: 24, total: 30, score: 80 },
+      { code, type: 'Test', name: 'Alice Test', studentId: '10001', correct: 27, total: 30, score: 90 }]);
+    window.taCourseResultsChanged();
+  }, item.code);
+  const alice = page.locator('.course-marks-table tr[data-student="10001"]');
+  await expect(alice.locator('.course-online')).toHaveText('27');
+  await alice.locator('.course-mark-input').fill('8.5');
+  await alice.locator('.course-mark-input').press('Enter');
+  await page.locator('.course-lesson-head h3').click();   // leave the box → saved
+  await expect(page.locator('.course-marks-table tr[data-student="10001"] .course-total')).toContainText('35.5');
+  await expect(page.locator('.course-marks-table tr[data-student="10001"] .course-total')).toContainText('89%');
+  // a mark above 10 isn't kept
+  const bobur = page.locator('.course-marks-table tr[data-student="10002"] .course-mark-input');
+  await bobur.fill('14');
+  await page.locator('.course-lesson-head h3').click();
+  await expect(bobur).toHaveValue('');
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem(Object.keys(localStorage).find(k => /ta_course_marks$/.test(k))))))
+    .toEqual({ 'g1|b1exam': { '10001': 8.5 } });
+  // 🔊 Play doesn't break anything (the test browser may have no voice)
+  await page.locator('.course-play').first().click();
+  await page.waitForTimeout(300);
+  expect(errors).toEqual([]);
 });

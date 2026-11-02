@@ -2695,3 +2695,20 @@ button:focus-visible, a:focus-visible, .picker-card:focus-visible, input:focus-v
 .course-slide-dots button.on { background: var(--c-pink); transform: scale(1.25); }
 .course-slides:fullscreen { padding: 20px 28px; }
 @media (prefers-reduced-motion: reduce) { .course-stop.next .course-dot, .course-slide-emoji, .course-soon-emoji { animation: none; } }
+/* Course: read-aloud listening, the exam's marks */
+.course-listen { display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px; border-radius: 14px; background: color-mix(in srgb, var(--mc) 12%, transparent); }
+.course-listen .course-play { flex-shrink: 0; min-width: 96px; }
+.course-play.playing { background: var(--c-red) !important; color: #fff !important; animation: loomWiggle .6s ease infinite; }
+.course-listen details { margin-top: 4px; }
+.course-listen summary { cursor: pointer; color: var(--brand); font-weight: 700; font-size: .85rem; }
+.course-listen details p { margin-top: 6px; color: var(--ink); font-size: .9rem; }
+.course-intro { margin-top: 6px; color: var(--ink-soft); font-weight: 600; line-height: 1.5; }
+.course-marks { margin-top: 18px; }
+.course-marks > p { color: var(--ink-soft); font-weight: 600; margin: 8px 0 12px; }
+.course-marks-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+.course-marks-table th { text-align: left; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); padding: 8px 10px; border-bottom: 2.5px solid var(--line); }
+.course-marks-table td { padding: 8px 10px; border-bottom: 1.5px dashed var(--border); font-weight: 700; }
+.course-marks-table td small { color: var(--ink-faint); font-weight: 600; }
+.course-marks-table tr:hover td { background: color-mix(in srgb, var(--c-yellow) 14%, transparent); }
+.course-mark-input { width: 84px !important; padding: 6px 10px !important; text-align: center; }
+.course-pct { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; background: var(--c-green); color: #12352A; border: 2px solid var(--line); font-size: .78rem; }

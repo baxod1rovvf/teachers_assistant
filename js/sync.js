@@ -17,7 +17,7 @@
   var SYNC_KEYS = ['ta_student_groups', 'ta_points_roster', 'ta_weekly_schedule', 'ta_recent_exercises',
     'ta_exercise_html_cache', 'ta_results', 'ta_code_resets', 'ta_active_code', 'ta_points_code',
     'ta_teacher_name', 'ta_avatar', 'ta_lessons_archived', 'ta_sentence_ratings', 'ta_checked_completions', 'ta_punished', 'ta_lessons_ready',
-    'ta_course_progress', 'ta_course_edits', 'ta_course_tests'];
+    'ta_course_progress', 'ta_course_edits', 'ta_course_tests', 'ta_course_marks'];
   var SYNC_SET = {};
   SYNC_KEYS.forEach(function (k) { SYNC_SET[k] = true; });
   var SEP = '␟';

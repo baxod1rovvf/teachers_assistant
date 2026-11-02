@@ -381,6 +381,7 @@ function rsDerivePlain() {
   if (window.renderDashboard) window.renderDashboard();
   if (window.renderTopActiveStudents) window.renderTopActiveStudents();
   if (window.taCompletionsChanged) window.taCompletionsChanged();
+  if (window.taCourseResultsChanged) window.taCourseResultsChanged();   // the Course's exam marks
 }
 window.startPlainCompletionsSync = function () {
   if (!db || !window.getRecentExercises) return;

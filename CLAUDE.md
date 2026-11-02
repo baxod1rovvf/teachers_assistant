@@ -513,6 +513,13 @@ real students' names or results into the repository (it is public).
   **Test exercise** (QUIZ_TEMPLATE, `gap` mode, questions and answers shuffled) once per group + lesson (`ta_course_tests`), saved in
   My Exercises with the group, put online at the first press like Copy link (7 days; expired → offer a new copy); then 📊 View Results.
   The three `ta_course_*` keys are synced and in the backup. To add a lesson: fill the same fields as b1l1. `tests/course.spec.js`.
+  **All of Block 1 is ready (2026-11-02)**: L1–L5 (each repeats a little of the one before in its first warm-up), `block.review`
+  (team games, 30-question review test) and `block.exam`. **Beginner exams (teacher): grammar, listening, reading online — one Test
+  link, `keepOrder` (12 grammar → 8 listening → 10 reading, `part` on each question), marked automatically — and writing on paper,
+  out of 10 (`writing.max`); no speaking.** The exam page has a marks table per group: the best online try (`correct` of the result
+  with the test's code, from `__allResults`; firebase.js calls `taCourseResultsChanged`) + the writing mark the teacher types
+  (`ta_course_marks`, synced/backup) = total /40 and %. `listen` texts (lessons, review, exam) are read aloud by the teacher's computer
+  (🔊 Play, `speechSynthesis`, en-GB, rate 0.85) and printed on the handout's teacher page. Exam reading text: on the exam paper and a slide.
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
   too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except
