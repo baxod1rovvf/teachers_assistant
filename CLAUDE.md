@@ -501,6 +501,18 @@ real students' names or results into the repository (it is public).
   there. My Exercises' buttons use `MYEX_EMOJI`; emojis that sit inside buttons are drawn from `data-emo` (`::before`) so the
   button's text stays its words. The old pictures are still in `images/icons/` (unused). Exercise files (student side) are
   unchanged. `tests/pages.spec.js` ("top bar: …"), `tests/my-exercises.spec.js`.
+- **Course (2026-11-02, teacher: "a journey where every lesson is kept and organized")**: `course.html` + `js/pages/course.js`,
+  tab `course` 🗺️ in the top bar (after Create). The content is `js/course-data.js` (`TA_COURSES`, `COURSE_BEGINNER`): **one shared
+  course for every group** (teacher chose it), 6 blocks; a **block = 5 lessons + 🔁 review + 🏁 exam** (3 lessons a week → an exam every
+  2 weeks); every block covers 🎧 📖 ✍️ 🗣️ across its lessons (a test checks it); every lesson starts with warm-up / pair-work games.
+  A lesson is ready when it has `slides`; only **B1 L1 "Letters and numbers"** is (2 warm-ups, 12 slides, a 6-part handout with the
+  teacher's listening script + answers, 20 test questions `{q with "_____", a, wrong[3]}`); the rest, review and exam show "Coming soon".
+  Per group (chips at the top, `ta_course_group` on this device): ☑️ Mark as taught → `ta_course_progress`, the map ticks it and the
+  next stop bounces. Slides: Present (← → keys, full screen) and ✏️ Change the text (contenteditable, saved per slide in
+  `ta_course_edits`, ↩️ Original text). Handout: 🖨️ Open & print (a new tab). Revision test: 🔗 Copy the link for <group> builds a
+  **Test exercise** (QUIZ_TEMPLATE, `gap` mode, questions and answers shuffled) once per group + lesson (`ta_course_tests`), saved in
+  My Exercises with the group, put online at the first press like Copy link (7 days; expired → offer a new copy); then 📊 View Results.
+  The three `ta_course_*` keys are synced and in the backup. To add a lesson: fill the same fields as b1l1. `tests/course.spec.js`.
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
   too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except

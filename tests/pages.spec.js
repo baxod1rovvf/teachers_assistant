@@ -2,7 +2,7 @@
 const { test, expect } = require('@playwright/test');
 const { prepare, watchErrors, hideNotices } = require('./support/app');
 
-const PAGES = ['index.html', 'create.html', 'statistics.html', 'my-exercises.html', 'students.html', 'results.html', 'settings.html'];
+const PAGES = ['index.html', 'create.html', 'course.html', 'statistics.html', 'my-exercises.html', 'students.html', 'results.html', 'settings.html'];
 
 for (const file of PAGES) {
   test(`${file} opens without errors`, async ({ page, context }) => {
@@ -146,7 +146,7 @@ test('the Dashboard opens quickly even with many long dictations (and their scor
   expect(res.again).toBe(res.score);
 });
 
-test('top bar: 5 sections in the middle, the one you\'re in has the coloured circle; tools and Settings on the right', async ({ page, context }) => {
+test('top bar: 6 sections in the middle, the one you\'re in has the coloured circle; tools and Settings on the right', async ({ page, context }) => {
   await prepare(context);
   const errors = watchErrors(page);
   await page.setViewportSize({ width: 1300, height: 800 });
@@ -154,8 +154,8 @@ test('top bar: 5 sections in the middle, the one you\'re in has the coloured cir
   await page.waitForTimeout(1500);
   await hideNotices(page);
   // icons only (the names show when you point at one)
-  expect(await page.locator('#taTopbar .tb-tab').evaluateAll(l => l.map(a => a.title))).toEqual(['Dashboard', 'Create', 'My Exercises', 'Statistics', 'Students']);
-  await expect(page.locator('#taTopbar .tb-tab')).toHaveText(['', '', '', '', '']);
+  expect(await page.locator('#taTopbar .tb-tab').evaluateAll(l => l.map(a => a.title))).toEqual(['Dashboard', 'Create', 'Course', 'My Exercises', 'Statistics', 'Students']);
+  await expect(page.locator('#taTopbar .tb-tab')).toHaveText(['', '', '', '', '', '']);
   for (const id of ['#quickSearchBtn', '#themeToggleBtn', '#taTopbar [data-tab="settings"]', '#tbAvatarBtn']) await expect(page.locator(id)).toBeVisible();
   await expect(page.locator('#mainSidebar')).toHaveCount(0);
   await expect(page.locator('#soundToggleBtn')).toHaveCount(0);   // no sound button
@@ -163,7 +163,7 @@ test('top bar: 5 sections in the middle, the one you\'re in has the coloured cir
   await expect(page.locator('#designPickerBtn, .design-option, .style-option')).toHaveCount(0);
   await expect(page.locator('body')).toHaveClass(/loom-fun/);
   await expect(page.locator('body')).not.toHaveClass(/glass-ui/);
-  expect(await page.locator('#taTopbar .tb-ic').evaluateAll(l => l.map(e => getComputedStyle(e, '::before').content.replace(/"/g, '')))).toEqual(['🏠', '✨', '📚', '📊', '🧑‍🎓']);
+  expect(await page.locator('#taTopbar .tb-ic').evaluateAll(l => l.map(e => getComputedStyle(e, '::before').content.replace(/"/g, '')))).toEqual(['🏠', '✨', '🗺️', '📚', '📊', '🧑‍🎓']);
   await expect(page.locator('body')).not.toHaveClass(/light-theme/);
   await page.locator('#themeToggleBtn').click();
   await expect(page.locator('body')).toHaveClass(/light-theme/);

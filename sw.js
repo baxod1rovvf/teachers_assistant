@@ -7,8 +7,8 @@
      older versions of the same file are dropped when a new one is saved.
    Only this site's own files are handled; the cloud (Firebase) and every
    other site go straight to the network. */
-const CACHE = 'ta-app-v3'; // v3: new logo and icons, manifest always fresh
-const PAGES = ['./', 'index.html', 'create.html', 'statistics.html', 'my-exercises.html', 'students.html',
+const CACHE = 'ta-app-v4'; // v4: the Course section (v3: new logo and icons, manifest always fresh)
+const PAGES = ['./', 'index.html', 'create.html', 'course.html', 'statistics.html', 'my-exercises.html', 'students.html',
   'results.html', 'points.html', 'settings.html'];
 
 self.addEventListener('install', event => {

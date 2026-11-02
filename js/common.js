@@ -56,6 +56,7 @@ const TA_PAGES = {
   main: 'index.html',
   createpicker: 'create.html',
   dashboard: 'statistics.html',
+  course: 'course.html',
   myexercises: 'my-exercises.html',
   students: 'students.html',
   results: 'results.html',
@@ -3412,6 +3413,7 @@ document.addEventListener('keydown', function (e) {
 const TA_TOPBAR_TABS = [
   { tab: 'main', href: 'index.html', label: 'Dashboard', emoji: '🏠', color: '#FF6B6B' },
   { tab: 'createpicker', href: 'create.html', label: 'Create', emoji: '✨', color: '#FFB020' },
+  { tab: 'course', href: 'course.html', label: 'Course', emoji: '🗺️', color: '#22C3D6' },
   { tab: 'myexercises', href: 'my-exercises.html', label: 'My Exercises', emoji: '📚', color: '#22C58B' },
   { tab: 'dashboard', href: 'statistics.html', label: 'Statistics', emoji: '📊', color: '#3D8BFF' },
   { tab: 'students', href: 'students.html', label: 'Students', emoji: '🧑‍🎓', color: '#A25CF5' }
