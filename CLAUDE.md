@@ -481,6 +481,12 @@ real students' names or results into the repository (it is public).
   toggles, the finish cards (`.certificate-card`, `.certificate-box`, `#endOverlay .panel-card`, `.ta-cert-box`) and a set's screens
   (light `.ta-screen`, `.ta-btn`, `#hwcBar`, `#hwcReviewBar`). Games' own pictures are untouched; the name tag is hidden on phones.
   Files made before keep the old look. `tests/student-theme.spec.js`.
+  **Since 2026-11-02 it uses the app's playful design** (teacher: "make the students' exercise files match the new design"):
+  cream/white sticker cards with a 3 px dark outline and a hard shadow (`--tas-shadow`), a yellow tilted type chip, a rainbow
+  underline (`.ta-underline`, `.divider-dash`), cream name boxes (also `#dcNameInput`, `#ecNameInput`, `#ilNameInput`, `#irNameInput`,
+  `#iwNameInput`), a pink → purple → blue Start button that sinks when pressed, Fredoka (Google Fonts, `@import`; offline: system
+  font); slide-deck exercises (Flashcard, Sentences, Spelling, Test…) get the sticker on `.deck-container:has(#slide-welcome.active)`.
+  Set screens: cream page with confetti dots, 🎉 after the headline.
 - **Playful design (teacher, 2026-11-02: "change Loom's design entirely, build it from 0 — colourful, playful,
   satisfying, use emojis")** — replaces the 2026-10-27 glass/black+red look and the line icons. The look lives in the
   "LOOM — PLAYFUL DESIGN" layer at the end of css/style.css (tokens in `:root` = Night, `body.light-theme` = Day); the

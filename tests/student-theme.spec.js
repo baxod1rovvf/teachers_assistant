@@ -38,9 +38,13 @@ test('a new exercise (and a set, with its rounds) carries the shared design; on 
   await s.goto('file://' + file);
   await s.waitForTimeout(800);
   const start = s.locator('.ta-login-form button', { hasText: 'Start' }).first();
-  expect(await start.evaluate(el => getComputedStyle(el).backgroundImage)).toContain('radial-gradient');   // a mesh gradient (no linear ones)
+  // the app's playful design (2026-11-02): a colourful gradient sticker with a thick outline, Fredoka letters
+  expect(await start.evaluate(el => getComputedStyle(el).backgroundImage)).toContain('linear-gradient');
+  expect(await start.evaluate(el => parseFloat(getComputedStyle(el).borderTopWidth))).toBeGreaterThanOrEqual(2);
+  expect(await start.evaluate(el => getComputedStyle(el).fontFamily)).toContain('Fredoka');
   expect((await start.boundingBox()).height).toBeGreaterThanOrEqual(54);
   expect(await s.locator('.ta-login-form .eyebrow').evaluateAll(l => l.every(el => getComputedStyle(el).display === 'none'))).toBe(true);
   expect((await s.locator('#studentNameInput').boundingBox()).height).toBeGreaterThanOrEqual(50);
+  await s.screenshot({ path: info.outputPath('student-phone.png') });
   await phone.close();
 });
