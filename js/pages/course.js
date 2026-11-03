@@ -74,7 +74,7 @@ function renderCourse() {
         '<div class="course-skills">' + skills.map(k => '<span title="' + COURSE_SKILLS[k].label + '">' + COURSE_SKILLS[k].emoji + '</span>').join('') + '</div></div>' +
         '<ol class="course-path">' +
         stops.filter(s => s.block === b).map(s => {
-          const ready = !!s.lesson.slides;
+          const ready = !!(s.lesson.deck || s.lesson.slides);
           const cls = ['course-stop', 'k-' + s.kind, ready ? 'ready' : 'soon', taught[s.id] ? 'done' : '', next === s && gid ? 'next' : ''].filter(Boolean).join(' ');
           const badge = s.kind === 'lesson' ? String(s.no) : s.lesson.emoji;
           return '<li><button type="button" class="' + cls + '" data-stop="' + s.id + '" onclick="courseOpen(' + jsAttr(s.id) + ')" title="' + escapeForHtml(s.lesson.title) + '">' +
@@ -117,7 +117,7 @@ function renderCourseLesson(wrap, stop) {
     (g ? '<button type="button" class="mini-btn course-taught-btn' + (taughtAt ? ' solid' : '') + '" onclick="courseToggleTaught(' + jsAttr(stop.id) + ')">' +
       (taughtAt ? '✅ Taught with ' + escapeForHtml(g.name) + ' · ' + new Date(taughtAt).toLocaleDateString(undefined, { day: 'numeric', month: 'short' }) : '☑️ Mark as taught with ' + escapeForHtml(g.name)) + '</button>' : '') +
     '</div>';
-  if (!l.slides) {
+  if (!(l.deck || l.slides)) {
     const what = stop.kind === 'review' ? 'A review of the block\'s five lessons — games and practice for all four skills before the exam.'
       : stop.kind === 'exam' ? 'The block exam: listening, reading, writing and speaking, on the block\'s five lessons.'
       : 'Warm-up games, slides, a handout and a 20-question revision test.';
@@ -131,11 +131,12 @@ function renderCourseLesson(wrap, stop) {
   if (l.warmups && l.warmups.length) html += '<div class="card course-mat" style="--mc:var(--c-orange)"><div class="course-mat-head"><span class="course-mat-emoji">🎲</span><h4>' + (stop.kind === 'review' ? 'Team games' : 'Warm-up &amp; pair work') + '</h4></div>' +
     l.warmups.map(w => '<div class="course-game"><b>' + w.emoji + ' ' + escapeForHtml(w.title) + '</b> <span class="course-time">' + escapeForHtml(w.time || '') + '</span><p>' + escapeForHtml(w.how) + '</p></div>').join('') + '</div>';
   // slides
-  const edited = Object.keys((courseRead(LS_COURSE_EDITS, {})[stop.id]) || {}).length;
+  const deck = slDeck(stop), edited = !!slEdited(stop.id), skipped = deck.filter(x => x.skip).length;
   html += '<div class="card course-mat" style="--mc:var(--c-blue)"><div class="course-mat-head"><span class="course-mat-emoji">🖥️</span><h4>Slides</h4></div>' +
-    '<p>' + l.slides.length + ' slides' + (edited ? ' · ✏️ ' + edited + ' changed by you' : '') + '. Show them on the board; you can change any slide\'s text.</p>' +
-    '<div class="course-actions"><button type="button" class="create-btn course-present" onclick="courseShowSlides(' + jsAttr(stop.id) + ', 0, false)">Present</button>' +
-    '<button type="button" class="mini-btn" onclick="courseShowSlides(' + jsAttr(stop.id) + ', 0, true)">✏️ Change the text</button></div></div>';
+    '<button type="button" class="course-slide-peek" onclick="courseTeach(' + jsAttr(stop.id) + ')" title="Teach">' + slScaledHtml(deck[0], 300, 'thumb') + '</button>' +
+    '<p>' + deck.length + ' slides' + (skipped ? ' (' + skipped + ' skipped)' : '') + (edited ? ' · ✏️ changed by you' : '') + '. Teach them on the board; in the editor you can change or add anything.</p>' +
+    '<div class="course-actions"><button type="button" class="create-btn course-present" onclick="courseTeach(' + jsAttr(stop.id) + ')">Teach</button>' +
+    '<button type="button" class="mini-btn" onclick="courseOpenSlideEditor(' + jsAttr(stop.id) + ')">✏️ Edit slides</button></div></div>';
   // handout
   if (l.listen && l.listen.length) html += '<div class="card course-mat" style="--mc:var(--c-purple)"><div class="course-mat-head"><span class="course-mat-emoji">🎧</span><h4>Listening</h4></div>' +
     '<p>Your computer reads the listening texts aloud — play them on the speakers. Or read them yourself.</p>' +
@@ -236,100 +237,6 @@ function courseToggleTaught(stopId) {
   courseWrite(LS_COURSE_PROGRESS, all);
   if (mine[stopId] && typeof taConfettiBurst === 'function') try { taConfettiBurst(window.innerWidth / 2, window.innerHeight / 3, 40); } catch (e) { /* ignore */ }
   renderCourse();
-}
-
-/* ---------- slides: present, and change the text ---------- */
-function courseSlide(stopId, i) {
-  const stop = courseFindStop(stopId), base = stop.lesson.slides[i];
-  const edit = ((courseRead(LS_COURSE_EDITS, {})[stopId]) || {})[i];
-  return { emoji: base.emoji, title: edit && typeof edit.title === 'string' ? edit.title : base.title, body: edit && typeof edit.body === 'string' ? edit.body : base.body, changed: !!edit };
-}
-let courseSlideState = null;
-function courseShowSlides(stopId, i, editing) {
-  const stop = courseFindStop(stopId);
-  if (!stop || !stop.lesson.slides) return;
-  let el = document.getElementById('courseSlides');
-  if (!el) {
-    el = document.createElement('div');
-    el.id = 'courseSlides';
-    el.className = 'course-slides';
-    el.setAttribute('role', 'dialog');
-    el.setAttribute('aria-label', 'Slides');
-    document.body.appendChild(el);
-    document.addEventListener('keydown', courseSlideKey);
-  }
-  courseSlideState = { stopId: stopId, i: Math.max(0, Math.min(i, stop.lesson.slides.length - 1)), editing: !!editing };
-  drawCourseSlide();
-}
-function drawCourseSlide() {
-  const el = document.getElementById('courseSlides');
-  if (!el || !courseSlideState) return;
-  const st = courseSlideState, stop = courseFindStop(st.stopId), n = stop.lesson.slides.length, s = courseSlide(st.stopId, st.i);
-  const ed = st.editing ? ' contenteditable="plaintext-only" spellcheck="false"' : '';
-  el.classList.toggle('editing', st.editing);
-  el.innerHTML =
-    '<div class="course-slide-bar"><span class="course-slide-count">' + (st.i + 1) + ' / ' + n + '</span>' +
-      (st.editing ? '<span class="course-edit-note">✏️ Click the text to change it — it saves by itself.</span>' : '') +
-      '<span class="course-slide-tools">' +
-        (st.editing && s.changed ? '<button type="button" class="mini-btn" onclick="courseResetSlide()">↩️ Original text</button>' : '') +
-        '<button type="button" class="mini-btn" onclick="courseToggleEdit()">' + (st.editing ? '✅ Done changing' : '✏️ Change the text') + '</button>' +
-        '<button type="button" class="mini-btn" onclick="courseFullScreen()" title="Full screen">⛶</button>' +
-        '<button type="button" class="mini-btn" onclick="courseCloseSlides()" title="Close" aria-label="Close">✕</button>' +
-      '</span></div>' +
-    '<div class="course-slide" style="--bc:' + stop.block.color + '">' +
-      '<div class="course-slide-emoji">' + s.emoji + '</div>' +
-      '<h2 class="course-slide-title" data-f="title"' + ed + '>' + escapeForHtml(s.title) + '</h2>' +
-      '<div class="course-slide-body" data-f="body"' + ed + '>' + escapeForHtml(s.body) + '</div>' +
-    '</div>' +
-    '<div class="course-slide-nav">' +
-      '<button type="button" class="mini-btn" onclick="courseSlideGo(-1)"' + (st.i === 0 ? ' disabled' : '') + '>← Back</button>' +
-      '<div class="course-slide-dots">' + stop.lesson.slides.map((x, k) => '<button type="button" class="' + (k === st.i ? 'on' : '') + '" onclick="courseSlideTo(' + k + ')" aria-label="Slide ' + (k + 1) + '"></button>').join('') + '</div>' +
-      '<button type="button" class="mini-btn solid" onclick="courseSlideGo(1)"' + (st.i === n - 1 ? ' disabled' : '') + '>Next →</button>' +
-    '</div>';
-  if (st.editing) el.querySelectorAll('[data-f]').forEach(f => f.addEventListener('input', () => courseSaveSlideField(f.dataset.f, f.innerText)));
-}
-function courseSaveSlideField(field, value) {
-  const st = courseSlideState;
-  const all = courseRead(LS_COURSE_EDITS, {});
-  const lesson = all[st.stopId] || (all[st.stopId] = {});
-  const cur = courseSlide(st.stopId, st.i);
-  lesson[st.i] = { title: field === 'title' ? value : cur.title, body: field === 'body' ? value.replace(/\n$/, '') : cur.body };
-  courseWrite(LS_COURSE_EDITS, all);
-}
-function courseResetSlide() {
-  const st = courseSlideState;
-  const all = courseRead(LS_COURSE_EDITS, {});
-  if (all[st.stopId]) { delete all[st.stopId][st.i]; if (!Object.keys(all[st.stopId]).length) delete all[st.stopId]; }
-  courseWrite(LS_COURSE_EDITS, all);
-  drawCourseSlide();
-}
-function courseToggleEdit() { courseSlideState.editing = !courseSlideState.editing; drawCourseSlide(); }
-function courseSlideGo(d) { courseSlideTo(courseSlideState.i + d); }
-function courseSlideTo(i) {
-  const n = courseFindStop(courseSlideState.stopId).lesson.slides.length;
-  courseSlideState.i = Math.max(0, Math.min(n - 1, i));
-  drawCourseSlide();
-}
-function courseFullScreen() {
-  const el = document.getElementById('courseSlides');
-  if (!el) return;
-  if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
-  else if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
-}
-function courseCloseSlides() {
-  if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
-  const el = document.getElementById('courseSlides');
-  if (el) el.remove();
-  document.removeEventListener('keydown', courseSlideKey);
-  courseSlideState = null;
-  renderCourse();   // "N changed by you"
-}
-function courseSlideKey(e) {
-  if (!courseSlideState) return;
-  if (courseSlideState.editing && e.target && e.target.isContentEditable) { if (e.key === 'Escape') e.target.blur(); return; }
-  if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); courseSlideGo(1); }
-  else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); courseSlideGo(-1); }
-  else if (e.key === 'Escape' && !document.fullscreenElement) courseCloseSlides();
 }
 
 /* ---------- the handout: a printable page ---------- */

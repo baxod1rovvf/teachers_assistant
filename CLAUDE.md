@@ -520,6 +520,22 @@ real students' names or results into the repository (it is public).
   with the test's code, from `__allResults`; firebase.js calls `taCourseResultsChanged`) + the writing mark the teacher types
   (`ta_course_marks`, synced/backup) = total /40 and %. `listen` texts (lessons, review, exam) are read aloud by the teacher's computer
   (🔊 Play, `speechSynthesis`, en-GB, rate 0.85) and printed on the handout's teacher page. Exam reading text: on the exam paper and a slide.
+  **Slides = an editor + Teach mode (teacher, 2026-11-03, from a screenshot of another app's editor)**: `js/course-slides.js`.
+  Lesson card: ▶️ Teach / ✏️ Edit slides. Editor (`courseOpenSlideEditor`, `#slEditor`, full screen): thumbnails (↑ ↓ ⧉ 🙈 skip 🗑,
+  ➕ New slide), toolbar (➕ Slide, Text, Heading, Picture — shrunk to ≤1400 px JPEG, or drag a file onto the slide — Shape, Sticker,
+  Timer, 🔊 Listen (reads its text aloud), ↶ ↷ (Ctrl Z/Y), ↩️ Original, 📁 File: download / load a .json, print), the slide (click
+  select, double-click type, drag move, corner resize, arrows nudge, Delete), right panel (background colour/picture, skip, teacher
+  notes — or the item's look and **🙈 Hidden until I click**). A slide is 1600 × 900: `{ bg, bgImg, skip, notes, items: [{ id, type:
+  text|shape|picture|audio|timer, x, y, w, h, … hidden }] }`; the teacher's deck is saved whole: `ta_course_edits[lessonId] = { v: 2,
+  slides }` (old `{ index: {title, body} }` text edits still apply to simple decks). **Teach mode** (`courseTeach`, `#slTeach`,
+  full screen): a click / → / space first shows the slide's hidden things one by one (layer order; a click right on one shows that
+  one), then the next slide; skipped slides left out; ← goes back (whole slide); N notes; audio/timer items play/start on click.
+  **The teacher's slide order** (lesson `deck` of layouts, built by `slBuildDeck`): title → list (what we learn today) → questions
+  (warm-up on the last lesson; answers hidden) → words (lead-in; translations hidden) → boxes (lesson) → mistakes ("You found it";
+  the right version hidden) → exercise → boxes → exercise → skill (listening/reading/speaking/writing) → exercise → finish.
+  **Exercises live once in `lesson.exercises`**: the exercise slides (answers hidden) and the handout (`courseExerciseHandout`) are
+  both made from them. Only **B1 L1** is redone this way so far (teacher: "if I say good you'll change the other 6"); L2–L5, review
+  and exam still have simple `slides` (shown as editable slides). `tests/course.spec.js`.
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
   too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except

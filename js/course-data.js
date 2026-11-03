@@ -18,6 +18,17 @@ const COURSE_SKILLS = {
   speaking: { emoji: '🗣️', label: 'Speaking' }
 };
 
+/* A lesson's handout made from its exercises — the same exercises its slides show (teacher, 2026-11-03) */
+function courseExerciseHandout(lesson) {
+  return {
+    title: lesson.title,
+    sections: lesson.exercises.map(e => ({ skill: e.skill, title: e.title, text: e.text,
+      items: e.items.map((it, k) => (k + 1) + '. ' + it.q + (/_{3}/.test(it.q) ? '' : '  →  ______________')) })),
+    teacherScript: lesson.teacherScript || [],
+    answers: lesson.exercises.map((e, i) => 'Exercise ' + (i + 1) + ': ' + e.items.map((it, k) => (k + 1) + ' ' + it.a).join(' · '))
+  };
+}
+
 const COURSE_BEGINNER = {
   id: 'beginner',
   title: 'Beginner English',
@@ -93,50 +104,72 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
     { emoji: '🏓', title: 'Number ping-pong', time: '5 min', how: 'Pairs count from 1 to 30, one number each, as fast as they can. Then the rule: instead of 3, 6, 9… (every number with 3 in it, or that 3 goes into) say "BUZZ!". A mistake = start again. The pair that reaches 30 first wins.' },
     { emoji: '🕵️', title: 'Spell & guess', time: '5 min', how: 'Student A thinks of a word from the board and spells it slowly, letter by letter. Student B writes the letters in the air with a finger and says the word as soon as they know it. Then swap.' }
   ],
-  slides: [
-    { emoji: '🔤🔢', title: 'Letters and numbers', body: 'Today we learn:\n• the English alphabet A–Z\n• how to spell your name\n• numbers 0–100 and phone numbers' },
-    { emoji: '🏓', title: 'Warm-up: Number ping-pong', body: 'Work in pairs. Count 1 → 30, one number each.\nEvery number with 3 in it, or that 3 goes into → say "BUZZ!"\n1, 2, BUZZ, 4, 5, BUZZ, 7…' },
-    { emoji: '🔤', title: 'The alphabet', body: 'A B C D E F G H I J K L M\nN O P Q R S T U V W X Y Z\n\n26 letters · 5 vowels: A E I O U' },
-    { emoji: '🎵', title: 'Letters that sound alike', body: '/eɪ/  A H J K\n/iː/  B C D E G P T V\n/e/  F L M N S X Z\n/aɪ/  I Y   ·   /əʊ/  O\n/uː/  Q U W   ·   /ɑː/  R' },
-    { emoji: '⚠️', title: 'Careful!', body: 'E /iː/ ≠ I /aɪ/\nG /dʒiː/ ≠ J /dʒeɪ/\nA /eɪ/ ≠ R /ɑː/\nTwo same letters: "double L" → B-E-double L-A' },
-    { emoji: '💬', title: 'Spelling your name', body: 'A: What\'s your name?\nB: My name is Bella.\nA: How do you spell it?\nB: B-E-double L-A.\nA: Thank you!' },
-    { emoji: '👥', title: 'Pair work: Spell it!', body: 'Ask 3 classmates. Write their names.\n"What\'s your name?" → "How do you spell it?"\nCheck: show them what you wrote. ✅' },
-    { emoji: '🔢', title: 'Numbers 0–20', body: '0 zero · 1 one · 2 two · 3 three · 4 four · 5 five\n6 six · 7 seven · 8 eight · 9 nine · 10 ten\n11 eleven · 12 twelve · 13 thirteen · 14 fourteen · 15 fifteen\n16 sixteen · 17 seventeen · 18 eighteen · 19 nineteen · 20 twenty' },
-    { emoji: '🔟', title: 'Tens and big numbers', body: '30 thirty · 40 forty · 50 fifty · 60 sixty\n70 seventy · 80 eighty · 90 ninety · 100 one hundred\n47 = forty-seven\n\n13 thirTEEN  ≠  30 THIRty' },
-    { emoji: '📞', title: 'Phone numbers', body: 'A: What\'s your phone number?\nB: It\'s 0 9 1 – 5 5 7 – 2 0 3.\n"oh nine one, double five seven, two oh three"\n0 → "oh" · 55 → "double five"' },
-    { emoji: '🎯', title: 'Game: Number bingo', body: 'Draw a 3 × 3 grid. Write 9 numbers from 1 to 100.\nListen to your teacher. Cross out the numbers you hear.\nThree in a line → shout "BINGO!" 🎉' },
-    { emoji: '🏁', title: 'Well done!', body: 'Today you can:\n✅ say the alphabet\n✅ spell your name\n✅ say numbers and phone numbers\n\nHomework: the revision test (link from your teacher) 📲' }
+  // The presentation (teacher, 2026-11-03): title → what we learn today → warm-up → lead-in words → lesson →
+  // you found it (mistakes everyone makes) → exercise → lesson → exercise → a skill → exercise → finish.
+  // The exercises live once, here: the slides and the printed handout are both made from them.
+  exercises: [
+    { id: 'letters', skill: 'writing', title: 'Write the missing letters.',
+      items: [{ q: 'A  B  ___  D', a: 'C' }, { q: 'F  ___  H', a: 'G' }, { q: '___  K  L', a: 'J' }, { q: 'M  N  ___', a: 'O' },
+        { q: 'R  ___  T', a: 'S' }, { q: 'W  X  ___  Z', a: 'Y' }, { q: 'B - ___ - ___ - K  (book)', a: 'O, O' }, { q: 'The vowels: A, E, I, O, ___', a: 'U' }] },
+    { id: 'numbers', skill: 'writing', title: 'Write the numbers in words.',
+      items: [{ q: '7', a: 'seven' }, { q: '12', a: 'twelve' }, { q: '13', a: 'thirteen' }, { q: '15', a: 'fifteen' },
+        { q: '30', a: 'thirty' }, { q: '48', a: 'forty-eight' }, { q: '90', a: 'ninety' }, { q: '100', a: 'one hundred' }] },
+    { id: 'phones', skill: 'listening', title: 'Listen and write the phone numbers.', listen: 1,
+      items: [{ q: 'Aziz:  ___ ___ ___', a: '071 339 502' }, { q: 'Lola:  ___ ___ ___', a: '099 214 860' }, { q: 'Mr Brown:  ___ ___ ___', a: '055 677 113' }] }
   ],
-  handout: {
-    title: 'Letters and numbers',
-    sections: [
-      { skill: 'listening', title: 'Listen and circle the letter you hear.',
-        items: ['1. A  E  I', '2. G  J  K', '3. B  P  V', '4. E  I  Y', '5. Q  U  W', '6. M  N  L', '7. A  H  R', '8. S  X  Z'] },
-      { skill: 'listening', title: 'Listen and write the phone numbers.',
-        items: ['1. ____________________', '2. ____________________', '3. ____________________'] },
-      { skill: 'reading', title: 'Read the card and answer the questions.',
-        text: 'STUDENT CARD\nName: Tom Kelly\nAge: 14\nPhone: 0 9 7 – 4 4 8 – 1 3 0\nClass: 7B',
-        items: ['1. How do you spell his first name? __________', '2. How old is he? __________', '3. What is his phone number? __________', '4. Is "Kelly" his first name? __________'] },
-      { skill: 'writing', title: 'Write the numbers in words.',
-        items: ['7 ________________', '12 ________________', '15 ________________', '30 ________________', '48 ________________', '90 ________________', '100 ________________'] },
-      { skill: 'writing', title: 'Make your own student card.',
-        text: 'Name: ____________________\nAge: ____________________\nPhone: ____________________\nClass: ____________________' },
-      { skill: 'speaking', title: 'Pair work: ask your partner and write the answers.',
-        text: 'What\'s your name?  ____________________\nHow do you spell it?  ____________________\nHow old are you?  ____________________\nWhat\'s your phone number?  ____________________' }
-    ],
-    teacherScript: [
-      'Letters: 1. E  2. J  3. P  4. I  5. U  6. N  7. R  8. Z',
-      'Phone numbers: 1. 0 7 1 – 3 3 9 – 5 0 2   2. 0 9 9 – 2 1 4 – 8 6 0   3. 0 5 5 – 6 7 7 – 1 1 3'
-    ],
-    answers: [
-      'Reading: 1. T-O-M  2. 14 (fourteen)  3. 097 448 130  4. No — "Kelly" is his last name (surname).',
-      'Numbers: seven · twelve · fifteen · thirty · forty-eight · ninety · one hundred'
-    ]
-  },
-  // read aloud by the teacher's computer (🔊), for the handout's listening exercises
+  deck: [
+    { layout: 'title', notes: 'The very first lesson. Smile, say "Hello!" and write your name on the board — spell it out loud: "M-R-S…". Students need the handout.' },
+    { layout: 'list', tag: 'TODAY', title: 'What we learn today', rows: [
+      { emoji: '🔤', text: 'Words: the alphabet A–Z, numbers 0–100' },
+      { emoji: '🎵', text: 'Sounds: letters that sound alike' },
+      { emoji: '🗣️', text: 'Speaking: "How do you spell it?"' },
+      { emoji: '🎧', text: 'Listening: phone numbers' },
+      { emoji: '📝', text: 'Revision test: 20 questions at the end' }],
+      notes: 'Read the list quickly — 1 minute. Point at each line.' },
+    { layout: 'questions', tag: 'WARM-UP', title: 'Hello! Let\'s talk', rows: [
+      'What\'s your name?', 'How old are you?', 'Can you say the alphabet? A, B, C…', 'Count from 1 to 10!', 'Do you know any English words?'],
+      notes: 'Ask the questions around the class — it\'s the first lesson, so there is no last lesson to revise. Click to show each question. Then play "Number ping-pong" (pairs count to 30, "BUZZ!" instead of 3, 6, 9…).' },
+    { layout: 'words', tag: 'LEAD-IN', title: 'Words for today', cards: [
+      { emoji: '🔤', word: 'letter', tr: 'harf' }, { emoji: '🔢', word: 'number', tr: 'raqam' },
+      { emoji: '📛', word: 'name', tr: 'ism' }, { emoji: '✍️', word: 'spell', tr: 'harflab aytmoq' },
+      { emoji: '🅰️', word: 'vowel', tr: 'unli tovush' }, { emoji: '📞', word: 'phone number', tr: 'telefon raqami' },
+      { emoji: '✌️', word: 'double', tr: 'ikki marta' }, { emoji: '⭕', word: 'zero / oh', tr: 'nol' }],
+      notes: 'Say each word, students repeat. Ask "What is it in Uzbek?" — then click the card to show the translation.' },
+    { layout: 'boxes', tag: 'LESSON · THE ALPHABET', title: 'Letters that sound alike', boxes: [
+      { head: '/eɪ/', body: 'A  H  J  K' }, { head: '/iː/', body: 'B  C  D  E  G  P  T  V' }, { head: '/e/', body: 'F  L  M  N  S  X  Z' },
+      { head: '/aɪ/', body: 'I  Y' }, { head: '/əʊ/', body: 'O' }, { head: '/uː/', body: 'Q  U  W' }, { head: '/ɑː/', body: 'R' }],
+      foot: 'How do you spell it? — B - E - double L - A  (Bella)',
+      notes: 'Say each group, students repeat. Then: students spell their names to a partner — "How do you spell it?" Two same letters = "double L".' },
+    { layout: 'mistakes', tag: 'YOU FOUND IT', title: 'Mistakes everyone makes', rows: [
+      { wrong: 'E sounds like /aɪ/', right: 'E is /iː/ — I is /aɪ/' },
+      { wrong: 'G and J sound the same', right: 'G /dʒiː/ — J /dʒeɪ/' },
+      { wrong: 'How do you spell?', right: 'How do you spell it?' },
+      { wrong: 'fourty', right: 'forty' },
+      { wrong: 'ninty', right: 'ninety' },
+      { wrong: 'thirteen = 30', right: 'thirteen = 13 · thirty = 30' }],
+      notes: 'Read the wrong one — "Is it right?" — let students find the mistake, then click to show the right one.' },
+    { layout: 'exercise', ex: 'letters', notes: 'Handout exercise 1. Students write, then check together: click each answer.' },
+    { layout: 'boxes', tag: 'LESSON · NUMBERS', title: 'Numbers 0–100', boxes: [
+      { head: '0 – 10', body: 'zero · one · two · three · four · five · six · seven · eight · nine · ten' },
+      { head: '11 – 20', body: 'eleven · twelve · thirteen · fourteen · fifteen · sixteen · seventeen · eighteen · nineteen · twenty' },
+      { head: 'Tens', body: '30 thirty · 40 forty · 50 fifty · 60 sixty · 70 seventy · 80 eighty · 90 ninety · 100 one hundred' },
+      { head: 'Big numbers', body: '47 = forty-seven\n85 = eighty-five' }],
+      foot: '13 thirTEEN  ≠  30 THIRty',
+      notes: 'Count together. Clap the stress: thir-TEEN / THIR-ty. Game: say a number, students show 13 or 30 with their fingers.' },
+    { layout: 'exercise', ex: 'numbers', notes: 'Handout exercise 2. Students write the words, then click to check.' },
+    { layout: 'skill', skill: 'listening', tag: 'LISTENING', title: 'Phone numbers', listen: 0,
+      text: 'A: What\'s your phone number?\nB: It\'s 0 9 1 – 5 5 7 – 2 0 3.\nA: Sorry? Can you say it again?\nB: Oh nine one, double five seven, two oh three.',
+      tips: ['0 → "oh"', '55 → "double five"', 'Say the numbers in groups'],
+      notes: 'Press 🔊 Listen (or read the dialogue). Students repeat in pairs with their own (or a made-up) number.' },
+    { layout: 'exercise', ex: 'phones', notes: 'Handout exercise 3. Press 🔊 Listen on this slide — play it twice. Then click to show the answers.' },
+    { layout: 'finish', title: 'Well done!', rows: ['I can say the alphabet', 'I can spell my name', 'I can say numbers 0–100', 'I can say a phone number'],
+      foot: 'Homework: the revision test 📲 (link from your teacher)', notes: 'Send the revision test link now (Course → Revision test → Copy the link).' }
+  ],
+  teacherScript: ['Exercise 3: press 🔊 on its slide (or on the Listening card) and play it twice.'],
+  // read aloud by the teacher's computer (🔊)
   listen: [
-    { label: 'Exercise 1 — letters', text: 'Number one: E. Number two: J. Number three: P. Number four: I. Number five: U. Number six: N. Number seven: R. Number eight: Z.' },
-    { label: 'Exercise 2 — phone numbers', text: 'Number one: oh seven one, double three nine, five oh two. Number two: oh double nine, two one four, eight six oh. Number three: oh double five, six double seven, one one three.' }
+    { label: 'Listening — the phone number dialogue', text: 'What\'s your phone number? It\'s oh nine one, five five seven, two oh three. Sorry? Can you say it again? Oh nine one, double five seven, two oh three.' },
+    { label: 'Exercise 3 — phone numbers', text: 'Number one. Aziz: oh seven one, double three nine, five oh two. Number two. Lola: oh double nine, two one four, eight six oh. Number three. Mister Brown: oh double five, six double seven, one one three.' }
   ],
   // 20 questions, each with 1 right answer and 3 wrong ones; "_____" is the gap
   test: [
@@ -162,6 +195,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
     { q: 'How old are you? — I\'m _____.', a: 'fourteen', wrong: ['Anna', 'A-N-N-A', 'double four'] }
   ]
 });
+
+COURSE_BEGINNER.blocks[0].lessons[0].handout = courseExerciseHandout(COURSE_BEGINNER.blocks[0].lessons[0]);
 
 /* ---------- Block 1, Lesson 2: Hello! Names and countries ---------- */
 Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
