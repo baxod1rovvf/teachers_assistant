@@ -580,6 +580,14 @@ real students' names or results into the repository (it is public).
   **New ids on purpose**: the old Block 1 (`b1…`) content is gone, and what was saved for it (taught ticks, slide edits, test links,
   exam marks) stays under the old ids, unused. Old content was partly reused (exercises, listening scripts). Generators: Claude's
   scratchpad `gen2/` (lib2.py, c1l1–c1l5.py, c1review.py, c1exam.py, inject_c1.py) — outside the repo.
+  **1.5 hours (teacher, 2026-11-03: "every lesson should be within 1.5 hours… reading, listening or writing is 10–15 minutes only")**:
+  every slide has `time` (minutes, also at the start of its notes "⏱️ N min · …") and the lesson `minutes` (their sum, ≤ 90, shown
+  as "⏱️ N min" on the lesson page). Times: title/list 1, warm-up questions 4, words 4, boxes/tiles 4, mistakes 3, game = its timer,
+  listening slide 1 + its exercise 4 (3 × 5 = 15), reading text 4 + its exercises, writing 10, finish 2, other exercises by type ×
+  questions + 1.5 (`ex_time` in gen2/lib2.py; `trim()` leaves slides out and renumbers "exercise N"). Each lesson: ~9–12 exercises,
+  ~23 slides, 3 listenings, 1 reading, 1 writing; **an easy speaking task every 2 lessons** (L2 "Find someone who", L4 "This or
+  that?" tagged SPEAKING, the review). **Exams: grammar in every General English exam; no speaking exam in Blocks 1 and 2** (from
+  Block 3 on, a speaking part). A test checks the minutes.
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
   too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except

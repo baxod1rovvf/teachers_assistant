@@ -113,15 +113,16 @@ function renderCourseLesson(wrap, stop) {
     '<div class="course-block-no">' + escapeForHtml(where) + ' · ' + escapeForHtml(stop.block.title) + '</div>' +
     '<h3>' + escapeForHtml(l.title) + '</h3>' +
     (l.sub ? '<div class="course-lesson-sub">' + escapeForHtml(l.sub) + '</div>' : '') +
-    (l.skills ? '<div class="course-skill-chips">' + l.skills.map(k => '<span>' + COURSE_SKILLS[k].emoji + ' ' + COURSE_SKILLS[k].label + '</span>').join('') + '</div>' : '') +
+    (l.skills || l.minutes ? '<div class="course-skill-chips">' + (l.minutes ? '<span class="course-minutes" title="Every slide shows its minutes in Teach mode (N)">⏱️ ' + l.minutes + ' min</span>' : '') +
+      (l.skills || []).map(k => '<span>' + COURSE_SKILLS[k].emoji + ' ' + COURSE_SKILLS[k].label + '</span>').join('') + '</div>' : '') +
     '</div>' +
     (g ? '<button type="button" class="mini-btn course-taught-btn' + (taughtAt ? ' solid' : '') + '" onclick="courseToggleTaught(' + jsAttr(stop.id) + ')">' +
       (taughtAt ? '✅ Taught with ' + escapeForHtml(g.name) + ' · ' + new Date(taughtAt).toLocaleDateString(undefined, { day: 'numeric', month: 'short' }) : '☑️ Mark as taught with ' + escapeForHtml(g.name)) + '</button>' : '') +
     '</div>';
   if (!(l.deck || l.slides)) {
     const what = stop.kind === 'review' ? 'A review of the block\'s five lessons — games and practice for all four skills before the exam.'
-      : stop.kind === 'exam' ? 'The block exam: listening, reading, writing and speaking, on the block\'s five lessons.'
-      : 'Warm-up games, slides, a handout and a 20-question revision test.';
+      : stop.kind === 'exam' ? 'The block exam on the block\'s five lessons: grammar, listening, reading and writing' + (stop.blockNo > 2 ? ', and speaking.' : ' (no speaking in Blocks 1 and 2).')
+      : 'A 1.5-hour lesson: warm-up games, slides, a handout and a 20-question revision test.';
     wrap.innerHTML = html + '<div class="card course-soon"><div class="course-soon-emoji">🛠️</div><p><b>Coming soon.</b> ' + what + '</p></div>';
     return;
   }

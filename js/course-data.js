@@ -56,6 +56,10 @@ function courseExerciseHandout(lesson) {
 // Block 1 has new ids (c1…) so nothing saved for the old Block 1 (b1…) gets mixed up with it.
 // The teacher's block themes (2026-11-03): Block 1 "Me", Block 2 "My things", Block 3 "My day" (Blocks 4–6 from the first plan).
 // Block 1 has new ids (c1…) so nothing saved for the old Block 1 (b1…) gets mixed up with it.
+// The teacher's block themes (2026-11-03): Block 1 "Me", Block 2 "My things", Block 3 "My day" (Blocks 4–6 from the first plan).
+// Block 1 has new ids (c1…) so nothing saved for the old Block 1 (b1…) gets mixed up with it.
+// The teacher's block themes (2026-11-03): Block 1 "Me", Block 2 "My things", Block 3 "My day" (Blocks 4–6 from the first plan).
+// Block 1 has new ids (c1…) so nothing saved for the old Block 1 (b1…) gets mixed up with it.
 const COURSE_BEGINNER = {
   id: 'beginner',
   title: 'Beginner English',
@@ -128,9 +132,10 @@ const COURSE_BEGINNER = {
 
 /* ---------- Block 1, Lesson 1: Hello, numbers & countries ---------- */
 Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
-  // A 2-hour lesson: many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude (Kokoro voices,
+  // A 1.5-hour lesson (teacher, 2026-11-03: 90 minutes; each slide's minutes are in `time`): many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude (Kokoro voices,
   // audio/course/*.mp3; the computer's own voice reads the text if a file can't play). Generated from a script;
   // the slides (deck) and the handout are both made from `exercises`.
+  minutes: 87,
   goals: [
     "Greet people and use class phrases (\"Can you repeat that, please?\")",
     "Say and spell the alphabet: \"How do you spell it?\"",
@@ -191,68 +196,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
       ]
     },
     {
-      "id": "times",
-      "type": "choose",
-      "skill": "reading",
-      "title": "Circle the right greeting.",
-      "items": [
-        {
-          "q": "8 o'clock in the morning ☀️",
-          "opts": [
-            "Good morning",
-            "Good evening",
-            "Good night"
-          ],
-          "a": "a"
-        },
-        {
-          "q": "2 o'clock in the afternoon 🌤️",
-          "opts": [
-            "Good evening",
-            "Good afternoon",
-            "Good morning"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "7 o'clock in the evening 🌙",
-          "opts": [
-            "Good afternoon",
-            "Good morning",
-            "Good evening"
-          ],
-          "a": "c"
-        },
-        {
-          "q": "11 o'clock at night — you go to bed 🛏️",
-          "opts": [
-            "Good night",
-            "Good morning",
-            "Hello"
-          ],
-          "a": "a"
-        },
-        {
-          "q": "You leave school.",
-          "opts": [
-            "Hello!",
-            "Goodbye!",
-            "Good morning!"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "You meet a new friend.",
-          "opts": [
-            "See you!",
-            "Nice to meet you!",
-            "Good night!"
-          ],
-          "a": "b"
-        }
-      ]
-    },
-    {
       "id": "lis_greet",
       "type": "choose",
       "skill": "listening",
@@ -305,42 +248,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
         }
       ],
       "listen": 0
-    },
-    {
-      "id": "classphr",
-      "type": "match",
-      "skill": "speaking",
-      "title": "What do you say? Match.",
-      "items": [
-        {
-          "q": "You don't understand.",
-          "a": "Sorry, I don't understand."
-        },
-        {
-          "q": "You want to hear it again.",
-          "a": "Can you repeat that, please?"
-        },
-        {
-          "q": "You don't know a word.",
-          "a": "What does \"ruler\" mean?"
-        },
-        {
-          "q": "You point at a book.",
-          "a": "What's this in English?"
-        },
-        {
-          "q": "You don't know the answer.",
-          "a": "I don't know."
-        },
-        {
-          "q": "You are late.",
-          "a": "Sorry I'm late!"
-        },
-        {
-          "q": "You need help.",
-          "a": "Can you help me, please?"
-        }
-      ]
     },
     {
       "id": "letters",
@@ -408,108 +315,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
         {
           "q": "5th student:  ____________",
           "a": "Lizzy"
-        }
-      ]
-    },
-    {
-      "id": "numwords",
-      "type": "write",
-      "skill": "writing",
-      "title": "Write the numbers in words.",
-      "items": [
-        {
-          "q": "13",
-          "a": "thirteen"
-        },
-        {
-          "q": "30",
-          "a": "thirty"
-        },
-        {
-          "q": "40",
-          "a": "forty"
-        },
-        {
-          "q": "48",
-          "a": "forty-eight"
-        },
-        {
-          "q": "90",
-          "a": "ninety"
-        },
-        {
-          "q": "55",
-          "a": "fifty-five"
-        },
-        {
-          "q": "67",
-          "a": "sixty-seven"
-        },
-        {
-          "q": "100",
-          "a": "one hundred"
-        }
-      ]
-    },
-    {
-      "id": "choosenum",
-      "type": "choose",
-      "skill": "reading",
-      "title": "Circle the right number.",
-      "items": [
-        {
-          "q": "fifteen",
-          "opts": [
-            "50",
-            "15",
-            "5"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "sixty",
-          "opts": [
-            "16",
-            "66",
-            "60"
-          ],
-          "a": "c"
-        },
-        {
-          "q": "nineteen",
-          "opts": [
-            "19",
-            "90",
-            "9"
-          ],
-          "a": "a"
-        },
-        {
-          "q": "seventy-one",
-          "opts": [
-            "17",
-            "71",
-            "77"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "eighty-four",
-          "opts": [
-            "48",
-            "84",
-            "80"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "thirty-three",
-          "opts": [
-            "33",
-            "13",
-            "303"
-          ],
-          "a": "a"
         }
       ]
     },
@@ -608,34 +413,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
       ]
     },
     {
-      "id": "natodd",
-      "type": "odd",
-      "skill": "reading",
-      "title": "Which word is different? Circle it.",
-      "items": [
-        {
-          "q": "Spain   France   German   Italy",
-          "a": "German (a nationality)"
-        },
-        {
-          "q": "Japanese   Chinese   Russia   British",
-          "a": "Russia (a country)"
-        },
-        {
-          "q": "Canada   Mexico   Spanish   Japan",
-          "a": "Spanish"
-        },
-        {
-          "q": "the UK   the USA   China   French",
-          "a": "French"
-        },
-        {
-          "q": "American   Italian   Turkey   Mexican",
-          "a": "Turkey"
-        }
-      ]
-    },
-    {
       "id": "camp_tf",
       "type": "tf",
       "skill": "reading",
@@ -719,74 +496,13 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
           "a": "(students' own)"
         }
       ]
-    },
-    {
-      "id": "quiz",
-      "type": "choose",
-      "skill": "speaking",
-      "title": "Team quiz! Say the answer first.",
-      "items": [
-        {
-          "q": "Good ___ ! (at 8 am)",
-          "opts": [
-            "morning",
-            "evening",
-            "night"
-          ],
-          "a": "a"
-        },
-        {
-          "q": "You don't understand. You say:",
-          "opts": [
-            "I don't know.",
-            "Sorry, I don't understand.",
-            "Goodbye!"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "\"double L\" means…",
-          "opts": [
-            "LL",
-            "L2",
-            "LLL"
-          ],
-          "a": "a"
-        },
-        {
-          "q": "thirty =",
-          "opts": [
-            "13",
-            "30",
-            "33"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "Japan →",
-          "opts": [
-            "Japanish",
-            "Japanese",
-            "Japan"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "How do you spell 40?",
-          "opts": [
-            "fourty",
-            "forty",
-            "fourtee"
-          ],
-          "a": "b"
-        }
-      ]
     }
   ],
   deck: [
     {
       "layout": "title",
-      "notes": "Lesson 1 (2 hours). Smile, say \"Hello!\" and write your name on the board. Spell it aloud. Students need the handout (15 exercises)."
+      "notes": "⏱️ 1 min · Lesson 1 (1.5 hours). Smile, say \"Hello!\" and write your name on the board. Spell it aloud. Students need the handout (15 exercises).",
+      "time": 1
     },
     {
       "layout": "list",
@@ -814,7 +530,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
           "text": "Revision test: 20 questions at the end"
         }
       ],
-      "notes": "Read the list quickly — 1 minute."
+      "notes": "⏱️ 1 min · Read the list quickly — 1 minute.",
+      "time": 1
     },
     {
       "layout": "questions",
@@ -827,16 +544,18 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
         "Can you say A, B, C…?",
         "Count from 1 to 10!"
       ],
-      "notes": "It's the first lesson. Click to show each question; ask 3–4 students each."
+      "notes": "⏱️ 4 min · It's the first lesson. Click to show each question; ask 3–4 students each.",
+      "time": 4
     },
     {
       "layout": "game",
       "tag": "WARM-UP GAME",
       "title": "Name chain",
       "emoji": "⛓️",
-      "minutes": 7,
+      "minutes": 5,
       "text": "Student 1: \"I'm Anna.\"\nStudent 2: \"She's Anna. I'm Alex.\"\nStudent 3: \"She's Anna, he's Alex, I'm Lucy.\"\n…and round the class!",
-      "notes": "If someone forgets a name, the class helps."
+      "notes": "⏱️ 5 min · If someone forgets a name, the class helps.",
+      "time": 5
     },
     {
       "layout": "words",
@@ -884,7 +603,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
           "tr": "077 455 120"
         }
       ],
-      "notes": "Say each word, students repeat. Ask \"Can you give an example?\" — then click the card to show one."
+      "notes": "⏱️ 4 min · Say each word, students repeat. Ask \"Can you give an example?\" — then click the card to show one.",
+      "time": 4
     },
     {
       "layout": "boxes",
@@ -909,45 +629,14 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
         }
       ],
       "foot": "\"Good night!\" = when you go to bed 🛏️ · \"Nice to meet you!\" = the first time",
-      "notes": "Show a clock time, students say the greeting."
-    },
-    {
-      "layout": "mistakes",
-      "tag": "YOU FOUND IT",
-      "title": "Greeting mistakes everyone makes",
-      "rows": [
-        {
-          "wrong": "Good night! (when you arrive)",
-          "right": "Good evening!"
-        },
-        {
-          "wrong": "Nice to meet you! (to your best friend)",
-          "right": "Hi! / How are you?"
-        },
-        {
-          "wrong": "I fine.",
-          "right": "I'm fine."
-        },
-        {
-          "wrong": "How are you? — I'm 12.",
-          "right": "How are you? — I'm fine."
-        },
-        {
-          "wrong": "Good afternoon! (at 9 am)",
-          "right": "Good morning!"
-        }
-      ],
-      "notes": "Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one."
+      "notes": "⏱️ 4 min · Show a clock time, students say the greeting.",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "greet",
-      "notes": "Handout exercise 1."
-    },
-    {
-      "layout": "exercise",
-      "ex": "times",
-      "notes": "Handout exercise 2."
+      "notes": "⏱️ 4 min · Handout exercise 1.",
+      "time": 4
     },
     {
       "layout": "skill",
@@ -955,42 +644,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
       "tag": "LISTENING 1",
       "title": "Five short dialogues",
       "listen": 0,
-      "text": "People meet and say goodbye.\nListen and circle the right answer (handout exercise 3).",
+      "text": "People meet and say goodbye.\nListen and circle the right answer (handout exercise 2).",
       "tips": [
         "Listen for the time of day",
         "Listen for names",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "lis_greet",
-      "notes": "Handout exercise 3 (Listening 1)."
-    },
-    {
-      "layout": "tiles",
-      "tag": "LESSON 2 · CLASS PHRASES",
-      "title": "In the classroom we say…",
-      "tiles": [
-        "🤔 Sorry, I don't understand.",
-        "🔁 Can you repeat that, please?",
-        "📕 What's this in English?",
-        "❓ What does \"ruler\" mean?",
-        "🤷 I don't know.",
-        "⏰ Sorry I'm late!",
-        "🙋 Can you help me, please?",
-        "🚻 Can I go to the toilet?"
-      ],
-      "notes": "Say each phrase, students repeat. Use them all lesson!",
-      "small": true,
-      "cols": 4,
-      "foot": "Put the phrases on the wall — use them every lesson"
-    },
-    {
-      "layout": "exercise",
-      "ex": "classphr",
-      "notes": "Handout exercise 4."
+      "notes": "⏱️ 4 min · Handout exercise 2 (Listening 1).",
+      "time": 4
     },
     {
       "layout": "tiles",
@@ -1024,7 +691,7 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
         "Y",
         "Z"
       ],
-      "notes": "Say the alphabet slowly, students repeat. Then boys and girls take turns.",
+      "notes": "⏱️ 4 min · Say the alphabet slowly, students repeat. Then boys and girls take turns.",
       "small": false,
       "mark": [
         "A",
@@ -1033,49 +700,14 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
         "O",
         "U"
       ],
-      "foot": "Vowels: A E I O U · the others are consonants"
-    },
-    {
-      "layout": "boxes",
-      "tag": "LESSON 3 · SOUNDS",
-      "title": "Letters that sound alike",
-      "boxes": [
-        {
-          "head": "/eɪ/  (day)",
-          "body": "A  H  J  K"
-        },
-        {
-          "head": "/iː/  (see)",
-          "body": "B  C  D  E  G  P  T  V"
-        },
-        {
-          "head": "/e/  (pen)",
-          "body": "F  L  M  N  S  X  Z"
-        },
-        {
-          "head": "/aɪ/  (my)",
-          "body": "I  Y"
-        },
-        {
-          "head": "/əʊ/  (no)",
-          "body": "O"
-        },
-        {
-          "head": "/uː/  (you)",
-          "body": "Q  U  W"
-        },
-        {
-          "head": "/ɑː/  (car)",
-          "body": "R"
-        }
-      ],
-      "foot": "How do you spell it? — B - E - double L - A  (Bella)",
-      "notes": "Groups race to say their line."
+      "foot": "Vowels: A E I O U · the others are consonants",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "letters",
-      "notes": "Handout exercise 5."
+      "notes": "⏱️ 6 min · Handout exercise 3.",
+      "time": 6
     },
     {
       "layout": "skill",
@@ -1083,49 +715,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
       "tag": "LISTENING 2",
       "title": "Spell your name",
       "listen": 1,
-      "text": "Five people say and spell their names.\nListen and write the names (handout exercise 6).",
+      "text": "Five people say and spell their names.\nListen and write the names (handout exercise 4).",
       "tips": [
         "Listen for \"double\"",
         "Names start with a capital letter",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "names",
-      "notes": "Handout exercise 6 (Listening 2)."
-    },
-    {
-      "layout": "tiles",
-      "tag": "LESSON 4 · NUMBERS 0–20",
-      "title": "Numbers 0–20",
-      "tiles": [
-        "0 zero",
-        "1 one",
-        "2 two",
-        "3 three",
-        "4 four",
-        "5 five",
-        "6 six",
-        "7 seven",
-        "8 eight",
-        "9 nine",
-        "10 ten",
-        "11 eleven",
-        "12 twelve",
-        "13 thirteen",
-        "14 fourteen",
-        "15 fifteen",
-        "16 sixteen",
-        "17 seventeen",
-        "18 eighteen",
-        "19 nineteen",
-        "20 twenty"
-      ],
-      "notes": "Count together, then backwards from 20.",
-      "small": true,
-      "cols": 7
+      "notes": "⏱️ 4 min · Handout exercise 4 (Listening 2).",
+      "time": 4
     },
     {
       "layout": "boxes",
@@ -1146,7 +749,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
         }
       ],
       "foot": "13 thirTEEN  ≠  30 THIRty",
-      "notes": "Clap the stress."
+      "notes": "⏱️ 4 min · Clap the stress.",
+      "time": 4
     },
     {
       "layout": "mistakes",
@@ -1174,17 +778,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
           "right": "one hundred"
         }
       ],
-      "notes": "Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one."
-    },
-    {
-      "layout": "exercise",
-      "ex": "numwords",
-      "notes": "Handout exercise 7."
-    },
-    {
-      "layout": "exercise",
-      "ex": "choosenum",
-      "notes": "Handout exercise 8."
+      "notes": "⏱️ 3 min · Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one.",
+      "time": 3
     },
     {
       "layout": "skill",
@@ -1192,69 +787,26 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
       "tag": "LISTENING 3",
       "title": "Numbers",
       "listen": 2,
-      "text": "Five people say a number.\nListen and circle the right number (handout exercise 9).\nCareful: 13 or 30? 15 or 50?",
+      "text": "Five people say a number.\nListen and circle the right number (handout exercise 5).\nCareful: 13 or 30? 15 or 50?",
       "tips": [
         "-TEEN or -ty?",
         "Circle a, b or c",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "ages",
-      "notes": "Handout exercise 9 (Listening 3)."
-    },
-    {
-      "layout": "game",
-      "tag": "GAME",
-      "title": "Number bingo",
-      "emoji": "🎯",
-      "minutes": 8,
-      "text": "Draw a 3 × 3 grid.\nWrite 9 numbers from 1 to 100.\nListen and cross out the numbers you hear.\nThree in a line → \"BINGO!\" 🎉",
-      "notes": "Call the tricky ones: 13/30, 14/40, 15/50."
-    },
-    {
-      "layout": "tiles",
-      "tag": "LESSON 5 · COUNTRIES",
-      "title": "Countries and nationalities",
-      "tiles": [
-        "Italy Italian",
-        "Spain Spanish",
-        "the UK British",
-        "the USA American",
-        "Canada Canadian",
-        "Mexico Mexican",
-        "France French",
-        "Germany German",
-        "Russia Russian",
-        "Japan Japanese",
-        "China Chinese",
-        "Turkey Turkish"
-      ],
-      "notes": "Say the country, students say the nationality.",
-      "small": true,
-      "cols": 4,
-      "foot": "Countries and nationalities start with a CAPITAL letter"
+      "notes": "⏱️ 4 min · Handout exercise 5 (Listening 3).",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "nat",
-      "notes": "Handout exercise 10."
-    },
-    {
-      "layout": "exercise",
-      "ex": "natodd",
-      "notes": "Handout exercise 11."
-    },
-    {
-      "layout": "game",
-      "tag": "SPEAKING · PAIR WORK",
-      "title": "Find your twin",
-      "emoji": "🎴",
-      "minutes": 7,
-      "text": "Take a card. Walk and ask:\n\"Hi! What's your name?\"\n\"How do you spell it?\"\n\"Where are you from?\"\nFind the student from the same country! 🔍",
-      "notes": "Two cards per country."
+      "notes": "⏱️ 6 min · Handout exercise 6.",
+      "time": 6
     },
     {
       "layout": "skill",
@@ -1264,30 +816,29 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
       "text": "Hi! I'm Mei. I'm thirteen and I'm from China. I'm Chinese. I'm at the summer camp with my friend Kate.\n\nHello! My name's Carlos. I'm twelve. I'm from Spain, so I'm Spanish. My brother Pablo is here too — he's fifteen.\n\nHi, I'm Emma. I'm from the UK — I'm British. I'm fourteen. My best friend here is Mei. We're in group A.",
       "tips": [
         "Name · Age · Country",
-        "Read, then do exercises 12 and 13"
+        "Read, then do exercises 7 and 8"
       ],
-      "notes": "Students read silently (3 min)."
+      "notes": "⏱️ 4 min · Students read silently (3 min).",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "camp_tf",
-      "notes": "Handout exercise 12."
+      "notes": "⏱️ 4 min · Handout exercise 7.",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "camp_q",
-      "notes": "Handout exercise 13."
+      "notes": "⏱️ 6 min · Handout exercise 8.",
+      "time": 6
     },
     {
       "layout": "exercise",
       "ex": "aboutme",
-      "notes": "Handout exercise 14. Then students read it to a partner, who writes the phone number.",
-      "minutes": 7
-    },
-    {
-      "layout": "exercise",
-      "ex": "quiz",
-      "notes": "Handout exercise 15 — or a team quiz."
+      "notes": "⏱️ 10 min · Handout exercise 9. Then students read it to a partner, who writes the phone number.",
+      "minutes": 10,
+      "time": 10
     },
     {
       "layout": "finish",
@@ -1299,7 +850,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
         "I can say countries and nationalities"
       ],
       "foot": "Homework: the revision test 📲 (link from your teacher)",
-      "notes": "Send the revision test link now (Course → Revision test → Copy the link)."
+      "notes": "⏱️ 2 min · Send the revision test link now (Course → Revision test → Copy the link).",
+      "time": 2
     }
   ],
   listen: [
@@ -1511,9 +1063,10 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
 
 /* ---------- Block 1, Lesson 2: be: all forms ---------- */
 Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
-  // A 2-hour lesson: many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude (Kokoro voices,
+  // A 1.5-hour lesson (teacher, 2026-11-03: 90 minutes; each slide's minutes are in `time`): many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude (Kokoro voices,
   // audio/course/*.mp3; the computer's own voice reads the text if a file can't play). Generated from a script;
   // the slides (deck) and the handout are both made from `exercises`.
+  minutes: 89,
   goals: [
     "Use am / is / are with I, you, he, she, it, we, they",
     "Make negatives: I'm not, he isn't, they aren't",
@@ -1577,42 +1130,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
         {
           "q": "Tom and I ___ friends.",
           "a": "are"
-        }
-      ]
-    },
-    {
-      "id": "short_forms",
-      "type": "write",
-      "skill": "writing",
-      "title": "Write the short form.",
-      "items": [
-        {
-          "q": "I am",
-          "a": "I'm"
-        },
-        {
-          "q": "you are",
-          "a": "you're"
-        },
-        {
-          "q": "he is",
-          "a": "he's"
-        },
-        {
-          "q": "she is",
-          "a": "she's"
-        },
-        {
-          "q": "it is",
-          "a": "it's"
-        },
-        {
-          "q": "we are",
-          "a": "we're"
-        },
-        {
-          "q": "they are",
-          "a": "they're"
         }
       ]
     },
@@ -1703,128 +1220,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
       ]
     },
     {
-      "id": "becorrect",
-      "type": "correct",
-      "skill": "writing",
-      "title": "Correct the mistakes.",
-      "items": [
-        {
-          "q": "She are from Spain.",
-          "a": "She is (She's) from Spain."
-        },
-        {
-          "q": "I is twelve.",
-          "a": "I am (I'm) twelve."
-        },
-        {
-          "q": "They is my friends.",
-          "a": "They are my friends."
-        },
-        {
-          "q": "He from Italy.",
-          "a": "He is (He's) from Italy."
-        },
-        {
-          "q": "We is in class 6A.",
-          "a": "We are in class 6A."
-        }
-      ]
-    },
-    {
-      "id": "qorder",
-      "type": "order",
-      "skill": "writing",
-      "title": "Put the words in order. Write the question.",
-      "items": [
-        {
-          "q": "from / you / are / where",
-          "a": "Where are you from?"
-        },
-        {
-          "q": "name / what's / your",
-          "a": "What's your name?"
-        },
-        {
-          "q": "she / is / American",
-          "a": "Is she American?"
-        },
-        {
-          "q": "you / are / how",
-          "a": "How are you?"
-        },
-        {
-          "q": "your / friend / he / is",
-          "a": "Is he your friend?"
-        },
-        {
-          "q": "they / where / from / are",
-          "a": "Where are they from?"
-        }
-      ]
-    },
-    {
-      "id": "short",
-      "type": "choose",
-      "skill": "speaking",
-      "title": "Circle the right short answer.",
-      "items": [
-        {
-          "q": "Are you from Italy? (✔)",
-          "opts": [
-            "Yes, I am.",
-            "Yes, I'm.",
-            "Yes, I is."
-          ],
-          "a": "a"
-        },
-        {
-          "q": "Is she British? (✘)",
-          "opts": [
-            "No, she not.",
-            "No, she isn't.",
-            "No, she aren't."
-          ],
-          "a": "b"
-        },
-        {
-          "q": "Are they from Spain? (✔)",
-          "opts": [
-            "Yes, they are.",
-            "Yes, they is.",
-            "Yes, they're."
-          ],
-          "a": "a"
-        },
-        {
-          "q": "Is he your friend? (✔)",
-          "opts": [
-            "Yes, he's.",
-            "Yes, he is.",
-            "Yes, he am."
-          ],
-          "a": "b"
-        },
-        {
-          "q": "Are you twelve? (✘)",
-          "opts": [
-            "No, I'm not.",
-            "No, I amn't.",
-            "No, I not."
-          ],
-          "a": "a"
-        },
-        {
-          "q": "Is it a big school? (✘)",
-          "opts": [
-            "No, it isn't.",
-            "No, it not.",
-            "No, it aren't."
-          ],
-          "a": "a"
-        }
-      ]
-    },
-    {
       "id": "lis_new",
       "type": "tf",
       "skill": "listening",
@@ -1854,38 +1249,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
       "listen": 1
     },
     {
-      "id": "qa",
-      "type": "match",
-      "skill": "reading",
-      "title": "Match the question and the answer.",
-      "items": [
-        {
-          "q": "Are you twelve?",
-          "a": "Yes, I am."
-        },
-        {
-          "q": "Is she your sister?",
-          "a": "No, she isn't. She's my cousin."
-        },
-        {
-          "q": "Are they from Spain?",
-          "a": "Yes, they are."
-        },
-        {
-          "q": "Is it a good book?",
-          "a": "Yes, it is!"
-        },
-        {
-          "q": "Are we late?",
-          "a": "No, we aren't."
-        },
-        {
-          "q": "Is he a doctor?",
-          "a": "No, he isn't. He's a nurse."
-        }
-      ]
-    },
-    {
       "id": "lis_register",
       "type": "gap",
       "skill": "listening",
@@ -1900,7 +1263,7 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
           "a": "ill"
         },
         {
-          "q": "Mia and Leo are at the ____________.",
+          "q": "Anna and Leo are at the ____________.",
           "a": "back"
         },
         {
@@ -1929,7 +1292,7 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
           "a": "F (he isn't old)"
         },
         {
-          "q": "Mia and Leo are in class 6B.",
+          "q": "Anna and Leo are in class 6B.",
           "a": "F (6A)"
         },
         {
@@ -1941,7 +1304,7 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
           "a": "T"
         }
       ],
-      "text": "Hi, I'm Lucy. I'm eleven and I'm in class 6B. My teacher is Mr Hill. He isn't old, and he's very funny!\n\nMy best friends are Mia and Leo. They aren't in class 6B. They're in class 6A, but we're always together at lunch.\n\nOur school is big. It isn't new, but it's very nice. Are you in a big school too?"
+      "text": "Hi, I'm Lucy. I'm eleven and I'm in class 6B. My teacher is Mr Hill. He isn't old, and he's very funny!\n\nMy best friends are Anna and Leo. They aren't in class 6B. They're in class 6A, but we're always together at lunch.\n\nOur school is big. It isn't new, but it's very nice. Are you in a big school too?"
     },
     {
       "id": "class_q",
@@ -1962,7 +1325,7 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
           "a": "Yes, he is."
         },
         {
-          "q": "What class are Mia and Leo in?",
+          "q": "What class are Anna and Leo in?",
           "a": "6A."
         },
         {
@@ -2026,74 +1389,13 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
           "a": "(students' own)"
         }
       ]
-    },
-    {
-      "id": "quiz",
-      "type": "choose",
-      "skill": "speaking",
-      "title": "Team quiz! Say the answer first.",
-      "items": [
-        {
-          "q": "They ___ from Italy.",
-          "opts": [
-            "is",
-            "am",
-            "are"
-          ],
-          "a": "c"
-        },
-        {
-          "q": "I ___ a teacher. I'm a student.",
-          "opts": [
-            "am not",
-            "isn't",
-            "aren't"
-          ],
-          "a": "a"
-        },
-        {
-          "q": "___ he your brother?",
-          "opts": [
-            "Are",
-            "Is",
-            "Am"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "Are you twelve? — Yes, I ___.",
-          "opts": [
-            "am",
-            "'m",
-            "is"
-          ],
-          "a": "a"
-        },
-        {
-          "q": "we are =",
-          "opts": [
-            "we're",
-            "were",
-            "we's"
-          ],
-          "a": "a"
-        },
-        {
-          "q": "Is it a cat? — No, it ___.",
-          "opts": [
-            "isn't",
-            "aren't",
-            "not"
-          ],
-          "a": "a"
-        }
-      ]
     }
   ],
   deck: [
     {
       "layout": "title",
-      "notes": "Lesson 2 (2 hours): the verb \"be\". Students need the handout (15 exercises)."
+      "notes": "⏱️ 1 min · Lesson 2 (1.5 hours): the verb \"be\". Students need the handout (15 exercises).",
+      "time": 1
     },
     {
       "layout": "list",
@@ -2121,7 +1423,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
           "text": "Revision test: 20 questions at the end"
         }
       ],
-      "notes": "Read the list quickly — 1 minute."
+      "notes": "⏱️ 1 min · Read the list quickly — 1 minute.",
+      "time": 1
     },
     {
       "layout": "questions",
@@ -2146,7 +1449,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
           "a": "Sorry, I don't understand."
         }
       ],
-      "notes": "Click to show each question, then its answer."
+      "notes": "⏱️ 4 min · Click to show each question, then its answer.",
+      "time": 4
     },
     {
       "layout": "game",
@@ -2155,7 +1459,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
       "emoji": "🔤",
       "minutes": 5,
       "text": "Listen to the word.\nWrite it with your partner, fast!\nHold it up when you are ready. ✋",
-      "notes": "Words: Spain, Canada, Japanese, thirteen, forty."
+      "notes": "⏱️ 5 min · Words: Spain, Canada, Japanese, thirteen, forty.",
+      "time": 5
     },
     {
       "layout": "words",
@@ -2203,7 +1508,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
           "tr": "am · is · are"
         }
       ],
-      "notes": "Point at people: \"I\", \"you\", \"he\"… Click each card for an example."
+      "notes": "⏱️ 4 min · Point at people: \"I\", \"you\", \"he\"… Click each card for an example.",
+      "time": 4
     },
     {
       "layout": "tiles",
@@ -2218,20 +1524,17 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
         "we are → we're",
         "they are → they're"
       ],
-      "notes": "Point at a student: \"He's Tom.\" \"She's Lucy.\" Then \"We're students.\"",
+      "notes": "⏱️ 4 min · Point at a student: \"He's Tom.\" \"She's Lucy.\" Then \"We're students.\"",
       "small": true,
       "cols": 4,
-      "foot": "I → am · he / she / it → is · you / we / they → are"
+      "foot": "I → am · he / she / it → is · you / we / they → are",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "be",
-      "notes": "Handout exercise 1."
-    },
-    {
-      "layout": "exercise",
-      "ex": "short_forms",
-      "notes": "Handout exercise 2."
+      "notes": "⏱️ 6 min · Handout exercise 1.",
+      "time": 6
     },
     {
       "layout": "skill",
@@ -2239,18 +1542,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
       "tag": "LISTENING 1",
       "title": "Meet my friends",
       "listen": 0,
-      "text": "Five people talk about themselves and their friends.\nListen and circle the right answer (handout exercise 3).",
+      "text": "Five people talk about themselves and their friends.\nListen and circle the right answer (handout exercise 2).",
       "tips": [
         "Listen for am / is / are",
         "Ages, countries, jobs",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "lis_friends",
-      "notes": "Handout exercise 3 (Listening 1)."
+      "notes": "⏱️ 4 min · Handout exercise 2 (Listening 1).",
+      "time": 4
     },
     {
       "layout": "boxes",
@@ -2271,7 +1576,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
         }
       ],
       "foot": "⚠️ I amn't ✗ → I'm not ✓",
-      "notes": "Say true and false sentences about students: \"Ben isn't twenty!\""
+      "notes": "⏱️ 4 min · Say true and false sentences about students: \"Ben isn't twenty!\"",
+      "time": 4
     },
     {
       "layout": "mistakes",
@@ -2299,17 +1605,14 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
           "right": "She isn't Spanish."
         }
       ],
-      "notes": "Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one."
+      "notes": "⏱️ 3 min · Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one.",
+      "time": 3
     },
     {
       "layout": "exercise",
       "ex": "negatives",
-      "notes": "Handout exercise 4."
-    },
-    {
-      "layout": "exercise",
-      "ex": "becorrect",
-      "notes": "Handout exercise 5."
+      "notes": "⏱️ 6 min · Handout exercise 3.",
+      "time": 6
     },
     {
       "layout": "boxes",
@@ -2330,17 +1633,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
         }
       ],
       "foot": "Short \"Yes\" answers never use 'm / 's: Yes, I am ✓ · Yes, I'm ✗",
-      "notes": "Ask students yes/no questions about themselves and famous people."
-    },
-    {
-      "layout": "exercise",
-      "ex": "qorder",
-      "notes": "Handout exercise 6. Then pairs ask each other the questions."
-    },
-    {
-      "layout": "exercise",
-      "ex": "short",
-      "notes": "Handout exercise 7."
+      "notes": "⏱️ 4 min · Ask students yes/no questions about themselves and famous people.",
+      "time": 4
     },
     {
       "layout": "skill",
@@ -2348,32 +1642,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
       "tag": "LISTENING 2",
       "title": "A new student",
       "listen": 1,
-      "text": "A girl talks to Tom, a new student.\nListen: true or false? (handout exercise 8)",
+      "text": "A girl talks to Tom, a new student.\nListen: true or false? (handout exercise 4)",
       "tips": [
         "Yes, I am / No, I'm not",
         "Where from? How old?",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "lis_new",
-      "notes": "Handout exercise 8 (Listening 2)."
-    },
-    {
-      "layout": "game",
-      "tag": "GAME",
-      "title": "Who am I?",
-      "emoji": "🕵️",
-      "minutes": 7,
-      "text": "Think of a famous person.\nThe class asks: \"Are you from the USA?\" \"Are you a singer?\"\nAnswer only: \"Yes, I am.\" / \"No, I'm not.\"\n10 questions to guess!",
-      "notes": "Start with a famous footballer."
-    },
-    {
-      "layout": "exercise",
-      "ex": "qa",
-      "notes": "Handout exercise 9."
+      "notes": "⏱️ 4 min · Handout exercise 4 (Listening 2).",
+      "time": 4
     },
     {
       "layout": "skill",
@@ -2381,57 +1663,59 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
       "tag": "LISTENING 3",
       "title": "The class register",
       "listen": 2,
-      "text": "A teacher checks who is in class.\nListen and complete (handout exercise 10).",
+      "text": "A teacher checks who is in class.\nListen and complete (handout exercise 5).",
       "tips": [
         "Who is here? Who isn't?",
         "A surname is spelled",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "lis_register",
-      "notes": "Handout exercise 10 (Listening 3)."
+      "notes": "⏱️ 4 min · Handout exercise 5 (Listening 3).",
+      "time": 4
     },
     {
       "layout": "skill",
       "skill": "reading",
       "tag": "READING",
       "title": "My new class",
-      "text": "Hi, I'm Lucy. I'm eleven and I'm in class 6B. My teacher is Mr Hill. He isn't old, and he's very funny!\n\nMy best friends are Mia and Leo. They aren't in class 6B. They're in class 6A, but we're always together at lunch.\n\nOur school is big. It isn't new, but it's very nice. Are you in a big school too?",
+      "text": "Hi, I'm Lucy. I'm eleven and I'm in class 6B. My teacher is Mr Hill. He isn't old, and he's very funny!\n\nMy best friends are Anna and Leo. They aren't in class 6B. They're in class 6A, but we're always together at lunch.\n\nOur school is big. It isn't new, but it's very nice. Are you in a big school too?",
       "tips": [
         "Who? What class? What is it like?",
-        "Read, then do exercises 11 and 12"
+        "Read, then do exercises 6 and 7"
       ],
-      "notes": "Students read silently (3 min)."
+      "notes": "⏱️ 4 min · Students read silently (3 min).",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "class_tf",
-      "notes": "Handout exercise 11."
+      "notes": "⏱️ 4 min · Handout exercise 6.",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "class_q",
-      "notes": "Handout exercise 12."
+      "notes": "⏱️ 6 min · Handout exercise 7.",
+      "time": 6
     },
     {
       "layout": "exercise",
       "ex": "aboutus",
-      "notes": "Handout exercise 13.",
-      "minutes": 7
+      "notes": "⏱️ 10 min · Handout exercise 8.",
+      "minutes": 10,
+      "time": 10
     },
     {
       "layout": "exercise",
       "ex": "findwho",
-      "notes": "Handout exercise 14: students walk and ask.",
-      "minutes": 8
-    },
-    {
-      "layout": "exercise",
-      "ex": "quiz",
-      "notes": "Handout exercise 15 — or a team quiz."
+      "notes": "⏱️ 6 min · Handout exercise 9: students walk and ask.",
+      "minutes": 6,
+      "time": 6
     },
     {
       "layout": "finish",
@@ -2443,7 +1727,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
         "I can answer \"Yes, I am. / No, I'm not.\""
       ],
       "foot": "Homework: the revision test 📲 (link from your teacher)",
-      "notes": "Send the revision test link now (Course → Revision test → Copy the link)."
+      "notes": "⏱️ 2 min · Send the revision test link now (Course → Revision test → Copy the link).",
+      "time": 2
     }
   ],
   listen: [
@@ -2462,8 +1747,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
     {
       "label": "Listening 3 — The class register",
       "src": "audio/course/c1l2-listening-3.mp3",
-      "text": "Good morning, everyone. Is Sophie here? Yes, I'm here. Good. Is Jack here? No, he isn't. He's ill today. Oh dear. And what about Mia and Leo? Are they here? Yes, we are. We're at the back. And who are you? Are you a new student? Yes, I am. My name is Harry Hill. How do you spell Hill? That's H, I, double L. Thank you, Harry. Where are you from? I'm from Australia.",
-      "script": "Narrator: Listening three. The class register. Listen and complete.\nA: Good morning, everyone. Is Sophie here?\nB: Yes, I'm here.\nA: Good. Is Jack here?\nC: No, he isn't. He's ill today.\nA: Oh dear. And what about Mia and Leo? Are they here?\nD: Yes, we are. We're at the back.\nA: And who are you? Are you a new student?\nE: Yes, I am. My name is Harry Hill.\nA: How do you spell Hill?\nE: That's H, I, double L.\nA: Thank you, Harry. Where are you from?\nE: I'm from Australia."
+      "text": "Good morning, everyone. Is Sophie here? Yes, I'm here. Good. Is Jack here? No, he isn't. He's ill today. Oh dear. And what about Anna and Leo? Are they here? Yes, we are. We're at the back. And who are you? Are you a new student? Yes, I am. My name is Harry Hill. How do you spell Hill? That's H, I, double L. Thank you, Harry. Where are you from? I'm from Australia.",
+      "script": "Narrator: Listening three. The class register. Listen and complete.\nA: Good morning, everyone. Is Sophie here?\nB: Yes, I'm here.\nA: Good. Is Jack here?\nC: No, he isn't. He's ill today.\nA: Oh dear. And what about Anna and Leo? Are they here?\nD: Yes, we are. We're at the back.\nA: And who are you? Are you a new student?\nE: Yes, I am. My name is Harry Hill.\nA: How do you spell Hill?\nE: That's H, I, double L.\nA: Thank you, Harry. Where are you from?\nE: I'm from Australia."
     }
   ],
   teacherScript: [
@@ -2655,9 +1940,10 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
 
 /* ---------- Block 1, Lesson 3: Things, colours & jobs ---------- */
 Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
-  // A 2-hour lesson: many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude (Kokoro voices,
+  // A 1.5-hour lesson (teacher, 2026-11-03: 90 minutes; each slide's minutes are in `time`): many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude (Kokoro voices,
   // audio/course/*.mp3; the computer's own voice reads the text if a file can't play). Generated from a script;
   // the slides (deck) and the handout are both made from `exercises`.
+  minutes: 87,
   goals: [
     "Name things in a school bag and in the classroom",
     "Say 11 colours: \"What colour is it?\"",
@@ -2721,38 +2007,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
         {
           "q": "🕒",
           "a": "clock"
-        }
-      ]
-    },
-    {
-      "id": "thingsodd",
-      "type": "odd",
-      "skill": "reading",
-      "title": "Which word is different? Circle it.",
-      "items": [
-        {
-          "q": "pen   pencil   ruler   apple",
-          "a": "apple"
-        },
-        {
-          "q": "desk   chair   board   banana",
-          "a": "banana"
-        },
-        {
-          "q": "bag   red   blue   green",
-          "a": "bag"
-        },
-        {
-          "q": "teacher   doctor   pilot   pencil",
-          "a": "pencil"
-        },
-        {
-          "q": "window   door   clock   cook",
-          "a": "cook"
-        },
-        {
-          "q": "yellow   pink   nurse   brown",
-          "a": "nurse"
         }
       ]
     },
@@ -2851,46 +2105,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
       ]
     },
     {
-      "id": "colourgap",
-      "type": "gap",
-      "skill": "writing",
-      "title": "Write the colour.",
-      "items": [
-        {
-          "q": "Grass is ____________.",
-          "a": "green"
-        },
-        {
-          "q": "The sky is ____________.",
-          "a": "blue"
-        },
-        {
-          "q": "Snow is ____________.",
-          "a": "white"
-        },
-        {
-          "q": "A banana is ____________.",
-          "a": "yellow"
-        },
-        {
-          "q": "Chocolate is ____________.",
-          "a": "brown"
-        },
-        {
-          "q": "An orange is ____________.",
-          "a": "orange"
-        },
-        {
-          "q": "red + white = ____________",
-          "a": "pink"
-        },
-        {
-          "q": "black + white = ____________",
-          "a": "grey"
-        }
-      ]
-    },
-    {
       "id": "lis_lost",
       "type": "gap",
       "skill": "listening",
@@ -2918,46 +2132,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
         }
       ],
       "listen": 1
-    },
-    {
-      "id": "jobs",
-      "type": "match",
-      "skill": "reading",
-      "title": "Where do they work? Match.",
-      "items": [
-        {
-          "q": "teacher",
-          "a": "a school"
-        },
-        {
-          "q": "doctor",
-          "a": "a hospital"
-        },
-        {
-          "q": "farmer",
-          "a": "a farm"
-        },
-        {
-          "q": "cook",
-          "a": "a restaurant"
-        },
-        {
-          "q": "pilot",
-          "a": "a plane"
-        },
-        {
-          "q": "shop assistant",
-          "a": "a shop"
-        },
-        {
-          "q": "police officer",
-          "a": "a police station"
-        },
-        {
-          "q": "vet",
-          "a": "an animal hospital"
-        }
-      ]
     },
     {
       "id": "jobschoose",
@@ -3022,34 +2196,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
       ]
     },
     {
-      "id": "jobscorrect",
-      "type": "correct",
-      "skill": "writing",
-      "title": "Correct the mistakes.",
-      "items": [
-        {
-          "q": "She is teacher.",
-          "a": "She's a teacher."
-        },
-        {
-          "q": "He is a engineer.",
-          "a": "He's an engineer."
-        },
-        {
-          "q": "My dad is doctor.",
-          "a": "My dad is a doctor."
-        },
-        {
-          "q": "They are a teachers.",
-          "a": "They are teachers."
-        },
-        {
-          "q": "What colour is it? — It's a red.",
-          "a": "It's red."
-        }
-      ]
-    },
-    {
       "id": "lis_jobs",
       "type": "choose",
       "skill": "listening",
@@ -3102,38 +2248,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
         }
       ],
       "listen": 2
-    },
-    {
-      "id": "colorder",
-      "type": "order",
-      "skill": "writing",
-      "title": "Put the words in order.",
-      "items": [
-        {
-          "q": "colour / what / your / is / bag",
-          "a": "What colour is your bag?"
-        },
-        {
-          "q": "is / it / blue",
-          "a": "It is blue."
-        },
-        {
-          "q": "a / she / nurse / is",
-          "a": "She is a nurse."
-        },
-        {
-          "q": "job / your / what / is / dad's",
-          "a": "What is your dad's job?"
-        },
-        {
-          "q": "pen / my / red / is",
-          "a": "My pen is red."
-        },
-        {
-          "q": "an / he / engineer / is",
-          "a": "He is an engineer."
-        }
-      ]
     },
     {
       "id": "jobs_tf",
@@ -3219,74 +2333,13 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
           "a": "(students' own)"
         }
       ]
-    },
-    {
-      "id": "quiz",
-      "type": "choose",
-      "skill": "speaking",
-      "title": "Team quiz! Say the answer first.",
-      "items": [
-        {
-          "q": "📏 =",
-          "opts": [
-            "rubber",
-            "ruler",
-            "pencil"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "red + white =",
-          "opts": [
-            "pink",
-            "purple",
-            "orange"
-          ],
-          "a": "a"
-        },
-        {
-          "q": "A pilot works in a…",
-          "opts": [
-            "plane",
-            "farm",
-            "shop"
-          ],
-          "a": "a"
-        },
-        {
-          "q": "She's ___ engineer.",
-          "opts": [
-            "a",
-            "an",
-            "the"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "What colour is the sky?",
-          "opts": [
-            "It's blue.",
-            "It's a blue.",
-            "Is blue."
-          ],
-          "a": "a"
-        },
-        {
-          "q": "A vet helps…",
-          "opts": [
-            "sick animals",
-            "cars",
-            "books"
-          ],
-          "a": "a"
-        }
-      ]
     }
   ],
   deck: [
     {
       "layout": "title",
-      "notes": "Lesson 3 (2 hours): things, colours and jobs. Bring a bag with classroom things (Mystery bag). Students need the handout."
+      "notes": "⏱️ 1 min · Lesson 3 (1.5 hours): things, colours and jobs. Bring a bag with classroom things (Mystery bag). Students need the handout.",
+      "time": 1
     },
     {
       "layout": "list",
@@ -3314,7 +2367,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
           "text": "Revision test: 20 questions at the end"
         }
       ],
-      "notes": "Read the list quickly — 1 minute."
+      "notes": "⏱️ 1 min · Read the list quickly — 1 minute.",
+      "time": 1
     },
     {
       "layout": "questions",
@@ -3342,16 +2396,18 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
           "a": "I'm not"
         }
       ],
-      "notes": "Click to show each question, then its answer."
+      "notes": "⏱️ 4 min · Click to show each question, then its answer.",
+      "time": 4
     },
     {
       "layout": "game",
       "tag": "WARM-UP GAME",
       "title": "Mystery bag",
       "emoji": "🛍️",
-      "minutes": 7,
+      "minutes": 5,
       "text": "Feel the thing in the bag. Don't look!\n\"Is it a ruler?\"\n\"Yes, it is!\" / \"No, it isn't.\"\nThen: \"What's this in English?\"",
-      "notes": "Use real classroom things."
+      "notes": "⏱️ 5 min · Use real classroom things.",
+      "time": 5
     },
     {
       "layout": "words",
@@ -3399,7 +2455,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
           "tr": "in a plane"
         }
       ],
-      "notes": "Say each word, students repeat. Ask \"Can you give an example?\" — then click the card to show one."
+      "notes": "⏱️ 4 min · Say each word, students repeat. Ask \"Can you give an example?\" — then click the card to show one.",
+      "time": 4
     },
     {
       "layout": "tiles",
@@ -3421,19 +2478,16 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
         "🕒 clock",
         "🚪 door"
       ],
-      "notes": "Point at real things: \"What's this?\" — \"It's a door.\"",
+      "notes": "⏱️ 4 min · Point at real things: \"What's this?\" — \"It's a door.\"",
       "small": true,
-      "cols": 5
+      "cols": 5,
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "things",
-      "notes": "Handout exercise 1."
-    },
-    {
-      "layout": "exercise",
-      "ex": "thingsodd",
-      "notes": "Handout exercise 2."
+      "notes": "⏱️ 6 min · Handout exercise 1.",
+      "time": 6
     },
     {
       "layout": "skill",
@@ -3441,18 +2495,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
       "tag": "LISTENING 1",
       "title": "What's in your bag?",
       "listen": 0,
-      "text": "Five students say what is in their bags.\nListen and circle the right answer (handout exercise 3).",
+      "text": "Five students say what is in their bags.\nListen and circle the right answer (handout exercise 2).",
       "tips": [
         "How many?",
         "What thing?",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "lis_bag",
-      "notes": "Handout exercise 3 (Listening 1)."
+      "notes": "⏱️ 4 min · Handout exercise 2 (Listening 1).",
+      "time": 4
     },
     {
       "layout": "tiles",
@@ -3471,29 +2527,17 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
         "⚪ white",
         "🩶 grey"
       ],
-      "notes": "Say each colour; students point at something of that colour.",
+      "notes": "⏱️ 4 min · Say each colour; students point at something of that colour.",
       "small": true,
       "cols": 4,
-      "foot": "What colour is it? — It's red. (no \"a\")"
+      "foot": "What colour is it? — It's red. (no \"a\")",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "colours",
-      "notes": "Handout exercise 4."
-    },
-    {
-      "layout": "exercise",
-      "ex": "colourgap",
-      "notes": "Handout exercise 5."
-    },
-    {
-      "layout": "game",
-      "tag": "GAME",
-      "title": "Colour hunt",
-      "emoji": "🎨",
-      "minutes": 5,
-      "text": "Listen to the colour.\nTouch something of that colour!\nSay: \"It's a red pen!\"\nThe last one is out.",
-      "notes": "Speed up as you go."
+      "notes": "⏱️ 6 min · Handout exercise 3.",
+      "time": 6
     },
     {
       "layout": "skill",
@@ -3501,18 +2545,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
       "tag": "LISTENING 2",
       "title": "Lost and found",
       "listen": 1,
-      "text": "A teacher finds things in the classroom.\nWhose are they? Listen and complete (handout exercise 6).",
+      "text": "A teacher finds things in the classroom.\nWhose are they? Listen and complete (handout exercise 4).",
       "tips": [
         "Colours and things",
         "Whose? → name + 's",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "lis_lost",
-      "notes": "Handout exercise 6 (Listening 2)."
+      "notes": "⏱️ 4 min · Handout exercise 4 (Listening 2).",
+      "time": 4
     },
     {
       "layout": "tiles",
@@ -3532,10 +2578,11 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
         "🐾 vet",
         "🧑‍🎓 student"
       ],
-      "notes": "Say the job, mime it; students guess.",
+      "notes": "⏱️ 4 min · Say the job, mime it; students guess.",
       "small": true,
       "cols": 4,
-      "foot": "She's a nurse. He's an engineer. (a / an + job!)"
+      "foot": "She's a nurse. He's an engineer. (a / an + job!)",
+      "time": 4
     },
     {
       "layout": "mistakes",
@@ -3563,22 +2610,14 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
           "right": "My favourite colour is blue."
         }
       ],
-      "notes": "Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one."
-    },
-    {
-      "layout": "exercise",
-      "ex": "jobs",
-      "notes": "Handout exercise 7."
+      "notes": "⏱️ 3 min · Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one.",
+      "time": 3
     },
     {
       "layout": "exercise",
       "ex": "jobschoose",
-      "notes": "Handout exercise 8."
-    },
-    {
-      "layout": "exercise",
-      "ex": "jobscorrect",
-      "notes": "Handout exercise 9."
+      "notes": "⏱️ 4 min · Handout exercise 5.",
+      "time": 4
     },
     {
       "layout": "skill",
@@ -3586,32 +2625,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
       "tag": "LISTENING 3",
       "title": "What do they do?",
       "listen": 2,
-      "text": "Five people talk about jobs.\nListen and circle the right answer (handout exercise 10).",
+      "text": "Five people talk about jobs.\nListen and circle the right answer (handout exercise 6).",
       "tips": [
         "Listen for the job",
         "Where do they work?",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "lis_jobs",
-      "notes": "Handout exercise 10 (Listening 3)."
-    },
-    {
-      "layout": "exercise",
-      "ex": "colorder",
-      "notes": "Handout exercise 11. Then pairs ask \"What colour is your…?\""
-    },
-    {
-      "layout": "game",
-      "tag": "SPEAKING · PAIR WORK",
-      "title": "Guess my job",
-      "emoji": "🕵️",
-      "minutes": 7,
-      "text": "Think of a job. Your partner asks:\n\"Do you work in a hospital?\" \"Are you a pilot?\"\nAnswer \"Yes\" or \"No\".\nSwap after 5 questions!",
-      "notes": "Model one round with a strong student."
+      "notes": "⏱️ 4 min · Handout exercise 6 (Listening 3).",
+      "time": 4
     },
     {
       "layout": "skill",
@@ -3621,30 +2648,29 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
       "text": "Hi, I'm Tom. My mum is a nurse. She works in a big hospital, and her favourite colour is green.\n\nMy dad is a cook. He works in an Italian restaurant. His bag is black and his car is red.\n\nMy sister Kate is a student. She's fourteen. In her school bag there's a pink pencil case, a blue notebook and three yellow pencils.",
       "tips": [
         "Jobs · colours · things",
-        "Read, then do exercises 12 and 13"
+        "Read, then do exercises 7 and 8"
       ],
-      "notes": "Students read silently (3 min)."
+      "notes": "⏱️ 4 min · Students read silently (3 min).",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "jobs_tf",
-      "notes": "Handout exercise 12."
+      "notes": "⏱️ 4 min · Handout exercise 7.",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "jobs_q",
-      "notes": "Handout exercise 13."
+      "notes": "⏱️ 6 min · Handout exercise 8.",
+      "time": 6
     },
     {
       "layout": "exercise",
       "ex": "mybag",
-      "notes": "Handout exercise 14.",
-      "minutes": 7
-    },
-    {
-      "layout": "exercise",
-      "ex": "quiz",
-      "notes": "Handout exercise 15 — or a team quiz."
+      "notes": "⏱️ 10 min · Handout exercise 9.",
+      "minutes": 10,
+      "time": 10
     },
     {
       "layout": "finish",
@@ -3656,7 +2682,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
         "I can ask \"What colour is it?\""
       ],
       "foot": "Homework: the revision test 📲 (link from your teacher)",
-      "notes": "Send the revision test link now (Course → Revision test → Copy the link)."
+      "notes": "⏱️ 2 min · Send the revision test link now (Course → Revision test → Copy the link).",
+      "time": 2
     }
   ],
   listen: [
@@ -3868,9 +2895,10 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
 
 /* ---------- Block 1, Lesson 4: One pen, two pens ---------- */
 Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
-  // A 2-hour lesson: many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude (Kokoro voices,
+  // A 1.5-hour lesson (teacher, 2026-11-03: 90 minutes; each slide's minutes are in `time`): many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude (Kokoro voices,
   // audio/course/*.mp3; the computer's own voice reads the text if a file can't play). Generated from a script;
   // the slides (deck) and the handout are both made from `exercises`.
+  minutes: 90,
   goals: [
     "Make plurals: pens, boxes, cities",
     "Use special plurals: men, women, children, people, feet, teeth",
@@ -3897,46 +2925,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
     }
   ],
   exercises: [
-    {
-      "id": "plurals",
-      "type": "write",
-      "skill": "writing",
-      "title": "Write the plural.",
-      "items": [
-        {
-          "q": "pen",
-          "a": "pens"
-        },
-        {
-          "q": "box",
-          "a": "boxes"
-        },
-        {
-          "q": "watch",
-          "a": "watches"
-        },
-        {
-          "q": "bus",
-          "a": "buses"
-        },
-        {
-          "q": "dictionary",
-          "a": "dictionaries"
-        },
-        {
-          "q": "child",
-          "a": "children"
-        },
-        {
-          "q": "woman",
-          "a": "women"
-        },
-        {
-          "q": "man",
-          "a": "men"
-        }
-      ]
-    },
     {
       "id": "rules",
       "type": "choose",
@@ -4094,38 +3082,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
       ]
     },
     {
-      "id": "plodd",
-      "type": "odd",
-      "skill": "reading",
-      "title": "Which word is different? Circle it.",
-      "items": [
-        {
-          "q": "pens   books   chair   desks",
-          "a": "chair (one)"
-        },
-        {
-          "q": "boxes   watch   buses   pencils",
-          "a": "watch (one)"
-        },
-        {
-          "q": "children   men   women   child",
-          "a": "child (one)"
-        },
-        {
-          "q": "an apple   an egg   an orange   an pen",
-          "a": "an pen ✗ (a pen)"
-        },
-        {
-          "q": "ruler   rubber   pencil   Monday",
-          "a": "Monday"
-        },
-        {
-          "q": "this   that   these   is",
-          "a": "is"
-        }
-      ]
-    },
-    {
       "id": "demo",
       "type": "choose",
       "skill": "writing",
@@ -4188,34 +3144,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
       ]
     },
     {
-      "id": "clcorrect",
-      "type": "correct",
-      "skill": "writing",
-      "title": "Correct the mistakes.",
-      "items": [
-        {
-          "q": "This is a apple.",
-          "a": "This is an apple."
-        },
-        {
-          "q": "I have got two pen.",
-          "a": "I have got two pens."
-        },
-        {
-          "q": "These is my books.",
-          "a": "These are my books."
-        },
-        {
-          "q": "Those boxs are big.",
-          "a": "Those boxes are big."
-        },
-        {
-          "q": "An book is on the desk.",
-          "a": "A book is on the desk."
-        }
-      ]
-    },
-    {
       "id": "lis_tidy",
       "type": "tf",
       "skill": "listening",
@@ -4243,70 +3171,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
         }
       ],
       "listen": 1
-    },
-    {
-      "id": "clorder",
-      "type": "order",
-      "skill": "writing",
-      "title": "Put the words in order.",
-      "items": [
-        {
-          "q": "are / these / my / books",
-          "a": "These are my books."
-        },
-        {
-          "q": "this / what / is / English / in",
-          "a": "What is this in English?"
-        },
-        {
-          "q": "your / open / book / please",
-          "a": "Open your book, please."
-        },
-        {
-          "q": "that / is / bag / your",
-          "a": "Is that your bag?"
-        },
-        {
-          "q": "pens / those / are / blue",
-          "a": "Those pens are blue."
-        },
-        {
-          "q": "a / it's / ruler",
-          "a": "It's a ruler."
-        }
-      ]
-    },
-    {
-      "id": "count",
-      "type": "gap",
-      "skill": "writing",
-      "title": "Write the plural.",
-      "items": [
-        {
-          "q": "There are three ____________. (box)",
-          "a": "boxes"
-        },
-        {
-          "q": "I've got two ____________. (sister)",
-          "a": "sisters"
-        },
-        {
-          "q": "Five ____________ are in the park. (child)",
-          "a": "children"
-        },
-        {
-          "q": "We've got ten ____________. (dictionary)",
-          "a": "dictionaries"
-        },
-        {
-          "q": "Two ____________ are at the door. (man)",
-          "a": "men"
-        },
-        {
-          "q": "I brush my ____________. (tooth)",
-          "a": "teeth"
-        }
-      ]
     },
     {
       "id": "lis_shop",
@@ -4421,74 +3285,13 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
           "a": "(students' own)"
         }
       ]
-    },
-    {
-      "id": "quiz",
-      "type": "choose",
-      "skill": "speaking",
-      "title": "Team quiz! Say the answer first.",
-      "items": [
-        {
-          "q": "one child, two…",
-          "opts": [
-            "childs",
-            "children",
-            "childrens"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "one city, two…",
-          "opts": [
-            "citys",
-            "cities",
-            "cityes"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "___ are my pens. (here)",
-          "opts": [
-            "This",
-            "These",
-            "That"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "one person, two…",
-          "opts": [
-            "persons",
-            "people",
-            "peoples"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "Look at ___ birds! (far)",
-          "opts": [
-            "these",
-            "those",
-            "this"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "one foot, two…",
-          "opts": [
-            "foots",
-            "feet",
-            "feets"
-          ],
-          "a": "b"
-        }
-      ]
     }
   ],
   deck: [
     {
       "layout": "title",
-      "notes": "Lesson 4 (2 hours): plurals and this / that / these / those. Students need the handout."
+      "notes": "⏱️ 1 min · Lesson 4 (1.5 hours): plurals and this / that / these / those. Students need the handout.",
+      "time": 1
     },
     {
       "layout": "list",
@@ -4516,7 +3319,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
           "text": "Revision test: 20 questions at the end"
         }
       ],
-      "notes": "Read the list quickly — 1 minute."
+      "notes": "⏱️ 1 min · Read the list quickly — 1 minute.",
+      "time": 1
     },
     {
       "layout": "questions",
@@ -4541,7 +3345,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
         },
         "What colour is your bag?"
       ],
-      "notes": "Click to show each question, then its answer."
+      "notes": "⏱️ 4 min · Click to show each question, then its answer.",
+      "time": 4
     },
     {
       "layout": "game",
@@ -4550,7 +3355,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
       "emoji": "🎨",
       "minutes": 5,
       "text": "Listen to the colour.\nTouch something of that colour!\nSay: \"It's a red pen!\"",
-      "notes": "Quick revision of Lesson 3."
+      "notes": "⏱️ 5 min · Quick revision of Lesson 3.",
+      "time": 5
     },
     {
       "layout": "words",
@@ -4598,7 +3404,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
           "tr": "far from me"
         }
       ],
-      "notes": "Say each word, students repeat. Ask \"Can you give an example?\" — then click the card to show one."
+      "notes": "⏱️ 4 min · Say each word, students repeat. Ask \"Can you give an example?\" — then click the card to show one.",
+      "time": 4
     },
     {
       "layout": "boxes",
@@ -4619,17 +3426,14 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
         }
       ],
       "foot": "After s, x, ch, sh → + es · consonant + y → ies",
-      "notes": "Count things in the room: one window, two windows…"
-    },
-    {
-      "layout": "exercise",
-      "ex": "plurals",
-      "notes": "Handout exercise 1."
+      "notes": "⏱️ 4 min · Count things in the room: one window, two windows…",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "rules",
-      "notes": "Handout exercise 2."
+      "notes": "⏱️ 4 min · Handout exercise 1.",
+      "time": 4
     },
     {
       "layout": "skill",
@@ -4637,18 +3441,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
       "tag": "LISTENING 1",
       "title": "How many?",
       "listen": 0,
-      "text": "Five people say how many things they have got.\nListen and circle the right answer (handout exercise 3).",
+      "text": "Five people say how many things they have got.\nListen and circle the right answer (handout exercise 2).",
       "tips": [
         "Listen for the number",
         "One or many?",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "lis_count",
-      "notes": "Handout exercise 3 (Listening 1)."
+      "notes": "⏱️ 4 min · Handout exercise 2 (Listening 1).",
+      "time": 4
     },
     {
       "layout": "tiles",
@@ -4664,15 +3470,17 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
         "mouse → mice",
         "fish → fish"
       ],
-      "notes": "Say \"one man\", students say \"two men!\" — faster and faster.",
+      "notes": "⏱️ 4 min · Say \"one man\", students say \"two men!\" — faster and faster.",
       "small": true,
       "cols": 4,
-      "foot": "No \"s\": two mans ✗ → two men ✓"
+      "foot": "No \"s\": two mans ✗ → two men ✓",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "irregular",
-      "notes": "Handout exercise 4."
+      "notes": "⏱️ 6 min · Handout exercise 3.",
+      "time": 6
     },
     {
       "layout": "mistakes",
@@ -4704,12 +3512,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
           "right": "people"
         }
       ],
-      "notes": "Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one."
-    },
-    {
-      "layout": "exercise",
-      "ex": "plodd",
-      "notes": "Handout exercise 5."
+      "notes": "⏱️ 3 min · Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one.",
+      "time": 3
     },
     {
       "layout": "boxes",
@@ -4734,17 +3538,14 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
         }
       ],
       "foot": "What's this? — It's a ruler. · What are these? — They're pencils.",
-      "notes": "Hold things / point at things."
+      "notes": "⏱️ 4 min · Hold things / point at things.",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "demo",
-      "notes": "Handout exercise 6."
-    },
-    {
-      "layout": "exercise",
-      "ex": "clcorrect",
-      "notes": "Handout exercise 7."
+      "notes": "⏱️ 4 min · Handout exercise 4.",
+      "time": 4
     },
     {
       "layout": "skill",
@@ -4752,37 +3553,30 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
       "tag": "LISTENING 2",
       "title": "Tidy up!",
       "listen": 1,
-      "text": "Ben's mum asks him about things in his room.\nListen: true or false? (handout exercise 8)",
+      "text": "Ben's mum asks him about things in his room.\nListen: true or false? (handout exercise 5)",
       "tips": [
         "these / those = many",
         "Whose? Ben's, Kate's, Dad's",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "lis_tidy",
-      "notes": "Handout exercise 8 (Listening 2)."
+      "notes": "⏱️ 4 min · Handout exercise 5 (Listening 2).",
+      "time": 4
     },
     {
       "layout": "game",
-      "tag": "GAME",
+      "tag": "SPEAKING",
       "title": "This or that?",
       "emoji": "👉",
-      "minutes": 6,
+      "minutes": 5,
       "text": "Your partner points at something.\nNear? Say \"This is…\" / \"These are…\"\nFar? Say \"That is…\" / \"Those are…\"\nRight = 1 point!",
-      "notes": "Pairs, then the whole class."
-    },
-    {
-      "layout": "exercise",
-      "ex": "clorder",
-      "notes": "Handout exercise 9."
-    },
-    {
-      "layout": "exercise",
-      "ex": "count",
-      "notes": "Handout exercise 10."
+      "notes": "⏱️ 5 min · Pairs, then the whole class.",
+      "time": 5
     },
     {
       "layout": "skill",
@@ -4790,18 +3584,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
       "tag": "LISTENING 3",
       "title": "At the toy shop",
       "listen": 2,
-      "text": "A boy buys toys in a shop.\nListen and complete (handout exercise 11).",
+      "text": "A boy buys toys in a shop.\nListen and complete (handout exercise 6).",
       "tips": [
         "How much? How many?",
         "these / those",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "lis_shop",
-      "notes": "Handout exercise 11 (Listening 3)."
+      "notes": "⏱️ 4 min · Handout exercise 6 (Listening 3).",
+      "time": 4
     },
     {
       "layout": "skill",
@@ -4811,30 +3607,29 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
       "text": "This is my room. It's small, but I love it! There are two windows and a big bed.\n\nOn my desk there are three books, four pencils and a lamp. These are my favourite books. They're about animals.\n\nUnder the bed there are two boxes. Those boxes are full of old toys. My little brother wants them, but they're my toys!",
       "tips": [
         "How many? Where?",
-        "Read, then do exercises 12 and 13"
+        "Read, then do exercises 7 and 8"
       ],
-      "notes": "Students read silently (3 min)."
+      "notes": "⏱️ 4 min · Students read silently (3 min).",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "room_tf",
-      "notes": "Handout exercise 12."
+      "notes": "⏱️ 4 min · Handout exercise 7.",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "room_q",
-      "notes": "Handout exercise 13."
+      "notes": "⏱️ 6 min · Handout exercise 8.",
+      "time": 6
     },
     {
       "layout": "exercise",
       "ex": "myroom",
-      "notes": "Handout exercise 14.",
-      "minutes": 7
-    },
-    {
-      "layout": "exercise",
-      "ex": "quiz",
-      "notes": "Handout exercise 15 — or a team quiz."
+      "notes": "⏱️ 10 min · Handout exercise 9.",
+      "minutes": 10,
+      "time": 10
     },
     {
       "layout": "finish",
@@ -4846,7 +3641,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
         "I can count things in the room"
       ],
       "foot": "Homework: the revision test 📲 (link from your teacher)",
-      "notes": "Send the revision test link now (Course → Revision test → Copy the link)."
+      "notes": "⏱️ 2 min · Send the revision test link now (Course → Revision test → Copy the link).",
+      "time": 2
     }
   ],
   listen: [
@@ -5058,9 +3854,10 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
 
 /* ---------- Block 1, Lesson 5: An apple, the apple ---------- */
 Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
-  // A 2-hour lesson: many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude (Kokoro voices,
+  // A 1.5-hour lesson (teacher, 2026-11-03: 90 minutes; each slide's minutes are in `time`): many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude (Kokoro voices,
   // audio/course/*.mp3; the computer's own voice reads the text if a file can't play). Generated from a script;
   // the slides (deck) and the handout are both made from `exercises`.
+  minutes: 88,
   goals: [
     "Use a and an: a pen, an apple, an old bag",
     "Use the for a thing we know: the apple, the door",
@@ -5245,68 +4042,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
       ]
     },
     {
-      "id": "athechoose",
-      "type": "choose",
-      "skill": "reading",
-      "title": "Circle the right answer.",
-      "items": [
-        {
-          "q": "Close ___ window, please. (in our classroom)",
-          "opts": [
-            "a",
-            "the",
-            "an"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "I want ___ sandwich.",
-          "opts": [
-            "a",
-            "the",
-            "an"
-          ],
-          "a": "a"
-        },
-        {
-          "q": "My dad is ___ pilot.",
-          "opts": [
-            "a",
-            "an",
-            "the"
-          ],
-          "a": "a"
-        },
-        {
-          "q": "There's a dog in the park. ___ dog is big.",
-          "opts": [
-            "A",
-            "An",
-            "The"
-          ],
-          "a": "c"
-        },
-        {
-          "q": "Is there ___ eraser in your bag?",
-          "opts": [
-            "a",
-            "an",
-            "the"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "What's ___ time?",
-          "opts": [
-            "a",
-            "the",
-            "an"
-          ],
-          "a": "b"
-        }
-      ]
-    },
-    {
       "id": "artcorrect",
       "type": "correct",
       "skill": "writing",
@@ -5362,58 +4097,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
         }
       ],
       "listen": 1
-    },
-    {
-      "id": "artodd",
-      "type": "odd",
-      "skill": "reading",
-      "title": "Which one is different? Circle it.",
-      "items": [
-        {
-          "q": "an apple · an egg · an orange · an banana",
-          "a": "an banana (a banana)"
-        },
-        {
-          "q": "a pen · a book · a umbrella · a desk",
-          "a": "a umbrella (an umbrella)"
-        },
-        {
-          "q": "an actor · an engineer · an doctor · an artist",
-          "a": "an doctor (a doctor)"
-        },
-        {
-          "q": "a red bag · a old bag · a big bag · a new bag",
-          "a": "a old bag (an old bag)"
-        }
-      ]
-    },
-    {
-      "id": "artorder",
-      "type": "order",
-      "skill": "writing",
-      "title": "Put the words in order.",
-      "items": [
-        {
-          "q": "is / the / cat / black / .",
-          "a": "The cat is black."
-        },
-        {
-          "q": "an / I've / orange / got / .",
-          "a": "I've got an orange."
-        },
-        {
-          "q": "teacher / is / she / an / English / .",
-          "a": "She is an English teacher."
-        },
-        {
-          "q": "the / please / open / window / ,",
-          "a": "Open the window, please."
-        },
-        {
-          "q": "a / there / dog / is / .",
-          "a": "There is a dog."
-        }
-      ]
     },
     {
       "id": "lis_cafe",
@@ -5527,38 +4210,6 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
       ]
     },
     {
-      "id": "jobsaan",
-      "type": "gap",
-      "skill": "writing",
-      "title": "Write a or an + the job.",
-      "items": [
-        {
-          "q": "👩‍⚕️ She's ____________.",
-          "a": "a doctor"
-        },
-        {
-          "q": "🧑‍🔧 He's ____________.",
-          "a": "an engineer"
-        },
-        {
-          "q": "🧑‍🎨 She's ____________.",
-          "a": "an artist"
-        },
-        {
-          "q": "👨‍🍳 He's ____________.",
-          "a": "a cook"
-        },
-        {
-          "q": "🧑‍✈️ She's ____________.",
-          "a": "a pilot"
-        },
-        {
-          "q": "🎭 He's ____________.",
-          "a": "an actor"
-        }
-      ]
-    },
-    {
       "id": "mypicture",
       "type": "write",
       "skill": "writing",
@@ -5585,68 +4236,13 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
           "a": "(students' own)"
         }
       ]
-    },
-    {
-      "id": "quiz",
-      "type": "choose",
-      "skill": "speaking",
-      "title": "Team quiz! Say the answer first.",
-      "items": [
-        {
-          "q": "___ umbrella",
-          "opts": [
-            "a",
-            "an"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "___ yellow bag",
-          "opts": [
-            "a",
-            "an"
-          ],
-          "a": "a"
-        },
-        {
-          "q": "Open ___ door, please.",
-          "opts": [
-            "a",
-            "the"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "He's ___ artist.",
-          "opts": [
-            "a",
-            "an"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "I've got a dog. ___ dog is black.",
-          "opts": [
-            "A",
-            "The"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "___ hour",
-          "opts": [
-            "a",
-            "an"
-          ],
-          "a": "b"
-        }
-      ]
     }
   ],
   deck: [
     {
       "layout": "title",
-      "notes": "Lesson 5 (2 hours): a, an and the. Students need the handout."
+      "notes": "⏱️ 1 min · Lesson 5 (1.5 hours): a, an and the. Students need the handout.",
+      "time": 1
     },
     {
       "layout": "list",
@@ -5674,7 +4270,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
           "text": "Revision test: 20 questions at the end"
         }
       ],
-      "notes": "Read the list quickly — 1 minute."
+      "notes": "⏱️ 1 min · Read the list quickly — 1 minute.",
+      "time": 1
     },
     {
       "layout": "questions",
@@ -5699,7 +4296,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
         },
         "How many windows are in our classroom?"
       ],
-      "notes": "Click to show each question, then its answer."
+      "notes": "⏱️ 4 min · Click to show each question, then its answer.",
+      "time": 4
     },
     {
       "layout": "game",
@@ -5708,7 +4306,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
       "emoji": "➕",
       "minutes": 5,
       "text": "Your teacher says \"one box\".\nYou shout \"two boxes!\"\nFastest team gets a point!",
-      "notes": "Quick revision of Lesson 4."
+      "notes": "⏱️ 5 min · Quick revision of Lesson 4.",
+      "time": 5
     },
     {
       "layout": "words",
@@ -5756,7 +4355,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
           "tr": "Look at the picture!"
         }
       ],
-      "notes": "Say each word, students repeat. Ask \"Can you give an example?\" — then click the card to show one."
+      "notes": "⏱️ 4 min · Say each word, students repeat. Ask \"Can you give an example?\" — then click the card to show one.",
+      "time": 4
     },
     {
       "layout": "boxes",
@@ -5777,17 +4377,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
         }
       ],
       "foot": "Listen to the first sound: a umbrella ✗ → an umbrella ✓",
-      "notes": "Say words fast; students answer \"a!\" or \"an!\"."
+      "notes": "⏱️ 4 min · Say words fast; students answer \"a!\" or \"an!\".",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "aan",
-      "notes": "Handout exercise 1."
+      "notes": "⏱️ 6 min · Handout exercise 1.",
+      "time": 6
     },
     {
       "layout": "exercise",
       "ex": "aanadj",
-      "notes": "Handout exercise 2."
+      "notes": "⏱️ 4 min · Handout exercise 2.",
+      "time": 4
     },
     {
       "layout": "skill",
@@ -5801,12 +4404,14 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
         "Where is it?",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "lis_picture",
-      "notes": "Handout exercise 3 (Listening 1)."
+      "notes": "⏱️ 4 min · Handout exercise 3 (Listening 1).",
+      "time": 4
     },
     {
       "layout": "boxes",
@@ -5827,17 +4432,14 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
         }
       ],
       "foot": "First time: a / an · Second time: the",
-      "notes": "Draw a cat on the board: \"This is a cat. The cat is happy.\""
+      "notes": "⏱️ 4 min · Draw a cat on the board: \"This is a cat. The cat is happy.\"",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "athe",
-      "notes": "Handout exercise 4."
-    },
-    {
-      "layout": "exercise",
-      "ex": "athechoose",
-      "notes": "Handout exercise 5."
+      "notes": "⏱️ 5 min · Handout exercise 4.",
+      "time": 5
     },
     {
       "layout": "mistakes",
@@ -5869,12 +4471,14 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
           "right": "I've got a cat."
         }
       ],
-      "notes": "Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one."
+      "notes": "⏱️ 3 min · Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one.",
+      "time": 3
     },
     {
       "layout": "exercise",
       "ex": "artcorrect",
-      "notes": "Handout exercise 6."
+      "notes": "⏱️ 6 min · Handout exercise 5.",
+      "time": 6
     },
     {
       "layout": "skill",
@@ -5882,37 +4486,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
       "tag": "LISTENING 2",
       "title": "My pets",
       "listen": 1,
-      "text": "A boy talks about his pets.\nListen and complete (handout exercise 7).",
+      "text": "A boy talks about his pets.\nListen and complete (handout exercise 6).",
       "tips": [
         "Names and colours",
         "a dog … the dog …",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "lis_pets",
-      "notes": "Handout exercise 7 (Listening 2)."
-    },
-    {
-      "layout": "game",
-      "tag": "GAME",
-      "title": "Picture memory",
-      "emoji": "🖼️",
-      "minutes": 6,
-      "text": "Look at a picture for 20 seconds.\nClose your eyes!\nSay: \"There is a dog. The dog is brown.\"\nRight = 1 point!",
-      "notes": "Pairs or teams. Use any picture from the book or the internet."
-    },
-    {
-      "layout": "exercise",
-      "ex": "artodd",
-      "notes": "Handout exercise 8."
-    },
-    {
-      "layout": "exercise",
-      "ex": "artorder",
-      "notes": "Handout exercise 9."
+      "notes": "⏱️ 4 min · Handout exercise 6 (Listening 2).",
+      "time": 4
     },
     {
       "layout": "skill",
@@ -5920,18 +4507,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
       "tag": "LISTENING 3",
       "title": "At the café",
       "listen": 2,
-      "text": "A man buys food and a drink.\nListen and circle the right answer (handout exercise 10).",
+      "text": "A man buys food and a drink.\nListen and circle the right answer (handout exercise 7).",
       "tips": [
         "What does he want?",
         "How much?",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "lis_cafe",
-      "notes": "Handout exercise 10 (Listening 3)."
+      "notes": "⏱️ 4 min · Handout exercise 7 (Listening 3).",
+      "time": 4
     },
     {
       "layout": "skill",
@@ -5941,44 +4530,29 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
       "text": "My name's Emma. Today is my first day at a new school. I'm a bit nervous!\n\nThe school is big and it's very old. My classroom is on the first floor. There's a big window and a whiteboard.\n\nMy English teacher is Mrs Lee. She's nice and funny. In the class there's a girl with an orange bag. Her name's Sophie. The orange bag is new, and it's beautiful! Now Sophie is my friend.",
       "tips": [
         "a / an / the",
-        "Read, then do exercises 11 and 12"
+        "Read, then do exercises 8 and 9"
       ],
-      "notes": "Students read silently (3 min)."
+      "notes": "⏱️ 4 min · Students read silently (3 min).",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "school_tf",
-      "notes": "Handout exercise 11."
+      "notes": "⏱️ 4 min · Handout exercise 8.",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "school_q",
-      "notes": "Handout exercise 12."
-    },
-    {
-      "layout": "exercise",
-      "ex": "jobsaan",
-      "notes": "Handout exercise 13."
-    },
-    {
-      "layout": "game",
-      "tag": "SPEAKING",
-      "title": "Describe and draw",
-      "emoji": "✏️",
-      "minutes": 8,
-      "text": "Student A describes a picture:\n\"There is a house. The house is small…\"\nStudent B draws it.\nThen compare!",
-      "notes": "Pairs. Then swap."
+      "notes": "⏱️ 6 min · Handout exercise 9.",
+      "time": 6
     },
     {
       "layout": "exercise",
       "ex": "mypicture",
-      "notes": "Handout exercise 14.",
-      "minutes": 8
-    },
-    {
-      "layout": "exercise",
-      "ex": "quiz",
-      "notes": "Handout exercise 15 — or a team quiz."
+      "notes": "⏱️ 10 min · Handout exercise 10.",
+      "minutes": 10,
+      "time": 10
     },
     {
       "layout": "finish",
@@ -5990,7 +4564,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
         "I can talk about a picture"
       ],
       "foot": "Homework: the revision test 📲 (link from your teacher)",
-      "notes": "Send the revision test link now (Course → Revision test → Copy the link)."
+      "notes": "⏱️ 2 min · Send the revision test link now (Course → Revision test → Copy the link).",
+      "time": 2
     }
   ],
   listen: [
@@ -6202,7 +4777,7 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
 
 /* ---------- Block 1: Review 1 ---------- */
 COURSE_BEGINNER.blocks[0].review = {
-  // The review lesson (2 hours): many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude (Kokoro voices,
+  // The review lesson (1.5 hours) (teacher, 2026-11-03: 90 minutes; each slide's minutes are in `time`): many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude (Kokoro voices,
   // audio/course/*.mp3; the computer's own voice reads the text if a file can't play). Generated from a script;
   // the slides (deck) and the handout are both made from `exercises`.
   title: "Review 1",
@@ -6213,6 +4788,7 @@ COURSE_BEGINNER.blocks[0].review = {
     "writing",
     "speaking"
   ],
+  minutes: 88,
   goals: [
     "Practise everything from Lessons 1–5 with games and exercises",
     "Find what to practise again before the exam",
@@ -6239,66 +4815,6 @@ COURSE_BEGINNER.blocks[0].review = {
     }
   ],
   exercises: [
-    {
-      "id": "r_letters",
-      "type": "odd",
-      "skill": "listening",
-      "title": "Lesson 1: Which letter has a different sound? Circle it.",
-      "items": [
-        {
-          "q": "A   J   K   E",
-          "a": "E"
-        },
-        {
-          "q": "B   D   F   V",
-          "a": "F"
-        },
-        {
-          "q": "I   Y   E",
-          "a": "E"
-        },
-        {
-          "q": "M   N   S   T",
-          "a": "T"
-        },
-        {
-          "q": "Q   W   U   R",
-          "a": "R"
-        }
-      ]
-    },
-    {
-      "id": "r_numbers",
-      "type": "write",
-      "skill": "writing",
-      "title": "Lesson 1: Write the numbers in words.",
-      "items": [
-        {
-          "q": "14",
-          "a": "fourteen"
-        },
-        {
-          "q": "40",
-          "a": "forty"
-        },
-        {
-          "q": "19",
-          "a": "nineteen"
-        },
-        {
-          "q": "90",
-          "a": "ninety"
-        },
-        {
-          "q": "72",
-          "a": "seventy-two"
-        },
-        {
-          "q": "100",
-          "a": "one hundred"
-        }
-      ]
-    },
     {
       "id": "r_nat",
       "type": "match",
@@ -6738,74 +5254,13 @@ COURSE_BEGINNER.blocks[0].review = {
           "a": "(students' own)"
         }
       ]
-    },
-    {
-      "id": "quiz",
-      "type": "choose",
-      "skill": "speaking",
-      "title": "Big team quiz! Say the answer first.",
-      "items": [
-        {
-          "q": "W is said…",
-          "opts": [
-            "\"wee\"",
-            "\"double U\"",
-            "\"vee\""
-          ],
-          "a": "b"
-        },
-        {
-          "q": "Japan →",
-          "opts": [
-            "Japanish",
-            "Japanese",
-            "Japan"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "They ___ from Spain.",
-          "opts": [
-            "is",
-            "are",
-            "am"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "one woman, two…",
-          "opts": [
-            "womans",
-            "women",
-            "womens"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "She's ___ artist.",
-          "opts": [
-            "a",
-            "an",
-            "the"
-          ],
-          "a": "b"
-        },
-        {
-          "q": "___ are my books. (here)",
-          "opts": [
-            "This",
-            "These",
-            "Those"
-          ],
-          "a": "b"
-        }
-      ]
     }
   ],
   deck: [
     {
       "layout": "title",
-      "notes": "The review lesson (2 hours): games and practice for Lessons 1–5. Note which exercises are hard and practise them again. Students need the handout."
+      "notes": "⏱️ 1 min · The review lesson (1.5 hours): games and practice for Lessons 1–5. Note which exercises are hard and practise them again. Students need the handout.",
+      "time": 1
     },
     {
       "layout": "list",
@@ -6833,7 +5288,8 @@ COURSE_BEGINNER.blocks[0].review = {
           "text": "Lesson 5: a, an, the"
         }
       ],
-      "notes": "Ask: \"Which lesson was easy? Which was difficult?\""
+      "notes": "⏱️ 1 min · Ask: \"Which lesson was easy? Which was difficult?\"",
+      "time": 1
     },
     {
       "layout": "questions",
@@ -6849,16 +5305,18 @@ COURSE_BEGINNER.blocks[0].review = {
         },
         "What colour is your bag?"
       ],
-      "notes": "Ask around the class: everyone answers one question."
+      "notes": "⏱️ 4 min · Ask around the class: everyone answers one question.",
+      "time": 4
     },
     {
       "layout": "game",
       "tag": "WARM-UP GAME",
       "title": "Board race",
       "emoji": "🏃",
-      "minutes": 8,
+      "minutes": 6,
       "text": "Two teams. Listen to the word.\nRun and write it on the board, correctly!\n✅ = 1 point\nWords from all five lessons!",
-      "notes": "Words: Japanese, children, umbrella, engineer, forty, purple, dictionaries."
+      "notes": "⏱️ 6 min · Words: Japanese, children, umbrella, engineer, forty, purple, dictionaries.",
+      "time": 6
     },
     {
       "layout": "words",
@@ -6906,43 +5364,14 @@ COURSE_BEGINNER.blocks[0].review = {
           "tr": "an apple"
         }
       ],
-      "notes": "Students say each word and an example, then click to check."
-    },
-    {
-      "layout": "boxes",
-      "tag": "REVIEW · LESSON 1",
-      "title": "Hello, numbers & countries",
-      "boxes": [
-        {
-          "head": "🔤 Spelling",
-          "body": "How do you spell it?\nB - E - double L - A"
-        },
-        {
-          "head": "🔢 Numbers",
-          "body": "13 thirTEEN · 30 THIRty\n40 forty · 90 ninety"
-        },
-        {
-          "head": "🌍 Countries",
-          "body": "Spain → Spanish\nJapan → Japanese"
-        }
-      ],
-      "foot": "Where are you from? — I'm from…",
-      "notes": "Quick drill: spell three names, say three numbers."
-    },
-    {
-      "layout": "exercise",
-      "ex": "r_letters",
-      "notes": "Handout exercise 1."
-    },
-    {
-      "layout": "exercise",
-      "ex": "r_numbers",
-      "notes": "Handout exercise 2."
+      "notes": "⏱️ 4 min · Students say each word and an example, then click to check.",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "r_nat",
-      "notes": "Handout exercise 3."
+      "notes": "⏱️ 4 min · Handout exercise 1.",
+      "time": 4
     },
     {
       "layout": "skill",
@@ -6950,70 +5379,32 @@ COURSE_BEGINNER.blocks[0].review = {
       "tag": "LISTENING 1",
       "title": "At the sports club",
       "listen": 0,
-      "text": "Oliver joins a sports club.\nListen and complete the form (handout exercise 4):\nsurname, age, country, phone, favourite colour.",
+      "text": "Oliver joins a sports club.\nListen and complete the form (handout exercise 2):\nsurname, age, country, phone, favourite colour.",
       "tips": [
         "The surname is spelled slowly",
         "Numbers: age and phone",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "lis_rev1",
-      "notes": "Handout exercise 4 (Listening 1)."
-    },
-    {
-      "layout": "boxes",
-      "tag": "REVIEW · LESSON 2",
-      "title": "be: all forms",
-      "boxes": [
-        {
-          "head": "🧩 be",
-          "body": "I am · he / she / it is\nyou / we / they are"
-        },
-        {
-          "head": "🚫 Negative",
-          "body": "I'm not · he isn't\nthey aren't"
-        },
-        {
-          "head": "❓ Questions",
-          "body": "Are you…? — Yes, I am.\nIs he…? — No, he isn't."
-        }
-      ],
-      "foot": "he / she / it → IS · you / we / they → ARE",
-      "notes": "Students ask each other \"Are you…?\" questions."
+      "notes": "⏱️ 4 min · Handout exercise 2 (Listening 1).",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "r_be",
-      "notes": "Handout exercise 5."
-    },
-    {
-      "layout": "boxes",
-      "tag": "REVIEW · LESSON 3",
-      "title": "Things, colours & jobs",
-      "boxes": [
-        {
-          "head": "🎒 Things",
-          "body": "a pen · a ruler\na notebook · a dictionary"
-        },
-        {
-          "head": "🎨 Colours",
-          "body": "red · blue · green\npurple · pink · grey"
-        },
-        {
-          "head": "🧑‍⚕️ Jobs",
-          "body": "doctor · teacher · pilot\nengineer · cook · farmer"
-        }
-      ],
-      "foot": "What colour is it? — It's blue.",
-      "notes": "Point at things; students say the thing and its colour."
+      "notes": "⏱️ 5 min · Handout exercise 3.",
+      "time": 5
     },
     {
       "layout": "exercise",
       "ex": "r_jobs",
-      "notes": "Handout exercise 6."
+      "notes": "⏱️ 4 min · Handout exercise 4.",
+      "time": 4
     },
     {
       "layout": "skill",
@@ -7021,75 +5412,38 @@ COURSE_BEGINNER.blocks[0].review = {
       "tag": "LISTENING 2",
       "title": "A class photo",
       "listen": 1,
-      "text": "Two friends look at a class photo.\nListen: true or false? (handout exercise 7)",
+      "text": "Two friends look at a class photo.\nListen: true or false? (handout exercise 5)",
       "tips": [
         "Who is it?",
         "Where from? What job?",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "lis_rev2",
-      "notes": "Handout exercise 7 (Listening 2)."
-    },
-    {
-      "layout": "boxes",
-      "tag": "REVIEW · LESSON 4",
-      "title": "One pen, two pens",
-      "boxes": [
-        {
-          "head": "➕ Plurals",
-          "body": "pens · boxes\ncities · dictionaries"
-        },
-        {
-          "head": "🧑‍🤝‍🧑 Special",
-          "body": "men · women\nchildren · people"
-        },
-        {
-          "head": "👉 this / these",
-          "body": "near: this, these\nfar: that, those"
-        }
-      ],
-      "foot": "What are these? — They're pencils.",
-      "notes": "Point at things; students say the sentence."
+      "notes": "⏱️ 4 min · Handout exercise 5 (Listening 2).",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "r_class",
-      "notes": "Handout exercise 8."
+      "notes": "⏱️ 5 min · Handout exercise 6.",
+      "time": 5
     },
     {
       "layout": "exercise",
       "ex": "r_demo",
-      "notes": "Handout exercise 9."
-    },
-    {
-      "layout": "boxes",
-      "tag": "REVIEW · LESSON 5",
-      "title": "An apple, the apple",
-      "boxes": [
-        {
-          "head": "🍎 a / an",
-          "body": "a pen · an apple\nan old bag"
-        },
-        {
-          "head": "👉 the",
-          "body": "a cat → the cat\nOpen the door."
-        },
-        {
-          "head": "🧑‍⚕️ Jobs",
-          "body": "He's a pilot.\nShe's an engineer."
-        }
-      ],
-      "foot": "First time: a / an · Second time: the",
-      "notes": "Draw something; students say \"a …\" then \"the …\"."
+      "notes": "⏱️ 4 min · Handout exercise 7.",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "r_athe",
-      "notes": "Handout exercise 10."
+      "notes": "⏱️ 5 min · Handout exercise 8.",
+      "time": 5
     },
     {
       "layout": "skill",
@@ -7097,18 +5451,20 @@ COURSE_BEGINNER.blocks[0].review = {
       "tag": "LISTENING 3",
       "title": "At the school shop",
       "listen": 2,
-      "text": "A girl buys things at the school shop.\nListen and circle the right answer (handout exercise 11).",
+      "text": "A girl buys things at the school shop.\nListen and circle the right answer (handout exercise 9).",
       "tips": [
         "How many? What colour?",
         "How much?",
         "You hear it two times"
       ],
-      "notes": "Play twice."
+      "notes": "⏱️ 1 min · Play twice.",
+      "time": 1
     },
     {
       "layout": "exercise",
       "ex": "lis_rev3",
-      "notes": "Handout exercise 11 (Listening 3)."
+      "notes": "⏱️ 4 min · Handout exercise 9 (Listening 3).",
+      "time": 4
     },
     {
       "layout": "mistakes",
@@ -7140,7 +5496,8 @@ COURSE_BEGINNER.blocks[0].review = {
           "right": "I'm 12."
         }
       ],
-      "notes": "Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one."
+      "notes": "⏱️ 3 min · Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one.",
+      "time": 3
     },
     {
       "layout": "skill",
@@ -7150,26 +5507,30 @@ COURSE_BEGINNER.blocks[0].review = {
       "text": "Hi Jack! My name's Sophie and I'm your new e-friend! I'm twelve and I'm from Paris, in France, so I'm French.\n\nMy mum is a teacher and my dad is an engineer. My favourite colour is green.\n\nIn my school bag there are three notebooks, a green pencil case and an English dictionary. It's old, but it's good!\n\nMy best friend is Chloe. That's C-H-L-O-E. She isn't French, she's Italian. Write soon! Sophie",
       "tips": [
         "Name · age · country · family · school bag",
-        "Read, then do exercise 12"
+        "Read, then do exercise 10"
       ],
-      "notes": "Students read silently (4 min)."
+      "notes": "⏱️ 4 min · Students read silently (4 min).",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "mail_tf",
-      "notes": "Handout exercise 12."
+      "notes": "⏱️ 4 min · Handout exercise 10.",
+      "time": 4
     },
     {
       "layout": "exercise",
       "ex": "findwho",
-      "notes": "Handout exercise 13: students walk and ask.",
-      "minutes": 8
+      "notes": "⏱️ 6 min · Handout exercise 11: students walk and ask.",
+      "minutes": 6,
+      "time": 6
     },
     {
       "layout": "exercise",
       "ex": "reply",
-      "notes": "Handout exercise 14: exam practice for the writing part.",
-      "minutes": 10
+      "notes": "⏱️ 10 min · Handout exercise 12: exam practice for the writing part.",
+      "minutes": 10,
+      "time": 10
     },
     {
       "layout": "list",
@@ -7197,12 +5558,8 @@ COURSE_BEGINNER.blocks[0].review = {
           "text": "Writing on paper: \"About me\", 40–60 words"
         }
       ],
-      "notes": "Answer students' questions about the exam."
-    },
-    {
-      "layout": "exercise",
-      "ex": "quiz",
-      "notes": "Handout exercise 15: the big team quiz."
+      "notes": "⏱️ 1 min · Answer students' questions about the exam.",
+      "time": 1
     },
     {
       "layout": "finish",
@@ -7214,7 +5571,8 @@ COURSE_BEGINNER.blocks[0].review = {
         "I'm ready for the exam!"
       ],
       "foot": "Homework: the review test 📲 (30 questions), then the exam!",
-      "notes": "Send the review test link now (Course → Review test → Copy the link)."
+      "notes": "⏱️ 2 min · Send the review test link now (Course → Review test → Copy the link).",
+      "time": 2
     }
   ],
   listen: [
@@ -7525,7 +5883,7 @@ COURSE_BEGINNER.blocks[0].exam = {
     "writing"
   ],
   "keepOrder": true,
-  "intro": "Grammar, listening and reading are one online test (students open the link and enter their ID; it's marked automatically): 10 grammar + 15 listening (3 recordings × 5 questions) + 10 reading = 35. Writing is on paper: you mark it out of 10 and type the marks below. Total: 35 + 10 = 45.",
+  "intro": "Grammar, listening and reading are one online test (students open the link and enter their ID; it's marked automatically): 10 grammar + 15 listening (3 recordings × 5 questions) + 10 reading = 35. Writing is on paper: you mark it out of 10 and type the marks below. Total: 35 + 10 = 45. No speaking part in Blocks 1 and 2.",
   "writing": {
     "max": 10
   },
