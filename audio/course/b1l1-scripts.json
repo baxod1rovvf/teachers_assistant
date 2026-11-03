@@ -1,1 +1,208 @@
-[{"label": "Listening 1 \u2014 Spell your name (5 people)", "src": "audio/course/b1l1-listening-1.mp3", "lines": [["bf_emma", "Listening one. Spell your name. Listen and write the names."], ["bf_alice", "Hello! What's your name?"], ["bf_lily", "Kamila."], ["bf_alice", "How do you spell it?"], ["bf_lily", "K. A. M. I. L. A."], ["bf_alice", "And what's your name?"], ["bm_george", "Jasur."], ["bf_alice", "How do you spell it?"], ["bm_george", "J. A. S. U. R."], ["bf_alice", "Hello! Are you the teacher?"], ["bm_lewis", "Yes, I am. I'm Mr Green."], ["bf_alice", "How do you spell Green?"], ["bm_lewis", "G. R. double E. N."], ["bf_alice", "Next, please. What's your name?"], ["bm_daniel", "Bobur."], ["bf_alice", "Can you spell it, please?"], ["bm_daniel", "B. O. B. U. R."], ["bf_alice", "And you?"], ["bf_isabella", "I'm Lizzy."], ["bf_alice", "How do you spell it?"], ["bf_isabella", "L. I. double Z. Y."], ["bf_alice", "Thank you, everyone!"]]}, {"label": "Listening 2 \u2014 Numbers (5 people)", "src": "audio/course/b1l1-listening-2.mp3", "lines": [["bf_emma", "Listening two. Listen and circle the right number."], ["bf_emma", "Number one."], ["bm_george", "Hi, I'm Tom. I'm thirteen years old."], ["bf_emma", "Number two."], ["bm_george", "This is my grandmother. She's seventy-two."], ["bf_emma", "Number three."], ["bf_lily", "I'm Sara. There are fifteen students in my class."], ["bf_emma", "Number four."], ["bm_daniel", "My name's Ben. I go to school on bus number forty-eight."], ["bf_emma", "Number five."], ["bf_alice", "Our school is big. It has ninety computers!"]]}, {"label": "Listening 3 \u2014 A phone call to an English school", "src": "audio/course/b1l1-listening-3.mp3", "lines": [["bf_emma", "Listening three. A phone call. Listen and complete."], ["bf_alice", "Hello, Sunrise English School."], ["bf_isabella", "Hello! I want English lessons for my son."], ["bf_alice", "Of course. What's his name?"], ["bf_isabella", "Daniel Brooks."], ["bf_alice", "How do you spell Brooks?"], ["bf_isabella", "B. R. double O. K. S."], ["bf_alice", "Thank you. And how old is Daniel?"], ["bf_isabella", "He's twelve."], ["bf_alice", "Twelve. OK. What's your phone number?"], ["bf_isabella", "It's oh double seven, four double five, two oh one."], ["bf_alice", "Oh double seven, four double five, two oh one. Great. The lesson is in room fourteen."], ["bf_isabella", "Room fourteen. Thank you! Goodbye."], ["bf_alice", "Goodbye!"]]}]
+[
+ {
+  "label": "Listening 1 — Spell your name (5 people)",
+  "src": "audio/course/b1l1-listening-1.mp3",
+  "lines": [
+   [
+    "bf_emma",
+    "Listening one. Spell your name. Listen and write the names."
+   ],
+   [
+    "bf_alice",
+    "Hello! What's your name?"
+   ],
+   [
+    "bf_lily",
+    "Emma."
+   ],
+   [
+    "bf_alice",
+    "How do you spell it?"
+   ],
+   [
+    "bf_lily",
+    "E. double M. A."
+   ],
+   [
+    "bf_alice",
+    "And what's your name?"
+   ],
+   [
+    "bm_george",
+    "Jack."
+   ],
+   [
+    "bf_alice",
+    "How do you spell it?"
+   ],
+   [
+    "bm_george",
+    "J. A. C. K."
+   ],
+   [
+    "bf_alice",
+    "Hello! Are you the teacher?"
+   ],
+   [
+    "bm_lewis",
+    "Yes, I am. I'm Mr Green."
+   ],
+   [
+    "bf_alice",
+    "How do you spell Green?"
+   ],
+   [
+    "bm_lewis",
+    "G. R. double E. N."
+   ],
+   [
+    "bf_alice",
+    "Next, please. What's your name?"
+   ],
+   [
+    "bf_isabella",
+    "Sophie."
+   ],
+   [
+    "bf_alice",
+    "Can you spell it, please?"
+   ],
+   [
+    "bf_isabella",
+    "S. O. P. H. I. E."
+   ],
+   [
+    "bf_alice",
+    "And you?"
+   ],
+   [
+    "bf_lily",
+    "I'm Lizzy."
+   ],
+   [
+    "bf_alice",
+    "How do you spell it?"
+   ],
+   [
+    "bf_lily",
+    "L. I. double Z. Y."
+   ],
+   [
+    "bf_alice",
+    "Thank you, everyone!"
+   ]
+  ]
+ },
+ {
+  "label": "Listening 2 — Numbers (5 people)",
+  "src": "audio/course/b1l1-listening-2.mp3",
+  "lines": [
+   [
+    "bf_emma",
+    "Listening two. Listen and circle the right number."
+   ],
+   [
+    "bf_emma",
+    "Number one."
+   ],
+   [
+    "bm_george",
+    "Hi, I'm Tom. I'm thirteen years old."
+   ],
+   [
+    "bf_emma",
+    "Number two."
+   ],
+   [
+    "bm_george",
+    "This is my grandmother. She's seventy-two."
+   ],
+   [
+    "bf_emma",
+    "Number three."
+   ],
+   [
+    "bf_lily",
+    "I'm Sara. There are fifteen students in my class."
+   ],
+   [
+    "bf_emma",
+    "Number four."
+   ],
+   [
+    "bm_daniel",
+    "My name's Ben. I go to school on bus number forty-eight."
+   ],
+   [
+    "bf_emma",
+    "Number five."
+   ],
+   [
+    "bf_alice",
+    "Our school is big. It has ninety computers!"
+   ]
+  ]
+ },
+ {
+  "label": "Listening 3 — A phone call to an English school",
+  "src": "audio/course/b1l1-listening-3.mp3",
+  "lines": [
+   [
+    "bf_emma",
+    "Listening three. A phone call. Listen and complete."
+   ],
+   [
+    "bf_alice",
+    "Hello, Sunrise English School."
+   ],
+   [
+    "bf_isabella",
+    "Hello! I want English lessons for my son."
+   ],
+   [
+    "bf_alice",
+    "Of course. What's his name?"
+   ],
+   [
+    "bf_isabella",
+    "Daniel Brooks."
+   ],
+   [
+    "bf_alice",
+    "How do you spell Brooks?"
+   ],
+   [
+    "bf_isabella",
+    "B. R. double O. K. S."
+   ],
+   [
+    "bf_alice",
+    "Thank you. And how old is Daniel?"
+   ],
+   [
+    "bf_isabella",
+    "He's twelve."
+   ],
+   [
+    "bf_alice",
+    "Twelve. OK. What's your phone number?"
+   ],
+   [
+    "bf_isabella",
+    "It's oh double seven, four double five, two oh one."
+   ],
+   [
+    "bf_alice",
+    "Oh double seven, four double five, two oh one. Great. The lesson is in room fourteen."
+   ],
+   [
+    "bf_isabella",
+    "Room fourteen. Thank you! Goodbye."
+   ],
+   [
+    "bf_alice",
+    "Goodbye!"
+   ]
+  ]
+ }
+]

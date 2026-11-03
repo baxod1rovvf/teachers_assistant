@@ -546,6 +546,10 @@ real students' names or results into the repository (it is public).
   file (Teach mode, Listening card), the computer's voice reads `text` if it can't. Claude can't listen to them — the teacher should
   play each once. The other lessons get the same treatment when the teacher approves Lesson 1. The l1 content is generated from a
   script (Python dict → JSON in course-data.js): edit the JSON there directly.
+  **Teacher's rules for course content (2026-11-03): no Uzbek names and no Uzbek language anywhere** (English names and places;
+  the lead-in cards show an English example on click, not a translation — a test checks the course data and the audio scripts),
+  and **spelling in recordings is slow**: a line like "E. double M. A." is said letter by letter, 1.1 s after each letter
+  (`SPELLING` in tools/make-course-audio.py); numbers with "oh / double" are read slower (0.76).
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
   too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except

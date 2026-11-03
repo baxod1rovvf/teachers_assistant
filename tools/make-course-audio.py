@@ -4,6 +4,7 @@
 #   curl -LO https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.int8.onnx  (save as kokoro.onnx)
 #   curl -LO https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin        (save as voices.bin)
 # Run:  ./venv/bin/python tools/make-course-audio.py <folder with kokoro.onnx + voices.bin> audio/course/b1l1-scripts.json audio/course
+# Spelled names (a line like "E. double M. A.") are said letter by letter with long pauses.
 # A scripts file: [{ "src": "audio/course/….mp3", "lines": [[voice, text], …] }] — bf_* / bm_* are British voices; letters are
 # written "K. A. M." so each is said on its own. Needs ffmpeg. Keep the "text" in course-data.js's `listen` in step.
 # Makes the course's listening audio with Kokoro (Apache-2.0): one voice per speaker, pauses between lines,
@@ -13,14 +14,28 @@ from kokoro_onnx import Kokoro
 model_dir, spec_file, out_dir = sys.argv[1], sys.argv[2], sys.argv[3]
 k = Kokoro(model_dir + '/kokoro.onnx', model_dir + '/voices.bin')
 spec = json.load(open(spec_file))
+SPELLING = re.compile(r'^\s*(?:(?:double )?[A-Z]\.\s*)+$')            # "E. double M. A."
+def say(text, voice, speed):
+    ph = k.tokenizer.phonemize(text, 'en-gb')
+    ph = re.sub(r'ˈ([^\sˈˌ,.!?]*?)tiːn', r'\1tˈiːn', ph)                # thirTEEN, fourTEEN…
+    return k.create(ph, voice=voice, speed=speed, lang='en-gb', is_phonemes=True)
 for item in spec:
     parts, sr = [], 24000
     for i, (voice, text) in enumerate(item['lines']):
-        ph = k.tokenizer.phonemize(text, 'en-gb')
-        ph = re.sub(r'ˈ([^\sˈˌ,.!?]*?)tiːn', r'\1tˈiːn', ph)          # thirTEEN, fourTEEN…
-        audio, sr = k.create(ph, voice=voice, speed=0.88, lang='en-gb', is_phonemes=True)
+        letters = re.findall(r'(?:double )?[A-Z]', text) if SPELLING.match(text) else None
+        if letters:
+            # spelling, slowly (teacher, 2026-11-03: beginners must have time to write): each letter on its own,
+            # a long pause after each one
+            for j, letter in enumerate(letters):
+                audio, sr = say(letter, voice, 0.8)
+                parts.append(audio)
+                parts.append(np.zeros(int(sr * (1.6 if j == len(letters) - 1 else 1.1)), dtype=audio.dtype))
+            continue
+        # numbers ("oh nine one, double five…") a little slower than the rest
+        speed = 0.76 if re.search(r'\b(oh|double)\b', text) else 0.85
+        audio, sr = say(text, voice, speed)
         parts.append(audio)
-        gap = 1.4 if i == 0 or voice == 'bf_emma' else 0.7                  # a longer pause after the narrator
+        gap = 1.4 if i == 0 or voice == 'bf_emma' else 0.8                  # a longer pause after the narrator
         parts.append(np.zeros(int(sr * gap), dtype=audio.dtype))
     wav = out_dir + '/tmp.wav'
     sf.write(wav, np.concatenate(parts), sr)

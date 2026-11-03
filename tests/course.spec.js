@@ -91,8 +91,8 @@ test('a lesson: mark it taught; the handout has exactly the exercises the slides
   await expect(popup.locator('section.ex')).toHaveCount(onSlides.length);
   const onPaper = await popup.locator('section.ex').evaluateAll(l => l.map(sec => Array.from(sec.querySelectorAll('.items > div, .match > div:first-child > div')).map(d => d.textContent.replace(/^\d+\. /, '').replace(/(  →  _+|   _{4})$/, ''))));
   expect(onPaper).toEqual(onSlides);
-  await expect(popup.locator('.teacher')).toContainText('Exercise 3: 1 Kamila · 2 Jasur · 3 Green · 4 Bobur · 5 Lizzy');
-  await expect(popup.locator('.teacher .script').first()).toContainText('B: K. A. M. I. L. A.');   // the listening scripts, with who speaks
+  await expect(popup.locator('.teacher')).toContainText('Exercise 3: 1 Emma · 2 Jack · 3 Green · 4 Sophie · 5 Lizzy');
+  await expect(popup.locator('.teacher .script').first()).toContainText('B: E. double M. A.');   // the listening scripts, with who speaks
   await expect(popup.locator('.match')).toHaveCount(1);
   expect(errors).toEqual([]);
 });
@@ -305,4 +305,20 @@ test('the exam: the online part keeps its order (grammar → listening → readi
   await page.locator('.course-play').first().click();
   await page.waitForTimeout(300);
   expect(errors).toEqual([]);
+});
+
+test('the course has no Uzbek names or Uzbek words (teacher, 2026-11-03) — only English', async () => {
+  const fs = require('fs'), path = require('path');
+  const files = ['js/course-data.js', 'audio/course/b1l1-scripts.json'].map(f => fs.readFileSync(path.join(__dirname, '..', f), 'utf8'));
+  const uzbek = /Uzbek|Tashkent|Samarkand|Bukhara|Kamila|Jasur|Bobur|Nodira|Karimov|Aziz|Lola\b|Malika|Rustam|Laylo|Jamol|Bekzod|Sardor|Nilufar|Madina|Timur|Dilnoza|Karim\b|\bAli\b|harf|raqam|unli tovush|telefon|ikki marta/;
+  files.forEach(t => expect(t.match(uzbek)).toBeNull());
+});
+
+test('in the recordings a spelled name is said letter by letter, slowly', async () => {
+  const fs = require('fs'), path = require('path');
+  const maker = fs.readFileSync(path.join(__dirname, '../tools/make-course-audio.py'), 'utf8');
+  expect(maker).toMatch(/SPELLING = re\.compile/);
+  const scripts = JSON.parse(fs.readFileSync(path.join(__dirname, '../audio/course/b1l1-scripts.json'), 'utf8'));
+  const spelled = scripts.flatMap(x => x.lines.map(l => l[1])).filter(t => /^\s*(?:(?:double )?[A-Z]\.\s*)+$/.test(t));
+  expect(spelled.length).toBeGreaterThanOrEqual(6);   // five names in Listening 1, one in Listening 3
 });
