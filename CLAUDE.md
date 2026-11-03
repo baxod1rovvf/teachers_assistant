@@ -536,6 +536,16 @@ real students' names or results into the repository (it is public).
   **Exercises live once in `lesson.exercises`**: the exercise slides (answers hidden) and the handout (`courseExerciseHandout`) are
   both made from them. Only **B1 L1** is redone this way so far (teacher: "if I say good you'll change the other 6"); L2–L5, review
   and exam still have simple `slides` (shown as editable slides). `tests/course.spec.js`.
+  **Lesson 1 = a 2-hour lesson (teacher, 2026-11-03: "teachers should teach 2 hours with one lesson… different types of exercises…
+  listening should be 3, each 5 questions, make the audio yourself")**: 35 slides, 15 exercises of 8 kinds (`type`: gap, choose
+  (a/b/c), tf, match (right column a–z sorted), order, odd, correct, write — shown by `courseExQ`/`courseExA` the same on slides and
+  handout; "(students' own)" answers show no answer chip), 3 listenings × 5 questions, reading (cards side by side), speaking/writing
+  tasks, games with timers (`game` layout), `tiles` layout (alphabet, 0–20). **Listening audio = real recordings**, made by Claude with
+  Kokoro (open voices, Apache-2.0; `tools/make-course-audio.py`, scripts in `audio/course/b1l1-scripts.json`; one voice per speaker;
+  the -teen stress is moved onto "-TEEN" in the phonemes): `listen[i] = { label, src: 'audio/course/…mp3', text, script }`; 🔊 plays the
+  file (Teach mode, Listening card), the computer's voice reads `text` if it can't. Claude can't listen to them — the teacher should
+  play each once. The other lessons get the same treatment when the teacher approves Lesson 1. The l1 content is generated from a
+  script (Python dict → JSON in course-data.js): edit the JSON there directly.
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
   too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except

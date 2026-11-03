@@ -26,7 +26,10 @@ function slShape(x, y, w, h, fill, o) { return Object.assign({ id: slId(), type:
 function slFrame(accent, tag, title) {
   return [slShape(0, 0, 18, SL_H, accent),
     slText(110, 64, 1300, 44, tag, { fs: 24, bold: true, color: accent, spacing: 4 }),
-    slText(110, 108, 1380, 96, title, { fs: 62, bold: true, font: 'head' })];
+    slText(110, 108, 1380, 96, title, { fs: title.length <= 36 ? 62 : title.length <= 48 ? 50 : title.length <= 60 ? 42 : 36, bold: true, font: 'head' })];
+}
+function slAudio(x, left, top, w, h) {
+  return { id: slId(), type: 'audio', x: left, y: top, w, h, label: '🔊 Listen', src: x.src || '', say: x.text };
 }
 function slBuildDeck(stop) {
   const l = stop.lesson, accent = stop.block.color, exNo = {};
@@ -65,7 +68,7 @@ function slBuildDeck(stop) {
         const x = 110 + (i % cols) * (bw + gap), y = 236 + Math.floor(i / cols) * (bh + gap), col = SL_COLORS[4 + (i % 8)];
         add(slShape(x, y, bw, bh, slTint(col, 24), { radius: 22 }));
         add(slText(x + 22, y + 16, bw - 44, 56, b.head, { fs: 36, bold: true, font: 'head', color: SL_INK }));
-        add(slText(x + 22, y + 76, bw - 44, bh - 90, b.body, { fs: n > 4 ? 40 : 32, bold: n > 4 }));
+        add(slText(x + 22, y + 76, bw - 44, bh - 90, b.body, { fs: n > 4 ? 40 : b.body.split('\n').length > 4 || b.body.length > 110 ? 32 : 38, bold: n > 4 }));
       });
       if (d.foot) add(slText(110, 760, 1380, 90, d.foot, { fs: 38, bold: true, fill: slTint(accent, 25), radius: 18, pad: 22, valign: 'middle', align: 'center' }));
     } else if (d.layout === 'mistakes') {
@@ -79,23 +82,59 @@ function slBuildDeck(stop) {
     } else if (d.layout === 'exercise') {
       const ex = (l.exercises || []).find(e => e.id === d.ex);
       if (!ex) return s;
-      const no = exNo[ex.id];
-      add(slFrame(accent, 'EXERCISE ' + no + ' · ' + COURSE_SKILLS[ex.skill].emoji + ' ' + COURSE_SKILLS[ex.skill].label.toUpperCase(), ex.title));
+      const no = exNo[ex.id], kind = { gap: 'Fill the gap', choose: 'Circle', tf: 'True or false', match: 'Match', order: 'Put in order', odd: 'Odd one out', correct: 'Correct it', write: 'Write' }[ex.type] || '';
+      add(slFrame(accent, 'EXERCISE ' + no + ' · ' + COURSE_SKILLS[ex.skill].emoji + ' ' + COURSE_SKILLS[ex.skill].label.toUpperCase() + (kind ? ' · ' + kind.toUpperCase() : ''), ex.title));
       add(slText(1250, 64, 240, 44, '📄 Handout ex. ' + no, { fs: 24, bold: true, color: '#5A4E72', align: 'right' }));
-      const two = ex.items.length > 4, rows = two ? Math.ceil(ex.items.length / 2) : ex.items.length;
-      const rh = Math.min(110, Math.floor(500 / rows)), qw = two ? 470 : 1000, aw = two ? 190 : 360;
-      ex.items.forEach((it, i) => {
-        const col = two ? Math.floor(i / rows) : 0, row = two ? i % rows : i;
-        const x = 110 + col * 710, y = 236 + row * (rh + 14);
-        add(slText(x, y, qw, rh, (i + 1) + '.  ' + it.q, { fs: 38, fill: '#F6F3FB', radius: 16, pad: 20, valign: 'middle' }));
-        add(slText(x + qw + 14, y, aw, rh, it.a, { fs: 36, bold: true, fill: '#DDF8EE', color: '#0B7A55', radius: 16, pad: 14, valign: 'middle', align: 'center', hidden: true }));
+      const own = ex.items.every(courseExOwn);
+      if (ex.type === 'match') {
+        const right = courseMatchRight(ex), rows = ex.items.length, rh = Math.min(76, Math.floor(560 / rows) - 10);
+        ex.items.forEach((it, i) => {
+          const y = 236 + i * (rh + 10);
+          add(slText(110, y, 420, rh, (i + 1) + '.  ' + it.q, { fs: 36, bold: true, fill: '#F6F3FB', radius: 14, pad: 14, valign: 'middle' }));
+          add(slText(546, y, 200, rh, courseExA(ex, it), { fs: 32, bold: true, fill: '#DDF8EE', color: '#0B7A55', radius: 14, pad: 10, valign: 'middle', align: 'center', hidden: true }));
+          add(slText(900, y, 590, rh, 'abcdefghij'[i] + ')  ' + right[i], { fs: 36, fill: slTint(SL_COLORS[4 + (i % 8)], 22), radius: 14, pad: 14, valign: 'middle' }));
+        });
+      } else {
+        const long = ex.items.some(it => courseExQ(ex, it).length > 22 || String(it.a).length > 14) || ex.type === 'choose' || ex.type === 'tf' || ex.type === 'correct';
+        const two = !long && ex.items.length > 4, rows = two ? Math.ceil(ex.items.length / 2) : ex.items.length;
+        const rh = Math.min(104, Math.floor(540 / rows) - 12), fs = rows > 6 ? 30 : rows > 5 ? 32 : 36;
+        const aw = own ? 0 : two ? 190 : ex.type === 'correct' || ex.type === 'write' || ex.type === 'gap' ? 520 : 300, qw = (two ? 680 : 1380) - aw - (own ? 0 : 14);
+        ex.items.forEach((it, i) => {
+          const col = two ? Math.floor(i / rows) : 0, row = two ? i % rows : i;
+          const x = 110 + col * 710, y = 236 + row * (rh + 12);
+          add(slText(x, y, qw, rh, (i + 1) + '.  ' + courseExQ(ex, it), { fs, fill: '#F6F3FB', radius: 16, pad: 18, valign: 'middle' }));
+          if (!own) add(slText(x + qw + 14, y, aw, rh, courseExA(ex, it), { fs: fs - 2, bold: true, fill: '#DDF8EE', color: '#0B7A55', radius: 16, pad: 12, valign: 'middle', align: 'center', hidden: true }));
+        });
+      }
+      if (typeof ex.listen === 'number' && l.listen && l.listen[ex.listen]) add(slAudio(l.listen[ex.listen], 1130, 800, 360, 76));
+      if (d.minutes) add({ id: slId(), type: 'timer', x: ex.listen !== undefined ? 740 : 1190, y: 800, w: 300, h: 76, seconds: d.minutes * 60 });
+    } else if (d.layout === 'tiles') {
+      add(slFrame(accent, d.tag, d.title));
+      const n = d.tiles.length, cols = d.cols || 9, rows = Math.ceil(n / cols), gap = 14;
+      const tw = Math.floor((1380 - (cols - 1) * gap) / cols), th = Math.min(150, Math.floor((d.foot ? 480 : 560) / rows) - gap);
+      d.tiles.forEach((t, i) => {
+        const x = 110 + (i % cols) * (tw + gap), y = 236 + Math.floor(i / cols) * (th + gap), vowel = (d.mark || []).indexOf(t) !== -1;
+        add(slText(x, y, tw, th, d.small ? t.replace(' ', '\n') : t, { fs: d.small ? 30 : 64, bold: true, font: d.small ? 'body' : 'head', align: 'center', valign: 'middle',
+          fill: vowel ? '#FF7AC6' : slTint(SL_COLORS[4 + (i % 8)], 26), color: vowel ? '#FFFFFF' : SL_INK, radius: 18 }));
       });
-      if (typeof ex.listen === 'number' && l.listen && l.listen[ex.listen]) add({ id: slId(), type: 'audio', x: 1130, y: 790, w: 360, h: 80, label: '🔊 Listen', say: l.listen[ex.listen].text });
+      if (d.foot) add(slText(110, 760, 1380, 90, d.foot, { fs: 36, bold: true, fill: slTint(accent, 25), radius: 18, pad: 22, valign: 'middle', align: 'center' }));
+    } else if (d.layout === 'game') {
+      add(slFrame(accent, d.tag, d.title));
+      add(slText(1180, 220, 310, 300, d.emoji || '🎲', { fs: 220, align: 'center', valign: 'middle' }));
+      add(slText(110, 240, 1020, 520, d.text, { fs: 44, fill: '#F6F3FB', radius: 24, pad: 34 }));
+      if (d.minutes) add({ id: slId(), type: 'timer', x: 1180, y: 600, w: 310, h: 100, seconds: d.minutes * 60 });
     } else if (d.layout === 'skill') {
       add(slFrame(accent, d.tag + ' · ' + COURSE_SKILLS[d.skill].emoji, d.title));
-      add(slText(110, 240, 900, 480, d.text, { fs: 40, fill: '#F6F3FB', radius: 22, pad: 30 }));
-      (d.tips || []).forEach((t, i) => add(slText(1060, 240 + i * 130, 430, 110, t, { fs: 34, bold: true, fill: slTint(SL_COLORS[6 + i], 30), radius: 18, pad: 20, valign: 'middle', align: 'center' })));
-      if (typeof d.listen === 'number' && l.listen && l.listen[d.listen]) add({ id: slId(), type: 'audio', x: 110, y: 760, w: 380, h: 90, label: '🔊 Listen', say: l.listen[d.listen].text });
+      const paras = d.text.split('\n\n');
+      if (paras.length >= 3) {   // e.g. three student cards side by side, the tips under them
+        const cw = Math.floor((1380 - (paras.length - 1) * 20) / paras.length);
+        paras.forEach((t, i) => add(slText(110 + i * (cw + 20), 236, cw, 420, t, { fs: 34, fill: slTint(SL_COLORS[4 + i * 2], 22), radius: 22, pad: 26 })));
+        (d.tips || []).forEach((t, i) => add(slText(110 + i * 470, 690, 440, 90, t, { fs: 30, bold: true, fill: slTint(SL_COLORS[6 + i], 30), radius: 18, pad: 16, valign: 'middle', align: 'center' })));
+      } else {
+        add(slText(110, 240, 900, 480, d.text, { fs: d.text.split('\n').length > 8 ? 30 : 40, fill: '#F6F3FB', radius: 22, pad: 30 }));
+        (d.tips || []).forEach((t, i) => add(slText(1060, 240 + i * 130, 430, 110, t, { fs: 34, bold: true, fill: slTint(SL_COLORS[6 + i], 30), radius: 18, pad: 20, valign: 'middle', align: 'center' })));
+      }
+      if (typeof d.listen === 'number' && l.listen && l.listen[d.listen]) add(slAudio(l.listen[d.listen], 110, 760, 420, 96));
     } else if (d.layout === 'finish') {
       s.items = [slShape(0, 0, 18, SL_H, accent),
         slText(110, 90, 1380, 130, d.title + ' 🎉', { fs: 96, bold: true, font: 'head', align: 'center' })];
@@ -542,7 +581,8 @@ function slDrawPanel() {
   } else if (it.type === 'audio') {
     html += '<div class="sle-sec"><div class="sle-h">Button text</div><input type="text" id="slAudioLabel" value="' + escapeForHtml(it.label || '') + '">' +
       '<div class="sle-h2">What the computer reads aloud</div><textarea id="slAudioSay" rows="6">' + escapeForHtml(it.say || '') + '</textarea>' +
-      '<div class="sle-row"><button type="button" class="mini-btn" onclick="slSpeak(slItem().say)">🔊 Try it</button></div></div>';
+      (it.src ? '<p class="sle-tip">🎧 Plays the recording <b>' + escapeForHtml(it.src.split('/').pop()) + '</b>; the text above is read aloud only if it can\'t play.</p>' : '') +
+      '<div class="sle-row"><button type="button" class="mini-btn" onclick="slTryAudio()">🔊 Try it</button></div></div>';
   } else if (it.type === 'timer') {
     html += '<div class="sle-sec"><div class="sle-h">Minutes</div><div class="sle-row">' + [1, 2, 3, 5, 10].map(m => '<button type="button" class="mini-btn' + (it.seconds === m * 60 ? ' solid' : '') + '" onclick="slSet(\'seconds\', ' + m * 60 + ')">' + m + '</button>').join('') + '</div>' +
       '<p class="sle-tip">In Teach mode, click the timer to start or pause it.</p></div>';
@@ -553,6 +593,13 @@ function slDrawPanel() {
   const lab = document.getElementById('slAudioLabel'), say = document.getElementById('slAudioSay');
   if (lab) lab.addEventListener('change', () => slSet('label', lab.value));
   if (say) say.addEventListener('change', () => slSet('say', say.value));
+}
+function slTryAudio() {
+  const it = slItem();
+  if (!it) return;
+  if (sltAudioEl) { sltStopAudio(); return; }
+  if (it.src) { const a = new Audio(it.src); sltAudioEl = a; a.onended = () => { sltAudioEl = null; }; a.play().catch(() => { sltAudioEl = null; slSpeak(it.say); }); }
+  else slSpeak(it.say);
 }
 function slPickBg(c) { slSetSlide('bg', c); }
 function slPickColor(c) { slSet('color', c); }
@@ -698,7 +745,7 @@ function sltBack() {
   sltGo(prev, true);
 }
 function sltGo(i, showAll) {
-  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+  sltStopAudio();
   SLT.i = i;
   SLT.revealed = new Set(showAll ? (SLT.slides[i].items || []).filter(it => it.hidden).map(it => it.id) : []);
   sltDraw();
@@ -716,13 +763,27 @@ function sltClick(e) {
   if (hit) { SLT.revealed.add(hit.id); sltDraw(); return; }
   sltNext();
 }
+let sltAudioEl = null;
+function sltStopAudio() {
+  if (sltAudioEl) { sltAudioEl.pause(); sltAudioEl = null; }
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+}
 function sltPlay(it, node) {
   const face = node.querySelector('.sl-btn-face');
-  if (node.classList.contains('playing')) { window.speechSynthesis && window.speechSynthesis.cancel(); node.classList.remove('playing'); if (face) face.textContent = it.label || '🔊 Listen'; return; }
-  if (slSpeak(it.say, () => { node.classList.remove('playing'); if (face) face.textContent = it.label || '🔊 Listen'; })) {
-    node.classList.add('playing');
-    if (face) face.textContent = '⏹ Stop';
+  const done = () => { node.classList.remove('playing'); if (face) face.textContent = it.label || '🔊 Listen'; };
+  if (node.classList.contains('playing')) { sltStopAudio(); done(); return; }
+  sltStopAudio();
+  const voice = () => { if (slSpeak(it.say, done)) { node.classList.add('playing'); if (face) face.textContent = '⏹ Stop'; } else done(); };
+  if (it.src) {   // the recorded listening; the computer's voice if it can't play
+    const a = new Audio(it.src);
+    sltAudioEl = a;
+    a.onended = done;
+    a.onerror = () => { if (sltAudioEl === a) { sltAudioEl = null; voice(); } };
+    node.classList.add('playing'); if (face) face.textContent = '⏹ Stop';
+    a.play().catch(() => { if (sltAudioEl === a) { sltAudioEl = null; voice(); } });
+    return;
   }
+  voice();
 }
 function sltTimer(it) {
   const t = SLT.timers[it.id] || (SLT.timers[it.id] = { left: Math.round(it.seconds || 60), run: null });
@@ -755,7 +816,7 @@ function sltKey(e) {
 }
 function sltExit() {
   if (!SLT) return;
-  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+  sltStopAudio();
   Object.keys(SLT.timers).forEach(id => SLT.timers[id].run && clearInterval(SLT.timers[id].run));
   if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
   const el = document.getElementById('slTeach');

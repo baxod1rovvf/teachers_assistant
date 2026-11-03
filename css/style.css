@@ -2793,3 +2793,4 @@ button:focus-visible, a:focus-visible, .picker-card:focus-visible, input:focus-v
 /* pop-ups and messages stay above the slide editor and Teach mode */
 body:has(#slEditor, #slTeach) .ta-modal { z-index: 100008; }
 body:has(#slEditor, #slTeach) .toast { z-index: 100009; }
+.course-script { white-space: pre-wrap; }

@@ -53,23 +53,47 @@ test('a lesson: mark it taught; the handout has exactly the exercises the slides
   await hideNotices(page);
   await page.locator('.course-stop[data-stop="b1l1"]').click();
   await expect(page.locator('.course-lesson-head h3')).toHaveText('Letters and numbers');
-  await expect(page.locator('.course-game')).toHaveCount(2);
+  await expect(page.locator('.course-game')).toHaveCount(4);
   await page.locator('.course-taught-btn').click();
   await expect(page.locator('.course-taught-btn')).toContainText('✅ Taught with');
   expect(await page.evaluate(() => courseTaught(courseGroupId()).b1l1)).toBeTruthy();
-  // the slides follow the teacher's order (2026-11-03)
-  const tags = await page.evaluate(() => TA_COURSES[0].blocks[0].lessons[0].deck.map(d => d.layout + (d.ex ? ':' + d.ex : '')));
-  expect(tags).toEqual(['title', 'list', 'questions', 'words', 'boxes', 'mistakes', 'exercise:letters', 'boxes', 'exercise:numbers', 'skill', 'exercise:phones', 'finish']);
+  // a 2-hour lesson in the teacher's order: title, today, warm-up, lead-in words, then lessons with exercises, "You found it",
+  // listening, reading, speaking, writing… and a finish slide; every exercise has its slide, in the handout's order
+  const info = await page.evaluate(() => {
+    const l = TA_COURSES[0].blocks[0].lessons[0];
+    return { first: l.deck.slice(0, 5).map(d => d.layout), last: l.deck[l.deck.length - 1].layout, slides: l.deck.length,
+      onSlides: l.deck.filter(d => d.layout === 'exercise').map(d => d.ex), exercises: l.exercises.map(e => e.id),
+      kinds: [...new Set(l.exercises.map(e => e.type))].length, mistakes: l.deck.filter(d => d.layout === 'mistakes').length,
+      skills: [...new Set(l.deck.filter(d => d.layout === 'skill').map(d => d.skill))].sort(),
+      listenings: l.exercises.filter(e => typeof e.listen === 'number').map(e => [e.listen, e.items.length]), audio: l.listen.map(x => x.src) };
+  });
+  expect(info.first).toEqual(['title', 'list', 'questions', 'game', 'words']);
+  expect(info.last).toBe('finish');
+  expect(info.slides).toBeGreaterThanOrEqual(30);
+  expect(info.onSlides).toEqual(info.exercises);
+  expect(info.exercises.length).toBeGreaterThanOrEqual(14);
+  expect(info.kinds).toBeGreaterThanOrEqual(7);
+  expect(info.mistakes).toBeGreaterThanOrEqual(1);
+  expect(info.skills).toEqual(['listening', 'reading']);
+  // three listenings, five questions each, each with its own recording (on the site)
+  expect(info.listenings).toEqual([[0, 5], [1, 5], [2, 5]]);
+  for (const src of info.audio) {
+    const r = await page.request.get('/' + src);
+    expect(r.status(), src).toBe(200);
+    expect((await r.body()).length, src).toBeGreaterThan(100000);
+  }
   // the exercise slides and the handout come from the same exercises
   const onSlides = await page.evaluate(() => {
     const stop = courseFindStop('b1l1'), deck = slOriginal(stop);
     return deck.filter((s, i) => stop.lesson.deck[i].layout === 'exercise').map(s => s.items.filter(it => it.type === 'text' && /^\d+\.  /.test(it.text)).map(it => it.text.replace(/^\d+\.  /, '')));
   });
   const [popup] = await Promise.all([page.waitForEvent('popup'), page.getByRole('button', { name: /Open & print/ }).click()]);
-  await expect(popup.locator('section.ex')).toHaveCount(3);
-  const onPaper = await popup.locator('section.ex').evaluateAll(l => l.map(sec => Array.from(sec.querySelectorAll('.items div')).map(d => d.textContent.replace(/^\d+\. /, '').replace(/  →  _+$/, ''))));
+  await expect(popup.locator('section.ex')).toHaveCount(onSlides.length);
+  const onPaper = await popup.locator('section.ex').evaluateAll(l => l.map(sec => Array.from(sec.querySelectorAll('.items > div, .match > div:first-child > div')).map(d => d.textContent.replace(/^\d+\. /, '').replace(/(  →  _+|   _{4})$/, ''))));
   expect(onPaper).toEqual(onSlides);
-  await expect(popup.locator('.teacher')).toContainText('Exercise 3: 1 071 339 502');
+  await expect(popup.locator('.teacher')).toContainText('Exercise 3: 1 Kamila · 2 Jasur · 3 Green · 4 Bobur · 5 Lizzy');
+  await expect(popup.locator('.teacher .script').first()).toContainText('B: K. A. M. I. L. A.');   // the listening scripts, with who speaks
+  await expect(popup.locator('.match')).toHaveCount(1);
   expect(errors).toEqual([]);
 });
 
@@ -82,8 +106,8 @@ test('the slide editor: type, add, hide until a click, move, delete, undo, skip 
   await page.locator('.course-stop[data-stop="b1l1"]').click();
   await page.getByRole('button', { name: '✏️ Edit slides' }).click();
   await expect(page.locator('#slEditor')).toBeVisible();
-  await expect(page.locator('.sle-thumb')).toHaveCount(12);
-  await expect(page.locator('#slPanel')).toContainText('Slide 1 of 12');
+  await expect(page.locator('.sle-thumb')).toHaveCount(35);
+  await expect(page.locator('#slPanel')).toContainText('Slide 1 of 35');
   // double-click the title and type
   const title = page.locator('#slStage .sl-text', { hasText: 'Letters and numbers' });
   await title.dblclick();
@@ -118,7 +142,7 @@ test('the slide editor: type, add, hide until a click, move, delete, undo, skip 
   await expect(page.locator('#slStage .sl-item', { hasText: 'Secret answer' })).toHaveCount(1);
   // a new slide, then skip slide 2 in Teach mode
   await page.locator('.sle-tools button', { hasText: 'Slide' }).first().click();
-  await expect(page.locator('.sle-thumb')).toHaveCount(13);
+  await expect(page.locator('.sle-thumb')).toHaveCount(36);
   await page.locator('.sle-thumb').nth(1).click();
   await page.locator('.sle-thumb.on .sle-thumb-tools button[title="Skip in Teach mode"]').click();
   await expect(page.locator('.sle-thumb').nth(1)).toHaveClass(/skipped/);
@@ -128,13 +152,13 @@ test('the slide editor: type, add, hide until a click, move, delete, undo, skip 
   await page.waitForTimeout(1000);
   await hideNotices(page);
   await page.locator('.course-stop[data-stop="b1l1"]').click();
-  await expect(page.locator('.course-mat', { hasText: 'Slides' })).toContainText('13 slides (1 skipped) · ✏️ changed by you');
+  await expect(page.locator('.course-mat', { hasText: 'Slides' })).toContainText('36 slides (1 skipped) · ✏️ changed by you');
   await page.getByRole('button', { name: '✏️ Edit slides' }).click();
   await expect(page.locator('#slStage .sl-text', { hasText: 'Letters & numbers' })).toHaveCount(1);
   // Original
   await page.locator('.sle-tools button', { hasText: 'Original' }).click();
   await page.getByRole('button', { name: '↩️ Use the original slides' }).click();
-  await expect(page.locator('.sle-thumb')).toHaveCount(12);
+  await expect(page.locator('.sle-thumb')).toHaveCount(35);
   await expect(page.locator('#slStage .sl-text', { hasText: 'Letters and numbers' })).toHaveCount(1);
   await page.locator('.sle-close').click();
   await expect(page.locator('.course-mat', { hasText: 'Slides' })).not.toContainText('changed by you');
@@ -151,24 +175,30 @@ test('Teach mode: a click shows the hidden things one by one, then goes on; skip
   await page.locator('.course-stop[data-stop="b1l1"]').click();
   await page.getByRole('button', { name: 'Teach' }).click();
   await expect(page.locator('#slTeach')).toBeVisible();
-  await expect(page.locator('#sltCount')).toHaveText('1 / 11');
+  await expect(page.locator('#sltCount')).toHaveText('1 / 34');
   await page.keyboard.press('ArrowRight');   // slide 2 is skipped → the warm-up, its 5 questions hidden
   await expect(page.locator('#sltStage')).toContainText('Hello! Let\'s talk');
-  await expect(page.locator('#sltCount')).toHaveText('2 / 11 · 🙈 5');
+  await expect(page.locator('#sltCount')).toHaveText('2 / 34 · 🙈 5');
   await expect(page.locator('#sltStage .sl-concealed')).toHaveCount(5);
   await page.locator('#sltStage').click({ position: { x: 20, y: 20 } });
   await expect(page.locator('#sltStage .sl-concealed')).toHaveCount(4);
   await expect(page.locator('#sltStage .sl-revealed')).toContainText('What\'s your name?');
   for (let k = 0; k < 4; k++) await page.keyboard.press(' ');
-  await expect(page.locator('#sltCount')).toHaveText('2 / 11');
+  await expect(page.locator('#sltCount')).toHaveText('2 / 34');
   await page.keyboard.press(' ');
-  await expect(page.locator('#sltStage')).toContainText('Words for today');
+  await expect(page.locator('#sltStage')).toContainText('Name chain');
   // back shows the previous slide whole
   await page.keyboard.press('ArrowLeft');
   await expect(page.locator('#sltStage .sl-concealed')).toHaveCount(0);
   // notes
   await page.keyboard.press('n');
-  await expect(page.locator('#sltNotes')).toContainText('Number ping-pong');
+  await expect(page.locator('#sltNotes')).toContainText('ask 3–4 students');
+  // a listening slide: 🔊 Listen plays its recording
+  await page.keyboard.press('n');
+  const mp3 = page.waitForRequest(r => /b1l1-listening-1\.mp3$/.test(r.url()));
+  await page.evaluate(() => sltGo(SLT.slides.findIndex(s => s.items.some(i => i.type === 'audio')), true));
+  await page.locator('#sltStage .sl-audio').click();
+  await mp3;
   await page.locator('.slt-bar button[title^="Stop teaching"]').click();
   await expect(page.locator('#slTeach')).toHaveCount(0);
   expect(errors).toEqual([]);

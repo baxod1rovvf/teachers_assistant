@@ -141,7 +141,7 @@ function renderCourseLesson(wrap, stop) {
   if (l.listen && l.listen.length) html += '<div class="card course-mat" style="--mc:var(--c-purple)"><div class="course-mat-head"><span class="course-mat-emoji">🎧</span><h4>Listening</h4></div>' +
     '<p>Your computer reads the listening texts aloud — play them on the speakers. Or read them yourself.</p>' +
     l.listen.map((x, k) => '<div class="course-listen"><button type="button" class="mini-btn solid course-play" onclick="courseSpeak(' + jsAttr(stop.id) + ', ' + k + ', this)">🔊 Play</button><div><b>' + escapeForHtml(x.label) + '</b>' +
-      '<details><summary>Show the text</summary><p>' + escapeForHtml(x.text) + '</p></details></div></div>').join('') + '</div>';
+      '<details><summary>Show the text</summary><p class="course-script">' + escapeForHtml(x.script || x.text) + '</p></details></div></div>').join('') + '</div>';
   html += '<div class="card course-mat" style="--mc:var(--c-green)"><div class="course-mat-head"><span class="course-mat-emoji">📄</span><h4>' + (stop.kind === 'exam' ? 'Exam paper' : 'Exercises handout') + '</h4></div>' +
     '<p>' + (stop.kind === 'exam' ? '📖 ✍️ The reading text and the writing paper to print, and your page with the listening instructions and how to mark the writing.'
       : l.handout.sections.map(s => COURSE_SKILLS[s.skill].emoji).filter((e, i, a) => a.indexOf(e) === i).join(' ') + ' ' + l.handout.sections.length + ' exercises to print, with your listening script and the answers on a separate page.') + '</p>' +
@@ -208,9 +208,29 @@ function courseSetMark(stopId, studentId, input) {
 window.taCourseResultsChanged = function () { if (courseOpenStop && /exam$/.test(courseOpenStop)) renderCourse(); };
 
 /* ---------- 🔊 the computer reads a listening text aloud ---------- */
+let courseAudio = null;
 function courseSpeak(stopId, k, btn) {
   const stop = courseFindStop(stopId), x = stop && stop.lesson.listen && stop.lesson.listen[k];
   if (!x) return;
+  if (x.src) {   // the recorded listening (audio/course/…), else the computer's voice below
+    const playing = btn.classList.contains('playing');
+    if (courseAudio) { courseAudio.pause(); courseAudio = null; }
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    document.querySelectorAll('.course-play.playing').forEach(b => { b.classList.remove('playing'); b.textContent = '🔊 Play'; });
+    if (playing) return;
+    const a = new Audio(x.src);
+    const done = () => { btn.classList.remove('playing'); btn.textContent = '🔊 Play'; if (courseAudio === a) courseAudio = null; };
+    a.onended = done;
+    a.onerror = () => { done(); courseSpeakText(x.text, btn); };
+    courseAudio = a;
+    btn.classList.add('playing'); btn.textContent = '⏹ Stop';
+    a.play().catch(() => { done(); courseSpeakText(x.text, btn); });
+    return;
+  }
+  courseSpeakText(x.text, btn);
+}
+function courseSpeakText(text, btn) {
+  const x = { text: text };
   if (!('speechSynthesis' in window)) { showToast('This browser can\'t read aloud — please read the text yourself.'); return; }
   const synth = window.speechSynthesis;
   const playing = btn.classList.contains('playing');
@@ -249,7 +269,8 @@ function courseHandoutHtml(stop) {
     'h1,h2{font-family:Fredoka,Nunito,sans-serif;margin:0}h1{font-size:1.7rem}header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #2B2140;padding-bottom:10px;margin-bottom:18px}' +
     '.who{font-size:.95rem}.ex{border:2.5px solid #2B2140;border-radius:16px;padding:12px 16px;margin:0 0 14px;break-inside:avoid}h2{font-size:1.05rem;margin-bottom:6px}' +
     '.skill{display:inline-block;font-size:.75rem;font-weight:700;border:2px solid #2B2140;border-radius:999px;padding:1px 10px;margin-bottom:6px;background:#FFF0D4}' +
-    '.box{background:#FFF7E8;border-radius:10px;padding:8px 12px;margin:6px 0;font-weight:700}.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px 18px}' +
+    '.box{background:#FFF7E8;border-radius:10px;padding:8px 12px;margin:6px 0;font-weight:700}.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px 18px}.items.wide{grid-template-columns:1fr}' +
+    '.match{display:grid;grid-template-columns:1fr 1fr;gap:4px 30px}.match>div{display:flex;flex-direction:column;gap:6px}.script{font-size:.9rem;background:#F6F3FB;border-radius:10px;padding:8px 12px;margin-bottom:10px}' +
     '.teacher{break-before:page;border-top:3px dashed #2B2140;margin-top:28px;padding-top:14px}.noprint{text-align:center;margin:20px}' +
     '.noprint button{font:700 1rem Nunito,sans-serif;padding:10px 22px;border:2.5px solid #2B2140;border-radius:14px;background:#FFD23F;box-shadow:0 4px 0 #2B2140;cursor:pointer}' +
     '@media print{.noprint{display:none}body{margin:0 auto}}</style></head><body>' +
@@ -258,9 +279,10 @@ function courseHandoutHtml(stop) {
     '<div class="who">Name: ____________________<br>Date: ____________________</div></header>' +
     h.sections.map((s, i) => '<section class="ex"><span class="skill">' + COURSE_SKILLS[s.skill].emoji + ' ' + COURSE_SKILLS[s.skill].label + '</span>' +
       '<h2>' + (i + 1) + '. ' + esc(s.title) + '</h2>' + (s.text ? '<div class="box">' + lines(s.text) + '</div>' : '') +
-      (s.items ? '<div class="items">' + s.items.map(x => '<div>' + esc(x) + '</div>').join('') + '</div>' : '') + '</section>').join('') +
+      (s.items && s.right ? '<div class="match"><div>' + s.items.map(x => '<div>' + esc(x) + '</div>').join('') + '</div><div>' + s.right.map(x => '<div>' + esc(x) + '</div>').join('') + '</div></div>'
+        : s.items ? '<div class="items' + (s.items.some(x => x.length > 38) ? ' wide' : '') + '">' + s.items.map(x => '<div>' + esc(x) + '</div>').join('') + '</div>' : '') + '</section>').join('') +
     '<section class="teacher"><h2>👩‍🏫 For the teacher</h2><p><b>Listening</b></p>' + h.teacherScript.map(x => '<p>' + esc(x) + '</p>').join('') +
-    (stop.lesson.listen || []).map(x => '<p><i>' + esc(x.label) + ':</i> ' + esc(x.text) + '</p>').join('') +
+    (stop.lesson.listen || []).map(x => x.script ? '<p><i>' + esc(x.label) + '</i></p><div class="script">' + lines(x.script) + '</div>' : '<p><i>' + esc(x.label) + ':</i> ' + esc(x.text) + '</p>').join('') +
     '<p><b>Answers</b></p>' + h.answers.map(x => '<p>' + esc(x) + '</p>').join('') + '</section></body></html>';
 }
 function coursePrintHandout(stopId) {

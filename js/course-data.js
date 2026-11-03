@@ -18,14 +18,31 @@ const COURSE_SKILLS = {
   speaking: { emoji: '🗣️', label: 'Speaking' }
 };
 
+/* Exercise kinds (teacher, 2026-11-03: "add different types of exercises"): gap (fill the gap), choose (a/b/c — circle),
+   tf (true / false), match (numbers ↔ words: the right column is shown in a–z order), order (put in order), odd (odd one
+   out), correct (correct the mistake), write (write / answer). How a question and its answer are shown — the same on the
+   slides and in the handout: */
+function courseExQ(e, it) {
+  if (e.type === 'choose') return it.q + '     ' + it.opts.map((o, i) => 'abc'[i] + ') ' + o).join('     ');
+  if (e.type === 'tf') return it.q + '     T / F';
+  return it.q;
+}
+function courseExA(e, it) {
+  if (e.type === 'choose') return it.a + ') ' + it.opts['abc'.indexOf(it.a)];
+  if (e.type === 'match') return courseMatchRight(e).indexOf(it.a) >= 0 ? 'abcdefghij'[courseMatchRight(e).indexOf(it.a)] + ') ' + it.a : it.a;
+  return it.a;
+}
+function courseMatchRight(e) { return e.items.map(it => it.a).slice().sort(); }
+function courseExOwn(it) { return /^\(students/.test(it.a); }   // "(students' own)" — no answer to show
 /* A lesson's handout made from its exercises — the same exercises its slides show (teacher, 2026-11-03) */
 function courseExerciseHandout(lesson) {
   return {
     title: lesson.title,
     sections: lesson.exercises.map(e => ({ skill: e.skill, title: e.title, text: e.text,
-      items: e.items.map((it, k) => (k + 1) + '. ' + it.q + (/_{3}/.test(it.q) ? '' : '  →  ______________')) })),
+      items: e.items.map((it, k) => (k + 1) + '. ' + courseExQ(e, it) + (e.type === 'match' ? '   ____' : /_{3}|T \/ F|^(choose|odd|tf)$/.test(courseExQ(e, it) + '|' + e.type) || e.type === 'choose' || e.type === 'odd' || e.type === 'tf' ? '' : '  →  ______________')),
+      right: e.type === 'match' ? courseMatchRight(e).map((a, i) => 'abcdefghij'[i] + ') ' + a) : null })),
     teacherScript: lesson.teacherScript || [],
-    answers: lesson.exercises.map((e, i) => 'Exercise ' + (i + 1) + ': ' + e.items.map((it, k) => (k + 1) + ' ' + it.a).join(' · '))
+    answers: lesson.exercises.map((e, i) => 'Exercise ' + (i + 1) + ': ' + (e.items.every(courseExOwn) ? 'students\' own answers' : e.items.map((it, k) => (k + 1) + ' ' + courseExA(e, it)).join(' · ')))
   };
 }
 
@@ -99,77 +116,1123 @@ const COURSE_BEGINNER = {
 
 /* ---------- Block 1, Lesson 1: Letters and numbers (ready) ---------- */
 Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
-  goals: ['Say and spell the English alphabet', 'Spell your name: "How do you spell it?"', 'Say numbers 0–100 and phone numbers'],
-  warmups: [
-    { emoji: '🏓', title: 'Number ping-pong', time: '5 min', how: 'Pairs count from 1 to 30, one number each, as fast as they can. Then the rule: instead of 3, 6, 9… (every number with 3 in it, or that 3 goes into) say "BUZZ!". A mistake = start again. The pair that reaches 30 first wins.' },
-    { emoji: '🕵️', title: 'Spell & guess', time: '5 min', how: 'Student A thinks of a word from the board and spells it slowly, letter by letter. Student B writes the letters in the air with a finger and says the word as soon as they know it. Then swap.' }
+  // A 2-hour lesson (teacher, 2026-11-03): many kinds of exercises; 3 listenings of 5 questions each, with audio made
+  // by Claude (Kokoro voices, audio/course/*.mp3 — the computer's own voice reads the text if a file can't play).
+  // Generated from a script; the slides (deck) and the handout are both made from `exercises`.
+  goals: [
+    "Say and spell the English alphabet (and know the letters that sound alike)",
+    "Spell names: \"How do you spell it?\" — double letters, capital letters",
+    "Say numbers 0–100 (13 thirTEEN ≠ 30 THIRty) and phone numbers",
+    "Understand names, ages and phone numbers in three listenings"
   ],
-  // The presentation (teacher, 2026-11-03): title → what we learn today → warm-up → lead-in words → lesson →
-  // you found it (mistakes everyone makes) → exercise → lesson → exercise → a skill → exercise → finish.
-  // The exercises live once, here: the slides and the printed handout are both made from them.
+  warmups: [
+    {
+      "emoji": "🗣️",
+      "title": "Hello! Let's talk",
+      "time": "5 min",
+      "how": "Ask the questions on slide 3 around the class (it's the first lesson — there is no last lesson to revise)."
+    },
+    {
+      "emoji": "⛓️",
+      "title": "Name chain",
+      "time": "7 min",
+      "how": "Student 1: \"I'm Anna.\" Student 2: \"She's Anna. I'm Ali.\" Student 3: \"She's Anna, he's Ali, I'm Lola.\"… The chain goes round the class."
+    },
+    {
+      "emoji": "🎯",
+      "title": "Number bingo",
+      "time": "8 min",
+      "how": "Students draw a 3 × 3 grid with 9 numbers from 1 to 100. Call numbers; three in a line → \"BINGO!\" (slide 25)."
+    },
+    {
+      "emoji": "🏓",
+      "title": "Number ping-pong",
+      "time": "5 min",
+      "how": "Pairs count to 30, one number each; every number with 3 in it or that 3 goes into → \"BUZZ!\"."
+    }
+  ],
   exercises: [
-    { id: 'letters', skill: 'writing', title: 'Write the missing letters.',
-      items: [{ q: 'A  B  ___  D', a: 'C' }, { q: 'F  ___  H', a: 'G' }, { q: '___  K  L', a: 'J' }, { q: 'M  N  ___', a: 'O' },
-        { q: 'R  ___  T', a: 'S' }, { q: 'W  X  ___  Z', a: 'Y' }, { q: 'B - ___ - ___ - K  (book)', a: 'O, O' }, { q: 'The vowels: A, E, I, O, ___', a: 'U' }] },
-    { id: 'numbers', skill: 'writing', title: 'Write the numbers in words.',
-      items: [{ q: '7', a: 'seven' }, { q: '12', a: 'twelve' }, { q: '13', a: 'thirteen' }, { q: '15', a: 'fifteen' },
-        { q: '30', a: 'thirty' }, { q: '48', a: 'forty-eight' }, { q: '90', a: 'ninety' }, { q: '100', a: 'one hundred' }] },
-    { id: 'phones', skill: 'listening', title: 'Listen and write the phone numbers.', listen: 1,
-      items: [{ q: 'Aziz:  ___ ___ ___', a: '071 339 502' }, { q: 'Lola:  ___ ___ ___', a: '099 214 860' }, { q: 'Mr Brown:  ___ ___ ___', a: '055 677 113' }] }
+    {
+      "id": "odd",
+      "type": "odd",
+      "skill": "listening",
+      "title": "Say the letters. Which letter has a different sound? Circle it.",
+      "items": [
+        {
+          "q": "A   H   J   B",
+          "a": "B"
+        },
+        {
+          "q": "B   C   F   D",
+          "a": "F"
+        },
+        {
+          "q": "F   L   M   E",
+          "a": "E"
+        },
+        {
+          "q": "I   Y   K",
+          "a": "K"
+        },
+        {
+          "q": "Q   U   W   O",
+          "a": "O"
+        },
+        {
+          "q": "G   P   T   J",
+          "a": "J"
+        }
+      ]
+    },
+    {
+      "id": "letters",
+      "type": "gap",
+      "skill": "writing",
+      "title": "Write the missing letters.",
+      "items": [
+        {
+          "q": "A  B  ___  D",
+          "a": "C"
+        },
+        {
+          "q": "F  ___  H",
+          "a": "G"
+        },
+        {
+          "q": "___  K  L",
+          "a": "J"
+        },
+        {
+          "q": "M  N  ___",
+          "a": "O"
+        },
+        {
+          "q": "R  ___  T",
+          "a": "S"
+        },
+        {
+          "q": "W  X  ___  Z",
+          "a": "Y"
+        },
+        {
+          "q": "The letter after P: ___",
+          "a": "Q"
+        },
+        {
+          "q": "The vowels: A, E, I, O, ___",
+          "a": "U"
+        }
+      ]
+    },
+    {
+      "id": "names",
+      "type": "gap",
+      "skill": "listening",
+      "title": "Listening 1: Listen. Write the names.",
+      "listen": 0,
+      "items": [
+        {
+          "q": "1st student:  ____________",
+          "a": "Kamila"
+        },
+        {
+          "q": "2nd student:  ____________",
+          "a": "Jasur"
+        },
+        {
+          "q": "The teacher:  Mr ____________",
+          "a": "Green"
+        },
+        {
+          "q": "4th student:  ____________",
+          "a": "Bobur"
+        },
+        {
+          "q": "5th student:  ____________",
+          "a": "Lizzy"
+        }
+      ]
+    },
+    {
+      "id": "order",
+      "type": "order",
+      "skill": "writing",
+      "title": "Put the letters in order. Write the word.",
+      "items": [
+        {
+          "q": "o - b - o - k",
+          "a": "book"
+        },
+        {
+          "q": "m - e - a - n",
+          "a": "name"
+        },
+        {
+          "q": "l - p - s - e - l",
+          "a": "spell"
+        },
+        {
+          "q": "n - o - h - e - p",
+          "a": "phone"
+        },
+        {
+          "q": "t - e - t - l - r - e",
+          "a": "letter"
+        },
+        {
+          "q": "b - m - u - n - e - r",
+          "a": "number"
+        }
+      ]
+    },
+    {
+      "id": "capitals",
+      "type": "correct",
+      "skill": "writing",
+      "title": "Correct the mistakes. Names start with a capital letter.",
+      "items": [
+        {
+          "q": "my name is anna.",
+          "a": "My name is Anna."
+        },
+        {
+          "q": "his name is tom kelly.",
+          "a": "His name is Tom Kelly."
+        },
+        {
+          "q": "How do you spell? — L-O-L-A.",
+          "a": "How do you spell it?"
+        },
+        {
+          "q": "B-E-L-A  (Bella)",
+          "a": "B-E-double L-A"
+        },
+        {
+          "q": "i'm from tashkent.",
+          "a": "I'm from Tashkent."
+        }
+      ]
+    },
+    {
+      "id": "match",
+      "type": "match",
+      "skill": "reading",
+      "title": "Match the numbers and the words.",
+      "items": [
+        {
+          "q": "3",
+          "a": "three"
+        },
+        {
+          "q": "8",
+          "a": "eight"
+        },
+        {
+          "q": "11",
+          "a": "eleven"
+        },
+        {
+          "q": "12",
+          "a": "twelve"
+        },
+        {
+          "q": "14",
+          "a": "fourteen"
+        },
+        {
+          "q": "16",
+          "a": "sixteen"
+        },
+        {
+          "q": "19",
+          "a": "nineteen"
+        },
+        {
+          "q": "20",
+          "a": "twenty"
+        }
+      ]
+    },
+    {
+      "id": "numwords",
+      "type": "write",
+      "skill": "writing",
+      "title": "Write the numbers in words.",
+      "items": [
+        {
+          "q": "13",
+          "a": "thirteen"
+        },
+        {
+          "q": "30",
+          "a": "thirty"
+        },
+        {
+          "q": "40",
+          "a": "forty"
+        },
+        {
+          "q": "48",
+          "a": "forty-eight"
+        },
+        {
+          "q": "90",
+          "a": "ninety"
+        },
+        {
+          "q": "55",
+          "a": "fifty-five"
+        },
+        {
+          "q": "67",
+          "a": "sixty-seven"
+        },
+        {
+          "q": "100",
+          "a": "one hundred"
+        }
+      ]
+    },
+    {
+      "id": "choosenum",
+      "type": "choose",
+      "skill": "reading",
+      "title": "Circle the right number.",
+      "items": [
+        {
+          "q": "fifteen",
+          "opts": [
+            "50",
+            "15",
+            "5"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "sixty",
+          "opts": [
+            "16",
+            "66",
+            "60"
+          ],
+          "a": "c"
+        },
+        {
+          "q": "nineteen",
+          "opts": [
+            "19",
+            "90",
+            "9"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "seventy-one",
+          "opts": [
+            "17",
+            "71",
+            "77"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "eighty-four",
+          "opts": [
+            "48",
+            "84",
+            "80"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "thirty-three",
+          "opts": [
+            "33",
+            "13",
+            "303"
+          ],
+          "a": "a"
+        }
+      ]
+    },
+    {
+      "id": "ages",
+      "type": "choose",
+      "skill": "listening",
+      "title": "Listening 2: Listen and circle the right number.",
+      "listen": 1,
+      "items": [
+        {
+          "q": "Tom is ___ years old.",
+          "opts": [
+            "13",
+            "30",
+            "3"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "His grandmother is ___.",
+          "opts": [
+            "62",
+            "72",
+            "27"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "There are ___ students in Sara's class.",
+          "opts": [
+            "50",
+            "15",
+            "16"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "Ben's bus is number ___.",
+          "opts": [
+            "48",
+            "84",
+            "44"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "The school has ___ computers.",
+          "opts": [
+            "19",
+            "90",
+            "99"
+          ],
+          "a": "b"
+        }
+      ]
+    },
+    {
+      "id": "saynum",
+      "type": "write",
+      "skill": "speaking",
+      "title": "How do you say these phone numbers? Write, then say them to your partner.",
+      "items": [
+        {
+          "q": "077 455 120",
+          "a": "oh double seven, four double five, one two oh"
+        },
+        {
+          "q": "090 336 818",
+          "a": "oh nine oh, double three six, eight one eight"
+        },
+        {
+          "q": "055 100 247",
+          "a": "oh double five, one double oh, two four seven"
+        },
+        {
+          "q": "099 712 663",
+          "a": "oh double nine, seven one two, double six three"
+        }
+      ]
+    },
+    {
+      "id": "call",
+      "type": "gap",
+      "skill": "listening",
+      "title": "Listening 3: A phone call. Listen and complete.",
+      "listen": 2,
+      "items": [
+        {
+          "q": "The boy's name is Daniel ____________.",
+          "a": "Brooks"
+        },
+        {
+          "q": "True or false: Daniel is thirteen.  T / F",
+          "a": "F — he's twelve"
+        },
+        {
+          "q": "The phone number is 077 ________ ________.",
+          "a": "455 201"
+        },
+        {
+          "q": "The lesson is in room ________.",
+          "a": "14"
+        },
+        {
+          "q": "True or false: \"Brooks\" has double O.  T / F",
+          "a": "T"
+        }
+      ]
+    },
+    {
+      "id": "cardstf",
+      "type": "tf",
+      "skill": "reading",
+      "title": "Read the student cards. True (T) or false (F)?",
+      "text": "STUDENT CARD 1\nName: Nodira Karimova\nAge: 13 · Class: 7A\nPhone: 090 112 456\n\nSTUDENT CARD 2\nName: Tom Kelly\nAge: 14 · Class: 8B\nPhone: 097 448 130\n\nSTUDENT CARD 3\nName: Lizzy Moon\nAge: 12 · Class: 6C\nPhone: 055 300 819",
+      "items": [
+        {
+          "q": "Nodira is thirteen.",
+          "a": "T"
+        },
+        {
+          "q": "Tom is in class 7A.",
+          "a": "F (8B)"
+        },
+        {
+          "q": "Lizzy's phone number starts with 055.",
+          "a": "T"
+        },
+        {
+          "q": "Tom is forty.",
+          "a": "F (14)"
+        },
+        {
+          "q": "\"Lizzy\" has double Z.",
+          "a": "T"
+        }
+      ]
+    },
+    {
+      "id": "cardsq",
+      "type": "write",
+      "skill": "reading",
+      "title": "Read the student cards again. Answer the questions.",
+      "items": [
+        {
+          "q": "How old is Lizzy?",
+          "a": "She's twelve."
+        },
+        {
+          "q": "What class is Tom in?",
+          "a": "8B"
+        },
+        {
+          "q": "How do you spell Tom's surname?",
+          "a": "K-E-double L-Y"
+        },
+        {
+          "q": "Who is in class 7A?",
+          "a": "Nodira"
+        },
+        {
+          "q": "What's Lizzy's phone number?",
+          "a": "oh double five, three double oh, eight one nine"
+        }
+      ]
+    },
+    {
+      "id": "mycard",
+      "type": "write",
+      "skill": "writing",
+      "title": "Make your own student card. Then read it to your partner.",
+      "items": [
+        {
+          "q": "Name:",
+          "a": "(students' own)"
+        },
+        {
+          "q": "Age:",
+          "a": "(students' own)"
+        },
+        {
+          "q": "Class:",
+          "a": "(students' own)"
+        },
+        {
+          "q": "Phone:",
+          "a": "(students' own)"
+        },
+        {
+          "q": "My name in letters:  __ - __ - __ - __ - __",
+          "a": "(students' own)"
+        }
+      ]
+    },
+    {
+      "id": "quiz",
+      "type": "choose",
+      "skill": "speaking",
+      "title": "Team quiz! Say the answer first.",
+      "items": [
+        {
+          "q": "How many letters are in the alphabet?",
+          "opts": [
+            "24",
+            "26",
+            "28"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "Which is a vowel?",
+          "opts": [
+            "B",
+            "K",
+            "E"
+          ],
+          "a": "c"
+        },
+        {
+          "q": "\"double L\" means…",
+          "opts": [
+            "LL",
+            "L2",
+            "LLL"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "thirty =",
+          "opts": [
+            "13",
+            "30",
+            "33"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "In a phone number, 0 is…",
+          "opts": [
+            "\"oh\"",
+            "\"of\"",
+            "\"on\""
+          ],
+          "a": "a"
+        },
+        {
+          "q": "How do you spell 40?",
+          "opts": [
+            "fourty",
+            "forty",
+            "fourtee"
+          ],
+          "a": "b"
+        }
+      ]
+    }
   ],
   deck: [
-    { layout: 'title', notes: 'The very first lesson. Smile, say "Hello!" and write your name on the board — spell it out loud: "M-R-S…". Students need the handout.' },
-    { layout: 'list', tag: 'TODAY', title: 'What we learn today', rows: [
-      { emoji: '🔤', text: 'Words: the alphabet A–Z, numbers 0–100' },
-      { emoji: '🎵', text: 'Sounds: letters that sound alike' },
-      { emoji: '🗣️', text: 'Speaking: "How do you spell it?"' },
-      { emoji: '🎧', text: 'Listening: phone numbers' },
-      { emoji: '📝', text: 'Revision test: 20 questions at the end' }],
-      notes: 'Read the list quickly — 1 minute. Point at each line.' },
-    { layout: 'questions', tag: 'WARM-UP', title: 'Hello! Let\'s talk', rows: [
-      'What\'s your name?', 'How old are you?', 'Can you say the alphabet? A, B, C…', 'Count from 1 to 10!', 'Do you know any English words?'],
-      notes: 'Ask the questions around the class — it\'s the first lesson, so there is no last lesson to revise. Click to show each question. Then play "Number ping-pong" (pairs count to 30, "BUZZ!" instead of 3, 6, 9…).' },
-    { layout: 'words', tag: 'LEAD-IN', title: 'Words for today', cards: [
-      { emoji: '🔤', word: 'letter', tr: 'harf' }, { emoji: '🔢', word: 'number', tr: 'raqam' },
-      { emoji: '📛', word: 'name', tr: 'ism' }, { emoji: '✍️', word: 'spell', tr: 'harflab aytmoq' },
-      { emoji: '🅰️', word: 'vowel', tr: 'unli tovush' }, { emoji: '📞', word: 'phone number', tr: 'telefon raqami' },
-      { emoji: '✌️', word: 'double', tr: 'ikki marta' }, { emoji: '⭕', word: 'zero / oh', tr: 'nol' }],
-      notes: 'Say each word, students repeat. Ask "What is it in Uzbek?" — then click the card to show the translation.' },
-    { layout: 'boxes', tag: 'LESSON · THE ALPHABET', title: 'Letters that sound alike', boxes: [
-      { head: '/eɪ/', body: 'A  H  J  K' }, { head: '/iː/', body: 'B  C  D  E  G  P  T  V' }, { head: '/e/', body: 'F  L  M  N  S  X  Z' },
-      { head: '/aɪ/', body: 'I  Y' }, { head: '/əʊ/', body: 'O' }, { head: '/uː/', body: 'Q  U  W' }, { head: '/ɑː/', body: 'R' }],
-      foot: 'How do you spell it? — B - E - double L - A  (Bella)',
-      notes: 'Say each group, students repeat. Then: students spell their names to a partner — "How do you spell it?" Two same letters = "double L".' },
-    { layout: 'mistakes', tag: 'YOU FOUND IT', title: 'Mistakes everyone makes', rows: [
-      { wrong: 'E sounds like /aɪ/', right: 'E is /iː/ — I is /aɪ/' },
-      { wrong: 'G and J sound the same', right: 'G /dʒiː/ — J /dʒeɪ/' },
-      { wrong: 'How do you spell?', right: 'How do you spell it?' },
-      { wrong: 'fourty', right: 'forty' },
-      { wrong: 'ninty', right: 'ninety' },
-      { wrong: 'thirteen = 30', right: 'thirteen = 13 · thirty = 30' }],
-      notes: 'Read the wrong one — "Is it right?" — let students find the mistake, then click to show the right one.' },
-    { layout: 'exercise', ex: 'letters', notes: 'Handout exercise 1. Students write, then check together: click each answer.' },
-    { layout: 'boxes', tag: 'LESSON · NUMBERS', title: 'Numbers 0–100', boxes: [
-      { head: '0 – 10', body: 'zero · one · two · three · four · five · six · seven · eight · nine · ten' },
-      { head: '11 – 20', body: 'eleven · twelve · thirteen · fourteen · fifteen · sixteen · seventeen · eighteen · nineteen · twenty' },
-      { head: 'Tens', body: '30 thirty · 40 forty · 50 fifty · 60 sixty · 70 seventy · 80 eighty · 90 ninety · 100 one hundred' },
-      { head: 'Big numbers', body: '47 = forty-seven\n85 = eighty-five' }],
-      foot: '13 thirTEEN  ≠  30 THIRty',
-      notes: 'Count together. Clap the stress: thir-TEEN / THIR-ty. Game: say a number, students show 13 or 30 with their fingers.' },
-    { layout: 'exercise', ex: 'numbers', notes: 'Handout exercise 2. Students write the words, then click to check.' },
-    { layout: 'skill', skill: 'listening', tag: 'LISTENING', title: 'Phone numbers', listen: 0,
-      text: 'A: What\'s your phone number?\nB: It\'s 0 9 1 – 5 5 7 – 2 0 3.\nA: Sorry? Can you say it again?\nB: Oh nine one, double five seven, two oh three.',
-      tips: ['0 → "oh"', '55 → "double five"', 'Say the numbers in groups'],
-      notes: 'Press 🔊 Listen (or read the dialogue). Students repeat in pairs with their own (or a made-up) number.' },
-    { layout: 'exercise', ex: 'phones', notes: 'Handout exercise 3. Press 🔊 Listen on this slide — play it twice. Then click to show the answers.' },
-    { layout: 'finish', title: 'Well done!', rows: ['I can say the alphabet', 'I can spell my name', 'I can say numbers 0–100', 'I can say a phone number'],
-      foot: 'Homework: the revision test 📲 (link from your teacher)', notes: 'Send the revision test link now (Course → Revision test → Copy the link).' }
+    {
+      "layout": "title",
+      "notes": "The very first lesson (2 hours). Smile, say \"Hello!\" and write your name on the board — spell it aloud. Students need the handout (15 exercises)."
+    },
+    {
+      "layout": "list",
+      "tag": "TODAY",
+      "title": "What we learn today",
+      "rows": [
+        {
+          "emoji": "🔤",
+          "text": "Words: the alphabet A–Z · numbers 0–100"
+        },
+        {
+          "emoji": "🎵",
+          "text": "Sounds: letters that sound alike · thirTEEN or THIRty?"
+        },
+        {
+          "emoji": "🗣️",
+          "text": "Speaking: \"How do you spell it?\" · phone numbers"
+        },
+        {
+          "emoji": "🎧",
+          "text": "Listening: names, numbers, a phone call"
+        },
+        {
+          "emoji": "📝",
+          "text": "Revision test: 20 questions at the end"
+        }
+      ],
+      "notes": "Read the list quickly — 1 minute."
+    },
+    {
+      "layout": "questions",
+      "tag": "WARM-UP",
+      "title": "Hello! Let's talk",
+      "rows": [
+        "What's your name?",
+        "How old are you?",
+        "Where are you from?",
+        "Can you say A, B, C…?",
+        "Count from 1 to 10!"
+      ],
+      "notes": "Click to show each question; ask 3–4 students each. 5 minutes."
+    },
+    {
+      "layout": "game",
+      "tag": "WARM-UP GAME",
+      "title": "Name chain",
+      "emoji": "⛓️",
+      "minutes": 7,
+      "text": "Student 1: \"I'm Anna.\"\nStudent 2: \"She's Anna. I'm Ali.\"\nStudent 3: \"She's Anna, he's Ali, I'm Lola.\"\n…and round the class!",
+      "notes": "Start the timer. If someone forgets a name, the class helps."
+    },
+    {
+      "layout": "words",
+      "tag": "LEAD-IN",
+      "title": "Words for today",
+      "cards": [
+        {
+          "emoji": "🔤",
+          "word": "letter",
+          "tr": "harf"
+        },
+        {
+          "emoji": "🔢",
+          "word": "number",
+          "tr": "raqam"
+        },
+        {
+          "emoji": "📛",
+          "word": "name",
+          "tr": "ism"
+        },
+        {
+          "emoji": "✍️",
+          "word": "spell",
+          "tr": "harflab aytmoq"
+        },
+        {
+          "emoji": "🅰️",
+          "word": "vowel",
+          "tr": "unli tovush"
+        },
+        {
+          "emoji": "📞",
+          "word": "phone number",
+          "tr": "telefon raqami"
+        },
+        {
+          "emoji": "✌️",
+          "word": "double",
+          "tr": "ikki marta"
+        },
+        {
+          "emoji": "⭕",
+          "word": "zero / oh",
+          "tr": "nol"
+        }
+      ],
+      "notes": "Say each word, students repeat. \"What is it in Uzbek?\" — click the card to check."
+    },
+    {
+      "layout": "tiles",
+      "tag": "LESSON 1 · THE ALPHABET",
+      "title": "The alphabet: 26 letters",
+      "tiles": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z"
+      ],
+      "mark": [
+        "A",
+        "E",
+        "I",
+        "O",
+        "U"
+      ],
+      "foot": "Vowels: A E I O U · the others are consonants",
+      "notes": "Say the alphabet slowly, students repeat. Then faster. Then boys / girls take turns letter by letter."
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 1 · SOUNDS",
+      "title": "Letters that sound alike",
+      "boxes": [
+        {
+          "head": "/eɪ/  (day)",
+          "body": "A  H  J  K"
+        },
+        {
+          "head": "/iː/  (see)",
+          "body": "B  C  D  E  G  P  T  V"
+        },
+        {
+          "head": "/e/  (pen)",
+          "body": "F  L  M  N  S  X  Z"
+        },
+        {
+          "head": "/aɪ/  (my)",
+          "body": "I  Y"
+        },
+        {
+          "head": "/əʊ/  (no)",
+          "body": "O"
+        },
+        {
+          "head": "/uː/  (you)",
+          "body": "Q  U  W"
+        },
+        {
+          "head": "/ɑː/  (car)",
+          "body": "R"
+        }
+      ],
+      "foot": "Say each group fast: \"A H J K!\" \"B C D E G P T V!\"",
+      "notes": "Groups race to say their line. Point at a group, students say it."
+    },
+    {
+      "layout": "mistakes",
+      "tag": "YOU FOUND IT",
+      "title": "Letter mistakes everyone makes",
+      "rows": [
+        {
+          "wrong": "E sounds like /aɪ/",
+          "right": "E is /iː/ — I is /aɪ/"
+        },
+        {
+          "wrong": "G and J sound the same",
+          "right": "G /dʒiː/ — J /dʒeɪ/"
+        },
+        {
+          "wrong": "A and R sound the same",
+          "right": "A /eɪ/ — R /ɑː/"
+        },
+        {
+          "wrong": "W = \"wee\"",
+          "right": "W = \"double U\""
+        },
+        {
+          "wrong": "H = \"hech\"",
+          "right": "H = /eɪtʃ/ (\"aitch\")"
+        },
+        {
+          "wrong": "Z = \"zi\"",
+          "right": "Z = \"zed\" (UK) / \"zee\" (US)"
+        }
+      ],
+      "notes": "Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one."
+    },
+    {
+      "layout": "exercise",
+      "ex": "odd",
+      "notes": "Handout exercise 1. Students say the letters aloud in pairs and circle. Click to check."
+    },
+    {
+      "layout": "exercise",
+      "ex": "letters",
+      "notes": "Handout exercise 2. 3 minutes, then check."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 1",
+      "title": "Spell your name",
+      "listen": 0,
+      "text": "Five people say and spell their names.\nListen and write the names (handout exercise 3).\n\nYou hear it two times. 🎧",
+      "tips": [
+        "Listen for \"double\": double E = EE",
+        "Names start with a capital letter",
+        "Write each letter you hear"
+      ],
+      "notes": "Play twice. Then the next slide shows the answers one by one."
+    },
+    {
+      "layout": "exercise",
+      "ex": "names",
+      "notes": "Handout exercise 3 (Listening 1). Play again if needed, then click to show the names."
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 2 · SPELLING NAMES",
+      "title": "How do you spell it?",
+      "boxes": [
+        {
+          "head": "💬 Ask",
+          "body": "A: What's your name?\nB: Bella.\nA: How do you spell it?\nB: B - E - double L - A."
+        },
+        {
+          "head": "✌️ Double letters",
+          "body": "LL = double L (Bella)\nEE = double E (Green)\nZZ = double Z (Lizzy)\nOO = double O (Brooks)"
+        },
+        {
+          "head": "🔠 Capital letters",
+          "body": "Names: Anna, Tom Kelly\nCities: Tashkent\nI: I'm Ali"
+        }
+      ],
+      "foot": "\"Can you spell it, please?\" — polite! 🙂",
+      "notes": "Model the dialogue with a strong student. Then 3 pairs say it in front of the class."
+    },
+    {
+      "layout": "exercise",
+      "ex": "order",
+      "notes": "Handout exercise 4. Pairs race. Click to check."
+    },
+    {
+      "layout": "exercise",
+      "ex": "capitals",
+      "notes": "Handout exercise 5. Students correct, then compare with a partner."
+    },
+    {
+      "layout": "game",
+      "tag": "SPEAKING · PAIR WORK",
+      "title": "Spell it!",
+      "emoji": "👥",
+      "minutes": 5,
+      "text": "Ask 4 classmates:\n\"What's your name?\"\n\"How do you spell it?\"\nWrite the names. Show them — is it right? ✅",
+      "notes": "Start the timer. Walk around and listen for \"double\"."
+    },
+    {
+      "layout": "tiles",
+      "tag": "LESSON 3 · NUMBERS 0–20",
+      "title": "Numbers 0–20",
+      "cols": 7,
+      "tiles": [
+        "0 zero",
+        "1 one",
+        "2 two",
+        "3 three",
+        "4 four",
+        "5 five",
+        "6 six",
+        "7 seven",
+        "8 eight",
+        "9 nine",
+        "10 ten",
+        "11 eleven",
+        "12 twelve",
+        "13 thirteen",
+        "14 fourteen",
+        "15 fifteen",
+        "16 sixteen",
+        "17 seventeen",
+        "18 eighteen",
+        "19 nineteen",
+        "20 twenty"
+      ],
+      "small": true,
+      "notes": "Count together, then backwards from 20. Clap on 11 and 12 — they are special (no \"-teen\")."
+    },
+    {
+      "layout": "exercise",
+      "ex": "match",
+      "notes": "Handout exercise 6. Click each row to show the matching letter."
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 4 · BIG NUMBERS",
+      "title": "Tens and big numbers",
+      "boxes": [
+        {
+          "head": "Tens",
+          "body": "20 twenty · 30 thirty · 40 forty\n50 fifty · 60 sixty · 70 seventy\n80 eighty · 90 ninety · 100 one hundred"
+        },
+        {
+          "head": "Big numbers",
+          "body": "21 = twenty-one\n47 = forty-seven\n85 = eighty-five\n(don't forget the -)"
+        },
+        {
+          "head": "👂 Listen to the stress",
+          "body": "13 thir-TEEN\n30 THIR-ty\n14 four-TEEN · 40 FOR-ty"
+        }
+      ],
+      "foot": "13 thirTEEN  ≠  30 THIRty",
+      "notes": "Clap the stress. Game: say a number — students show 13 or 30 with fingers."
+    },
+    {
+      "layout": "mistakes",
+      "tag": "YOU FOUND IT",
+      "title": "Number mistakes everyone makes",
+      "rows": [
+        {
+          "wrong": "fourty",
+          "right": "forty (no U!)"
+        },
+        {
+          "wrong": "ninty",
+          "right": "ninety"
+        },
+        {
+          "wrong": "twentyone",
+          "right": "twenty-one"
+        },
+        {
+          "wrong": "thirteen = 30",
+          "right": "thirteen = 13 · thirty = 30"
+        },
+        {
+          "wrong": "hundred",
+          "right": "one hundred"
+        },
+        {
+          "wrong": "I am 14 years.",
+          "right": "I'm 14. / I'm 14 years old."
+        }
+      ],
+      "notes": "Students find each mistake, then click."
+    },
+    {
+      "layout": "exercise",
+      "ex": "numwords",
+      "notes": "Handout exercise 7. 4 minutes."
+    },
+    {
+      "layout": "exercise",
+      "ex": "choosenum",
+      "notes": "Handout exercise 8. Read aloud together after checking."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 2",
+      "title": "Numbers",
+      "listen": 1,
+      "text": "Five people say a number.\nListen and circle the right number (handout exercise 9).\n\nCareful: 13 or 30? 15 or 50?",
+      "tips": [
+        "Listen for the stress: -TEEN or -ty?",
+        "Circle a, b or c",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "ages",
+      "notes": "Handout exercise 9 (Listening 2). Click to check."
+    },
+    {
+      "layout": "game",
+      "tag": "GAME",
+      "title": "Number bingo",
+      "emoji": "🎯",
+      "minutes": 8,
+      "text": "Draw a 3 × 3 grid.\nWrite 9 numbers from 1 to 100.\nListen to your teacher. Cross out the numbers you hear.\nThree in a line → \"BINGO!\" 🎉",
+      "notes": "Call numbers like 13/30, 14/40, 15/50 — the tricky ones!"
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 5 · PHONE NUMBERS",
+      "title": "What's your phone number?",
+      "boxes": [
+        {
+          "head": "💬 Ask",
+          "body": "A: What's your phone number?\nB: It's 091 557 203.\nA: Sorry, can you say it again?"
+        },
+        {
+          "head": "🗣️ Say it",
+          "body": "0 → \"oh\"\n55 → \"double five\"\n091 557 203 →\n\"oh nine one, double five seven, two oh three\""
+        },
+        {
+          "head": "✋ Groups",
+          "body": "Say the numbers in groups of three and stop a little after each group."
+        }
+      ],
+      "foot": "Never say \"fifty-five\" in a phone number!",
+      "notes": "Drill: you say a number, students repeat. Then made-up numbers in pairs."
+    },
+    {
+      "layout": "exercise",
+      "ex": "saynum",
+      "notes": "Handout exercise 10. Students write, then say to a partner. Click to check."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 3",
+      "title": "A phone call",
+      "listen": 2,
+      "text": "A mother calls an English school.\nListen and complete (handout exercise 11):\nher son's name, his age, the phone number and the room.",
+      "tips": [
+        "Spelling: listen for \"double\"",
+        "Two true / false questions",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "call",
+      "notes": "Handout exercise 11 (Listening 3). Click to check."
+    },
+    {
+      "layout": "skill",
+      "skill": "reading",
+      "tag": "READING",
+      "title": "Student cards",
+      "text": "STUDENT CARD 1\nName: Nodira Karimova\nAge: 13 · Class: 7A\nPhone: 090 112 456\n\nSTUDENT CARD 2\nName: Tom Kelly\nAge: 14 · Class: 8B\nPhone: 097 448 130\n\nSTUDENT CARD 3\nName: Lizzy Moon\nAge: 12 · Class: 6C\nPhone: 055 300 819",
+      "tips": [
+        "Name · Age · Class · Phone",
+        "Read, then do exercises 12 and 13"
+      ],
+      "notes": "Students read silently (3 min). Then exercises 12 and 13."
+    },
+    {
+      "layout": "exercise",
+      "ex": "cardstf",
+      "notes": "Handout exercise 12."
+    },
+    {
+      "layout": "exercise",
+      "ex": "cardsq",
+      "notes": "Handout exercise 13. Students answer in full where they can."
+    },
+    {
+      "layout": "exercise",
+      "ex": "mycard",
+      "minutes": 6,
+      "notes": "Handout exercise 14. Students write their card, then read it to a partner, who writes the phone number. 3 students read theirs to the class."
+    },
+    {
+      "layout": "exercise",
+      "ex": "quiz",
+      "notes": "Handout exercise 15 — or play it as a team quiz: two teams, the first correct answer gets a point."
+    },
+    {
+      "layout": "finish",
+      "title": "Well done!",
+      "rows": [
+        "I can say and spell the alphabet",
+        "I can spell my name",
+        "I can say numbers 0–100",
+        "I can say a phone number"
+      ],
+      "foot": "Homework: the revision test 📲 (link from your teacher)",
+      "notes": "Send the revision test link now (Course → Revision test → Copy the link)."
+    }
   ],
-  teacherScript: ['Exercise 3: press 🔊 on its slide (or on the Listening card) and play it twice.'],
-  // read aloud by the teacher's computer (🔊)
   listen: [
-    { label: 'Listening — the phone number dialogue', text: 'What\'s your phone number? It\'s oh nine one, five five seven, two oh three. Sorry? Can you say it again? Oh nine one, double five seven, two oh three.' },
-    { label: 'Exercise 3 — phone numbers', text: 'Number one. Aziz: oh seven one, double three nine, five oh two. Number two. Lola: oh double nine, two one four, eight six oh. Number three. Mister Brown: oh double five, six double seven, one one three.' }
+    {
+      "label": "Listening 1 — Spell your name (5 people)",
+      "src": "audio/course/b1l1-listening-1.mp3",
+      "text": "Hello! What's your name? Kamila. How do you spell it? K. A. M. I. L. A. And what's your name? Jasur. How do you spell it? J. A. S. U. R. Hello! Are you the teacher? Yes, I am. I'm Mr Green. How do you spell Green? G. R. double E. N. Next, please. What's your name? Bobur. Can you spell it, please? B. O. B. U. R. And you? I'm Lizzy. How do you spell it? L. I. double Z. Y. Thank you, everyone!",
+      "script": "Narrator: Listening one. Spell your name. Listen and write the names.\nA: Hello! What's your name?\nB: Kamila.\nA: How do you spell it?\nB: K. A. M. I. L. A.\nA: And what's your name?\nB: Jasur.\nA: How do you spell it?\nB: J. A. S. U. R.\nA: Hello! Are you the teacher?\nB: Yes, I am. I'm Mr Green.\nA: How do you spell Green?\nB: G. R. double E. N.\nA: Next, please. What's your name?\nB: Bobur.\nA: Can you spell it, please?\nB: B. O. B. U. R.\nA: And you?\nB: I'm Lizzy.\nA: How do you spell it?\nB: L. I. double Z. Y.\nA: Thank you, everyone!"
+    },
+    {
+      "label": "Listening 2 — Numbers (5 people)",
+      "src": "audio/course/b1l1-listening-2.mp3",
+      "text": "Number one. Hi, I'm Tom. I'm thirteen years old. Number two. This is my grandmother. She's seventy-two. Number three. I'm Sara. There are fifteen students in my class. Number four. My name's Ben. I go to school on bus number forty-eight. Number five. Our school is big. It has ninety computers!",
+      "script": "Narrator: Listening two. Listen and circle the right number.\nNarrator: Number one.\nB: Hi, I'm Tom. I'm thirteen years old.\nNarrator: Number two.\nB: This is my grandmother. She's seventy-two.\nNarrator: Number three.\nB: I'm Sara. There are fifteen students in my class.\nNarrator: Number four.\nB: My name's Ben. I go to school on bus number forty-eight.\nNarrator: Number five.\nA: Our school is big. It has ninety computers!"
+    },
+    {
+      "label": "Listening 3 — A phone call to an English school",
+      "src": "audio/course/b1l1-listening-3.mp3",
+      "text": "Hello, Sunrise English School. Hello! I want English lessons for my son. Of course. What's his name? Daniel Brooks. How do you spell Brooks? B. R. double O. K. S. Thank you. And how old is Daniel? He's twelve. Twelve. OK. What's your phone number? It's oh double seven, four double five, two oh one. Oh double seven, four double five, two oh one. Great. The lesson is in room fourteen. Room fourteen. Thank you! Goodbye. Goodbye!",
+      "script": "Narrator: Listening three. A phone call. Listen and complete.\nA: Hello, Sunrise English School.\nB: Hello! I want English lessons for my son.\nA: Of course. What's his name?\nB: Daniel Brooks.\nA: How do you spell Brooks?\nB: B. R. double O. K. S.\nA: Thank you. And how old is Daniel?\nB: He's twelve.\nA: Twelve. OK. What's your phone number?\nB: It's oh double seven, four double five, two oh one.\nA: Oh double seven, four double five, two oh one. Great. The lesson is in room fourteen.\nB: Room fourteen. Thank you! Goodbye.\nA: Goodbye!"
+    }
+  ],
+  teacherScript: [
+    "Play each listening twice (🔊 on its slide or the Listening card). The full scripts are below."
   ],
   // 20 questions, each with 1 right answer and 3 wrong ones; "_____" is the gap
   test: [
