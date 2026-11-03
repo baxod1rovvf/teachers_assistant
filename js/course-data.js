@@ -1259,54 +1259,1090 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
   ]
 });
 
-COURSE_BEGINNER.blocks[0].lessons[0].handout = courseExerciseHandout(COURSE_BEGINNER.blocks[0].lessons[0]);
 
 /* ---------- Block 1, Lesson 2: Hello! Names and countries ---------- */
 Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
-  goals: ['Greet people and say "Nice to meet you"', 'Use I\'m / you\'re / he\'s / she\'s (the verb "be")', 'Say where people are from: countries and nationalities'],
+  // A 2-hour lesson (teacher, 2026-11-03): many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude
+  // (Kokoro voices, audio/course/*.mp3). Generated from a script; the slides (deck) and the handout come from `exercises`.
+  skills: [
+    "listening",
+    "reading",
+    "writing",
+    "speaking"
+  ],
+  goals: [
+    "Greet people at different times of the day and say \"Nice to meet you\"",
+    "Use the verb \"be\": I'm, you're, he's, she's, we're, they're",
+    "Say countries and nationalities — with capital letters",
+    "Ask and answer: \"Where are you from?\" \"Are you…?\" \"Yes, I am. / No, I'm not.\""
+  ],
   warmups: [
-    { emoji: '🔤', title: 'Spell it fast (from Lesson 1)', time: '5 min', how: 'Say a name or a country ("Turkey!"). Pairs race to spell it on a piece of paper. The first pair to hold it up with the right spelling gets a point. 6–8 words.' },
-    { emoji: '🎴', title: 'Find your twin', time: '7 min', how: 'Give every student a card with a name and a country — each card has one twin. Students walk around: "Hi! What\'s your name?" "Where are you from?" until they find the classmate with the same country. Pairs sit down together.' }
+    {
+      "emoji": "🔤",
+      "title": "Spell it fast (from Lesson 1)",
+      "time": "5 min",
+      "how": "Say a name or a country. Pairs race to spell it on paper; the first right spelling held up wins a point."
+    },
+    {
+      "emoji": "🎴",
+      "title": "Find your twin",
+      "time": "7 min",
+      "how": "Every student gets a card with a name and a country; each card has one twin. Students ask \"Where are you from?\" until they find their twin."
+    },
+    {
+      "emoji": "🕵️",
+      "title": "Who am I?",
+      "time": "7 min",
+      "how": "A student is a famous person. The class asks \"Are you from the USA?\" \"Are you a singer?\" — answers only \"Yes, I am / No, I'm not.\""
+    }
   ],
-  slides: [
-    { emoji: '🌍👋', title: 'Hello! Names and countries', body: 'Today we learn:\n• greetings\n• I\'m · you\'re · he\'s · she\'s\n• countries and nationalities' },
-    { emoji: '🔤', title: 'Warm-up: Spell it fast', body: 'Listen to the word.\nWrite it with your partner — fast!\nHold it up when you are ready. ✋' },
-    { emoji: '👋', title: 'Greetings', body: 'Hello! · Hi!\nGood morning ☀️ (before 12)\nGood afternoon 🌤️ (12 – 6)\nGood evening 🌙 (after 6)\nGoodbye! · Bye! · See you!' },
-    { emoji: '🤝', title: 'Nice to meet you', body: 'A: Hi, I\'m Adam. What\'s your name?\nB: I\'m Lucy.\nA: Nice to meet you, Lucy.\nB: Nice to meet you too!' },
-    { emoji: '🧩', title: 'The verb "be"', body: 'I am → I\'m\nyou are → you\'re\nhe is → he\'s · she is → she\'s · it is → it\'s\nwe are → we\'re · they are → they\'re' },
-    { emoji: '🗺️', title: 'Countries', body: 'Italy · Canada · Russia · Turkey\nthe UK · the USA · China · Japan\nKorea · Germany · France · Spain' },
-    { emoji: '🏳️', title: 'Nationalities', body: 'Italy → Italian · Canada → Canadian\nRussia → Russian · Korea → Korean · Germany → German\nTurkey → Turkish · the UK → British · Spain → Spanish\nthe USA → American\nChina → Chinese · Japan → Japanese\nFrance → French' },
-    { emoji: '❓', title: 'Where are you from?', body: 'A: Where are you from?\nB: I\'m from Italy. I\'m Italian.\nA: Where is Ken from?\nB: He\'s from Japan. He\'s Japanese.' },
-    { emoji: '✅', title: 'Yes or no?', body: 'Are you from Spain?\n→ Yes, I am. / No, I\'m not.\nIs she British?\n→ Yes, she is. / No, she isn\'t.' },
-    { emoji: '🎴', title: 'Pair work: Find your twin', body: 'Take a card. Walk and ask:\n"What\'s your name?"\n"Where are you from?"\nFind the student from the same country! 🔍' },
-    { emoji: '📖', title: 'Read: Hello from Mei', body: 'Hello! I\'m Mei. I\'m thirteen.\nI\'m from China. I\'m Chinese.\nMy best friend is Ana. She\'s from Spain.\nShe\'s Spanish. We\'re in class 7B.' },
-    { emoji: '🏁', title: 'Well done!', body: 'Today you can:\n✅ say hello and goodbye\n✅ use I\'m / he\'s / she\'s\n✅ say where you are from\n\nHomework: the revision test 📲' }
+  exercises: [
+    {
+      "id": "greet",
+      "type": "match",
+      "skill": "reading",
+      "title": "Match the greeting and the answer.",
+      "items": [
+        {
+          "q": "Hello!",
+          "a": "Hi!"
+        },
+        {
+          "q": "Nice to meet you.",
+          "a": "Nice to meet you too."
+        },
+        {
+          "q": "How are you?",
+          "a": "I'm fine, thanks."
+        },
+        {
+          "q": "Goodbye!",
+          "a": "Bye! See you!"
+        },
+        {
+          "q": "What's your name?",
+          "a": "I'm Lucy."
+        },
+        {
+          "q": "Thank you!",
+          "a": "You're welcome."
+        }
+      ]
+    },
+    {
+      "id": "times",
+      "type": "choose",
+      "skill": "reading",
+      "title": "Circle the right greeting.",
+      "items": [
+        {
+          "q": "8 o'clock in the morning ☀️",
+          "opts": [
+            "Good morning",
+            "Good evening",
+            "Good night"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "2 o'clock in the afternoon 🌤️",
+          "opts": [
+            "Good evening",
+            "Good afternoon",
+            "Good morning"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "7 o'clock in the evening 🌙",
+          "opts": [
+            "Good afternoon",
+            "Good morning",
+            "Good evening"
+          ],
+          "a": "c"
+        },
+        {
+          "q": "11 o'clock at night — you go to bed 🛏️",
+          "opts": [
+            "Good night",
+            "Good morning",
+            "Hello"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "You leave school.",
+          "opts": [
+            "Hello!",
+            "Goodbye!",
+            "Good morning!"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "You meet a new friend.",
+          "opts": [
+            "See you!",
+            "Nice to meet you!",
+            "Good night!"
+          ],
+          "a": "b"
+        }
+      ]
+    },
+    {
+      "id": "lis_greet",
+      "type": "choose",
+      "skill": "listening",
+      "title": "Listening 1: Listen to five short dialogues. Circle the right answer.",
+      "items": [
+        {
+          "q": "Dialogue 1 is in the…",
+          "opts": [
+            "morning",
+            "afternoon",
+            "evening"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "In dialogue 2, the new girl's name is…",
+          "opts": [
+            "Kate",
+            "Katie",
+            "Cathy"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "In dialogue 3, Mr Hill is…",
+          "opts": [
+            "fine",
+            "tired",
+            "happy"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "Dialogue 4 is in the…",
+          "opts": [
+            "morning",
+            "afternoon",
+            "evening"
+          ],
+          "a": "c"
+        },
+        {
+          "q": "In dialogue 5, the boys say…",
+          "opts": [
+            "Hello!",
+            "Nice to meet you!",
+            "See you tomorrow!"
+          ],
+          "a": "c"
+        }
+      ],
+      "listen": 0
+    },
+    {
+      "id": "be",
+      "type": "gap",
+      "skill": "writing",
+      "title": "Write am, is or are.",
+      "items": [
+        {
+          "q": "I ___ from Canada.",
+          "a": "am"
+        },
+        {
+          "q": "She ___ my friend.",
+          "a": "is"
+        },
+        {
+          "q": "We ___ in class 7B.",
+          "a": "are"
+        },
+        {
+          "q": "They ___ from Japan.",
+          "a": "are"
+        },
+        {
+          "q": "He ___ twelve.",
+          "a": "is"
+        },
+        {
+          "q": "You ___ a good student!",
+          "a": "are"
+        },
+        {
+          "q": "It ___ a big school.",
+          "a": "is"
+        },
+        {
+          "q": "Tom and I ___ friends.",
+          "a": "are"
+        }
+      ]
+    },
+    {
+      "id": "becorrect",
+      "type": "correct",
+      "skill": "writing",
+      "title": "Correct the mistakes.",
+      "items": [
+        {
+          "q": "She are from Spain.",
+          "a": "She is (She's) from Spain."
+        },
+        {
+          "q": "I is twelve.",
+          "a": "I am (I'm) twelve."
+        },
+        {
+          "q": "They is my friends.",
+          "a": "They are my friends."
+        },
+        {
+          "q": "He from Italy.",
+          "a": "He is (He's) from Italy."
+        },
+        {
+          "q": "We is in class 6A.",
+          "a": "We are in class 6A."
+        }
+      ]
+    },
+    {
+      "id": "nat",
+      "type": "match",
+      "skill": "reading",
+      "title": "Match the country and the nationality.",
+      "items": [
+        {
+          "q": "Italy",
+          "a": "Italian"
+        },
+        {
+          "q": "Spain",
+          "a": "Spanish"
+        },
+        {
+          "q": "Japan",
+          "a": "Japanese"
+        },
+        {
+          "q": "the UK",
+          "a": "British"
+        },
+        {
+          "q": "the USA",
+          "a": "American"
+        },
+        {
+          "q": "France",
+          "a": "French"
+        },
+        {
+          "q": "China",
+          "a": "Chinese"
+        },
+        {
+          "q": "Germany",
+          "a": "German"
+        }
+      ]
+    },
+    {
+      "id": "natodd",
+      "type": "odd",
+      "skill": "reading",
+      "title": "Which word is different? Circle it.",
+      "items": [
+        {
+          "q": "Spain   France   German   Italy",
+          "a": "German (a nationality)"
+        },
+        {
+          "q": "Japanese   Chinese   Russia   British",
+          "a": "Russia (a country)"
+        },
+        {
+          "q": "morning   evening   Hello   afternoon",
+          "a": "Hello (not a time of day)"
+        },
+        {
+          "q": "he's   she's   it's   my",
+          "a": "my"
+        },
+        {
+          "q": "Hi   Hello   Goodbye   Good morning",
+          "a": "Goodbye (not hello)"
+        },
+        {
+          "q": "am   is   are   from",
+          "a": "from"
+        }
+      ]
+    },
+    {
+      "id": "lis_from",
+      "type": "gap",
+      "skill": "listening",
+      "title": "Listening 2: Five students at a summer school. Where are they from?",
+      "items": [
+        {
+          "q": "Ken is from ____________.",
+          "a": "Japan"
+        },
+        {
+          "q": "Sophie is ____________.",
+          "a": "French"
+        },
+        {
+          "q": "Carlos is from ____________.",
+          "a": "Spain"
+        },
+        {
+          "q": "Mei is ____________.",
+          "a": "Chinese"
+        },
+        {
+          "q": "Jack is from ____________.",
+          "a": "the USA"
+        }
+      ],
+      "listen": 1
+    },
+    {
+      "id": "short",
+      "type": "choose",
+      "skill": "speaking",
+      "title": "Circle the right short answer.",
+      "items": [
+        {
+          "q": "Are you from Italy? (✔)",
+          "opts": [
+            "Yes, I am.",
+            "Yes, I'm.",
+            "Yes, I is."
+          ],
+          "a": "a"
+        },
+        {
+          "q": "Is she British? (✘)",
+          "opts": [
+            "No, she not.",
+            "No, she isn't.",
+            "No, she aren't."
+          ],
+          "a": "b"
+        },
+        {
+          "q": "Are they from Spain? (✔)",
+          "opts": [
+            "Yes, they are.",
+            "Yes, they is.",
+            "Yes, they're."
+          ],
+          "a": "a"
+        },
+        {
+          "q": "Is he your friend? (✔)",
+          "opts": [
+            "Yes, he's.",
+            "Yes, he is.",
+            "Yes, he am."
+          ],
+          "a": "b"
+        },
+        {
+          "q": "Are you twelve? (✘)",
+          "opts": [
+            "No, I'm not.",
+            "No, I amn't.",
+            "No, I not."
+          ],
+          "a": "a"
+        },
+        {
+          "q": "Is it a big school? (✘)",
+          "opts": [
+            "No, it isn't.",
+            "No, it not.",
+            "No, it aren't."
+          ],
+          "a": "a"
+        }
+      ]
+    },
+    {
+      "id": "qorder",
+      "type": "order",
+      "skill": "writing",
+      "title": "Put the words in order. Write the question.",
+      "items": [
+        {
+          "q": "from / you / are / where",
+          "a": "Where are you from?"
+        },
+        {
+          "q": "name / what's / your",
+          "a": "What's your name?"
+        },
+        {
+          "q": "she / is / American",
+          "a": "Is she American?"
+        },
+        {
+          "q": "you / are / how",
+          "a": "How are you?"
+        },
+        {
+          "q": "your / friend / he / is",
+          "a": "Is he your friend?"
+        },
+        {
+          "q": "they / where / from / are",
+          "a": "Where are they from?"
+        }
+      ]
+    },
+    {
+      "id": "lis_camp",
+      "type": "gap",
+      "skill": "listening",
+      "title": "Listening 3: At a summer camp. Listen and complete.",
+      "items": [
+        {
+          "q": "The girl's name is Anna ____________.",
+          "a": "Kowalska (K-O-W-A-L-S-K-A)"
+        },
+        {
+          "q": "True or false: Anna is from Spain.  T / F",
+          "a": "F — she's from Poland"
+        },
+        {
+          "q": "Anna is ________ years old.",
+          "a": "13"
+        },
+        {
+          "q": "Her friend Rosa is ____________.",
+          "a": "Mexican"
+        },
+        {
+          "q": "True or false: They are in group B.  T / F",
+          "a": "T"
+        }
+      ],
+      "listen": 2
+    },
+    {
+      "id": "camp_tf",
+      "type": "tf",
+      "skill": "reading",
+      "title": "Read the camp profiles. True (T) or false (F)?",
+      "items": [
+        {
+          "q": "Mei is Chinese.",
+          "a": "T"
+        },
+        {
+          "q": "Carlos is fifteen.",
+          "a": "F (12)"
+        },
+        {
+          "q": "Pablo is Carlos's brother.",
+          "a": "T"
+        },
+        {
+          "q": "Emma is American.",
+          "a": "F (British)"
+        },
+        {
+          "q": "Emma and Mei are in group A.",
+          "a": "T"
+        }
+      ],
+      "text": "Hi! I'm Mei. I'm thirteen and I'm from China. I'm Chinese. I'm at the summer camp with my friend Kate.\n\nHello! My name's Carlos. I'm twelve. I'm from Spain, so I'm Spanish. My brother Pablo is here too — he's fifteen.\n\nHi, I'm Emma. I'm from the UK — I'm British. I'm fourteen. My best friend here is Mei. We're in group A."
+    },
+    {
+      "id": "camp_q",
+      "type": "write",
+      "skill": "reading",
+      "title": "Read again. Answer the questions.",
+      "items": [
+        {
+          "q": "Where is Mei from?",
+          "a": "She's from China."
+        },
+        {
+          "q": "How old is Carlos?",
+          "a": "He's twelve."
+        },
+        {
+          "q": "What nationality is Carlos?",
+          "a": "Spanish"
+        },
+        {
+          "q": "Who is Emma's best friend?",
+          "a": "Mei"
+        },
+        {
+          "q": "How old is Pablo?",
+          "a": "He's fifteen."
+        }
+      ]
+    },
+    {
+      "id": "aboutme",
+      "type": "write",
+      "skill": "writing",
+      "title": "Write about you and a friend.",
+      "items": [
+        {
+          "q": "My name is…",
+          "a": "(students' own)"
+        },
+        {
+          "q": "I'm from…  I'm… (nationality)",
+          "a": "(students' own)"
+        },
+        {
+          "q": "I'm… years old.",
+          "a": "(students' own)"
+        },
+        {
+          "q": "My friend's name is…",
+          "a": "(students' own)"
+        },
+        {
+          "q": "He / She is from…",
+          "a": "(students' own)"
+        }
+      ]
+    },
+    {
+      "id": "quiz",
+      "type": "choose",
+      "skill": "speaking",
+      "title": "Team quiz! Say the answer first.",
+      "items": [
+        {
+          "q": "Good ___ ! (at 9 pm)",
+          "opts": [
+            "morning",
+            "evening",
+            "afternoon"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "They ___ from Italy.",
+          "opts": [
+            "is",
+            "am",
+            "are"
+          ],
+          "a": "c"
+        },
+        {
+          "q": "the USA →",
+          "opts": [
+            "American",
+            "Americish",
+            "USA-ian"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "Is he French? — No, he ___.",
+          "opts": [
+            "isn't",
+            "aren't",
+            "not"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "Nice to meet you! — ",
+          "opts": [
+            "Nice to meet you too!",
+            "Good night!",
+            "I'm fine."
+          ],
+          "a": "a"
+        },
+        {
+          "q": "Which needs a capital letter?",
+          "opts": [
+            "spanish",
+            "Spanish",
+            "both"
+          ],
+          "a": "b"
+        }
+      ]
+    }
   ],
-  handout: {
-    title: 'Hello! Names and countries',
-    sections: [
-      { skill: 'listening', title: 'Listen. Where are they from? Match.',
-        items: ['1. Ken  ·  a) the USA', '2. Sophie  ·  b) Japan', '3. Jack  ·  c) Turkey', '4. Elif  ·  d) France'] },
-      { skill: 'reading', title: 'Read and write T (true) or F (false).',
-        text: 'Hi! I\'m Carlos. I\'m twelve and I\'m from Spain. My friend Emma is from the UK. She\'s British. Her brother Tom is fourteen. They\'re in my school.',
-        items: ['1. Carlos is Spanish. ___', '2. Carlos is fourteen. ___', '3. Emma is American. ___', '4. Tom is Emma\'s brother. ___'] },
-      { skill: 'writing', title: 'Write the nationality.',
-        items: ['Italy → __________', 'Russia → __________', 'China → __________', 'Turkey → __________', 'the USA → __________', 'Germany → __________'] },
-      { skill: 'writing', title: 'Write am, is or are.',
-        items: ['1. I ____ from Italy.', '2. She ____ Japanese.', '3. We ____ in class 7B.', '4. ____ you from Russia?', '5. He ____ my friend.', '6. They ____ from France.'] },
-      { skill: 'speaking', title: 'Pair work: ask three classmates and write.',
-        text: 'Name  ·  Country  ·  Nationality\n1. ______________________________\n2. ______________________________\n3. ______________________________' }
-    ],
-    teacherScript: ['Read the four introductions aloud (or press 🔊): Ken — Japan; Sophie — France; Jack — the USA; Elif — Turkey.'],
-    answers: [
-      'Listening: 1 b · 2 d · 3 a · 4 c',
-      'Reading: 1 T · 2 F (twelve) · 3 F (British) · 4 T',
-      'Nationalities: Italian · Russian · Chinese · Turkish · American · German',
-      'am / is / are: 1 am · 2 is · 3 are · 4 Are · 5 is · 6 are'
-    ]
-  },
+  deck: [
+    {
+      "layout": "title",
+      "notes": "Lesson 2 (2 hours). Greet the class at the door: \"Good morning! / Good afternoon!\" Students need the handout (15 exercises)."
+    },
+    {
+      "layout": "list",
+      "tag": "TODAY",
+      "title": "What we learn today",
+      "rows": [
+        {
+          "emoji": "👋",
+          "text": "Greetings for every time of the day"
+        },
+        {
+          "emoji": "🧩",
+          "text": "Grammar: I'm, you're, he's, she's, we're, they're"
+        },
+        {
+          "emoji": "🌍",
+          "text": "Words: 12 countries and nationalities"
+        },
+        {
+          "emoji": "🎧",
+          "text": "Listening: dialogues, a summer school, a summer camp"
+        },
+        {
+          "emoji": "📝",
+          "text": "Revision test: 20 questions at the end"
+        }
+      ],
+      "notes": "Read the list quickly — 1 minute."
+    },
+    {
+      "layout": "questions",
+      "tag": "WARM-UP",
+      "title": "From Lesson 1: can you remember?",
+      "rows": [
+        "How do you spell your name?",
+        {
+          "q": "What is 13 + 17?",
+          "a": "thirty"
+        },
+        {
+          "q": "Which letters sound like A?",
+          "a": "H, J, K"
+        },
+        {
+          "q": "How do we say 0 in a phone number?",
+          "a": "\"oh\""
+        },
+        {
+          "q": "What's the number after nineteen?",
+          "a": "twenty"
+        }
+      ],
+      "notes": "Ask around the class. Click to show each question, then its answer."
+    },
+    {
+      "layout": "game",
+      "tag": "WARM-UP GAME",
+      "title": "Spell it fast",
+      "emoji": "🔤",
+      "minutes": 5,
+      "text": "Listen to the word.\nWork with your partner: write it — fast!\nHold it up when you are ready. ✋\nRight spelling = 1 point",
+      "notes": "Words: Spain, Japan, hello, morning, friend, twelve."
+    },
+    {
+      "layout": "words",
+      "tag": "LEAD-IN",
+      "title": "Words for today",
+      "cards": [
+        {
+          "emoji": "👋",
+          "word": "hello",
+          "tr": "Hello! Hi!"
+        },
+        {
+          "emoji": "🙋",
+          "word": "goodbye",
+          "tr": "Bye! See you!"
+        },
+        {
+          "emoji": "🌍",
+          "word": "country",
+          "tr": "Spain, Japan"
+        },
+        {
+          "emoji": "🏳️",
+          "word": "nationality",
+          "tr": "Spanish, Japanese"
+        },
+        {
+          "emoji": "🤝",
+          "word": "friend",
+          "tr": "Lucy is my friend."
+        },
+        {
+          "emoji": "📍",
+          "word": "from",
+          "tr": "I'm from Italy."
+        },
+        {
+          "emoji": "☀️",
+          "word": "morning",
+          "tr": "Good morning!"
+        },
+        {
+          "emoji": "🌙",
+          "word": "evening",
+          "tr": "Good evening!"
+        }
+      ],
+      "notes": "Say each word, students repeat. Ask \"Can you give an example?\" — then click the card to show one."
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 1 · GREETINGS",
+      "title": "Hello and goodbye",
+      "boxes": [
+        {
+          "head": "☀️ Morning (before 12)",
+          "body": "Good morning!"
+        },
+        {
+          "head": "🌤️ Afternoon (12 – 6)",
+          "body": "Good afternoon!"
+        },
+        {
+          "head": "🌙 Evening (after 6)",
+          "body": "Good evening!"
+        },
+        {
+          "head": "👋 Any time",
+          "body": "Hello! · Hi!\nGoodbye! · Bye! · See you!"
+        }
+      ],
+      "foot": "\"Good night!\" = when you go to bed 🛏️",
+      "notes": "Show a clock time, students say the greeting. Then act out meeting / leaving."
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 1 · MEETING PEOPLE",
+      "title": "Nice to meet you!",
+      "boxes": [
+        {
+          "head": "🤝 New people",
+          "body": "A: Hi, I'm Ben.\nB: Hi, Ben. I'm Lucy.\nA: Nice to meet you!\nB: Nice to meet you too!"
+        },
+        {
+          "head": "😊 Friends",
+          "body": "A: How are you?\nB: I'm fine, thanks. And you?\nA: I'm OK, thank you."
+        }
+      ],
+      "foot": "Say \"Nice to meet you\" only the first time you meet someone",
+      "notes": "Students stand up and meet three classmates."
+    },
+    {
+      "layout": "mistakes",
+      "tag": "YOU FOUND IT",
+      "title": "Greeting mistakes everyone makes",
+      "rows": [
+        {
+          "wrong": "Good night! (when you arrive)",
+          "right": "Good evening! (Good night = goodbye)"
+        },
+        {
+          "wrong": "Nice to meet you! (to your best friend)",
+          "right": "Hi! / How are you?"
+        },
+        {
+          "wrong": "I fine.",
+          "right": "I'm fine."
+        },
+        {
+          "wrong": "How are you? — I'm 12.",
+          "right": "How are you? — I'm fine."
+        },
+        {
+          "wrong": "Good afternoon! (at 9 am)",
+          "right": "Good morning!"
+        }
+      ],
+      "notes": "Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one."
+    },
+    {
+      "layout": "exercise",
+      "ex": "greet",
+      "notes": "Handout exercise 1. Click each row to show the matching letter."
+    },
+    {
+      "layout": "exercise",
+      "ex": "times",
+      "notes": "Handout exercise 2."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 1",
+      "title": "Five short dialogues",
+      "listen": 0,
+      "text": "Five short dialogues: people meet and say goodbye.\nListen and circle the right answer (handout exercise 3).",
+      "tips": [
+        "Listen for the time of day",
+        "Listen for names",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "lis_greet",
+      "notes": "Handout exercise 3 (Listening 1). Click to check."
+    },
+    {
+      "layout": "tiles",
+      "tag": "LESSON 2 · THE VERB \"BE\"",
+      "title": "I'm, you're, he's…",
+      "tiles": [
+        "I am → I'm",
+        "you are → you're",
+        "he is → he's",
+        "she is → she's",
+        "it is → it's",
+        "we are → we're",
+        "they are → they're"
+      ],
+      "notes": "Point at a student: \"He's Tom.\" \"She's Lucy.\" Then \"We're students.\"",
+      "small": true,
+      "cols": 4,
+      "foot": "I → am · he / she / it → is · you / we / they → are"
+    },
+    {
+      "layout": "exercise",
+      "ex": "be",
+      "notes": "Handout exercise 4."
+    },
+    {
+      "layout": "exercise",
+      "ex": "becorrect",
+      "notes": "Handout exercise 5. Students find the mistake first, then click."
+    },
+    {
+      "layout": "tiles",
+      "tag": "LESSON 3 · COUNTRIES",
+      "title": "Countries and nationalities",
+      "tiles": [
+        "Italy Italian",
+        "Spain Spanish",
+        "the UK British",
+        "the USA American",
+        "Canada Canadian",
+        "Mexico Mexican",
+        "France French",
+        "Germany German",
+        "Russia Russian",
+        "Japan Japanese",
+        "China Chinese",
+        "Turkey Turkish"
+      ],
+      "notes": "Say the country, students say the nationality. Clap the stress: ja-pa-NESE, ITA-ly / i-TA-li-an.",
+      "small": true,
+      "cols": 4,
+      "foot": "Countries and nationalities start with a CAPITAL letter"
+    },
+    {
+      "layout": "mistakes",
+      "tag": "YOU FOUND IT",
+      "title": "Country mistakes everyone makes",
+      "rows": [
+        {
+          "wrong": "I'm from Spanish.",
+          "right": "I'm from Spain. / I'm Spanish."
+        },
+        {
+          "wrong": "He is english.",
+          "right": "He is English."
+        },
+        {
+          "wrong": "I'm from USA.",
+          "right": "I'm from the USA."
+        },
+        {
+          "wrong": "She is Japan.",
+          "right": "She is Japanese."
+        },
+        {
+          "wrong": "Where you are from?",
+          "right": "Where are you from?"
+        }
+      ],
+      "notes": "Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one."
+    },
+    {
+      "layout": "exercise",
+      "ex": "nat",
+      "notes": "Handout exercise 6."
+    },
+    {
+      "layout": "exercise",
+      "ex": "natodd",
+      "notes": "Handout exercise 7."
+    },
+    {
+      "layout": "game",
+      "tag": "SPEAKING · PAIR WORK",
+      "title": "Find your twin",
+      "emoji": "🎴",
+      "minutes": 7,
+      "text": "Take a card. Walk and ask:\n\"Hi! What's your name?\"\n\"Where are you from?\"\nFind the student from the same country! 🔍",
+      "notes": "Prepare cards in pairs: two \"Italy\", two \"Japan\"…"
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 2",
+      "title": "Where are they from?",
+      "listen": 1,
+      "text": "Five students at a summer school say where they are from.\nListen and complete (handout exercise 8).",
+      "tips": [
+        "A country — or a nationality?",
+        "Use a capital letter",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "lis_from",
+      "notes": "Handout exercise 8 (Listening 2). Click to check."
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 4 · QUESTIONS",
+      "title": "Are you…? Yes, I am!",
+      "boxes": [
+        {
+          "head": "❓ Questions",
+          "body": "Are you from Italy?\nIs he Spanish?\nIs she your friend?\nAre they twelve?"
+        },
+        {
+          "head": "✅ Yes",
+          "body": "Yes, I am.\nYes, he is.\nYes, she is.\nYes, they are."
+        },
+        {
+          "head": "❌ No",
+          "body": "No, I'm not.\nNo, he isn't.\nNo, she isn't.\nNo, they aren't."
+        }
+      ],
+      "foot": "Short \"Yes\" answers never use 'm / 's: Yes, I am ✓ — Yes, I'm ✗",
+      "notes": "Ask students yes/no questions about famous people."
+    },
+    {
+      "layout": "exercise",
+      "ex": "short",
+      "notes": "Handout exercise 9."
+    },
+    {
+      "layout": "exercise",
+      "ex": "qorder",
+      "notes": "Handout exercise 10. Then pairs ask each other the questions."
+    },
+    {
+      "layout": "game",
+      "tag": "GAME",
+      "title": "Who am I?",
+      "emoji": "🕵️",
+      "minutes": 7,
+      "text": "Think of a famous person.\nThe class asks: \"Are you from the USA?\" \"Are you a singer?\"\nAnswer only: \"Yes, I am.\" / \"No, I'm not.\"\n10 questions to guess!",
+      "notes": "Start with a famous footballer."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 3",
+      "title": "At a summer camp",
+      "listen": 2,
+      "text": "A camp leader meets two new girls.\nListen and complete (handout exercise 11):\nher surname, her country, her age and her friend.",
+      "tips": [
+        "The surname is spelled slowly",
+        "Two true / false questions",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "lis_camp",
+      "notes": "Handout exercise 11 (Listening 3). Click to check."
+    },
+    {
+      "layout": "skill",
+      "skill": "reading",
+      "tag": "READING",
+      "title": "Hello from summer camp!",
+      "text": "Hi! I'm Mei. I'm thirteen and I'm from China. I'm Chinese. I'm at the summer camp with my friend Kate.\n\nHello! My name's Carlos. I'm twelve. I'm from Spain, so I'm Spanish. My brother Pablo is here too — he's fifteen.\n\nHi, I'm Emma. I'm from the UK — I'm British. I'm fourteen. My best friend here is Mei. We're in group A.",
+      "tips": [
+        "Name · Age · Country",
+        "Read, then do exercises 12 and 13"
+      ],
+      "notes": "Students read silently (3 min)."
+    },
+    {
+      "layout": "exercise",
+      "ex": "camp_tf",
+      "notes": "Handout exercise 12."
+    },
+    {
+      "layout": "exercise",
+      "ex": "camp_q",
+      "notes": "Handout exercise 13."
+    },
+    {
+      "layout": "exercise",
+      "ex": "aboutme",
+      "notes": "Handout exercise 14. Then students read their text to a partner.",
+      "minutes": 7
+    },
+    {
+      "layout": "exercise",
+      "ex": "quiz",
+      "notes": "Handout exercise 15 — or two teams: the first right answer wins a point."
+    },
+    {
+      "layout": "finish",
+      "title": "Well done!",
+      "rows": [
+        "I can say hello and goodbye",
+        "I can use I'm, he's, she's, we're",
+        "I can say countries and nationalities",
+        "I can ask \"Where are you from?\""
+      ],
+      "foot": "Homework: the revision test 📲 (link from your teacher)",
+      "notes": "Send the revision test link now (Course → Revision test → Copy the link)."
+    }
+  ],
   listen: [
-    { label: 'Exercise 1 — where are they from?', text: 'One. Hello, my name is Ken. I am from Japan. Two. Hi! I am Sophie. I am French — I am from France. Three. Hello, I am Jack. I am from the USA. I am American. Four. Hi, my name is Elif. I am from Turkey.' }
+    {
+      "label": "Listening 1 — Five short dialogues",
+      "src": "audio/course/b1l2-listening-1.mp3",
+      "text": "Dialogue one. Good morning, Mrs Brown! Good morning, Tom. You're early today! Dialogue two. Hi! I'm Katie. I'm new here. Hi, Katie! Nice to meet you. I'm Ben. Nice to meet you too, Ben. Dialogue three. Hello, Mr Hill. How are you? I'm fine, thank you. And you? I'm fine, thanks. Dialogue four. Good evening! Welcome to the party. Good evening! Thank you. Dialogue five. Bye, Jack! See you tomorrow! See you tomorrow, Ben!",
+      "script": "Narrator: Listening one. Listen to five short dialogues.\nNarrator: Dialogue one.\nA: Good morning, Mrs Brown!\nB: Good morning, Tom. You're early today!\nNarrator: Dialogue two.\nC: Hi! I'm Katie. I'm new here.\nD: Hi, Katie! Nice to meet you. I'm Ben.\nC: Nice to meet you too, Ben.\nNarrator: Dialogue three.\nE: Hello, Mr Hill. How are you?\nF: I'm fine, thank you. And you?\nE: I'm fine, thanks.\nNarrator: Dialogue four.\nB: Good evening! Welcome to the party.\nA: Good evening! Thank you.\nNarrator: Dialogue five.\nD: Bye, Jack! See you tomorrow!\nA: See you tomorrow, Ben!"
+    },
+    {
+      "label": "Listening 2 — Where are they from?",
+      "src": "audio/course/b1l2-listening-2.mp3",
+      "text": "Number one. Hello! I'm Ken. I'm from Japan. Number two. Hi, my name's Sophie. I'm French. Number three. Hi! I'm Carlos. I'm from Spain. Number four. Hello. I'm Mei. I'm Chinese. Number five. Hi there! I'm Jack. I'm from the USA.",
+      "script": "Narrator: Listening two. Five students at a summer school. Where are they from?\nNarrator: Number one.\nA: Hello! I'm Ken. I'm from Japan.\nNarrator: Number two.\nB: Hi, my name's Sophie. I'm French.\nNarrator: Number three.\nC: Hi! I'm Carlos. I'm from Spain.\nNarrator: Number four.\nD: Hello. I'm Mei. I'm Chinese.\nNarrator: Number five.\nE: Hi there! I'm Jack. I'm from the USA."
+    },
+    {
+      "label": "Listening 3 — At a summer camp",
+      "src": "audio/course/b1l2-listening-3.mp3",
+      "text": "Hello! Welcome to the camp. What's your name? Hi! I'm Anna Kowalska. How do you spell Kowalska? K. O. W. A. L. S. K. A. Thank you. Are you from Spain, Anna? No, I'm not. I'm from Poland. And how old are you? I'm thirteen. And who's this? This is my friend Rosa. She's Mexican. Nice to meet you, Rosa! OK, you're in group B. Group B. Thank you!",
+      "script": "Narrator: Listening three. At a summer camp. Listen and complete.\nA: Hello! Welcome to the camp. What's your name?\nB: Hi! I'm Anna Kowalska.\nA: How do you spell Kowalska?\nB: K. O. W. A. L. S. K. A.\nA: Thank you. Are you from Spain, Anna?\nB: No, I'm not. I'm from Poland.\nA: And how old are you?\nB: I'm thirteen.\nA: And who's this?\nB: This is my friend Rosa. She's Mexican.\nA: Nice to meet you, Rosa! OK, you're in group B.\nC: Group B. Thank you!"
+    }
+  ],
+  teacherScript: [
+    "Play each listening twice (🔊 on its slide or the Listening card). The full scripts are below."
   ],
   test: [
     { q: 'I _____ from Italy.', a: 'am', wrong: ['is', 'are', 'be'] },
@@ -1334,49 +2370,996 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
 
 /* ---------- Block 1, Lesson 3: My family ---------- */
 Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
-  goals: ['Name family members', 'Use his / her and \'s ("Alex\'s sister")', 'Use have got / has got and say ages'],
+  // A 2-hour lesson (teacher, 2026-11-03): many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude
+  // (Kokoro voices, audio/course/*.mp3). Generated from a script; the slides (deck) and the handout come from `exercises`.
+  skills: [
+    "listening",
+    "reading",
+    "writing",
+    "speaking"
+  ],
+  goals: [
+    "Name family members (mother, uncle, cousin…)",
+    "Use his / her and 's: \"Alex's sister\", \"her brother\"",
+    "Use have got / has got — questions and short answers",
+    "Ask and answer about ages: \"How old is your brother?\""
+  ],
   warmups: [
-    { emoji: '🌍', title: 'Who am I? (from Lesson 2)', time: '5 min', how: 'One student thinks of a famous person. The class asks yes/no questions: "Are you from the USA?" "Are you a woman?" "Are you a singer?" Ten questions to guess.' },
-    { emoji: '🌳', title: 'Family tree guess', time: '8 min', how: 'Students draw a simple family tree with only first names. The partner points and asks: "Who is this?" — "That\'s my aunt." "How old is she?" — "She\'s 35." Then swap.' }
+    {
+      "emoji": "🕵️",
+      "title": "Who am I? (from Lesson 2)",
+      "time": "5 min",
+      "how": "A student is a famous person; the class asks yes/no questions with \"Are you…?\" to guess."
+    },
+    {
+      "emoji": "🌳",
+      "title": "Family tree guess",
+      "time": "8 min",
+      "how": "Students draw a family tree with first names only. The partner points: \"Who is this?\" \"How old is he?\""
+    },
+    {
+      "emoji": "🗣️",
+      "title": "Family whispers",
+      "time": "5 min",
+      "how": "Teams in lines whisper a sentence (\"Alex's aunt has got two sons\"); the last student writes it on the board."
+    }
   ],
-  slides: [
-    { emoji: '👨‍👩‍👧‍👦', title: 'My family', body: 'Today we learn:\n• family words\n• his / her and \'s\n• I have got · she has got' },
-    { emoji: '🌍', title: 'Warm-up: Who am I?', body: 'Think of a famous person.\nThe class asks: "Are you from…?" "Are you a…?"\nAnswer only: "Yes, I am." / "No, I\'m not."' },
-    { emoji: '👪', title: 'Family words', body: 'mother 👩 · father 👨 → parents\nsister 👧 · brother 👦\ngrandmother 👵 · grandfather 👴 → grandparents\naunt · uncle · cousin\ndaughter · son' },
-    { emoji: '🌳', title: 'Alex\'s family', body: 'Kevin + Diana → Alex, Zara\nKevin is Alex\'s father.\nDiana is Alex\'s mother.\nZara is Alex\'s sister.' },
-    { emoji: '🔑', title: 'His or her?', body: 'Alex → HIS sister\nZara → HER brother\nThis is my friend Tom. His mother is a teacher.\nThis is Sara. Her father is a doctor.' },
-    { emoji: '✏️', title: '\'s = belongs to', body: 'Alex\'s sister = the sister of Alex\nmy mother\'s name\nTom\'s brother is 17.\n⚠️ "Alex\'s a student" = Alex IS a student' },
-    { emoji: '🎒', title: 'have got / has got', body: 'I / you / we / they have got → I\'ve got two sisters.\nhe / she has got → She\'s got a brother.\nHave you got a cousin? — Yes, I have. / No, I haven\'t.' },
-    { emoji: '🎂', title: 'How old…?', body: 'How old is your brother?\n— He\'s seventeen.\nHow old are your grandparents?\n— They\'re seventy and sixty-eight.' },
-    { emoji: '👥', title: 'Pair work: Family tree guess', body: 'Draw your family tree (names only).\nAsk: "Who is this?" "How old is she?"\nTell: "This is my uncle. His name is…"' },
-    { emoji: '📝', title: 'Write about your family', body: 'My name is Nora. I\'m 13.\nI\'ve got a brother and a sister.\nMy brother\'s name is Jack. He\'s 16.\nMy mother is a teacher. Her name is Mary.' },
-    { emoji: '🏁', title: 'Well done!', body: 'Today you can:\n✅ name your family\n✅ use his / her and \'s\n✅ say "I\'ve got…"\n\nHomework: the revision test 📲' }
+  exercises: [
+    {
+      "id": "pairs",
+      "type": "match",
+      "skill": "reading",
+      "title": "Match the pairs: boy ↔ girl.",
+      "items": [
+        {
+          "q": "brother",
+          "a": "sister"
+        },
+        {
+          "q": "father",
+          "a": "mother"
+        },
+        {
+          "q": "son",
+          "a": "daughter"
+        },
+        {
+          "q": "uncle",
+          "a": "aunt"
+        },
+        {
+          "q": "grandfather",
+          "a": "grandmother"
+        },
+        {
+          "q": "husband",
+          "a": "wife"
+        },
+        {
+          "q": "dad",
+          "a": "mum"
+        },
+        {
+          "q": "grandson",
+          "a": "granddaughter"
+        }
+      ]
+    },
+    {
+      "id": "tree",
+      "type": "gap",
+      "skill": "writing",
+      "title": "Look at Alex's family tree on the slide. Complete.",
+      "items": [
+        {
+          "q": "Kevin is Alex's ____________.",
+          "a": "father"
+        },
+        {
+          "q": "Diana is Alex's ____________.",
+          "a": "mother"
+        },
+        {
+          "q": "Zara is Alex's ____________.",
+          "a": "sister"
+        },
+        {
+          "q": "Kevin and Diana are Alex's ____________.",
+          "a": "parents"
+        },
+        {
+          "q": "Alex is Diana's ____________.",
+          "a": "son"
+        },
+        {
+          "q": "Zara is Kevin's ____________.",
+          "a": "daughter"
+        },
+        {
+          "q": "Paul is Kevin's brother. He's Alex's ____________.",
+          "a": "uncle"
+        },
+        {
+          "q": "Paul's son Sam is Alex's ____________.",
+          "a": "cousin"
+        }
+      ]
+    },
+    {
+      "id": "lis_photo",
+      "type": "gap",
+      "skill": "listening",
+      "title": "Listening 1: Sam talks about a family photo. Write the ages.",
+      "items": [
+        {
+          "q": "Sam's mother: ________",
+          "a": "41"
+        },
+        {
+          "q": "Sam's father: ________",
+          "a": "45"
+        },
+        {
+          "q": "His sister Kate: ________",
+          "a": "8"
+        },
+        {
+          "q": "His grandmother: ________",
+          "a": "72"
+        },
+        {
+          "q": "His cousin Oliver: ________",
+          "a": "15"
+        }
+      ],
+      "listen": 0
+    },
+    {
+      "id": "hisher",
+      "type": "choose",
+      "skill": "writing",
+      "title": "Circle his or her.",
+      "items": [
+        {
+          "q": "This is Tom. ___ sister is ten.",
+          "opts": [
+            "His",
+            "Her"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "This is Sara. ___ father is a doctor.",
+          "opts": [
+            "His",
+            "Her"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "Look at Mrs Hill and ___ son.",
+          "opts": [
+            "his",
+            "her"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "Mr Brown and ___ daughter are here.",
+          "opts": [
+            "his",
+            "her"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "My aunt and ___ husband live in London.",
+          "opts": [
+            "his",
+            "her"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "Ben is with ___ grandfather.",
+          "opts": [
+            "his",
+            "her"
+          ],
+          "a": "a"
+        }
+      ]
+    },
+    {
+      "id": "apos",
+      "type": "write",
+      "skill": "writing",
+      "title": "Write it with 's.",
+      "items": [
+        {
+          "q": "the bag of Tom",
+          "a": "Tom's bag"
+        },
+        {
+          "q": "the sister of Lucy",
+          "a": "Lucy's sister"
+        },
+        {
+          "q": "the car of my dad",
+          "a": "my dad's car"
+        },
+        {
+          "q": "the name of my mum",
+          "a": "my mum's name"
+        },
+        {
+          "q": "the dog of Harry",
+          "a": "Harry's dog"
+        },
+        {
+          "q": "the house of my grandma",
+          "a": "my grandma's house"
+        }
+      ]
+    },
+    {
+      "id": "havegot",
+      "type": "gap",
+      "skill": "writing",
+      "title": "Write have got or has got.",
+      "items": [
+        {
+          "q": "I ____________ two sisters.",
+          "a": "have got"
+        },
+        {
+          "q": "She ____________ a brother.",
+          "a": "has got"
+        },
+        {
+          "q": "We ____________ a big family.",
+          "a": "have got"
+        },
+        {
+          "q": "My uncle ____________ three children.",
+          "a": "has got"
+        },
+        {
+          "q": "They ____________ a dog.",
+          "a": "have got"
+        },
+        {
+          "q": "Tom ____________ a cousin in Canada.",
+          "a": "has got"
+        }
+      ]
+    },
+    {
+      "id": "famcorrect",
+      "type": "correct",
+      "skill": "writing",
+      "title": "Correct the mistakes.",
+      "items": [
+        {
+          "q": "He have got a sister.",
+          "a": "He has got a sister."
+        },
+        {
+          "q": "This is my dad. Her name is Robert.",
+          "a": "His name is Robert."
+        },
+        {
+          "q": "I have got 12 years.",
+          "a": "I'm 12. / I'm 12 years old."
+        },
+        {
+          "q": "My mother name is Mary.",
+          "a": "My mother's name is Mary."
+        },
+        {
+          "q": "She has got two brother.",
+          "a": "She has got two brothers."
+        }
+      ]
+    },
+    {
+      "id": "lis_have",
+      "type": "tf",
+      "skill": "listening",
+      "title": "Listening 2: \"Have you got…?\" Five children answer. True (T) or false (F)?",
+      "items": [
+        {
+          "q": "Leo has got a sister.",
+          "a": "F (two brothers)"
+        },
+        {
+          "q": "Mia has got a cousin in Spain.",
+          "a": "T"
+        },
+        {
+          "q": "Jack has got a dog.",
+          "a": "T"
+        },
+        {
+          "q": "Amy's grandparents have got a big house.",
+          "a": "F (a small house)"
+        },
+        {
+          "q": "Daniel hasn't got a brother.",
+          "a": "T"
+        }
+      ],
+      "listen": 1
+    },
+    {
+      "id": "famorder",
+      "type": "order",
+      "skill": "writing",
+      "title": "Put the words in order.",
+      "items": [
+        {
+          "q": "got / I / sister / have / a",
+          "a": "I have got a sister."
+        },
+        {
+          "q": "old / how / your / is / brother",
+          "a": "How old is your brother?"
+        },
+        {
+          "q": "name / her / is / Mary",
+          "a": "Her name is Mary."
+        },
+        {
+          "q": "you / have / got / cousin / a",
+          "a": "Have you got a cousin?"
+        },
+        {
+          "q": "Tom's / is / this / dad",
+          "a": "This is Tom's dad."
+        },
+        {
+          "q": "has / she / got / two / sons",
+          "a": "She has got two sons."
+        }
+      ]
+    },
+    {
+      "id": "lis_new",
+      "type": "gap",
+      "skill": "listening",
+      "title": "Listening 3: Lucy, a new student, talks to her teacher. Listen and complete.",
+      "items": [
+        {
+          "q": "Lucy's brother is called ____________.",
+          "a": "Jake (J-A-K-E)"
+        },
+        {
+          "q": "He is ________ years old.",
+          "a": "17"
+        },
+        {
+          "q": "Lucy's mum is a ____________.",
+          "a": "nurse"
+        },
+        {
+          "q": "Lucy has got ________ cousins.",
+          "a": "3"
+        },
+        {
+          "q": "Her grandmother is ________.",
+          "a": "80"
+        }
+      ],
+      "listen": 2
+    },
+    {
+      "id": "fam_tf",
+      "type": "tf",
+      "skill": "reading",
+      "title": "Read Nora's text. True (T) or false (F)?",
+      "items": [
+        {
+          "q": "Nora has got two sisters.",
+          "a": "F (one brother, one sister)"
+        },
+        {
+          "q": "Harry is sixteen.",
+          "a": "T"
+        },
+        {
+          "q": "Nora's dad is a teacher.",
+          "a": "F (a doctor)"
+        },
+        {
+          "q": "Max is the family's dog.",
+          "a": "T"
+        },
+        {
+          "q": "Leo and Tom are Nora's cousins.",
+          "a": "T"
+        }
+      ],
+      "text": "Hi! I'm Nora. I'm thirteen. I've got one brother and one sister. My brother's name is Harry — he's sixteen. My sister Lily is nine.\n\nMy mum's name is Mary. She's a teacher. My dad is a doctor. His name is Robert. We've got a dog — his name is Max.\n\nMy grandparents live near us. Grandma is seventy and Grandpa is seventy-two. My aunt Jane has got two sons — my cousins, Leo and Tom."
+    },
+    {
+      "id": "fam_q",
+      "type": "write",
+      "skill": "reading",
+      "title": "Read again. Answer the questions.",
+      "items": [
+        {
+          "q": "How old is Lily?",
+          "a": "She's nine."
+        },
+        {
+          "q": "What's Nora's mum's name?",
+          "a": "Mary"
+        },
+        {
+          "q": "How old is Grandpa?",
+          "a": "He's seventy-two."
+        },
+        {
+          "q": "Who has got two sons?",
+          "a": "Aunt Jane"
+        },
+        {
+          "q": "What's the dog's name?",
+          "a": "Max"
+        }
+      ]
+    },
+    {
+      "id": "famodd",
+      "type": "odd",
+      "skill": "reading",
+      "title": "Which word is different? Circle it.",
+      "items": [
+        {
+          "q": "mother   sister   aunt   brother",
+          "a": "brother (the others are women)"
+        },
+        {
+          "q": "son   uncle   daughter   father",
+          "a": "daughter"
+        },
+        {
+          "q": "his   her   my   is",
+          "a": "is"
+        },
+        {
+          "q": "have   has   got   brother",
+          "a": "brother"
+        },
+        {
+          "q": "cousin   parent   uncle   dog",
+          "a": "dog"
+        },
+        {
+          "q": "twelve   eighty   old   forty",
+          "a": "old"
+        }
+      ]
+    },
+    {
+      "id": "myfamily",
+      "type": "write",
+      "skill": "writing",
+      "title": "Write about your family (5 sentences).",
+      "items": [
+        {
+          "q": "I've got…",
+          "a": "(students' own)"
+        },
+        {
+          "q": "My mother's name is…",
+          "a": "(students' own)"
+        },
+        {
+          "q": "My … is … years old.",
+          "a": "(students' own)"
+        },
+        {
+          "q": "My father is a…",
+          "a": "(students' own)"
+        },
+        {
+          "q": "My grandparents…",
+          "a": "(students' own)"
+        }
+      ]
+    },
+    {
+      "id": "quiz",
+      "type": "choose",
+      "skill": "speaking",
+      "title": "Team quiz! Say the answer first.",
+      "items": [
+        {
+          "q": "My mother's sister is my…",
+          "opts": [
+            "aunt",
+            "uncle",
+            "cousin"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "She ___ got a cat.",
+          "opts": [
+            "have",
+            "has",
+            "is"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "This is Ben. ___ mum is a nurse.",
+          "opts": [
+            "Her",
+            "His",
+            "He"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "the bag of Lucy =",
+          "opts": [
+            "Lucy bag",
+            "Lucy's bag",
+            "Lucys bag"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "Have you got a brother? — No, I ___.",
+          "opts": [
+            "haven't",
+            "hasn't",
+            "am not"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "My parents =",
+          "opts": [
+            "mum and dad",
+            "brother and sister",
+            "aunt and uncle"
+          ],
+          "a": "a"
+        }
+      ]
+    }
   ],
-  handout: {
-    title: 'My family',
-    sections: [
-      { skill: 'listening', title: 'Listen to Sam. Write the ages.',
-        items: ['mother: ______', 'father: ______', 'sister Kate: ______', 'grandmother: ______'] },
-      { skill: 'reading', title: 'Read and answer.',
-        text: 'Hi, I\'m Nora. I\'m thirteen. I\'ve got one brother and one sister. My brother\'s name is Jack — he\'s sixteen. My sister Lily is nine. My mother\'s name is Mary. She\'s a teacher. My father is a doctor. His name is Robert.',
-        items: ['1. How old is Nora? __________', '2. What\'s her brother\'s name? __________', '3. How old is Lily? __________', '4. What is her mother\'s job? __________', '5. What\'s her father\'s name? __________'] },
-      { skill: 'writing', title: 'Write his or her.',
-        items: ['1. This is Tom. ____ sister is ten.', '2. This is Sara. ____ father is a doctor.', '3. Alex and ____ brother are at school.', '4. My aunt and ____ son live in London.'] },
-      { skill: 'writing', title: 'Write have got or has got.',
-        items: ['1. I ________ two brothers.', '2. She ________ a cousin.', '3. We ________ a big family.', '4. My uncle ________ three children.'] },
-      { skill: 'writing', title: 'Write about your family (5–6 sentences).',
-        text: '________________________________________________\n________________________________________________\n________________________________________________\n________________________________________________' }
-    ],
-    teacherScript: ['Read Sam\'s text aloud (or press 🔊).'],
-    answers: [
-      'Listening: mother 41 · father 45 · sister Kate 8 · grandmother 72',
-      'Reading: 1 thirteen · 2 Jack · 3 nine · 4 a teacher · 5 Robert',
-      'his / her: 1 His · 2 Her · 3 his · 4 her',
-      'have / has got: 1 have got · 2 has got · 3 have got · 4 has got'
-    ]
-  },
+  deck: [
+    {
+      "layout": "title",
+      "notes": "Lesson 3 (2 hours). Bring a photo of your own family (on your phone is fine) — students love the teacher's photo. Students need the handout."
+    },
+    {
+      "layout": "list",
+      "tag": "TODAY",
+      "title": "What we learn today",
+      "rows": [
+        {
+          "emoji": "👪",
+          "text": "Words: family — mother, uncle, cousin…"
+        },
+        {
+          "emoji": "🔑",
+          "text": "Grammar: his / her and 's"
+        },
+        {
+          "emoji": "🎒",
+          "text": "Grammar: have got / has got"
+        },
+        {
+          "emoji": "🎧",
+          "text": "Listening: a family photo, \"Have you got…?\", a new student"
+        },
+        {
+          "emoji": "📝",
+          "text": "Revision test: 20 questions at the end"
+        }
+      ],
+      "notes": "Read the list quickly — 1 minute."
+    },
+    {
+      "layout": "questions",
+      "tag": "WARM-UP",
+      "title": "From Lesson 2: can you remember?",
+      "rows": [
+        "Where are you from?",
+        {
+          "q": "Japan → nationality?",
+          "a": "Japanese"
+        },
+        {
+          "q": "Say hello at 7 pm.",
+          "a": "Good evening!"
+        },
+        {
+          "q": "she is = ?",
+          "a": "she's"
+        },
+        {
+          "q": "Is he from Spain? — No, he…",
+          "a": "isn't"
+        }
+      ],
+      "notes": "Ask around the class. Click to show each question, then its answer."
+    },
+    {
+      "layout": "game",
+      "tag": "WARM-UP GAME",
+      "title": "Who am I?",
+      "emoji": "🕵️",
+      "minutes": 5,
+      "text": "Think of a famous person.\nThe class asks \"Are you…?\" questions.\n\"Yes, I am.\" / \"No, I'm not.\"",
+      "notes": "From Lesson 2 — a quick round."
+    },
+    {
+      "layout": "words",
+      "tag": "LEAD-IN",
+      "title": "Words for today",
+      "cards": [
+        {
+          "emoji": "👩",
+          "word": "mother",
+          "tr": "Mum"
+        },
+        {
+          "emoji": "👨",
+          "word": "father",
+          "tr": "Dad"
+        },
+        {
+          "emoji": "👧",
+          "word": "sister",
+          "tr": "Kate is my sister."
+        },
+        {
+          "emoji": "👦",
+          "word": "brother",
+          "tr": "Harry is my brother."
+        },
+        {
+          "emoji": "👵",
+          "word": "grandmother",
+          "tr": "Grandma"
+        },
+        {
+          "emoji": "👴",
+          "word": "grandfather",
+          "tr": "Grandpa"
+        },
+        {
+          "emoji": "👩‍🦰",
+          "word": "aunt",
+          "tr": "my mum's sister"
+        },
+        {
+          "emoji": "🧔",
+          "word": "uncle",
+          "tr": "my dad's brother"
+        }
+      ],
+      "notes": "Say each word, students repeat. Ask \"Can you give an example?\" — then click the card to show one."
+    },
+    {
+      "layout": "tiles",
+      "tag": "LESSON 1 · FAMILY WORDS",
+      "title": "My family",
+      "tiles": [
+        "👩 mother",
+        "👨 father",
+        "👧 sister",
+        "👦 brother",
+        "👵 grandmother",
+        "👴 grandfather",
+        "👩‍🦰 aunt",
+        "🧔 uncle",
+        "🧒 cousin",
+        "👶 son",
+        "👧 daughter",
+        "👫 parents"
+      ],
+      "notes": "Point at the tiles, students say the word. \"Who is your mother's brother?\" → \"My uncle.\"",
+      "small": true,
+      "cols": 4,
+      "foot": "parents = mother + father · grandparents = grandmother + grandfather"
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 1 · A FAMILY TREE",
+      "title": "Alex's family",
+      "boxes": [
+        {
+          "head": "👨👩 Parents",
+          "body": "Kevin + Diana"
+        },
+        {
+          "head": "👦👧 Children",
+          "body": "Alex and Zara"
+        },
+        {
+          "head": "🧔 Uncle",
+          "body": "Paul = Kevin's brother\nHis son Sam = Alex's cousin"
+        }
+      ],
+      "foot": "Kevin is Alex's father · Zara is Alex's sister · Sam is Alex's cousin",
+      "notes": "Draw the tree on the board as you explain. Exercise 2 uses it."
+    },
+    {
+      "layout": "exercise",
+      "ex": "pairs",
+      "notes": "Handout exercise 1."
+    },
+    {
+      "layout": "exercise",
+      "ex": "tree",
+      "notes": "Handout exercise 2 — leave the family tree on the board."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 1",
+      "title": "Sam's family photo",
+      "listen": 0,
+      "text": "Sam shows a photo of his family.\nListen and write the ages (handout exercise 3).",
+      "tips": [
+        "Listen for -teen or -ty",
+        "Five ages",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "lis_photo",
+      "notes": "Handout exercise 3 (Listening 1)."
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 2 · HIS, HER AND 'S",
+      "title": "Whose is it?",
+      "boxes": [
+        {
+          "head": "👦 his",
+          "body": "This is Tom.\nHIS sister is ten."
+        },
+        {
+          "head": "👧 her",
+          "body": "This is Sara.\nHER father is a doctor."
+        },
+        {
+          "head": "✏️ 's",
+          "body": "Tom's bag = the bag of Tom\nmy mum's name"
+        }
+      ],
+      "foot": "Tom → his · Sara → her",
+      "notes": "Hold up students' things: \"Whose pen is this?\" \"It's Ben's pen. It's his pen.\""
+    },
+    {
+      "layout": "mistakes",
+      "tag": "YOU FOUND IT",
+      "title": "His / her / 's mistakes everyone makes",
+      "rows": [
+        {
+          "wrong": "This is my dad. Her name is Robert.",
+          "right": "His name is Robert."
+        },
+        {
+          "wrong": "My mother name is Mary.",
+          "right": "My mother's name is Mary."
+        },
+        {
+          "wrong": "Tom bag",
+          "right": "Tom's bag"
+        },
+        {
+          "wrong": "Lucy and his brother",
+          "right": "Lucy and her brother"
+        },
+        {
+          "wrong": "She's name is Kate.",
+          "right": "Her name is Kate."
+        }
+      ],
+      "notes": "Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one."
+    },
+    {
+      "layout": "exercise",
+      "ex": "hisher",
+      "notes": "Handout exercise 4."
+    },
+    {
+      "layout": "exercise",
+      "ex": "apos",
+      "notes": "Handout exercise 5."
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 3 · HAVE GOT",
+      "title": "I've got a sister",
+      "boxes": [
+        {
+          "head": "✅ I / you / we / they",
+          "body": "I have got (I've got)\na sister."
+        },
+        {
+          "head": "✅ he / she / it",
+          "body": "She has got (she's got)\na brother."
+        },
+        {
+          "head": "❌ Not",
+          "body": "I haven't got a dog.\nHe hasn't got a cousin."
+        },
+        {
+          "head": "❓ Questions",
+          "body": "Have you got a pet?\n— Yes, I have. / No, I haven't.\nHas she got…? — Yes, she has."
+        }
+      ],
+      "foot": "he / she / it → HAS got",
+      "notes": "Students tell a partner 3 things they have got and 1 they haven't got."
+    },
+    {
+      "layout": "exercise",
+      "ex": "havegot",
+      "notes": "Handout exercise 6."
+    },
+    {
+      "layout": "exercise",
+      "ex": "famcorrect",
+      "notes": "Handout exercise 7."
+    },
+    {
+      "layout": "game",
+      "tag": "SPEAKING · PAIR WORK",
+      "title": "Family tree guess",
+      "emoji": "🌳",
+      "minutes": 8,
+      "text": "Draw your family tree — names only.\nYour partner points and asks:\n\"Who is this?\" — \"That's my aunt.\"\n\"How old is she?\" — \"She's 35.\"",
+      "notes": "Walk around and help with ages."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 2",
+      "title": "Have you got…?",
+      "listen": 1,
+      "text": "A teacher asks five children \"Have you got…?\"\nListen: true or false? (handout exercise 8)",
+      "tips": [
+        "Listen for \"Yes, I have\" / \"No, I haven't\"",
+        "Brothers, cousins, pets…",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "lis_have",
+      "notes": "Handout exercise 8 (Listening 2)."
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 4 · AGES",
+      "title": "How old is he?",
+      "boxes": [
+        {
+          "head": "❓ Ask",
+          "body": "How old is your brother?\nHow old are your grandparents?"
+        },
+        {
+          "head": "✅ Answer",
+          "body": "He's seventeen.\nThey're seventy and seventy-two."
+        },
+        {
+          "head": "⚠️ Careful",
+          "body": "I'm 12. ✓\nI'm 12 years old. ✓\nI have 12 years. ✗"
+        }
+      ],
+      "foot": "Remember from Lesson 1: thirTEEN ≠ THIRty",
+      "notes": "Students ask three classmates about a family member's age."
+    },
+    {
+      "layout": "exercise",
+      "ex": "famorder",
+      "notes": "Handout exercise 9."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 3",
+      "title": "A new student",
+      "listen": 2,
+      "text": "Lucy is new at school. She talks to her teacher about her family.\nListen and complete (handout exercise 10).",
+      "tips": [
+        "A name is spelled slowly",
+        "Numbers: ages and how many",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "lis_new",
+      "notes": "Handout exercise 10 (Listening 3)."
+    },
+    {
+      "layout": "skill",
+      "skill": "reading",
+      "tag": "READING",
+      "title": "Nora's family",
+      "text": "Hi! I'm Nora. I'm thirteen. I've got one brother and one sister. My brother's name is Harry — he's sixteen. My sister Lily is nine.\n\nMy mum's name is Mary. She's a teacher. My dad is a doctor. His name is Robert. We've got a dog — his name is Max.\n\nMy grandparents live near us. Grandma is seventy and Grandpa is seventy-two. My aunt Jane has got two sons — my cousins, Leo and Tom.",
+      "tips": [
+        "Who? How old? What job?",
+        "Read, then do exercises 11 and 12"
+      ],
+      "notes": "Students read silently (4 min)."
+    },
+    {
+      "layout": "exercise",
+      "ex": "fam_tf",
+      "notes": "Handout exercise 11."
+    },
+    {
+      "layout": "exercise",
+      "ex": "fam_q",
+      "notes": "Handout exercise 12."
+    },
+    {
+      "layout": "exercise",
+      "ex": "famodd",
+      "notes": "Handout exercise 13."
+    },
+    {
+      "layout": "exercise",
+      "ex": "myfamily",
+      "notes": "Handout exercise 14. Then students read their text to a partner.",
+      "minutes": 8
+    },
+    {
+      "layout": "exercise",
+      "ex": "quiz",
+      "notes": "Handout exercise 15 — or a team quiz."
+    },
+    {
+      "layout": "finish",
+      "title": "Well done!",
+      "rows": [
+        "I can name my family",
+        "I can use his, her and 's",
+        "I can say \"I've got…\" / \"She has got…\"",
+        "I can ask \"How old is…?\""
+      ],
+      "foot": "Homework: the revision test 📲 (link from your teacher)",
+      "notes": "Send the revision test link now (Course → Revision test → Copy the link)."
+    }
+  ],
   listen: [
-    { label: 'Exercise 1 — Sam\'s family', text: 'Hi, I am Sam. This is my family. My mother is forty-one. My father is forty-five. My sister\'s name is Kate. She is eight. And this is my grandmother. She is seventy-two.' }
+    {
+      "label": "Listening 1 — Sam's family photo",
+      "src": "audio/course/b1l3-listening-1.mp3",
+      "text": "Hi, I'm Sam. This is a photo of my family. This is my mother. She's forty-one. Next to her is my father. He's forty-five. This little girl is my sister, Kate. She's eight. And this is my grandmother. She's seventy-two. Oh, and this tall boy is my cousin, Oliver. He's fifteen.",
+      "script": "Narrator: Listening one. Sam talks about a family photo. Write the ages.\nA: Hi, I'm Sam. This is a photo of my family. This is my mother. She's forty-one.\nA: Next to her is my father. He's forty-five.\nA: This little girl is my sister, Kate. She's eight.\nA: And this is my grandmother. She's seventy-two.\nA: Oh, and this tall boy is my cousin, Oliver. He's fifteen."
+    },
+    {
+      "label": "Listening 2 — Have you got…?",
+      "src": "audio/course/b1l3-listening-2.mp3",
+      "text": "Leo, have you got a sister? No, I haven't. I've got two brothers. Mia, have you got cousins? Yes, I have. I've got a cousin in Spain. Jack, have you got a pet? Yes, I have. I've got a dog. His name is Rex. Amy, tell me about your grandparents. They've got a small house near the sea. And you, Daniel? Have you got a brother? No, I haven't. I've got one sister.",
+      "script": "Narrator: Listening two. Have you got…? Five children answer. True or false?\nA: Leo, have you got a sister?\nB: No, I haven't. I've got two brothers.\nA: Mia, have you got cousins?\nC: Yes, I have. I've got a cousin in Spain.\nA: Jack, have you got a pet?\nD: Yes, I have. I've got a dog. His name is Rex.\nA: Amy, tell me about your grandparents.\nE: They've got a small house near the sea.\nA: And you, Daniel? Have you got a brother?\nF: No, I haven't. I've got one sister."
+    },
+    {
+      "label": "Listening 3 — A new student",
+      "src": "audio/course/b1l3-listening-3.mp3",
+      "text": "So, Lucy, tell me about your family. Have you got brothers or sisters? I've got one brother. His name is Jake. How do you spell Jake? J. A. K. E. And how old is he? He's seventeen. What about your parents? My mum is a nurse and my dad is a taxi driver. Have you got cousins? Yes, I have. I've got three cousins. And your grandparents? My grandmother lives with us. She's eighty!",
+      "script": "Narrator: Listening three. Lucy, a new student, talks to her teacher. Listen and complete.\nA: So, Lucy, tell me about your family. Have you got brothers or sisters?\nB: I've got one brother. His name is Jake.\nA: How do you spell Jake?\nB: J. A. K. E.\nA: And how old is he?\nB: He's seventeen.\nA: What about your parents?\nB: My mum is a nurse and my dad is a taxi driver.\nA: Have you got cousins?\nB: Yes, I have. I've got three cousins.\nA: And your grandparents?\nB: My grandmother lives with us. She's eighty!"
+    }
+  ],
+  teacherScript: [
+    "Play each listening twice (🔊 on its slide or the Listening card). The full scripts are below."
   ],
   test: [
     { q: 'My mother\'s mother is my _____.', a: 'grandmother', wrong: ['aunt', 'sister', 'cousin'] },
@@ -1404,49 +3387,1068 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
 
 /* ---------- Block 1, Lesson 4: Things in the classroom ---------- */
 Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
-  goals: ['Name 14 classroom things', 'Use a / an and plurals (pens, boxes, children)', 'Use this / that / these / those and understand classroom instructions'],
+  // A 2-hour lesson (teacher, 2026-11-03): many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude
+  // (Kokoro voices, audio/course/*.mp3). Generated from a script; the slides (deck) and the handout come from `exercises`.
+  skills: [
+    "listening",
+    "reading",
+    "writing",
+    "speaking"
+  ],
+  goals: [
+    "Name 14 classroom things",
+    "Use a / an and plurals (pens, boxes, children)",
+    "Use this / that / these / those",
+    "Understand and give classroom instructions"
+  ],
   warmups: [
-    { emoji: '👪', title: 'Family whispers (from Lesson 3)', time: '5 min', how: 'Teams stand in lines. Whisper a sentence to the first student ("Alex\'s aunt has got two sons"). It travels down the line; the last student writes it on the board. The closest sentence wins.' },
-    { emoji: '🛍️', title: 'Mystery bag', time: '7 min', how: 'Put classroom things in a bag. A student feels one without looking and guesses: "Is it a ruler?" The class answers "Yes, it is!" / "No, it isn\'t." Then: "What\'s this in English?"' }
+    {
+      "emoji": "🗣️",
+      "title": "Family whispers (from Lesson 3)",
+      "time": "5 min",
+      "how": "Teams in lines whisper a sentence (\"Alex's aunt has got two sons\"); the last student writes it on the board."
+    },
+    {
+      "emoji": "🛍️",
+      "title": "Mystery bag",
+      "time": "7 min",
+      "how": "Classroom things in a bag. A student feels one without looking: \"Is it a ruler?\" — \"Yes, it is!\" / \"No, it isn't.\""
+    },
+    {
+      "emoji": "🙋",
+      "title": "Simon says",
+      "time": "6 min",
+      "how": "Give instructions; students do them only after \"Simon says…\"."
+    }
   ],
-  slides: [
-    { emoji: '🎒✏️', title: 'Things in the classroom', body: 'Today we learn:\n• classroom things\n• a / an and plurals\n• this · that · these · those\n• classroom instructions' },
-    { emoji: '👂', title: 'Warm-up: Family whispers', body: 'Stand in a line.\nWhisper the sentence to the next student.\nThe last student writes it on the board. 📝' },
-    { emoji: '🖊️', title: 'Classroom things', body: 'pen · pencil · rubber (eraser) · ruler\nbook · notebook · dictionary · bag\ndesk · chair · board · window · door · computer' },
-    { emoji: '🍎', title: 'a or an?', body: 'a + consonant sound: a pen · a book · a desk\nan + vowel sound (a e i o u): an apple · an eraser · an umbrella\n⚠️ an hour · a university' },
-    { emoji: '➕', title: 'One → many', body: 'pen → pens · book → books\nbox → boxes · watch → watches · bus → buses\ndictionary → dictionaries\nman → men · woman → women · child → children' },
-    { emoji: '👉', title: 'this · that · these · those', body: 'near me 🤚: this pen · these pens\nfar from me 👉: that door · those windows' },
-    { emoji: '❓', title: 'What\'s this in English?', body: 'A: What\'s this in English?\nB: It\'s a ruler.\nA: What are these?\nB: They\'re pencils.\nA: How do you spell it?' },
-    { emoji: '📣', title: 'Classroom instructions', body: 'Open your book. · Close your book.\nListen and repeat. · Work in pairs.\nStand up. · Sit down.\nLook at the board. · Write your name.' },
-    { emoji: '🙋', title: 'Game: Simon says', body: 'Do it only when you hear "Simon says"!\n"Simon says: stand up." → stand up ✅\n"Sit down." → don\'t move! ❌' },
-    { emoji: '🛍️', title: 'Pair work: Mystery bag', body: 'Feel the thing. Don\'t look!\n"Is it a pen?" — "Yes, it is!" / "No, it isn\'t."\n"What\'s this in English?"' },
-    { emoji: '🏁', title: 'Well done!', body: 'Today you can:\n✅ name things in the classroom\n✅ use a / an and plurals\n✅ use this, that, these, those\n\nHomework: the revision test 📲' }
+  exercises: [
+    {
+      "id": "things",
+      "type": "match",
+      "skill": "reading",
+      "title": "Match the picture and the word.",
+      "items": [
+        {
+          "q": "✏️",
+          "a": "pencil"
+        },
+        {
+          "q": "🖊️",
+          "a": "pen"
+        },
+        {
+          "q": "📏",
+          "a": "ruler"
+        },
+        {
+          "q": "📕",
+          "a": "book"
+        },
+        {
+          "q": "🎒",
+          "a": "bag"
+        },
+        {
+          "q": "🪑",
+          "a": "chair"
+        },
+        {
+          "q": "🖥️",
+          "a": "computer"
+        },
+        {
+          "q": "🕒",
+          "a": "clock"
+        }
+      ]
+    },
+    {
+      "id": "aan",
+      "type": "gap",
+      "skill": "writing",
+      "title": "Write a or an.",
+      "items": [
+        {
+          "q": "___ pencil",
+          "a": "a"
+        },
+        {
+          "q": "___ eraser",
+          "a": "an"
+        },
+        {
+          "q": "___ apple",
+          "a": "an"
+        },
+        {
+          "q": "___ desk",
+          "a": "a"
+        },
+        {
+          "q": "___ umbrella",
+          "a": "an"
+        },
+        {
+          "q": "___ notebook",
+          "a": "a"
+        },
+        {
+          "q": "___ orange",
+          "a": "an"
+        },
+        {
+          "q": "___ ruler",
+          "a": "a"
+        }
+      ]
+    },
+    {
+      "id": "plurals",
+      "type": "write",
+      "skill": "writing",
+      "title": "Write the plural.",
+      "items": [
+        {
+          "q": "pen",
+          "a": "pens"
+        },
+        {
+          "q": "box",
+          "a": "boxes"
+        },
+        {
+          "q": "watch",
+          "a": "watches"
+        },
+        {
+          "q": "bus",
+          "a": "buses"
+        },
+        {
+          "q": "dictionary",
+          "a": "dictionaries"
+        },
+        {
+          "q": "child",
+          "a": "children"
+        },
+        {
+          "q": "woman",
+          "a": "women"
+        },
+        {
+          "q": "man",
+          "a": "men"
+        }
+      ]
+    },
+    {
+      "id": "plodd",
+      "type": "odd",
+      "skill": "reading",
+      "title": "Which word is different? Circle it.",
+      "items": [
+        {
+          "q": "pens   books   chair   desks",
+          "a": "chair (one)"
+        },
+        {
+          "q": "boxes   watch   buses   pencils",
+          "a": "watch (one)"
+        },
+        {
+          "q": "children   men   women   child",
+          "a": "child (one)"
+        },
+        {
+          "q": "an apple   an egg   an orange   an pen",
+          "a": "an pen ✗ (a pen)"
+        },
+        {
+          "q": "ruler   rubber   pencil   Monday",
+          "a": "Monday"
+        },
+        {
+          "q": "this   that   these   is",
+          "a": "is"
+        }
+      ]
+    },
+    {
+      "id": "lis_bag",
+      "type": "choose",
+      "skill": "listening",
+      "title": "Listening 1: What's in their bags? Circle the right answer.",
+      "items": [
+        {
+          "q": "Sara has got ___ pens.",
+          "opts": [
+            "two",
+            "three",
+            "four"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "In Ben's bag there is a…",
+          "opts": [
+            "dictionary",
+            "ruler",
+            "phone"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "Lucy has got ___ notebooks.",
+          "opts": [
+            "two",
+            "five",
+            "twelve"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "Tom has got an…",
+          "opts": [
+            "apple",
+            "orange",
+            "umbrella"
+          ],
+          "a": "c"
+        },
+        {
+          "q": "Mia's pencil case is…",
+          "opts": [
+            "big",
+            "new",
+            "small"
+          ],
+          "a": "b"
+        }
+      ],
+      "listen": 0
+    },
+    {
+      "id": "demo",
+      "type": "choose",
+      "skill": "writing",
+      "title": "Circle this, that, these or those.",
+      "items": [
+        {
+          "q": "___ is my pen. (in my hand)",
+          "opts": [
+            "This",
+            "These",
+            "Those"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "___ are my books. (on my desk)",
+          "opts": [
+            "This",
+            "These",
+            "That"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "Look at ___ window! (over there)",
+          "opts": [
+            "these",
+            "that",
+            "those"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "___ chairs over there are new.",
+          "opts": [
+            "That",
+            "This",
+            "Those"
+          ],
+          "a": "c"
+        },
+        {
+          "q": "Is ___ your bag? (here)",
+          "opts": [
+            "this",
+            "these",
+            "those"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "What are ___ ? (over there)",
+          "opts": [
+            "that",
+            "those",
+            "this"
+          ],
+          "a": "b"
+        }
+      ]
+    },
+    {
+      "id": "clcorrect",
+      "type": "correct",
+      "skill": "writing",
+      "title": "Correct the mistakes.",
+      "items": [
+        {
+          "q": "This is a apple.",
+          "a": "This is an apple."
+        },
+        {
+          "q": "I have got two pen.",
+          "a": "I have got two pens."
+        },
+        {
+          "q": "These is my books.",
+          "a": "These are my books."
+        },
+        {
+          "q": "Those boxs are big.",
+          "a": "Those boxes are big."
+        },
+        {
+          "q": "An book is on the desk.",
+          "a": "A book is on the desk."
+        }
+      ]
+    },
+    {
+      "id": "lis_lost",
+      "type": "gap",
+      "skill": "listening",
+      "title": "Listening 2: Lost and found. Listen and complete.",
+      "items": [
+        {
+          "q": "The black bag is ____________'s.",
+          "a": "Jack's"
+        },
+        {
+          "q": "The red pen is ____________'s.",
+          "a": "Emma's"
+        },
+        {
+          "q": "Leo's ____________ are on the teacher's desk.",
+          "a": "books"
+        },
+        {
+          "q": "The umbrella is the ____________'s.",
+          "a": "teacher's"
+        },
+        {
+          "q": "Mia's pencil case is under the ____________.",
+          "a": "chair"
+        }
+      ],
+      "listen": 1
+    },
+    {
+      "id": "instr",
+      "type": "match",
+      "skill": "reading",
+      "title": "Match the instruction and the picture.",
+      "items": [
+        {
+          "q": "Open your book.",
+          "a": "📖"
+        },
+        {
+          "q": "Close the door.",
+          "a": "🚪"
+        },
+        {
+          "q": "Stand up.",
+          "a": "🧍"
+        },
+        {
+          "q": "Sit down.",
+          "a": "🪑"
+        },
+        {
+          "q": "Listen.",
+          "a": "👂"
+        },
+        {
+          "q": "Write your name.",
+          "a": "✍️"
+        }
+      ]
+    },
+    {
+      "id": "lis_simon",
+      "type": "choose",
+      "skill": "listening",
+      "title": "Listening 3: Follow the teacher. What do the students do?",
+      "items": [
+        {
+          "q": "First they…",
+          "opts": [
+            "stand up",
+            "sit down",
+            "open the window"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "Then they look at the…",
+          "opts": [
+            "door",
+            "board",
+            "clock"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "They open their books at page…",
+          "opts": [
+            "twelve",
+            "twenty",
+            "two"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "They write in their…",
+          "opts": [
+            "books",
+            "notebooks",
+            "bags"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "At the end they work…",
+          "opts": [
+            "alone",
+            "in pairs",
+            "in groups"
+          ],
+          "a": "b"
+        }
+      ],
+      "listen": 2
+    },
+    {
+      "id": "clorder",
+      "type": "order",
+      "skill": "writing",
+      "title": "Put the words in order.",
+      "items": [
+        {
+          "q": "are / these / my / books",
+          "a": "These are my books."
+        },
+        {
+          "q": "this / what / is / English / in",
+          "a": "What is this in English?"
+        },
+        {
+          "q": "your / open / book / please",
+          "a": "Open your book, please."
+        },
+        {
+          "q": "that / is / bag / your",
+          "a": "Is that your bag?"
+        },
+        {
+          "q": "pens / those / are / blue",
+          "a": "Those pens are blue."
+        },
+        {
+          "q": "a / it's / ruler",
+          "a": "It's a ruler."
+        }
+      ]
+    },
+    {
+      "id": "room_tf",
+      "type": "tf",
+      "skill": "reading",
+      "title": "Read about the classroom. True (T) or false (F)?",
+      "items": [
+        {
+          "q": "The classroom is small.",
+          "a": "F (big)"
+        },
+        {
+          "q": "There are twenty desks.",
+          "a": "T"
+        },
+        {
+          "q": "The board is black.",
+          "a": "F (white)"
+        },
+        {
+          "q": "There is a clock on the wall.",
+          "a": "T"
+        },
+        {
+          "q": "There are two pens in the pencil case.",
+          "a": "F (three)"
+        }
+      ],
+      "text": "This is my classroom. It's big and it's got four windows. There are twenty desks and twenty-one chairs — one chair is for the teacher.\n\nThe board is white. Next to it is the teacher's computer. On the wall there's a big map of the world and a clock.\n\nMy desk is near the door. On my desk there are two books, a notebook and a pencil case. In my pencil case I've got three pens and a rubber."
+    },
+    {
+      "id": "room_q",
+      "type": "write",
+      "skill": "reading",
+      "title": "Read again. Answer the questions.",
+      "items": [
+        {
+          "q": "How many windows are there?",
+          "a": "Four."
+        },
+        {
+          "q": "How many chairs are there?",
+          "a": "Twenty-one."
+        },
+        {
+          "q": "What is next to the board?",
+          "a": "The teacher's computer."
+        },
+        {
+          "q": "Where is the desk?",
+          "a": "Near the door."
+        },
+        {
+          "q": "What is in the pencil case?",
+          "a": "Three pens and a rubber."
+        }
+      ]
+    },
+    {
+      "id": "mybag",
+      "type": "write",
+      "skill": "writing",
+      "title": "Write about your bag and your desk.",
+      "items": [
+        {
+          "q": "In my bag there is / are…",
+          "a": "(students' own)"
+        },
+        {
+          "q": "I've got… (how many?)",
+          "a": "(students' own)"
+        },
+        {
+          "q": "On my desk…",
+          "a": "(students' own)"
+        },
+        {
+          "q": "This is my… / These are my…",
+          "a": "(students' own)"
+        },
+        {
+          "q": "My favourite thing is…",
+          "a": "(students' own)"
+        }
+      ]
+    },
+    {
+      "id": "quiz",
+      "type": "choose",
+      "skill": "speaking",
+      "title": "Team quiz! Say the answer first.",
+      "items": [
+        {
+          "q": "___ umbrella",
+          "opts": [
+            "a",
+            "an",
+            "two"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "one child, two…",
+          "opts": [
+            "childs",
+            "children",
+            "childrens"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "___ are my pens. (here)",
+          "opts": [
+            "This",
+            "These",
+            "That"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "📏 =",
+          "opts": [
+            "rubber",
+            "ruler",
+            "pencil"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "What's this? —",
+          "opts": [
+            "It's a pen.",
+            "They're a pen.",
+            "Is a pen."
+          ],
+          "a": "a"
+        },
+        {
+          "q": "\"Sit ___!\"",
+          "opts": [
+            "up",
+            "down",
+            "on"
+          ],
+          "a": "b"
+        }
+      ]
+    }
   ],
-  handout: {
-    title: 'Things in the classroom',
-    sections: [
-      { skill: 'listening', title: 'Listen. What is in Sara\'s bag? Tick ✓.',
-        items: ['☐ a pen', '☐ a ruler', '☐ two pencils', '☐ a dictionary', '☐ an apple', '☐ a notebook', '☐ a phone', '☐ three books'] },
-      { skill: 'listening', title: 'Listen to your teacher and do it.',
-        text: 'Stand up · Sit down · Open your book · Close your notebook · Look at the window · Write your name' },
-      { skill: 'writing', title: 'Write a or an.',
-        items: ['1. ____ pencil', '2. ____ eraser', '3. ____ apple', '4. ____ desk', '5. ____ umbrella', '6. ____ notebook'] },
-      { skill: 'writing', title: 'Write the plural.',
-        items: ['pen → __________', 'box → __________', 'watch → __________', 'dictionary → __________', 'child → __________', 'woman → __________'] },
-      { skill: 'reading', title: 'Read and answer.',
-        text: 'This is my classroom. It\'s big. There are twenty desks and twenty-one chairs. The board is white. These are my books, and that is my teacher\'s computer. Those windows are very big.',
-        items: ['1. Is the classroom small? __________', '2. How many desks are there? __________', '3. What colour is the board? __________', '4. Whose computer is that? __________'] }
-    ],
-    teacherScript: ['Exercise 1: press 🔊 (Sara\'s bag). Exercise 2: say the instructions in any order; students do them.'],
-    answers: [
-      'Sara\'s bag: a pen ✓ · two pencils ✓ · an apple ✓ · a notebook ✓ · three books ✓ (no ruler, dictionary or phone)',
-      'a / an: 1 a · 2 an · 3 an · 4 a · 5 an · 6 a',
-      'Plurals: pens · boxes · watches · dictionaries · children · women',
-      'Reading: 1 No, it isn\'t (it\'s big). · 2 twenty · 3 white · 4 the teacher\'s'
-    ]
-  },
+  deck: [
+    {
+      "layout": "title",
+      "notes": "Lesson 4 (2 hours). Bring a bag with classroom things for \"Mystery bag\". Students need the handout."
+    },
+    {
+      "layout": "list",
+      "tag": "TODAY",
+      "title": "What we learn today",
+      "rows": [
+        {
+          "emoji": "🎒",
+          "text": "Words: 14 classroom things"
+        },
+        {
+          "emoji": "🍎",
+          "text": "Grammar: a / an · one pen → two pens"
+        },
+        {
+          "emoji": "👉",
+          "text": "Grammar: this · that · these · those"
+        },
+        {
+          "emoji": "🎧",
+          "text": "Listening: bags, lost and found, the teacher's instructions"
+        },
+        {
+          "emoji": "📝",
+          "text": "Revision test: 20 questions at the end"
+        }
+      ],
+      "notes": "Read the list quickly — 1 minute."
+    },
+    {
+      "layout": "questions",
+      "tag": "WARM-UP",
+      "title": "From Lesson 3: can you remember?",
+      "rows": [
+        {
+          "q": "Your mother's brother is your…",
+          "a": "uncle"
+        },
+        {
+          "q": "This is Tom. ___ sister is ten.",
+          "a": "His"
+        },
+        {
+          "q": "She ___ got a cat.",
+          "a": "has"
+        },
+        {
+          "q": "the bag of Lucy = ?",
+          "a": "Lucy's bag"
+        },
+        "How old is your father?"
+      ],
+      "notes": "Ask around the class. Click to show each question, then its answer."
+    },
+    {
+      "layout": "game",
+      "tag": "WARM-UP GAME",
+      "title": "Mystery bag",
+      "emoji": "🛍️",
+      "minutes": 7,
+      "text": "Feel the thing in the bag. Don't look!\n\"Is it a ruler?\"\n\"Yes, it is!\" / \"No, it isn't.\"\nThen: \"What's this in English?\"",
+      "notes": "Use real classroom things."
+    },
+    {
+      "layout": "words",
+      "tag": "LEAD-IN",
+      "title": "Words for today",
+      "cards": [
+        {
+          "emoji": "🖊️",
+          "word": "pen",
+          "tr": "I write with a pen."
+        },
+        {
+          "emoji": "✏️",
+          "word": "pencil",
+          "tr": "a pencil and a rubber"
+        },
+        {
+          "emoji": "📏",
+          "word": "ruler",
+          "tr": "30 cm"
+        },
+        {
+          "emoji": "🧽",
+          "word": "rubber",
+          "tr": "eraser (US)"
+        },
+        {
+          "emoji": "📕",
+          "word": "book",
+          "tr": "Open your book."
+        },
+        {
+          "emoji": "📓",
+          "word": "notebook",
+          "tr": "Write in your notebook."
+        },
+        {
+          "emoji": "🎒",
+          "word": "bag",
+          "tr": "my school bag"
+        },
+        {
+          "emoji": "🪑",
+          "word": "desk",
+          "tr": "a desk and a chair"
+        }
+      ],
+      "notes": "Say each word, students repeat. Ask \"Can you give an example?\" — then click the card to show one."
+    },
+    {
+      "layout": "tiles",
+      "tag": "LESSON 1 · CLASSROOM THINGS",
+      "title": "In the classroom",
+      "tiles": [
+        "🖊️ pen",
+        "✏️ pencil",
+        "📏 ruler",
+        "🧽 rubber",
+        "📕 book",
+        "📓 notebook",
+        "📚 dictionary",
+        "🎒 bag",
+        "🪑 chair",
+        "🗄️ desk",
+        "🖥️ computer",
+        "🕒 clock",
+        "🪟 window",
+        "🚪 door"
+      ],
+      "notes": "Point at real things in the room. \"What's this?\" — \"It's a window.\"",
+      "small": true,
+      "cols": 5
+    },
+    {
+      "layout": "exercise",
+      "ex": "things",
+      "notes": "Handout exercise 1."
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 2 · A OR AN?",
+      "title": "a pen, an apple",
+      "boxes": [
+        {
+          "head": "a + consonant sound",
+          "body": "a pen · a book · a desk\na ruler · a notebook"
+        },
+        {
+          "head": "an + vowel sound (a e i o u)",
+          "body": "an apple · an eraser\nan umbrella · an orange"
+        },
+        {
+          "head": "⚠️ Listen to the sound",
+          "body": "an hour (h is silent)\na university (sounds like \"you\")"
+        }
+      ],
+      "foot": "Say it: a pen / an apple — an + a, e, i, o, u",
+      "notes": "Show objects, students say \"a…\" or \"an…\"."
+    },
+    {
+      "layout": "exercise",
+      "ex": "aan",
+      "notes": "Handout exercise 2."
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 3 · ONE → MANY",
+      "title": "Plurals",
+      "boxes": [
+        {
+          "head": "+ s",
+          "body": "pen → pens\nbook → books"
+        },
+        {
+          "head": "+ es",
+          "body": "box → boxes\nwatch → watches\nbus → buses"
+        },
+        {
+          "head": "y → ies",
+          "body": "dictionary → dictionaries\nfamily → families"
+        },
+        {
+          "head": "Special!",
+          "body": "man → men\nwoman → women\nchild → children"
+        }
+      ],
+      "foot": "Count things in the room: one window, two windows…",
+      "notes": "Students count things in the classroom."
+    },
+    {
+      "layout": "mistakes",
+      "tag": "YOU FOUND IT",
+      "title": "a / an / plural mistakes everyone makes",
+      "rows": [
+        {
+          "wrong": "a apple",
+          "right": "an apple"
+        },
+        {
+          "wrong": "an book",
+          "right": "a book"
+        },
+        {
+          "wrong": "two pen",
+          "right": "two pens"
+        },
+        {
+          "wrong": "boxs",
+          "right": "boxes"
+        },
+        {
+          "wrong": "childs",
+          "right": "children"
+        },
+        {
+          "wrong": "womans",
+          "right": "women"
+        }
+      ],
+      "notes": "Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one."
+    },
+    {
+      "layout": "exercise",
+      "ex": "plurals",
+      "notes": "Handout exercise 3."
+    },
+    {
+      "layout": "exercise",
+      "ex": "plodd",
+      "notes": "Handout exercise 4."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 1",
+      "title": "What's in your bag?",
+      "listen": 0,
+      "text": "Five students say what is in their bags.\nListen and circle the right answer (handout exercise 5).",
+      "tips": [
+        "How many?",
+        "What thing?",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "lis_bag",
+      "notes": "Handout exercise 5 (Listening 1)."
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 4 · THIS, THAT, THESE, THOSE",
+      "title": "Near or far?",
+      "boxes": [
+        {
+          "head": "🤚 Near · one",
+          "body": "This is my pen."
+        },
+        {
+          "head": "🤚 Near · many",
+          "body": "These are my pens."
+        },
+        {
+          "head": "👉 Far · one",
+          "body": "That is a door."
+        },
+        {
+          "head": "👉 Far · many",
+          "body": "Those are windows."
+        }
+      ],
+      "foot": "What's this? — It's a ruler. · What are these? — They're pencils.",
+      "notes": "Hold things / point at things. Students say the sentence."
+    },
+    {
+      "layout": "exercise",
+      "ex": "demo",
+      "notes": "Handout exercise 6."
+    },
+    {
+      "layout": "exercise",
+      "ex": "clcorrect",
+      "notes": "Handout exercise 7."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 2",
+      "title": "Lost and found",
+      "listen": 1,
+      "text": "A teacher finds things in the classroom.\nWhose are they? Listen and complete (handout exercise 8).",
+      "tips": [
+        "Whose? → name + 's",
+        "Where?",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "lis_lost",
+      "notes": "Handout exercise 8 (Listening 2)."
+    },
+    {
+      "layout": "tiles",
+      "tag": "LESSON 5 · INSTRUCTIONS",
+      "title": "Classroom instructions",
+      "tiles": [
+        "📖 Open your book",
+        "📕 Close your book",
+        "🧍 Stand up",
+        "🪑 Sit down",
+        "👂 Listen",
+        "🔁 Listen and repeat",
+        "👀 Look at the board",
+        "✍️ Write your name",
+        "👥 Work in pairs",
+        "🙋 Put up your hand"
+      ],
+      "notes": "Say each instruction, students do it.",
+      "small": true,
+      "cols": 5
+    },
+    {
+      "layout": "exercise",
+      "ex": "instr",
+      "notes": "Handout exercise 9."
+    },
+    {
+      "layout": "game",
+      "tag": "GAME",
+      "title": "Simon says",
+      "emoji": "🙋",
+      "minutes": 6,
+      "text": "Do it only when you hear \"Simon says\"!\n\"Simon says: stand up.\" → stand up ✅\n\"Sit down.\" → don't move! ❌\nWrong move = you sit out.",
+      "notes": "Use the instructions from the last slide."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 3",
+      "title": "Follow the teacher",
+      "listen": 2,
+      "text": "A teacher gives instructions to her class.\nWhat do the students do? (handout exercise 10)",
+      "tips": [
+        "First… then… at the end…",
+        "Listen for the page number",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "lis_simon",
+      "notes": "Handout exercise 10 (Listening 3)."
+    },
+    {
+      "layout": "exercise",
+      "ex": "clorder",
+      "notes": "Handout exercise 11."
+    },
+    {
+      "layout": "skill",
+      "skill": "reading",
+      "tag": "READING",
+      "title": "My classroom",
+      "text": "This is my classroom. It's big and it's got four windows. There are twenty desks and twenty-one chairs — one chair is for the teacher.\n\nThe board is white. Next to it is the teacher's computer. On the wall there's a big map of the world and a clock.\n\nMy desk is near the door. On my desk there are two books, a notebook and a pencil case. In my pencil case I've got three pens and a rubber.",
+      "tips": [
+        "How many? Where? What?",
+        "Read, then do exercises 12 and 13"
+      ],
+      "notes": "Students read silently (4 min)."
+    },
+    {
+      "layout": "exercise",
+      "ex": "room_tf",
+      "notes": "Handout exercise 12."
+    },
+    {
+      "layout": "exercise",
+      "ex": "room_q",
+      "notes": "Handout exercise 13."
+    },
+    {
+      "layout": "exercise",
+      "ex": "mybag",
+      "notes": "Handout exercise 14. Then students show their bag to a partner and talk.",
+      "minutes": 7
+    },
+    {
+      "layout": "exercise",
+      "ex": "quiz",
+      "notes": "Handout exercise 15 — or a team quiz."
+    },
+    {
+      "layout": "finish",
+      "title": "Well done!",
+      "rows": [
+        "I can name classroom things",
+        "I can use a / an and plurals",
+        "I can use this, that, these, those",
+        "I can follow classroom instructions"
+      ],
+      "foot": "Homework: the revision test 📲 (link from your teacher)",
+      "notes": "Send the revision test link now (Course → Revision test → Copy the link)."
+    }
+  ],
   listen: [
-    { label: 'Exercise 1 — Sara\'s bag', text: 'Hi, I am Sara. What is in my bag? I have got a pen, two pencils and a notebook. I have got three books. And I have got an apple for lunch!' }
+    {
+      "label": "Listening 1 — What's in your bag?",
+      "src": "audio/course/b1l4-listening-1.mp3",
+      "text": "Number one. I'm Sara. In my bag I've got three pens and a notebook. Number two. I'm Ben. My bag is very heavy — there's a big dictionary in it! Number three. I'm Lucy. I've got two notebooks: one for English and one for maths. Number four. I'm Tom. It's a rainy day, so I've got an umbrella in my bag. Number five. I'm Mia. Look — this is my new pencil case!",
+      "script": "Narrator: Listening one. What's in their bags? Circle the right answer.\nNarrator: Number one.\nA: I'm Sara. In my bag I've got three pens and a notebook.\nNarrator: Number two.\nB: I'm Ben. My bag is very heavy — there's a big dictionary in it!\nNarrator: Number three.\nC: I'm Lucy. I've got two notebooks: one for English and one for maths.\nNarrator: Number four.\nD: I'm Tom. It's a rainy day, so I've got an umbrella in my bag.\nNarrator: Number five.\nE: I'm Mia. Look — this is my new pencil case!"
+    },
+    {
+      "label": "Listening 2 — Lost and found",
+      "src": "audio/course/b1l4-listening-2.mp3",
+      "text": "OK, everyone. Whose is this black bag? Is it your bag, Jack? Yes, it is! Thank you. And this red pen? That's my pen. I'm Emma. Leo, are these your books on my desk? Yes, they are. Sorry! And that umbrella by the door is my umbrella. Excuse me, where's my pencil case? Look, Mia — it's under your chair.",
+      "script": "Narrator: Listening two. Lost and found. Listen and complete.\nA: OK, everyone. Whose is this black bag? Is it your bag, Jack?\nB: Yes, it is! Thank you.\nA: And this red pen?\nC: That's my pen. I'm Emma.\nA: Leo, are these your books on my desk?\nD: Yes, they are. Sorry!\nA: And that umbrella by the door is my umbrella.\nE: Excuse me, where's my pencil case?\nA: Look, Mia — it's under your chair."
+    },
+    {
+      "label": "Listening 3 — Follow the teacher",
+      "src": "audio/course/b1l4-listening-3.mp3",
+      "text": "Good morning, everyone. Please stand up. Thank you. Now sit down and look at the board. Open your books at page twelve. Page twelve. Now take your notebooks and write the new words in your notebooks. Good! Now work in pairs. Ask your partner: what's this in English?",
+      "script": "Narrator: Listening three. Follow the teacher. What do the students do?\nA: Good morning, everyone. Please stand up.\nA: Thank you. Now sit down and look at the board.\nA: Open your books at page twelve. Page twelve.\nA: Now take your notebooks and write the new words in your notebooks.\nA: Good! Now work in pairs. Ask your partner: what's this in English?"
+    }
+  ],
+  teacherScript: [
+    "Play each listening twice (🔊 on its slide or the Listening card). The full scripts are below."
   ],
   test: [
     { q: 'I write with a _____.', a: 'pen', wrong: ['desk', 'door', 'window'] },
@@ -1474,49 +4476,1062 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
 
 /* ---------- Block 1, Lesson 5: Days, months and the time ---------- */
 Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
-  goals: ['Say the days of the week and the months', 'Say dates with ordinal numbers: "the 3rd of May"', 'Tell the time and use on / in / at'],
+  // A 2-hour lesson (teacher, 2026-11-03): many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude
+  // (Kokoro voices, audio/course/*.mp3). Generated from a script; the slides (deck) and the handout come from `exercises`.
+  skills: [
+    "listening",
+    "reading",
+    "writing",
+    "speaking"
+  ],
+  goals: [
+    "Say the days of the week and the months",
+    "Say dates with ordinal numbers: \"the third of May\"",
+    "Use on / in / at with days, months and times",
+    "Tell the time: o'clock, half past, quarter past / to"
+  ],
   warmups: [
-    { emoji: '🙋', title: 'Simon says (from Lesson 4)', time: '4 min', how: 'Play "Simon says" with classroom instructions: "Simon says: open your book… Simon says: stand up… sit down!" Anyone who moves without "Simon says" sits out.' },
-    { emoji: '🎂', title: 'Birthday line', time: '8 min', how: 'Students stand in a line in the order of their birthdays (January → December) — without writing, only by asking "When\'s your birthday?" "It\'s on the 5th of March." Check the line together at the end.' }
+    {
+      "emoji": "🙋",
+      "title": "Simon says (from Lesson 4)",
+      "time": "4 min",
+      "how": "Classroom instructions — move only after \"Simon says\"."
+    },
+    {
+      "emoji": "🎂",
+      "title": "Birthday line",
+      "time": "8 min",
+      "how": "Students stand in order of their birthdays (January → December) — no writing, only \"When's your birthday?\""
+    },
+    {
+      "emoji": "⏰",
+      "title": "What's the time, Mr Wolf?",
+      "time": "6 min",
+      "how": "One student is the wolf; the class asks \"What's the time, Mr Wolf?\" and steps forward that many steps."
+    }
   ],
-  slides: [
-    { emoji: '📅🕒', title: 'Days, months and the time', body: 'Today we learn:\n• days and months\n• dates: the 3rd of May\n• telling the time\n• on · in · at' },
-    { emoji: '🙋', title: 'Warm-up: Simon says', body: 'Listen carefully!\nMove only after "Simon says". 😄' },
-    { emoji: '📆', title: 'Days of the week', body: 'Monday · Tuesday · Wednesday · Thursday\nFriday · Saturday · Sunday\nSaturday + Sunday = the weekend 🎉\n⚠️ Always a capital letter!' },
-    { emoji: '🗓️', title: 'Months', body: 'January · February · March · April\nMay · June · July · August\nSeptember · October · November · December' },
-    { emoji: '🥇', title: 'First, second, third…', body: '1st first · 2nd second · 3rd third · 4th fourth\n5th fifth · 8th eighth · 9th ninth · 12th twelfth\n20th twentieth · 21st twenty-first · 22nd twenty-second\n30th thirtieth · 31st thirty-first' },
-    { emoji: '🎂', title: 'Dates', body: 'We write: 3 May · 3rd May\nWe say: "the third of May"\nWhen\'s your birthday? — It\'s on the 21st of October.\nWhat\'s the date today? — It\'s the…' },
-    { emoji: '📍', title: 'on · in · at', body: 'on + days and dates: on Monday · on the 5th of June\nin + months and years: in July · in 2026\nat + times: at 7 o\'clock · at half past three' },
-    { emoji: '🕒', title: 'What time is it?', body: '7:00 seven o\'clock · 7:30 half past seven\n7:15 quarter past seven · 7:45 quarter to eight\n7:10 ten past seven · 7:50 ten to eight\nor simply: seven fifty' },
-    { emoji: '🗒️', title: 'My week', body: 'On Monday I\'ve got English at 9 o\'clock.\nOn Wednesday I\'ve got football at half past four.\nOn Saturday I get up at ten! 😴' },
-    { emoji: '🎂', title: 'Pair work: Birthday line', body: 'Ask: "When\'s your birthday?"\nStand in order: January → December.\nNo writing — only English! 🗣️' },
-    { emoji: '🏁', title: 'Well done!', body: 'Today you can:\n✅ say days and months\n✅ say dates\n✅ tell the time\n\nNext: the review lesson, then the exam! 🏁' }
+  exercises: [
+    {
+      "id": "daysorder",
+      "type": "order",
+      "skill": "writing",
+      "title": "Put the days in order.",
+      "items": [
+        {
+          "q": "Wednesday  Monday  Tuesday",
+          "a": "Monday, Tuesday, Wednesday"
+        },
+        {
+          "q": "Saturday  Friday  Sunday",
+          "a": "Friday, Saturday, Sunday"
+        },
+        {
+          "q": "Thursday  Wednesday  Friday",
+          "a": "Wednesday, Thursday, Friday"
+        },
+        {
+          "q": "Sunday  Tuesday  Monday",
+          "a": "Sunday, Monday, Tuesday"
+        },
+        {
+          "q": "Friday  Thursday  Saturday",
+          "a": "Thursday, Friday, Saturday"
+        }
+      ]
+    },
+    {
+      "id": "months",
+      "type": "gap",
+      "skill": "writing",
+      "title": "Write the missing day or month.",
+      "items": [
+        {
+          "q": "January, ____________, March",
+          "a": "February"
+        },
+        {
+          "q": "April, May, ____________",
+          "a": "June"
+        },
+        {
+          "q": "____________, August, September",
+          "a": "July"
+        },
+        {
+          "q": "October, ____________, December",
+          "a": "November"
+        },
+        {
+          "q": "Monday, ____________, Wednesday",
+          "a": "Tuesday"
+        },
+        {
+          "q": "Friday, Saturday, ____________",
+          "a": "Sunday"
+        },
+        {
+          "q": "The first month: ____________",
+          "a": "January"
+        },
+        {
+          "q": "The last month: ____________",
+          "a": "December"
+        }
+      ]
+    },
+    {
+      "id": "lis_bday",
+      "type": "gap",
+      "skill": "listening",
+      "title": "Listening 1: When's your birthday? Write the dates.",
+      "items": [
+        {
+          "q": "Emma: the ________ of ____________",
+          "a": "3rd of March"
+        },
+        {
+          "q": "Jack: the ________ of ____________",
+          "a": "21st of June"
+        },
+        {
+          "q": "Lily: the ________ of ____________",
+          "a": "12th of October"
+        },
+        {
+          "q": "Sam: the ________ of ____________",
+          "a": "30th of August"
+        },
+        {
+          "q": "Mia: the ________ of ____________",
+          "a": "1st of January"
+        }
+      ],
+      "listen": 0
+    },
+    {
+      "id": "ordinals",
+      "type": "match",
+      "skill": "reading",
+      "title": "Match the number and the word.",
+      "items": [
+        {
+          "q": "1st",
+          "a": "first"
+        },
+        {
+          "q": "2nd",
+          "a": "second"
+        },
+        {
+          "q": "3rd",
+          "a": "third"
+        },
+        {
+          "q": "5th",
+          "a": "fifth"
+        },
+        {
+          "q": "8th",
+          "a": "eighth"
+        },
+        {
+          "q": "12th",
+          "a": "twelfth"
+        },
+        {
+          "q": "20th",
+          "a": "twentieth"
+        },
+        {
+          "q": "31st",
+          "a": "thirty-first"
+        }
+      ]
+    },
+    {
+      "id": "dates",
+      "type": "write",
+      "skill": "writing",
+      "title": "Write the dates in words.",
+      "items": [
+        {
+          "q": "3 May",
+          "a": "the third of May"
+        },
+        {
+          "q": "1 January",
+          "a": "the first of January"
+        },
+        {
+          "q": "22 July",
+          "a": "the twenty-second of July"
+        },
+        {
+          "q": "15 October",
+          "a": "the fifteenth of October"
+        },
+        {
+          "q": "31 December",
+          "a": "the thirty-first of December"
+        }
+      ]
+    },
+    {
+      "id": "onin",
+      "type": "gap",
+      "skill": "writing",
+      "title": "Write on, in or at.",
+      "items": [
+        {
+          "q": "___ Monday",
+          "a": "on"
+        },
+        {
+          "q": "___ August",
+          "a": "in"
+        },
+        {
+          "q": "___ 7 o'clock",
+          "a": "at"
+        },
+        {
+          "q": "___ the 5th of June",
+          "a": "on"
+        },
+        {
+          "q": "___ 2027",
+          "a": "in"
+        },
+        {
+          "q": "___ half past four",
+          "a": "at"
+        },
+        {
+          "q": "___ the weekend",
+          "a": "at"
+        },
+        {
+          "q": "___ the morning",
+          "a": "in"
+        }
+      ]
+    },
+    {
+      "id": "times",
+      "type": "write",
+      "skill": "writing",
+      "title": "Write the times in words.",
+      "items": [
+        {
+          "q": "8:00",
+          "a": "eight o'clock"
+        },
+        {
+          "q": "9:30",
+          "a": "half past nine"
+        },
+        {
+          "q": "3:15",
+          "a": "quarter past three"
+        },
+        {
+          "q": "6:45",
+          "a": "quarter to seven"
+        },
+        {
+          "q": "11:10",
+          "a": "ten past eleven"
+        },
+        {
+          "q": "4:50",
+          "a": "ten to five"
+        }
+      ]
+    },
+    {
+      "id": "timechoose",
+      "type": "choose",
+      "skill": "reading",
+      "title": "Circle the right time.",
+      "items": [
+        {
+          "q": "half past seven",
+          "opts": [
+            "6:30",
+            "7:30",
+            "8:30"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "quarter to ten",
+          "opts": [
+            "9:45",
+            "10:15",
+            "10:45"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "twenty past two",
+          "opts": [
+            "2:40",
+            "1:20",
+            "2:20"
+          ],
+          "a": "c"
+        },
+        {
+          "q": "quarter past one",
+          "opts": [
+            "1:15",
+            "12:45",
+            "1:45"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "ten to six",
+          "opts": [
+            "6:10",
+            "5:50",
+            "5:10"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "twelve o'clock",
+          "opts": [
+            "12:00",
+            "2:00",
+            "11:00"
+          ],
+          "a": "a"
+        }
+      ]
+    },
+    {
+      "id": "lis_time",
+      "type": "choose",
+      "skill": "listening",
+      "title": "Listening 2: What time is it? Circle the right time.",
+      "items": [
+        {
+          "q": "The train leaves at…",
+          "opts": [
+            "7:15",
+            "7:50",
+            "6:15"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "The film starts at…",
+          "opts": [
+            "8:30",
+            "8:00",
+            "6:30"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "The shop closes at…",
+          "opts": [
+            "5:00",
+            "9:00",
+            "6:00"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "The English lesson is at…",
+          "opts": [
+            "10:45",
+            "11:45",
+            "10:15"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "The bus comes at…",
+          "opts": [
+            "4:20",
+            "4:40",
+            "2:20"
+          ],
+          "a": "b"
+        }
+      ],
+      "listen": 1
+    },
+    {
+      "id": "lis_plan",
+      "type": "gap",
+      "skill": "listening",
+      "title": "Listening 3: Jack and Lily plan a weekend. Listen and complete.",
+      "items": [
+        {
+          "q": "They meet on ____________.",
+          "a": "Saturday"
+        },
+        {
+          "q": "They meet at ____________.",
+          "a": "half past ten (10:30)"
+        },
+        {
+          "q": "The cinema is on ____________ Street.",
+          "a": "Green (G-R-double E-N)"
+        },
+        {
+          "q": "The film finishes at ____________.",
+          "a": "1 o'clock"
+        },
+        {
+          "q": "Lily's birthday party is on the ________ of May.",
+          "a": "20th"
+        }
+      ],
+      "listen": 2
+    },
+    {
+      "id": "dtcorrect",
+      "type": "correct",
+      "skill": "writing",
+      "title": "Correct the mistakes.",
+      "items": [
+        {
+          "q": "My birthday is in Monday.",
+          "a": "on Monday"
+        },
+        {
+          "q": "See you on 5 o'clock.",
+          "a": "at 5 o'clock"
+        },
+        {
+          "q": "I was born on May.",
+          "a": "in May"
+        },
+        {
+          "q": "It's the twelveth of June.",
+          "a": "twelfth"
+        },
+        {
+          "q": "school starts on monday.",
+          "a": "School starts on Monday."
+        }
+      ]
+    },
+    {
+      "id": "week_tf",
+      "type": "tf",
+      "skill": "reading",
+      "title": "Read about Ben's week. True (T) or false (F)?",
+      "items": [
+        {
+          "q": "Ben's birthday is in February.",
+          "a": "T"
+        },
+        {
+          "q": "School starts at eight o'clock.",
+          "a": "F (half past eight)"
+        },
+        {
+          "q": "He has got swimming on Tuesday and Thursday.",
+          "a": "T"
+        },
+        {
+          "q": "He plays football on Sunday.",
+          "a": "F (Saturday)"
+        },
+        {
+          "q": "His favourite month is July.",
+          "a": "T"
+        }
+      ],
+      "text": "Hi, I'm Ben. My birthday is on the 12th of February.\n\nOn weekdays I get up at seven o'clock. School starts at half past eight and finishes at three o'clock. On Tuesday and Thursday I've got swimming at five.\n\nOn Saturday I play football in the morning, and on Sunday I visit my grandparents. My favourite month is July — no school!"
+    },
+    {
+      "id": "week_q",
+      "type": "write",
+      "skill": "reading",
+      "title": "Read again. Answer the questions.",
+      "items": [
+        {
+          "q": "When is Ben's birthday?",
+          "a": "On the 12th of February."
+        },
+        {
+          "q": "What time does he get up?",
+          "a": "At seven o'clock."
+        },
+        {
+          "q": "When does school finish?",
+          "a": "At three o'clock."
+        },
+        {
+          "q": "What does he do on Sunday?",
+          "a": "He visits his grandparents."
+        },
+        {
+          "q": "Why is July his favourite month?",
+          "a": "No school!"
+        }
+      ]
+    },
+    {
+      "id": "myweek",
+      "type": "write",
+      "skill": "writing",
+      "title": "Write about your week.",
+      "items": [
+        {
+          "q": "My birthday is on…",
+          "a": "(students' own)"
+        },
+        {
+          "q": "On weekdays I get up at…",
+          "a": "(students' own)"
+        },
+        {
+          "q": "School starts at…",
+          "a": "(students' own)"
+        },
+        {
+          "q": "On Saturday I…",
+          "a": "(students' own)"
+        },
+        {
+          "q": "My favourite day is… because…",
+          "a": "(students' own)"
+        }
+      ]
+    },
+    {
+      "id": "quiz",
+      "type": "choose",
+      "skill": "speaking",
+      "title": "Team quiz! Say the answer first.",
+      "items": [
+        {
+          "q": "The day after Friday:",
+          "opts": [
+            "Thursday",
+            "Saturday",
+            "Sunday"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "12th =",
+          "opts": [
+            "twelveth",
+            "twelfth",
+            "twelve"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "I play football ___ Saturday.",
+          "opts": [
+            "in",
+            "on",
+            "at"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "7:30 =",
+          "opts": [
+            "half past seven",
+            "half past six",
+            "seven thirty past"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "How many months in a year?",
+          "opts": [
+            "ten",
+            "twelve",
+            "twenty"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "When's your birthday? — It's ___ May.",
+          "opts": [
+            "on",
+            "in",
+            "at"
+          ],
+          "a": "b"
+        }
+      ]
+    }
   ],
-  handout: {
-    title: 'Days, months and the time',
-    sections: [
-      { skill: 'listening', title: 'Listen and complete James\'s timetable.',
-        items: ['Monday — English at ______', '______ — football at 4:30', 'Thursday — piano at ______', 'Saturday — get up at ______'] },
-      { skill: 'writing', title: 'Write the times in words.',
-        items: ['8:00 ______________', '9:30 ______________', '3:15 ______________', '6:45 ______________', '11:10 ______________'] },
-      { skill: 'writing', title: 'Write on, in or at.',
-        items: ['1. ____ Friday', '2. ____ August', '3. ____ 6 o\'clock', '4. ____ the 2nd of March', '5. ____ 2027', '6. ____ half past four'] },
-      { skill: 'reading', title: 'Read and answer.',
-        text: 'My name is Ben. My birthday is on the 12th of February. On weekdays I get up at seven o\'clock. School starts at half past eight. On Tuesday and Thursday I\'ve got swimming at five. My favourite day is Saturday!',
-        items: ['1. When is Ben\'s birthday? __________', '2. What time does school start? __________', '3. When has he got swimming? __________', '4. What is his favourite day? __________'] },
-      { skill: 'speaking', title: 'Ask five classmates: "When\'s your birthday?"',
-        text: 'Name · Birthday\n1. ______________________\n2. ______________________\n3. ______________________\n4. ______________________\n5. ______________________' }
-    ],
-    teacherScript: ['Exercise 1: press 🔊 (James\'s week), twice.'],
-    answers: [
-      'Timetable: Monday — English at 9 o\'clock · Wednesday — football · Thursday — piano at 6:15 · Saturday — get up at 10',
-      'Times: eight o\'clock · half past nine · quarter past three · quarter to seven · ten past eleven',
-      'on / in / at: 1 on · 2 in · 3 at · 4 on · 5 in · 6 at',
-      'Reading: 1 the 12th of February · 2 half past eight · 3 on Tuesday and Thursday (at five) · 4 Saturday'
-    ]
-  },
+  deck: [
+    {
+      "layout": "title",
+      "notes": "Lesson 5 (2 hours), the last lesson before the review. Bring a clock with hands if you can. Students need the handout."
+    },
+    {
+      "layout": "list",
+      "tag": "TODAY",
+      "title": "What we learn today",
+      "rows": [
+        {
+          "emoji": "📆",
+          "text": "Words: days of the week and months"
+        },
+        {
+          "emoji": "🥇",
+          "text": "Numbers: first, second, third… and dates"
+        },
+        {
+          "emoji": "📍",
+          "text": "Grammar: on · in · at"
+        },
+        {
+          "emoji": "🕒",
+          "text": "Telling the time · Listening: birthdays, times, weekend plans"
+        },
+        {
+          "emoji": "📝",
+          "text": "Revision test: 20 questions at the end"
+        }
+      ],
+      "notes": "Read the list quickly — 1 minute."
+    },
+    {
+      "layout": "questions",
+      "tag": "WARM-UP",
+      "title": "From Lesson 4: can you remember?",
+      "rows": [
+        {
+          "q": "a or an: ___ apple",
+          "a": "an"
+        },
+        {
+          "q": "one box, two…",
+          "a": "boxes"
+        },
+        {
+          "q": "___ are my pens. (here)",
+          "a": "These"
+        },
+        {
+          "q": "What's this in English? (point at a pen)",
+          "a": "It's a pen."
+        },
+        {
+          "q": "\"Open your…\"",
+          "a": "book"
+        }
+      ],
+      "notes": "Ask around the class. Click to show each question, then its answer."
+    },
+    {
+      "layout": "game",
+      "tag": "WARM-UP GAME",
+      "title": "Simon says",
+      "emoji": "🙋",
+      "minutes": 4,
+      "text": "Do it only after \"Simon says\"!\nSimon says: stand up · sit down · open your book · look at the window…",
+      "notes": "Quick revision of Lesson 4."
+    },
+    {
+      "layout": "words",
+      "tag": "LEAD-IN",
+      "title": "Words for today",
+      "cards": [
+        {
+          "emoji": "📅",
+          "word": "day",
+          "tr": "Monday"
+        },
+        {
+          "emoji": "🗓️",
+          "word": "week",
+          "tr": "7 days"
+        },
+        {
+          "emoji": "🎉",
+          "word": "weekend",
+          "tr": "Saturday + Sunday"
+        },
+        {
+          "emoji": "🌙",
+          "word": "month",
+          "tr": "May"
+        },
+        {
+          "emoji": "🎆",
+          "word": "year",
+          "tr": "2027"
+        },
+        {
+          "emoji": "🎂",
+          "word": "birthday",
+          "tr": "the 3rd of May"
+        },
+        {
+          "emoji": "🕒",
+          "word": "clock",
+          "tr": "It's 3 o'clock."
+        },
+        {
+          "emoji": "📆",
+          "word": "date",
+          "tr": "the 2nd of November"
+        }
+      ],
+      "notes": "Say each word, students repeat. Ask \"Can you give an example?\" — then click the card to show one."
+    },
+    {
+      "layout": "tiles",
+      "tag": "LESSON 1 · DAYS",
+      "title": "The days of the week",
+      "tiles": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "notes": "Say the days, students repeat. Wednesday = \"WENZ-day\".",
+      "small": true,
+      "cols": 7,
+      "foot": "Saturday + Sunday = the weekend 🎉 · Days start with a CAPITAL letter"
+    },
+    {
+      "layout": "exercise",
+      "ex": "daysorder",
+      "notes": "Handout exercise 1."
+    },
+    {
+      "layout": "tiles",
+      "tag": "LESSON 2 · MONTHS",
+      "title": "The months of the year",
+      "tiles": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
+      "notes": "Say the months. \"Which month is your birthday?\" — students stand up when they hear their month.",
+      "small": true,
+      "cols": 4,
+      "foot": "12 months · Months start with a CAPITAL letter"
+    },
+    {
+      "layout": "exercise",
+      "ex": "months",
+      "notes": "Handout exercise 2."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 1",
+      "title": "When's your birthday?",
+      "listen": 0,
+      "text": "A teacher asks five students about their birthdays.\nListen and write the dates (handout exercise 3).",
+      "tips": [
+        "the … of …",
+        "Listen for -th / -st / -rd",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "lis_bday",
+      "notes": "Handout exercise 3 (Listening 1)."
+    },
+    {
+      "layout": "tiles",
+      "tag": "LESSON 3 · ORDINAL NUMBERS",
+      "title": "First, second, third…",
+      "tiles": [
+        "1st first",
+        "2nd second",
+        "3rd third",
+        "4th fourth",
+        "5th fifth",
+        "6th sixth",
+        "7th seventh",
+        "8th eighth",
+        "9th ninth",
+        "10th tenth",
+        "12th twelfth",
+        "20th twentieth",
+        "21st twenty-first",
+        "22nd twenty-second",
+        "30th thirtieth",
+        "31st thirty-first"
+      ],
+      "notes": "Students say them in a chain.",
+      "small": true,
+      "cols": 4
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 3 · DATES",
+      "title": "When's your birthday?",
+      "boxes": [
+        {
+          "head": "✍️ We write",
+          "body": "3 May\n3rd May"
+        },
+        {
+          "head": "🗣️ We say",
+          "body": "the third of May"
+        },
+        {
+          "head": "💬 Ask",
+          "body": "When's your birthday?\n— It's on the 21st of October."
+        }
+      ],
+      "foot": "What's the date today?",
+      "notes": "Students ask three classmates \"When's your birthday?\""
+    },
+    {
+      "layout": "mistakes",
+      "tag": "YOU FOUND IT",
+      "title": "Date mistakes everyone makes",
+      "rows": [
+        {
+          "wrong": "the twelveth",
+          "right": "the twelfth"
+        },
+        {
+          "wrong": "the fiveth",
+          "right": "the fifth"
+        },
+        {
+          "wrong": "the 3th of May",
+          "right": "the 3rd of May"
+        },
+        {
+          "wrong": "monday",
+          "right": "Monday"
+        },
+        {
+          "wrong": "in Monday",
+          "right": "on Monday"
+        }
+      ],
+      "notes": "Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one."
+    },
+    {
+      "layout": "exercise",
+      "ex": "ordinals",
+      "notes": "Handout exercise 4."
+    },
+    {
+      "layout": "exercise",
+      "ex": "dates",
+      "notes": "Handout exercise 5."
+    },
+    {
+      "layout": "game",
+      "tag": "GAME",
+      "title": "Birthday line",
+      "emoji": "🎂",
+      "minutes": 8,
+      "text": "Stand in a line: January → December.\nNo writing — only English!\n\"When's your birthday?\"\n\"It's on the 5th of March.\"",
+      "notes": "Check the line together at the end."
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 4 · ON, IN, AT",
+      "title": "on Monday, in May, at 7",
+      "boxes": [
+        {
+          "head": "📅 on",
+          "body": "days and dates\non Monday\non the 5th of June"
+        },
+        {
+          "head": "🗓️ in",
+          "body": "months, years, parts of the day\nin May · in 2027\nin the morning"
+        },
+        {
+          "head": "🕒 at",
+          "body": "times\nat 7 o'clock\nat half past three\nat the weekend"
+        }
+      ],
+      "foot": "on + day · in + month · at + time",
+      "notes": "Say a word, students say \"on\", \"in\" or \"at\"."
+    },
+    {
+      "layout": "exercise",
+      "ex": "onin",
+      "notes": "Handout exercise 6."
+    },
+    {
+      "layout": "boxes",
+      "tag": "LESSON 5 · THE TIME",
+      "title": "What time is it?",
+      "boxes": [
+        {
+          "head": "🕐 o'clock",
+          "body": "7:00 seven o'clock"
+        },
+        {
+          "head": "🕧 half past",
+          "body": "7:30 half past seven"
+        },
+        {
+          "head": "🕒 quarter",
+          "body": "7:15 quarter past seven\n7:45 quarter to eight"
+        },
+        {
+          "head": "🕙 past / to",
+          "body": "7:10 ten past seven\n7:50 ten to eight"
+        }
+      ],
+      "foot": "What time is it? — It's half past seven.",
+      "notes": "Move the clock hands; students say the time."
+    },
+    {
+      "layout": "exercise",
+      "ex": "times",
+      "notes": "Handout exercise 7."
+    },
+    {
+      "layout": "exercise",
+      "ex": "timechoose",
+      "notes": "Handout exercise 8."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 2",
+      "title": "What time is it?",
+      "listen": 1,
+      "text": "Five people say a time.\nListen and circle the right time (handout exercise 9).",
+      "tips": [
+        "past or to?",
+        "quarter or half?",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "lis_time",
+      "notes": "Handout exercise 9 (Listening 2)."
+    },
+    {
+      "layout": "game",
+      "tag": "GAME",
+      "title": "What's the time, Mr Wolf?",
+      "emoji": "🐺",
+      "minutes": 6,
+      "text": "One student is Mr Wolf.\nThe class: \"What's the time, Mr Wolf?\"\nWolf: \"It's three o'clock!\" → take 3 steps.\n\"It's dinner time!\" → run! 🏃",
+      "notes": "Play in the corridor or at the back of the room."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 3",
+      "title": "Plans for the weekend",
+      "listen": 2,
+      "text": "Jack and Lily plan to go to the cinema.\nListen and complete (handout exercise 10).",
+      "tips": [
+        "Day · time · street · date",
+        "A street name is spelled slowly",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "lis_plan",
+      "notes": "Handout exercise 10 (Listening 3)."
+    },
+    {
+      "layout": "exercise",
+      "ex": "dtcorrect",
+      "notes": "Handout exercise 11."
+    },
+    {
+      "layout": "skill",
+      "skill": "reading",
+      "tag": "READING",
+      "title": "Ben's week",
+      "text": "Hi, I'm Ben. My birthday is on the 12th of February.\n\nOn weekdays I get up at seven o'clock. School starts at half past eight and finishes at three o'clock. On Tuesday and Thursday I've got swimming at five.\n\nOn Saturday I play football in the morning, and on Sunday I visit my grandparents. My favourite month is July — no school!",
+      "tips": [
+        "When? What time?",
+        "Read, then do exercises 12 and 13"
+      ],
+      "notes": "Students read silently (4 min)."
+    },
+    {
+      "layout": "exercise",
+      "ex": "week_tf",
+      "notes": "Handout exercise 12."
+    },
+    {
+      "layout": "exercise",
+      "ex": "week_q",
+      "notes": "Handout exercise 13."
+    },
+    {
+      "layout": "exercise",
+      "ex": "myweek",
+      "notes": "Handout exercise 14. Then students read their week to a partner.",
+      "minutes": 7
+    },
+    {
+      "layout": "exercise",
+      "ex": "quiz",
+      "notes": "Handout exercise 15 — or a team quiz."
+    },
+    {
+      "layout": "finish",
+      "title": "Well done!",
+      "rows": [
+        "I can say the days and months",
+        "I can say dates: the 3rd of May",
+        "I can use on, in, at",
+        "I can tell the time"
+      ],
+      "foot": "Next: the review lesson, then the Block 1 exam! 🏁",
+      "notes": "Send the revision test link now (Course → Revision test → Copy the link)."
+    }
+  ],
   listen: [
-    { label: 'Exercise 1 — James\'s week', text: 'Hi, I am James. On Monday I have got English at nine o\'clock. On Wednesday I have got football at half past four. On Thursday I have got piano at quarter past six. And on Saturday I get up at ten o\'clock!' }
+    {
+      "label": "Listening 1 — When's your birthday?",
+      "src": "audio/course/b1l5-listening-1.mp3",
+      "text": "Emma, when's your birthday? It's on the third of March. And you, Jack? My birthday is on the twenty-first of June. Lily? Mine is on the twelfth of October. Sam, when's your birthday? It's on the thirtieth of August. And Mia? Mine is easy — it's on the first of January!",
+      "script": "Narrator: Listening one. When's your birthday? Write the dates.\nA: Emma, when's your birthday?\nB: It's on the third of March.\nA: And you, Jack?\nC: My birthday is on the twenty-first of June.\nA: Lily?\nD: Mine is on the twelfth of October.\nA: Sam, when's your birthday?\nE: It's on the thirtieth of August.\nA: And Mia?\nB: Mine is easy — it's on the first of January!"
+    },
+    {
+      "label": "Listening 2 — What time is it?",
+      "src": "audio/course/b1l5-listening-2.mp3",
+      "text": "Number one. The train to London leaves at quarter past seven. Number two. Hurry up! The film starts at half past eight. Number three. Excuse me, when does the shop close? — At nine o'clock. Number four. Our English lesson is at quarter to eleven. Number five. The bus comes at twenty to five.",
+      "script": "Narrator: Listening two. What time is it? Circle the right time.\nNarrator: Number one.\nA: The train to London leaves at quarter past seven.\nNarrator: Number two.\nB: Hurry up! The film starts at half past eight.\nNarrator: Number three.\nC: Excuse me, when does the shop close? — At nine o'clock.\nNarrator: Number four.\nD: Our English lesson is at quarter to eleven.\nNarrator: Number five.\nE: The bus comes at twenty to five."
+    },
+    {
+      "label": "Listening 3 — Plans for the weekend",
+      "src": "audio/course/b1l5-listening-3.mp3",
+      "text": "Hi, Lily! Let's go to the cinema on Saturday. Great idea! What time? Let's meet at half past ten. OK. Where is the cinema? It's on Green Street. How do you spell Green? G. R. double E. N. And when does the film finish? At one o'clock. Perfect. Oh, and my birthday party is on the twentieth of May. Can you come? Yes, of course!",
+      "script": "Narrator: Listening three. Jack and Lily plan a weekend. Listen and complete.\nA: Hi, Lily! Let's go to the cinema on Saturday.\nB: Great idea! What time?\nA: Let's meet at half past ten.\nB: OK. Where is the cinema?\nA: It's on Green Street.\nB: How do you spell Green?\nA: G. R. double E. N.\nB: And when does the film finish?\nA: At one o'clock.\nB: Perfect. Oh, and my birthday party is on the twentieth of May. Can you come?\nA: Yes, of course!"
+    }
+  ],
+  teacherScript: [
+    "Play each listening twice (🔊 on its slide or the Listening card). The full scripts are below."
   ],
   test: [
     { q: 'Monday, Tuesday, _____, Thursday', a: 'Wednesday', wrong: ['Wensday', 'Friday', 'Sunday'] },
@@ -1544,48 +5559,1042 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
 
 /* ---------- Block 1: the review lesson ---------- */
 COURSE_BEGINNER.blocks[0].review = {
-  title: 'Block 1 review', emoji: '🔁', skills: ['listening', 'reading', 'writing', 'speaking'],
-  goals: ['Practise everything from Lessons 1–5 with games', 'Know what is in the exam: grammar, listening, reading, writing', 'Find what to practise again before the exam'],
+  // The review lesson (2 hours) (teacher, 2026-11-03): many kinds of exercises; 3 listenings of 5 questions each, recorded by Claude
+  // (Kokoro voices, audio/course/*.mp3). Generated from a script; the slides (deck) and the handout come from `exercises`.
+  title: "Block 1 review",
+  emoji: "🔁",
+  skills: [
+    "listening",
+    "reading",
+    "writing",
+    "speaking"
+  ],
+  goals: [
+    "Practise everything from Lessons 1–5 with games and exercises",
+    "Find what to practise again before the exam",
+    "Know the exam: grammar, listening and reading online — writing on paper"
+  ],
   warmups: [
-    { emoji: '🏃', title: 'Board race', time: '8 min', how: 'Two teams, one marker each. Say a word ("Wednesday", "children", "Japanese"). One student from each team runs and writes it. Right spelling = 1 point. Everyone gets a turn.' },
-    { emoji: '🔍', title: 'Find someone who…', time: '10 min', how: 'Students use the sheet on the handout. They walk and ask: "Have you got a sister?" "Is your birthday in May?" When someone says yes, they write that name. First to fill five lines wins.' }
+    {
+      "emoji": "🏃",
+      "title": "Board race",
+      "time": "8 min",
+      "how": "Two teams, one marker each. Say a word (\"Wednesday\", \"children\", \"Japanese\"); one student from each team runs and writes it."
+    },
+    {
+      "emoji": "🎯",
+      "title": "Number bingo",
+      "time": "7 min",
+      "how": "3 × 3 grids with numbers 1–100; call tricky numbers (13/30, 14/40…)."
+    },
+    {
+      "emoji": "🔍",
+      "title": "Find someone who…",
+      "time": "10 min",
+      "how": "Students walk and ask the questions on the handout sheet (exercise 13) until they have a name for each line."
+    }
   ],
-  slides: [
-    { emoji: '🔁🎮', title: 'Block 1 review', body: 'Games from Lessons 1–5:\n🔤 letters and numbers · 🌍 countries\n👪 family · 🎒 classroom · 🕒 days and time\nThen: what\'s in the exam?' },
-    { emoji: '🏃', title: 'Round 1: Board race', body: 'Two teams. Listen to the word.\nRun, write it on the board — correctly!\n✅ = 1 point' },
-    { emoji: '🎯', title: 'Round 2: Number bingo', body: 'Draw a 3 × 3 grid. Write 9 numbers from 1 to 100.\nListen and cross out.\nThree in a line → "BINGO!" 🎉' },
-    { emoji: '🌍', title: 'Round 3: Where are they from?', body: 'Ken → Japan → Japanese\nSophie → France → ?\nCarlos → Spain → ?\nElif → Turkey → ?\nYou → ? → ?' },
-    { emoji: '👪', title: 'Round 4: Family quiz', body: 'My mother\'s mother is my…?\nMy uncle\'s son is my…?\nThis is Tom. ___ sister is ten. (his / her)\nShe ___ got two brothers. (have / has)' },
-    { emoji: '🎒', title: 'Round 5: What\'s in the bag?', body: 'Look for 10 seconds. Close your eyes!\nWhat\'s missing?\n"Is it a ruler?" "Are they pencils?"' },
-    { emoji: '🕒', title: 'Round 6: Time race', body: 'Say it first!\n7:30 · 9:15 · 4:45 · 12:00\nthe 1st of May · the 22nd of July\non / in / at: ___ Monday · ___ June · ___ 5 o\'clock' },
-    { emoji: '🔍', title: 'Find someone who…', body: '…has got a sister.\n…has a birthday in winter.\n…has got a dictionary in their bag.\n…gets up before 7 o\'clock.\n…can spell "Wednesday".' },
-    { emoji: '🏁', title: 'The exam', body: 'Next lesson — the Block 1 exam:\n📝 grammar · 🎧 listening · 📖 reading — on your phone, with your ID\n✍️ writing — on paper\nPractise: the review test 📲' }
+  exercises: [
+    {
+      "id": "r_letters",
+      "type": "odd",
+      "skill": "listening",
+      "title": "Lesson 1: Which letter has a different sound? Circle it.",
+      "items": [
+        {
+          "q": "A   J   K   E",
+          "a": "E"
+        },
+        {
+          "q": "B   D   F   V",
+          "a": "F"
+        },
+        {
+          "q": "I   Y   E",
+          "a": "E"
+        },
+        {
+          "q": "M   N   S   T",
+          "a": "T"
+        },
+        {
+          "q": "Q   W   U   R",
+          "a": "R"
+        }
+      ]
+    },
+    {
+      "id": "r_numbers",
+      "type": "write",
+      "skill": "writing",
+      "title": "Lesson 1: Write the numbers in words.",
+      "items": [
+        {
+          "q": "14",
+          "a": "fourteen"
+        },
+        {
+          "q": "40",
+          "a": "forty"
+        },
+        {
+          "q": "19",
+          "a": "nineteen"
+        },
+        {
+          "q": "90",
+          "a": "ninety"
+        },
+        {
+          "q": "72",
+          "a": "seventy-two"
+        },
+        {
+          "q": "100",
+          "a": "one hundred"
+        }
+      ]
+    },
+    {
+      "id": "lis_rev1",
+      "type": "gap",
+      "skill": "listening",
+      "title": "Listening 1: A new member at the sports club. Listen and complete.",
+      "items": [
+        {
+          "q": "Surname: ____________",
+          "a": "Thompson (T-H-O-M-P-S-O-N)"
+        },
+        {
+          "q": "Age: ________",
+          "a": "13"
+        },
+        {
+          "q": "Country: ____________",
+          "a": "Canada"
+        },
+        {
+          "q": "Phone: 078 ________ ________",
+          "a": "366 914"
+        },
+        {
+          "q": "Birthday: the ________ of ____________",
+          "a": "4th of July"
+        }
+      ],
+      "listen": 0
+    },
+    {
+      "id": "r_be",
+      "type": "gap",
+      "skill": "writing",
+      "title": "Lesson 2: Write am, is, are — or isn't / aren't.",
+      "items": [
+        {
+          "q": "I ___ from the UK.",
+          "a": "am"
+        },
+        {
+          "q": "Lucy and Emma ___ my friends.",
+          "a": "are"
+        },
+        {
+          "q": "Is he Spanish? — No, he ___.",
+          "a": "isn't"
+        },
+        {
+          "q": "___ you twelve? — Yes, I am.",
+          "a": "Are"
+        },
+        {
+          "q": "Are they French? — No, they ___.",
+          "a": "aren't"
+        },
+        {
+          "q": "My teacher ___ British.",
+          "a": "is"
+        }
+      ]
+    },
+    {
+      "id": "r_nat",
+      "type": "match",
+      "skill": "reading",
+      "title": "Lesson 2: Match the country and the nationality.",
+      "items": [
+        {
+          "q": "Spain",
+          "a": "Spanish"
+        },
+        {
+          "q": "Japan",
+          "a": "Japanese"
+        },
+        {
+          "q": "the USA",
+          "a": "American"
+        },
+        {
+          "q": "Italy",
+          "a": "Italian"
+        },
+        {
+          "q": "France",
+          "a": "French"
+        },
+        {
+          "q": "China",
+          "a": "Chinese"
+        }
+      ]
+    },
+    {
+      "id": "r_family",
+      "type": "choose",
+      "skill": "writing",
+      "title": "Lesson 3: Circle the right word.",
+      "items": [
+        {
+          "q": "My mother's sister is my…",
+          "opts": [
+            "aunt",
+            "uncle",
+            "cousin"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "This is Ben. ___ sister is six.",
+          "opts": [
+            "Her",
+            "His",
+            "He"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "She ___ got two brothers.",
+          "opts": [
+            "have",
+            "has",
+            "is"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "Have you got a pet? — Yes, I ___.",
+          "opts": [
+            "have",
+            "has",
+            "am"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "the house of my grandma =",
+          "opts": [
+            "my grandma house",
+            "my grandma's house",
+            "my grandmas house"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "My parents =",
+          "opts": [
+            "mum and dad",
+            "brother and sister",
+            "aunt and uncle"
+          ],
+          "a": "a"
+        }
+      ]
+    },
+    {
+      "id": "lis_rev2",
+      "type": "tf",
+      "skill": "listening",
+      "title": "Listening 2: Two friends look at a photo. True (T) or false (F)?",
+      "items": [
+        {
+          "q": "The photo is from Daniel's birthday.",
+          "a": "T"
+        },
+        {
+          "q": "Daniel's cousin is from Italy.",
+          "a": "F (from Spain)"
+        },
+        {
+          "q": "His cousin is fifteen.",
+          "a": "T"
+        },
+        {
+          "q": "The man with the camera is Daniel's uncle.",
+          "a": "T"
+        },
+        {
+          "q": "Daniel's grandmother has got a cat.",
+          "a": "F (a dog)"
+        }
+      ],
+      "listen": 1
+    },
+    {
+      "id": "r_class",
+      "type": "gap",
+      "skill": "writing",
+      "title": "Lesson 4: Write a / an, or the plural.",
+      "items": [
+        {
+          "q": "___ umbrella",
+          "a": "an"
+        },
+        {
+          "q": "___ notebook",
+          "a": "a"
+        },
+        {
+          "q": "one box, two ____________",
+          "a": "boxes"
+        },
+        {
+          "q": "one child, three ____________",
+          "a": "children"
+        },
+        {
+          "q": "one dictionary, two ____________",
+          "a": "dictionaries"
+        },
+        {
+          "q": "___ apple",
+          "a": "an"
+        }
+      ]
+    },
+    {
+      "id": "r_demo",
+      "type": "choose",
+      "skill": "writing",
+      "title": "Lesson 4: Circle this, that, these or those.",
+      "items": [
+        {
+          "q": "___ is my bag. (here)",
+          "opts": [
+            "This",
+            "These",
+            "Those"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "___ are my books. (here)",
+          "opts": [
+            "That",
+            "These",
+            "This"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "Look at ___ birds! (over there)",
+          "opts": [
+            "these",
+            "that",
+            "those"
+          ],
+          "a": "c"
+        },
+        {
+          "q": "Is ___ your pen? (over there)",
+          "opts": [
+            "that",
+            "these",
+            "those"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "What are ___ ? (here)",
+          "opts": [
+            "this",
+            "that",
+            "these"
+          ],
+          "a": "c"
+        }
+      ]
+    },
+    {
+      "id": "r_time",
+      "type": "gap",
+      "skill": "writing",
+      "title": "Lesson 5: Write on, in or at — and the time in words.",
+      "items": [
+        {
+          "q": "___ Friday",
+          "a": "on"
+        },
+        {
+          "q": "___ December",
+          "a": "in"
+        },
+        {
+          "q": "___ six o'clock",
+          "a": "at"
+        },
+        {
+          "q": "7:30 = ____________",
+          "a": "half past seven"
+        },
+        {
+          "q": "9:45 = ____________",
+          "a": "quarter to ten"
+        },
+        {
+          "q": "3rd = ____________",
+          "a": "third"
+        }
+      ]
+    },
+    {
+      "id": "lis_rev3",
+      "type": "choose",
+      "skill": "listening",
+      "title": "Listening 3: A school day. Circle the right answer.",
+      "items": [
+        {
+          "q": "Emma gets up at…",
+          "opts": [
+            "6:45",
+            "7:15",
+            "7:45"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "Her first lesson is…",
+          "opts": [
+            "English",
+            "maths",
+            "art"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "She has got lunch at…",
+          "opts": [
+            "twelve o'clock",
+            "half past twelve",
+            "one o'clock"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "On Wednesday she has got…",
+          "opts": [
+            "swimming",
+            "football",
+            "piano"
+          ],
+          "a": "a"
+        },
+        {
+          "q": "Her favourite day is…",
+          "opts": [
+            "Monday",
+            "Wednesday",
+            "Friday"
+          ],
+          "a": "c"
+        }
+      ],
+      "listen": 2
+    },
+    {
+      "id": "mail_tf",
+      "type": "tf",
+      "skill": "reading",
+      "title": "Read Sophie's e-mail. True (T) or false (F)?",
+      "items": [
+        {
+          "q": "Sophie is twelve.",
+          "a": "T"
+        },
+        {
+          "q": "She is from Italy.",
+          "a": "F (France)"
+        },
+        {
+          "q": "Her birthday is in April.",
+          "a": "T"
+        },
+        {
+          "q": "She has got two sisters.",
+          "a": "F (two brothers and a baby sister)"
+        },
+        {
+          "q": "English is at nine o'clock on Friday.",
+          "a": "T"
+        }
+      ],
+      "text": "Hi Jack!\n\nMy name's Sophie and I'm your new e-friend! I'm twelve and I'm from Paris, in France. My birthday is on the 2nd of April.\n\nI've got a big family: my mum, my dad, two brothers and a baby sister. My brothers are fourteen and ten. My sister's name is Chloe — that's C-H-L-O-E.\n\nAt school my favourite day is Friday — I've got English at nine o'clock and art at half past two. Write soon! Sophie"
+    },
+    {
+      "id": "findwho",
+      "type": "write",
+      "skill": "speaking",
+      "title": "Find someone who… (ask and write a name).",
+      "items": [
+        {
+          "q": "…has got a sister.  \"Have you got a sister?\"",
+          "a": "(students' own)"
+        },
+        {
+          "q": "…has a birthday in winter.  \"When's your birthday?\"",
+          "a": "(students' own)"
+        },
+        {
+          "q": "…can spell \"Wednesday\".  \"How do you spell Wednesday?\"",
+          "a": "(students' own)"
+        },
+        {
+          "q": "…gets up before 7 o'clock.  \"What time do you get up?\"",
+          "a": "(students' own)"
+        },
+        {
+          "q": "…has got a cousin in another country.  \"Have you got…?\"",
+          "a": "(students' own)"
+        }
+      ]
+    },
+    {
+      "id": "reply",
+      "type": "write",
+      "skill": "writing",
+      "title": "Write a reply to Sophie (exam practice: 40–60 words).",
+      "items": [
+        {
+          "q": "Hi Sophie! My name's…",
+          "a": "(students' own)"
+        },
+        {
+          "q": "I'm… years old and I'm from…",
+          "a": "(students' own)"
+        },
+        {
+          "q": "My birthday is on…",
+          "a": "(students' own)"
+        },
+        {
+          "q": "I've got… (family)",
+          "a": "(students' own)"
+        },
+        {
+          "q": "My favourite day is… because…",
+          "a": "(students' own)"
+        }
+      ]
+    },
+    {
+      "id": "quiz",
+      "type": "choose",
+      "skill": "speaking",
+      "title": "Big team quiz! Say the answer first.",
+      "items": [
+        {
+          "q": "W is said…",
+          "opts": [
+            "\"wee\"",
+            "\"double U\"",
+            "\"vee\""
+          ],
+          "a": "b"
+        },
+        {
+          "q": "Japan →",
+          "opts": [
+            "Japanish",
+            "Japanese",
+            "Japan"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "She ___ got a dog.",
+          "opts": [
+            "have",
+            "has",
+            "is"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "one woman, two…",
+          "opts": [
+            "womans",
+            "women",
+            "womens"
+          ],
+          "a": "b"
+        },
+        {
+          "q": "My birthday is ___ the 5th of May.",
+          "opts": [
+            "in",
+            "at",
+            "on"
+          ],
+          "a": "c"
+        },
+        {
+          "q": "quarter past four =",
+          "opts": [
+            "4:15",
+            "4:45",
+            "3:45"
+          ],
+          "a": "a"
+        }
+      ]
+    }
   ],
-  handout: {
-    title: 'Block 1 review',
-    sections: [
-      { skill: 'listening', title: 'Listen and write the numbers and letters.',
-        items: ['1. ______', '2. ______', '3. ______', '4. ______', '5. ______', '6. ______'] },
-      { skill: 'writing', title: 'Countries and nationalities. Complete.',
-        items: ['Japan → __________', '__________ → Turkish', 'the UK → __________', '__________ → Chinese'] },
-      { skill: 'writing', title: 'Choose the right word.',
-        items: ['1. This is Alex. (His / Her) mother is a nurse.', '2. I (have got / has got) two cousins.', '3. (This / These) are my books.', '4. My birthday is (in / on / at) the 3rd of May.', '5. I\'ve got (a / an) umbrella.', '6. They (is / are) from Russia.'] },
-      { skill: 'reading', title: 'Read and write T (true) or F (false).',
-        text: 'Hi! I\'m Megan. I\'m from London. I\'ve got one brother, Tim. He\'s eleven. His birthday is on the 30th of September. In my bag I\'ve got two notebooks and an English book. My English lesson is on Monday at half past nine.',
-        items: ['1. Megan has got a sister. ___', '2. Tim is eleven. ___', '3. Tim\'s birthday is in September. ___', '4. Her English lesson is on Tuesday. ___'] },
-      { skill: 'speaking', title: 'Find someone who… (write a name)',
-        text: '…has got a sister: __________\n…has a birthday in winter: __________\n…has got a dictionary in their bag: __________\n…gets up before 7 o\'clock: __________\n…can spell "Wednesday": __________' }
-    ],
-    teacherScript: ['Exercise 1: press 🔊 (numbers and letters).'],
-    answers: [
-      'Listening: 1. 17 · 2. 70 · 3. W · 4. 48 · 5. J · 6. 0 9 9 – 3 1 5',
-      'Nationalities: Japanese · Turkey · British · China',
-      'Choose: 1 His · 2 have got · 3 These · 4 on · 5 an · 6 are',
-      'Reading: 1 F · 2 T · 3 T · 4 F'
-    ]
-  },
+  deck: [
+    {
+      "layout": "title",
+      "notes": "The review lesson (2 hours): games and practice for Lessons 1–5. Note which exercises are hard — practise them again. Students need the handout."
+    },
+    {
+      "layout": "list",
+      "tag": "TODAY",
+      "title": "What we review today",
+      "rows": [
+        {
+          "emoji": "🔤",
+          "text": "Lesson 1: letters, spelling, numbers"
+        },
+        {
+          "emoji": "🌍",
+          "text": "Lesson 2: greetings, \"be\", countries"
+        },
+        {
+          "emoji": "👪",
+          "text": "Lesson 3: family, his / her, have got"
+        },
+        {
+          "emoji": "🎒",
+          "text": "Lesson 4: a / an, plurals, this / these"
+        },
+        {
+          "emoji": "🕒",
+          "text": "Lesson 5: days, months, dates, the time"
+        }
+      ],
+      "notes": "Ask: \"Which lesson was easy? Which was difficult?\""
+    },
+    {
+      "layout": "questions",
+      "tag": "WARM-UP",
+      "title": "Quick questions from the block",
+      "rows": [
+        "How do you spell your surname?",
+        "Where are you from?",
+        "Have you got a brother?",
+        {
+          "q": "What's this? (point at a ruler)",
+          "a": "It's a ruler."
+        },
+        "When's your birthday?"
+      ],
+      "notes": "Ask around the class — everyone answers one question."
+    },
+    {
+      "layout": "game",
+      "tag": "WARM-UP GAME",
+      "title": "Board race",
+      "emoji": "🏃",
+      "minutes": 8,
+      "text": "Two teams. Listen to the word.\nRun and write it on the board — correctly!\n✅ = 1 point\nWords from all five lessons!",
+      "notes": "Words: Wednesday, children, Japanese, uncle, twelfth, forty, umbrella."
+    },
+    {
+      "layout": "words",
+      "tag": "LEAD-IN",
+      "title": "Words for today",
+      "cards": [
+        {
+          "emoji": "🔤",
+          "word": "spell",
+          "tr": "T-O-M"
+        },
+        {
+          "emoji": "🔢",
+          "word": "thirteen / thirty",
+          "tr": "13 / 30"
+        },
+        {
+          "emoji": "🌍",
+          "word": "nationality",
+          "tr": "British"
+        },
+        {
+          "emoji": "👪",
+          "word": "cousin",
+          "tr": "my aunt's son"
+        },
+        {
+          "emoji": "🎒",
+          "word": "children",
+          "tr": "one child"
+        },
+        {
+          "emoji": "👉",
+          "word": "those",
+          "tr": "far, many"
+        },
+        {
+          "emoji": "🥇",
+          "word": "twelfth",
+          "tr": "12th"
+        },
+        {
+          "emoji": "🕒",
+          "word": "quarter to",
+          "tr": "9:45"
+        }
+      ],
+      "notes": "Students say each word and an example — then click to check."
+    },
+    {
+      "layout": "boxes",
+      "tag": "REVIEW · LESSON 1",
+      "title": "Letters and numbers",
+      "boxes": [
+        {
+          "head": "🔤 Spelling",
+          "body": "How do you spell it?\nB - E - double L - A"
+        },
+        {
+          "head": "🔢 Numbers",
+          "body": "13 thirTEEN · 30 THIRty\n40 forty · 90 ninety"
+        },
+        {
+          "head": "📞 Phone",
+          "body": "0 = \"oh\" · 55 = \"double five\""
+        }
+      ],
+      "foot": "The vowels: A E I O U",
+      "notes": "Quick drill: spell three names, say three numbers."
+    },
+    {
+      "layout": "exercise",
+      "ex": "r_letters",
+      "notes": "Handout exercise 1."
+    },
+    {
+      "layout": "exercise",
+      "ex": "r_numbers",
+      "notes": "Handout exercise 2."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 1",
+      "title": "At the sports club",
+      "listen": 0,
+      "text": "Oliver joins a sports club.\nListen and complete the form (handout exercise 3):\nsurname, age, country, phone, birthday.",
+      "tips": [
+        "The surname is spelled slowly",
+        "Numbers: phone and date",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "lis_rev1",
+      "notes": "Handout exercise 3 (Listening 1)."
+    },
+    {
+      "layout": "boxes",
+      "tag": "REVIEW · LESSON 2",
+      "title": "Hello! Countries",
+      "boxes": [
+        {
+          "head": "🧩 be",
+          "body": "I am · he / she / it is\nyou / we / they are"
+        },
+        {
+          "head": "❓ Short answers",
+          "body": "Yes, I am. / No, I'm not.\nYes, he is. / No, he isn't."
+        },
+        {
+          "head": "🌍 Capital letters",
+          "body": "Spain → Spanish\nJapan → Japanese"
+        }
+      ],
+      "foot": "Where are you from? — I'm from…",
+      "notes": "Students ask each other \"Are you…?\" questions."
+    },
+    {
+      "layout": "exercise",
+      "ex": "r_be",
+      "notes": "Handout exercise 4."
+    },
+    {
+      "layout": "exercise",
+      "ex": "r_nat",
+      "notes": "Handout exercise 5."
+    },
+    {
+      "layout": "boxes",
+      "tag": "REVIEW · LESSON 3",
+      "title": "My family",
+      "boxes": [
+        {
+          "head": "👪 Words",
+          "body": "aunt · uncle · cousin\nparents · grandparents"
+        },
+        {
+          "head": "🔑 his / her / 's",
+          "body": "Tom → his · Sara → her\nTom's bag"
+        },
+        {
+          "head": "🎒 have got",
+          "body": "I have got · she has got\nHave you got…? — Yes, I have."
+        }
+      ],
+      "foot": "he / she / it → HAS got",
+      "notes": "Students tell a partner about one family member."
+    },
+    {
+      "layout": "exercise",
+      "ex": "r_family",
+      "notes": "Handout exercise 6."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 2",
+      "title": "A birthday photo",
+      "listen": 1,
+      "text": "Two friends look at a birthday photo.\nListen: true or false? (handout exercise 7)",
+      "tips": [
+        "Who is it?",
+        "How old? Where from?",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "lis_rev2",
+      "notes": "Handout exercise 7 (Listening 2)."
+    },
+    {
+      "layout": "boxes",
+      "tag": "REVIEW · LESSON 4",
+      "title": "Classroom things",
+      "boxes": [
+        {
+          "head": "🍎 a / an",
+          "body": "a pen · an apple"
+        },
+        {
+          "head": "➕ Plurals",
+          "body": "boxes · dictionaries\nmen · women · children"
+        },
+        {
+          "head": "👉 this / these",
+          "body": "near: this, these\nfar: that, those"
+        }
+      ],
+      "foot": "What's this? — It's a… · What are these? — They're…",
+      "notes": "Point at things; students say the sentence."
+    },
+    {
+      "layout": "exercise",
+      "ex": "r_class",
+      "notes": "Handout exercise 8."
+    },
+    {
+      "layout": "exercise",
+      "ex": "r_demo",
+      "notes": "Handout exercise 9."
+    },
+    {
+      "layout": "boxes",
+      "tag": "REVIEW · LESSON 5",
+      "title": "Days, dates and time",
+      "boxes": [
+        {
+          "head": "📅 on / in / at",
+          "body": "on Monday · in May · at 7"
+        },
+        {
+          "head": "🥇 Dates",
+          "body": "the 3rd of May\nfirst · second · third · twelfth"
+        },
+        {
+          "head": "🕒 Time",
+          "body": "half past · quarter past\nquarter to · ten to"
+        }
+      ],
+      "foot": "When's your birthday? — It's on the…",
+      "notes": "Show times on a clock."
+    },
+    {
+      "layout": "exercise",
+      "ex": "r_time",
+      "notes": "Handout exercise 10."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "LISTENING 3",
+      "title": "A school day",
+      "listen": 2,
+      "text": "Emma talks about her school day.\nListen and circle the right answer (handout exercise 11).",
+      "tips": [
+        "Times · subjects · days",
+        "Circle a, b or c",
+        "You hear it two times"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "exercise",
+      "ex": "lis_rev3",
+      "notes": "Handout exercise 11 (Listening 3)."
+    },
+    {
+      "layout": "mistakes",
+      "tag": "YOU FOUND IT",
+      "title": "The block's top mistakes",
+      "rows": [
+        {
+          "wrong": "fourty",
+          "right": "forty"
+        },
+        {
+          "wrong": "I'm from Spanish.",
+          "right": "I'm from Spain."
+        },
+        {
+          "wrong": "She have got a dog.",
+          "right": "She has got a dog."
+        },
+        {
+          "wrong": "two childs",
+          "right": "two children"
+        },
+        {
+          "wrong": "in Monday",
+          "right": "on Monday"
+        },
+        {
+          "wrong": "I have 12 years.",
+          "right": "I'm 12."
+        }
+      ],
+      "notes": "Read the wrong one: \"Is it right?\" Students find the problem, then click to show the right one."
+    },
+    {
+      "layout": "skill",
+      "skill": "reading",
+      "tag": "READING",
+      "title": "An e-mail from Sophie",
+      "text": "Hi Jack!\n\nMy name's Sophie and I'm your new e-friend! I'm twelve and I'm from Paris, in France. My birthday is on the 2nd of April.\n\nI've got a big family: my mum, my dad, two brothers and a baby sister. My brothers are fourteen and ten. My sister's name is Chloe — that's C-H-L-O-E.\n\nAt school my favourite day is Friday — I've got English at nine o'clock and art at half past two. Write soon! Sophie",
+      "tips": [
+        "Name · age · country · family · school",
+        "Read, then do exercise 12"
+      ],
+      "notes": "Students read silently (4 min)."
+    },
+    {
+      "layout": "exercise",
+      "ex": "mail_tf",
+      "notes": "Handout exercise 12."
+    },
+    {
+      "layout": "exercise",
+      "ex": "findwho",
+      "notes": "Handout exercise 13 — students walk and ask.",
+      "minutes": 8
+    },
+    {
+      "layout": "exercise",
+      "ex": "reply",
+      "notes": "Handout exercise 14 — exam practice for the writing part.",
+      "minutes": 10
+    },
+    {
+      "layout": "list",
+      "tag": "THE EXAM",
+      "title": "What is in the Block 1 exam?",
+      "rows": [
+        {
+          "emoji": "📱",
+          "text": "Online (your phone, with your ID): grammar · listening · reading"
+        },
+        {
+          "emoji": "📝",
+          "text": "Grammar: be, have got, his / her, a / an, plurals, on / in / at"
+        },
+        {
+          "emoji": "🎧",
+          "text": "Listening: 3 recordings, 5 questions each, two times"
+        },
+        {
+          "emoji": "📖",
+          "text": "Reading: a short text about a student"
+        },
+        {
+          "emoji": "✍️",
+          "text": "Writing on paper: \"About me\", 40–60 words"
+        }
+      ],
+      "notes": "Answer students' questions about the exam."
+    },
+    {
+      "layout": "exercise",
+      "ex": "quiz",
+      "notes": "Handout exercise 15 — the big team quiz."
+    },
+    {
+      "layout": "finish",
+      "title": "Well done!",
+      "rows": [
+        "I can spell, count and say dates",
+        "I can talk about me, my family and my country",
+        "I can use the grammar of Block 1",
+        "I'm ready for the exam!"
+      ],
+      "foot": "Homework: the review test 📲 (30 questions) — then the exam!",
+      "notes": "Send the review test link now (Course → Review test → Copy the link)."
+    }
+  ],
   listen: [
-    { label: 'Exercise 1 — numbers and letters', text: 'Number one: seventeen. Number two: seventy. Number three: the letter W. Number four: forty-eight. Number five: the letter J. Number six: oh double nine, three one five.' }
+    {
+      "label": "Listening 1 — A new member at the sports club",
+      "src": "audio/course/b1review-listening-1.mp3",
+      "text": "Hello! Welcome to the sports club. What's your name? Oliver Thompson. How do you spell Thompson? T. H. O. M. P. S. O. N. Thank you. How old are you, Oliver? I'm thirteen. And where are you from? I'm from Canada. What's your phone number? It's oh seven eight, three double six, nine one four. And when's your birthday? It's on the fourth of July. Great. See you on Monday!",
+      "script": "Narrator: Listening one. A new member at the sports club. Listen and complete.\nA: Hello! Welcome to the sports club. What's your name?\nB: Oliver Thompson.\nA: How do you spell Thompson?\nB: T. H. O. M. P. S. O. N.\nA: Thank you. How old are you, Oliver?\nB: I'm thirteen.\nA: And where are you from?\nB: I'm from Canada.\nA: What's your phone number?\nB: It's oh seven eight, three double six, nine one four.\nA: And when's your birthday?\nB: It's on the fourth of July.\nA: Great. See you on Monday!"
+    },
+    {
+      "label": "Listening 2 — A birthday photo",
+      "src": "audio/course/b1review-listening-2.mp3",
+      "text": "Is this a photo from your birthday, Daniel? Yes, it is. Look, this is my cousin Pablo. He's from Spain. How old is he? He's fifteen. And who's the man with the camera? That's my uncle — Pablo's dad. And this lady with the dog? That's my grandmother. She's got a dog called Rocky.",
+      "script": "Narrator: Listening two. Two friends look at a photo. True or false?\nA: Is this a photo from your birthday, Daniel?\nB: Yes, it is. Look, this is my cousin Pablo. He's from Spain.\nA: How old is he?\nB: He's fifteen.\nA: And who's the man with the camera?\nB: That's my uncle — Pablo's dad.\nA: And this lady with the dog?\nB: That's my grandmother. She's got a dog called Rocky."
+    },
+    {
+      "label": "Listening 3 — A school day",
+      "src": "audio/course/b1review-listening-3.mp3",
+      "text": "I get up at quarter past seven. School starts at half past eight. My first lesson is maths. Then I've got English. We have lunch at half past twelve. On Wednesday I've got swimming after school. My favourite day is Friday, because we've got art and music!",
+      "script": "Narrator: Listening three. Emma talks about her school day. Circle the right answer.\nA: I get up at quarter past seven. School starts at half past eight.\nA: My first lesson is maths. Then I've got English.\nA: We have lunch at half past twelve.\nA: On Wednesday I've got swimming after school.\nA: My favourite day is Friday, because we've got art and music!"
+    }
+  ],
+  teacherScript: [
+    "Play each listening twice. The full scripts are below. The review test (30 questions) is good exam practice — send its link at the end."
   ],
   test: [
     { q: 'X, Y, _____', a: 'Z', wrong: ['W', 'V', 'S'] },
@@ -1622,68 +6631,546 @@ COURSE_BEGINNER.blocks[0].review = {
 };
 
 /* ---------- Block 1: the exam (Beginner: grammar, listening, reading online · writing on paper) ---------- */
+// Beginner exam (teacher): grammar, listening, reading online (one Test link, kept in order) + writing on paper. 3 recordings × 5 questions.
 COURSE_BEGINNER.blocks[0].exam = {
-  title: 'Block 1 exam', emoji: '🏁', skills: ['listening', 'reading', 'writing'], keepOrder: true,
-  intro: 'Grammar, listening and reading are one online test (students open the link and enter their ID; it\'s marked automatically). Writing is on paper — you mark it out of 10 and type the marks below. Total: 30 + 10 = 40.',
-  slides: [
-    { emoji: '🏁📝', title: 'Block 1 exam', body: 'Today: the exam for Lessons 1–5.\n📱 Part 1–3 on your phone: grammar, listening, reading\n✍️ Part 4 on paper: writing\nPhones: open the link and enter your ID.' },
-    { emoji: '📝', title: 'Part 1: Grammar', body: 'Questions 1–12.\nChoose the right answer.\nThen wait — don\'t start the listening yet! ✋' },
-    { emoji: '🎧', title: 'Part 2: Listening', body: 'Questions 13–20.\nListen to Jennifer and Daniel.\nYou hear each text two times. 🔁' },
-    { emoji: '📖', title: 'Part 3: Reading', body: 'Hello! My name is Amy and I\'m twelve years old. I\'m from Bristol, in the UK. I\'ve got a big family: my mother, my father, two brothers and a grandmother. My brothers\' names are Ben and Sam. Ben is fifteen and Sam is nine. My grandmother is seventy-three. Her birthday is on the 1st of January! My favourite day is Friday because I\'ve got art at half past two. In my school bag I\'ve got four notebooks, a pencil case and an English dictionary.' },
-    { emoji: '✍️', title: 'Part 4: Writing (on paper)', body: 'Write about yourself — 40 to 60 words:\n• your name and age · where you are from\n• your family\n• your birthday\n• what is in your school bag' },
-    { emoji: '🎉', title: 'Finished!', body: 'Press the button to send your answers. 📤\nGive your writing to your teacher.\nWell done — Block 1 is complete! 🏆' }
+  "title": "Block 1 exam",
+  "emoji": "🏁",
+  "skills": [
+    "listening",
+    "reading",
+    "writing"
   ],
-  handout: {
-    title: 'Block 1 exam — paper',
-    sections: [
-      { skill: 'reading', title: 'Part 3: Read the text. Answer questions 21–30 on your phone.',
-        text: 'Hello! My name is Amy and I\'m twelve years old. I\'m from Bristol, in the UK. I\'ve got a big family: my mother, my father, two brothers and a grandmother. My brothers\' names are Ben and Sam. Ben is fifteen and Sam is nine. My grandmother is seventy-three. Her birthday is on the 1st of January! My favourite day is Friday because I\'ve got art at half past two. In my school bag I\'ve got four notebooks, a pencil case and an English dictionary.' },
-      { skill: 'writing', title: 'Part 4: Write about yourself (40–60 words). Your name and age, where you are from, your family, your birthday, what is in your school bag.',
-        text: '________________________________________________\n________________________________________________\n________________________________________________\n________________________________________________\n________________________________________________\n________________________________________________' }
+  "keepOrder": true,
+  "intro": "Grammar, listening and reading are one online test (students open the link and enter their ID; it's marked automatically): 10 grammar + 15 listening (3 recordings × 5 questions) + 10 reading = 35. Writing is on paper — you mark it out of 10 and type the marks below. Total: 35 + 10 = 45.",
+  "writing": {
+    "max": 10
+  },
+  "listen": [
+    {
+      "label": "Part 2 — Recording 1: Jennifer (questions 11–15)",
+      "src": "audio/course/b1exam-listening-1.mp3",
+      "text": "Hello! My name is Jennifer. J. E. double N. I. F. E. R. I'm fourteen years old and I'm from the UK. My phone number is oh nine three, four four seven, two oh eight. My birthday is on the eighteenth of April.",
+      "script": "Narrator: Recording one. Questions eleven to fifteen. Listen to Jennifer.\nA: Hello! My name is Jennifer.\nA: J. E. double N. I. F. E. R.\nA: I'm fourteen years old and I'm from the UK.\nA: My phone number is oh nine three, four four seven, two oh eight.\nA: My birthday is on the eighteenth of April."
+    },
+    {
+      "label": "Part 2 — Recording 2: Daniel (questions 16–20)",
+      "src": "audio/course/b1exam-listening-2.mp3",
+      "text": "Hi, I'm Daniel and I'm German — I'm from Germany. I've got two sisters, Anna and Lisa. In my bag I've got a dictionary and two pens. My English lesson is on Friday at quarter past ten.",
+      "script": "Narrator: Recording two. Questions sixteen to twenty. Listen to Daniel.\nA: Hi, I'm Daniel and I'm German — I'm from Germany.\nA: I've got two sisters, Anna and Lisa.\nA: In my bag I've got a dictionary and two pens.\nA: My English lesson is on Friday at quarter past ten."
+    },
+    {
+      "label": "Part 2 — Recording 3: A phone message (questions 21–25)",
+      "src": "audio/course/b1exam-listening-3.mp3",
+      "text": "Hi Tom, it's Lucy! My birthday party is on Saturday — Saturday the ninth of May. It starts at three o'clock. My house is number forty-seven, Park Road. Bring your cousin, too! Call me — my number is oh seven seven, five one two, three nine oh. Bye!",
+      "script": "Narrator: Recording three. Questions twenty-one to twenty-five. Listen to Lucy's phone message.\nA: Hi Tom, it's Lucy! My birthday party is on Saturday — Saturday the ninth of May.\nA: It starts at three o'clock.\nA: My house is number forty-seven, Park Road.\nA: Bring your cousin, too! Call me — my number is oh seven seven, five one two, three nine oh. Bye!"
+    }
+  ],
+  "test": [
+    {
+      "part": "grammar",
+      "q": "Grammar 1. My sister _____ ten years old.",
+      "a": "is",
+      "wrong": [
+        "are",
+        "am",
+        "has"
+      ]
+    },
+    {
+      "part": "grammar",
+      "q": "Grammar 2. _____ you from Canada? — Yes, I am.",
+      "a": "Are",
+      "wrong": [
+        "Is",
+        "Am",
+        "Have"
+      ]
+    },
+    {
+      "part": "grammar",
+      "q": "Grammar 3. They're from the USA. They're _____.",
+      "a": "American",
+      "wrong": [
+        "USA",
+        "Americish",
+        "Amerikan"
+      ]
+    },
+    {
+      "part": "grammar",
+      "q": "Grammar 4. This is Jack. _____ father is a doctor.",
+      "a": "His",
+      "wrong": [
+        "Her",
+        "He",
+        "Him"
+      ]
+    },
+    {
+      "part": "grammar",
+      "q": "Grammar 5. My grandparents _____ a big house.",
+      "a": "have got",
+      "wrong": [
+        "has got",
+        "is got",
+        "are got"
+      ]
+    },
+    {
+      "part": "grammar",
+      "q": "Grammar 6. the car of my father = my _____ car",
+      "a": "father's",
+      "wrong": [
+        "fathers",
+        "father",
+        "father is"
+      ]
+    },
+    {
+      "part": "grammar",
+      "q": "Grammar 7. I've got _____ orange.",
+      "a": "an",
+      "wrong": [
+        "a",
+        "two",
+        "the an"
+      ]
+    },
+    {
+      "part": "grammar",
+      "q": "Grammar 8. one child, four _____",
+      "a": "children",
+      "wrong": [
+        "childs",
+        "childrens",
+        "child"
+      ]
+    },
+    {
+      "part": "grammar",
+      "q": "Grammar 9. _____ are my friends over there. (far)",
+      "a": "Those",
+      "wrong": [
+        "That",
+        "This",
+        "These is"
+      ]
+    },
+    {
+      "part": "grammar",
+      "q": "Grammar 10. Her birthday is _____ the 9th of March.",
+      "a": "on",
+      "wrong": [
+        "in",
+        "at",
+        "of"
+      ]
+    },
+    {
+      "part": "listening",
+      "q": "Listening 11. Her name is J-E-N-N-I-_____-E-R.",
+      "a": "F",
+      "wrong": [
+        "V",
+        "P",
+        "S"
+      ]
+    },
+    {
+      "part": "listening",
+      "q": "Listening 12. Jennifer is _____ years old.",
+      "a": "14",
+      "wrong": [
+        "40",
+        "13",
+        "4"
+      ]
+    },
+    {
+      "part": "listening",
+      "q": "Listening 13. Her phone number is 093 447 _____.",
+      "a": "208",
+      "wrong": [
+        "280",
+        "218",
+        "802"
+      ]
+    },
+    {
+      "part": "listening",
+      "q": "Listening 14. Her birthday is on the _____ of April.",
+      "a": "18th",
+      "wrong": [
+        "8th",
+        "80th",
+        "28th"
+      ]
+    },
+    {
+      "part": "listening",
+      "q": "Listening 15. Jennifer is from _____.",
+      "a": "the UK",
+      "wrong": [
+        "the USA",
+        "Canada",
+        "Italy"
+      ]
+    },
+    {
+      "part": "listening",
+      "q": "Listening 16. Daniel is _____.",
+      "a": "German",
+      "wrong": [
+        "Spanish",
+        "French",
+        "Turkish"
+      ]
+    },
+    {
+      "part": "listening",
+      "q": "Listening 17. Daniel has got two _____.",
+      "a": "sisters",
+      "wrong": [
+        "brothers",
+        "cousins",
+        "sons"
+      ]
+    },
+    {
+      "part": "listening",
+      "q": "Listening 18. In his bag there is a _____.",
+      "a": "dictionary",
+      "wrong": [
+        "ruler",
+        "phone",
+        "apple"
+      ]
+    },
+    {
+      "part": "listening",
+      "q": "Listening 19. His English lesson is on _____.",
+      "a": "Friday",
+      "wrong": [
+        "Monday",
+        "Thursday",
+        "Saturday"
+      ]
+    },
+    {
+      "part": "listening",
+      "q": "Listening 20. His English lesson is at _____.",
+      "a": "quarter past ten",
+      "wrong": [
+        "half past ten",
+        "quarter to ten",
+        "ten o'clock"
+      ]
+    },
+    {
+      "part": "listening",
+      "q": "Listening 21. Lucy's party is on _____.",
+      "a": "Saturday",
+      "wrong": [
+        "Sunday",
+        "Friday",
+        "Monday"
+      ]
+    },
+    {
+      "part": "listening",
+      "q": "Listening 22. The date is the _____ of May.",
+      "a": "9th",
+      "wrong": [
+        "5th",
+        "19th",
+        "29th"
+      ]
+    },
+    {
+      "part": "listening",
+      "q": "Listening 23. The party starts at _____.",
+      "a": "three o'clock",
+      "wrong": [
+        "two o'clock",
+        "half past three",
+        "four o'clock"
+      ]
+    },
+    {
+      "part": "listening",
+      "q": "Listening 24. Lucy's house is number _____, Park Road.",
+      "a": "47",
+      "wrong": [
+        "74",
+        "17",
+        "40"
+      ]
+    },
+    {
+      "part": "listening",
+      "q": "Listening 25. Lucy's phone number is 077 512 _____.",
+      "a": "390",
+      "wrong": [
+        "309",
+        "930",
+        "319"
+      ]
+    },
+    {
+      "part": "reading",
+      "q": "Reading 26. Amy is _____ years old.",
+      "a": "12",
+      "wrong": [
+        "15",
+        "9",
+        "73"
+      ]
+    },
+    {
+      "part": "reading",
+      "q": "Reading 27. She is from _____.",
+      "a": "Bristol",
+      "wrong": [
+        "London",
+        "Manchester",
+        "Germany"
+      ]
+    },
+    {
+      "part": "reading",
+      "q": "Reading 28. She has got _____ brothers.",
+      "a": "two",
+      "wrong": [
+        "three",
+        "one",
+        "four"
+      ]
+    },
+    {
+      "part": "reading",
+      "q": "Reading 29. Sam is _____.",
+      "a": "nine",
+      "wrong": [
+        "fifteen",
+        "twelve",
+        "nineteen"
+      ]
+    },
+    {
+      "part": "reading",
+      "q": "Reading 30. Ben is Amy's _____.",
+      "a": "brother",
+      "wrong": [
+        "father",
+        "cousin",
+        "uncle"
+      ]
+    },
+    {
+      "part": "reading",
+      "q": "Reading 31. Her grandmother is _____.",
+      "a": "seventy-three",
+      "wrong": [
+        "thirty-seven",
+        "seventy",
+        "sixty-three"
+      ]
+    },
+    {
+      "part": "reading",
+      "q": "Reading 32. Her grandmother's birthday is on the _____ of January.",
+      "a": "1st",
+      "wrong": [
+        "3rd",
+        "21st",
+        "31st"
+      ]
+    },
+    {
+      "part": "reading",
+      "q": "Reading 33. Amy's favourite day is _____.",
+      "a": "Friday",
+      "wrong": [
+        "Monday",
+        "Saturday",
+        "Sunday"
+      ]
+    },
+    {
+      "part": "reading",
+      "q": "Reading 34. She has got art at _____.",
+      "a": "half past two",
+      "wrong": [
+        "two o'clock",
+        "quarter past two",
+        "half past three"
+      ]
+    },
+    {
+      "part": "reading",
+      "q": "Reading 35. In her bag she has got four _____.",
+      "a": "notebooks",
+      "wrong": [
+        "pencils",
+        "dictionaries",
+        "books"
+      ]
+    }
+  ],
+  "handout": {
+    "title": "Block 1 exam — paper",
+    "sections": [
+      {
+        "skill": "reading",
+        "title": "Part 3: Read the text. Answer questions 26–35 on your phone.",
+        "text": "Hello! My name is Amy and I'm twelve years old. I'm from Bristol, in the UK. I've got a big family: my mother, my father, two brothers and a grandmother. My brothers' names are Ben and Sam. Ben is fifteen and Sam is nine. My grandmother is seventy-three. Her birthday is on the 1st of January! My favourite day is Friday because I've got art at half past two. In my school bag I've got four notebooks, a pencil case and an English dictionary."
+      },
+      {
+        "skill": "writing",
+        "title": "Part 4: Write about yourself (40–60 words). Your name and age, where you are from, your family, your birthday, what is in your school bag.",
+        "text": "________________________________________________\n________________________________________________\n________________________________________________\n________________________________________________\n________________________________________________\n________________________________________________\n________________________________________________\n"
+      }
     ],
-    teacherScript: ['Part 2: press 🔊 for each text and play it TWICE. Students answer questions 13–16 (Jennifer) and 17–20 (Daniel) on their phones.'],
-    answers: [
-      'Online part (30) is marked automatically.',
-      'Writing (10): task — all five points: name/age, country, family, birthday, school bag (4) · grammar — am/is/are, have got, his/her (3) · words — enough and right (2) · spelling and capital letters (1).'
+    "teacherScript": [
+      "Part 2: press 🔊 on each recording's slide and play it TWICE. Recording 1 → questions 11–15, recording 2 → 16–20, recording 3 → 21–25."
+    ],
+    "answers": [
+      "Online part (35) is marked automatically.",
+      "Writing (10): task — all five points: name/age, country, family, birthday, school bag (4) · grammar — am/is/are, have got, his/her (3) · words — enough and right (2) · spelling and capital letters (1)."
     ]
   },
-  listen: [
-    { label: 'Part 2 — Text 1: Jennifer (questions 13–16)', text: 'Hello! My name is Jennifer. That\'s J, E, double N, I, F, E, R. I am fourteen years old and I am from the UK. My phone number is oh nine three, four four seven, two oh eight. My birthday is on the eighteenth of April.' },
-    { label: 'Part 2 — Text 2: Daniel (questions 17–20)', text: 'Hi, I am Daniel and I am German — I am from Germany. I have got two sisters, Anna and Lisa. In my bag I have got a dictionary and two pens. My English lesson is on Friday at quarter past ten.' }
+  "teacherScript": [
+    "Part 2: press 🔊 on each recording's slide and play it TWICE. Recording 1 → questions 11–15, recording 2 → 16–20, recording 3 → 21–25."
   ],
-  writing: { max: 10 },
-  test: [
-    { part: 'grammar', q: 'Grammar 1. My sister _____ ten years old.', a: 'is', wrong: ['are', 'am', 'has'] },
-    { part: 'grammar', q: 'Grammar 2. _____ you from Canada? — Yes, I am.', a: 'Are', wrong: ['Is', 'Am', 'Have'] },
-    { part: 'grammar', q: 'Grammar 3. They\'re from the USA. They\'re _____.', a: 'American', wrong: ['USA', 'Americish', 'Amerikan'] },
-    { part: 'grammar', q: 'Grammar 4. This is Jack. _____ father is a doctor.', a: 'His', wrong: ['Her', 'He', 'Him'] },
-    { part: 'grammar', q: 'Grammar 5. My grandparents _____ a big house.', a: 'have got', wrong: ['has got', 'is got', 'are got'] },
-    { part: 'grammar', q: 'Grammar 6. the car of my father = my _____ car', a: 'father\'s', wrong: ['fathers', 'father', 'father is'] },
-    { part: 'grammar', q: 'Grammar 7. I\'ve got _____ orange.', a: 'an', wrong: ['a', 'two', 'the an'] },
-    { part: 'grammar', q: 'Grammar 8. one child, four _____', a: 'children', wrong: ['childs', 'childrens', 'child'] },
-    { part: 'grammar', q: 'Grammar 9. _____ are my friends over there. (far)', a: 'Those', wrong: ['That', 'This', 'These is'] },
-    { part: 'grammar', q: 'Grammar 10. Her birthday is _____ the 9th of March.', a: 'on', wrong: ['in', 'at', 'of'] },
-    { part: 'grammar', q: 'Grammar 11. The lesson starts _____ half past eight.', a: 'at', wrong: ['on', 'in', 'to'] },
-    { part: 'grammar', q: 'Grammar 12. 22nd = _____', a: 'twenty-second', wrong: ['twenty-two', 'twenty-twoth', 'twentieth-second'] },
-    { part: 'listening', q: 'Listening 13. Her name is J-E-N-N-I-_____-E-R.', a: 'F', wrong: ['V', 'P', 'S'] },
-    { part: 'listening', q: 'Listening 14. Jennifer is _____ years old.', a: '14', wrong: ['40', '13', '4'] },
-    { part: 'listening', q: 'Listening 15. Her phone number is 093 447 _____.', a: '208', wrong: ['280', '218', '802'] },
-    { part: 'listening', q: 'Listening 16. Her birthday is on the _____ of April.', a: '18th', wrong: ['8th', '80th', '28th'] },
-    { part: 'listening', q: 'Listening 17. Daniel is _____.', a: 'German', wrong: ['Spanish', 'French', 'Turkish'] },
-    { part: 'listening', q: 'Listening 18. Daniel has got two _____.', a: 'sisters', wrong: ['brothers', 'cousins', 'sons'] },
-    { part: 'listening', q: 'Listening 19. In his bag there is a _____.', a: 'dictionary', wrong: ['ruler', 'phone', 'apple'] },
-    { part: 'listening', q: 'Listening 20. His English lesson is at _____.', a: 'quarter past ten', wrong: ['half past ten', 'quarter to ten', 'ten o\'clock'] },
-    { part: 'reading', q: 'Reading 21. Amy is _____ years old.', a: '12', wrong: ['15', '9', '73'] },
-    { part: 'reading', q: 'Reading 22. She is from _____.', a: 'Bristol', wrong: ['London', 'Manchester', 'Germany'] },
-    { part: 'reading', q: 'Reading 23. She has got _____ brothers.', a: 'two', wrong: ['three', 'one', 'four'] },
-    { part: 'reading', q: 'Reading 24. Sam is _____.', a: 'nine', wrong: ['fifteen', 'twelve', 'nineteen'] },
-    { part: 'reading', q: 'Reading 25. Ben is Amy\'s _____.', a: 'brother', wrong: ['father', 'cousin', 'uncle'] },
-    { part: 'reading', q: 'Reading 26. Her grandmother is _____.', a: 'seventy-three', wrong: ['thirty-seven', 'seventy', 'sixty-three'] },
-    { part: 'reading', q: 'Reading 27. Her grandmother\'s birthday is on the _____ of January.', a: '1st', wrong: ['3rd', '21st', '31st'] },
-    { part: 'reading', q: 'Reading 28. Amy\'s favourite day is _____.', a: 'Friday', wrong: ['Monday', 'Saturday', 'Sunday'] },
-    { part: 'reading', q: 'Reading 29. She has got art at _____.', a: 'half past two', wrong: ['two o\'clock', 'quarter past two', 'half past three'] },
-    { part: 'reading', q: 'Reading 30. In her bag she has got four _____.', a: 'notebooks', wrong: ['pencils', 'dictionaries', 'books'] }
+  "deck": [
+    {
+      "layout": "title",
+      "notes": "The Block 1 exam (about 60 minutes). Before: phones charged, the exam paper printed, the online part's link copied (Course → Online part → Copy the link)."
+    },
+    {
+      "layout": "list",
+      "tag": "THE EXAM",
+      "title": "Block 1 exam — how it works",
+      "rows": [
+        {
+          "emoji": "📱",
+          "text": "Open the link on your phone and enter your ID"
+        },
+        {
+          "emoji": "📝",
+          "text": "Part 1: Grammar — questions 1–10"
+        },
+        {
+          "emoji": "🎧",
+          "text": "Part 2: Listening — questions 11–25 (3 recordings, two times each)"
+        },
+        {
+          "emoji": "📖",
+          "text": "Part 3: Reading — questions 26–35 (the text is on your paper)"
+        },
+        {
+          "emoji": "✍️",
+          "text": "Part 4: Writing — on paper"
+        }
+      ],
+      "notes": "Phones only for the exam. Check that everyone entered the right ID."
+    },
+    {
+      "layout": "boxes",
+      "tag": "PART 1",
+      "title": "Grammar",
+      "boxes": [
+        {
+          "head": "📝 Questions 1–10",
+          "body": "Choose the right answer.\nDon't start the listening yet!"
+        },
+        {
+          "head": "⏱️ Time",
+          "body": "About 10 minutes"
+        },
+        {
+          "head": "✋ Finished?",
+          "body": "Wait for the listening.\nDon't talk — thank you!"
+        }
+      ],
+      "foot": "Read every answer before you choose",
+      "notes": "Start the timer if you like."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "PART 2 · LISTENING",
+      "title": "Recording 1 — Jennifer",
+      "listen": 0,
+      "text": "Questions 11–15.\nJennifer talks about herself.\nYou hear the recording two times.",
+      "tips": [
+        "Her name is spelled slowly",
+        "Age · phone · birthday · country"
+      ],
+      "notes": "Play twice, then go on."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "PART 2 · LISTENING",
+      "title": "Recording 2 — Daniel",
+      "listen": 1,
+      "text": "Questions 16–20.\nDaniel talks about himself.\nYou hear the recording two times.",
+      "tips": [
+        "Nationality · family · bag",
+        "Day and time of his lesson"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "skill",
+      "skill": "listening",
+      "tag": "PART 2 · LISTENING",
+      "title": "Recording 3 — A phone message",
+      "listen": 2,
+      "text": "Questions 21–25.\nLucy leaves a message about her party.\nYou hear the recording two times.",
+      "tips": [
+        "Day · date · time",
+        "House number · phone number"
+      ],
+      "notes": "Play twice."
+    },
+    {
+      "layout": "skill",
+      "skill": "reading",
+      "tag": "READING",
+      "title": "Part 3: Reading — questions 26–35",
+      "text": "Hello! My name is Amy and I'm twelve years old. I'm from Bristol, in the UK. I've got a big family: my mother, my father, two brothers and a grandmother. My brothers' names are Ben and Sam. Ben is fifteen and Sam is nine. My grandmother is seventy-three. Her birthday is on the 1st of January! My favourite day is Friday because I've got art at half past two. In my school bag I've got four notebooks, a pencil case and an English dictionary.",
+      "tips": [
+        "The text is on your paper too",
+        "Answer on your phone"
+      ],
+      "notes": "Students read and answer on their phones (about 15 minutes)."
+    },
+    {
+      "layout": "game",
+      "tag": "PART 4 · ON PAPER",
+      "title": "Writing: About me",
+      "emoji": "✍️",
+      "minutes": 20,
+      "text": "Write about yourself — 40 to 60 words:\n• your name and age · where you are from\n• your family\n• your birthday\n• what is in your school bag",
+      "notes": "Collect the papers. Mark them out of 10 and type the marks on the exam page."
+    },
+    {
+      "layout": "finish",
+      "title": "Well done!",
+      "rows": [
+        "Press the button to send your online answers 📤",
+        "Give your writing to your teacher",
+        "Block 1 is complete! 🏆"
+      ],
+      "foot": "Well done, everyone! 🎉",
+      "notes": "Check the marks table on the exam page as answers arrive."
+    }
   ]
 };
+
+// every lesson's (and review's) handout is made from its exercises — the same ones its slides show
+COURSE_BEGINNER.blocks.forEach(b => b.lessons.concat(b.review ? [b.review] : []).forEach(l => { if (l.exercises) l.handout = courseExerciseHandout(l); }));
 
 const TA_COURSES = [COURSE_BEGINNER];

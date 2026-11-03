@@ -1,0 +1,128 @@
+[
+ {
+  "label": "Listening 1 — What's in your bag?",
+  "src": "audio/course/b1l4-listening-1.mp3",
+  "lines": [
+   [
+    "bf_emma",
+    "Listening one. What's in their bags? Circle the right answer."
+   ],
+   [
+    "bf_emma",
+    "Number one."
+   ],
+   [
+    "bf_lily",
+    "I'm Sara. In my bag I've got three pens and a notebook."
+   ],
+   [
+    "bf_emma",
+    "Number two."
+   ],
+   [
+    "bm_daniel",
+    "I'm Ben. My bag is very heavy — there's a big dictionary in it!"
+   ],
+   [
+    "bf_emma",
+    "Number three."
+   ],
+   [
+    "bf_isabella",
+    "I'm Lucy. I've got two notebooks: one for English and one for maths."
+   ],
+   [
+    "bf_emma",
+    "Number four."
+   ],
+   [
+    "bm_george",
+    "I'm Tom. It's a rainy day, so I've got an umbrella in my bag."
+   ],
+   [
+    "bf_emma",
+    "Number five."
+   ],
+   [
+    "bf_alice",
+    "I'm Mia. Look — this is my new pencil case!"
+   ]
+  ]
+ },
+ {
+  "label": "Listening 2 — Lost and found",
+  "src": "audio/course/b1l4-listening-2.mp3",
+  "lines": [
+   [
+    "bf_emma",
+    "Listening two. Lost and found. Listen and complete."
+   ],
+   [
+    "bm_lewis",
+    "OK, everyone. Whose is this black bag? Is it your bag, Jack?"
+   ],
+   [
+    "bm_george",
+    "Yes, it is! Thank you."
+   ],
+   [
+    "bm_lewis",
+    "And this red pen?"
+   ],
+   [
+    "bf_lily",
+    "That's my pen. I'm Emma."
+   ],
+   [
+    "bm_lewis",
+    "Leo, are these your books on my desk?"
+   ],
+   [
+    "bm_daniel",
+    "Yes, they are. Sorry!"
+   ],
+   [
+    "bm_lewis",
+    "And that umbrella by the door is my umbrella."
+   ],
+   [
+    "bf_isabella",
+    "Excuse me, where's my pencil case?"
+   ],
+   [
+    "bm_lewis",
+    "Look, Mia — it's under your chair."
+   ]
+  ]
+ },
+ {
+  "label": "Listening 3 — Follow the teacher",
+  "src": "audio/course/b1l4-listening-3.mp3",
+  "lines": [
+   [
+    "bf_emma",
+    "Listening three. Follow the teacher. What do the students do?"
+   ],
+   [
+    "bf_alice",
+    "Good morning, everyone. Please stand up."
+   ],
+   [
+    "bf_alice",
+    "Thank you. Now sit down and look at the board."
+   ],
+   [
+    "bf_alice",
+    "Open your books at page twelve. Page twelve."
+   ],
+   [
+    "bf_alice",
+    "Now take your notebooks and write the new words in your notebooks."
+   ],
+   [
+    "bf_alice",
+    "Good! Now work in pairs. Ask your partner: what's this in English?"
+   ]
+  ]
+ }
+]

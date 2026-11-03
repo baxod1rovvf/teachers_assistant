@@ -35,11 +35,11 @@ test('the course map: every block is 5 lessons + review + exam and covers all fo
   expect(check.map(c => c.id)).toEqual(['b1l1', 'b1l2', 'b1l3', 'b1l4', 'b1l5', 'b1review', 'b1exam']);
   check.forEach(c => {
     expect(c, c.id).toMatchObject({ slides: true, handout: true, ok: true, listen: true, warm: c.id !== 'b1exam' });
-    expect(c.test, c.id).toBe(/l\d$/.test(c.id) ? 20 : 30);
+    expect(c.test, c.id).toBe(/l\d$/.test(c.id) ? 20 : c.id === 'b1exam' ? 35 : 30);
   });
   // the Beginner exam: grammar, listening and reading online (12 + 8 + 10), writing on paper — no speaking
   expect(await page.evaluate(() => { const e = TA_COURSES[0].blocks[0].exam; return ['grammar', 'listening', 'reading'].map(p => e.test.filter(t => t.part === p).length).concat([e.writing.max, e.skills.indexOf('speaking')]); }))
-    .toEqual([12, 8, 10, 10, -1]);
+    .toEqual([10, 15, 10, 10, -1]);   // 3 recordings × 5 listening questions (teacher, 2026-11-03)
   await expect(page.locator('.course-stop.ready')).toHaveCount(7);
   await expect(page.locator('.course-stop.next')).toHaveCount(1);   // the first group's next lesson glows
   expect(errors).toEqual([]);
@@ -204,17 +204,31 @@ test('Teach mode: a click shows the hidden things one by one, then goes on; skip
   expect(errors).toEqual([]);
 });
 
-test('lessons not redone yet open in the editor too, with any text the teacher had changed', async ({ page, context }) => {
+test('every lesson and the review: a 2-hour lesson — 15 exercises, 3 listenings of 5 questions with recordings; the exam: 3 recordings too', async ({ page, context }) => {
   await prepare(context);
   await page.goto('/course.html');
-  await page.waitForTimeout(1200);
-  await hideNotices(page);
+  await page.waitForTimeout(1000);
+  const all = await page.evaluate(() => courseStops(TA_COURSES[0]).filter(s => s.blockNo === 1).map(s => {
+    const l = s.lesson;
+    return { id: s.id, slides: (l.deck || []).length, exercises: (l.exercises || []).length, kinds: [...new Set((l.exercises || []).map(e => e.type))].length,
+      listenings: (l.exercises || []).filter(e => typeof e.listen === 'number').map(e => e.items.length), audio: (l.listen || []).map(x => x.src),
+      handout: l.exercises ? l.handout.sections.length : null, built: slOriginal(courseFindStop(s.id)).length };
+  }));
+  for (const x of all) {
+    expect(x.audio.length, x.id).toBe(3);
+    for (const src of x.audio) expect((await page.request.get('/' + src)).status(), src).toBe(200);
+    expect(x.built, x.id).toBe(x.slides);
+    if (x.id === 'b1exam') continue;
+    expect(x.slides, x.id).toBeGreaterThanOrEqual(30);
+    expect(x.exercises, x.id).toBe(15);
+    expect(x.handout, x.id).toBe(15);
+    expect(x.kinds, x.id).toBeGreaterThanOrEqual(6);
+    expect(x.listenings, x.id).toEqual([5, 5, 5]);
+  }
+  // an old text-only change doesn't break the new slides
   await page.evaluate(() => courseWrite(LS_COURSE_EDITS, { b1l2: { 1: { title: 'My own title', body: 'My own text' } } }));
   await page.evaluate(() => courseOpenSlideEditor('b1l2'));
-  await expect(page.locator('.sle-thumb')).toHaveCount(12);
-  await page.locator('.sle-thumb').nth(1).click();
-  await expect(page.locator('#slStage')).toContainText('My own title');
-  await expect(page.locator('#slStage')).toContainText('My own text');
+  await expect(page.locator('.sle-thumb')).toHaveCount(all.find(x => x.id === 'b1l2').slides);
 });
 
 test('the revision test: one Test exercise per group with 20 questions, put online at the first "Copy the link"', async ({ page, context }) => {
@@ -271,7 +285,7 @@ test('the exam: the online part keeps its order (grammar → listening → readi
   await page.evaluate(PRETEND_HTTPS);
   await page.locator('.course-stop[data-stop="b1exam"]').click();
   await expect(page.locator('.course-lesson-head h3')).toHaveText('Block 1 exam');
-  await expect(page.locator('.course-listen')).toHaveCount(2);              // the two listening texts, read aloud
+  await expect(page.locator('.course-listen')).toHaveCount(3);              // the two listening texts, read aloud
   await expect(page.locator('.course-marks-table tbody tr')).toHaveCount(3); // Target's three students
   await expect(page.locator('.course-marks-table .course-online').first()).toContainText('not yet');
   await page.getByRole('button', { name: /Copy the link for/ }).click();
@@ -279,7 +293,7 @@ test('the exam: the online part keeps its order (grammar → listening → readi
   const item = await page.evaluate(() => getRecentExercises()[0]);
   expect(item.title).toBe('Block 1 exam — online part (Target)');
   expect(item.contentSummary.split('\n')[0]).toMatch(/^Grammar 1\./);
-  expect(item.contentSummary.split('\n')[29]).toMatch(/^Reading 30\./);
+  expect(item.contentSummary.split('\n')[34]).toMatch(/^Reading 35\./);
   // Alice finishes it twice (24 and 27 right) — the better try counts
   await page.evaluate(code => {
     window.__allResults = (window.__allResults || []).concat([
@@ -293,7 +307,7 @@ test('the exam: the online part keeps its order (grammar → listening → readi
   await alice.locator('.course-mark-input').press('Enter');
   await page.locator('.course-lesson-head h3').click();   // leave the box → saved
   await expect(page.locator('.course-marks-table tr[data-student="10001"] .course-total')).toContainText('35.5');
-  await expect(page.locator('.course-marks-table tr[data-student="10001"] .course-total')).toContainText('89%');
+  await expect(page.locator('.course-marks-table tr[data-student="10001"] .course-total')).toContainText('79%');   // 35.5 of 45
   // a mark above 10 isn't kept
   const bobur = page.locator('.course-marks-table tr[data-student="10002"] .course-mark-input');
   await bobur.fill('14');
@@ -309,7 +323,7 @@ test('the exam: the online part keeps its order (grammar → listening → readi
 
 test('the course has no Uzbek names or Uzbek words (teacher, 2026-11-03) — only English', async () => {
   const fs = require('fs'), path = require('path');
-  const files = ['js/course-data.js', 'audio/course/b1l1-scripts.json'].map(f => fs.readFileSync(path.join(__dirname, '..', f), 'utf8'));
+  const files = ['js/course-data.js'].concat(fs.readdirSync(path.join(__dirname, '../audio/course')).filter(f => /-scripts\.json$/.test(f)).map(f => 'audio/course/' + f)).map(f => fs.readFileSync(path.join(__dirname, '..', f), 'utf8'));
   const uzbek = /Uzbek|Tashkent|Samarkand|Bukhara|Kamila|Jasur|Bobur|Nodira|Karimov|Aziz|Lola\b|Malika|Rustam|Laylo|Jamol|Bekzod|Sardor|Nilufar|Madina|Timur|Dilnoza|Karim\b|\bAli\b|harf|raqam|unli tovush|telefon|ikki marta/;
   files.forEach(t => expect(t.match(uzbek)).toBeNull());
 });

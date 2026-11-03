@@ -1,0 +1,140 @@
+[
+ {
+  "label": "Listening 1 — Sam's family photo",
+  "src": "audio/course/b1l3-listening-1.mp3",
+  "lines": [
+   [
+    "bf_emma",
+    "Listening one. Sam talks about a family photo. Write the ages."
+   ],
+   [
+    "bm_george",
+    "Hi, I'm Sam. This is a photo of my family. This is my mother. She's forty-one."
+   ],
+   [
+    "bm_george",
+    "Next to her is my father. He's forty-five."
+   ],
+   [
+    "bm_george",
+    "This little girl is my sister, Kate. She's eight."
+   ],
+   [
+    "bm_george",
+    "And this is my grandmother. She's seventy-two."
+   ],
+   [
+    "bm_george",
+    "Oh, and this tall boy is my cousin, Oliver. He's fifteen."
+   ]
+  ]
+ },
+ {
+  "label": "Listening 2 — Have you got…?",
+  "src": "audio/course/b1l3-listening-2.mp3",
+  "lines": [
+   [
+    "bf_emma",
+    "Listening two. Have you got…? Five children answer. True or false?"
+   ],
+   [
+    "bf_alice",
+    "Leo, have you got a sister?"
+   ],
+   [
+    "bm_daniel",
+    "No, I haven't. I've got two brothers."
+   ],
+   [
+    "bf_alice",
+    "Mia, have you got cousins?"
+   ],
+   [
+    "bf_lily",
+    "Yes, I have. I've got a cousin in Spain."
+   ],
+   [
+    "bf_alice",
+    "Jack, have you got a pet?"
+   ],
+   [
+    "bm_george",
+    "Yes, I have. I've got a dog. His name is Rex."
+   ],
+   [
+    "bf_alice",
+    "Amy, tell me about your grandparents."
+   ],
+   [
+    "bf_isabella",
+    "They've got a small house near the sea."
+   ],
+   [
+    "bf_alice",
+    "And you, Daniel? Have you got a brother?"
+   ],
+   [
+    "bm_lewis",
+    "No, I haven't. I've got one sister."
+   ]
+  ]
+ },
+ {
+  "label": "Listening 3 — A new student",
+  "src": "audio/course/b1l3-listening-3.mp3",
+  "lines": [
+   [
+    "bf_emma",
+    "Listening three. Lucy, a new student, talks to her teacher. Listen and complete."
+   ],
+   [
+    "bm_lewis",
+    "So, Lucy, tell me about your family. Have you got brothers or sisters?"
+   ],
+   [
+    "bf_lily",
+    "I've got one brother. His name is Jake."
+   ],
+   [
+    "bm_lewis",
+    "How do you spell Jake?"
+   ],
+   [
+    "bf_lily",
+    "J. A. K. E."
+   ],
+   [
+    "bm_lewis",
+    "And how old is he?"
+   ],
+   [
+    "bf_lily",
+    "He's seventeen."
+   ],
+   [
+    "bm_lewis",
+    "What about your parents?"
+   ],
+   [
+    "bf_lily",
+    "My mum is a nurse and my dad is a taxi driver."
+   ],
+   [
+    "bm_lewis",
+    "Have you got cousins?"
+   ],
+   [
+    "bf_lily",
+    "Yes, I have. I've got three cousins."
+   ],
+   [
+    "bm_lewis",
+    "And your grandparents?"
+   ],
+   [
+    "bf_lily",
+    "My grandmother lives with us. She's eighty!"
+   ]
+  ]
+ }
+]

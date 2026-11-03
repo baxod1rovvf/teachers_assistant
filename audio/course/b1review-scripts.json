@@ -1,0 +1,136 @@
+[
+ {
+  "label": "Listening 1 — A new member at the sports club",
+  "src": "audio/course/b1review-listening-1.mp3",
+  "lines": [
+   [
+    "bf_emma",
+    "Listening one. A new member at the sports club. Listen and complete."
+   ],
+   [
+    "bm_lewis",
+    "Hello! Welcome to the sports club. What's your name?"
+   ],
+   [
+    "bm_george",
+    "Oliver Thompson."
+   ],
+   [
+    "bm_lewis",
+    "How do you spell Thompson?"
+   ],
+   [
+    "bm_george",
+    "T. H. O. M. P. S. O. N."
+   ],
+   [
+    "bm_lewis",
+    "Thank you. How old are you, Oliver?"
+   ],
+   [
+    "bm_george",
+    "I'm thirteen."
+   ],
+   [
+    "bm_lewis",
+    "And where are you from?"
+   ],
+   [
+    "bm_george",
+    "I'm from Canada."
+   ],
+   [
+    "bm_lewis",
+    "What's your phone number?"
+   ],
+   [
+    "bm_george",
+    "It's oh seven eight, three double six, nine one four."
+   ],
+   [
+    "bm_lewis",
+    "And when's your birthday?"
+   ],
+   [
+    "bm_george",
+    "It's on the fourth of July."
+   ],
+   [
+    "bm_lewis",
+    "Great. See you on Monday!"
+   ]
+  ]
+ },
+ {
+  "label": "Listening 2 — A birthday photo",
+  "src": "audio/course/b1review-listening-2.mp3",
+  "lines": [
+   [
+    "bf_emma",
+    "Listening two. Two friends look at a photo. True or false?"
+   ],
+   [
+    "bf_lily",
+    "Is this a photo from your birthday, Daniel?"
+   ],
+   [
+    "bm_daniel",
+    "Yes, it is. Look, this is my cousin Pablo. He's from Spain."
+   ],
+   [
+    "bf_lily",
+    "How old is he?"
+   ],
+   [
+    "bm_daniel",
+    "He's fifteen."
+   ],
+   [
+    "bf_lily",
+    "And who's the man with the camera?"
+   ],
+   [
+    "bm_daniel",
+    "That's my uncle — Pablo's dad."
+   ],
+   [
+    "bf_lily",
+    "And this lady with the dog?"
+   ],
+   [
+    "bm_daniel",
+    "That's my grandmother. She's got a dog called Rocky."
+   ]
+  ]
+ },
+ {
+  "label": "Listening 3 — A school day",
+  "src": "audio/course/b1review-listening-3.mp3",
+  "lines": [
+   [
+    "bf_emma",
+    "Listening three. Emma talks about her school day. Circle the right answer."
+   ],
+   [
+    "bf_isabella",
+    "I get up at quarter past seven. School starts at half past eight."
+   ],
+   [
+    "bf_isabella",
+    "My first lesson is maths. Then I've got English."
+   ],
+   [
+    "bf_isabella",
+    "We have lunch at half past twelve."
+   ],
+   [
+    "bf_isabella",
+    "On Wednesday I've got swimming after school."
+   ],
+   [
+    "bf_isabella",
+    "My favourite day is Friday, because we've got art and music!"
+   ]
+  ]
+ }
+]

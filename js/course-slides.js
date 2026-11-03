@@ -39,19 +39,24 @@ function slBuildDeck(stop) {
     const add = a => { s.items = s.items.concat(a); };
     if (d.layout === 'title') {
       s.items = [slShape(0, 0, 18, SL_H, accent),
-        slText(1080, 60, 470, 760, String(stop.kind === 'lesson' ? stop.no : stop.kind === 'review' ? '🔁' : '🏁'), { fs: 600, bold: true, font: 'head', color: slTint(accent, 35), align: 'center' }),
+        stop.kind === 'lesson' ? slText(1080, 60, 470, 760, String(stop.no), { fs: 600, bold: true, font: 'head', color: slTint(accent, 35), align: 'center' })
+          : slText(1100, 140, 420, 420, stop.kind === 'review' ? '🔁' : '🏁', { fs: 300, align: 'center', valign: 'middle' }),
         slText(110, 170, 900, 50, 'LOOM', { fs: 34, bold: true, spacing: 12 }),
         slText(110, 228, 900, 40, stop.course.title.toUpperCase() + ' · ' + (stop.kind === 'lesson' ? 'LESSON ' + stop.no : stop.kind === 'review' ? 'REVIEW' : 'EXAM'), { fs: 24, bold: true, color: accent, spacing: 5 }),
         slText(110, 300, 960, 280, l.title, { fs: 110, bold: true, font: 'head' }),
         slText(110, 620, 960, 60, 'Block ' + stop.blockNo + ' · ' + stop.block.title, { fs: 40, color: '#5A4E72' }),
         slShape(110, 700, 90, 10, accent, { radius: 5 }),
-        slText(1300, 640, 200, 200, l.emoji, { fs: 140, align: 'center' })];
+        stop.kind === 'lesson' ? slText(1300, 640, 200, 200, l.emoji, { fs: 140, align: 'center' }) : null].filter(Boolean);
     } else if (d.layout === 'list') {
       add(slFrame(accent, d.tag, d.title));
-      d.rows.forEach((r, i) => add(slText(110, 240 + i * 116, 1380, 96, (r.emoji ? r.emoji + '   ' : '') + r.text, { fs: 40, fill: i === d.rows.length - 1 ? slTint(accent, 22) : '#F6F3FB', radius: 18, pad: 24, valign: 'middle' })));
+      d.rows.forEach((r, i) => add(slText(110, 240 + i * 116, 1380, 96, (r.emoji ? r.emoji + '   ' : '') + r.text, { fs: r.text.length > 56 ? 32 : 40, fill: i === d.rows.length - 1 ? slTint(accent, 22) : '#F6F3FB', radius: 18, pad: 24, valign: 'middle' })));
     } else if (d.layout === 'questions') {
       add(slFrame(accent, d.tag, d.title));
-      d.rows.forEach((q, i) => add(slText(110, 240 + i * 116, 1380, 96, (i + 1) + '.  ' + q, { fs: 44, fill: '#F6F3FB', radius: 18, pad: 24, valign: 'middle', hidden: true })));
+      d.rows.forEach((r, i) => {   // a question (shown on a click), and its answer if it has one (on the next click)
+        const q = typeof r === 'string' ? r : r.q, a = typeof r === 'string' ? '' : r.a;
+        add(slText(110, 240 + i * 116, a ? 1000 : 1380, 96, (i + 1) + '.  ' + q, { fs: 40, fill: '#F6F3FB', radius: 18, pad: 24, valign: 'middle', hidden: true }));
+        if (a) add(slText(1124, 240 + i * 116, 366, 96, a, { fs: 36, bold: true, fill: '#DDF8EE', color: '#0B7A55', radius: 18, pad: 14, valign: 'middle', align: 'center', hidden: true }));
+      });
     } else if (d.layout === 'words') {
       add(slFrame(accent, d.tag, d.title));
       const cols = 4, cw = 330, gap = 20;
@@ -67,8 +72,9 @@ function slBuildDeck(stop) {
       d.boxes.forEach((b, i) => {
         const x = 110 + (i % cols) * (bw + gap), y = 236 + Math.floor(i / cols) * (bh + gap), col = SL_COLORS[4 + (i % 8)];
         add(slShape(x, y, bw, bh, slTint(col, 24), { radius: 22 }));
-        add(slText(x + 22, y + 16, bw - 44, 56, b.head, { fs: 36, bold: true, font: 'head', color: SL_INK }));
-        add(slText(x + 22, y + 76, bw - 44, bh - 90, b.body, { fs: n > 4 ? 40 : b.body.split('\n').length > 4 || b.body.length > 110 ? 32 : 38, bold: n > 4 }));
+        const longHead = b.head.length * 19 > bw - 44, hh = longHead ? 96 : 56;
+        add(slText(x + 22, y + 16, bw - 44, hh, b.head, { fs: longHead ? 30 : 36, bold: true, font: 'head', color: SL_INK }));
+        add(slText(x + 22, y + 20 + hh, bw - 44, bh - hh - 34, b.body, { fs: n > 4 ? 40 : b.body.split('\n').length > 4 || b.body.length > 110 ? 32 : 38, bold: n > 4 }));
       });
       if (d.foot) add(slText(110, 760, 1380, 90, d.foot, { fs: 38, bold: true, fill: slTint(accent, 25), radius: 18, pad: 22, valign: 'middle', align: 'center' }));
     } else if (d.layout === 'mistakes') {
@@ -131,14 +137,19 @@ function slBuildDeck(stop) {
         paras.forEach((t, i) => add(slText(110 + i * (cw + 20), 236, cw, 420, t, { fs: 34, fill: slTint(SL_COLORS[4 + i * 2], 22), radius: 22, pad: 26 })));
         (d.tips || []).forEach((t, i) => add(slText(110 + i * 470, 690, 440, 90, t, { fs: 30, bold: true, fill: slTint(SL_COLORS[6 + i], 30), radius: 18, pad: 16, valign: 'middle', align: 'center' })));
       } else {
-        add(slText(110, 240, 900, 480, d.text, { fs: d.text.split('\n').length > 8 ? 30 : 40, fill: '#F6F3FB', radius: 22, pad: 30 }));
+        const long = d.text.length > 380;
+        add(slText(110, 240, long ? 1380 : 900, long ? 520 : 480, d.text, { fs: long ? 38 : d.text.split('\n').length > 8 ? 28 : d.text.length > 240 ? 34 : 40, fill: '#F6F3FB', radius: 22, pad: 30 }));
+        if (long) {   // the tips go in a row under the text
+          (d.tips || []).forEach((t, i) => add(slText(110 + i * 470, 784, 440, 80, t, { fs: 30, bold: true, fill: slTint(SL_COLORS[6 + i], 30), radius: 18, pad: 14, valign: 'middle', align: 'center' })));
+          d = Object.assign({}, d, { tips: [] });
+        }
         (d.tips || []).forEach((t, i) => add(slText(1060, 240 + i * 130, 430, 110, t, { fs: 34, bold: true, fill: slTint(SL_COLORS[6 + i], 30), radius: 18, pad: 20, valign: 'middle', align: 'center' })));
       }
       if (typeof d.listen === 'number' && l.listen && l.listen[d.listen]) add(slAudio(l.listen[d.listen], 110, 760, 420, 96));
     } else if (d.layout === 'finish') {
       s.items = [slShape(0, 0, 18, SL_H, accent),
         slText(110, 90, 1380, 130, d.title + ' 🎉', { fs: 96, bold: true, font: 'head', align: 'center' })];
-      d.rows.forEach((r, i) => add(slText(330, 260 + i * 104, 940, 88, '✅  ' + r, { fs: 40, fill: '#DDF8EE', radius: 18, pad: 22, valign: 'middle' })));
+      d.rows.forEach((r, i) => add(slText(330, 260 + i * 104, 940, 88, '✅  ' + r, { fs: r.length > 36 ? 32 : 40, fill: '#DDF8EE', radius: 18, pad: 22, valign: 'middle' })));
       if (d.foot) add(slText(260, 720, 1080, 100, d.foot, { fs: 38, bold: true, fill: slTint(accent, 30), radius: 50, pad: 20, valign: 'middle', align: 'center' }));
     }
     return s;
