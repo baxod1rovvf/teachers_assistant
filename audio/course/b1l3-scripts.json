@@ -9,23 +9,23 @@
    ],
    [
     "bm_george",
-    "Hi, I'm Sam. This is a photo of my family. This is my mother. She's forty-one."
+    "Hi, I'm Sam, and this is a photo of my family. Here's my mother. She's forty-one."
    ],
    [
     "bm_george",
-    "Next to her is my father. He's forty-five."
+    "My father is next to her. He's forty-five."
    ],
    [
     "bm_george",
-    "This little girl is my sister, Kate. She's eight."
+    "The little girl is my sister, Kate. She's eight."
    ],
    [
     "bm_george",
-    "And this is my grandmother. She's seventy-two."
+    "And here's my grandmother. She's seventy-two."
    ],
    [
     "bm_george",
-    "Oh, and this tall boy is my cousin, Oliver. He's fifteen."
+    "Oh, and that tall boy at the back is my cousin, Oliver. He's fifteen."
    ]
   ]
  },
@@ -43,15 +43,15 @@
    ],
    [
     "bm_daniel",
-    "No, I haven't. I've got two brothers."
+    "No, I haven't. But I've got two brothers."
    ],
    [
     "bf_alice",
-    "Mia, have you got cousins?"
+    "And you, Mia? Have you got any cousins?"
    ],
    [
     "bf_lily",
-    "Yes, I have. I've got a cousin in Spain."
+    "Yes, I have. One cousin. She lives in Spain."
    ],
    [
     "bf_alice",
@@ -59,7 +59,7 @@
    ],
    [
     "bm_george",
-    "Yes, I have. I've got a dog. His name is Rex."
+    "Yes, a dog. His name's Rex."
    ],
    [
     "bf_alice",
@@ -67,15 +67,15 @@
    ],
    [
     "bf_isabella",
-    "They've got a small house near the sea."
+    "Well, they've got a small house near the sea."
    ],
    [
     "bf_alice",
-    "And you, Daniel? Have you got a brother?"
+    "Daniel, have you got a brother?"
    ],
    [
     "bm_lewis",
-    "No, I haven't. I've got one sister."
+    "No, I haven't. I've only got a sister."
    ]
   ]
  },
@@ -89,11 +89,11 @@
    ],
    [
     "bm_lewis",
-    "So, Lucy, tell me about your family. Have you got brothers or sisters?"
+    "So, Lucy, tell me about your family. Have you got any brothers or sisters?"
    ],
    [
     "bf_isabella",
-    "I've got one brother. His name is Jake."
+    "Yes, I've got one brother. His name's Jake."
    ],
    [
     "bm_lewis",
@@ -113,19 +113,19 @@
    ],
    [
     "bm_lewis",
-    "What about your parents?"
+    "What about your mum and dad?"
    ],
    [
     "bf_isabella",
-    "My mum is a nurse and my dad is a taxi driver."
+    "My mum's a nurse, and my dad's a taxi driver."
    ],
    [
     "bm_lewis",
-    "Have you got cousins?"
+    "Have you got any cousins?"
    ],
    [
     "bf_isabella",
-    "Yes, I have. I've got three cousins."
+    "Yes, three cousins."
    ],
    [
     "bm_lewis",

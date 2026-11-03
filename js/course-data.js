@@ -1215,20 +1215,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
     {
       "label": "Listening 1 — Spell your name (5 people)",
       "src": "audio/course/b1l1-listening-1.mp3",
-      "text": "Hello! What's your name? Emma. How do you spell it? That's E, double M, A. And what's your name? My name's Jack. How do you spell it? That's J, A, C, K. Hello! Are you the teacher? Yes, I am. I'm Mr Green. How do you spell Green? That's G, R, double E, N. Next, please. What's your name? Sophie. Can you spell it, please? That's S, O, P, H, I, E. And you? I'm Lizzy. How do you spell it? That's L, I, double Z, Y. Thank you, everyone!",
-      "script": "Narrator: Listening one. Spell your name. Listen and write the names.\nA: Hello! What's your name?\nB: Emma.\nA: How do you spell it?\nB: That's E, double M, A.\nA: And what's your name?\nB: My name's Jack.\nA: How do you spell it?\nB: That's J, A, C, K.\nA: Hello! Are you the teacher?\nB: Yes, I am. I'm Mr Green.\nA: How do you spell Green?\nB: That's G, R, double E, N.\nA: Next, please. What's your name?\nB: Sophie.\nA: Can you spell it, please?\nB: That's S, O, P, H, I, E.\nA: And you?\nB: I'm Lizzy.\nA: How do you spell it?\nB: That's L, I, double Z, Y.\nA: Thank you, everyone!"
+      "text": "Hello! What's your name? Hi, I'm Emma. How do you spell that? That's E, double M, A. Thanks, Emma. And what's your name? My name's Jack. Can you spell it for me? That's J, A, C, K. Oh, hello! Are you the new teacher? Yes, I am. I'm Mr Green. Green. How do you spell that? That's G, R, double E, N. Next, please. What's your name? My name's Sophie. Can you spell it, please? That's S, O, P, H, I, E. And what about you? I'm Lizzy. Lizzy. And the spelling? That's L, I, double Z, Y. Great. Thank you, everyone!",
+      "script": "Narrator: Listening one. Spell your name. Listen and write the names.\nB: Hello! What's your name?\nB: Hi, I'm Emma.\nB: How do you spell that?\nB: That's E, double M, A.\nB: Thanks, Emma. And what's your name?\nB: My name's Jack.\nB: Can you spell it for me?\nB: That's J, A, C, K.\nB: Oh, hello! Are you the new teacher?\nB: Yes, I am. I'm Mr Green.\nB: Green. How do you spell that?\nB: That's G, R, double E, N.\nB: Next, please. What's your name?\nB: My name's Sophie.\nB: Can you spell it, please?\nB: That's S, O, P, H, I, E.\nB: And what about you?\nB: I'm Lizzy.\nB: Lizzy. And the spelling?\nB: That's L, I, double Z, Y.\nB: Great. Thank you, everyone!"
     },
     {
       "label": "Listening 2 — Numbers (5 people)",
       "src": "audio/course/b1l1-listening-2.mp3",
-      "text": "Number one. Hi, I'm Tom. I'm thirteen years old. Number two. This is my grandmother. She's seventy-two. Number three. I'm Sara. There are fifteen students in my class. Number four. My name's Ben. I go to school on bus number forty-eight. Number five. Our school is big. It has ninety computers!",
-      "script": "Narrator: Listening two. Listen and circle the right number.\nNarrator: Number one.\nB: Hi, I'm Tom. I'm thirteen years old.\nNarrator: Number two.\nB: This is my grandmother. She's seventy-two.\nNarrator: Number three.\nB: I'm Sara. There are fifteen students in my class.\nNarrator: Number four.\nB: My name's Ben. I go to school on bus number forty-eight.\nNarrator: Number five.\nA: Our school is big. It has ninety computers!"
+      "text": "Number one. Hi, I'm Tom, and I'm thirteen years old. Number two. This is my grandmother. She's seventy-two, but she still plays tennis! Number three. Hello, I'm Sara. My class is small. There are fifteen students in it. Number four. My name's Ben. I take the bus to school. It's bus number forty-eight. Number five. Our school is really big. We've got ninety computers!",
+      "script": "Narrator: Listening two. Listen and circle the right number.\nNarrator: Number one.\nB: Hi, I'm Tom, and I'm thirteen years old.\nNarrator: Number two.\nB: This is my grandmother. She's seventy-two, but she still plays tennis!\nNarrator: Number three.\nB: Hello, I'm Sara. My class is small. There are fifteen students in it.\nNarrator: Number four.\nB: My name's Ben. I take the bus to school. It's bus number forty-eight.\nNarrator: Number five.\nB: Our school is really big. We've got ninety computers!"
     },
     {
       "label": "Listening 3 — A phone call to an English school",
       "src": "audio/course/b1l1-listening-3.mp3",
-      "text": "Hello, Sunrise English School. Hello! I want English lessons for my son. Of course. What's his name? Daniel Brooks. How do you spell Brooks? That's B, R, double O, K, S. Thank you. And how old is Daniel? He's twelve. Twelve. OK. What's your phone number? It's oh double seven, four double five, two oh one. Oh double seven, four double five, two oh one. Great. The lesson is in room fourteen. Room fourteen. Thank you! Goodbye. Goodbye, and thank you!",
-      "script": "Narrator: Listening three. A phone call. Listen and complete.\nA: Hello, Sunrise English School.\nB: Hello! I want English lessons for my son.\nA: Of course. What's his name?\nB: Daniel Brooks.\nA: How do you spell Brooks?\nB: That's B, R, double O, K, S.\nA: Thank you. And how old is Daniel?\nB: He's twelve.\nA: Twelve. OK. What's your phone number?\nB: It's oh double seven, four double five, two oh one.\nA: Oh double seven, four double five, two oh one. Great. The lesson is in room fourteen.\nB: Room fourteen. Thank you! Goodbye.\nA: Goodbye, and thank you!"
+      "text": "Hello, Sunrise English School. Hello. I'd like English lessons for my son, please. Of course. What's his name? His name's Daniel Brooks. And how do you spell Brooks? That's B, R, double O, K, S. Thank you. How old is Daniel? He's twelve. Twelve, OK. And what's your phone number? It's oh double seven, four double five, two oh one. Oh double seven, four double five, two oh one. Lovely. His lesson is in room fourteen. Room fourteen. Thank you very much. Goodbye. Goodbye, and thank you for calling!",
+      "script": "Narrator: Listening three. A phone call. Listen and complete.\nB: Hello, Sunrise English School.\nB: Hello. I'd like English lessons for my son, please.\nB: Of course. What's his name?\nB: His name's Daniel Brooks.\nB: And how do you spell Brooks?\nB: That's B, R, double O, K, S.\nB: Thank you. How old is Daniel?\nB: He's twelve.\nB: Twelve, OK. And what's your phone number?\nB: It's oh double seven, four double five, two oh one.\nB: Oh double seven, four double five, two oh one. Lovely. His lesson is in room fourteen.\nB: Room fourteen. Thank you very much. Goodbye.\nB: Goodbye, and thank you for calling!"
     }
   ],
   teacherScript: [
@@ -2325,20 +2325,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
     {
       "label": "Listening 1 — Five short dialogues",
       "src": "audio/course/b1l2-listening-1.mp3",
-      "text": "Dialogue number one. Listen. Good morning, Mrs Brown! Good morning, Tom. You're early today! Number two. Hi! I'm Katie. I'm new here. Hi, Katie! Nice to meet you. I'm Ben. Nice to meet you too, Ben. Number three. Hello, Mr Hill. How are you? I'm fine, thank you. And you? I'm fine, thanks. Number four. Good evening! Welcome to the party. Good evening! Thank you. Number five. Bye, Jack! See you tomorrow! See you tomorrow, Ben!",
-      "script": "Narrator: Listening one. Listen to five short dialogues.\nNarrator: Dialogue number one. Listen.\nA: Good morning, Mrs Brown!\nB: Good morning, Tom. You're early today!\nNarrator: Number two.\nC: Hi! I'm Katie. I'm new here.\nD: Hi, Katie! Nice to meet you. I'm Ben.\nC: Nice to meet you too, Ben.\nNarrator: Number three.\nE: Hello, Mr Hill. How are you?\nF: I'm fine, thank you. And you?\nE: I'm fine, thanks.\nNarrator: Number four.\nB: Good evening! Welcome to the party.\nA: Good evening! Thank you.\nNarrator: Number five.\nD: Bye, Jack! See you tomorrow!\nA: See you tomorrow, Ben!"
+      "text": "Dialogue number one. Listen. Good morning, Mrs Brown! Good morning, Tom. You're early today! Number two. Hi! I'm Katie. I'm new here. Oh, hi, Katie! Nice to meet you. I'm Ben. Nice to meet you too, Ben. Number three. Hello, Mr Hill. How are you? I'm fine, thank you. And you? Fine, thanks. Number four. Good evening! Come in, welcome to the party. Good evening! Thank you very much. Number five. Bye, Jack! See you tomorrow! Yes, see you tomorrow, Ben!",
+      "script": "Narrator: Listening one. Listen to five short dialogues.\nNarrator: Dialogue number one. Listen.\nA: Good morning, Mrs Brown!\nB: Good morning, Tom. You're early today!\nNarrator: Number two.\nC: Hi! I'm Katie. I'm new here.\nD: Oh, hi, Katie! Nice to meet you. I'm Ben.\nC: Nice to meet you too, Ben.\nNarrator: Number three.\nE: Hello, Mr Hill. How are you?\nF: I'm fine, thank you. And you?\nE: Fine, thanks.\nNarrator: Number four.\nB: Good evening! Come in, welcome to the party.\nA: Good evening! Thank you very much.\nNarrator: Number five.\nD: Bye, Jack! See you tomorrow!\nA: Yes, see you tomorrow, Ben!"
     },
     {
       "label": "Listening 2 — Where are they from?",
       "src": "audio/course/b1l2-listening-2.mp3",
-      "text": "Number one. Hello! I'm Ken. I'm from Japan. Number two. Hi, my name's Sophie. I'm French. Number three. Hi! I'm Carlos. I'm from Spain. Number four. Hello. I'm Mei. I'm Chinese. Number five. Hi there! I'm Jack. I'm from the USA.",
-      "script": "Narrator: Listening two. Five students at a summer school. Where are they from?\nNarrator: Number one.\nA: Hello! I'm Ken. I'm from Japan.\nNarrator: Number two.\nB: Hi, my name's Sophie. I'm French.\nNarrator: Number three.\nC: Hi! I'm Carlos. I'm from Spain.\nNarrator: Number four.\nD: Hello. I'm Mei. I'm Chinese.\nNarrator: Number five.\nE: Hi there! I'm Jack. I'm from the USA."
+      "text": "Number one. Hello! My name's Ken, and I'm from Japan. Number two. Hi, I'm Sophie. I'm French. Number three. Hi there. I'm Carlos, from Spain. Number four. Hello, everyone. I'm Mei, and I'm Chinese. Number five. Hey! I'm Jack. I'm from the USA.",
+      "script": "Narrator: Listening two. Five students at a summer school. Where are they from?\nNarrator: Number one.\nA: Hello! My name's Ken, and I'm from Japan.\nNarrator: Number two.\nB: Hi, I'm Sophie. I'm French.\nNarrator: Number three.\nC: Hi there. I'm Carlos, from Spain.\nNarrator: Number four.\nD: Hello, everyone. I'm Mei, and I'm Chinese.\nNarrator: Number five.\nE: Hey! I'm Jack. I'm from the USA."
     },
     {
       "label": "Listening 3 — At a summer camp",
       "src": "audio/course/b1l2-listening-3.mp3",
-      "text": "Hello! Welcome to the camp. What's your name? Hello! My name is Anna Baker, and I am new here. How do you spell Baker? That's B, A, K, E, R. Thank you. Are you from Spain, Anna? No, I'm not. I'm from Poland. And how old are you? I'm thirteen. And who's this? This is my friend Rosa. She's Mexican. Nice to meet you, Rosa! OK, you're in group B. We're in group B. Thank you!",
-      "script": "Narrator: Listening three. At a summer camp. Listen and complete.\nA: Hello! Welcome to the camp. What's your name?\nB: Hello! My name is Anna Baker, and I am new here.\nA: How do you spell Baker?\nB: That's B, A, K, E, R.\nA: Thank you. Are you from Spain, Anna?\nB: No, I'm not. I'm from Poland.\nA: And how old are you?\nB: I'm thirteen.\nA: And who's this?\nB: This is my friend Rosa. She's Mexican.\nA: Nice to meet you, Rosa! OK, you're in group B.\nC: We're in group B. Thank you!"
+      "text": "Hello! Welcome to the camp. What's your name? Hello! My name is Anna Baker, and I am new here. Nice to meet you, Anna. How do you spell Baker? That's B, A, K, E, R. Thanks. Are you from Spain? No, I'm not. I'm from Poland. Poland, OK. And how old are you? I'm thirteen. And who's this with you? This is my friend Rosa. She's Mexican. Hi, Rosa! Right, you two are in group B. Group B? Great, thank you!",
+      "script": "Narrator: Listening three. At a summer camp. Listen and complete.\nA: Hello! Welcome to the camp. What's your name?\nB: Hello! My name is Anna Baker, and I am new here.\nA: Nice to meet you, Anna. How do you spell Baker?\nB: That's B, A, K, E, R.\nA: Thanks. Are you from Spain?\nB: No, I'm not. I'm from Poland.\nA: Poland, OK. And how old are you?\nB: I'm thirteen.\nA: And who's this with you?\nB: This is my friend Rosa. She's Mexican.\nA: Hi, Rosa! Right, you two are in group B.\nC: Group B? Great, thank you!"
     }
   ],
   teacherScript: [
@@ -3342,20 +3342,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
     {
       "label": "Listening 1 — Sam's family photo",
       "src": "audio/course/b1l3-listening-1.mp3",
-      "text": "Hi, I'm Sam. This is a photo of my family. This is my mother. She's forty-one. Next to her is my father. He's forty-five. This little girl is my sister, Kate. She's eight. And this is my grandmother. She's seventy-two. Oh, and this tall boy is my cousin, Oliver. He's fifteen.",
-      "script": "Narrator: Listening one. Sam talks about a family photo. Write the ages.\nA: Hi, I'm Sam. This is a photo of my family. This is my mother. She's forty-one.\nA: Next to her is my father. He's forty-five.\nA: This little girl is my sister, Kate. She's eight.\nA: And this is my grandmother. She's seventy-two.\nA: Oh, and this tall boy is my cousin, Oliver. He's fifteen."
+      "text": "Hi, I'm Sam, and this is a photo of my family. Here's my mother. She's forty-one. My father is next to her. He's forty-five. The little girl is my sister, Kate. She's eight. And here's my grandmother. She's seventy-two. Oh, and that tall boy at the back is my cousin, Oliver. He's fifteen.",
+      "script": "Narrator: Listening one. Sam talks about a family photo. Write the ages.\nA: Hi, I'm Sam, and this is a photo of my family. Here's my mother. She's forty-one.\nA: My father is next to her. He's forty-five.\nA: The little girl is my sister, Kate. She's eight.\nA: And here's my grandmother. She's seventy-two.\nA: Oh, and that tall boy at the back is my cousin, Oliver. He's fifteen."
     },
     {
       "label": "Listening 2 — Have you got…?",
       "src": "audio/course/b1l3-listening-2.mp3",
-      "text": "Leo, have you got a sister? No, I haven't. I've got two brothers. Mia, have you got cousins? Yes, I have. I've got a cousin in Spain. Jack, have you got a pet? Yes, I have. I've got a dog. His name is Rex. Amy, tell me about your grandparents. They've got a small house near the sea. And you, Daniel? Have you got a brother? No, I haven't. I've got one sister.",
-      "script": "Narrator: Listening two. Have you got…? Five children answer. True or false?\nA: Leo, have you got a sister?\nB: No, I haven't. I've got two brothers.\nA: Mia, have you got cousins?\nC: Yes, I have. I've got a cousin in Spain.\nA: Jack, have you got a pet?\nD: Yes, I have. I've got a dog. His name is Rex.\nA: Amy, tell me about your grandparents.\nE: They've got a small house near the sea.\nA: And you, Daniel? Have you got a brother?\nF: No, I haven't. I've got one sister."
+      "text": "Leo, have you got a sister? No, I haven't. But I've got two brothers. And you, Mia? Have you got any cousins? Yes, I have. One cousin. She lives in Spain. Jack, have you got a pet? Yes, a dog. His name's Rex. Amy, tell me about your grandparents. Well, they've got a small house near the sea. Daniel, have you got a brother? No, I haven't. I've only got a sister.",
+      "script": "Narrator: Listening two. Have you got…? Five children answer. True or false?\nA: Leo, have you got a sister?\nB: No, I haven't. But I've got two brothers.\nA: And you, Mia? Have you got any cousins?\nC: Yes, I have. One cousin. She lives in Spain.\nA: Jack, have you got a pet?\nD: Yes, a dog. His name's Rex.\nA: Amy, tell me about your grandparents.\nE: Well, they've got a small house near the sea.\nA: Daniel, have you got a brother?\nF: No, I haven't. I've only got a sister."
     },
     {
       "label": "Listening 3 — A new student",
       "src": "audio/course/b1l3-listening-3.mp3",
-      "text": "So, Lucy, tell me about your family. Have you got brothers or sisters? I've got one brother. His name is Jake. How do you spell Jake? That's J, A, K, E. And how old is he? He's seventeen. What about your parents? My mum is a nurse and my dad is a taxi driver. Have you got cousins? Yes, I have. I've got three cousins. And your grandparents? My grandmother lives with us. She's eighty!",
-      "script": "Narrator: Listening three. Lucy, a new student, talks to her teacher. Listen and complete.\nA: So, Lucy, tell me about your family. Have you got brothers or sisters?\nB: I've got one brother. His name is Jake.\nA: How do you spell Jake?\nB: That's J, A, K, E.\nA: And how old is he?\nB: He's seventeen.\nA: What about your parents?\nB: My mum is a nurse and my dad is a taxi driver.\nA: Have you got cousins?\nB: Yes, I have. I've got three cousins.\nA: And your grandparents?\nB: My grandmother lives with us. She's eighty!"
+      "text": "So, Lucy, tell me about your family. Have you got any brothers or sisters? Yes, I've got one brother. His name's Jake. How do you spell Jake? That's J, A, K, E. And how old is he? He's seventeen. What about your mum and dad? My mum's a nurse, and my dad's a taxi driver. Have you got any cousins? Yes, three cousins. And your grandparents? My grandmother lives with us. She's eighty!",
+      "script": "Narrator: Listening three. Lucy, a new student, talks to her teacher. Listen and complete.\nA: So, Lucy, tell me about your family. Have you got any brothers or sisters?\nB: Yes, I've got one brother. His name's Jake.\nA: How do you spell Jake?\nB: That's J, A, K, E.\nA: And how old is he?\nB: He's seventeen.\nA: What about your mum and dad?\nB: My mum's a nurse, and my dad's a taxi driver.\nA: Have you got any cousins?\nB: Yes, three cousins.\nA: And your grandparents?\nB: My grandmother lives with us. She's eighty!"
     }
   ],
   teacherScript: [
@@ -4431,20 +4431,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[3], {
     {
       "label": "Listening 1 — What's in your bag?",
       "src": "audio/course/b1l4-listening-1.mp3",
-      "text": "Number one. I'm Sara. In my bag I've got three pens and a notebook. Number two. I'm Ben. My bag is very heavy — there's a big dictionary in it! Number three. I'm Lucy. I've got two notebooks: one for English and one for maths. Number four. I'm Tom. It's a rainy day, so I've got an umbrella in my bag. Number five. I'm Mia. Look — this is my new pencil case!",
-      "script": "Narrator: Listening one. What's in their bags? Circle the right answer.\nNarrator: Number one.\nA: I'm Sara. In my bag I've got three pens and a notebook.\nNarrator: Number two.\nB: I'm Ben. My bag is very heavy — there's a big dictionary in it!\nNarrator: Number three.\nC: I'm Lucy. I've got two notebooks: one for English and one for maths.\nNarrator: Number four.\nD: I'm Tom. It's a rainy day, so I've got an umbrella in my bag.\nNarrator: Number five.\nE: I'm Mia. Look — this is my new pencil case!"
+      "text": "Number one. I'm Sara. In my bag I've got three pens and a notebook. Number two. I'm Ben. My bag is really heavy, because there's a big dictionary in it! Number three. Hi, I'm Lucy. I've got two notebooks, one for English and one for maths. Number four. I'm Tom. It's raining today, so I've got an umbrella in my bag. Number five. I'm Mia. Look, this is my new pencil case!",
+      "script": "Narrator: Listening one. What's in their bags? Circle the right answer.\nNarrator: Number one.\nA: I'm Sara. In my bag I've got three pens and a notebook.\nNarrator: Number two.\nB: I'm Ben. My bag is really heavy, because there's a big dictionary in it!\nNarrator: Number three.\nC: Hi, I'm Lucy. I've got two notebooks, one for English and one for maths.\nNarrator: Number four.\nD: I'm Tom. It's raining today, so I've got an umbrella in my bag.\nNarrator: Number five.\nE: I'm Mia. Look, this is my new pencil case!"
     },
     {
       "label": "Listening 2 — Lost and found",
       "src": "audio/course/b1l4-listening-2.mp3",
-      "text": "OK, everyone. Whose is this black bag? Is it your bag, Jack? Yes, it is! Thank you. And this red pen? That's my pen. I'm Emma. Leo, are these your books on my desk? Yes, they are. Sorry! And that umbrella by the door is my umbrella. Excuse me, where's my pencil case? Look, Mia — it's under your chair.",
-      "script": "Narrator: Listening two. Lost and found. Listen and complete.\nA: OK, everyone. Whose is this black bag? Is it your bag, Jack?\nB: Yes, it is! Thank you.\nA: And this red pen?\nC: That's my pen. I'm Emma.\nA: Leo, are these your books on my desk?\nD: Yes, they are. Sorry!\nA: And that umbrella by the door is my umbrella.\nE: Excuse me, where's my pencil case?\nA: Look, Mia — it's under your chair."
+      "text": "OK, everyone. Whose is this black bag? Jack, is it yours? Yes, it is! Thanks. And this red pen? Oh, that's my pen. I'm Emma. Leo, are these your books on my desk? Yes, they are. Sorry! And that umbrella by the door? That's my umbrella. Excuse me, where's my pencil case? Look, Mia. It's under your chair.",
+      "script": "Narrator: Listening two. Lost and found. Listen and complete.\nA: OK, everyone. Whose is this black bag? Jack, is it yours?\nB: Yes, it is! Thanks.\nA: And this red pen?\nC: Oh, that's my pen. I'm Emma.\nA: Leo, are these your books on my desk?\nD: Yes, they are. Sorry!\nA: And that umbrella by the door? That's my umbrella.\nE: Excuse me, where's my pencil case?\nA: Look, Mia. It's under your chair."
     },
     {
       "label": "Listening 3 — Follow the teacher",
       "src": "audio/course/b1l4-listening-3.mp3",
-      "text": "Good morning, everyone. Please stand up. Thank you. Now sit down and look at the board. Open your books at page twelve. Page twelve. Now take your notebooks and write the new words in your notebooks. Good! Now work in pairs. Ask your partner: what's this in English?",
-      "script": "Narrator: Listening three. Follow the teacher. What do the students do?\nA: Good morning, everyone. Please stand up.\nA: Thank you. Now sit down and look at the board.\nA: Open your books at page twelve. Page twelve.\nA: Now take your notebooks and write the new words in your notebooks.\nA: Good! Now work in pairs. Ask your partner: what's this in English?"
+      "text": "Good morning, everyone. Please stand up. Thank you. Sit down, please, and look at the board. Open your books at page twelve. That's page twelve. Take your notebooks and write the new words in them. Good! Next, work in pairs. Ask your partner: what's this in English?",
+      "script": "Narrator: Listening three. Follow the teacher. What do the students do?\nA: Good morning, everyone. Please stand up.\nA: Thank you. Sit down, please, and look at the board.\nA: Open your books at page twelve. That's page twelve.\nA: Take your notebooks and write the new words in them.\nA: Good! Next, work in pairs. Ask your partner: what's this in English?"
     }
   ],
   teacherScript: [
@@ -5514,20 +5514,20 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
     {
       "label": "Listening 1 — When's your birthday?",
       "src": "audio/course/b1l5-listening-1.mp3",
-      "text": "Emma, when is your birthday? It's on the third of March. And you, Jack? My birthday is on the twenty-first of June. And what about you, Lily? Mine is on the twelfth of October. Sam, when's your birthday? It's on the thirtieth of August. And what about you, Mia? Mine is easy — it's on the first of January!",
-      "script": "Narrator: Listening one. When's your birthday? Write the dates.\nA: Emma, when is your birthday?\nB: It's on the third of March.\nA: And you, Jack?\nC: My birthday is on the twenty-first of June.\nA: And what about you, Lily?\nD: Mine is on the twelfth of October.\nA: Sam, when's your birthday?\nE: It's on the thirtieth of August.\nA: And what about you, Mia?\nB: Mine is easy — it's on the first of January!"
+      "text": "Emma, when is your birthday? It's on the third of March. And you, Jack? Mine's on the twenty-first of June. And what about you, Lily? My birthday is on the twelfth of October. Sam, when's your birthday? It's on the thirtieth of August. And what about you, Mia? Oh, mine is easy. It's on the first of January!",
+      "script": "Narrator: Listening one. When's your birthday? Write the dates.\nA: Emma, when is your birthday?\nB: It's on the third of March.\nA: And you, Jack?\nC: Mine's on the twenty-first of June.\nA: And what about you, Lily?\nD: My birthday is on the twelfth of October.\nA: Sam, when's your birthday?\nE: It's on the thirtieth of August.\nA: And what about you, Mia?\nB: Oh, mine is easy. It's on the first of January!"
     },
     {
       "label": "Listening 2 — What time is it?",
       "src": "audio/course/b1l5-listening-2.mp3",
-      "text": "Number one. The train to London leaves at quarter past seven. Number two. Hurry up! The film starts at half past eight. Number three. Excuse me, when does the shop close? — At nine o'clock. Number four. Our English lesson is at quarter to eleven. Number five. The bus comes at twenty to five.",
-      "script": "Narrator: Listening two. What time is it? Circle the right time.\nNarrator: Number one.\nA: The train to London leaves at quarter past seven.\nNarrator: Number two.\nB: Hurry up! The film starts at half past eight.\nNarrator: Number three.\nC: Excuse me, when does the shop close? — At nine o'clock.\nNarrator: Number four.\nD: Our English lesson is at quarter to eleven.\nNarrator: Number five.\nE: The bus comes at twenty to five."
+      "text": "Number one. The train to London leaves at quarter past seven. Number two. Hurry up! The film starts at half past eight. Number three. Excuse me, when does the shop close? It closes at nine o'clock. Number four. Our English lesson is at quarter to eleven today. Number five. The next bus comes at twenty to five.",
+      "script": "Narrator: Listening two. What time is it? Circle the right time.\nNarrator: Number one.\nA: The train to London leaves at quarter past seven.\nNarrator: Number two.\nB: Hurry up! The film starts at half past eight.\nNarrator: Number three.\nC: Excuse me, when does the shop close?\nD: It closes at nine o'clock.\nNarrator: Number four.\nD: Our English lesson is at quarter to eleven today.\nNarrator: Number five.\nE: The next bus comes at twenty to five."
     },
     {
       "label": "Listening 3 — Plans for the weekend",
       "src": "audio/course/b1l5-listening-3.mp3",
-      "text": "Hi, Lily! Let's go to the cinema on Saturday. Great idea! What time? Let's meet at half past ten. OK. Where is the cinema? It's on Green Street. How do you spell Green? That's G, R, double E, N. And when does the film finish? It finishes at one o'clock. Perfect. Oh, and my birthday party is on the twentieth of May. Can you come? Yes, of course!",
-      "script": "Narrator: Listening three. Jack and Lily plan a weekend. Listen and complete.\nA: Hi, Lily! Let's go to the cinema on Saturday.\nB: Great idea! What time?\nA: Let's meet at half past ten.\nB: OK. Where is the cinema?\nA: It's on Green Street.\nB: How do you spell Green?\nA: That's G, R, double E, N.\nB: And when does the film finish?\nA: It finishes at one o'clock.\nB: Perfect. Oh, and my birthday party is on the twentieth of May. Can you come?\nA: Yes, of course!"
+      "text": "Hi, Lily! Do you want to go to the cinema on Saturday? Yes, good idea! What time? Let's meet at half past ten. OK. Where's the cinema? It's on Green Street. How do you spell Green? That's G, R, double E, N. And when does the film finish? It finishes at one o'clock. Perfect. Oh, and my birthday party is on the twentieth of May. Can you come? Yes, of course!",
+      "script": "Narrator: Listening three. Jack and Lily plan a weekend. Listen and complete.\nA: Hi, Lily! Do you want to go to the cinema on Saturday?\nB: Yes, good idea! What time?\nA: Let's meet at half past ten.\nB: OK. Where's the cinema?\nA: It's on Green Street.\nB: How do you spell Green?\nA: That's G, R, double E, N.\nB: And when does the film finish?\nA: It finishes at one o'clock.\nB: Perfect. Oh, and my birthday party is on the twentieth of May. Can you come?\nA: Yes, of course!"
     }
   ],
   teacherScript: [
@@ -6577,20 +6577,20 @@ COURSE_BEGINNER.blocks[0].review = {
     {
       "label": "Listening 1 — A new member at the sports club",
       "src": "audio/course/b1review-listening-1.mp3",
-      "text": "Hello! Welcome to the sports club. What's your name? Oliver Thompson. How do you spell Thompson? That's T, H, O, M, P, S, O, N. Thank you. How old are you, Oliver? I'm thirteen. And where are you from? I'm from Canada. What's your phone number? It's oh seven eight, three double six, nine one four. And when's your birthday? It's on the fourth of July. Great. See you on Monday!",
-      "script": "Narrator: Listening one. A new member at the sports club. Listen and complete.\nA: Hello! Welcome to the sports club. What's your name?\nB: Oliver Thompson.\nA: How do you spell Thompson?\nB: That's T, H, O, M, P, S, O, N.\nA: Thank you. How old are you, Oliver?\nB: I'm thirteen.\nA: And where are you from?\nB: I'm from Canada.\nA: What's your phone number?\nB: It's oh seven eight, three double six, nine one four.\nA: And when's your birthday?\nB: It's on the fourth of July.\nA: Great. See you on Monday!"
+      "text": "Hello! Welcome to the sports club. What's your name? Hi. My name's Oliver Thompson. How do you spell Thompson? That's T, H, O, M, P, S, O, N. Thanks. How old are you, Oliver? I'm thirteen. And where are you from? I'm from Canada. OK. Can I have your phone number? Sure. It's oh seven eight, three double six, nine one four. And when's your birthday? It's on the fourth of July. Great. See you on Monday, then!",
+      "script": "Narrator: Listening one. A new member at the sports club. Listen and complete.\nA: Hello! Welcome to the sports club. What's your name?\nB: Hi. My name's Oliver Thompson.\nA: How do you spell Thompson?\nB: That's T, H, O, M, P, S, O, N.\nA: Thanks. How old are you, Oliver?\nB: I'm thirteen.\nA: And where are you from?\nB: I'm from Canada.\nA: OK. Can I have your phone number?\nB: Sure. It's oh seven eight, three double six, nine one four.\nA: And when's your birthday?\nB: It's on the fourth of July.\nA: Great. See you on Monday, then!"
     },
     {
       "label": "Listening 2 — A birthday photo",
       "src": "audio/course/b1review-listening-2.mp3",
-      "text": "Is this a photo from your birthday, Daniel? Yes, it is. Look, this is my cousin Pablo. He's from Spain. How old is he? He's fifteen. And who's the man with the camera? That's my uncle — Pablo's dad. And this lady with the dog? That's my grandmother. She's got a dog called Rocky.",
-      "script": "Narrator: Listening two. Two friends look at a photo. True or false?\nA: Is this a photo from your birthday, Daniel?\nB: Yes, it is. Look, this is my cousin Pablo. He's from Spain.\nA: How old is he?\nB: He's fifteen.\nA: And who's the man with the camera?\nB: That's my uncle — Pablo's dad.\nA: And this lady with the dog?\nB: That's my grandmother. She's got a dog called Rocky."
+      "text": "Daniel, is this a photo from your birthday? Yes, it is. Look, this is my cousin Pablo. He's from Spain. How old is he? He's fifteen. And who's the man with the camera? That's my uncle. He's Pablo's dad. And this lady with the dog? That's my grandmother, and the dog is hers. He's called Rocky.",
+      "script": "Narrator: Listening two. Two friends look at a photo. True or false?\nA: Daniel, is this a photo from your birthday?\nB: Yes, it is. Look, this is my cousin Pablo. He's from Spain.\nA: How old is he?\nB: He's fifteen.\nA: And who's the man with the camera?\nB: That's my uncle. He's Pablo's dad.\nA: And this lady with the dog?\nB: That's my grandmother, and the dog is hers. He's called Rocky."
     },
     {
       "label": "Listening 3 — A school day",
       "src": "audio/course/b1review-listening-3.mp3",
-      "text": "I get up at quarter past seven. School starts at half past eight. My first lesson is maths. Then I've got English. We have lunch at half past twelve. On Wednesday I've got swimming after school. My favourite day is Friday, because we've got art and music!",
-      "script": "Narrator: Listening three. Emma talks about her school day. Circle the right answer.\nA: I get up at quarter past seven. School starts at half past eight.\nA: My first lesson is maths. Then I've got English.\nA: We have lunch at half past twelve.\nA: On Wednesday I've got swimming after school.\nA: My favourite day is Friday, because we've got art and music!"
+      "text": "I get up at quarter past seven, and school starts at half past eight. My first lesson is maths. After that I've got English. Lunch is at half past twelve. On Wednesday I go swimming after school. Friday is my favourite day, because we've got art and music!",
+      "script": "Narrator: Listening three. Emma talks about her school day. Circle the right answer.\nA: I get up at quarter past seven, and school starts at half past eight.\nA: My first lesson is maths. After that I've got English.\nA: Lunch is at half past twelve.\nA: On Wednesday I go swimming after school.\nA: Friday is my favourite day, because we've got art and music!"
     }
   ],
   teacherScript: [
@@ -6638,6 +6638,8 @@ COURSE_BEGINNER.blocks[0].review = {
 // Beginner exam (teacher): grammar, listening, reading online (one Test link, kept in order) + writing on paper. 3 recordings × 5 questions.
 // Beginner exam (teacher): grammar, listening, reading online (one Test link, kept in order) + writing on paper. 3 recordings × 5 questions.
 // Beginner exam (teacher): grammar, listening, reading online (one Test link, kept in order) + writing on paper. 3 recordings × 5 questions.
+// Beginner exam (teacher): grammar, listening, reading online (one Test link, kept in order) + writing on paper. 3 recordings × 5 questions.
+// Beginner exam (teacher): grammar, listening, reading online (one Test link, kept in order) + writing on paper. 3 recordings × 5 questions.
 COURSE_BEGINNER.blocks[0].exam = {
   "title": "Block 1 exam",
   "emoji": "🏁",
@@ -6655,20 +6657,20 @@ COURSE_BEGINNER.blocks[0].exam = {
     {
       "label": "Part 2 — Recording 1: Jennifer (questions 11–15)",
       "src": "audio/course/b1exam-listening-1.mp3",
-      "text": "Hello! My name is Jennifer. That's J, E, double N, I, F, E, R. I'm fourteen years old and I'm from the UK. My phone number is oh nine three, four four seven, two oh eight. My birthday is on the eighteenth of April.",
-      "script": "Narrator: Recording one. Questions eleven to fifteen. Listen to Jennifer.\nA: Hello! My name is Jennifer.\nA: That's J, E, double N, I, F, E, R.\nA: I'm fourteen years old and I'm from the UK.\nA: My phone number is oh nine three, four four seven, two oh eight.\nA: My birthday is on the eighteenth of April."
+      "text": "Hello! My name is Jennifer. That's J, E, double N, I, F, E, R. I'm fourteen years old, and I'm from the UK. If you want to call me, my phone number is oh nine three, four four seven, two oh eight. Oh, and my birthday is on the eighteenth of April.",
+      "script": "Narrator: Recording one. Questions eleven to fifteen. Listen to Jennifer.\nA: Hello! My name is Jennifer.\nA: That's J, E, double N, I, F, E, R.\nA: I'm fourteen years old, and I'm from the UK.\nA: If you want to call me, my phone number is oh nine three, four four seven, two oh eight.\nA: Oh, and my birthday is on the eighteenth of April."
     },
     {
       "label": "Part 2 — Recording 2: Daniel (questions 16–20)",
       "src": "audio/course/b1exam-listening-2.mp3",
-      "text": "Hi, I'm Daniel and I'm German — I'm from Germany. I've got two sisters, Anna and Lisa. In my bag I've got a dictionary and two pens. My English lesson is on Friday at quarter past ten.",
-      "script": "Narrator: Recording two. Questions sixteen to twenty. Listen to Daniel.\nA: Hi, I'm Daniel and I'm German — I'm from Germany.\nA: I've got two sisters, Anna and Lisa.\nA: In my bag I've got a dictionary and two pens.\nA: My English lesson is on Friday at quarter past ten."
+      "text": "Hi, I'm Daniel. I'm from Germany, so I'm German. I've got two sisters, Anna and Lisa. There's a dictionary in my bag, and two pens. My English lesson is on Friday, at quarter past ten.",
+      "script": "Narrator: Recording two. Questions sixteen to twenty. Listen to Daniel.\nA: Hi, I'm Daniel. I'm from Germany, so I'm German.\nA: I've got two sisters, Anna and Lisa.\nA: There's a dictionary in my bag, and two pens.\nA: My English lesson is on Friday, at quarter past ten."
     },
     {
       "label": "Part 2 — Recording 3: A phone message (questions 21–25)",
       "src": "audio/course/b1exam-listening-3.mp3",
-      "text": "Hi Tom, it's Lucy! My birthday party is on Saturday — Saturday the ninth of May. It starts at three o'clock. My house is number forty-seven, Park Road. Bring your cousin, too! Call me — my number is oh seven seven, five one two, three nine oh. Bye!",
-      "script": "Narrator: Recording three. Questions twenty-one to twenty-five. Listen to Lucy's phone message.\nA: Hi Tom, it's Lucy! My birthday party is on Saturday — Saturday the ninth of May.\nA: It starts at three o'clock.\nA: My house is number forty-seven, Park Road.\nA: Bring your cousin, too! Call me — my number is oh seven seven, five one two, three nine oh. Bye!"
+      "text": "Hi Tom, it's Lucy! My birthday party is on Saturday. That's Saturday the ninth of May. It starts at three o'clock. My house is number forty-seven, Park Road. You can bring your cousin, too! Call me. My number is oh seven seven, five one two, three nine oh. Bye!",
+      "script": "Narrator: Recording three. Questions twenty-one to twenty-five. Listen to Lucy's phone message.\nA: Hi Tom, it's Lucy! My birthday party is on Saturday. That's Saturday the ninth of May.\nA: It starts at three o'clock.\nA: My house is number forty-seven, Park Road.\nA: You can bring your cousin, too! Call me. My number is oh seven seven, five one two, three nine oh. Bye!"
     }
   ],
   "test": [

@@ -13,7 +13,7 @@
    ],
    [
     "bm_george",
-    "Oliver Thompson."
+    "Hi. My name's Oliver Thompson."
    ],
    [
     "bm_lewis",
@@ -25,7 +25,7 @@
    ],
    [
     "bm_lewis",
-    "Thank you. How old are you, Oliver?"
+    "Thanks. How old are you, Oliver?"
    ],
    [
     "bm_george",
@@ -41,11 +41,11 @@
    ],
    [
     "bm_lewis",
-    "What's your phone number?"
+    "OK. Can I have your phone number?"
    ],
    [
     "bm_george",
-    "It's oh seven eight, three double six, nine one four."
+    "Sure. It's oh seven eight, three double six, nine one four."
    ],
    [
     "bm_lewis",
@@ -57,7 +57,7 @@
    ],
    [
     "bm_lewis",
-    "Great. See you on Monday!"
+    "Great. See you on Monday, then!"
    ]
   ]
  },
@@ -71,7 +71,7 @@
    ],
    [
     "bf_lily",
-    "Is this a photo from your birthday, Daniel?"
+    "Daniel, is this a photo from your birthday?"
    ],
    [
     "bm_daniel",
@@ -91,7 +91,7 @@
    ],
    [
     "bm_daniel",
-    "That's my uncle — Pablo's dad."
+    "That's my uncle. He's Pablo's dad."
    ],
    [
     "bf_lily",
@@ -99,7 +99,7 @@
    ],
    [
     "bm_daniel",
-    "That's my grandmother. She's got a dog called Rocky."
+    "That's my grandmother, and the dog is hers. He's called Rocky."
    ]
   ]
  },
@@ -113,23 +113,23 @@
    ],
    [
     "bf_isabella",
-    "I get up at quarter past seven. School starts at half past eight."
+    "I get up at quarter past seven, and school starts at half past eight."
    ],
    [
     "bf_isabella",
-    "My first lesson is maths. Then I've got English."
+    "My first lesson is maths. After that I've got English."
    ],
    [
     "bf_isabella",
-    "We have lunch at half past twelve."
+    "Lunch is at half past twelve."
    ],
    [
     "bf_isabella",
-    "On Wednesday I've got swimming after school."
+    "On Wednesday I go swimming after school."
    ],
    [
     "bf_isabella",
-    "My favourite day is Friday, because we've got art and music!"
+    "Friday is my favourite day, because we've got art and music!"
    ]
   ]
  }

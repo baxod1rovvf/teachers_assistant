@@ -21,7 +21,7 @@
    ],
    [
     "bm_george",
-    "My birthday is on the twenty-first of June."
+    "Mine's on the twenty-first of June."
    ],
    [
     "bf_alice",
@@ -29,7 +29,7 @@
    ],
    [
     "bf_isabella",
-    "Mine is on the twelfth of October."
+    "My birthday is on the twelfth of October."
    ],
    [
     "bf_alice",
@@ -45,7 +45,7 @@
    ],
    [
     "bf_lily",
-    "Mine is easy — it's on the first of January!"
+    "Oh, mine is easy. It's on the first of January!"
    ]
   ]
  },
@@ -79,7 +79,11 @@
    ],
    [
     "bm_george",
-    "Excuse me, when does the shop close? — At nine o'clock."
+    "Excuse me, when does the shop close?"
+   ],
+   [
+    "bf_isabella",
+    "It closes at nine o'clock."
    ],
    [
     "bf_emma",
@@ -87,7 +91,7 @@
    ],
    [
     "bf_isabella",
-    "Our English lesson is at quarter to eleven."
+    "Our English lesson is at quarter to eleven today."
    ],
    [
     "bf_emma",
@@ -95,7 +99,7 @@
    ],
    [
     "bm_daniel",
-    "The bus comes at twenty to five."
+    "The next bus comes at twenty to five."
    ]
   ]
  },
@@ -109,11 +113,11 @@
    ],
    [
     "bm_daniel",
-    "Hi, Lily! Let's go to the cinema on Saturday."
+    "Hi, Lily! Do you want to go to the cinema on Saturday?"
    ],
    [
     "bf_lily",
-    "Great idea! What time?"
+    "Yes, good idea! What time?"
    ],
    [
     "bm_daniel",
@@ -121,7 +125,7 @@
    ],
    [
     "bf_lily",
-    "OK. Where is the cinema?"
+    "OK. Where's the cinema?"
    ],
    [
     "bm_daniel",

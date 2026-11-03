@@ -557,6 +557,11 @@ real students' names or results into the repository (it is public).
   "Lily?") also garble — write full sentences. Voices that spelled badly were swapped (Lizzy af_heart, Lucy/L3 bf_isabella,
   Jack/L5 bm_daniel). All 21 recordings pass; the printed scripts show spellings as "That's E, double M, A." Whisper on a
   whole long file sometimes skips a part — check line by line, not whole files.
+  **Scripts humanized (2026-11-03, teacher ran the humanizer skill: "fix the audios… for lesson 1 use another female voice")**:
+  every script reads like people talking (varied openings, natural replies, no dashes; a self-answering line in L5 split
+  into two speakers); every fact a question tests is unchanged. Lesson 1's women: receptionist/secretary **af_bella**, Emma and
+  Sara **af_nicole** (bf_alice / bf_lily are the voice model's weakest). Short answers like "At nine o'clock." still garble — write
+  "It closes at nine o'clock." The checker's false alarms: whose/who's, and capitalised number words ("One cousin").
   **All of Block 1 is now in this format (2026-11-03, teacher: "now change other 6")**: L2–L5 and the review = 32–35 slides, 15
   exercises (6+ kinds), 3 listenings × 5 questions with recordings each; warm-up questions revise the previous lesson with the
   answer on a click (`questions` rows `{q, a}`). **The exam** = 9 slides (rules, Part 1 grammar, Part 2 three recordings, Part 3
