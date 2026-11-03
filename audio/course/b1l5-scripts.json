@@ -9,7 +9,7 @@
    ],
    [
     "bf_alice",
-    "Emma, when's your birthday?"
+    "Emma, when is your birthday?"
    ],
    [
     "bf_lily",
@@ -25,7 +25,7 @@
    ],
    [
     "bf_alice",
-    "Lily?"
+    "And what about you, Lily?"
    ],
    [
     "bf_isabella",
@@ -41,7 +41,7 @@
    ],
    [
     "bf_alice",
-    "And Mia?"
+    "And what about you, Mia?"
    ],
    [
     "bf_lily",
@@ -108,7 +108,7 @@
     "Listening three. Jack and Lily plan a weekend. Listen and complete."
    ],
    [
-    "bm_george",
+    "bm_daniel",
     "Hi, Lily! Let's go to the cinema on Saturday."
    ],
    [
@@ -116,7 +116,7 @@
     "Great idea! What time?"
    ],
    [
-    "bm_george",
+    "bm_daniel",
     "Let's meet at half past ten."
    ],
    [
@@ -124,7 +124,7 @@
     "OK. Where is the cinema?"
    ],
    [
-    "bm_george",
+    "bm_daniel",
     "It's on Green Street."
    ],
    [
@@ -132,7 +132,7 @@
     "How do you spell Green?"
    ],
    [
-    "bm_george",
+    "bm_daniel",
     "G. R. double E. N."
    ],
    [
@@ -140,15 +140,15 @@
     "And when does the film finish?"
    ],
    [
-    "bm_george",
-    "At one o'clock."
+    "bm_daniel",
+    "It finishes at one o'clock."
    ],
    [
     "bf_lily",
     "Perfect. Oh, and my birthday party is on the twentieth of May. Can you come?"
    ],
    [
-    "bm_george",
+    "bm_daniel",
     "Yes, of course!"
    ]
   ]

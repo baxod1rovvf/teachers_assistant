@@ -92,7 +92,7 @@ test('a lesson: mark it taught; the handout has exactly the exercises the slides
   const onPaper = await popup.locator('section.ex').evaluateAll(l => l.map(sec => Array.from(sec.querySelectorAll('.items > div, .match > div:first-child > div')).map(d => d.textContent.replace(/^\d+\. /, '').replace(/(  →  _+|   _{4})$/, ''))));
   expect(onPaper).toEqual(onSlides);
   await expect(popup.locator('.teacher')).toContainText('Exercise 3: 1 Emma · 2 Jack · 3 Green · 4 Sophie · 5 Lizzy');
-  await expect(popup.locator('.teacher .script').first()).toContainText('B: E. double M. A.');   // the listening scripts, with who speaks
+  await expect(popup.locator('.teacher .script').first()).toContainText("B: That's E, double M, A.");   // the listening scripts, with who speaks
   await expect(popup.locator('.match')).toHaveCount(1);
   expect(errors).toEqual([]);
 });

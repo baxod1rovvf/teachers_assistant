@@ -1215,8 +1215,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
     {
       "label": "Listening 1 — Spell your name (5 people)",
       "src": "audio/course/b1l1-listening-1.mp3",
-      "text": "Hello! What's your name? Emma. How do you spell it? E. double M. A. And what's your name? Jack. How do you spell it? J. A. C. K. Hello! Are you the teacher? Yes, I am. I'm Mr Green. How do you spell Green? G. R. double E. N. Next, please. What's your name? Sophie. Can you spell it, please? S. O. P. H. I. E. And you? I'm Lizzy. How do you spell it? L. I. double Z. Y. Thank you, everyone!",
-      "script": "Narrator: Listening one. Spell your name. Listen and write the names.\nA: Hello! What's your name?\nB: Emma.\nA: How do you spell it?\nB: E. double M. A.\nA: And what's your name?\nB: Jack.\nA: How do you spell it?\nB: J. A. C. K.\nA: Hello! Are you the teacher?\nB: Yes, I am. I'm Mr Green.\nA: How do you spell Green?\nB: G. R. double E. N.\nA: Next, please. What's your name?\nB: Sophie.\nA: Can you spell it, please?\nB: S. O. P. H. I. E.\nA: And you?\nB: I'm Lizzy.\nA: How do you spell it?\nB: L. I. double Z. Y.\nA: Thank you, everyone!"
+      "text": "Hello! What's your name? Emma. How do you spell it? That's E, double M, A. And what's your name? My name's Jack. How do you spell it? That's J, A, C, K. Hello! Are you the teacher? Yes, I am. I'm Mr Green. How do you spell Green? That's G, R, double E, N. Next, please. What's your name? Sophie. Can you spell it, please? That's S, O, P, H, I, E. And you? I'm Lizzy. How do you spell it? That's L, I, double Z, Y. Thank you, everyone!",
+      "script": "Narrator: Listening one. Spell your name. Listen and write the names.\nA: Hello! What's your name?\nB: Emma.\nA: How do you spell it?\nB: That's E, double M, A.\nA: And what's your name?\nB: My name's Jack.\nA: How do you spell it?\nB: That's J, A, C, K.\nA: Hello! Are you the teacher?\nB: Yes, I am. I'm Mr Green.\nA: How do you spell Green?\nB: That's G, R, double E, N.\nA: Next, please. What's your name?\nB: Sophie.\nA: Can you spell it, please?\nB: That's S, O, P, H, I, E.\nA: And you?\nB: I'm Lizzy.\nA: How do you spell it?\nB: That's L, I, double Z, Y.\nA: Thank you, everyone!"
     },
     {
       "label": "Listening 2 — Numbers (5 people)",
@@ -1227,8 +1227,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[0], {
     {
       "label": "Listening 3 — A phone call to an English school",
       "src": "audio/course/b1l1-listening-3.mp3",
-      "text": "Hello, Sunrise English School. Hello! I want English lessons for my son. Of course. What's his name? Daniel Brooks. How do you spell Brooks? B. R. double O. K. S. Thank you. And how old is Daniel? He's twelve. Twelve. OK. What's your phone number? It's oh double seven, four double five, two oh one. Oh double seven, four double five, two oh one. Great. The lesson is in room fourteen. Room fourteen. Thank you! Goodbye. Goodbye!",
-      "script": "Narrator: Listening three. A phone call. Listen and complete.\nA: Hello, Sunrise English School.\nB: Hello! I want English lessons for my son.\nA: Of course. What's his name?\nB: Daniel Brooks.\nA: How do you spell Brooks?\nB: B. R. double O. K. S.\nA: Thank you. And how old is Daniel?\nB: He's twelve.\nA: Twelve. OK. What's your phone number?\nB: It's oh double seven, four double five, two oh one.\nA: Oh double seven, four double five, two oh one. Great. The lesson is in room fourteen.\nB: Room fourteen. Thank you! Goodbye.\nA: Goodbye!"
+      "text": "Hello, Sunrise English School. Hello! I want English lessons for my son. Of course. What's his name? Daniel Brooks. How do you spell Brooks? That's B, R, double O, K, S. Thank you. And how old is Daniel? He's twelve. Twelve. OK. What's your phone number? It's oh double seven, four double five, two oh one. Oh double seven, four double five, two oh one. Great. The lesson is in room fourteen. Room fourteen. Thank you! Goodbye. Goodbye, and thank you!",
+      "script": "Narrator: Listening three. A phone call. Listen and complete.\nA: Hello, Sunrise English School.\nB: Hello! I want English lessons for my son.\nA: Of course. What's his name?\nB: Daniel Brooks.\nA: How do you spell Brooks?\nB: That's B, R, double O, K, S.\nA: Thank you. And how old is Daniel?\nB: He's twelve.\nA: Twelve. OK. What's your phone number?\nB: It's oh double seven, four double five, two oh one.\nA: Oh double seven, four double five, two oh one. Great. The lesson is in room fourteen.\nB: Room fourteen. Thank you! Goodbye.\nA: Goodbye, and thank you!"
     }
   ],
   teacherScript: [
@@ -1716,7 +1716,7 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
       "items": [
         {
           "q": "The girl's name is Anna ____________.",
-          "a": "Kowalska (K-O-W-A-L-S-K-A)"
+          "a": "Baker (B-A-K-E-R)"
         },
         {
           "q": "True or false: Anna is from Spain.  T / F",
@@ -2325,8 +2325,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
     {
       "label": "Listening 1 — Five short dialogues",
       "src": "audio/course/b1l2-listening-1.mp3",
-      "text": "Dialogue one. Good morning, Mrs Brown! Good morning, Tom. You're early today! Dialogue two. Hi! I'm Katie. I'm new here. Hi, Katie! Nice to meet you. I'm Ben. Nice to meet you too, Ben. Dialogue three. Hello, Mr Hill. How are you? I'm fine, thank you. And you? I'm fine, thanks. Dialogue four. Good evening! Welcome to the party. Good evening! Thank you. Dialogue five. Bye, Jack! See you tomorrow! See you tomorrow, Ben!",
-      "script": "Narrator: Listening one. Listen to five short dialogues.\nNarrator: Dialogue one.\nA: Good morning, Mrs Brown!\nB: Good morning, Tom. You're early today!\nNarrator: Dialogue two.\nC: Hi! I'm Katie. I'm new here.\nD: Hi, Katie! Nice to meet you. I'm Ben.\nC: Nice to meet you too, Ben.\nNarrator: Dialogue three.\nE: Hello, Mr Hill. How are you?\nF: I'm fine, thank you. And you?\nE: I'm fine, thanks.\nNarrator: Dialogue four.\nB: Good evening! Welcome to the party.\nA: Good evening! Thank you.\nNarrator: Dialogue five.\nD: Bye, Jack! See you tomorrow!\nA: See you tomorrow, Ben!"
+      "text": "Dialogue number one. Listen. Good morning, Mrs Brown! Good morning, Tom. You're early today! Number two. Hi! I'm Katie. I'm new here. Hi, Katie! Nice to meet you. I'm Ben. Nice to meet you too, Ben. Number three. Hello, Mr Hill. How are you? I'm fine, thank you. And you? I'm fine, thanks. Number four. Good evening! Welcome to the party. Good evening! Thank you. Number five. Bye, Jack! See you tomorrow! See you tomorrow, Ben!",
+      "script": "Narrator: Listening one. Listen to five short dialogues.\nNarrator: Dialogue number one. Listen.\nA: Good morning, Mrs Brown!\nB: Good morning, Tom. You're early today!\nNarrator: Number two.\nC: Hi! I'm Katie. I'm new here.\nD: Hi, Katie! Nice to meet you. I'm Ben.\nC: Nice to meet you too, Ben.\nNarrator: Number three.\nE: Hello, Mr Hill. How are you?\nF: I'm fine, thank you. And you?\nE: I'm fine, thanks.\nNarrator: Number four.\nB: Good evening! Welcome to the party.\nA: Good evening! Thank you.\nNarrator: Number five.\nD: Bye, Jack! See you tomorrow!\nA: See you tomorrow, Ben!"
     },
     {
       "label": "Listening 2 — Where are they from?",
@@ -2337,8 +2337,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[1], {
     {
       "label": "Listening 3 — At a summer camp",
       "src": "audio/course/b1l2-listening-3.mp3",
-      "text": "Hello! Welcome to the camp. What's your name? Hi! I'm Anna Kowalska. How do you spell Kowalska? K. O. W. A. L. S. K. A. Thank you. Are you from Spain, Anna? No, I'm not. I'm from Poland. And how old are you? I'm thirteen. And who's this? This is my friend Rosa. She's Mexican. Nice to meet you, Rosa! OK, you're in group B. Group B. Thank you!",
-      "script": "Narrator: Listening three. At a summer camp. Listen and complete.\nA: Hello! Welcome to the camp. What's your name?\nB: Hi! I'm Anna Kowalska.\nA: How do you spell Kowalska?\nB: K. O. W. A. L. S. K. A.\nA: Thank you. Are you from Spain, Anna?\nB: No, I'm not. I'm from Poland.\nA: And how old are you?\nB: I'm thirteen.\nA: And who's this?\nB: This is my friend Rosa. She's Mexican.\nA: Nice to meet you, Rosa! OK, you're in group B.\nC: Group B. Thank you!"
+      "text": "Hello! Welcome to the camp. What's your name? Hello! My name is Anna Baker, and I am new here. How do you spell Baker? That's B, A, K, E, R. Thank you. Are you from Spain, Anna? No, I'm not. I'm from Poland. And how old are you? I'm thirteen. And who's this? This is my friend Rosa. She's Mexican. Nice to meet you, Rosa! OK, you're in group B. We're in group B. Thank you!",
+      "script": "Narrator: Listening three. At a summer camp. Listen and complete.\nA: Hello! Welcome to the camp. What's your name?\nB: Hello! My name is Anna Baker, and I am new here.\nA: How do you spell Baker?\nB: That's B, A, K, E, R.\nA: Thank you. Are you from Spain, Anna?\nB: No, I'm not. I'm from Poland.\nA: And how old are you?\nB: I'm thirteen.\nA: And who's this?\nB: This is my friend Rosa. She's Mexican.\nA: Nice to meet you, Rosa! OK, you're in group B.\nC: We're in group B. Thank you!"
     }
   ],
   teacherScript: [
@@ -3354,8 +3354,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[2], {
     {
       "label": "Listening 3 — A new student",
       "src": "audio/course/b1l3-listening-3.mp3",
-      "text": "So, Lucy, tell me about your family. Have you got brothers or sisters? I've got one brother. His name is Jake. How do you spell Jake? J. A. K. E. And how old is he? He's seventeen. What about your parents? My mum is a nurse and my dad is a taxi driver. Have you got cousins? Yes, I have. I've got three cousins. And your grandparents? My grandmother lives with us. She's eighty!",
-      "script": "Narrator: Listening three. Lucy, a new student, talks to her teacher. Listen and complete.\nA: So, Lucy, tell me about your family. Have you got brothers or sisters?\nB: I've got one brother. His name is Jake.\nA: How do you spell Jake?\nB: J. A. K. E.\nA: And how old is he?\nB: He's seventeen.\nA: What about your parents?\nB: My mum is a nurse and my dad is a taxi driver.\nA: Have you got cousins?\nB: Yes, I have. I've got three cousins.\nA: And your grandparents?\nB: My grandmother lives with us. She's eighty!"
+      "text": "So, Lucy, tell me about your family. Have you got brothers or sisters? I've got one brother. His name is Jake. How do you spell Jake? That's J, A, K, E. And how old is he? He's seventeen. What about your parents? My mum is a nurse and my dad is a taxi driver. Have you got cousins? Yes, I have. I've got three cousins. And your grandparents? My grandmother lives with us. She's eighty!",
+      "script": "Narrator: Listening three. Lucy, a new student, talks to her teacher. Listen and complete.\nA: So, Lucy, tell me about your family. Have you got brothers or sisters?\nB: I've got one brother. His name is Jake.\nA: How do you spell Jake?\nB: That's J, A, K, E.\nA: And how old is he?\nB: He's seventeen.\nA: What about your parents?\nB: My mum is a nurse and my dad is a taxi driver.\nA: Have you got cousins?\nB: Yes, I have. I've got three cousins.\nA: And your grandparents?\nB: My grandmother lives with us. She's eighty!"
     }
   ],
   teacherScript: [
@@ -5514,8 +5514,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
     {
       "label": "Listening 1 — When's your birthday?",
       "src": "audio/course/b1l5-listening-1.mp3",
-      "text": "Emma, when's your birthday? It's on the third of March. And you, Jack? My birthday is on the twenty-first of June. Lily? Mine is on the twelfth of October. Sam, when's your birthday? It's on the thirtieth of August. And Mia? Mine is easy — it's on the first of January!",
-      "script": "Narrator: Listening one. When's your birthday? Write the dates.\nA: Emma, when's your birthday?\nB: It's on the third of March.\nA: And you, Jack?\nC: My birthday is on the twenty-first of June.\nA: Lily?\nD: Mine is on the twelfth of October.\nA: Sam, when's your birthday?\nE: It's on the thirtieth of August.\nA: And Mia?\nB: Mine is easy — it's on the first of January!"
+      "text": "Emma, when is your birthday? It's on the third of March. And you, Jack? My birthday is on the twenty-first of June. And what about you, Lily? Mine is on the twelfth of October. Sam, when's your birthday? It's on the thirtieth of August. And what about you, Mia? Mine is easy — it's on the first of January!",
+      "script": "Narrator: Listening one. When's your birthday? Write the dates.\nA: Emma, when is your birthday?\nB: It's on the third of March.\nA: And you, Jack?\nC: My birthday is on the twenty-first of June.\nA: And what about you, Lily?\nD: Mine is on the twelfth of October.\nA: Sam, when's your birthday?\nE: It's on the thirtieth of August.\nA: And what about you, Mia?\nB: Mine is easy — it's on the first of January!"
     },
     {
       "label": "Listening 2 — What time is it?",
@@ -5526,8 +5526,8 @@ Object.assign(COURSE_BEGINNER.blocks[0].lessons[4], {
     {
       "label": "Listening 3 — Plans for the weekend",
       "src": "audio/course/b1l5-listening-3.mp3",
-      "text": "Hi, Lily! Let's go to the cinema on Saturday. Great idea! What time? Let's meet at half past ten. OK. Where is the cinema? It's on Green Street. How do you spell Green? G. R. double E. N. And when does the film finish? At one o'clock. Perfect. Oh, and my birthday party is on the twentieth of May. Can you come? Yes, of course!",
-      "script": "Narrator: Listening three. Jack and Lily plan a weekend. Listen and complete.\nA: Hi, Lily! Let's go to the cinema on Saturday.\nB: Great idea! What time?\nA: Let's meet at half past ten.\nB: OK. Where is the cinema?\nA: It's on Green Street.\nB: How do you spell Green?\nA: G. R. double E. N.\nB: And when does the film finish?\nA: At one o'clock.\nB: Perfect. Oh, and my birthday party is on the twentieth of May. Can you come?\nA: Yes, of course!"
+      "text": "Hi, Lily! Let's go to the cinema on Saturday. Great idea! What time? Let's meet at half past ten. OK. Where is the cinema? It's on Green Street. How do you spell Green? That's G, R, double E, N. And when does the film finish? It finishes at one o'clock. Perfect. Oh, and my birthday party is on the twentieth of May. Can you come? Yes, of course!",
+      "script": "Narrator: Listening three. Jack and Lily plan a weekend. Listen and complete.\nA: Hi, Lily! Let's go to the cinema on Saturday.\nB: Great idea! What time?\nA: Let's meet at half past ten.\nB: OK. Where is the cinema?\nA: It's on Green Street.\nB: How do you spell Green?\nA: That's G, R, double E, N.\nB: And when does the film finish?\nA: It finishes at one o'clock.\nB: Perfect. Oh, and my birthday party is on the twentieth of May. Can you come?\nA: Yes, of course!"
     }
   ],
   teacherScript: [
@@ -6577,8 +6577,8 @@ COURSE_BEGINNER.blocks[0].review = {
     {
       "label": "Listening 1 — A new member at the sports club",
       "src": "audio/course/b1review-listening-1.mp3",
-      "text": "Hello! Welcome to the sports club. What's your name? Oliver Thompson. How do you spell Thompson? T. H. O. M. P. S. O. N. Thank you. How old are you, Oliver? I'm thirteen. And where are you from? I'm from Canada. What's your phone number? It's oh seven eight, three double six, nine one four. And when's your birthday? It's on the fourth of July. Great. See you on Monday!",
-      "script": "Narrator: Listening one. A new member at the sports club. Listen and complete.\nA: Hello! Welcome to the sports club. What's your name?\nB: Oliver Thompson.\nA: How do you spell Thompson?\nB: T. H. O. M. P. S. O. N.\nA: Thank you. How old are you, Oliver?\nB: I'm thirteen.\nA: And where are you from?\nB: I'm from Canada.\nA: What's your phone number?\nB: It's oh seven eight, three double six, nine one four.\nA: And when's your birthday?\nB: It's on the fourth of July.\nA: Great. See you on Monday!"
+      "text": "Hello! Welcome to the sports club. What's your name? Oliver Thompson. How do you spell Thompson? That's T, H, O, M, P, S, O, N. Thank you. How old are you, Oliver? I'm thirteen. And where are you from? I'm from Canada. What's your phone number? It's oh seven eight, three double six, nine one four. And when's your birthday? It's on the fourth of July. Great. See you on Monday!",
+      "script": "Narrator: Listening one. A new member at the sports club. Listen and complete.\nA: Hello! Welcome to the sports club. What's your name?\nB: Oliver Thompson.\nA: How do you spell Thompson?\nB: That's T, H, O, M, P, S, O, N.\nA: Thank you. How old are you, Oliver?\nB: I'm thirteen.\nA: And where are you from?\nB: I'm from Canada.\nA: What's your phone number?\nB: It's oh seven eight, three double six, nine one four.\nA: And when's your birthday?\nB: It's on the fourth of July.\nA: Great. See you on Monday!"
     },
     {
       "label": "Listening 2 — A birthday photo",
@@ -6632,6 +6632,12 @@ COURSE_BEGINNER.blocks[0].review = {
 
 /* ---------- Block 1: the exam (Beginner: grammar, listening, reading online · writing on paper) ---------- */
 // Beginner exam (teacher): grammar, listening, reading online (one Test link, kept in order) + writing on paper. 3 recordings × 5 questions.
+// Beginner exam (teacher): grammar, listening, reading online (one Test link, kept in order) + writing on paper. 3 recordings × 5 questions.
+// Beginner exam (teacher): grammar, listening, reading online (one Test link, kept in order) + writing on paper. 3 recordings × 5 questions.
+// Beginner exam (teacher): grammar, listening, reading online (one Test link, kept in order) + writing on paper. 3 recordings × 5 questions.
+// Beginner exam (teacher): grammar, listening, reading online (one Test link, kept in order) + writing on paper. 3 recordings × 5 questions.
+// Beginner exam (teacher): grammar, listening, reading online (one Test link, kept in order) + writing on paper. 3 recordings × 5 questions.
+// Beginner exam (teacher): grammar, listening, reading online (one Test link, kept in order) + writing on paper. 3 recordings × 5 questions.
 COURSE_BEGINNER.blocks[0].exam = {
   "title": "Block 1 exam",
   "emoji": "🏁",
@@ -6649,8 +6655,8 @@ COURSE_BEGINNER.blocks[0].exam = {
     {
       "label": "Part 2 — Recording 1: Jennifer (questions 11–15)",
       "src": "audio/course/b1exam-listening-1.mp3",
-      "text": "Hello! My name is Jennifer. J. E. double N. I. F. E. R. I'm fourteen years old and I'm from the UK. My phone number is oh nine three, four four seven, two oh eight. My birthday is on the eighteenth of April.",
-      "script": "Narrator: Recording one. Questions eleven to fifteen. Listen to Jennifer.\nA: Hello! My name is Jennifer.\nA: J. E. double N. I. F. E. R.\nA: I'm fourteen years old and I'm from the UK.\nA: My phone number is oh nine three, four four seven, two oh eight.\nA: My birthday is on the eighteenth of April."
+      "text": "Hello! My name is Jennifer. That's J, E, double N, I, F, E, R. I'm fourteen years old and I'm from the UK. My phone number is oh nine three, four four seven, two oh eight. My birthday is on the eighteenth of April.",
+      "script": "Narrator: Recording one. Questions eleven to fifteen. Listen to Jennifer.\nA: Hello! My name is Jennifer.\nA: That's J, E, double N, I, F, E, R.\nA: I'm fourteen years old and I'm from the UK.\nA: My phone number is oh nine three, four four seven, two oh eight.\nA: My birthday is on the eighteenth of April."
     },
     {
       "label": "Part 2 — Recording 2: Daniel (questions 16–20)",

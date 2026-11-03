@@ -9,7 +9,7 @@
    ],
    [
     "bf_emma",
-    "Dialogue one."
+    "Dialogue number one. Listen."
    ],
    [
     "bm_george",
@@ -21,7 +21,7 @@
    ],
    [
     "bf_emma",
-    "Dialogue two."
+    "Number two."
    ],
    [
     "bf_lily",
@@ -37,7 +37,7 @@
    ],
    [
     "bf_emma",
-    "Dialogue three."
+    "Number three."
    ],
    [
     "bf_isabella",
@@ -53,7 +53,7 @@
    ],
    [
     "bf_emma",
-    "Dialogue four."
+    "Number four."
    ],
    [
     "bf_alice",
@@ -65,7 +65,7 @@
    ],
    [
     "bf_emma",
-    "Dialogue five."
+    "Number five."
    ],
    [
     "bm_daniel",
@@ -141,15 +141,15 @@
    ],
    [
     "bf_lily",
-    "Hi! I'm Anna Kowalska."
+    "Hello! My name is Anna Baker, and I am new here."
    ],
    [
     "bm_lewis",
-    "How do you spell Kowalska?"
+    "How do you spell Baker?"
    ],
    [
     "bf_lily",
-    "K. O. W. A. L. S. K. A."
+    "B. A. K. E. R."
    ],
    [
     "bm_lewis",
@@ -181,7 +181,7 @@
    ],
    [
     "bf_isabella",
-    "Group B. Thank you!"
+    "We're in group B. Thank you!"
    ]
   ]
  }

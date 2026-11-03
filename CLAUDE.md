@@ -550,6 +550,13 @@ real students' names or results into the repository (it is public).
   the lead-in cards show an English example on click, not a translation — a test checks the course data and the audio scripts),
   and **spelling in recordings is slow**: a line like "E. double M. A." is said letter by letter, 1.1 s after each letter
   (`SPELLING` in tools/make-course-audio.py); numbers with "oh / double" are read slower (0.76).
+  **Fixed 2026-11-03 (teacher: "listening audios are not accurate… Emma sounded like 'ellay tdouble em hney'")**: a letter said on
+  its own garbles in Kokoro. Now a spelling is ONE sentence, "That's E, double M, A." (the "That's" keeps the first letter clear),
+  and the pauses between letters are stretched to ~0.9 s afterwards (`stretch_pauses`). Every line is checked with a speech
+  recogniser (Whisper base.en via sherpa-onnx from GitHub, `ASR_DIR`) and remade until heard right; one-word lines ("Jack.",
+  "Lily?") also garble — write full sentences. Voices that spelled badly were swapped (Lizzy af_heart, Lucy/L3 bf_isabella,
+  Jack/L5 bm_daniel). All 21 recordings pass; the printed scripts show spellings as "That's E, double M, A." Whisper on a
+  whole long file sometimes skips a part — check line by line, not whole files.
   **All of Block 1 is now in this format (2026-11-03, teacher: "now change other 6")**: L2–L5 and the review = 32–35 slides, 15
   exercises (6+ kinds), 3 listenings × 5 questions with recordings each; warm-up questions revise the previous lesson with the
   answer on a click (`questions` rows `{q, a}`). **The exam** = 9 slides (rules, Part 1 grammar, Part 2 three recordings, Part 3
