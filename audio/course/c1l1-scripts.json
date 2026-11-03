@@ -1,11 +1,89 @@
 [
  {
-  "label": "Listening 1 — Spell your name (5 people)",
-  "src": "audio/course/b1l1-listening-1.mp3",
+  "label": "Listening 1 — Five short dialogues",
+  "src": "audio/course/c1l1-listening-1.mp3",
   "lines": [
    [
     "bf_emma",
-    "Listening one. Spell your name. Listen and write the names."
+    "Listening one. Listen to five short dialogues."
+   ],
+   [
+    "bf_emma",
+    "Dialogue number one. Listen."
+   ],
+   [
+    "bm_george",
+    "Good morning, Mrs Brown!"
+   ],
+   [
+    "bf_alice",
+    "Good morning, Tom. You're early today!"
+   ],
+   [
+    "bf_emma",
+    "Number two."
+   ],
+   [
+    "bf_lily",
+    "Hi! I'm Katie. I'm new here."
+   ],
+   [
+    "bm_daniel",
+    "Oh, hi, Katie! Nice to meet you. I'm Ben."
+   ],
+   [
+    "bf_lily",
+    "Nice to meet you too, Ben."
+   ],
+   [
+    "bf_emma",
+    "Number three."
+   ],
+   [
+    "bf_isabella",
+    "Hello, Mr Hill. How are you?"
+   ],
+   [
+    "bm_lewis",
+    "I'm fine, thank you. And you?"
+   ],
+   [
+    "bf_isabella",
+    "Fine, thanks."
+   ],
+   [
+    "bf_emma",
+    "Number four."
+   ],
+   [
+    "bf_alice",
+    "Good evening! Come in, welcome to the party."
+   ],
+   [
+    "bm_george",
+    "Good evening! Thank you very much."
+   ],
+   [
+    "bf_emma",
+    "Number five."
+   ],
+   [
+    "bm_daniel",
+    "Bye, Jack! See you tomorrow!"
+   ],
+   [
+    "bm_george",
+    "Yes, see you tomorrow, Ben!"
+   ]
+  ]
+ },
+ {
+  "label": "Listening 2 — Spell your name (5 people)",
+  "src": "audio/course/c1l1-listening-2.mp3",
+  "lines": [
+   [
+    "bf_emma",
+    "Listening two. Spell your name. Listen and write the names."
    ],
    [
     "af_bella",
@@ -94,12 +172,12 @@
   ]
  },
  {
-  "label": "Listening 2 — Numbers (5 people)",
-  "src": "audio/course/b1l1-listening-2.mp3",
+  "label": "Listening 3 — Numbers (5 people)",
+  "src": "audio/course/c1l1-listening-3.mp3",
   "lines": [
    [
     "bf_emma",
-    "Listening two. Listen and circle the right number."
+    "Listening three. Listen and circle the right number."
    ],
    [
     "bf_emma",
@@ -140,68 +218,6 @@
    [
     "af_bella",
     "Our school is really big. We've got ninety computers!"
-   ]
-  ]
- },
- {
-  "label": "Listening 3 — A phone call to an English school",
-  "src": "audio/course/b1l1-listening-3.mp3",
-  "lines": [
-   [
-    "bf_emma",
-    "Listening three. A phone call. Listen and complete."
-   ],
-   [
-    "af_bella",
-    "Hello, Sunrise English School."
-   ],
-   [
-    "bf_isabella",
-    "Hello. I'd like English lessons for my son, please."
-   ],
-   [
-    "af_bella",
-    "Of course. What's his name?"
-   ],
-   [
-    "bf_isabella",
-    "His name's Daniel Brooks."
-   ],
-   [
-    "af_bella",
-    "And how do you spell Brooks?"
-   ],
-   [
-    "bf_isabella",
-    "B. R. double O. K. S."
-   ],
-   [
-    "af_bella",
-    "Thank you. How old is Daniel?"
-   ],
-   [
-    "bf_isabella",
-    "He's twelve."
-   ],
-   [
-    "af_bella",
-    "Twelve, OK. And what's your phone number?"
-   ],
-   [
-    "bf_isabella",
-    "It's oh double seven, four double five, two oh one."
-   ],
-   [
-    "af_bella",
-    "Oh double seven, four double five, two oh one. Lovely. His lesson is in room fourteen."
-   ],
-   [
-    "bf_isabella",
-    "Room fourteen. Thank you very much. Goodbye."
-   ],
-   [
-    "af_bella",
-    "Goodbye, and thank you for calling!"
    ]
   ]
  }

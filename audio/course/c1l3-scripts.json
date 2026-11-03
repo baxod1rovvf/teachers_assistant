@@ -1,7 +1,7 @@
 [
  {
   "label": "Listening 1 — What's in your bag?",
-  "src": "audio/course/b1l4-listening-1.mp3",
+  "src": "audio/course/c1l3-listening-1.mp3",
   "lines": [
    [
     "bf_emma",
@@ -51,7 +51,7 @@
  },
  {
   "label": "Listening 2 — Lost and found",
-  "src": "audio/course/b1l4-listening-2.mp3",
+  "src": "audio/course/c1l3-listening-2.mp3",
   "lines": [
    [
     "bf_emma",
@@ -96,32 +96,52 @@
   ]
  },
  {
-  "label": "Listening 3 — Follow the teacher",
-  "src": "audio/course/b1l4-listening-3.mp3",
+  "label": "Listening 3 — What do they do?",
+  "src": "audio/course/c1l3-listening-3.mp3",
   "lines": [
    [
     "bf_emma",
-    "Listening three. Follow the teacher. What do the students do?"
+    "Listening three. What do they do? Circle the right answer."
    ],
    [
-    "bf_alice",
-    "Good morning, everyone. Please stand up."
+    "bf_emma",
+    "Number one."
    ],
    [
-    "bf_alice",
-    "Thank you. Sit down, please, and look at the board."
+    "bm_george",
+    "My dad is a doctor. He works in a big hospital."
    ],
    [
-    "bf_alice",
-    "Open your books at page twelve. That's page twelve."
+    "bf_emma",
+    "Number two."
    ],
    [
-    "bf_alice",
-    "Take your notebooks and write the new words in them."
+    "af_nicole",
+    "I'm a teacher. I teach English at a school in London."
    ],
    [
-    "bf_alice",
-    "Good! Next, work in pairs. Ask your partner: what's this in English?"
+    "bf_emma",
+    "Number three."
+   ],
+   [
+    "bm_daniel",
+    "My uncle is a farmer. He's got lots of cows and sheep."
+   ],
+   [
+    "bf_emma",
+    "Number four."
+   ],
+   [
+    "bf_isabella",
+    "My mum is a pilot. She flies to Japan and the USA."
+   ],
+   [
+    "bf_emma",
+    "Number five."
+   ],
+   [
+    "bm_lewis",
+    "I'm a cook. I work in a small restaurant in Paris."
    ]
   ]
  }

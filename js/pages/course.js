@@ -62,7 +62,7 @@ function renderCourse() {
     const next = stops.find(s => !taught[s.id]);
     html += '<div class="course-head"><span class="course-emoji">' + course.emoji + '</span><div><h3>' + escapeForHtml(course.title) + '</h3>' +
       '<div class="course-sub">' + course.blocks.length + ' blocks · ' + stops.length + ' meetings' +
-      (gid ? ' · <b>' + done + ' of ' + stops.length + ' done</b>' + (next ? ' · next: ' + escapeForHtml(next.kind === 'lesson' ? 'Block ' + next.blockNo + ', Lesson ' + next.no : 'Block ' + next.blockNo + ' ' + next.lesson.title.toLowerCase()) : ' · 🎉 finished!') : '') +
+      (gid ? ' · <b>' + done + ' of ' + stops.length + ' done</b>' + (next ? ' · next: ' + escapeForHtml('Block ' + next.blockNo + ', ' + (next.kind === 'lesson' ? 'Lesson ' + next.no : next.lesson.title)) : ' · 🎉 finished!') : '') +
       '</div></div></div>';
     if (gid) html += '<div class="course-progress" role="progressbar" aria-valuemin="0" aria-valuemax="' + stops.length + '" aria-valuenow="' + done + '"><span style="width:' + Math.round(done / stops.length * 100) + '%"></span></div>';
     html += '<div class="course-blocks">';
@@ -77,7 +77,7 @@ function renderCourse() {
           const ready = !!(s.lesson.deck || s.lesson.slides);
           const cls = ['course-stop', 'k-' + s.kind, ready ? 'ready' : 'soon', taught[s.id] ? 'done' : '', next === s && gid ? 'next' : ''].filter(Boolean).join(' ');
           const badge = s.kind === 'lesson' ? String(s.no) : s.lesson.emoji;
-          return '<li><button type="button" class="' + cls + '" data-stop="' + s.id + '" onclick="courseOpen(' + jsAttr(s.id) + ')" title="' + escapeForHtml(s.lesson.title) + '">' +
+          return '<li><button type="button" class="' + cls + '" data-stop="' + s.id + '" onclick="courseOpen(' + jsAttr(s.id) + ')" title="' + escapeForHtml(s.lesson.title + (s.lesson.sub ? ' · ' + s.lesson.sub : '')) + '">' +
             '<span class="course-dot">' + (taught[s.id] ? '✓' : badge) + '</span>' +
             '<span class="course-stop-title">' + (s.kind === 'lesson' ? s.lesson.emoji + ' ' : '') + escapeForHtml(s.lesson.title) + '</span>' +
             (ready ? '<span class="course-ready-tag">Ready</span>' : '') + '</button></li>';
@@ -112,6 +112,7 @@ function renderCourseLesson(wrap, stop) {
     '<div class="course-lesson-head" style="--bc:' + stop.block.color + '"><span class="course-lesson-emoji">' + l.emoji + '</span><div>' +
     '<div class="course-block-no">' + escapeForHtml(where) + ' · ' + escapeForHtml(stop.block.title) + '</div>' +
     '<h3>' + escapeForHtml(l.title) + '</h3>' +
+    (l.sub ? '<div class="course-lesson-sub">' + escapeForHtml(l.sub) + '</div>' : '') +
     (l.skills ? '<div class="course-skill-chips">' + l.skills.map(k => '<span>' + COURSE_SKILLS[k].emoji + ' ' + COURSE_SKILLS[k].label + '</span>').join('') + '</div>' : '') +
     '</div>' +
     (g ? '<button type="button" class="mini-btn course-taught-btn' + (taughtAt ? ' solid' : '') + '" onclick="courseToggleTaught(' + jsAttr(stop.id) + ')">' +

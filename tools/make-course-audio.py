@@ -7,7 +7,7 @@
 #   https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-whisper-base.en.tar.bz2
 # and run with ASR_DIR=<that folder>: every line is checked by a speech recogniser and made again (other speed) until it is
 # heard right; lines still not right are printed with ⚠️ (one-word lines garble — write full sentences).
-# Run:  ./venv/bin/python tools/make-course-audio.py <folder with kokoro.onnx + voices.bin> audio/course/b1l1-scripts.json audio/course
+# Run:  ./venv/bin/python tools/make-course-audio.py <folder with kokoro.onnx + voices.bin> audio/course/c1l1-scripts.json audio/course
 # Spelled names (a line like "E. double M. A.") are said as "That's E, double M, A." with the pauses between letters stretched.
 # A scripts file: [{ "src": "audio/course/….mp3", "lines": [[voice, text], …] }] — bf_* / bm_* are British voices; letters are
 # written "K. A. M." so each is said on its own. Needs ffmpeg. Keep the "text" in course-data.js's `listen` in step.

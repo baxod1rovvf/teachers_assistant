@@ -2655,6 +2655,7 @@ button:focus-visible, a:focus-visible, .picker-card:focus-visible, input:focus-v
 .course-lesson-head > div { flex: 1; min-width: 220px; }
 .course-lesson-emoji { font-size: 2.6rem; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; border-radius: 20px; background: var(--bc); border: 2.5px solid var(--line); box-shadow: 0 4px 0 var(--line); transform: rotate(-5deg); }
 .course-lesson-head h3 { font-family: 'Fredoka', sans-serif; font-size: 1.7rem; margin: 2px 0 6px; }
+.course-lesson-sub { font-weight: 700; color: var(--muted, inherit); opacity: .85; margin: -2px 0 8px; }
 .course-skill-chips { display: flex; gap: 6px; flex-wrap: wrap; }
 .course-skill-chips span { font-size: .8rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--surface); border: 2px solid var(--line); }
 .course-goals { margin-bottom: 18px; }
