@@ -17,6 +17,7 @@
 import os, sys, re, json, subprocess, numpy as np, soundfile as sf
 from kokoro_onnx import Kokoro
 model_dir, spec_file, out_dir = sys.argv[1], sys.argv[2], sys.argv[3]
+ONLY = sys.argv[4].split(',') if len(sys.argv) > 4 else None     # e.g. "1" or "2,3": remake only these levels
 def timed_model(folder):
     # Kokoro works out how long each sound lasts but the published file doesn't report it. Adding that number as an
     # output (once, saved next to the model; needs `pip install onnx`) tells us exactly where each spelled letter ends.
@@ -53,28 +54,32 @@ def letters_of(text):
     t = re.sub(r"^\W*(so\W+)?(that'?s|it'?s|ok)\W*", '', text.strip(), flags=re.I).upper()
     t = re.sub(r'DOUBLE\W*([A-Z])', r'\1\1', t)
     return re.sub(r'[^A-Z]', '', t)
-def spell_even(letters, voice, speed, gap=0.45, first_gap=0.5):
-    """"That's T, H, O, …" said in one go (letters said alone come out garbled), then cut exactly after every comma using
-    the model's timings and put back together with the same pause between all letters. Before 2026-11-04 the pauses were
-    stretched where the sound happened to dip, so some letters ran together: "tho … m … pso … n" (teacher)."""
-    a, sr, t = k.create_timed("That's " + ', '.join(letters) + '.', voice=voice, speed=speed, lang='en-us', clause_pause=0)
-    cuts = [next(x for x in t if x.phoneme == ' ').start] + [x.end for x in t if x.phoneme == ',']
-    b = [0] + [int(c * sr) for c in cuts] + [len(a)]
+def spell_slow(letters, voice, speed, gap=0.7, first_gap=0.5):
+    """Each letter is said as the last word of its own little sentence, "That's T." — a letter inside a list is said in a
+    quarter of a second and sounded cut off (teacher, 2026-11-04: "not spelled to the end … should be slow and relaxed"),
+    while the last word of a sentence is said in full. The model's timings show where "That's " ends; the letter is kept,
+    and the letters are joined with a relaxed pause (~1.3 s from one letter to the next, like a real exam recording)."""
     out, letters_from = [], None
-    for j in range(len(b) - 1):
-        seg = a[b[j]:b[j + 1]].copy()
-        idx = np.where(np.abs(seg) > 0.015 * np.abs(a).max())[0]
-        if len(idx): seg = seg[max(0, idx[0] - int(sr * .01)):idx[-1] + int(sr * .03)]
-        f = min(len(seg) // 4, int(sr * 0.01))
-        if f: seg[:f] *= np.linspace(0, 1, f); seg[-f:] *= np.linspace(1, 0, f)
-        if j == 1: letters_from = sum(len(p) for p in out)
-        out += [seg, np.zeros(int(sr * (first_gap if j == 0 else gap)), dtype=a.dtype)]
+    for i, letter in enumerate(letters):
+        a, sr, t = k.create_timed("That's " + letter + '.', voice=voice, speed=speed, lang='en-us', clause_pause=0)
+        c = int(next(x for x in t if x.phoneme == ' ').start * sr)
+        loud = 0.004 * np.abs(a).max()
+        def clean(seg):
+            idx = np.where(np.abs(seg) > loud)[0]
+            seg = seg[max(0, idx[0] - int(sr * .015)):idx[-1] + int(sr * .06)].copy()
+            f, g = int(sr * 0.012), int(sr * 0.04)
+            seg[:f] *= np.linspace(0, 1, f); seg[-g:] *= np.linspace(1, 0, g)
+            return seg
+        if i == 0:
+            out += [clean(a[:c]), np.zeros(int(sr * first_gap), dtype=a.dtype)]
+            letters_from = sum(len(p) for p in out)
+        out += [clean(a[c:]), np.zeros(int(sr * gap), dtype=a.dtype)]
     return np.concatenate(out[:-1]), sr, letters_from
 def best_spelling(letters, voice):
     want = ''.join(l[-1] * (2 if l.startswith('double') else 1) for l in letters)
     first = None
-    for speed in [0.85, 0.8, 0.9, 0.75]:
-        audio, sr, cut = spell_even(letters, voice, speed)
+    for speed in [0.8, 0.75, 0.85, 0.7]:
+        audio, sr, cut = spell_slow(letters, voice, speed)
         if first is None: first = (audio, sr)
         if not ASR: return audio, sr
         h = heard(audio[cut:], sr)                     # the letters alone (a recogniser adds words after a lone "That's")
@@ -131,7 +136,8 @@ def best_line(text, voice, speed):
     print('   ⚠️ line', repr(text), '— heard', repr(h))
     return first
 
-for item in spec:
+for n, item in enumerate(spec, 1):
+    if ONLY and str(n) not in ONLY: continue
     parts, sr = [], 24000
     for i, line in enumerate(item['lines']):
         voice, text = line[0], line[1]
@@ -140,7 +146,7 @@ for item in spec:
         if letters:
             # Spelling (teacher, 2026-11-03: "it should be iy double em ey", and slow for beginners). A letter said on its own
             # comes out garbled, so the whole spelling is one sentence — "That's E, double M, A." — and then the short
-            # letters are spaced evenly, 0.45 s apart (spell_even).
+            # letters are said in full, one by one, with a relaxed pause (spell_slow).
             audio, sr = best_spelling(letters, voice)
             parts.append(audio)
             parts.append(np.zeros(int(sr * max(1.2, write_pause)), dtype=audio.dtype))
