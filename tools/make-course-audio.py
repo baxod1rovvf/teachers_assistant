@@ -1,4 +1,4 @@
-# Makes the Course's listening recordings (audio/course/*.mp3) with Kokoro — an open voice model (Apache-2.0).
+# Makes the skills course's listening recordings (audio/skills/*.mp3) with Kokoro — an open voice model (Apache-2.0).
 # Setup (once, outside the project):
 #   python3 -m venv venv && ./venv/bin/pip install kokoro-onnx soundfile
 #   curl -LO https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.int8.onnx  (save as kokoro.onnx)
@@ -7,10 +7,10 @@
 #   https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-whisper-base.en.tar.bz2
 # and run with ASR_DIR=<that folder>: every line is checked by a speech recogniser and made again (other speed) until it is
 # heard right; lines still not right are printed with ⚠️ (one-word lines garble — write full sentences).
-# Run:  ./venv/bin/python tools/make-course-audio.py <folder with kokoro.onnx + voices.bin> audio/course/c1l1-scripts.json audio/course
+# Run:  ./venv/bin/python tools/make-course-audio.py <folder with kokoro.onnx + voices.bin> audio/skills/elementary-scripts.json audio/skills
 # Spelled names (a line like "E. double M. A.") are said as "That's E, double M, A." with the pauses between letters stretched.
-# A scripts file: [{ "src": "audio/course/….mp3", "lines": [[voice, text], …] }] — bf_* / bm_* are British voices; letters are
-# written "K. A. M." so each is said on its own. Needs ffmpeg. Keep the "text" in course-data.js's `listen` in step.
+# A scripts file: [{ "src": "audio/skills/….mp3", "lines": [[voice, text], …] }] — bf_* / bm_* are British voices; letters are
+# written "K. A. M." so each is said on its own. Needs ffmpeg. Keep `transcript` in js/skills-data.js in step.
 # Makes the course's listening audio with Kokoro (Apache-2.0): one voice per speaker, pauses between lines,
 # the stress of -teen numbers on "-TEEN" (the lesson teaches thirTEEN vs THIRty).
 import os, sys, re, json, subprocess, numpy as np, soundfile as sf

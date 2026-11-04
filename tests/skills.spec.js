@@ -1,6 +1,6 @@
 // The Skills course (2026-11-04): band rules shared by the student page and Loom.
 const { test, expect } = require('@playwright/test');
-const { prepare } = require('./support/app');
+const { prepare, watchErrors, hideNotices } = require('./support/app');
 
 test.describe('bands', () => {
   test('listening/reading bands, writing estimate, overall and CEFR follow the rules', async ({ page, context }) => {
@@ -498,3 +498,93 @@ test.describe('speaking', () => {
   });
 });
 
+
+test.describe('course page', () => {
+  // The links are absolute on the real site (https); the tests run on http, so pretend.
+  const PRETEND_HTTPS = () => { window.skAppUrl = 'https://example.github.io/teachers_assistant/'; };
+  const open = async (page, context, opts) => {
+    await prepare(context, opts);
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    const errors = watchErrors(page);
+    await page.goto('/course.html');
+    await page.waitForTimeout(1000);
+    await hideNotices(page);
+    await page.addStyleTag({ content: '#taNoticeStack { display: none !important; }' });   // notes that come later (old files…)
+    return errors;
+  };
+
+  test('the Course page: four skills, 10 levels each, Try opens a preview', async ({ page, context }) => {
+    const errors = await open(page, context);
+    const cards = page.locator('.sk-skill-card');
+    await expect(cards).toHaveCount(4);
+    await expect(cards).toHaveText([/Listening/, /Reading/, /Writing/, /Speaking/]);
+    await cards.filter({ hasText: 'Listening' }).click();
+    await expect(page.locator('#courseWrap')).toContainText('Elementary');
+    const tiles = page.locator('.sk-level-tile');
+    await expect(tiles).toHaveCount(10);
+    await expect(tiles.nth(0)).toContainText('Level 1 · Meeting people');
+    await expect(tiles.nth(0).getByRole('button', { name: '▶️ Try' })).toBeVisible();
+    for (let i = 1; i < 10; i++) {
+      await expect(tiles.nth(i)).toContainText('Coming soon');
+      await expect(tiles.nth(i).getByRole('button', { name: '▶️ Try' })).toHaveCount(0);
+    }
+    const [popup] = await Promise.all([page.waitForEvent('popup'), tiles.nth(0).getByRole('button', { name: '▶️ Try' }).click()]);
+    await popup.waitForURL(/skill\.html\?s=listening&lv=1&preview=1/);
+    // the chosen skill is remembered on this device; ← All skills goes back
+    await page.reload();
+    await expect(page.locator('.sk-level-tile')).toHaveCount(10);
+    await page.getByRole('button', { name: '← All skills' }).click();
+    await expect(page.locator('.sk-skill-card')).toHaveCount(4);
+    expect(errors).toEqual([]);
+  });
+
+  test('Copy link makes one My Exercises item per level + skill + group', async ({ page, context }) => {
+    const errors = await open(page, context);
+    await page.evaluate(PRETEND_HTTPS);
+    await page.locator('.sk-skill-card', { hasText: 'Listening' }).click();
+    const tile = page.locator('.sk-level-tile').first();
+    await expect(tile.getByRole('button', { name: '📊 View Results' })).toHaveCount(0);
+    const before = await page.evaluate(() => getRecentExercises().length);
+    const group = await page.evaluate(() => getStudentGroups().find(g => g.id === skGroupId()));
+    await tile.getByRole('button', { name: '🔗 Copy link for ' + group.name }).click();
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(/^https:\/\/example\.github\.io\/teachers_assistant\/skill\.html\?s=listening&lv=1&c=[A-Z0-9]{6}$/);
+    const first = await page.evaluate(() => navigator.clipboard.readText());
+    const item = await page.evaluate(() => getRecentExercises()[0]);
+    expect(item).toMatchObject({ typeLabel: 'Listening course', groupId: group.id, title: 'Level 1 · Meeting people — Listening (' + group.name + ')', contentSummary: 'Level 1 · Listening' });
+    expect(first).toContain('&c=' + item.code);
+    expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skills_links')))).toEqual({ [group.id + '|listening|1']: item.uid });
+    await page.evaluate(() => navigator.clipboard.writeText(''));
+    await tile.getByRole('button', { name: /Copy link for/ }).click();
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(first);
+    expect(await page.evaluate(() => getRecentExercises().length)).toBe(before + 1);
+    expect(await page.evaluate(() => (window.__writes || []).filter(w => w.type === 'TA_SYNC:PLAY').length)).toBe(0);
+    await expect(tile.getByRole('button', { name: '📊 View Results' })).toBeVisible();
+    // Speaking: just the link, no My Exercises item and no results
+    await page.getByRole('button', { name: '← All skills' }).click();
+    await page.locator('.sk-skill-card', { hasText: 'Speaking' }).click();
+    const sp = page.locator('.sk-level-tile').first();
+    await sp.getByRole('button', { name: /Copy link for/ }).click();
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe('https://example.github.io/teachers_assistant/skill.html?s=speaking&lv=1');
+    expect(await page.evaluate(() => getRecentExercises().length)).toBe(before + 1);
+    await expect(sp.getByRole('button', { name: '📊 View Results' })).toHaveCount(0);
+    expect(errors).toEqual([]);
+  });
+
+  test('without groups the tiles ask for one; on a phone nothing scrolls sideways', async ({ page, context }) => {
+    const errors = await open(page, context, { storage: { ta_student_groups: '[]' } });
+    await page.setViewportSize({ width: 390, height: 800 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+    await page.locator('.sk-skill-card', { hasText: 'Reading' }).click();
+    await expect(page.locator('.sk-level-tile').first()).toContainText('Add a group on the Students page first');
+    await expect(page.getByRole('button', { name: /Copy link for/ })).toHaveCount(0);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+    expect(errors).toEqual([]);
+  });
+
+  test('old Course data is gone', async ({ page, context }) => {
+    await open(page, context);
+    expect(await page.evaluate(() => [typeof COURSE_BEGINNER, typeof courseTeach, typeof TA_COURSES])).toEqual(['undefined', 'undefined', 'undefined']);
+    expect((await page.request.get('/audio/course/c1l1-scripts.json')).status()).toBe(404);
+    expect((await page.request.get('/js/course-data.js')).status()).toBe(404);
+  });
+});
