@@ -57,7 +57,7 @@
       ["bm_george", "Could you spell the name of the road for me?"],
       ["af_heart", "H. A. M. P. T. O. N."],
       ["bm_george", "Thank you. And what's the best phone number for you?"],
-      ["af_heart", "It's oh seven nine four six, double five two, oh one eight."],
+      ["af_heart", "It's oh seven seven double oh, nine double oh, four five two."],
       ["bm_george", "Perfect. For you and Callum together, it's thirty pounds a month."],
       ["af_heart", "That sounds fine. Do we need anything for the first lesson?"],
       ["bm_george", "Yes, please bring a photo of Callum for his membership card."],
@@ -90,7 +90,7 @@
       ["bm_george", "Can I come and see the room this week?"],
       ["af_heart", "Yes, of course. Come on Thursday evening, after six o'clock."],
       ["bm_george", "Thursday is good for me. What's your phone number, in case I'm late?"],
-      ["af_heart", "My mobile number is oh seven eight one two, three four double six, nine oh."],
+      ["af_heart", "My mobile number is oh seven seven double oh, nine double oh, seven one eight."],
       ["bm_george", "Thank you very much, Mrs Fletcher. See you on Thursday."]
     ]
   },
@@ -155,7 +155,7 @@
       ["af_heart", "That's a beautiful name. So the total is one hundred and twenty pounds."],
       ["bm_george", "That's fine. Can I pay on the day?"],
       ["af_heart", "Yes, you can. Can I have a phone number, please?"],
-      ["bm_george", "Sure. It's oh seven nine double one, one two three, four five six."],
+      ["bm_george", "Sure. It's oh seven seven double oh, nine double oh, three six five."],
       ["af_heart", "Thank you, Mr Barton. We will see you and Rosie on Sunday!"]
     ]
   }

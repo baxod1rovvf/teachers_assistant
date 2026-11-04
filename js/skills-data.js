@@ -161,8 +161,8 @@ var TA_SKILLS = {
             { q: 'Sport for the son: _____', a: ['swimming'] },
             { q: 'Lessons on: _____ mornings', a: ['Saturday', 'Saturdays'] },
             { q: 'Address: 18 _____ Road', a: ['Hampton'] },
-            { q: 'Phone number: _____', a: ['07946 552 018', '07946552018'] },
-            { q: 'Cost: £_____ a month', a: ['30', 'thirty', '30.00'] },
+            { q: 'Phone number: _____', a: ['07700 900 452', '07700900452'] },
+            { q: 'Cost: £_____ a month', a: ['30', 'thirty', '30.00', '£30'] },
             { q: 'For the first lesson, bring a _____', a: ['photo', 'photograph', 'photo of Callum'] }
           ],
           words: [
@@ -200,7 +200,7 @@ var TA_SKILLS = {
             { who: 'Man', text: 'Could you spell the name of the road for me?', answers: [] },
             { who: 'Woman', text: "That's H, A, M, P, T, O, N.", answers: [7] },
             { who: 'Man', text: "Thank you. And what's the best phone number for you?", answers: [] },
-            { who: 'Woman', text: "It's oh seven nine four six, double five two, oh one eight.", answers: [8] },
+            { who: 'Woman', text: "It's oh seven seven double oh, nine double oh, four five two.", answers: [8] },
             { who: 'Man', text: "Perfect. For you and Callum together, it's thirty pounds a month.", answers: [9] },
             { who: 'Woman', text: 'That sounds fine. Do we need anything for the first lesson?', answers: [] },
             { who: 'Man', text: 'Yes, please bring a photo of Callum for his membership card.', answers: [10] },
@@ -297,7 +297,7 @@ var TA_SKILLS = {
             { q: 'Shares the bathroom with _____ other people', a: ['2', 'two'] },
             { q: 'At the end of the street: a _____', a: ['park', 'big park'] },
             { q: 'Can see the room on _____ evening', a: ['Thursday'] },
-            { q: "Mrs Fletcher's mobile: _____", a: ['07812 346 690', '07812346690'] }
+            { q: "Mrs Fletcher's mobile: _____", a: ['07700 900 718', '07700900718'] }
           ],
           words: [
             { w: 'advert', m: 'a short text that tells people about something to buy or rent', ex: "I'm calling about the room in your advert." },
@@ -334,7 +334,7 @@ var TA_SKILLS = {
             { who: 'Man', text: 'Can I come and see the room this week?', answers: [] },
             { who: 'Woman', text: "Yes, of course. Come on Thursday evening, after six o'clock.", answers: [9] },
             { who: 'Man', text: "Thursday is good for me. What's your phone number, in case I'm late?", answers: [9] },
-            { who: 'Woman', text: 'My mobile number is oh seven eight one two, three four double six, nine oh.', answers: [10] },
+            { who: 'Woman', text: 'My mobile number is oh seven seven double oh, nine double oh, seven one eight.', answers: [10] },
             { who: 'Man', text: 'Thank you very much, Mrs Fletcher. See you on Thursday.', answers: [] }
           ]
         },
@@ -572,7 +572,7 @@ var TA_SKILLS = {
             { q: 'For a boy who can\'t eat cheese: _____ sandwiches', a: ['chicken'] },
             { q: 'Name on the cake: _____', a: ['Rosie'] },
             { q: 'Total price: £_____', a: ['120', '£120', '120.00', 'one hundred and twenty', 'a hundred and twenty'] },
-            { q: 'Phone number: _____', a: ['07911 123 456', '07911123456'] }
+            { q: 'Phone number: _____', a: ['07700 900 365', '07700900365'] }
           ],
           words: [
             { w: 'order', m: 'to ask for food or drink that you want to buy', ex: "I'd like to order some food for a party." },
@@ -611,7 +611,7 @@ var TA_SKILLS = {
             { who: 'Woman', text: "That's a beautiful name. So the total is one hundred and twenty pounds.", answers: [9] },
             { who: 'Man', text: "That's fine. Can I pay on the day?", answers: [] },
             { who: 'Woman', text: 'Yes, you can. Can I have a phone number, please?', answers: [] },
-            { who: 'Man', text: "Sure. It's oh seven nine double one, one two three, four five six.", answers: [10] },
+            { who: 'Man', text: "Sure. It's oh seven seven double oh, nine double oh, three six five.", answers: [10] },
             { who: 'Woman', text: 'Thank you, Mr Barton. We will see you and Rosie on Sunday!', answers: [] }
           ]
         },
