@@ -2,7 +2,7 @@
 // - Listening and Reading: the score is scaled to 40 (round(correct / total x 40)), then the IELTS table below.
 // - Writing estimate: 3 + 3 x (words / minimum, at most 1) + 3 x (1 - mistakes per 100 words / 10, at least 0),
 //   rounded to the nearest half band, kept between 1 and 9. If the grammar check didn't run, the last part is 1.5.
-//   The teacher's own mark replaces this estimate.
+//   A blank writing (0 words) is band 1. The teacher's own mark replaces this estimate.
 // - Overall: the average of the skills present, rounded like IELTS (x.25 goes up to x.5, x.75 to the next whole band).
 // - CEFR from Overall: 8.5-9 C2 / 7-8 C1 / 5.5-6.5 B2 / 4-5 B1 / 3-3.5 A2 / below that A1.
 
@@ -18,6 +18,7 @@ function skBand(correct, total) {
 }
 
 function skWritingBand(words, minWords, mistakes, checked) {
+  if (!(words > 0)) return 1;   // a blank writing (e.g. the time ran out on an empty box)
   var lengthPart = minWords > 0 ? Math.min(1, words / minWords) : 1;
   var grammarPart = 1.5;
   if (checked) {
