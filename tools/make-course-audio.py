@@ -33,9 +33,21 @@ k = Kokoro(timed_model(model_dir), model_dir + '/voices.bin')
 assert k.has_timings, 'the model does not report timings'
 spec = json.load(open(spec_file))
 SPELLING = re.compile(r'^\s*(?:(?:double )?[A-Z]\.\s*)+$')            # "E. double M. A."
+DIGIT = r"(?:double oh|double \w+|oh|zero|one|two|three|four|five|six|seven|eight|nine)"
+PHONE = re.compile(DIGIT + r"(?:,? " + DIGIT + r"){5,}")
+def slow_phone(text):
+    """A phone number slowly, like a real exam recording (teacher, 2026-11-04): a short pause after every digit and a longer
+    one after every group — "oh seven seven double oh, nine double oh, …" → "oh, seven, seven, double oh. nine, double oh. …"."""
+    def fix(m):
+        groups = [g.strip() for g in m.group(0).split(',')]
+        return '. '.join(', '.join(re.findall(DIGIT, g)) for g in groups)
+    return PHONE.sub(fix, text)
 def say(text, voice, speed):
+    phone = bool(PHONE.search(text))
+    if phone: text = slow_phone(text)
     ph = k.tokenizer.phonemize(text, 'en-us')
     ph = re.sub(r'ˈ([^\sˈˌ,.!?]*?)tiːn', r'\1tˈiːn', ph)                # thirTEEN, fourTEEN…
+    if phone: return k.create(ph, voice=voice, speed=speed, lang='en-us', is_phonemes=True, clause_pause=0.3, sentence_pause=0.8)
     return k.create(ph, voice=voice, speed=speed, lang='en-us', is_phonemes=True)
 # Optional check by ear (a speech recogniser): set ASR_DIR to a sherpa-onnx Whisper folder (base.en). Each spelling is
 # made in a few slightly different ways until the recogniser hears exactly the right letters.
@@ -54,26 +66,27 @@ def letters_of(text):
     t = re.sub(r"^\W*(so\W+)?(that'?s|it'?s|ok)\W*", '', text.strip(), flags=re.I).upper()
     t = re.sub(r'DOUBLE\W*([A-Z])', r'\1\1', t)
     return re.sub(r'[^A-Z]', '', t)
-def spell_slow(letters, voice, speed, gap=0.7, first_gap=0.5):
-    """Each letter is said as the last word of its own little sentence, "That's T." — a letter inside a list is said in a
+def spell_slow(letters, voice, speed, gap=0.7, first_gap=0.9):
+    """Each letter is said as the last word of its own little sentence, "The letter T." — a letter inside a list is said in a
     quarter of a second and sounded cut off (teacher, 2026-11-04: "not spelled to the end … should be slow and relaxed"),
-    while the last word of a sentence is said in full. The model's timings show where "That's " ends; the letter is kept,
-    and the letters are joined with a relaxed pause (~1.3 s from one letter to the next, like a real exam recording)."""
-    out, letters_from = [], None
-    for i, letter in enumerate(letters):
-        a, sr, t = k.create_timed("That's " + letter + '.', voice=voice, speed=speed, lang='en-us', clause_pause=0)
-        c = int(next(x for x in t if x.phoneme == ' ').start * sr)
-        loud = 0.004 * np.abs(a).max()
-        def clean(seg):
-            idx = np.where(np.abs(seg) > loud)[0]
-            seg = seg[max(0, idx[0] - int(sr * .015)):idx[-1] + int(sr * .06)].copy()
-            f, g = int(sr * 0.012), int(sr * 0.04)
-            seg[:f] *= np.linspace(0, 1, f); seg[-g:] *= np.linspace(1, 0, g)
-            return seg
-        if i == 0:
-            out += [clean(a[:c]), np.zeros(int(sr * first_gap), dtype=a.dtype)]
-            letters_from = sum(len(p) for p in out)
-        out += [clean(a[c:]), np.zeros(int(sr * gap), dtype=a.dtype)]
+    while the last word of a sentence is said in full. ("That's S." ran the two s sounds together — S sounded like F.)
+    The model's timings show where the letter starts; it is kept with its quiet ending (the hiss of S), and the letters
+    are joined with a relaxed pause (~1.3 s from one letter to the next, like a real exam recording). "That's" comes first,
+    then a calm pause before the first letter."""
+    def clean(seg, sr, loud):
+        idx = np.where(np.abs(seg) > loud)[0]
+        seg = seg[max(0, idx[0] - int(sr * .015)):idx[-1] + int(sr * .12)].copy()
+        f, g = int(sr * 0.012), int(sr * 0.03)
+        seg[:f] *= np.linspace(0, 1, f); seg[-g:] *= np.linspace(1, 0, g)
+        return seg
+    a, sr, t = k.create_timed("That's " + letters[0] + '.', voice=voice, speed=speed, lang='en-us', clause_pause=0)
+    c = int(next(x for x in t if x.phoneme == ' ').start * sr)
+    out = [clean(a[:c], sr, 0.004 * np.abs(a).max()), np.zeros(int(sr * first_gap), dtype=a.dtype)]
+    letters_from = sum(len(p) for p in out)
+    for letter in letters:
+        a, sr, t = k.create_timed('The letter ' + letter + '.', voice=voice, speed=speed, lang='en-us', clause_pause=0)
+        c = int([x for x in t if x.phoneme == ' '][1].start * sr)
+        out += [clean(a[c:], sr, 0.0015 * np.abs(a).max()), np.zeros(int(sr * gap), dtype=a.dtype)]
     return np.concatenate(out[:-1]), sr, letters_from
 def best_spelling(letters, voice):
     want = ''.join(l[-1] * (2 if l.startswith('double') else 1) for l in letters)
@@ -154,11 +167,12 @@ for n, item in enumerate(spec, 1):
         # numbers ("oh nine one, double five…") a little slower than the rest
         # Like a real exam recording (teacher's sample, 2026-11-04): normal speed, quick turns between speakers, and a
         # real pause after each answer so students can write. Phone numbers a little slower.
-        speed = 0.8 if re.search(r'\b(oh|double)\b', text) else 0.95
+        speed = 0.75 if PHONE.search(text) else 0.95
         if text.rstrip().endswith('!'): speed += 0.05                 # excited lines a little livelier
         audio, sr = best_line(text, voice, speed)
         parts.append(audio)
         gap = 2.0 if i == 0 else max(0.5, write_pause)
+        if i + 1 < len(item['lines']) and SPELLING.match(item['lines'][i + 1][1]): gap = max(gap, 1.0)   # don't rush into a spelling
         parts.append(np.zeros(int(sr * gap), dtype=audio.dtype))
     wav = out_dir + '/tmp.wav'
     sf.write(wav, np.concatenate(parts), sr)
