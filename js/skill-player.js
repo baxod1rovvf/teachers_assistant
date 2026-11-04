@@ -25,6 +25,10 @@ const SKILL_INFO = {
   speaking: { name: 'Speaking', emoji: '🗣️', type: 'Speaking course' }
 };
 const NAME_KEY = 'ta_skill_student';   // the student's name + ID on this device (not one of the app's keys)
+// A writing in progress: { text, startedAt, id } under ta_skill_draft|<code>|<level> (this page's own key, like NAME_KEY).
+// Phones often reload a tab that was in the background: the text comes back and the clock goes on from the first start.
+// Cleared once the writing is sent. A preview keeps nothing.
+const draftKey = () => 'ta_skill_draft|' + SK.code + '|' + SK.level;
 
 const params = new URLSearchParams(location.search);
 const SK = window.SK = {
@@ -36,8 +40,6 @@ const SK = window.SK = {
   studentId: ''
 };
 let startedAt = Date.now();
-// sent as builtAt: Loom's Results hide results "built" before a "Delete all results" (isExpiredResult in common.js)
-const SK_OPENED_AT = new Date().toISOString();
 let lastPayload = null;
 
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -310,8 +312,9 @@ function submit(level, content, info) {
   lastPayload = {
     v: 1, code: SK.code, type: info.type, title: `Level ${level.no} · ${level.theme} — ${info.name}`, level: level.no, skill: SK.skill,
     name: SK.name, studentId: SK.studentId, correct, total, score: Math.round(correct / total * 100), band: skBand(correct, total),
-    answers, timeSeconds: secs, timeDisplay: pad(Math.floor(secs / 60)) + ':' + pad(secs % 60), date: new Date().toISOString(), builtAt: SK_OPENED_AT
+    answers, timeSeconds: secs, timeDisplay: pad(Math.floor(secs / 60)) + ':' + pad(secs % 60), date: new Date().toISOString()
   };
+  lastPayload.builtAt = lastPayload.date;   // see submitWriting
   lastPayload.__id = skResultId(lastPayload);   // the same record on every try and on "Send again"
   const pct = correct / total;
   const cheer = pct >= 0.8 ? '🌟 Excellent work!' : pct >= 0.6 ? '👏 Well done!' : pct >= 0.4 ? '💪 Good try — keep going!' : '🌱 Keep practising — you can do it!';
@@ -347,7 +350,9 @@ async function sendNow() {
   if (!lastPayload) return;
   if (SK.preview) { setSend('preview'); return; }
   setSend('sending');
-  setSend(await skSendResult(lastPayload));
+  const state = await skSendResult(lastPayload);
+  if (state === 'ok' && lastPayload.skill === 'writing') clearDraft();   // the teacher has it: a reload starts afresh
+  setSend(state);
 }
 
 function analyze(content, isReading) {
@@ -468,9 +473,28 @@ function checkedTextHtml(text, matches) {
 const fmtClock = secs => { const s = Math.max(0, Math.ceil(secs)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); };
 
 let writeTimer = null;
+function readDraft() {
+  if (SK.preview) return null;
+  try {
+    const d = JSON.parse(localStorage.getItem(draftKey()) || 'null');
+    if (!d || typeof d !== 'object' || typeof d.startedAt !== 'number' || d.startedAt > Date.now()) return null;
+    if (d.id && String(d.id) !== String(SK.studentId)) return null;   // another student on this device
+    return { text: typeof d.text === 'string' ? d.text : '', startedAt: d.startedAt };
+  } catch (e) { return null; }
+}
+function saveDraft(text) {
+  if (SK.preview) return;
+  try { localStorage.setItem(draftKey(), JSON.stringify({ text, startedAt, id: SK.studentId })); } catch (e) { /* private window / full */ }
+}
+function clearDraft() {
+  if (SK.preview) return;
+  try { localStorage.removeItem(draftKey()); } catch (e) { /* ignore */ }
+}
+
 function showWriting(level) {
   const W = level.writing;
-  startedAt = Date.now();
+  const draft = readDraft();
+  startedAt = draft ? draft.startedAt : Date.now();
   const secondsPerMinute = window.__skFast ? 1 : 60;   // tests: a minute lasts one second
   const totalMs = W.minutes * secondsPerMinute * 1000;
   root().innerHTML = headerHtml(level) + `
@@ -493,13 +517,16 @@ function showWriting(level) {
     <div id="skAfter"></div>`;
   const box = $('#skWriteBox');
   const count = $('#skCount');
+  if (draft) box.value = draft.text;
+  else saveDraft('');   // the clock's start is kept even before the first word
   const updateCount = () => {
     const n = skCountWords(box.value);
     count.textContent = `${n} / ${W.minWords}–${W.maxWords} words`;
     count.classList.toggle('ok', n >= W.minWords && n <= W.maxWords);
     count.classList.toggle('over', n > W.maxWords);
   };
-  box.addEventListener('input', updateCount);
+  box.addEventListener('input', () => { updateCount(); if (!done) saveDraft(box.value); });
+  updateCount();
   let done = false;
   const finish = timeUp => {
     if (done) return;
@@ -517,6 +544,7 @@ function showWriting(level) {
   };
   clearInterval(writeTimer);
   writeTimer = setInterval(tick, secondsPerMinute === 1 ? 100 : 500);
+  tick();   // a kept clock may already be at 0: then it is sent now, as the timer would
   // leaving the page before Submit loses the text: ask first
   window.addEventListener('beforeunload', e => { if (!done && box.value.trim()) { e.preventDefault(); e.returnValue = ''; } });
   window.scrollTo(0, 0);
@@ -568,8 +596,11 @@ async function submitWriting(level, W, timeUp) {
     name: SK.name, studentId: SK.studentId, text, words, minWords: W.minWords, maxWords: W.maxWords,
     mistakes: check.matches.length,
     mistakeList: check.matches.map(m => ({ bad: text.slice(m.offset, m.offset + m.length), fix: m.replacements[0] || '', message: m.message })),
-    grammarChecked: check.ok, band, timeSeconds: secs, timeDisplay: fmtClock(secs), date: new Date().toISOString(), builtAt: SK_OPENED_AT
+    grammarChecked: check.ok, band, timeSeconds: secs, timeDisplay: fmtClock(secs), date: new Date().toISOString()
   };
+  // builtAt = the Submit time (= date): Loom hides results "built" before a "Delete all results" (isExpiredResult in common.js);
+  // a page opened before a reset and sent after it is a new result, in Results and the Course's results table alike.
+  lastPayload.builtAt = lastPayload.date;
   lastPayload.__id = skResultId(lastPayload);
   $('#skActions .sk-result').insertAdjacentHTML('afterbegin', `<div class="sk-score sk-band"><span class="sk-score-n">${band}</span>
     <span class="sk-score-t">Estimated band · ${words} words</span></div>`);

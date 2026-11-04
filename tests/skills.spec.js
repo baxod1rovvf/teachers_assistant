@@ -218,6 +218,8 @@ test.describe('student page', () => {
     expect(recs[0].answers[7].right).toBe(false);
     expect(recs[0].submittedAt).toBeTruthy();
     expect(recs[0].timeDisplay).toMatch(/^\d\d:\d\d$/);
+    // builtAt = the Submit time (a page opened before "Delete all results" and sent after it still counts)
+    expect(recs[0].builtAt).toBe(recs[0].date);
     // the answers stay on the screen; a second press sends nothing more
     await expect(boxes.nth(0)).toHaveValue('THOMPSON.');
     await expect(page.getByRole('button', { name: /Submit/ })).toHaveCount(0);
@@ -423,6 +425,7 @@ test.describe('writing', () => {
       { bad: 'have got', fix: 'have', message: 'Use "have" here.' },
       { bad: '<b>', fix: '<i>', message: 'A <b> tag & "quotes" must stay text.' }]);
     expect(recs[0].timeDisplay).toMatch(/^\d\d:\d\d$/);
+    expect(recs[0].builtAt).toBe(recs[0].date);
     await expect(page.locator('.sk-band')).toContainText(String(band));
     expect(errors).toEqual([]);
   });
@@ -477,6 +480,55 @@ test.describe('writing', () => {
     expect(recs).toHaveLength(1);
     expect(recs[0]).toMatchObject({ words: 0, text: '', skill: 'writing' });
     expect(recs[0].band).toBe(1);
+  });
+
+  test('writing: a reload keeps the text and the clock (phones reload background tabs); a sent writing clears it', async ({ page, context }) => {
+    await prepare(context);
+    await mockGrammar(context);
+    await page.addInitScript(() => { window.__skFast = 1; });   // a minute lasts a second: 15 minutes = 15 s
+    page.on('dialog', d => d.accept());
+    await start(page, '/skill.html?s=writing&lv=1&c=WRT789');
+    await page.locator('#skWriteBox').fill(TEXT);
+    const draft = await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skill_draft|WRT789|1')));
+    expect(draft.text).toBe(TEXT);
+    expect(typeof draft.startedAt).toBe('number');
+    await page.waitForTimeout(3000);
+    await page.reload();
+    await page.getByRole('button', { name: /Start/ }).click();   // name + ID are remembered
+    await expect(page.locator('#skWriteBox')).toHaveValue(TEXT);
+    const left = await page.locator('#skTimer b').textContent();
+    const mins = Number(left.split(':')[0]);
+    expect(mins, 'the clock went on: ' + left).toBeLessThanOrEqual(12);
+    expect(mins).toBeGreaterThanOrEqual(1);
+    await page.getByRole('button', { name: /Submit my writing/ }).click();
+    await expect(page.locator('.sk-send')).toContainText('Saved ✅');
+    expect(await page.evaluate(() => localStorage.getItem('ta_skill_draft|WRT789|1'))).toBeNull();
+    const recs = await sentRecords(page);
+    expect(recs).toHaveLength(1);
+    expect(recs[0]).toMatchObject({ text: TEXT, words: 45 });
+  });
+
+  test('writing: the time ran out while the page was away → it is sent at once, with the kept text', async ({ page, context }) => {
+    await prepare(context, { storage: { 'ta_skill_draft|WRT789|1': JSON.stringify({ text: 'My name is Anna.', startedAt: Date.now() - 3600000, id: '10001' }) } });
+    await mockGrammar(context);
+    await start(page, '/skill.html?s=writing&lv=1&c=WRT789');
+    await expect(page.locator('body')).toContainText("Time's up");
+    await expect(page.locator('.sk-send')).toContainText('Saved ✅');
+    const recs = await sentRecords(page);
+    expect(recs).toHaveLength(1);
+    expect(recs[0]).toMatchObject({ text: 'My name is Anna.', words: 4 });
+    expect(await page.evaluate(() => localStorage.getItem('ta_skill_draft|WRT789|1'))).toBeNull();
+  });
+
+  test('writing: another student on the same device does not get the kept text; a preview keeps nothing', async ({ page, context }) => {
+    await prepare(context, { storage: { 'ta_skill_draft|WRT789|1': JSON.stringify({ text: 'Not mine.', startedAt: Date.now(), id: '99999' }) } });
+    await mockGrammar(context);
+    await start(page, '/skill.html?s=writing&lv=1&c=WRT789');
+    await expect(page.locator('#skWriteBox')).toHaveValue('');
+    await expect(page.locator('#skTimer')).toContainText('15:00');
+    await page.goto('/skill.html?s=writing&lv=1&preview=1');
+    await page.locator('#skWriteBox').fill(TEXT);
+    expect(await page.evaluate(() => Object.keys(localStorage).filter(k => k.startsWith('ta_skill_draft') && !k.includes('WRT789')))).toEqual([]);
   });
 
   test('writing: preview sends nothing; a phone has no sideways scrolling', async ({ page, context }) => {
@@ -624,6 +676,42 @@ test.describe('course page', () => {
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe('https://example.github.io/teachers_assistant/skill.html?s=speaking&lv=1');
     expect(await page.evaluate(() => getRecentExercises().length)).toBe(before + 1);
     await expect(sp.getByRole('button', { name: '📊 View Results' })).toHaveCount(0);
+    expect(errors).toEqual([]);
+  });
+
+  test('the clipboard refuses → the link shows in a window titled with the group\'s name as typed ("Kids & Teens")', async ({ page, context }) => {
+    const errors = await open(page, context, { storage: { ta_student_groups: JSON.stringify([{ id: 'g1', name: 'Kids & Teens' }]) } });
+    await page.evaluate(PRETEND_HTTPS);
+    await page.evaluate(() => { navigator.clipboard.writeText = () => Promise.reject(new Error('blocked')); });
+    await page.locator('.sk-skill-card', { hasText: 'Listening' }).click();
+    await page.locator('.sk-level-tile').first().getByRole('button', { name: '🔗 Copy link for Kids & Teens' }).click();
+    await expect(page.locator('.ta-modal .points-modal-title')).toHaveText('🔗 The link for Kids & Teens');
+    await expect(page.locator('.ta-modal input')).toHaveValue(/skill\.html\?s=listening&lv=1&c=[A-Z0-9]{6}$/);
+    expect(errors).toEqual([]);
+  });
+
+  test('results arriving while the Course page is hidden don\'t redraw it; each drawing reads the kept results once', async ({ page, context }) => {
+    const errors = await open(page, context);
+    await page.locator('.sk-skill-card', { hasText: 'Listening' }).click();
+    const r = await page.evaluate(() => {
+      let draws = 0, reads = 0;
+      const realRender = window.renderCourse, realRead = window.getStoredResults;
+      window.renderCourse = function () { draws++; return realRender.apply(this, arguments); };
+      window.getStoredResults = function () { reads++; return realRead.apply(this, arguments); };
+      const wrap = document.getElementById('courseWrap');
+      wrap.style.display = 'none';
+      window.taCourseResultsChanged();
+      const hidden = draws;
+      wrap.style.display = '';
+      reads = 0;
+      window.taCourseResultsChanged();
+      const shown = draws - hidden;
+      window.renderCourse = realRender; window.getStoredResults = realRead;
+      return { hidden, shown, reads };
+    });
+    expect(r.hidden).toBe(0);
+    expect(r.shown).toBe(1);
+    expect(r.reads).toBeLessThanOrEqual(2);
     expect(errors).toEqual([]);
   });
 
@@ -805,11 +893,20 @@ test.describe('results', () => {
     expect(errors).toEqual([]);
   });
 
-  test('Top 5: a Writing course result (no score) is done but unscored, not 0%', async ({ page, context }) => {
-    await open(page, context, '/index.html');
-    const top = await page.evaluate(() => getTopActiveStudents(5, 'g1').map(s => ({ name: s.name, pct: Math.round(s.avg), did: s.did, given: s.given })));
-    // Cora: listening 80 %, reading 80 %, writing left out → 80 % over 2 (not 53 % over 3)
-    expect(top.find(s => s.name === 'Cora Test')).toEqual({ name: 'Cora Test', pct: 80, did: 2, given: 2 });
+  test('Top 5 leaves the Skills course out: open levels sent ahead never count as 0 %, and their results don\'t count either', async ({ page, context }) => {
+    const extra = [{ uid: 'tst1', code: 'TST001', typeLabel: 'Test', groupId: 'g1', title: 'A test (Target)', contentSummary: 'Test', date: new Date().toISOString() }];
+    await prepare(context, { docs: docs().concat([{ __id: 'tst-c', v: 1, code: 'TST001', type: 'Test', title: 'A test', name: 'Cora Test', studentId: '10003',
+      score: 90, correct: 9, total: 10, date: new Date().toISOString(), submittedAt: new Date().toISOString(), timeSeconds: 60, timeDisplay: '01:00' }]),
+      storage: { ta_recent_exercises: JSON.stringify(items().concat(extra)), ta_skills_links: links(), ta_course_group: 'g1' } });
+    await page.goto('/index.html');
+    await page.waitForFunction(() => (window.__allResults || []).length >= 11, null, { timeout: 10000 });
+    const r = await page.evaluate(() => ({
+      top: getTopActiveStudents(5, 'g1').map(s => ({ name: s.name, pct: Math.round(s.avg), did: s.did, given: s.given })),
+      assigned: [...(taAssignedCodesByGroup().g1 || [])]
+    }));
+    expect(r.assigned).toEqual(['TST001']);
+    // Cora: only the test counts (90 %); Alice and Bobur did only course levels → not listed
+    expect(r.top).toEqual([{ name: 'Cora Test', pct: 90, did: 1, given: 1 }]);
   });
 
   test('"Delete all results" hides older course results only: a newer one sent without builtAt still shows', async ({ page, context }) => {
@@ -823,9 +920,58 @@ test.describe('results', () => {
     expect(errors).toEqual([]);
   });
 
-  test('the student page sends builtAt (when it was opened)', async () => {
-    const src = require('fs').readFileSync(require('path').join(__dirname, '../js/skill-player.js'), 'utf8');
-    expect((src.match(/builtAt: SK_OPENED_AT/g) || []).length).toBe(2);
+  test('"Delete all results": Results and the results table agree — a page opened before the reset and sent after it shows in both', async ({ page, context }) => {
+    const errors = await open(page, context, '/course.html', { ta_code_resets: '{}' });
+    const cut = await page.evaluate(() => { const iso = new Date(Date.now() - 30 * 60000).toISOString(); setLocalReset('LSN001', iso); return iso; });
+    const before = new Date(Date.parse(cut) - 10 * 60000).toISOString(), now = new Date().toISOString();
+    await page.evaluate(([now]) => window.__studentSubmits({ v: 1, code: 'LSN001', type: 'Listening course', skill: 'listening', level: 1, title: 'Level 1',
+      name: 'Alice Test', studentId: '10001', correct: 9, total: 10, score: 90, band: 8.5, answers: [], timeSeconds: 300, timeDisplay: '05:00', date: now, builtAt: now }), [now]);
+    // an older page's record (builtAt = when it was opened, before the reset) — hidden in both places
+    await page.evaluate(([before, now]) => window.__studentSubmits({ v: 1, code: 'LSN001', type: 'Listening course', skill: 'listening', level: 1, title: 'Level 1',
+      name: 'Bobur Test', studentId: '10002', correct: 10, total: 10, score: 100, answers: [], timeSeconds: 300, timeDisplay: '05:00', date: now, builtAt: before }), [before, now]);
+    await expect.poll(() => page.evaluate(() => window.__allResults.filter(r => r.code === 'LSN001').length)).toBe(7);
+    const r = await page.evaluate(() => ({
+      table: skTableRows(1, 'g1').filter(x => x.listening).map(x => x.name),
+      results: collectResults('LSN001').visible.map(x => x.name)
+    }));
+    expect(r.table).toEqual(['Alice Test']);
+    expect(r.results.filter(n => n !== 'Alice Test')).toEqual([]);
+    expect(errors).toEqual([]);
+  });
+
+  test('a fake result can\'t set any band: Listening/Reading bands come from correct / total, writing bands stay 1–9', async ({ page, context }) => {
+    const errors = await open(page, context, '/course.html', { ta_skills_marks: JSON.stringify({ 'WRT001|10003': 42 }) });
+    await page.evaluate(() => {
+      const base = { v: 1, level: 1, title: 'Level 1', answers: [], timeSeconds: 60, timeDisplay: '01:00', date: new Date().toISOString() };
+      window.__studentSubmits(Object.assign({}, base, { code: 'LSN001', type: 'Listening course', skill: 'listening', name: 'Alice Test', studentId: '10001', correct: 2, total: 10, score: 20, band: 99 }));
+      window.__studentSubmits(Object.assign({}, base, { code: 'RDG001', type: 'Reading course', skill: 'reading', name: 'Bobur Test', studentId: '10002', correct: 400, total: 15, score: 100, band: 99 }));
+      window.__studentSubmits(Object.assign({}, base, { code: 'WRT001', type: 'Writing course', skill: 'writing', name: 'Bobur Test', studentId: '10002', text: 'Hi.', words: 1, band: 99 }));
+    });
+    await expect.poll(() => page.evaluate(() => window.__allResults.length)).toBeGreaterThanOrEqual(13);
+    const r = await page.evaluate(() => {
+      const rows = skTableRows(1, 'g1');
+      const row = n => rows.find(x => x.name === n);
+      return { all: rows.map(x => [x.listening, x.reading, x.writing, x.overall]).flat().filter(v => v !== null).map(v => typeof v === 'object' ? v.band : v),
+        bobR: row('Bobur Test').reading.band, bobW: row('Bobur Test').writing.band, cora: row('Cora Test').writing.band,
+        fakeW: skWritingBandFor({ code: 'X', studentId: '1', band: 99 }), lowW: skWritingBandFor({ code: 'X', studentId: '1', band: -3 }) };
+    });
+    r.all.forEach(b => { expect(b).toBeGreaterThanOrEqual(0); expect(b).toBeLessThanOrEqual(9); });
+    expect(r.bobR).toBe(9);          // 400 / 15 is clamped to 15 / 15
+    expect(r.bobW).toBe(9);          // band 99 → 9
+    expect(r.cora).toBe(9);          // a stored mark of 42 is kept to 9
+    expect(r.fakeW).toBe(9);
+    expect(r.lowW).toBe(1);
+    expect(errors).toEqual([]);
+  });
+
+  test('the spreadsheet (CSV) has the band of a writing result', async ({ page, context }) => {
+    const errors = await open(page, context, '/results.html');
+    await page.evaluate(() => showExerciseResults('skwriting'));
+    const [download] = await Promise.all([page.waitForEvent('download'), page.evaluate(() => exportResultsCsv())]);
+    const csv = require('fs').readFileSync(await download.path(), 'utf8');
+    const alice = csv.split('\r\n').find(l => l.includes('Alice Test'));
+    expect(alice).toContain('"Band 7"');
+    expect(errors).toEqual([]);
   });
 
   test('a fake writing result can\'t add attributes: quotes in a mistake are shown as text', async ({ page, context }) => {

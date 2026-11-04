@@ -514,15 +514,21 @@ real students' names or results into the repository (it is public).
   (`taSkillLink` in common.js; speaking has no code, never expires, loads from GitHub Pages not Firebase). Start card (name + ID, any ID
   accepted), the code is checked. Listening: audio + 10 gaps, Submit → ✅/❌, score, 10 useful words, **Analyze >** = transcript with the
   answer lines marked. Reading: text + 15 questions (5 T/F/NG, 5 gaps, 5 a/b/c), same flow. Writing: topic + 3 points, timer (submits by
-  itself), word counter, Submit → LanguageTool + better words. **Speaking is practice only**: topic words, simple questions, a Part 2 card
+  itself), word counter, Submit → LanguageTool + better words; the text + the clock's start are kept as the student types
+(`ta_skill_draft|<code>|<level>`, `{text, startedAt, id}`, the page's own key; not in preview) so a reload — phones reload background
+tabs — brings them back with the clock going on (time already up → sent at once); cleared once sent. **Speaking is practice only**: topic words, simple questions, a Part 2 card
   with timers — no microphone, nothing sent, no ID screen. One result per Submit: record id from `skResultId`, `setDoc` with timeouts,
   "Send again" on failure; result `type` 'Listening course' / 'Reading course' / 'Writing course' with `code, name, studentId, level, skill,
-  correct, total, score, band` (writing: `text, words, minWords, mistakes, mistakeList, grammarChecked, band, timeSeconds`), `builtAt`,
-  `submittedAt`. Preview sends nothing.
+  correct, total, score, band` (writing: `text, words, minWords, mistakes, mistakeList, grammarChecked, band, timeSeconds`), `builtAt`
+  (= the Submit time, same as `date`: a page opened before "Delete all results" and sent after it counts), `submittedAt`. Preview sends nothing.
 - **Teacher's side**: first Copy link for level + skill + group makes a My Exercises item (type "… course", that group, a fresh code;
   `skEnsureItem`, kept as `{uid, code}` in `ta_skills_links` under "<groupId>|<skill>|<level>", and a deleted item is re-created with the
   same code); ⋯ there: Copy link = the skill.html link, no Redownload (`taSkillItemInfo`, `taSkillItemLink`). `firebase.js` loads the codes
-  from `ta_skills_links`; `isExpiredResult` falls back to the date for " course" types. Results for writing: `viewSkillWriting` (text, words,
+  from `ta_skills_links`; `isExpiredResult` falls back to the date for " course" types; the results table uses `isExpiredResult` too (`skResultsMap`, one
+read per drawing; the hidden/preloaded Course panel isn't redrawn). Listening/Reading bands are always worked out from correct/total
+(a result's own `band` is ignored); writing bands (estimate and teacher's mark) are kept to 1–9. **Skills course items and results are
+left out of Top 5** (`TA_SKILL_COURSE_RE` in main.js: levels are open and sent ahead, unreached ones would count as 0 %). CSV: a
+writing's band goes in "Other result". Results for writing: `viewSkillWriting` (text, words,
   time, mistakes, a band box). **The teacher's mark wins everywhere**: `ta_skills_marks` keyed "<code>|<studentId>". Both keys are synced and
   in the backup. **Results table** per level + group (`skTableRows`, `skTableHtml`, PNG by `skDrawTablePng`): ranked by Overall (equal places
   share a number, medals), 🎧 📖 ✍️ bands with raw scores, best try per skill, a missing skill "—", footer average.

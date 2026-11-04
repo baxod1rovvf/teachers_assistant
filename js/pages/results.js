@@ -619,6 +619,11 @@ function exportResultsReport() {
 
 /* The same results as a spreadsheet: opens in Excel, Google Sheets or
    Numbers, ready to sort, filter or copy into a grade book. */
+/* a Skills course writing has no %: its band (the teacher's mark if given) goes in "Other result" */
+function csvWritingBand(r) {
+  const band = skWritingBandFor(r);
+  return band === null ? '' : 'Band ' + band;
+}
 function exportResultsCsv() {
   const code = (document.getElementById('res-code-input').value.trim()) || getActiveCode();
   if (!code) { showToast('Enter a class code first.'); return; }
@@ -640,7 +645,8 @@ function exportResultsCsv() {
       r.title || '',
       r.type || '',
       typeof taResultScore(r) === 'number' ? taResultScore(r) : '',
-      typeof taResultScore(r) === 'number' ? '' : (r.sentenceCount ? r.sentenceCount + ' sentences' : (r.wordsLearned ? r.wordsLearned + ' words' : '')),
+      typeof taResultScore(r) === 'number' ? '' : (r.type === 'Writing course' ? csvWritingBand(r)
+        : (r.sentenceCount ? r.sentenceCount + ' sentences' : (r.wordsLearned ? r.wordsLearned + ' words' : ''))),
       r.timeDisplay || '',
       when(r.date)
     ].map(cell).join(','));

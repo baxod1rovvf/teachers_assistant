@@ -98,13 +98,16 @@ function performanceScores(results) {
   return out;
 }
 
+// The Skills course (typeLabel / result type "… course") is left out of Top 5: its 10 levels are all open and their
+// links are sent ahead, so levels a student hasn't reached yet would count as 0 %.
+const TA_SKILL_COURSE_RE = / course$/;
 // The exercise codes given to each group: { groupId: Set of codes } (a set's rounds one by one).
 function taAssignedCodesByGroup() {
   const out = {};
   (getRecentExercises() || []).forEach(e => {
-    if (!e || !e.groupId) return;
+    if (!e || !e.groupId || TA_SKILL_COURSE_RE.test(String(e.typeLabel || ''))) return;
     const codes = e.mergedItems && e.mergedItems.length
-      ? e.mergedItems.filter(m => m && !/IELTS/i.test(m.typeLabel || m.title || '')).map(m => m.code)
+      ? e.mergedItems.filter(m => m && !/IELTS/i.test(m.typeLabel || m.title || '') && !TA_SKILL_COURSE_RE.test(String(m.typeLabel || ''))).map(m => m.code)
       : (/IELTS/i.test(e.typeLabel || '') ? [] : [e.code]);
     codes.forEach(c => { if (c) (out[e.groupId] = out[e.groupId] || new Set()).add(c); });
   });
@@ -114,7 +117,7 @@ function taAssignedCodesByGroup() {
 // groupId: only that group's students (Top 5 of Target, of Apex…); left out: everyone.
 function getTopActiveStudents(limit, groupId) {
   const rosterIdx = taRosterIndex();
-  const results = getAllScoredResultsCombined();
+  const results = getAllScoredResultsCombined().filter(r => !(r && TA_SKILL_COURSE_RE.test(String(r.type || ''))));
   const keyOf = st => String(st.id).trim().toLowerCase();
   const students = {};   // key -> { st, best: {code: score}, done: Set of codes }
   const studentFor = st => students[keyOf(st)] || (students[keyOf(st)] = { st: st, best: {}, done: new Set() });

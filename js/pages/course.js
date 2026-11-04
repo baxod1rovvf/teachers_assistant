@@ -117,14 +117,16 @@ function renderCourse() {
     return;
   }
   const s = skSkill(open);
+  // every tile's results from one reading of the kept results (not 3 per tile)
+  const resultsMap = g && s.results ? skResultsMap([].concat(...skLevels().map(lv => SK_TABLE_SKILLS.map(k => skCodeFor(k, lv.no, g))))) : {};
   html += '<button type="button" class="back-to-picker-btn" onclick="skOpen(\'\')">← All skills</button>' +
     '<div class="sk-skill-head" style="--skc:' + s.color + '"><span class="sk-skill-emoji">' + s.emoji + '</span><div><h3>' + s.label + '</h3>' +
     '<div class="sk-skill-level">Elementary · 10 levels</div></div></div>' +
-    '<div class="sk-levels" style="--skc:' + s.color + '">' + skLevels().map(lv => skTileHtml(s, lv, g)).join('') + '</div>';
+    '<div class="sk-levels" style="--skc:' + s.color + '">' + skLevels().map(lv => skTileHtml(s, lv, g, resultsMap)).join('') + '</div>';
   wrap.innerHTML = html;
 }
 function skTileSub(c) { return c.title || c.topic || (c.part2 && (c.part2.topic || c.part2.title)) || ''; }
-function skTileHtml(s, lv, g) {
+function skTileHtml(s, lv, g, resultsMap) {
   const c = lv[s.key];
   let html = '<div class="sk-level-tile' + (c ? '' : ' soon') + '" data-level="' + lv.no + '">' +
     '<div class="sk-tile-top"><span class="sk-tile-emoji">' + lv.emoji + '</span><div class="sk-tile-name"><b>Level ' + lv.no + ' · ' + escapeForHtml(lv.theme) + '</b>' +
@@ -134,7 +136,7 @@ function skTileHtml(s, lv, g) {
   html += '<div class="sk-tile-btns"><button type="button" class="mini-btn" onclick="skTry(' + jsAttr(s.key) + ', ' + lv.no + ')">▶️ Try</button>' +
     (g ? '<button type="button" class="mini-btn solid" onclick="skCopyLink(' + jsAttr(s.key) + ', ' + lv.no + ')">🔗 Copy link for ' + escapeForHtml(g.name) + '</button>' : '') +
     (item ? '<button type="button" class="mini-btn" onclick="taNavigate(\'results.html?exercise=' + encodeURIComponent(item.uid) + '\')">📊 View Results</button>' : '') +
-    (s.results && skHasTableResults(lv.no, g) ? '<button type="button" class="mini-btn sk-rt-open" onclick="skOpenTable(' + lv.no + ')">🏆 Results table</button>' : '') + '</div>';
+    (s.results && skHasTableResults(lv.no, g, resultsMap) ? '<button type="button" class="mini-btn sk-rt-open" onclick="skOpenTable(' + lv.no + ')">🏆 Results table</button>' : '') + '</div>';
   if (!g) html += '<p class="sk-hint">Add a group on the Students page first.</p>';
   return html + '</div>';
 }
@@ -158,7 +160,8 @@ function skCopyLink(skill, level) {
   const url = skLinkFor(skill, level, g);
   if (!url) return;
   const msg = '🔗 Link copied — send it to ' + g.name + '. It always works.';
-  const show = () => taModal('🔗 The link for ' + escapeForHtml(g.name), '<input type="text" class="ta-input" readonly value="' + escapeForHtml(url) + '" aria-label="The link">');
+  // taModal sets the title as text: the group's name goes in as typed
+  const show = () => taModal('🔗 The link for ' + g.name, '<input type="text" class="ta-input" readonly value="' + escapeForHtml(url) + '" aria-label="The link">');
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(() => showToast(msg, 'ok'), show);
   else show();
   renderCourse();
@@ -172,37 +175,53 @@ function skCopyLink(skill, level) {
    it to the group's chat). */
 const SK_TABLE_SKILLS = ['listening', 'reading', 'writing'];
 const SK_MEDALS = ['🥇', '🥈', '🥉'];
-/* the results of a code (kept on this device), newest first, without those cleared by "Delete all results" */
-function skResultsFor(code) {
-  if (!code) return [];
-  const seen = new Set(), out = [];
-  const cutoff = typeof resetCutoffFor === 'function' ? resetCutoffFor(code) : '';
-  (window.__allResults || []).concat(typeof collectResults === 'function' ? collectResults(code).visible : []).forEach(r => {
-    if (!r || r.code !== code || isResetMarker(r)) return;
-    if (cutoff && String(r.date || '') <= cutoff) return;
+/* The results of some codes (kept on this device): { code: [results] }, without those cleared by "Delete all results"
+   — decided by isExpiredResult, the same rule Results uses. The kept results are read once for all the codes
+   (a drawing of the Course page asks for every tile's codes at once). */
+function skResultsMap(codes) {
+  const want = new Set((codes || []).filter(Boolean)), map = {};
+  want.forEach(c => { map[c] = []; });
+  if (!want.size) return map;
+  const stored = getStoredResults(), live = window.__liveResults || [], cutoff = {}, resets = getLocalResets();
+  want.forEach(c => { cutoff[c] = resets[c] || ''; });
+  live.concat(stored).forEach(r => {
+    if (isResetMarker(r) && want.has(r.code) && r.resetAt && r.resetAt > cutoff[r.code]) cutoff[r.code] = r.resetAt;
+  });
+  const seen = new Set();
+  (window.__allResults || []).concat(stored, live).forEach(r => {
+    if (!r || !want.has(r.code) || isResetMarker(r) || isExpiredResult(r, cutoff[r.code])) return;
     const sig = resultSignature(r);
     if (seen.has(sig)) return;
     seen.add(sig);
-    out.push(r);
+    map[r.code].push(r);
   });
-  return out;
+  return map;
 }
 function skCodeFor(skill, level, g) { const e = skLinkEntry(skill, level, g); return e ? e.code : ''; }
+/* Listening/Reading: the band is worked out here from correct / total (kept to 0…total) — a result's own `band` is
+   ignored, so a made-up record can't claim band 99. Writing: skWritingBandFor (kept to 1–9). */
 function skResultBand(skill, r) {
   if (skill === 'writing') return skWritingBandFor(r);
-  if (typeof r.band === 'number') return r.band;
-  return typeof r.correct === 'number' && r.total ? skBand(r.correct, r.total) : null;
+  const total = Number(r.total), correct = Number(r.correct);
+  if (!(total > 0) || !isFinite(total) || !isFinite(correct)) return null;
+  return skBand(Math.max(0, Math.min(total, correct)), total);
+}
+function skResultRawNums(r) {
+  const total = Number(r.total), correct = Number(r.correct);
+  return total > 0 && isFinite(total) && isFinite(correct) ? Math.max(0, Math.min(total, correct)) + ' / ' + total : '';
 }
 function skResultRaw(skill, r) {
   if (skill === 'writing') return (typeof r.words === 'number' ? r.words : 0) + ' words';
-  return typeof r.correct === 'number' && r.total ? r.correct + ' / ' + r.total : '';
+  return skResultRawNums(r);
 }
-function skTableRows(level, groupId) {
+function skTableRows(level, groupId, resultsMap) {
   const g = skGroup(groupId);
   if (!g) return [];
   const idx = taRosterIndex(), students = {};
-  SK_TABLE_SKILLS.forEach(skill => {
-    skResultsFor(skCodeFor(skill, level, g)).forEach(r => {
+  const codes = SK_TABLE_SKILLS.map(skill => skCodeFor(skill, level, g));
+  const map = resultsMap || skResultsMap(codes);
+  SK_TABLE_SKILLS.forEach((skill, i) => {
+    (map[codes[i]] || []).forEach(r => {
       const st = rosterStudentForResult(r, idx);
       if (!st || st.group !== g.id) return;
       const band = skResultBand(skill, r);
@@ -225,8 +244,11 @@ function skTableRows(level, groupId) {
   return rows;
 }
 window.skTableRows = skTableRows;
-function skHasTableResults(level, g) {
-  return !!g && SK_TABLE_SKILLS.some(s => skResultsFor(skCodeFor(s, level, g)).length);
+function skHasTableResults(level, g, resultsMap) {
+  if (!g) return false;
+  const codes = SK_TABLE_SKILLS.map(s => skCodeFor(s, level, g));
+  const map = resultsMap || skResultsMap(codes);
+  return codes.some(c => c && (map[c] || []).length);
 }
 function skTableMeta(level, g) {
   const lv = skLevel(level);
@@ -379,9 +401,15 @@ async function skDrawTablePng(rows, meta) {
 window.skDrawTablePng = skDrawTablePng;
 
 /* firebase.js calls this when results change: the tiles' buttons and an open results table follow. */
-window.taCourseResultsChanged = function () { if (skOpenSkill()) renderCourse(); skRenderTable(); };
+/* The Course panel may be loaded in the background (taPreloadSections): it isn't drawn while hidden — opening it
+   draws it (taOnTab). */
+function skCourseShown() {
+  const wrap = document.getElementById('courseWrap');
+  return !!wrap && wrap.getClientRects().length > 0;
+}
+window.taCourseResultsChanged = function () { if (skOpenSkill() && skCourseShown()) renderCourse(); skRenderTable(); };
 
 /* ================= PAGE START ================= */
-window.addEventListener('storage', e => { if (e.key && /ta_skills_links|ta_student_groups|ta_recent_exercises/.test(e.key)) renderCourse(); });
+window.addEventListener('storage', e => { if (e.key && /ta_skills_links|ta_student_groups|ta_recent_exercises/.test(e.key) && skCourseShown()) renderCourse(); });
 taOnTab('course', renderCourse);
 taStartPage('course');

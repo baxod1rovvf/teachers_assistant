@@ -1643,16 +1643,17 @@ function skMarks() {
   try { const v = JSON.parse(localStorage.getItem(LS_SKILLS_MARKS) || 'null'); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; }
 }
 function skMarkKey(r) { return String(r.code || '') + '|' + String(r.studentId || r.name || '').trim(); }
+/* a writing band is kept to 1–9 (a made-up result could send band 99) */
+function skClampWritingBand(v) { return typeof v === 'number' && isFinite(v) ? Math.max(1, Math.min(9, v)) : null; }
 function skTeacherMark(r) {
-  const v = r ? skMarks()[skMarkKey(r)] : undefined;
-  return typeof v === 'number' && v >= 1 && v <= 9 ? v : null;
+  return r ? skClampWritingBand(skMarks()[skMarkKey(r)]) : null;
 }
-/* The band a writing counts with: the teacher's mark if set, else the page's estimate. */
+/* The band a writing counts with: the teacher's mark if set, else the page's estimate — both kept to 1–9. */
 function skWritingBandFor(r) {
   if (!r) return null;
   const m = skTeacherMark(r);
   if (m !== null) return m;
-  return typeof r.band === 'number' ? r.band : null;
+  return skClampWritingBand(r.band);
 }
 window.skWritingBandFor = skWritingBandFor;
 /* The text with each mistake underlined: the list has no positions, so each one is looked for after the one before. */
