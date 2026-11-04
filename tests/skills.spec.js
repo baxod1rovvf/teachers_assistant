@@ -444,10 +444,57 @@ test.describe('writing', () => {
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
     expect(await page.evaluate(() => window.__writes ? window.__writes.length : 0)).toBe(0);
   });
+});
 
-  test('speaking still says it is coming soon', async ({ page, context }) => {
+test.describe('speaking', () => {
+  test('speaking: words → questions → Part 2, nothing sent, no ID', async ({ page, context }) => {
     await prepare(context);
+    const errors = [];
+    page.on('pageerror', e => errors.push(e.message));
+    await page.addInitScript(() => { window.__skFast = 1; });
+    await page.goto('/skill.html?s=speaking&lv=1');
+    await expect(page.locator('#studentNameInput, #skIdInput')).toHaveCount(0);
+    await expect(page.locator('.sk-steps')).toContainText('Words');
+    const n = await page.locator('.sk-word').count();
+    expect(n).toBeGreaterThanOrEqual(8);
+    expect(n).toBeLessThanOrEqual(10);
+    await page.getByRole('button', { name: /Next →/ }).click();
+    const qs = await page.evaluate(() => TA_SKILLS.elementary.levels[0].speaking.questions);
+    for (let i = 0; i < qs.length; i++) {
+      await expect(page.locator('.sk-sq')).toContainText(qs[i].q);
+      await expect(page.locator('.sk-use')).toContainText('Words you can use');
+      await expect(page.locator('.sk-use')).toContainText(qs[i].use[0]);
+      if (i === 1) {
+        await page.getByRole('button', { name: /← Back/ }).click();
+        await expect(page.locator('.sk-sq')).toContainText(qs[0].q);
+        await page.getByRole('button', { name: /Next →/ }).click();
+      }
+      await page.getByRole('button', { name: /Next →/ }).click();
+    }
+    await expect(page.locator('.sk-topic')).toContainText('Talk about yourself');
+    await expect(page.locator('.sk-points li')).toHaveCount(3);
+    await expect(page.getByRole('button', { name: 'Get ready (30 s)' })).toBeVisible();
+    await page.getByRole('button', { name: 'Start speaking' }).click();
+    await expect(page.locator('.sk-speak-timer')).toContainText('0:45', { timeout: 5000 });
+    await expect(page.locator('body')).toContainText('Well done! 🎉', { timeout: 15000 });
+    await page.getByRole('button', { name: 'Start again' }).click();
+    await expect(page.getByRole('button', { name: 'Start speaking' })).toBeVisible();
+    await page.getByRole('button', { name: 'Get ready (30 s)' }).click();
+    await expect(page.getByRole('button', { name: /Stop/ })).toBeVisible();
+    await page.getByRole('button', { name: /Stop/ }).click();
+    await expect(page.getByRole('button', { name: 'Start speaking' })).toBeVisible();
+    expect(await page.evaluate(() => window.__writes ? window.__writes.length : 0)).toBe(0);
+    expect(errors).toEqual([]);
+  });
+
+  test('speaking: the 🔊 button only shows when the browser can speak; a phone has no sideways scrolling', async ({ page, context }) => {
+    await prepare(context);
+    await page.setViewportSize({ width: 390, height: 800 });
+    await page.addInitScript(() => { try { delete window.speechSynthesis; } catch (e) {} try { Object.defineProperty(window, 'speechSynthesis', { value: undefined, configurable: true }); delete window.speechSynthesis; } catch (e) {} });
     await page.goto('/skill.html?s=speaking&lv=1&preview=1');
-    await expect(page.locator('body')).toContainText('Coming soon');
+    await expect(page.locator('.sk-word').first()).toBeVisible();
+    await expect(page.locator('.sk-say')).toHaveCount(0);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
   });
 });
+

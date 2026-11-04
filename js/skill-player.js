@@ -6,7 +6,8 @@
 // Preview (&preview=1, the teacher's ▶️ Try): no start card, nothing imported from Firebase, nothing written.
 // Writing: a topic with 3 points, a timer (submits by itself at 0), a live word counter; Submit → the free LanguageTool
 // grammar check (mistakes underlined, each with its fix) + "better words" from TA_BETTER_WORDS, then one result is sent.
-// Speaking comes later (it shows "Coming soon" here for now).
+// Speaking: practice only — words, then the questions one by one, then a Part 2 talk with a timer. No start card, no
+// microphone, nothing recorded, sent or scored (it is the student's own wish to speak).
 
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyCefg2YghdSneABh0ZOUu3-snO4soVw0lA",
@@ -590,6 +591,91 @@ function wireCheckAgain(text) {
   });
 }
 
+/* ---------- speaking (practice only: nothing recorded, sent or scored) ---------- */
+let speakTimer = null;
+const fmtMinSec = secs => { const s = Math.max(0, Math.ceil(secs)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+function skCanSpeak() { return 'speechSynthesis' in window && !!window.speechSynthesis && typeof SpeechSynthesisUtterance !== 'undefined'; }
+function skSay(text) {
+  try {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-GB'; u.rate = 0.85;
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+  } catch (e) { /* no voice: nothing to do */ }
+}
+function showSpeaking(level) {
+  const S = level.speaking;
+  const canSpeak = skCanSpeak();
+  const stepsHtml = n => `<ol class="sk-steps" aria-label="Steps">${['Words', 'Questions', 'Talk'].map((t, i) =>
+    `<li class="${i + 1 === n ? 'on' : i + 1 < n ? 'done' : ''}"${i + 1 === n ? ' aria-current="step"' : ''}><span>${i + 1}</span> ${t}</li>`).join('')}</ol>`;
+  const shell = (n, inner) => { clearInterval(speakTimer); root().innerHTML = headerHtml(level) + stepsHtml(n) + inner; window.scrollTo(0, 0); };
+
+  const stepWords = () => {
+    shell(1, `<section class="sk-card"><h2>🗣️ Words to help you speak</h2>
+      <p class="sk-intro">Read the words. Say each example out loud.</p>
+      <ul class="sk-wordgrid">${S.words.map((w, i) => `<li class="sk-word"><span class="sk-word-emoji" aria-hidden="true">${esc(w.emoji)}</span>
+        <div class="sk-word-body"><b>${esc(w.w)}</b><span>${esc(w.ex)}</span></div>
+        ${canSpeak ? `<button type="button" class="sk-say" data-i="${i}" title="Listen" aria-label="Listen to ${esc(w.w)}">🔊</button>` : ''}</li>`).join('')}</ul>
+      <div class="sk-actions"><button type="button" class="sk-btn sk-btn-main" id="skNext">Next →</button></div></section>`);
+    root().querySelectorAll('.sk-say').forEach(b => b.addEventListener('click', () => { const w = S.words[+b.dataset.i]; skSay(w.w + '. ' + w.ex); }));
+    $('#skNext').addEventListener('click', () => stepQuestion(0));
+  };
+  const stepQuestion = i => {
+    const q = S.questions[i];
+    shell(2, `<section class="sk-card"><p class="sk-qcount">Question ${i + 1} of ${S.questions.length}</p>
+      <h2 class="sk-sq">${esc(q.q)}</h2>
+      <p class="sk-use"><b>Words you can use:</b> ${(q.use || []).map(u => `<span class="sk-use-chip">${esc(u)}</span>`).join(' ')}</p>
+      <p class="sk-intro">Answer out loud, in a full sentence.</p>
+      <div class="sk-actions sk-actions-2"><button type="button" class="sk-btn sk-btn-ghost" id="skBack">← Back</button>
+      <button type="button" class="sk-btn sk-btn-main" id="skNext">Next →</button></div></section>`);
+    $('#skBack').addEventListener('click', () => i ? stepQuestion(i - 1) : stepWords());
+    $('#skNext').addEventListener('click', () => i + 1 < S.questions.length ? stepQuestion(i + 1) : stepTalk());
+  };
+  const stepTalk = () => {
+    const P = S.part2;
+    const sec = window.__skFast ? 0.02 : 1;   // tests: one second lasts 20 ms
+    shell(3, `<section class="sk-card"><h2 class="sk-topic">🎤 ${esc(P.topic)}</h2>
+      <p class="sk-points-t">Talk about:</p>
+      <ul class="sk-points">${P.hints.map(h => `<li>${esc(h)}</li>`).join('')}</ul>
+      <p class="sk-intro">You can talk for ${P.seconds} seconds. It is up to you: nothing is recorded or sent.</p>
+      <div class="sk-speak-timer" id="skSpeakTimer" role="timer" aria-live="off">${fmtMinSec(P.seconds)}</div>
+      <p class="sk-well" id="skWell" hidden>Well done! 🎉</p>
+      <div class="sk-actions sk-actions-2" id="skTalkActions"></div>
+      <div class="sk-actions"><button type="button" class="sk-btn sk-btn-ghost" id="skBack">← Back to the questions</button></div></section>`);
+    const box = $('#skSpeakTimer'), acts = $('#skTalkActions'), well = $('#skWell');
+    const idle = () => {
+      clearInterval(speakTimer);
+      box.textContent = fmtMinSec(P.seconds); box.className = 'sk-speak-timer'; well.hidden = true;
+      acts.innerHTML = `<button type="button" class="sk-btn sk-btn-ghost" id="skReady">⏳ Get ready (30 s)</button>
+        <button type="button" class="sk-btn sk-btn-main" id="skGo">🎤 Start speaking</button>`;
+      $('#skReady').addEventListener('click', () => run(30, 'ready', () => idle()));
+      $('#skGo').addEventListener('click', () => run(P.seconds, 'talk', finished));
+    };
+    const finished = () => {
+      box.textContent = fmtMinSec(0); box.className = 'sk-speak-timer done'; well.hidden = false;
+      acts.innerHTML = '<button type="button" class="sk-btn sk-btn-main" id="skAgain">🔁 Start again</button>';
+      $('#skAgain').addEventListener('click', idle);
+    };
+    const run = (secs, mode, onEnd) => {
+      clearInterval(speakTimer);
+      well.hidden = true;
+      const t0 = Date.now();
+      box.className = 'sk-speak-timer ' + mode;
+      acts.innerHTML = `<button type="button" class="sk-btn sk-btn-ghost" id="skStop">⏹ Stop</button>`;
+      $('#skStop').addEventListener('click', idle);
+      const tick = () => {
+        const left = secs - (Date.now() - t0) / 1000 / sec;
+        box.textContent = fmtMinSec(left);
+        if (left <= 0) { clearInterval(speakTimer); onEnd(); }
+      };
+      tick();
+      speakTimer = setInterval(tick, window.__skFast ? 5 : 250);
+    };
+    $('#skBack').addEventListener('click', () => stepQuestion(S.questions.length - 1));
+    idle();
+  };
+  stepWords();
+}
+
 /* ---------- start ---------- */
 function boot() {
   const level = levelData();
@@ -598,7 +684,8 @@ function boot() {
   document.title = `${info.name} · Level ${level.no} — Loom`;
   if (!SK.preview && SK.skill !== 'speaking' && SK.code.length !== 6) { showNoCode(); return; }
   if (SK.skill === 'speaking') {
-    showComingSoon(level, `${info.name} for Level ${level.no} is coming soon in this page. Ask your teacher for the Listening, Reading or Writing link for now.`);
+    if (level.speaking) showSpeaking(level);
+    else showComingSoon(level, `Level ${level.no} (${level.theme}) is still being made. Ask your teacher which level to do now.`);
     return;
   }
   const content = level[SK.skill];
