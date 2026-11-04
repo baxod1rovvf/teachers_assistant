@@ -42,15 +42,18 @@ const $ = sel => document.querySelector(sel);
 function skNorm(s) {
   return String(s == null ? '' : s).toLowerCase().replace(/[’‘`]/g, "'").replace(/\s+/g, ' ').trim().replace(/\.+$/, '').trim();
 }
-// true when `answer` matches one of the accepted answers: case, extra spaces and a final full stop don't matter;
-// an accepted answer made of digits (after removing spaces and dashes) is compared digits only ("07700 900123").
+// true when `answer` matches one of the accepted answers: case, extra spaces and a final full stop don't matter.
+// When the student wrote only digits (spaces, dashes and one leading "+" allowed) and an accepted answer is digits
+// too, only the digits are compared ("07700 900123" = "07700 900 123"); "no 12" or "1a2" are compared as text.
 function skMark(answer, accepted) {
   const given = skNorm(answer);
   if (!given) return false;
+  const givenPlain = given.replace(/[\s-]/g, '');
+  const givenDigits = /^\+?\d+$/.test(givenPlain) ? givenPlain.replace(/\D/g, '') : null;
   return (accepted || []).some(a => {
     const want = skNorm(a);
-    const digits = want.replace(/[\s-]/g, '');
-    if (/^\d+$/.test(digits) && /\d/.test(given)) return given.replace(/\D/g, '') === digits;
+    const wantDigits = want.replace(/[\s-]/g, '');
+    if (givenDigits !== null && /^\d+$/.test(wantDigits)) return givenDigits === wantDigits;
     return given === want;
   });
 }
@@ -70,17 +73,35 @@ function loadFirestore() {
   return fsReady;
 }
 const wait = ms => new Promise(r => setTimeout(r, ms));
-// One result → `results` (addDoc), up to 3 tries. Never in preview (resolves 'ok' without writing).
+// Offline, Firestore doesn't refuse a write — it waits (and sends it later). Each step gives up after a while.
+const sendTimeout = () => window.__skSendTimeoutMs || 12000;
+function within(promise, ms) {
+  return Promise.race([promise, new Promise((_, reject) => setTimeout(() => reject(Object.assign(new Error('timeout'), { code: 'timeout' })), ms))]);
+}
+// One record id per Submit (sk_<code>_<ID>_<time>): every try — and "Send again" — writes the same record, so a late
+// write that was waiting offline, or a reply lost after reaching the server, can never make a copy. Changing a record
+// is refused by the rules, so a refused try asks the server whether the record is already there (like a Homework set).
+function skResultId(payload) {
+  const clean = s => String(s || '').replace(/[^A-Za-z0-9_-]/g, '_').slice(0, 40);
+  return 'sk_' + clean(payload.code) + '_' + clean(payload.studentId || payload.name) + '_' + String(payload.date || Date.now()).replace(/[^0-9]/g, '');
+}
+// One result → `results/<id>` (setDoc), up to 3 tries. Never in preview (resolves 'ok' without writing).
 async function skSendResult(payload) {
   if (SK.preview) return 'ok';
+  const id = payload.__id || skResultId(payload);
+  const data = Object.assign({}, payload);
+  delete data.__id;
   for (let attempt = 0; attempt < 3; attempt++) {
     if (attempt) await wait(600 * attempt);
+    let fs, db;
+    try { ({ fs, db } = await within(loadFirestore(), sendTimeout())); } catch (e) { console.warn('Skills course: database not ready', e); continue; }
+    const ref = fs.doc(db, 'results', id);
     try {
-      const { fs, db } = await loadFirestore();
-      await fs.addDoc(fs.collection(db, 'results'), Object.assign({}, payload, { submittedAt: fs.serverTimestamp() }));
+      await within(fs.setDoc(ref, Object.assign({}, data, { submittedAt: fs.serverTimestamp() })), sendTimeout());
       return 'ok';
     } catch (e) {
       console.warn('Skills course: sending failed', e);
+      try { const snap = await within(fs.getDocFromServer(ref), sendTimeout()); if (snap.exists()) return 'ok'; } catch (e2) { /* still not there */ }
     }
   }
   return 'failed';
@@ -112,6 +133,15 @@ function showMissing() {
     <h1>This level doesn't exist</h1>
     <p>The link may be cut short or mistyped. Ask your teacher to send it again.</p>
     <a class="sk-btn sk-btn-ghost" href="index.html">🏠 Go to Loom's home page</a>
+  </div>`;
+}
+
+function showNoCode() {
+  document.title = 'Link without its code — Loom';
+  root().innerHTML = `<div class="sk-card sk-center sk-missing">
+    <div class="sk-big-emoji" aria-hidden="true">🔗</div>
+    <h1>This link is missing its code</h1>
+    <p>This link is missing its code — ask your teacher for the link again.</p>
   </div>`;
 }
 
@@ -277,6 +307,7 @@ function submit(level, content, info) {
     name: SK.name, studentId: SK.studentId, correct, total, score: Math.round(correct / total * 100), band: skBand(correct, total),
     answers, timeSeconds: secs, timeDisplay: pad(Math.floor(secs / 60)) + ':' + pad(secs % 60), date: new Date().toISOString()
   };
+  lastPayload.__id = skResultId(lastPayload);   // the same record on every try and on "Send again"
   const pct = correct / total;
   const cheer = pct >= 0.8 ? '🌟 Excellent work!' : pct >= 0.6 ? '👏 Well done!' : pct >= 0.4 ? '💪 Good try — keep going!' : '🌱 Keep practising — you can do it!';
   $('#skActions').innerHTML = `<div class="sk-result">
@@ -347,6 +378,7 @@ function boot() {
   const info = SKILL_INFO[SK.skill];
   if (!level || !info) { showMissing(); return; }
   document.title = `${info.name} · Level ${level.no} — Loom`;
+  if (!SK.preview && SK.skill !== 'speaking' && SK.code.length !== 6) { showNoCode(); return; }
   if (SK.skill === 'writing' || SK.skill === 'speaking') {
     showComingSoon(level, `${info.name} for Level ${level.no} is coming soon in this page. Ask your teacher for the Listening or Reading link for now.`);
     return;

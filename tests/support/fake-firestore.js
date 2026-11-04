@@ -5,6 +5,8 @@
 //   window.__writes / window.__deletes — what the app wrote / deleted
 //   window.__studentSubmits(data) — a student handing in a result while the app is open
 //   window.__failWrites — while above 0, writes fail (no connection); each failure counts it down
+//   window.__holdWrites — while true, writes wait like the real SDK offline (no answer, no error);
+//                         window.__releaseWrites() lets the waiting ones through, late
 //   window.__RULES    — when true, like the real rules: the teacher's own kinds of
 //                       records and deleting need a database sign-in (fake-auth.js)
 const DOCS = (window.__FIXTURE || []).map(d => Object.assign({}, d));
@@ -62,14 +64,19 @@ function store(d) {
   window.__writes.push({ id: d.__id, type: d.type, code: d.code, title: d.title, len: (d.data || '').length });
   listeners.forEach(l => { if (match(l.w)(d)) { window.__reads++; l.cb(snapOf(l.w, [{ type: 'added', doc: wrap(d) }])); } });
 }
+window.__heldWrites = [];
+window.__releaseWrites = () => { window.__holdWrites = false; window.__heldWrites.splice(0).forEach(go => go()); };
+const holding = () => window.__holdWrites ? new Promise(go => window.__heldWrites.push(go)) : null;
 const failing = () => { if (window.__failWrites > 0) { window.__failWrites--; throw Object.assign(new Error('Failed to reach the database.'), { code: 'unavailable' }); } };
 export async function addDoc(c, data) {
   failing();
+  const held = holding(); if (held) await held;
   if (window.__RULES && teachersKind(data) && !signedIn()) throw refuse();
   store(Object.assign({ __id: 'auto' + Math.random().toString(36).slice(2), __col: (c && c.col) || 'results' }, data));
 }
 export async function setDoc(ref, data) {
   failing();
+  const held = holding(); if (held) await held;
   if (window.__RULES && DOCS.some(d => d.__id === ref.id && colOf(d) === (ref.col || 'results'))) throw refuse(); // no changes, like the real rules
   if (window.__RULES && (teachersKind(data) || ref.col !== 'results') && !signedIn()) throw refuse();
   store(Object.assign({ __id: ref.id, __col: ref.col || 'results' }, data));
@@ -82,6 +89,7 @@ export async function deleteDoc(ref) {
 }
 export async function updateDoc() {}
 export async function getDocFromServer(ref) {
+  if (window.__holdWrites) return new Promise(() => {});   // offline: the server can't be asked either
   window.__reads++;
   const d = DOCS.find(x => x.__id === ref.id && colOf(x) === (ref.col || 'results'));
   return { id: ref.id, exists: () => !!d, data: () => d ? Object.assign({}, d) : undefined };

@@ -239,6 +239,33 @@ test.describe('student page', () => {
     expect(recs[0]).toMatchObject({ code: 'ABC123', correct: 1, total: 10 });
   });
 
+  test('offline: the write waits, the student sees Send again, and only one record is ever saved', async ({ page, context }) => {
+    await prepare(context, { rules: true });   // like the real rules: a record can't be changed once it's there
+    await start(page, '/skill.html?s=listening&lv=1&c=ABC123');
+    await page.locator('.sk-q input').first().fill('Thompson');
+    await page.evaluate(() => { window.__skSendTimeoutMs = 300; window.__holdWrites = true; });
+    await page.getByRole('button', { name: /Submit/ }).click();
+    await expect(page.locator('.sk-send')).toContainText('Sending');
+    await expect(page.locator('.sk-send')).toContainText('Not sent yet — press Send again', { timeout: 8000 });
+    // the waiting writes arrive late (back online), then the student presses Send again
+    await page.evaluate(() => window.__releaseWrites());
+    await page.getByRole('button', { name: /Send again/ }).click();
+    await expect(page.locator('.sk-send')).toContainText('Saved ✅');
+    const docs = await page.evaluate(() => window.__fakeDocs.filter(d => d.code === 'ABC123' && d.type === 'Listening course'));
+    expect(docs).toHaveLength(1);
+    expect(docs[0].__id).toMatch(/^sk_ABC123_10001_\d+$/);
+    expect(docs[0]).toMatchObject({ correct: 1, total: 10, name: 'Test Student' });
+  });
+
+  test('a link without its 6-character code never reaches the start card', async ({ page, context }) => {
+    await prepare(context);
+    for (const url of ['/skill.html?s=listening&lv=1', '/skill.html?s=reading&lv=1&c=AB12', '/skill.html?s=writing&lv=1&c=ABCDEFG']) {
+      await page.goto(url);
+      await expect(page.locator('body')).toContainText('This link is missing its code — ask your teacher for the link again.');
+      await expect(page.locator('#studentNameInput')).toHaveCount(0);
+    }
+  });
+
   test('unknown level', async ({ page, context }) => {
     await prepare(context);
     await page.goto('/skill.html?s=dance&lv=99');
@@ -254,8 +281,9 @@ test.describe('student page', () => {
     const r = await page.evaluate(() => [
       skMark('THOMPSON.', ['Thompson']), skMark('  big   supermarket ', ['supermarket', 'big supermarket']),
       skMark('07700 900123', ['07700 900 123']), skMark('07700-900-123', ['07700 900 123']), skMark('07700 900124', ['07700 900 123']),
-      skMark('Kingston', ['Kingsley']), skMark('', ['3']), skMark('three', ['3', 'three']), skMark('Lucy’s dog', ["Lucy's dog"])]);
-    expect(r).toEqual([true, true, true, true, false, false, false, true, true]);
+      skMark('Kingston', ['Kingsley']), skMark('', ['3']), skMark('three', ['3', 'three']), skMark('Lucy’s dog', ["Lucy's dog"]),
+      skMark('1a2', ['12']), skMark('no 12', ['12']), skMark('+12', ['12']), skMark('7.30', ['730', '7.30']), skMark('room 214', ['214'])]);
+    expect(r).toEqual([true, true, true, true, false, false, false, true, true, false, false, true, true, false]);
   });
 
   test('writing and speaking say they are coming soon on this page', async ({ page, context }) => {
