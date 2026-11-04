@@ -1630,6 +1630,86 @@ function viewMazeResult(idx) {
   modal.classList.add('show');
 }
 
+/* ================= SKILLS COURSE: WRITING MARKS =================
+   A Writing course result carries the page's estimated band; the teacher can give their own.
+   ta_skills_marks = { "<code>|<studentId>": band } (synced, in the backup). The mark is the student's for
+   that level + group (every try of it), so the results table and Results agree. */
+const LS_SKILLS_MARKS = 'ta_skills_marks';
+function skMarks() {
+  try { const v = JSON.parse(localStorage.getItem(LS_SKILLS_MARKS) || 'null'); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; }
+}
+function skMarkKey(r) { return String(r.code || '') + '|' + String(r.studentId || r.name || '').trim(); }
+function skTeacherMark(r) {
+  const v = r ? skMarks()[skMarkKey(r)] : undefined;
+  return typeof v === 'number' && v >= 1 && v <= 9 ? v : null;
+}
+/* The band a writing counts with: the teacher's mark if set, else the page's estimate. */
+function skWritingBandFor(r) {
+  if (!r) return null;
+  const m = skTeacherMark(r);
+  if (m !== null) return m;
+  return typeof r.band === 'number' ? r.band : null;
+}
+window.skWritingBandFor = skWritingBandFor;
+/* The text with each mistake underlined: the list has no positions, so each one is looked for after the one before. */
+function skWritingTextHtml(r) {
+  const text = String(r.text || ''), esc = escapeForHtml;
+  let html = '', pos = 0;
+  (Array.isArray(r.mistakeList) ? r.mistakeList : []).forEach(m => {
+    const bad = String((m && m.bad) || '');
+    if (!bad) return;
+    const at = text.indexOf(bad, pos);
+    if (at < 0) return;
+    html += esc(text.slice(pos, at)) + '<mark title="' + esc(m.fix ? '→ ' + m.fix : (m.message || '')) + '">' + esc(bad) + '</mark>';
+    pos = at + bad.length;
+  });
+  return html + esc(text.slice(pos));
+}
+function skWritingViewHtml(r) {
+  const esc = escapeForHtml, list = Array.isArray(r.mistakeList) ? r.mistakeList : [];
+  const mark = skTeacherMark(r), band = skWritingBandFor(r);
+  const words = typeof r.words === 'number' ? r.words : String(r.text || '').trim().split(/\s+/).filter(Boolean).length;
+  return '<div class="sk-wv">' +
+    '<div class="sk-wv-who"><b translate="no">' + esc(r.name || 'Student') + '</b><span>' + esc(r.title || 'Writing') + '</span></div>' +
+    '<div class="sk-wv-chips"><span class="dd-chip">📝 ' + words + ' words' + (r.minWords ? ' (' + r.minWords + '–' + (r.maxWords || r.minWords) + ' asked)' : '') + '</span>' +
+      '<span class="dd-chip">⏱️ ' + esc(typeof taTimeText === 'function' ? taTimeText(r) : (r.timeDisplay || '—')) + '</span>' +
+      '<span class="dd-chip ' + (list.length ? 'mistakes' : 'ok') + '">' + (r.grammarChecked === false ? '⚠️ Grammar not checked' : list.length + (list.length === 1 ? ' mistake' : ' mistakes')) + '</span></div>' +
+    '<div class="sk-wv-text">' + (String(r.text || '').trim() ? skWritingTextHtml(r) : '<i>(nothing written)</i>') + '</div>' +
+    (list.length ? '<ol class="sk-wv-mistakes">' + list.map(m => '<li><span class="sk-wv-bad">' + esc(m.bad || '') + '</span>' +
+      (m.fix ? ' → <span class="sk-wv-fix">' + esc(m.fix) + '</span>' : '') + (m.message ? '<small>' + esc(m.message) + '</small>' : '') + '</li>').join('') + '</ol>' : '') +
+    '<div class="sk-wv-band"><label for="skWvBand">Band</label>' +
+      '<input type="number" id="skWvBand" class="ta-input" min="1" max="9" step="0.5" value="' + (band !== null ? band : '') + '">' +
+      '<span class="sk-wv-how">' + (mark !== null ? '(your mark)' : '(estimated)') + '</span>' +
+      '<button type="button" class="mini-btn solid" onclick="skSaveWritingMark()">Save band</button>' +
+      (mark !== null ? '<button type="button" class="mini-btn" onclick="skSaveWritingMark(true)">↩️ Use the estimate</button>' : '') + '</div>' +
+  '</div>';
+}
+let skWvOpen = null;   // { r, modal }
+function viewSkillWriting(idx) {
+  const r = (window.__lastResultsMatches || [])[idx];
+  if (!r) return;
+  const modal = taModal('✍️ Writing', skWritingViewHtml(r), { wide: true, onClose: () => { skWvOpen = null; } });
+  skWvOpen = { r: r, modal: modal };
+}
+function skSaveWritingMark(clear) {
+  if (!skWvOpen) return;
+  const r = skWvOpen.r, marks = skMarks(), key = skMarkKey(r);
+  if (clear) delete marks[key];
+  else {
+    const input = skWvOpen.modal.body.querySelector('#skWvBand');
+    const v = Number(input && input.value);
+    if (!(v >= 1 && v <= 9) || Math.round(v * 2) !== v * 2) { showToast('Type a band from 1 to 9 (whole or half: 6, 6.5…).'); return; }
+    marks[key] = v;
+  }
+  try { localStorage.setItem(LS_SKILLS_MARKS, JSON.stringify(marks)); } catch (e) { showToast('⚠️ Couldn\'t save — the browser\'s storage is full.'); return; }
+  showToast(clear ? 'Back to the estimated band.' : '✅ Band ' + marks[key] + ' saved for ' + (r.name || 'the student') + '.', 'ok');
+  skWvOpen.modal.body.innerHTML = skWritingViewHtml(r);
+  if (typeof window.renderResultsTable === 'function' && document.getElementById('res-code-input')) {
+    try { window.onResultsCodeInput ? window.onResultsCodeInput() : window.renderResultsTable(); } catch (e) { /* ignore */ }
+  }
+  if (window.taCourseResultsChanged) window.taCourseResultsChanged();
+}
+
 /* ================= DICTATION ANSWERS, READABLE =================
    The original text with the student's mistakes marked on it: correct words
    plain, a wrong word shows the right word with what the student typed above

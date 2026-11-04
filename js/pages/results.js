@@ -502,13 +502,20 @@ function renderResultsTable(codeOverride) {
         viewBtn = '<button class="res-view-btn" type="button" onclick="viewNotesResult(' + idx + ')">👁 View Notes</button>';
       } else if (r.type === 'Maze' && Array.isArray(r.tries) && r.tries.length) {
         viewBtn = '<button class="res-view-btn" type="button" onclick="viewMazeResult(' + idx + ')">👁 ' + r.tries.length + (r.tries.length === 1 ? ' attempt' : ' attempts') + '</button>';
+      } else if (r.type === 'Writing course') {
+        viewBtn = '<button class="res-view-btn" type="button" onclick="viewSkillWriting(' + idx + ')">👁 View</button>';
       } else if (r.type === 'Dictation' && typeof r.dictationFeedback === 'string' && r.dictationFeedback.trim()) {
         viewBtn = '<button class="res-view-btn" type="button" onclick="viewDictationResult(' + idx + ')">👁 View</button>';
       }
       const initials = initialsForName(r.name);
       const avatarColor = avatarColorForName(r.name || '');
       let scoreCell;
-      if (typeof taResultScore(r) === 'number') {
+      if (r.type === 'Writing course') {
+        // no % for a writing: its band (the teacher's mark if given) and the words
+        const band = skWritingBandFor(r);
+        scoreCell = '<span class="res-band">' + (band !== null ? 'Band ' + band : '—') + '</span>' +
+          ' <small>' + (skTeacherMark(r) !== null ? 'your mark' : 'estimated') + (typeof r.words === 'number' ? ' · ' + r.words + ' words' : '') + '</small>';
+      } else if (typeof taResultScore(r) === 'number') {
         const pct = Math.max(0, Math.min(100, taResultScore(r)));
         const barColor = pct >= 80 ? 'var(--success)' : (pct >= 50 ? 'var(--warning)' : 'var(--danger)');
         scoreCell = '<div class="res-score-cell">' +

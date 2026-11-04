@@ -26,7 +26,8 @@ const MYEX_TYPE_ICONS = {
   'English Content': 'engcontent', 'Dictation': 'listening', 'Jungle': 'jungle', 'Bamboozle': 'bamboozle',
   'Presentation': 'presentation', 'Pronunciation': 'pronunciation', 'Test': 'test',
   'IELTS Listening': 'listening', 'IELTS Reading': 'reading', 'IELTS Writing': 'sentences',
-  'Homework': 'homework', 'Class': 'class'
+  'Homework': 'homework', 'Class': 'class',
+  'Listening course': 'sklistening', 'Reading course': 'skreading', 'Writing course': 'skwriting'
 };
 function myexTypeIconHtml(typeLabel, extraClass) {
   const key = MYEX_TYPE_ICONS[typeLabel];

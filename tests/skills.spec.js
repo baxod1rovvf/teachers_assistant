@@ -632,3 +632,137 @@ test.describe('course page', () => {
     expect((await page.request.get('/js/course-data.js')).status()).toBe(404);
   });
 });
+
+test.describe('results', () => {
+  // Made-up results for level 1 of Target (g1): Alice, Bobur and Cora from the test class.
+  const items = () => ['listening', 'reading', 'writing'].map((s, i) => ({
+    uid: 'sk' + s, code: ['LSN001', 'RDG001', 'WRT001'][i], typeLabel: s[0].toUpperCase() + s.slice(1) + ' course', groupId: 'g1', skill: s, level: 1,
+    title: 'Level 1 · Meeting people — ' + s + ' (Target)', contentSummary: 'Level 1', date: new Date().toISOString() }));
+  const links = () => JSON.stringify(Object.fromEntries(items().map(it => ['g1|' + it.skill + '|1', { uid: it.uid, code: it.code }])));
+  const TEXT = 'My name is Alice and I am fourteen years old. I live in a small town near the sea. I has two brothers and one sister. ' +
+    'My favourite colour is blue and I like music very much. On Sunday I play football with my friends in the park. I want to be a doctor.';
+  const docs = () => {
+    let n = 0, t = Date.now() - 3600000;
+    const d = x => Object.assign({ __id: 'sk' + (++n), v: 1, level: 1, date: new Date(t += 60000).toISOString(), submittedAt: new Date(t).toISOString(),
+      timeSeconds: 600, timeDisplay: '10:00' }, x);
+    const lr = (skill, code, id, name, correct, total) => d({ code, type: skill === 'listening' ? 'Listening course' : 'Reading course', skill, title: 'Level 1',
+      name, studentId: id, correct, total, score: Math.round(correct / total * 100), band: null, answers: [] });
+    const w = (id, name, band, words, extra) => d(Object.assign({ code: 'WRT001', type: 'Writing course', skill: 'writing', title: 'Level 1 · About me', name, studentId: id,
+      text: TEXT, words, minWords: 40, maxWords: 60, mistakes: 1, mistakeList: [{ bad: 'I has', fix: 'I have', message: 'Use "have" with I.' }],
+      grammarChecked: true, band, timeSeconds: 754, timeDisplay: '12:34' }, extra || {}));
+    return [
+      lr('listening', 'LSN001', '10001', 'Alice Test', 10, 10), lr('reading', 'RDG001', '10001', 'Alice Test', 15, 15), w('10001', 'Alice Test', 7, 54),
+      lr('listening', 'LSN001', '10002', 'Bobur Test', 6, 10), lr('listening', 'LSN001', '10002', 'Bobur Test', 8, 10),   // best try counts
+      lr('reading', 'RDG001', '10002', 'Bobur Test', 12, 15),
+      lr('listening', 'LSN001', '10003', 'Cora Test', 8, 10), lr('reading', 'RDG001', '10003', 'Cora Test', 12, 15), w('10003', 'Cora Test', 8, 48),
+      lr('listening', 'LSN001', '20001', 'Dilya Test', 10, 10)   // another group: not in Target's table
+    ].map(x => { if (x.band === null) delete x.band; return x; });
+  };
+  const open = async (page, context, url, extra) => {
+    await prepare(context, { docs: docs(), storage: Object.assign({ ta_recent_exercises: JSON.stringify(items()), ta_skills_links: links(), ta_course_group: 'g1' }, extra || {}) });
+    const errors = watchErrors(page);
+    await page.goto(url);
+    await page.waitForFunction(() => (window.__allResults || []).length >= 10, null, { timeout: 10000 });
+    await page.waitForTimeout(500);
+    await hideNotices(page);
+    await page.addStyleTag({ content: '#taNoticeStack { display: none !important; }' });
+    return errors;
+  };
+
+  test('writing results: the text, mistakes and a band the teacher can change', async ({ page, context }) => {
+    const errors = await open(page, context, '/results.html');
+    await page.evaluate(() => showExerciseResults('skwriting'));
+    const row = page.locator('.results-table tbody tr', { hasText: 'Alice Test' });
+    await expect(row).toContainText('Band 7');
+    await row.getByRole('button', { name: '👁 View' }).click();
+    const modal = page.locator('.sk-wv');
+    await expect(modal).toContainText('Alice Test');
+    await expect(modal).toContainText('Level 1 · About me');
+    await expect(modal).toContainText('I live in a small town near the sea.');
+    await expect(modal.locator('.sk-wv-text mark')).toHaveText('I has');
+    await expect(modal).toContainText('54 words');
+    await expect(modal).toContainText('12:34');
+    await expect(modal).toContainText('I have');
+    await expect(modal).toContainText('(estimated)');
+    const input = modal.getByLabel('Band');
+    await expect(input).toHaveValue('7');
+    await input.fill('6');
+    await modal.getByRole('button', { name: 'Save band' }).click();
+    expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skills_marks')))).toEqual({ 'WRT001|10001': 6 });
+    expect(await page.evaluate(() => skWritingBandFor(window.__allResults.find(r => r.type === 'Writing course' && r.studentId === '10001')))).toBe(6);
+    await expect(page.locator('.sk-wv')).toContainText('(your mark)');
+    await expect(row).toContainText('Band 6');
+    // a band outside 1–9 isn't saved
+    await page.locator('.sk-wv').getByLabel('Band').fill('12');
+    await page.locator('.sk-wv').getByRole('button', { name: 'Save band' }).click();
+    expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skills_marks')))).toEqual({ 'WRT001|10001': 6 });
+    expect(errors).toEqual([]);
+  });
+
+  test('results table: ranking with ties, missing skills, colours, picture', async ({ page, context }) => {
+    const errors = await open(page, context, '/course.html', { ta_skills_marks: JSON.stringify({ 'WRT001|10003': 6 }) });
+    await page.locator('.sk-skill-card', { hasText: 'Writing' }).click();
+    const tile = page.locator('.sk-level-tile').first();
+    await expect(page.locator('.sk-level-tile').nth(1).getByRole('button', { name: '🏆 Results table' })).toHaveCount(0);
+    await tile.getByRole('button', { name: '🏆 Results table' }).click();
+    const table = page.locator('.sk-rt');
+    await expect(table.locator('.sk-rt-head')).toContainText('Level 1 · Meeting people');
+    await expect(table.locator('.sk-rt-head')).toContainText('Target');
+    await expect(table.locator('.sk-rt-chip')).toHaveText([/Listening/, /Reading/, /Writing/]);
+    const rows = table.locator('.sk-rt-row');
+    await expect(rows).toHaveCount(3);
+    await expect(rows.locator('.sk-rt-name')).toHaveText(['Alice Test', 'Bobur Test', 'Cora Test']);
+    await expect(rows.locator('.sk-rt-place')).toHaveText(['🥇', '🥈', '🥉']);
+    // Alice: 9 · 9 · 7 → 8.5 C2 (band 8.5 is C2)
+    const a = rows.nth(0);
+    await expect(a.locator('.sk-rt-cell').nth(0)).toHaveClass(/good/);
+    await expect(a.locator('.sk-rt-cell').nth(0)).toContainText('9');
+    await expect(a.locator('.sk-rt-cell').nth(0)).toContainText('10 / 10');
+    await expect(a.locator('.sk-rt-cell').nth(2)).toContainText('54 words');
+    await expect(a.locator('.sk-rt-overall')).toContainText('8.5');
+    await expect(a.locator('.sk-rt-overall')).toContainText('C2');
+    // Bobur: best listening try 8/10 → 7.5; no writing
+    const b = rows.nth(1);
+    await expect(b.locator('.sk-rt-cell').nth(0)).toContainText('8 / 10');
+    await expect(b.locator('.sk-rt-cell').nth(0)).toContainText('7.5');
+    await expect(b.locator('.sk-rt-cell').nth(2)).toHaveText('—');
+    await expect(b.locator('.sk-rt-overall')).toContainText('7.5');
+    // Cora: the teacher's 6 replaces the estimate 8 → mid (yellow); overall 7 C1
+    const c = rows.nth(2);
+    await expect(c.locator('.sk-rt-cell').nth(2)).toHaveClass(/mid/);
+    await expect(c.locator('.sk-rt-cell').nth(2)).toContainText('6');
+    await expect(c.locator('.sk-rt-overall')).toContainText('C1');
+    await expect(table.locator('.sk-rt-foot')).toContainText('Group average: 7.5');
+    await expect(table.locator('.sk-rt-foot')).toContainText('3 students');
+    // ties share a place
+    const tie = await page.evaluate(() => {
+      localStorage.setItem('ta_skills_marks', JSON.stringify({ 'WRT001|10003': 7.5 }));
+      return skTableRows(1, 'g1').map(r => [r.name, r.place, r.overall, r.writing && r.writing.band]);
+    });
+    expect(tie).toEqual([['Alice Test', 1, 8.5, 7], ['Bobur Test', 2, 7.5, null], ['Cora Test', 2, 7.5, 7.5]]);
+    // the picture
+    const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: '⬇️ Download picture' }).click()]);
+    expect(download.suggestedFilename()).toBe('level-1-target.png');
+    const buf = require('fs').readFileSync(await download.path());
+    expect(buf.length).toBeGreaterThan(5000);
+    expect(buf.slice(1, 4).toString()).toBe('PNG');
+    expect(errors).toEqual([]);
+  });
+
+  test('Top 5: a Writing course result (no score) is done but unscored, not 0%', async ({ page, context }) => {
+    await open(page, context, '/index.html');
+    const top = await page.evaluate(() => getTopActiveStudents(5, 'g1').map(s => ({ name: s.name, pct: Math.round(s.avg), did: s.did, given: s.given })));
+    // Cora: listening 80 %, reading 80 %, writing left out → 80 % over 2 (not 53 % over 3)
+    expect(top.find(s => s.name === 'Cora Test')).toEqual({ name: 'Cora Test', pct: 80, did: 2, given: 2 });
+  });
+
+  test('the results table fits a phone: it scrolls inside its own box', async ({ page, context }) => {
+    const errors = await open(page, context, '/course.html');
+    await page.setViewportSize({ width: 390, height: 800 });
+    await page.locator('.sk-skill-card', { hasText: 'Listening' }).click();
+    await page.locator('.sk-level-tile').first().getByRole('button', { name: '🏆 Results table' }).click();
+    await expect(page.locator('.sk-rt-row')).toHaveCount(3);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+    expect(errors).toEqual([]);
+  });
+});
