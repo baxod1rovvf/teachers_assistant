@@ -104,7 +104,7 @@ The first stage is **Elementary: 10 levels**, each with a Listening, a Reading, 
   16–17 = 5, 13–15 = 4.5, 10–12 = 4, 8–9 = 3.5, 6–7 = 3, 4–5 = 2.5, 1–3 = 2 (rounded down to 1 below that), 0 = 0.
   This matches the teacher's picture (19/20 → 8.5, 16/20 → 7.5, 9/20 → 5.5, 7/20 → 4.5, 3/20 → 3).
 - **Writing estimate:** `3 + 3 × min(1, words / minimum words) + 3 × max(0, 1 − mistakes per 100 words / 10)`,
-  rounded to the nearest 0.5 and kept within 1–9. If the grammar check didn't run, the last part counts as 1.5.
+  rounded to the nearest 0.5 and kept within 1–9. If the grammar check didn't run, the last part counts as 1.5. A blank text (0 words) is band 1.
   The teacher's mark replaces it.
 - **Overall:** the average of the skills present, rounded like IELTS (x.25 → x.5, x.75 → next whole band).
 - **CEFR from Overall:** 8.5–9 C2 · 7–8 C1 · 5.5–6.5 B2 · 4–5 B1 · 3–3.5 A2 · below A1.
