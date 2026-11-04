@@ -20,7 +20,7 @@ var TA_SKILLS = {
         listening: {
           src: 'audio/skills/elem-1-listening.mp3',
           title: 'Checking in at a hotel',
-          intro: 'Listen to a man checking in at a hotel. Complete the form. Write ONE WORD or A NUMBER for each answer.',
+          intro: 'Listen to a man checking in at a hotel. Complete the form. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
           questions: [
             { q: 'Surname: _____', a: ['Thompson'] },
             { q: 'First name: _____', a: ['Steven'] },
@@ -86,7 +86,7 @@ var TA_SKILLS = {
             "Please write to me soon!",
           questions: [
             { type: 'tfng', q: 'Lucy lives in a big city.', a: ['True'], line: 1 },
-            { type: 'tfng', q: 'Lucy has a sister.', a: ['False'], line: 2 },
+            { type: 'tfng', q: 'Lucy lives with her grandparents.', a: ['False'], line: 2 },
             { type: 'tfng', q: 'Sam plays in a football team.', a: ['Not given'], line: 3 },
             { type: 'tfng', q: 'Lucy likes maths.', a: ['False'], line: 5 },
             { type: 'tfng', q: "Lucy's dog is friendly.", a: ['True'], line: 7 },
