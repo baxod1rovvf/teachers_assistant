@@ -174,3 +174,16 @@
 - [ ] **Step 2:** `PW_CHROMIUM=/opt/pw-browsers/chromium npx playwright test` → all pass.
 - [ ] **Step 3:** Screenshot Level 1 of each skill (desktop 1600×950 and phone 390×800) and look at them; fix layout overflows.
 - [ ] **Step 4: Commit and push** `claude/eager-johnson-4rf131` — no merge until the teacher says "merge it".
+
+### Task 9: Levels 2–5 content + recordings (teacher, 2026-11-04: "finish when level 5 is ready; levels 6–10 are for future") — runs before Task 8
+
+**Files:**
+- Modify: `js/skills-data.js` (levels 2–5 get full `listening`, `reading`, `writing`, `speaking` in Level 1's exact shape), `audio/skills/elementary-scripts.json` (add entries for levels 2–5)
+- Create: `audio/skills/elem-2-listening.mp3` … `elem-5-listening.mp3`
+- Test: `tests/skills.spec.js` (the `content` block already checks every level that has content; extend it so levels 1–5 must have all four skills and 6–10 must have none)
+
+Themes and tasks are the spec's table rows 2–5 (Family & friends · My home · My day · Food & cafés), including writing words/minutes and Part 2 seconds; difficulty a little higher each level (reading ~170, ~190, ~210, ~230 words). Same voices, spelling rules and checker loop as Task 2. Levels 6–10 stay "Coming soon".
+
+- [ ] **Step 1:** extend the content test (levels 1–5 complete; 6–10 theme only); run → FAIL.
+- [ ] **Step 2:** write levels 2–5 content and scripts; make the four recordings (every line ✓ or a known false alarm).
+- [ ] **Step 3:** run → PASS; full suite; commit `Skills course: Elementary levels 2–5`; push.
