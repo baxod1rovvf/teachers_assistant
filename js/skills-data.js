@@ -18,7 +18,7 @@ var TA_SKILLS = {
       {
         no: 1, theme: 'Meeting people', emoji: '👋',
         listening: {
-          src: 'audio/skills/elem-1-listening.mp3?v=2',
+          src: 'audio/skills/elem-1-listening.mp3?v=3',
           title: 'Checking in at a hotel',
           intro: 'Listen to a man checking in at a hotel. Complete the form. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
           questions: [
@@ -58,11 +58,14 @@ var TA_SKILLS = {
             { who: 'Man', text: "Room two one four. That's great, thank you.", answers: [] },
             { who: 'Woman', text: 'Can I have a phone number, please?', answers: [] },
             { who: 'Man', text: "Of course. It's oh seven seven double oh, nine double oh, one two three.", answers: [4] },
+            { who: 'Woman', text: "Oh seven seven double oh, nine double oh, one two three?", answers: [4] },
+            { who: 'Man', text: "Yes, that's right.", answers: [] },
             { who: 'Woman', text: 'Thank you. And where are you from?', answers: [] },
             { who: 'Man', text: "I'm from Brighton, on the south coast. I'm here for work this week.", answers: [5] },
             { who: 'Woman', text: "How nice. And you're staying with us for three nights, is that right?", answers: [6] },
             { who: 'Man', text: "Yes, that's right, three nights. What time is breakfast in the morning?", answers: [6] },
             { who: 'Woman', text: 'Breakfast starts at seven thirty, in the restaurant on the ground floor.', answers: [7] },
+            { who: 'Man', text: "Seven thirty? Great.", answers: [7] },
             { who: 'Man', text: 'Lovely. And where can I leave my car?', answers: [] },
             { who: 'Woman', text: 'Our car park is behind the hotel, on Kingsley Street.', answers: [8] },
             { who: 'Man', text: 'Sorry, could you spell the name of the street for me?', answers: [] },
@@ -71,6 +74,7 @@ var TA_SKILLS = {
             { who: 'Woman', text: "Yes, there's a big supermarket opposite the hotel. It's open until ten in the evening.", answers: [9] },
             { who: 'Man', text: "That's very useful. And what time is check-out on my last day?", answers: [] },
             { who: 'Woman', text: "Check-out is at eleven o'clock in the morning. Here's your key, and enjoy your stay!", answers: [10] },
+            { who: 'Man', text: "Eleven o'clock. OK, thank you.", answers: [10] },
             { who: 'Man', text: "Thank you very much. You've been very kind.", answers: [] }
           ]
         },
@@ -150,7 +154,7 @@ var TA_SKILLS = {
       {
         no: 2, theme: 'Family & friends', emoji: '👨‍👩‍👧',
         listening: {
-          src: 'audio/skills/elem-2-listening.mp3?v=2',
+          src: 'audio/skills/elem-2-listening.mp3?v=3',
           title: 'Joining a sports club',
           intro: 'Listen to a woman joining a sports club with her son. Complete the form. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
           questions: [
@@ -201,7 +205,11 @@ var TA_SKILLS = {
             { who: 'Woman', text: "That's H, A, M, P, T, O, N.", answers: [7] },
             { who: 'Man', text: "Thank you. And what's the best phone number for you?", answers: [] },
             { who: 'Woman', text: "It's oh seven seven double oh, nine double oh, four five two.", answers: [8] },
+            { who: 'Man', text: "Oh seven seven double oh, nine double oh, four five two?", answers: [8] },
+            { who: 'Woman', text: "Yes, that's right.", answers: [] },
             { who: 'Man', text: "Perfect. For you and Callum together, it's thirty pounds a month.", answers: [9] },
+            { who: 'Woman', text: "Thirty pounds a month?", answers: [9] },
+            { who: 'Man', text: "Yes, that's right.", answers: [] },
             { who: 'Woman', text: 'That sounds fine. Do we need anything for the first lesson?', answers: [] },
             { who: 'Man', text: 'Yes, please bring a photo of Callum for his membership card.', answers: [10] },
             { who: 'Woman', text: 'No problem. Thank you very much for your help.', answers: [] }
@@ -284,7 +292,7 @@ var TA_SKILLS = {
       {
         no: 3, theme: 'My home', emoji: '🏠',
         listening: {
-          src: 'audio/skills/elem-3-listening.mp3?v=2',
+          src: 'audio/skills/elem-3-listening.mp3?v=3',
           title: 'Renting a room',
           intro: 'Listen to a man phoning about a room to rent. Complete the notes. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
           questions: [
@@ -327,6 +335,8 @@ var TA_SKILLS = {
             { who: 'Woman', text: "Yes, there's a bed, a desk and a big wardrobe for your clothes.", answers: [5] },
             { who: 'Man', text: 'Great. How much is the rent?', answers: [] },
             { who: 'Woman', text: 'The rent is four hundred and fifty pounds a month. That includes the bills.', answers: [6] },
+            { who: 'Man', text: "Four hundred and fifty pounds?", answers: [6] },
+            { who: 'Woman', text: "Yes, that's right.", answers: [] },
             { who: 'Man', text: "That's fine for me. Do I share the bathroom?", answers: [] },
             { who: 'Woman', text: "Yes, you share it with two other people. They're both students, and they're very tidy.", answers: [7] },
             { who: 'Man', text: "And what's near the house? I like going running.", answers: [] },
@@ -335,6 +345,8 @@ var TA_SKILLS = {
             { who: 'Woman', text: "Yes, of course. Come on Thursday evening, after six o'clock.", answers: [9] },
             { who: 'Man', text: "Thursday is good for me. What's your phone number, in case I'm late?", answers: [9] },
             { who: 'Woman', text: 'My mobile number is oh seven seven double oh, nine double oh, seven one eight.', answers: [10] },
+            { who: 'Man', text: "Oh seven seven double oh, nine double oh, seven one eight?", answers: [10] },
+            { who: 'Woman', text: "Yes, that's right.", answers: [] },
             { who: 'Man', text: 'Thank you very much, Mrs Fletcher. See you on Thursday.', answers: [] }
           ]
         },
@@ -419,7 +431,7 @@ var TA_SKILLS = {
       {
         no: 4, theme: 'My day', emoji: '⏰',
         listening: {
-          src: 'audio/skills/elem-4-listening.mp3?v=2',
+          src: 'audio/skills/elem-4-listening.mp3?v=3',
           title: "Booking a doctor's appointment",
           intro: "Listen to a woman phoning a doctor's surgery. Complete the notes. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.",
           questions: [
@@ -471,6 +483,8 @@ var TA_SKILLS = {
             { who: 'Man', text: "And please arrive ten minutes early, because there's a short form to fill in.", answers: [8] },
             { who: 'Woman', text: "That's fine. Can I have the surgery's phone number, in case I'm late?", answers: [] },
             { who: 'Man', text: "Yes, it's oh one six three two, nine six oh, four seven one.", answers: [9] },
+            { who: 'Woman', text: "Oh one six three two, nine six oh, four seven one?", answers: [9] },
+            { who: 'Man', text: "Yes, that's right.", answers: [] },
             { who: 'Woman', text: "Thank you. And where can I park? I'll come by car.", answers: [] },
             { who: 'Man', text: "Our car park is very small, so it's better to park next to the library. It's just across the road.", answers: [10] },
             { who: 'Woman', text: 'Thank you very much for your help. See you on Wednesday.', answers: [] }
@@ -559,7 +573,7 @@ var TA_SKILLS = {
       {
         no: 5, theme: 'Food & cafés', emoji: '🍕',
         listening: {
-          src: 'audio/skills/elem-5-listening.mp3?v=2',
+          src: 'audio/skills/elem-5-listening.mp3?v=3',
           title: 'Ordering food for a party',
           intro: 'Listen to a man ordering food for a birthday party at a café. Complete the order form. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
           questions: [
@@ -602,6 +616,8 @@ var TA_SKILLS = {
             { who: 'Woman', text: 'Most children love our cheese and tomato pizzas.', answers: [5] },
             { who: 'Man', text: 'Pizzas sound great. How much are they?', answers: [] },
             { who: 'Woman', text: "They're eight pounds each, and one pizza is enough for three children.", answers: [6] },
+            { who: 'Man', text: "Eight pounds each?", answers: [6] },
+            { who: 'Woman', text: "Yes, that's right.", answers: [] },
             { who: 'Man', text: "That's good. But one boy can't eat cheese. Have you got anything else?", answers: [] },
             { who: 'Woman', text: 'Yes, we can make some chicken sandwiches for him.', answers: [7] },
             { who: 'Man', text: 'Lovely. And can you make a birthday cake?', answers: [] },
@@ -609,9 +625,13 @@ var TA_SKILLS = {
             { who: 'Man', text: "Please write Rosie. That's my daughter's name.", answers: [8] },
             { who: 'Man', text: "That's R, O, S, I, E.", answers: [8] },
             { who: 'Woman', text: "That's a beautiful name. So the total is one hundred and twenty pounds.", answers: [9] },
+            { who: 'Man', text: "One hundred and twenty pounds?", answers: [9] },
+            { who: 'Woman', text: "Yes, that's right.", answers: [] },
             { who: 'Man', text: "That's fine. Can I pay on the day?", answers: [] },
             { who: 'Woman', text: 'Yes, you can. Can I have a phone number, please?', answers: [] },
             { who: 'Man', text: "Sure. It's oh seven seven double oh, nine double oh, three six five.", answers: [10] },
+            { who: 'Woman', text: "Oh seven seven double oh, nine double oh, three six five?", answers: [10] },
+            { who: 'Man', text: "Yes, that's right.", answers: [] },
             { who: 'Woman', text: 'Thank you, Mr Barton. We will see you and Rosie on Sunday!', answers: [] }
           ]
         },

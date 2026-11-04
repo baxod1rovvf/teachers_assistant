@@ -94,7 +94,7 @@ def line_ok(text, h):
 def best_line(text, voice, speed):
     if not ASR: return say(text, voice, speed)
     first = None
-    for sp in [speed, speed - 0.06, speed + 0.06, speed - 0.12]:
+    for sp in [speed, speed - 0.06, speed + 0.04, speed - 0.12]:
         audio, sr = say(text, voice, sp)
         if first is None: first = (audio, sr)
         pad = np.concatenate([np.zeros(int(sr * 0.3), dtype=audio.dtype), audio, np.zeros(int(sr * 0.3), dtype=audio.dtype)])
@@ -125,7 +125,9 @@ def stretch_pauses(x, sr, target):
 
 for item in spec:
     parts, sr = [], 24000
-    for i, (voice, text) in enumerate(item['lines']):
+    for i, line in enumerate(item['lines']):
+        voice, text = line[0], line[1]
+        write_pause = line[2] if len(line) > 2 else 0          # seconds for students to write after an answer
         letters = re.findall(r'(?:double )?[A-Z]', text) if SPELLING.match(text) else None
         if letters:
             # Spelling (teacher, 2026-11-03: "it should be iy double em ey", and slow for beginners). A letter said on its own
@@ -133,13 +135,15 @@ for item in spec:
             # pauses between the letters are stretched a little (teacher, 2026-11-04: 0.9 s was too choppy → 0.45 s).
             audio, sr = best_spelling(letters, voice)
             parts.append(stretch_pauses(audio, sr, 0.45))
-            parts.append(np.zeros(int(sr * 1.2), dtype=audio.dtype))
+            parts.append(np.zeros(int(sr * max(1.2, write_pause)), dtype=audio.dtype))
             continue
         # numbers ("oh nine one, double five…") a little slower than the rest
-        speed = 0.76 if re.search(r'\b(oh|double)\b', text) else 0.85
+        # Like a real exam recording (teacher's sample, 2026-11-04): normal speed, quick turns between speakers, and a
+        # real pause after each answer so students can write. Phone numbers a little slower.
+        speed = 0.8 if re.search(r'\b(oh|double)\b', text) else 0.95
         audio, sr = best_line(text, voice, speed)
         parts.append(audio)
-        gap = 1.4 if i == 0 or voice == 'bf_emma' else 0.8                  # a longer pause after the narrator
+        gap = 2.0 if i == 0 else max(0.5, write_pause)
         parts.append(np.zeros(int(sr * gap), dtype=audio.dtype))
     wav = out_dir + '/tmp.wav'
     sf.write(wav, np.concatenate(parts), sr)
