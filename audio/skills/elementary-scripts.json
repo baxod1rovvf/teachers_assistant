@@ -1,0 +1,34 @@
+[
+  {
+    "label": "Level 1 · Meeting people — a hotel check-in",
+    "src": "audio/skills/elem-1-listening.mp3",
+    "lines": [
+      ["af_heart", "Level one. You will hear a conversation at a hotel. Listen and complete the form."],
+      ["af_heart", "Good afternoon, and welcome to the Riverside Hotel. How can I help you?"],
+      ["bm_george", "Hello. I've got a booking for tonight. My surname is Thompson."],
+      ["af_heart", "Lovely. Could you spell your surname for me, please?"],
+      ["bm_george", "T. H. O. M. P. S. O. N."],
+      ["af_heart", "Thank you. And what's your first name?"],
+      ["bm_george", "People often write my first name wrong, so I'll spell it for you."],
+      ["bm_george", "S. T. E. V. E. N."],
+      ["af_heart", "Perfect, thank you. Your room is number two one four. It's on the second floor."],
+      ["bm_george", "Room two one four. That's great, thank you."],
+      ["af_heart", "Can I have a phone number, please?"],
+      ["bm_george", "Of course. It's oh seven seven double oh, nine double oh, one two three."],
+      ["af_heart", "Thank you. And where are you from?"],
+      ["bm_george", "I'm from Brighton, on the south coast. I'm here for work this week."],
+      ["af_heart", "How nice. And you're staying with us for three nights, is that right?"],
+      ["bm_george", "Yes, that's right, three nights. What time is breakfast in the morning?"],
+      ["af_heart", "Breakfast starts at seven thirty, in the restaurant on the ground floor."],
+      ["bm_george", "Lovely. And where can I leave my car?"],
+      ["af_heart", "Our car park is behind the hotel, on Kingsley Street."],
+      ["bm_george", "Sorry, could you spell the name of the street for me?"],
+      ["af_heart", "K. I. N. G. S. L. E. Y."],
+      ["bm_george", "Thanks. Is there a shop near here? I need a few things."],
+      ["af_heart", "Yes, there's a big supermarket opposite the hotel. It's open until ten in the evening."],
+      ["bm_george", "That's very useful. And what time is check-out on my last day?"],
+      ["af_heart", "Check-out is at eleven o'clock in the morning. Here's your key, and enjoy your stay!"],
+      ["bm_george", "Thank you very much. You've been very kind."]
+    ]
+  }
+]

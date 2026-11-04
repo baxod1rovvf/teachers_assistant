@@ -71,7 +71,8 @@ def words(t):
         if x in NUMS: out.append(str(NUMS[x]))
         elif x in ORD: out.append(str(ORD[x]))
         elif x == 'oh' and (i + 1 < len(w) and (w[i + 1] in NUMS or w[i + 1] == 'double') or i > 0 and w[i - 1] in NUMS): out.append('0')
-        elif x == 'double' and i + 1 < len(w): out.append(str(NUMS.get(w[i + 1], w[i + 1]))); out.append(str(NUMS.get(w[i + 1], w[i + 1]))); i += 2; continue
+        elif x == 'double' and i + 1 < len(w):                          # "double oh" → 0 0, "double five" → 5 5
+            d = str(0 if w[i + 1] == 'oh' else NUMS.get(w[i + 1], w[i + 1])); out.append(d); out.append(d); i += 2; continue
         elif re.fullmatch(r'\d+(st|nd|rd|th)', x): out.append(re.sub(r'\D', '', x))
         elif re.fullmatch(r'\d+', x): out.extend(list(x) if len(x) >= 3 else [x])
         elif x == 'okay': out.append('ok')
