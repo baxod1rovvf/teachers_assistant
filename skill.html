@@ -4,9 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Skill — Loom</title>
+<meta name="theme-color" content="#FFF5E1">
+<link rel="icon" href="images/app/favicon-ta-64.png" type="image/png">
+<!-- The Skills course's student page: skill.html?s=<listening|reading|writing|speaking>&lv=<1…10>&c=<code> (&preview=1 = the teacher's Try). -->
+<link rel="stylesheet" href="css/style.css?v=20261103m">
 <script src="js/skill-bands.js?v=20261103m"></script>
 <script src="js/skills-data.js?v=20261103m"></script>
+<script src="js/student-theme.js?v=20261103m"></script>
 </head>
-<body>
+<body class="light-theme sk-body">
+<main class="sk-app" id="skApp" aria-live="polite"></main>
+<script>
+  // the same student look as every exercise file (taApplyStudentTheme in common.js puts it last in the page)
+  if (typeof TA_STUDENT_THEME_CSS !== 'undefined') {
+    var taTheme = document.createElement('style');
+    taTheme.id = 'ta-student-theme';
+    taTheme.textContent = TA_STUDENT_THEME_CSS;
+    document.body.appendChild(taTheme);
+  }
+</script>
+<script type="module" src="js/skill-player.js?v=20261103m"></script>
 </body>
 </html>
