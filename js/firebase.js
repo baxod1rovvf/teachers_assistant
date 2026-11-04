@@ -398,6 +398,12 @@ window.startPlainCompletionsSync = function () {
       if (e.code) codes.push(e.code);
     } else if (e.code) codes.push(e.code);
   });
+  // Skills course: a level's code is kept in ta_skills_links even if its My Exercises item was deleted
+  // (the link still works), so its results still reach the Course page's results table
+  try {
+    const links = window.taSkillsLinks ? window.taSkillsLinks() : {};
+    Object.keys(links).forEach(k => { const v = links[k]; if (v && typeof v === 'object' && v.code) codes.push(v.code); });
+  } catch (e) { /* ignore */ }
   plainCodes = new Set(codes);
   rsEnsureCodes(codes).then(rsDerivePlain);
 };

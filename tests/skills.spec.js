@@ -756,6 +756,49 @@ test.describe('results', () => {
     expect(top.find(s => s.name === 'Cora Test')).toEqual({ name: 'Cora Test', pct: 80, did: 2, given: 2 });
   });
 
+  test('"Delete all results" hides older course results only: a newer one sent without builtAt still shows', async ({ page, context }) => {
+    const errors = await open(page, context, '/results.html', { ta_code_resets: '{}' });
+    await page.evaluate(() => setLocalReset('LSN001', new Date(Date.now() - 30 * 60000).toISOString()));   // after every seeded result
+    await page.evaluate(() => showExerciseResults('sklistening'));
+    await expect(page.locator('.results-table tbody tr')).toHaveCount(0);
+    await page.evaluate(() => window.__studentSubmits({ v: 1, code: 'LSN001', type: 'Listening course', skill: 'listening', level: 1, title: 'Level 1',
+      name: 'Alice Test', studentId: '10001', correct: 9, total: 10, score: 90, band: 8.5, answers: [], timeSeconds: 300, timeDisplay: '05:00', date: new Date().toISOString() }));
+    await expect.poll(async () => { await page.evaluate(() => onResultsCodeInput()); return page.locator('.results-table tbody tr', { hasText: 'Alice Test' }).count(); }).toBe(1);
+    expect(errors).toEqual([]);
+  });
+
+  test('the student page sends builtAt (when it was opened)', async () => {
+    const src = require('fs').readFileSync(require('path').join(__dirname, '../js/skill-player.js'), 'utf8');
+    expect((src.match(/builtAt: SK_OPENED_AT/g) || []).length).toBe(2);
+  });
+
+  test('a fake writing result can\'t add attributes: quotes in a mistake are shown as text', async ({ page, context }) => {
+    const errors = await open(page, context, '/results.html');
+    await page.evaluate(() => window.__studentSubmits({ v: 1, code: 'WRT001', type: 'Writing course', skill: 'writing', level: 1, title: 'Level 1',
+      name: 'Bobur Test', studentId: '10002', text: 'I has a cat.', words: 4, minWords: 40, maxWords: 60, mistakes: 1, grammarChecked: true, band: 4,
+      mistakeList: [{ bad: 'I has', fix: 'x" onmouseover="alert(1)', message: "It's \"wrong\"" }], timeSeconds: 60, timeDisplay: '01:00', date: new Date().toISOString() }));
+    await page.evaluate(() => showExerciseResults('skwriting'));
+    const row = page.locator('.results-table tbody tr', { hasText: 'Bobur Test' });
+    await expect(row).toHaveCount(1);
+    await row.getByRole('button', { name: '👁 View' }).click();
+    const mark = page.locator('.sk-wv-text mark');
+    await expect(mark).toHaveText('I has');
+    expect(await mark.getAttribute('onmouseover')).toBeNull();
+    expect(await mark.getAttribute('title')).toBe('→ x" onmouseover="alert(1)');
+    expect(await page.locator('.sk-wv [onmouseover]').count()).toBe(0);
+    await expect(page.locator('.sk-wv-mistakes')).toContainText('x" onmouseover="alert(1)');
+    expect(errors).toEqual([]);
+  });
+
+  test('the Course page loads a level\'s results by itself, even when its My Exercises item was deleted', async ({ page, context }) => {
+    const errors = await open(page, context, '/course.html', { ta_recent_exercises: JSON.stringify(items().filter(i => i.skill !== 'reading')) });
+    expect(await page.evaluate(() => window.__allResults.filter(r => r.code === 'RDG001').length)).toBe(3);
+    await page.locator('.sk-skill-card', { hasText: 'Reading' }).click();
+    await page.locator('.sk-level-tile').first().getByRole('button', { name: '🏆 Results table' }).click();
+    await expect(page.locator('.sk-rt-row').first().locator('.sk-rt-cell').nth(1)).toContainText('15 / 15');
+    expect(errors).toEqual([]);
+  });
+
   test('the results table fits a phone: it scrolls inside its own box', async ({ page, context }) => {
     const errors = await open(page, context, '/course.html');
     await page.setViewportSize({ width: 390, height: 800 });

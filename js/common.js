@@ -1472,7 +1472,11 @@ function resetCutoffFor(code) {
 
 function isExpiredResult(r, cutoff) {
   if (!cutoff) return false;
-  if (!r.builtAt) return true;   // built before this app stamped its files
+  if (!r.builtAt) {
+    // skill-course pages (skill.html) sent no builtAt before 2026-11-04: their own date tells
+    if (/ course$/.test(String(r.type || '')) && r.date) return r.date <= cutoff;
+    return true;   // built before this app stamped its files
+  }
   return r.builtAt <= cutoff;
 }
 
@@ -1652,21 +1656,23 @@ function skWritingBandFor(r) {
 }
 window.skWritingBandFor = skWritingBandFor;
 /* The text with each mistake underlined: the list has no positions, so each one is looked for after the one before. */
+/* text for inside a "…" or '…' attribute (escapeForHtml leaves quotes alone) */
+function taAttr(v) { return escapeForHtml(String(v == null ? '' : v)).replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
 function skWritingTextHtml(r) {
-  const text = String(r.text || ''), esc = escapeForHtml;
+  const text = String(r.text || ''), esc = v => escapeForHtml(String(v == null ? '' : v));
   let html = '', pos = 0;
   (Array.isArray(r.mistakeList) ? r.mistakeList : []).forEach(m => {
     const bad = String((m && m.bad) || '');
     if (!bad) return;
     const at = text.indexOf(bad, pos);
     if (at < 0) return;
-    html += esc(text.slice(pos, at)) + '<mark title="' + esc(m.fix ? '→ ' + m.fix : (m.message || '')) + '">' + esc(bad) + '</mark>';
+    html += esc(text.slice(pos, at)) + '<mark title="' + taAttr(m.fix ? '→ ' + m.fix : (m.message || '')) + '">' + esc(bad) + '</mark>';
     pos = at + bad.length;
   });
   return html + esc(text.slice(pos));
 }
 function skWritingViewHtml(r) {
-  const esc = escapeForHtml, list = Array.isArray(r.mistakeList) ? r.mistakeList : [];
+  const esc = v => escapeForHtml(String(v == null ? '' : v)), list = (Array.isArray(r.mistakeList) ? r.mistakeList : []).filter(m => m && typeof m === 'object');
   const mark = skTeacherMark(r), band = skWritingBandFor(r);
   const words = typeof r.words === 'number' ? r.words : String(r.text || '').trim().split(/\s+/).filter(Boolean).length;
   return '<div class="sk-wv">' +

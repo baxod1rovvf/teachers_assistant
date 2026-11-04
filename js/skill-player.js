@@ -36,6 +36,8 @@ const SK = window.SK = {
   studentId: ''
 };
 let startedAt = Date.now();
+// sent as builtAt: Loom's Results hide results "built" before a "Delete all results" (isExpiredResult in common.js)
+const SK_OPENED_AT = new Date().toISOString();
 let lastPayload = null;
 
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -308,7 +310,7 @@ function submit(level, content, info) {
   lastPayload = {
     v: 1, code: SK.code, type: info.type, title: `Level ${level.no} · ${level.theme} — ${info.name}`, level: level.no, skill: SK.skill,
     name: SK.name, studentId: SK.studentId, correct, total, score: Math.round(correct / total * 100), band: skBand(correct, total),
-    answers, timeSeconds: secs, timeDisplay: pad(Math.floor(secs / 60)) + ':' + pad(secs % 60), date: new Date().toISOString()
+    answers, timeSeconds: secs, timeDisplay: pad(Math.floor(secs / 60)) + ':' + pad(secs % 60), date: new Date().toISOString(), builtAt: SK_OPENED_AT
   };
   lastPayload.__id = skResultId(lastPayload);   // the same record on every try and on "Send again"
   const pct = correct / total;
@@ -566,7 +568,7 @@ async function submitWriting(level, W, timeUp) {
     name: SK.name, studentId: SK.studentId, text, words, minWords: W.minWords, maxWords: W.maxWords,
     mistakes: check.matches.length,
     mistakeList: check.matches.map(m => ({ bad: text.slice(m.offset, m.offset + m.length), fix: m.replacements[0] || '', message: m.message })),
-    grammarChecked: check.ok, band, timeSeconds: secs, timeDisplay: fmtClock(secs), date: new Date().toISOString()
+    grammarChecked: check.ok, band, timeSeconds: secs, timeDisplay: fmtClock(secs), date: new Date().toISOString(), builtAt: SK_OPENED_AT
   };
   lastPayload.__id = skResultId(lastPayload);
   $('#skActions .sk-result').insertAdjacentHTML('afterbegin', `<div class="sk-score sk-band"><span class="sk-score-n">${band}</span>
