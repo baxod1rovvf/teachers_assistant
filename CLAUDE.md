@@ -545,6 +545,24 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   reading {title, text, questions (tfng/gap/choose, `line` = sentence index)}, writing {topic, points, minutes, minWords, maxWords},
   speaking {words, questions[{q, use}], part2}` like level 1; add its entry to `elementary-scripts.json`; run the audio command; keep
   `transcript` in step with the script; English names only, no Uzbek. `tests/skills.spec.js`.
+- **🎧 Making course listening audio — do it exactly like this (teacher approved levels 1–5 on 2026-11-04).** When the teacher asks
+  for a new level's recording (or to remake one), follow these steps; don't invent a new way. Setup in the scratchpad (not the repo):
+  `python3 -m venv venv && ./venv/bin/pip install kokoro-onnx soundfile sherpa-onnx onnx`; download from GitHub releases (Hugging Face
+  is blocked here) `kokoro-v1.0.int8.onnx` (save as `kokoro.onnx`) + `voices-v1.0.bin` (as `voices.bin`) from
+  `thewh1teagle/kokoro-onnx` release `model-files-v1.0`, and `sherpa-onnx-whisper-base.en.tar.bz2` from `k2-fsa/sherpa-onnx` release
+  `asr-models` (unpack). Write the script lines in `audio/skills/elementary-scripts.json` (`[voice, text]` or `[voice, text, 3.5]` =
+  pause to write after an answer) and the same lines in the level's `transcript` in `js/skills-data.js`. Run
+  `ASR_DIR=<whisper folder> ./venv/bin/python tools/make-course-audio.py <kokoro folder> audio/skills/elementary-scripts.json audio/skills <level>`
+  (the tool adds the timings model `kokoro-timed.onnx` itself). Every spelling must print ✓; "⚠️ line" about digits/"Dr."/"O" for
+  "oh" are false alarms. Then bump `?v=` on that level's `src`, `npm run stamp`, run the tests, **send the teacher the mp3
+  (SendUserFile) to listen before merging**. What the teacher asked for, all built into the tool — keep it:
+  two voices `af_heart` (woman, narrator) + `am_michael` (man), American accent (the British voice dropped its r's); normal speed (0.95),
+  the next speaker answers at once (0.25 s); short natural turns; numbers, prices and phone numbers read back by the other speaker
+  ("Thirty pounds a month?" "Yes, that's right.") so students hear them twice, then a ~3.5 s pause to write; **spelling slow and
+  complete**: a calm pause, a full "That's.", a pause, then every letter said in full ("ess", not "f") with an even ~1.3 s per letter
+  — never let letters run together ("tho … m … pso … n") or get cut off; phone numbers digit by digit with a longer pause after each
+  group; spelled names and phone numbers in their own lines; full sentences (one-word lines garble). Real human voices/acting can't be
+  made with this tool — say so if asked, and never copy a real person's voice.
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
   too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except
