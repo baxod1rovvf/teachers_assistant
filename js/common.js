@@ -475,6 +475,32 @@ const TA_APP_URL = /^https?:$/.test(location.protocol) ? new URL('.', location.h
    the microphone on a web page. After the 7 days the link stays expired.
    See CLAUDE.md for the limits this runs into. */
 const TA_PLAY_DAYS = 7;
+/* Skills course (course.html, skill.html): the students' link for a level — skill.html?s=<skill>&lv=<n>&c=<code>
+   (speaking: no code). Absolute on the real site (https), else relative; window.skAppUrl lets a test pretend.
+   ta_skills_links = { "<groupId>|<skill>|<level>": { uid, code } } (before 2026-11-04's fix: just the uid). */
+function taSkillLink(skill, level, code) {
+  const base = window.skAppUrl || (/^https:/.test(TA_APP_URL) ? TA_APP_URL : '');
+  return base + 'skill.html?s=' + encodeURIComponent(skill) + '&lv=' + Number(level) + (code ? '&c=' + encodeURIComponent(code) : '');
+}
+function taSkillsLinks() {
+  try { const v = JSON.parse(localStorage.getItem('ta_skills_links') || 'null'); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; }
+}
+/* { skill, level } of a My Exercises "… course" item, or null for any other item */
+function taSkillItemInfo(item) {
+  if (!item || !/ course$/.test(item.typeLabel || '')) return null;
+  if (item.skill && item.level) return { skill: item.skill, level: Number(item.level) };
+  const links = taSkillsLinks();
+  for (const k in links) {
+    const v = links[k], uid = v && typeof v === 'object' ? v.uid : v;
+    const m = /\|(listening|reading|writing)\|(\d+)$/.exec(k);
+    if (uid === item.uid && m) return { skill: m[1], level: Number(m[2]) };
+  }
+  return null;
+}
+function taSkillItemLink(item) {
+  const i = taSkillItemInfo(item);
+  return i && item.code ? taSkillLink(i.skill, i.level, item.code) : '';
+}
 function taPlayUrl(uid) { return /^https:/.test(TA_APP_URL) && uid ? TA_APP_URL + 'play.html?x=' + encodeURIComponent(uid) : ''; }
 // online now, and for at least another hour
 function taPlayLive(item) {

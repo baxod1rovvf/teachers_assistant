@@ -1,8 +1,10 @@
 /* ================= COURSE — the four skill courses (2026-11-04) =================
    Listening, Reading, Writing and Speaking, Elementary, 10 levels each (content: js/skills-data.js, TA_SKILLS).
    The students' page is skill.html?s=<skill>&lv=<n>&c=<code> (speaking: no code — nothing is sent).
-   - ta_skills_links  { "<groupId>|<skill>|<level>": exercise uid }  (synced, in the backup) — the My Exercises item
-                      made at the first "Copy link" for that level + skill + group, so Results / Statistics / Top 5 work
+   - ta_skills_links  { "<groupId>|<skill>|<level>": { uid, code } }  (synced, in the backup) — the My Exercises item
+                      made at the first "Copy link" for that level + skill + group, so Results / Statistics / Top 5 work;
+                      the code is kept so a sent link stays valid even if the item is deleted (it comes back the same).
+                      The link itself: taSkillLink / taSkillItemLink in common.js (My Exercises uses them too).
    - ta_skills_marks  the teacher's writing marks (Results, Task 7; synced, in the backup)
    - ta_course_group  the group picked on this device (not synced)
    - ta_skills_open   the skill open on this device (not synced) */
@@ -19,9 +21,6 @@ const SK_SKILLS = [
 function skSkill(key) { return SK_SKILLS.find(s => s.key === key) || null; }
 function skLevels() { return (window.TA_SKILLS && TA_SKILLS.elementary && TA_SKILLS.elementary.levels) || []; }
 function skLevel(no) { return skLevels().find(l => l.no === Number(no)) || null; }
-function skReadLinks() {
-  try { const v = JSON.parse(localStorage.getItem(LS_SKILLS_LINKS) || 'null'); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; }
-}
 function skWriteLinks(v) {
   try { localStorage.setItem(LS_SKILLS_LINKS, JSON.stringify(v)); } catch (e) { showToast('⚠️ Couldn\'t save — the browser\'s storage is full.'); }
 }
@@ -41,43 +40,58 @@ function skGroup(g) {
   const id = g || skGroupId();
   return getStudentGroups().find(x => x.id === id) || null;
 }
-/* The site's address: absolute on the real site (https), else relative. window.skAppUrl lets a test pretend. */
-function skBaseUrl() {
-  if (window.skAppUrl) return window.skAppUrl;
-  return /^https:/.test(TA_APP_URL) ? TA_APP_URL : '';
-}
 function skLinkKey(skill, level, group) { return group.id + '|' + skill + '|' + Number(level); }
+/* { uid, code } kept for a level + skill + group (an old entry was just the uid) */
+function skLinkEntry(skill, level, g) {
+  const v = taSkillsLinks()[skLinkKey(skill, level, g)];
+  if (!v) return null;
+  if (typeof v === 'object') return v.uid ? v : null;
+  const item = getRecentExercises().find(e => e.uid === v);
+  return { uid: v, code: item ? item.code : '' };
+}
 function skItemFor(skill, level, group) {
   const g = skGroup(group);
   if (!g) return null;
-  const uid = skReadLinks()[skLinkKey(skill, level, g)];
-  return uid ? getRecentExercises().find(e => e.uid === uid) || null : null;
+  const e = skLinkEntry(skill, level, g);
+  return e ? getRecentExercises().find(x => x.uid === e.uid) || null : null;
 }
-/* The My Exercises item for a level + skill + group: made at the first call, the same one after that. */
+/* The My Exercises item for a level + skill + group: made at the first call, the same one after that.
+   A link once sent must keep working: if the teacher deleted the item, it comes back with the same code and uid. */
 function skEnsureItem(skill, level, group) {
   const g = skGroup(group), lv = skLevel(level), s = skSkill(skill);
   if (!g || !lv || !s || skill === 'speaking') return null;
-  const have = skItemFor(skill, level, g);
-  if (have) return have;
-  const uid = generateExerciseUid();
+  const key = skLinkKey(skill, level, g), kept = skLinkEntry(skill, level, g);
+  const list = getRecentExercises();
+  let item = kept ? list.find(e => e.uid === kept.uid) : null;
+  if (item) {
+    if (!item.skill || typeof taSkillsLinks()[key] !== 'object') {   // made before skill/level/code were kept
+      item.skill = skill; item.level = lv.no; saveRecentExercises(list);
+      const links = taSkillsLinks(); links[key] = { uid: item.uid, code: item.code }; skWriteLinks(links);
+    }
+    return item;
+  }
+  const uid = (kept && kept.code && kept.uid) || generateExerciseUid();
+  const code = (kept && kept.code) || generateClassCode();
   // the Create page's form (if it's loaded in the background) has nothing to do with this item
   const snap = window.taSnapshotForMyExercises;
   window.taSnapshotForMyExercises = null;
   try {
     pushRecentExercise({ title: 'Level ' + lv.no + ' · ' + lv.theme + ' — ' + s.label + ' (' + g.name + ')', typeLabel: s.label + ' course',
-      code: generateClassCode(), uid: uid, groupId: g.id, contentSummary: 'Level ' + lv.no + ' · ' + s.label });
+      code: code, uid: uid, groupId: g.id, contentSummary: 'Level ' + lv.no + ' · ' + s.label });
   } finally { window.taSnapshotForMyExercises = snap; }
-  const links = skReadLinks();
-  links[skLinkKey(skill, level, g)] = uid;
+  const now = getRecentExercises();
+  item = now.find(e => e.uid === uid) || null;
+  if (item) { item.skill = skill; item.level = lv.no; saveRecentExercises(now); }
+  const links = taSkillsLinks();
+  links[key] = { uid: uid, code: code };
   skWriteLinks(links);
-  return getRecentExercises().find(e => e.uid === uid) || null;
+  return item;
 }
 /* The students' link. Listening/Reading/Writing carry the group's code (the item is made if needed). */
 function skLinkFor(skill, level, group) {
-  const base = skBaseUrl() + 'skill.html?s=' + encodeURIComponent(skill) + '&lv=' + Number(level);
-  if (skill === 'speaking') return base;
+  if (skill === 'speaking') return taSkillLink(skill, level);
   const item = skEnsureItem(skill, level, group);
-  return item ? base + '&c=' + encodeURIComponent(item.code) : '';
+  return item ? taSkillLink(skill, level, item.code) : '';
 }
 window.skLinkFor = skLinkFor;
 window.skEnsureItem = skEnsureItem;
@@ -134,7 +148,7 @@ function skOpen(key) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function skTry(skill, level) {
-  const w = window.open(skBaseUrl() + 'skill.html?s=' + encodeURIComponent(skill) + '&lv=' + Number(level) + '&preview=1', '_blank');
+  const w = window.open(taSkillLink(skill, level) + '&preview=1', '_blank');
   if (!w) showToast('⚠️ The browser blocked the new tab. Allow pop-ups for this site and press again.');
 }
 function skCopyLink(skill, level) {

@@ -552,7 +552,8 @@ test.describe('course page', () => {
     const item = await page.evaluate(() => getRecentExercises()[0]);
     expect(item).toMatchObject({ typeLabel: 'Listening course', groupId: group.id, title: 'Level 1 · Meeting people — Listening (' + group.name + ')', contentSummary: 'Level 1 · Listening' });
     expect(first).toContain('&c=' + item.code);
-    expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skills_links')))).toEqual({ [group.id + '|listening|1']: item.uid });
+    expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skills_links')))).toEqual({ [group.id + '|listening|1']: { uid: item.uid, code: item.code } });
+    expect(item).toMatchObject({ skill: 'listening', level: 1 });
     await page.evaluate(() => navigator.clipboard.writeText(''));
     await tile.getByRole('button', { name: /Copy link for/ }).click();
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(first);
@@ -578,6 +579,49 @@ test.describe('course page', () => {
     await expect(page.locator('.sk-level-tile').first()).toContainText('Add a group on the Students page first');
     await expect(page.getByRole('button', { name: /Copy link for/ })).toHaveCount(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+    expect(errors).toEqual([]);
+  });
+
+  test('a sent link stays valid: the item deleted in My Exercises comes back with the same code', async ({ page, context }) => {
+    const errors = await open(page, context);
+    await page.evaluate(PRETEND_HTTPS);
+    await page.locator('.sk-skill-card', { hasText: 'Reading' }).click();
+    const tile = page.locator('.sk-level-tile').first();
+    await tile.getByRole('button', { name: /Copy link for/ }).click();
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(/skill\.html\?s=reading&lv=1&c=[A-Z0-9]{6}$/);
+    const first = await page.evaluate(() => navigator.clipboard.readText());
+    const item = await page.evaluate(() => getRecentExercises()[0]);
+    await page.evaluate(uid => removeRecentExercise(uid), item.uid);
+    expect(await page.evaluate(uid => getRecentExercises().filter(e => e.uid === uid).length, item.uid)).toBe(0);
+    await page.evaluate(() => { renderCourse(); return navigator.clipboard.writeText(''); });
+    await expect(tile.getByRole('button', { name: '📊 View Results' })).toHaveCount(0);
+    await tile.getByRole('button', { name: /Copy link for/ }).click();
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(first);
+    const again = await page.evaluate(uid => getRecentExercises().filter(e => e.uid === uid), item.uid);
+    expect(again).toHaveLength(1);
+    expect(again[0]).toMatchObject({ code: item.code, title: item.title, typeLabel: 'Reading course', groupId: item.groupId, skill: 'reading', level: 1 });
+    expect(errors).toEqual([]);
+  });
+
+  test('My Exercises: ⋯ on a course item copies its skill.html link and has no Redownload (old items found through ta_skills_links)', async ({ page, context }) => {
+    // an item made before skill/level were kept on it: only the uid in ta_skills_links
+    const old = { title: 'Level 1 · Meeting people — Listening (Target)', typeLabel: 'Listening course', code: 'LSN123', uid: 'skold1', groupId: 'g1',
+      contentSummary: 'Level 1 · Listening', date: new Date().toISOString(), disabled: false };
+    await prepare(context, { storage: { ta_recent_exercises: JSON.stringify([old]), ta_skills_links: JSON.stringify({ 'g1|listening|1': 'skold1' }) } });
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    const errors = watchErrors(page);
+    await page.addInitScript(() => { window.skAppUrl = 'https://example.github.io/teachers_assistant/'; });
+    await page.goto('/my-exercises.html');
+    await page.waitForTimeout(1000);
+    await hideNotices(page);
+    await page.addStyleTag({ content: '#taNoticeStack { display: none !important; }' });
+    await page.locator('.myex-more').first().click();
+    const menu = page.locator('#myexMenu');
+    await expect(menu.getByRole('menuitem', { name: 'Copy link' })).toBeVisible();
+    await expect(menu.getByRole('menuitem', { name: 'Redownload' })).toHaveCount(0);
+    await menu.getByRole('menuitem', { name: 'Copy link' }).click();
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe('https://example.github.io/teachers_assistant/skill.html?s=listening&lv=1&c=LSN123');
+    expect(await page.evaluate(() => (window.__writes || []).filter(w => w.type === 'TA_SYNC:PLAY').length)).toBe(0);
     expect(errors).toEqual([]);
   });
 

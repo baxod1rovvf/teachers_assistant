@@ -186,11 +186,14 @@ function openMyexMenu(e, idx) {
   if (was && was.dataset.idx === String(idx)) return; // a second tap closes it
   const item = getRecentExercises()[idx];
   if (!item) return;
+  const skillLink = taSkillItemLink(item);
   const items = [
     exerciseLoadFor(item) ? ['use-again', 'Use again', () => useRecentExerciseAgain(idx)] : null,
     item.mergedItems && item.mergedItems.length ? ['get-one', 'Get one exercise', () => getOneFromSet(idx)] : null,
-    taPlayUrl(item.uid) ? ['copy-link', 'Copy link', () => copyRecentExerciseLink(idx)] : null,
-    ['redownload', 'Redownload', () => redownloadRecentExercise(idx)]
+    // a skills-course item (Course page) has no file: its link is the level's skill.html link, which always works
+    skillLink ? ['copy-link', 'Copy link', () => taCopyText(skillLink, '🔗 Link copied — it always works.')]
+      : taPlayUrl(item.uid) ? ['copy-link', 'Copy link', () => copyRecentExerciseLink(idx)] : null,
+    skillLink || / course$/.test(item.typeLabel || '') ? null : ['redownload', 'Redownload', () => redownloadRecentExercise(idx)]
   ].filter(Boolean);
   const menu = document.createElement('div');
   menu.className = 'myex-menu';
