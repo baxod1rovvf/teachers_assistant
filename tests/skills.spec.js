@@ -122,16 +122,17 @@ test.describe('content', () => {
   });
 });
 
-test.describe('student page', () => {
-  // the record the stand-in database keeps for each write (window.__writes only lists a few fields)
-  const sentRecords = page => page.evaluate(() => window.__writes.map(w => window.__fakeDocs.find(d => d.__id === w.id)));
+// the record the stand-in database keeps for each write (window.__writes only lists a few fields)
+const sentRecords = page => page.evaluate(() => window.__writes.map(w => window.__fakeDocs.find(d => d.__id === w.id)));
 
-  async function start(page, url) {
-    await page.goto(url);
-    await page.locator('#studentNameInput').fill('Test Student');
-    await page.locator('#skIdInput').fill('10001');
-    await page.getByRole('button', { name: /Start/ }).click();
-  }
+async function start(page, url) {
+  await page.goto(url);
+  await page.locator('#studentNameInput').fill('Test Student');
+  await page.locator('#skIdInput').fill('10001');
+  await page.getByRole('button', { name: /Start/ }).click();
+}
+
+test.describe('student page', () => {
 
   test('listening: Submit marks each box, shows 10 words, Analyze highlights the answer lines, one result is sent', async ({ page, context }) => {
     await prepare(context);
@@ -286,12 +287,6 @@ test.describe('student page', () => {
     expect(r).toEqual([true, true, true, true, false, false, false, true, true, false, false, true, true, false]);
   });
 
-  test('writing and speaking say they are coming soon on this page', async ({ page, context }) => {
-    await prepare(context);
-    await page.goto('/skill.html?s=writing&lv=1&preview=1');
-    await expect(page.locator('body')).toContainText('Coming soon');
-    await expect(page.locator('body')).not.toContainText("doesn't exist");
-  });
 
   test('works on a phone without sideways scrolling', async ({ page, context }) => {
     await prepare(context);
@@ -301,5 +296,158 @@ test.describe('student page', () => {
     await page.getByRole('button', { name: 'Analyze >' }).click();
     const w = await page.evaluate(() => document.documentElement.scrollWidth);
     expect(w).toBeLessThanOrEqual(390);
+  });
+});
+
+test.describe('writing', () => {
+  // 45 words, with "good", "very big" and "like" from the better-words list
+  const TEXT = 'Hello! My name is Anna and I am fourteen years old. I live in a very big city with my family. ' +
+    'I have got one brother and he is good at football. In my free time I like reading books and swimming with my friends.';
+  // a stand-in LanguageTool: two mistakes found in whatever text it gets (after prepare(), so this route wins)
+  async function mockGrammar(context, { status = 200, calls } = {}) {
+    await context.route('**/api.languagetool.org/**', async route => {
+      const req = route.request();
+      const text = new URLSearchParams(req.postData() || '').get('text') || '';
+      if (calls) calls.push({ method: req.method(), lang: new URLSearchParams(req.postData() || '').get('language'), text });
+      if (status !== 200) return route.fulfill({ status, contentType: 'text/plain', body: 'Too many requests' });
+      const at = (bit) => text.indexOf(bit);
+      const matches = [
+        { offset: at('have got'), length: 8, message: 'Use "have" here.', replacements: [{ value: 'have' }], context: {} },
+        { offset: at('<b>'), length: 3, message: 'A <b> tag & "quotes" must stay text.', replacements: [{ value: '<i>' }], context: {} }
+      ].filter(m => m.offset >= 0);
+      return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ matches }) });
+    });
+  }
+
+  test('writing: counter, check, better words, band', async ({ page, context }) => {
+    await prepare(context);
+    const calls = [];
+    await mockGrammar(context, { calls });
+    const errors = [];
+    page.on('pageerror', e => errors.push(e.message));
+    await start(page, '/skill.html?s=writing&lv=1&c=WRT789');
+    await expect(page.locator('.sk-topic')).toContainText('About me');
+    await expect(page.locator('.sk-points li')).toHaveCount(3);
+    await expect(page.locator('.sk-timer')).toContainText('15:00');
+    const box = page.locator('#skWriteBox');
+    await expect(page.locator('.sk-count')).toContainText('0 / 40–60 words');
+    await expect(page.locator('.sk-count')).not.toHaveClass(/ok/);
+    await box.fill(TEXT + ' <b>');
+    await expect(page.locator('.sk-count')).toContainText('46 / 40–60 words');
+    await box.fill(TEXT);
+    await expect(page.locator('.sk-count')).toContainText('45 / 40–60 words');
+    await expect(page.locator('.sk-count')).toHaveClass(/ok/);
+    await box.fill(TEXT + ' <b> & more');
+    await page.getByRole('button', { name: /Submit my writing/ }).click();
+    await expect(page.locator('.sk-mistake')).toHaveCount(2);
+    await expect(page.locator('.sk-mistake').nth(0)).toContainText('have got');
+    await expect(page.locator('.sk-mistake').nth(0)).toContainText('have');
+    await expect(page.locator('.sk-mistake').nth(0)).toContainText('Use "have" here.');
+    await expect(page.locator('.sk-mistake').nth(1)).toContainText('A <b> tag & "quotes" must stay text.');
+    // the student's text with the two mistakes underlined, every character shown as text
+    await expect(page.locator('.sk-checked mark.sk-err')).toHaveCount(2);
+    await expect(page.locator('.sk-checked mark.sk-err').nth(0)).toHaveText('have got');
+    await expect(page.locator('.sk-checked mark.sk-err').nth(1)).toHaveText('<b>');
+    await expect(page.locator('.sk-checked')).toHaveText(TEXT + ' <b> & more');
+    await expect(page.locator('.sk-checked b')).toHaveCount(0);
+    // better words: "very big" (not also "big"), "good", "like"
+    await expect(page.locator('.sk-better li', { hasText: 'good' }).first()).toContainText('great');
+    await expect(page.locator('.sk-better li', { hasText: 'very big' })).toContainText('huge');
+    await expect(page.locator('.sk-better li', { hasText: /^\s*big/ })).toHaveCount(0);
+    await expect(page.locator('.sk-better li', { hasText: /^\s*old/ })).toHaveCount(0);   // "fourteen years old" is an age
+    expect(await page.evaluate(() => [skBetterWords('A GOOD, old house; I like it.'), skBetterWords('Good morning! It looks like rain. Goodbye!')])).toEqual([
+      [{ word: 'good', better: ['great', 'excellent', 'wonderful'] }, { word: 'old', better: ['ancient', 'historic'] }, { word: 'like', better: ['enjoy', 'love', 'am keen on'] }],
+      []]);
+    await expect(page.locator('#skWriteBox')).toHaveJSProperty('readOnly', true);
+    await expect(page.locator('.sk-send')).toContainText('Saved ✅');
+    await expect(page.getByRole('button', { name: /Submit my writing/ })).toHaveCount(0);
+    expect(calls).toHaveLength(1);
+    expect(calls[0]).toMatchObject({ method: 'POST', lang: 'en-GB', text: TEXT + ' <b> & more' });
+
+    const recs = await sentRecords(page);
+    expect(recs).toHaveLength(1);
+    const band = await page.evaluate(() => skWritingBand(47, 40, 2, true));
+    expect(recs[0]).toMatchObject({ v: 1, code: 'WRT789', type: 'Writing course', title: 'Level 1 · Meeting people — Writing', level: 1,
+      skill: 'writing', name: 'Test Student', studentId: '10001', text: TEXT + ' <b> & more', words: 47, minWords: 40, maxWords: 60,
+      mistakes: 2, grammarChecked: true, band });
+    expect(recs[0].score).toBeUndefined();
+    expect(recs[0].mistakeList).toEqual([
+      { bad: 'have got', fix: 'have', message: 'Use "have" here.' },
+      { bad: '<b>', fix: '<i>', message: 'A <b> tag & "quotes" must stay text.' }]);
+    expect(recs[0].timeDisplay).toMatch(/^\d\d:\d\d$/);
+    await expect(page.locator('.sk-band')).toContainText(String(band));
+    expect(errors).toEqual([]);
+  });
+
+  test('writing: the 45-word text gives the band from the rules', async ({ page, context }) => {
+    await prepare(context);
+    await mockGrammar(context);
+    await start(page, '/skill.html?s=writing&lv=1&c=WRT789');
+    await page.locator('#skWriteBox').fill(TEXT);
+    await page.getByRole('button', { name: /Submit my writing/ }).click();
+    await expect(page.locator('.sk-send')).toContainText('Saved ✅');
+    const recs = await sentRecords(page);
+    expect(recs[0]).toMatchObject({ words: 45, mistakes: 1, grammarChecked: true, band: await page.evaluate(() => skWritingBand(45, 40, 1, true)) });
+  });
+
+  test('writing: grammar checker down', async ({ page, context }) => {
+    await prepare(context);
+    const calls = [];
+    await mockGrammar(context, { status: 429, calls });
+    await start(page, '/skill.html?s=writing&lv=1&c=WRT789');
+    await page.locator('#skWriteBox').fill(TEXT);
+    await page.getByRole('button', { name: /Submit my writing/ }).click();
+    await expect(page.locator('.sk-check-note')).toContainText("The grammar check couldn't run this time");
+    await expect(page.locator('.sk-better li', { hasText: 'good' }).first()).toContainText('great');
+    await expect(page.locator('.sk-send')).toContainText('Saved ✅');
+    let recs = await sentRecords(page);
+    expect(recs).toHaveLength(1);
+    expect(recs[0]).toMatchObject({ words: 45, mistakes: 0, mistakeList: [], grammarChecked: false, band: await page.evaluate(() => skWritingBand(45, 40, 0, false)) });
+    // Check again: the checker works now → the mistakes show, but no second result is sent
+    await context.unroute('**/api.languagetool.org/**');
+    await mockGrammar(context, { calls });
+    await page.getByRole('button', { name: /Check again/ }).click();
+    await expect(page.locator('.sk-mistake')).toHaveCount(1);
+    await expect(page.locator('.sk-check-note')).toHaveCount(0);
+    expect(calls).toHaveLength(2);
+    await page.waitForTimeout(500);
+    recs = await sentRecords(page);
+    expect(recs).toHaveLength(1);
+  });
+
+  test('writing: time runs out', async ({ page, context }) => {
+    await prepare(context);
+    await mockGrammar(context);
+    await page.addInitScript(() => { window.__skFast = 1; });
+    await start(page, '/skill.html?s=writing&lv=1&c=WRT789');
+    await expect(page.locator('.sk-timer')).toContainText('15:00');
+    await expect(page.locator('.sk-send')).toContainText('Saved ✅', { timeout: 25000 });
+    await expect(page.locator('body')).toContainText("Time's up");
+    await expect(page.locator('#skWriteBox')).toHaveJSProperty('readOnly', true);
+    await page.waitForTimeout(1500);
+    const recs = await sentRecords(page);
+    expect(recs).toHaveLength(1);
+    expect(recs[0]).toMatchObject({ words: 0, text: '', skill: 'writing' });
+    expect(recs[0].band).toBeGreaterThanOrEqual(1);
+  });
+
+  test('writing: preview sends nothing; a phone has no sideways scrolling', async ({ page, context }) => {
+    await prepare(context);
+    await mockGrammar(context);
+    await page.setViewportSize({ width: 390, height: 800 });
+    await page.goto('/skill.html?s=writing&lv=1&preview=1');
+    await expect(page.locator('#studentNameInput')).toHaveCount(0);
+    await page.locator('#skWriteBox').fill(TEXT);
+    await page.getByRole('button', { name: /Submit my writing/ }).click();
+    await expect(page.locator('.sk-mistake')).toHaveCount(1);
+    await expect(page.locator('.sk-send')).toContainText('Preview');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+    expect(await page.evaluate(() => window.__writes ? window.__writes.length : 0)).toBe(0);
+  });
+
+  test('speaking still says it is coming soon', async ({ page, context }) => {
+    await prepare(context);
+    await page.goto('/skill.html?s=speaking&lv=1&preview=1');
+    await expect(page.locator('body')).toContainText('Coming soon');
   });
 });
