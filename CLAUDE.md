@@ -149,6 +149,8 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
 16. **Student ID typos / shared IDs**: results then don't match the Students list and are
     left out of Statistics, Top 5 and "Didn't do it".
 17. **Reminders and notifications only work while the app is open** (no server to push them).
+21. **Writing's grammar check (LanguageTool, free) allows about 20 checks a minute per connection** — a whole class on one Wi-Fi may see
+    "press Check again" (the text is still sent; the band then uses only the length).
 
 ## Automatic tests — run them before every merge
 
@@ -501,93 +503,42 @@ real students' names or results into the repository (it is public).
   there. My Exercises' buttons use `MYEX_EMOJI`; emojis that sit inside buttons are drawn from `data-emo` (`::before`) so the
   button's text stays its words. The old pictures are still in `images/icons/` (unused). Exercise files (student side) are
   unchanged. `tests/pages.spec.js` ("top bar: …"), `tests/my-exercises.spec.js`.
-- **Course (2026-11-02, teacher: "a journey where every lesson is kept and organized")**: `course.html` + `js/pages/course.js`,
-  tab `course` 🗺️ in the top bar (after Create). The content is `js/course-data.js` (`TA_COURSES`, `COURSE_BEGINNER`): **one shared
-  course for every group** (teacher chose it), 6 blocks; a **block = 5 lessons + 🔁 review + 🏁 exam** (3 lessons a week → an exam every
-  2 weeks); every block covers 🎧 📖 ✍️ 🗣️ across its lessons (a test checks it); every lesson starts with warm-up / pair-work games.
-  A lesson is ready when it has `slides`; only **B1 L1 "Letters and numbers"** is (2 warm-ups, 12 slides, a 6-part handout with the
-  teacher's listening script + answers, 20 test questions `{q with "_____", a, wrong[3]}`); the rest, review and exam show "Coming soon".
-  Per group (chips at the top, `ta_course_group` on this device): ☑️ Mark as taught → `ta_course_progress`, the map ticks it and the
-  next stop bounces. Slides: Present (← → keys, full screen) and ✏️ Change the text (contenteditable, saved per slide in
-  `ta_course_edits`, ↩️ Original text). Handout: 🖨️ Open & print (a new tab). Revision test: 🔗 Copy the link for <group> builds a
-  **Test exercise** (QUIZ_TEMPLATE, `gap` mode, questions and answers shuffled) once per group + lesson (`ta_course_tests`), saved in
-  My Exercises with the group, put online at the first press like Copy link (7 days; expired → offer a new copy); then 📊 View Results.
-  The three `ta_course_*` keys are synced and in the backup. To add a lesson: fill the same fields as c1l1. `tests/course.spec.js`.
-  **All of Block 1 is ready (2026-11-02)**: L1–L5 (each repeats a little of the one before in its first warm-up), `block.review`
-  (team games, 30-question review test) and `block.exam`. **Beginner exams (teacher): grammar, listening, reading online — one Test
-  link, `keepOrder` (12 grammar → 8 listening → 10 reading, `part` on each question), marked automatically — and writing on paper,
-  out of 10 (`writing.max`); no speaking.** The exam page has a marks table per group: the best online try (`correct` of the result
-  with the test's code, from `__allResults`; firebase.js calls `taCourseResultsChanged`) + the writing mark the teacher types
-  (`ta_course_marks`, synced/backup) = total /40 and %. `listen` texts (lessons, review, exam) are read aloud by the teacher's computer
-  (🔊 Play, `speechSynthesis`, en-GB, rate 0.85) and printed on the handout's teacher page. Exam reading text: on the exam paper and a slide.
-  **Slides = an editor + Teach mode (teacher, 2026-11-03, from a screenshot of another app's editor)**: `js/course-slides.js`.
-  Lesson card: ▶️ Teach / ✏️ Edit slides. Editor (`courseOpenSlideEditor`, `#slEditor`, full screen): thumbnails (↑ ↓ ⧉ 🙈 skip 🗑,
-  ➕ New slide), toolbar (➕ Slide, Text, Heading, Picture — shrunk to ≤1400 px JPEG, or drag a file onto the slide — Shape, Sticker,
-  Timer, 🔊 Listen (reads its text aloud), ↶ ↷ (Ctrl Z/Y), ↩️ Original, 📁 File: download / load a .json, print), the slide (click
-  select, double-click type, drag move, corner resize, arrows nudge, Delete), right panel (background colour/picture, skip, teacher
-  notes — or the item's look and **🙈 Hidden until I click**). A slide is 1600 × 900: `{ bg, bgImg, skip, notes, items: [{ id, type:
-  text|shape|picture|audio|timer, x, y, w, h, … hidden }] }`; the teacher's deck is saved whole: `ta_course_edits[lessonId] = { v: 2,
-  slides }` (old `{ index: {title, body} }` text edits still apply to simple decks). **Teach mode** (`courseTeach`, `#slTeach`,
-  full screen): a click / → / space first shows the slide's hidden things one by one (layer order; a click right on one shows that
-  one), then the next slide; skipped slides left out; ← goes back (whole slide); N notes; audio/timer items play/start on click.
-  **The teacher's slide order** (lesson `deck` of layouts, built by `slBuildDeck`): title → list (what we learn today) → questions
-  (warm-up on the last lesson; answers hidden) → words (lead-in; translations hidden) → boxes (lesson) → mistakes ("You found it";
-  the right version hidden) → exercise → boxes → exercise → skill (listening/reading/speaking/writing) → exercise → finish.
-  **Exercises live once in `lesson.exercises`**: the exercise slides (answers hidden) and the handout (`courseExerciseHandout`) are
-  both made from them. Only **B1 L1** is redone this way so far (teacher: "if I say good you'll change the other 6"); L2–L5, review
-  and exam still have simple `slides` (shown as editable slides). `tests/course.spec.js`.
-  **Lesson 1 = a 2-hour lesson (teacher, 2026-11-03: "teachers should teach 2 hours with one lesson… different types of exercises…
-  listening should be 3, each 5 questions, make the audio yourself")**: 35 slides, 15 exercises of 8 kinds (`type`: gap, choose
-  (a/b/c), tf, match (right column a–z sorted), order, odd, correct, write — shown by `courseExQ`/`courseExA` the same on slides and
-  handout; "(students' own)" answers show no answer chip), 3 listenings × 5 questions, reading (cards side by side), speaking/writing
-  tasks, games with timers (`game` layout), `tiles` layout (alphabet, 0–20). **Listening audio = real recordings**, made by Claude with
-  Kokoro (open voices, Apache-2.0; `tools/make-course-audio.py`, scripts in `audio/course/<stop id>-scripts.json`; one voice per speaker;
-  the -teen stress is moved onto "-TEEN" in the phonemes): `listen[i] = { label, src: 'audio/course/…mp3', text, script }`; 🔊 plays the
-  file (Teach mode, Listening card), the computer's voice reads `text` if it can't. Claude can't listen to them — the teacher should
-  play each once. The other lessons get the same treatment when the teacher approves Lesson 1. The l1 content is generated from a
-  script (Python dict → JSON in course-data.js): edit the JSON there directly.
-  **Teacher's rules for course content (2026-11-03): no Uzbek names and no Uzbek language anywhere** (English names and places;
-  the lead-in cards show an English example on click, not a translation — a test checks the course data and the audio scripts),
-  and **spelling in recordings is slow**: a line like "E. double M. A." is said letter by letter, 1.1 s after each letter
-  (`SPELLING` in tools/make-course-audio.py); numbers with "oh / double" are read slower (0.76).
-  **Fixed 2026-11-03 (teacher: "listening audios are not accurate… Emma sounded like 'ellay tdouble em hney'")**: a letter said on
-  its own garbles in Kokoro. Now a spelling is ONE sentence, "That's E, double M, A." (the "That's" keeps the first letter clear),
-  and the pauses between letters are stretched to ~0.9 s afterwards (`stretch_pauses`). Every line is checked with a speech
-  recogniser (Whisper base.en via sherpa-onnx from GitHub, `ASR_DIR`) and remade until heard right; one-word lines ("Jack.",
-  "Lily?") also garble — write full sentences. Voices that spelled badly were swapped (Lizzy af_heart, Lucy/L3 bf_isabella,
-  Jack/L5 bm_daniel). All 21 recordings pass; the printed scripts show spellings as "That's E, double M, A." Whisper on a
-  whole long file sometimes skips a part — check line by line, not whole files.
-  **Scripts humanized (2026-11-03, teacher ran the humanizer skill: "fix the audios… for lesson 1 use another female voice")**:
-  every script reads like people talking (varied openings, natural replies, no dashes; a self-answering line in L5 split
-  into two speakers); every fact a question tests is unchanged. Lesson 1's women: receptionist/secretary **af_bella**, Emma and
-  Sara **af_nicole** (bf_alice / bf_lily are the voice model's weakest). Short answers like "At nine o'clock." still garble — write
-  "It closes at nine o'clock." The checker's false alarms: whose/who's, and capitalised number words ("One cousin").
-  **All of Block 1 is now in this format (2026-11-03, teacher: "now change other 6")**: L2–L5 and the review = 32–35 slides, 15
-  exercises (6+ kinds), 3 listenings × 5 questions with recordings each; warm-up questions revise the previous lesson with the
-  answer on a click (`questions` rows `{q, a}`). **The exam** = 9 slides (rules, Part 1 grammar, Part 2 three recordings, Part 3
-  reading text, Part 4 writing with a 20-min timer); online part **10 grammar + 15 listening (3 recordings × 5) + 10 reading = 35**,
-  + writing /10 = 45; its handout is the exam paper (reading text + writing lines), custom, not from exercises. Every lesson's /
-  review's handout = `courseExerciseHandout` (a loop before `TA_COURSES`). Content is generated by Claude's scripts (lib.py +
-  one file per lesson, outside the repo) into course-data.js; the recordings' scripts are in `audio/course/<id>-scripts.json`
-  (c1l1…c1l5, c1review, c1exam) — remake audio with tools/make-course-audio.py.
-  **The teacher's block themes (2026-11-03, from 3 screenshots: "change blocks theme… Now build block 1 only")**: Block 1 **"Me"**
-  (`c1`, ids `c1l1`…`c1l5`, `c1review`, `c1exam`): 1 Hello, numbers & countries (Words V1) · 2 be: all forms (G1) · 3 Things, colours &
-  jobs (V2) · 4 One pen, two pens (G2: plurals, this/these) · 5 An apple, the apple (G3: a/an/the) · Review 1 · Sunday exam #1. Block 2
-  **"My things"** (`c2`: family/people/pets, have got, food & drink, some & any, whose / my, your + 's) and Block 3 **"My day"** (`c3`: Wake up,
-  Alex!, he/she + s, the clock/days/subjects, don't/doesn't/Do/Does, wh-questions) are on the map as "Coming soon" (their review/exam
-  have only a `title`). The teacher's titles had Uzbek names (Aziz, Laylo): changed to Alex, Lily. Old Blocks 2–3 were dropped, 4–6
-  kept (`b4`…`b6`). A lesson can have `sub` (e.g. "Grammar G1: am / is / are…"), shown under its title and in the map's tooltip.
-  **New ids on purpose**: the old Block 1 (`b1…`) content is gone, and what was saved for it (taught ticks, slide edits, test links,
-  exam marks) stays under the old ids, unused. Old content was partly reused (exercises, listening scripts). Generators: Claude's
-  scratchpad `gen2/` (lib2.py, c1l1–c1l5.py, c1review.py, c1exam.py, inject_c1.py) — outside the repo.
-  **1.5 hours (teacher, 2026-11-03: "every lesson should be within 1.5 hours… reading, listening or writing is 10–15 minutes only")**:
-  every slide has `time` (minutes, also at the start of its notes "⏱️ N min · …") and the lesson `minutes` (their sum, ≤ 90, shown
-  as "⏱️ N min" on the lesson page). Times: title/list 1, warm-up questions 4, words 4, boxes/tiles 4, mistakes 3, game = its timer,
-  listening slide 1 + its exercise 4 (3 × 5 = 15), reading text 4 + its exercises, writing 10, finish 2, other exercises by type ×
-  questions + 1.5 (`ex_time` in gen2/lib2.py; `trim()` leaves slides out and renumbers "exercise N"). Each lesson: ~9–12 exercises,
-  ~23 slides, 3 listenings, 1 reading, 1 writing; **an easy speaking task every 2 lessons** (L2 "Find someone who", L4 "This or
-  that?" tagged SPEAKING, the review). **Exams: grammar in every General English exam; no speaking exam in Blocks 1 and 2** (from
-  Block 3 on, a speaking part). A test checks the minutes.
+- **Skills Course (2026-11-04, teacher: replace the old Course with four skills)**: the old lesson Course (Block 1 lessons, slide
+  editor, Teach mode, handouts, exam marks, `audio/course/`, `js/course-data.js`, `js/course-slides.js`, `ta_course_*`) is deleted.
+  `course.html` + `js/pages/course.js`, tab `course` 🗺️: four cards 🎧 Listening · 📖 Reading · ✍️ Writing · 🗣️ Speaking → Elementary →
+  10 level tiles, **all open, nothing locked**. **Each level + skill has its own permanent link** the teacher sends to a group
+  (group chips at the top, `ta_course_group`). Content: `js/skills-data.js` (`TA_SKILLS.elementary`; **levels 1–5 are complete, 6–10 have
+  only `{no, theme, emoji}` = "Coming soon"**; `TA_BETTER_WORDS` for the writing tips). Tile buttons: ▶️ Try (`skTry`, `&preview=1`, sends
+  nothing), 🔗 Copy link for <group> (`skCopyLink`), 📊 View Results, and a results-table button once any result exists.
+- **Student page** `skill.html` + `js/skill-player.js` (`js/skill-bands.js` shared): link `skill.html?s=<listening|reading|writing|speaking>&lv=<n>&c=<code>`
+  (`taSkillLink` in common.js; speaking has no code, never expires, loads from GitHub Pages not Firebase). Start card (name + ID, any ID
+  accepted), the code is checked. Listening: audio + 10 gaps, Submit → ✅/❌, score, 10 useful words, **Analyze >** = transcript with the
+  answer lines marked. Reading: text + 15 questions (5 T/F/NG, 5 gaps, 5 a/b/c), same flow. Writing: topic + 3 points, timer (submits by
+  itself), word counter, Submit → LanguageTool + better words. **Speaking is practice only**: topic words, simple questions, a Part 2 card
+  with timers — no microphone, nothing sent, no ID screen. One result per Submit: record id from `skResultId`, `setDoc` with timeouts,
+  "Send again" on failure; result `type` 'Listening course' / 'Reading course' / 'Writing course' with `code, name, studentId, level, skill,
+  correct, total, score, band` (writing: `text, words, minWords, mistakes, mistakeList, grammarChecked, band, timeSeconds`), `builtAt`,
+  `submittedAt`. Preview sends nothing.
+- **Teacher's side**: first Copy link for level + skill + group makes a My Exercises item (type "… course", that group, a fresh code;
+  `skEnsureItem`, kept as `{uid, code}` in `ta_skills_links` under "<groupId>|<skill>|<level>", and a deleted item is re-created with the
+  same code); ⋯ there: Copy link = the skill.html link, no Redownload (`taSkillItemInfo`, `taSkillItemLink`). `firebase.js` loads the codes
+  from `ta_skills_links`; `isExpiredResult` falls back to the date for " course" types. Results for writing: `viewSkillWriting` (text, words,
+  time, mistakes, a band box). **The teacher's mark wins everywhere**: `ta_skills_marks` keyed "<code>|<studentId>". Both keys are synced and
+  in the backup. **Results table** per level + group (`skTableRows`, `skTableHtml`, PNG by `skDrawTablePng`): ranked by Overall (equal places
+  share a number, medals), 🎧 📖 ✍️ bands with raw scores, best try per skill, a missing skill "—", footer average.
+- **Bands** (`js/skill-bands.js`): Listening/Reading = round(correct/total × 40) → IELTS table (19/20 → 8.5, 16/20 → 7.5, 9/20 → 5.5);
+  Writing estimate = 3 + 3×min(1, words/min) + 3×max(0, 1 − mistakes per 100 words/10), nearest 0.5, 1–9 (grammar check didn't run → last
+  part 1.5; **blank writing = band 1**); Overall = average of the present skills, rounded like IELTS; CEFR from Overall.
+- **LanguageTool** (`https://api.languagetool.org/v2/check`, `en-GB`, free, no key): about 20 checks a minute per connection. A busy or
+  offline check shows "press Check again", the text is still sent, the band then uses only the length.
+- **Recordings**: Kokoro voices `af_heart` (woman, also the narrator) and `bm_george` (man); `tools/make-course-audio.py <model folder>
+  audio/skills/elementary-scripts.json audio/skills` makes `audio/skills/elem-<n>-listening.mp3` (needs ffmpeg; `ASR_DIR` = a sherpa-onnx
+  Whisper base.en folder checks every line and remakes it until heard right). Spelled names are said "That's T, H, O…" slowly; write full
+  sentences (one-word lines garble); phone numbers in Ofcom drama ranges. The checker's false alarms: whose/who's, number words with a capital.
+  **To add a level**: fill `no, theme, emoji, listening {src, title, intro, questions[{q, a[]}], words, transcript[{who, text, answers}]},
+  reading {title, text, questions (tfng/gap/choose, `line` = sentence index)}, writing {topic, points, minutes, minWords, maxWords},
+  speaking {words, questions[{q, use}], part2}` like level 1; add its entry to `elementary-scripts.json`; run the audio command; keep
+  `transcript` in step with the script; English names only, no Uzbek. `tests/skills.spec.js`.
 - **Builders are short (2026-10-04)**: no description or coloured chips under a builder's title (IELTS
   too; the Homework/Class set builder keeps its round guidance), and short labels: Group, Points, Class
   code, Time limit (the hints moved into the placeholders). No "Instructions for Students" box — except
