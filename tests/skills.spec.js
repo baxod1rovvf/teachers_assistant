@@ -24,13 +24,26 @@ test.describe('bands', () => {
 test.describe('content', () => {
   // Spoken numbers → digits ("oh seven seven double oh" → "07700", "seven thirty" → "730"), then letters/digits only,
   // so an answer can be found in the transcript line that says it (spellings "That's T, H, O…" → "thatstho…").
+  // "twenty-seven" → 27, "four hundred and fifty" → 450.
   const NUM = { zero: 0, oh: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12,
-    thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19, twenty: 20, thirty: 30, forty: 40, fifty: 50 };
+    thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19, twenty: 20, thirty: 30, forty: 40, fifty: 50,
+    sixty: 60, seventy: 70, eighty: 80, ninety: 90 };
   const norm = s => {
     const w = String(s).toLowerCase().replace(/[’']/g, '').split(/[^a-z0-9]+/).filter(Boolean);
     const out = [];
+    const tensUnits = i => {   // [value, words used] for "twenty seven" / "twenty" / "seven" at w[i]
+      const x = w[i], nx = w[i + 1];
+      if (NUM[x] >= 20 && NUM[x] % 10 === 0 && NUM[nx] >= 1 && NUM[nx] <= 9) return [NUM[x] + NUM[nx], 2];
+      return [NUM[x], 1];
+    };
     for (let i = 0; i < w.length; i++) {
       const x = w[i], nx = w[i + 1];
+      if ((x in NUM || x === 'a') && x !== 'oh' && nx === 'hundred') {
+        let v = (x === 'a' ? 1 : NUM[x]) * 100; i += 1;
+        if (w[i + 1] === 'and' && w[i + 2] in NUM) { const [t, n] = tensUnits(i + 2); v += t; i += 1 + n; }
+        out.push(String(v)); continue;
+      }
+      if (NUM[x] >= 20 && NUM[x] % 10 === 0 && NUM[nx] >= 1 && NUM[nx] <= 9) { out.push(String(NUM[x] + NUM[nx])); i++; continue; }
       if (x === 'double' && nx in NUM) { out.push(String(NUM[nx]).repeat(2)); i++; continue; }
       if (x === 'oh' && !(nx in NUM || nx === 'double') && !(w[i - 1] in NUM)) { out.push(x); continue; }
       out.push(x in NUM ? String(NUM[x]) : x);
@@ -39,7 +52,7 @@ test.describe('content', () => {
   };
   const sentences = text => text.trim().split(/(?<=[.!?])\s+/);
 
-  test('every level has its theme; Level 1 has full, checked content in all four skills', async ({ page, context, request }) => {
+  test('every level has its theme; Levels 1–5 have full, checked content in all four skills; 6–10 are still to come', async ({ page, context, request }) => {
     await prepare(context);
     await page.goto('/skill.html?s=listening&lv=1&preview=1');
     const S = await page.evaluate(() => ({ skills: TA_SKILLS, better: TA_BETTER_WORDS }));
@@ -49,10 +62,15 @@ test.describe('content', () => {
     levels.forEach(l => expect(l.emoji).toBeTruthy());
     expect(Object.keys(S.better).length).toBeGreaterThanOrEqual(30);
     ['good', 'nice', 'big', 'small', 'very happy', 'bad', 'like'].forEach(w => expect(S.better[w].length).toBeGreaterThan(0));
-    const full = levels.filter(l => l.listening);
-    expect(full.length).toBeGreaterThanOrEqual(1);
-    expect(full[0].no).toBe(1);
+    // the teacher (2026-11-04): "finish when level 5 is ready; levels 6–10 are for future"
+    const full = levels.filter(l => l.no <= 5);
+    full.forEach(l => ['listening', 'reading', 'writing', 'speaking'].forEach(k => expect(l[k], 'level ' + l.no + ' ' + k).toBeTruthy()));
+    levels.filter(l => l.no > 5).forEach(l => expect(Object.keys(l).sort(), 'level ' + l.no).toEqual(['emoji', 'no', 'theme']));
+    // every listening/reading is its own (no copy of another level)
+    expect(new Set(full.map(l => l.listening.src)).size).toBe(5);
+    expect(new Set(full.map(l => l.reading.title)).size).toBe(5);
     for (const lv of full) {
+      expect(lv.listening.src).toBe('audio/skills/elem-' + lv.no + '-listening.mp3');
       const L = lv.listening;
       expect(L.questions.length).toBe(10);
       expect(L.words.length).toBe(10);
@@ -110,6 +128,36 @@ test.describe('content', () => {
     expect(l1.writing).toMatchObject({ topic: 'About me', minWords: 40, maxWords: 60, minutes: 15 });
     expect(l1.speaking.part2.seconds).toBe(45);
     expect(l1.speaking.part2.topic).toMatch(/yourself/i);
+  });
+
+  test('Levels 2–5 are as the spec plans them (themes, tasks, writing words/minutes, Part 2 seconds)', async ({ page, context }) => {
+    await prepare(context);
+    await page.goto('/skill.html?s=listening&lv=1&preview=1');
+    const L = await page.evaluate(() => TA_SKILLS.elementary.levels);
+    const plan = [
+      { no: 2, listen: /sports club/i, read: /Emma's family/, topic: 'My family', min: 40, max: 60, minutes: 15, talk: /family member/i, sec: 45 },
+      { no: 3, listen: /room/i, read: /Two homes/, topic: 'My home', min: 40, max: 60, minutes: 15, talk: /your home/i, sec: 45 },
+      { no: 4, listen: /doctor/i, read: /nurse/i, topic: 'My weekday', min: 50, max: 70, minutes: 20, talk: /favourite day/i, sec: 60 },
+      { no: 5, listen: /party/i, read: /café/i, topic: 'My favourite meal', min: 50, max: 70, minutes: 20, talk: /food you like/i, sec: 60 },
+    ];
+    const words = t => t.split(/\s+/).filter(Boolean).length;
+    let last = words(L[0].reading.text);
+    for (const p of plan) {
+      const lv = L[p.no - 1];
+      expect(lv.listening.title).toMatch(p.listen);
+      expect(lv.listening.intro).toMatch(/NO MORE THAN TWO WORDS AND\/OR A NUMBER/);
+      expect(lv.reading.title).toMatch(p.read);
+      expect(lv.writing).toMatchObject({ topic: p.topic, minWords: p.min, maxWords: p.max, minutes: p.minutes });
+      expect(lv.writing.task).toBeTruthy();
+      expect(lv.speaking.part2.topic).toMatch(p.talk);
+      expect(lv.speaking.part2.seconds).toBe(p.sec);
+      lv.speaking.questions.forEach(q => expect(q.use.length).toBeGreaterThan(0));
+      // a little longer each level (~170, 190, 210, 230 words)
+      const n = words(lv.reading.text);
+      expect(n, 'level ' + p.no + ' reading words').toBeGreaterThan(last);
+      expect(Math.abs(n - (130 + 20 * p.no)), 'level ' + p.no + ' reading words').toBeLessThanOrEqual(20);
+      last = n;
+    }
   });
 
   test('the skills course has no Uzbek names or Uzbek words — only English', async () => {
@@ -513,21 +561,29 @@ test.describe('course page', () => {
     return errors;
   };
 
-  test('the Course page: four skills, 10 levels each, Try opens a preview', async ({ page, context }) => {
+  test('the Course page: four skills, 10 levels each (1–5 ready, 6–10 coming soon), Try opens a preview', async ({ page, context }) => {
     const errors = await open(page, context);
     const cards = page.locator('.sk-skill-card');
     await expect(cards).toHaveCount(4);
     await expect(cards).toHaveText([/Listening/, /Reading/, /Writing/, /Speaking/]);
-    await cards.filter({ hasText: 'Listening' }).click();
-    await expect(page.locator('#courseWrap')).toContainText('Elementary');
     const tiles = page.locator('.sk-level-tile');
-    await expect(tiles).toHaveCount(10);
-    await expect(tiles.nth(0)).toContainText('Level 1 · Meeting people');
-    await expect(tiles.nth(0).getByRole('button', { name: '▶️ Try' })).toBeVisible();
-    for (let i = 1; i < 10; i++) {
-      await expect(tiles.nth(i)).toContainText('Coming soon');
-      await expect(tiles.nth(i).getByRole('button', { name: '▶️ Try' })).toHaveCount(0);
+    for (const skill of ['Reading', 'Writing', 'Speaking', 'Listening']) {
+      await cards.filter({ hasText: skill }).click();
+      await expect(page.locator('#courseWrap')).toContainText('Elementary');
+      await expect(tiles).toHaveCount(10);
+      for (let i = 0; i < 10; i++) {
+        if (i < 5) {
+          await expect(tiles.nth(i).getByRole('button', { name: '▶️ Try' })).toBeVisible();
+          await expect(tiles.nth(i)).not.toContainText('Coming soon');
+        } else {
+          await expect(tiles.nth(i)).toContainText('Coming soon');
+          await expect(tiles.nth(i).getByRole('button', { name: '▶️ Try' })).toHaveCount(0);
+        }
+      }
+      if (skill !== 'Listening') await page.getByRole('button', { name: '← All skills' }).click();
     }
+    await expect(tiles.nth(0)).toContainText('Level 1 · Meeting people');
+    await expect(tiles.nth(4)).toContainText('Level 5 · Food & cafés');
     const [popup] = await Promise.all([page.waitForEvent('popup'), tiles.nth(0).getByRole('button', { name: '▶️ Try' }).click()]);
     await popup.waitForURL(/skill\.html\?s=listening&lv=1&preview=1/);
     // the chosen skill is remembered on this device; ← All skills goes back
