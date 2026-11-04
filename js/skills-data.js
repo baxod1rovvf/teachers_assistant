@@ -18,7 +18,7 @@ var TA_SKILLS = {
       {
         no: 1, theme: 'Meeting people', emoji: '👋',
         listening: {
-          src: 'audio/skills/elem-1-listening.mp3?v=3',
+          src: 'audio/skills/elem-1-listening.mp3?v=4',
           title: 'Checking in at a hotel',
           intro: 'Listen to a man checking in at a hotel. Complete the form. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
           questions: [
@@ -154,7 +154,7 @@ var TA_SKILLS = {
       {
         no: 2, theme: 'Family & friends', emoji: '👨‍👩‍👧',
         listening: {
-          src: 'audio/skills/elem-2-listening.mp3?v=3',
+          src: 'audio/skills/elem-2-listening.mp3?v=4',
           title: 'Joining a sports club',
           intro: 'Listen to a woman joining a sports club with her son. Complete the form. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
           questions: [
@@ -292,7 +292,7 @@ var TA_SKILLS = {
       {
         no: 3, theme: 'My home', emoji: '🏠',
         listening: {
-          src: 'audio/skills/elem-3-listening.mp3?v=3',
+          src: 'audio/skills/elem-3-listening.mp3?v=4',
           title: 'Renting a room',
           intro: 'Listen to a man phoning about a room to rent. Complete the notes. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
           questions: [
@@ -431,7 +431,7 @@ var TA_SKILLS = {
       {
         no: 4, theme: 'My day', emoji: '⏰',
         listening: {
-          src: 'audio/skills/elem-4-listening.mp3?v=3',
+          src: 'audio/skills/elem-4-listening.mp3?v=4',
           title: "Booking a doctor's appointment",
           intro: "Listen to a woman phoning a doctor's surgery. Complete the notes. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.",
           questions: [
@@ -573,7 +573,7 @@ var TA_SKILLS = {
       {
         no: 5, theme: 'Food & cafés', emoji: '🍕',
         listening: {
-          src: 'audio/skills/elem-5-listening.mp3?v=3',
+          src: 'audio/skills/elem-5-listening.mp3?v=4',
           title: 'Ordering food for a party',
           intro: 'Listen to a man ordering food for a birthday party at a café. Complete the order form. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
           questions: [
