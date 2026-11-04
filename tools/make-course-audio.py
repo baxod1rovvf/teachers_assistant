@@ -79,9 +79,9 @@ def spell_slow(letters, voice, speed, gap=0.7, first_gap=0.9):
         f, g = int(sr * 0.012), int(sr * 0.03)
         seg[:f] *= np.linspace(0, 1, f); seg[-g:] *= np.linspace(1, 0, g)
         return seg
-    a, sr, t = k.create_timed("That's " + letters[0] + '.', voice=voice, speed=speed, lang='en-us', clause_pause=0)
-    c = int(next(x for x in t if x.phoneme == ' ').start * sr)
-    out = [clean(a[:c], sr, 0.004 * np.abs(a).max()), np.zeros(int(sr * first_gap), dtype=a.dtype)]
+    # "That's." on its own: before a letter it was said quickly with a clipped s ("that's" not finished — teacher)
+    a, sr = k.create("That's.", voice=voice, speed=speed, lang='en-us')
+    out = [clean(a, sr, 0.0015 * np.abs(a).max()), np.zeros(int(sr * first_gap), dtype=a.dtype)]
     letters_from = sum(len(p) for p in out)
     for letter in letters:
         a, sr, t = k.create_timed('The letter ' + letter + '.', voice=voice, speed=speed, lang='en-us', clause_pause=0)
@@ -171,7 +171,7 @@ for n, item in enumerate(spec, 1):
         if text.rstrip().endswith('!'): speed += 0.05                 # excited lines a little livelier
         audio, sr = best_line(text, voice, speed)
         parts.append(audio)
-        gap = 2.0 if i == 0 else max(0.5, write_pause)
+        gap = 2.0 if i == 0 else max(0.25, write_pause)        # the next speaker answers at once (teacher: no waiting)
         if i + 1 < len(item['lines']) and SPELLING.match(item['lines'][i + 1][1]): gap = max(gap, 1.0)   # don't rush into a spelling
         parts.append(np.zeros(int(sr * gap), dtype=audio.dtype))
     wav = out_dir + '/tmp.wav'
