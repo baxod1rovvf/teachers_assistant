@@ -537,7 +537,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   part 1.5; **blank writing = band 1**); Overall = average of the present skills, rounded like IELTS; CEFR from Overall.
 - **LanguageTool** (`https://api.languagetool.org/v2/check`, `en-GB`, free, no key): about 20 checks a minute per connection. A busy or
   offline check shows "press Check again", the text is still sent, the band then uses only the length.
-- **Recordings**: Kokoro voices `af_heart` (woman, also the narrator) and `bm_george` (man); `tools/make-course-audio.py <model folder>
+- **Recordings**: Kokoro voices `af_heart` (woman, also the narrator) and `am_michael` (man), American accent (teacher, 2026-11-04: the British one dropped its r's — "four" sounded like "faw"); spelled letters ~0.45 s apart; `tools/make-course-audio.py <model folder>
   audio/skills/elementary-scripts.json audio/skills` makes `audio/skills/elem-<n>-listening.mp3` (needs ffmpeg; `ASR_DIR` = a sherpa-onnx
   Whisper base.en folder checks every line and remakes it until heard right). Spelled names are said "That's T, H, O…" slowly; write full
   sentences (one-word lines garble); phone numbers in Ofcom drama ranges. The checker's false alarms: whose/who's, number words with a capital.

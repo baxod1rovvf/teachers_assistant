@@ -70,7 +70,7 @@ test.describe('content', () => {
     expect(new Set(full.map(l => l.listening.src)).size).toBe(5);
     expect(new Set(full.map(l => l.reading.title)).size).toBe(5);
     for (const lv of full) {
-      expect(lv.listening.src).toBe('audio/skills/elem-' + lv.no + '-listening.mp3');
+      expect(lv.listening.src).toMatch(new RegExp('^audio/skills/elem-' + lv.no + '-listening\\.mp3(\\?v=\\d+)?$'));
       const L = lv.listening;
       expect(L.questions.length).toBe(10);
       expect(L.words.length).toBe(10);
@@ -123,7 +123,7 @@ test.describe('content', () => {
     await page.goto('/skill.html?s=listening&lv=1&preview=1');
     const l1 = await page.evaluate(() => TA_SKILLS.elementary.levels[0]);
     expect(l1).toMatchObject({ no: 1, theme: 'Meeting people', emoji: '👋' });
-    expect(l1.listening.src).toBe('audio/skills/elem-1-listening.mp3');
+    expect(l1.listening.src).toMatch(/^audio\/skills\/elem-1-listening\.mp3(\?v=\d+)?$/);
     expect(l1.reading.title).toMatch(/pen-friend/i);
     expect(l1.writing).toMatchObject({ topic: 'About me', minWords: 40, maxWords: 60, minutes: 15 });
     expect(l1.speaking.part2.seconds).toBe(45);

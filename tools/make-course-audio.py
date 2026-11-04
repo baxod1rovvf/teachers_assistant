@@ -10,7 +10,8 @@
 # Run:  ./venv/bin/python tools/make-course-audio.py <folder with kokoro.onnx + voices.bin> audio/skills/elementary-scripts.json audio/skills
 # Spelled names (a line like "E. double M. A.") are said as "That's E, double M, A." with the pauses between letters stretched.
 # A scripts file: [{ "src": "audio/skills/….mp3", "lines": [[voice, text], …] }] — bf_* / bm_* are British voices; letters are
-# written "K. A. M." so each is said on its own. Needs ffmpeg. Keep `transcript` in js/skills-data.js in step.
+# written "K. A. M." so each is said on its own. American voices and accent (teacher, 2026-11-04: the British one dropped its
+# 'r's — "four" sounded like "faw", "form" like "farm"): woman af_heart, man am_michael. Needs ffmpeg. Keep `transcript` in js/skills-data.js in step.
 # Makes the course's listening audio with Kokoro (Apache-2.0): one voice per speaker, pauses between lines,
 # the stress of -teen numbers on "-TEEN" (the lesson teaches thirTEEN vs THIRty).
 import os, sys, re, json, subprocess, numpy as np, soundfile as sf
@@ -20,9 +21,9 @@ k = Kokoro(model_dir + '/kokoro.onnx', model_dir + '/voices.bin')
 spec = json.load(open(spec_file))
 SPELLING = re.compile(r'^\s*(?:(?:double )?[A-Z]\.\s*)+$')            # "E. double M. A."
 def say(text, voice, speed):
-    ph = k.tokenizer.phonemize(text, 'en-gb')
+    ph = k.tokenizer.phonemize(text, 'en-us')
     ph = re.sub(r'ˈ([^\sˈˌ,.!?]*?)tiːn', r'\1tˈiːn', ph)                # thirTEEN, fourTEEN…
-    return k.create(ph, voice=voice, speed=speed, lang='en-gb', is_phonemes=True)
+    return k.create(ph, voice=voice, speed=speed, lang='en-us', is_phonemes=True)
 # Optional check by ear (a speech recogniser): set ASR_DIR to a sherpa-onnx Whisper folder (base.en). Each spelling is
 # made in a few slightly different ways until the recogniser hears exactly the right letters.
 ASR = None
@@ -129,9 +130,9 @@ for item in spec:
         if letters:
             # Spelling (teacher, 2026-11-03: "it should be iy double em ey", and slow for beginners). A letter said on its own
             # comes out garbled, so the whole spelling is one sentence — "That's E, double M, A." — and then the short
-            # pauses between the letters are stretched to ~0.9 s, so students have time to write.
+            # pauses between the letters are stretched a little (teacher, 2026-11-04: 0.9 s was too choppy → 0.45 s).
             audio, sr = best_spelling(letters, voice)
-            parts.append(stretch_pauses(audio, sr, 0.9))
+            parts.append(stretch_pauses(audio, sr, 0.45))
             parts.append(np.zeros(int(sr * 1.2), dtype=audio.dtype))
             continue
         # numbers ("oh nine one, double five…") a little slower than the rest
