@@ -3,7 +3,7 @@
     "label": "Level 1 · Meeting people — a hotel check-in",
     "src": "audio/skills/elem-1-listening.mp3",
     "lines": [
-      ["af_heart", "Level one. You will hear a conversation at a hotel. Listen and complete the form."],
+      ["af_heart", "Step eleven. You will hear a conversation at a hotel. Listen and complete the form."],
       ["af_heart", "Good afternoon, and welcome to the Riverside Hotel. How can I help you?"],
       ["am_michael", "Hello. I've got a booking for tonight. My surname is Thompson."],
       ["af_heart", "Lovely. Could you spell your surname for me, please?"],
@@ -39,7 +39,7 @@
     "label": "Level 2 · Family & friends — joining a sports club",
     "src": "audio/skills/elem-2-listening.mp3",
     "lines": [
-      ["af_heart", "Level two. You will hear a conversation at a sports club. Listen and complete the form."],
+      ["af_heart", "Step twelve. You will hear a conversation at a sports club. Listen and complete the form."],
       ["am_michael", "Good morning, Greenfield Sports Club. How can I help you?"],
       ["af_heart", "Hello. I'd like to join the club with my son, please. He's very keen on sport."],
       ["am_michael", "Wonderful. I'll fill in the form for you. What's your surname, please?"],
@@ -76,7 +76,7 @@
     "label": "Level 3 · My home — renting a room",
     "src": "audio/skills/elem-3-listening.mp3",
     "lines": [
-      ["af_heart", "Level three. You will hear a phone call about a room to rent. Listen and complete the notes."],
+      ["af_heart", "Step thirteen. You will hear a phone call about a room to rent. Listen and complete the notes."],
       ["am_michael", "Hello. I'm calling about the room in your advert. Is it still free?"],
       ["af_heart", "Yes, it is. I'm the owner of the house. My name is Mrs Fletcher.", 3.5],
       ["am_michael", "Sorry, could you spell your name for me, please?"],
@@ -110,7 +110,7 @@
     "label": "Level 4 · My day — a doctor's appointment",
     "src": "audio/skills/elem-4-listening.mp3",
     "lines": [
-      ["af_heart", "Level four. You will hear a phone call to a doctor's surgery. Listen and complete the notes."],
+      ["af_heart", "Step fourteen. You will hear a phone call to a doctor's surgery. Listen and complete the notes."],
       ["am_michael", "Good morning, Oakfield Surgery. How can I help you?"],
       ["af_heart", "Hello. I'd like to make an appointment with a doctor, please."],
       ["am_michael", "Of course. Can I have your surname, please?"],
@@ -145,7 +145,7 @@
     "label": "Level 5 · Food & cafés — ordering for a party",
     "src": "audio/skills/elem-5-listening.mp3",
     "lines": [
-      ["af_heart", "Level five. You will hear a phone call to a café. Listen and complete the order form."],
+      ["af_heart", "Step fifteen. You will hear a phone call to a café. Listen and complete the order form."],
       ["af_heart", "Hello, Sunflower Café. Jessica speaking. How can I help you?"],
       ["am_michael", "Hi. I'd like to order some food for my daughter's birthday party, please."],
       ["af_heart", "How lovely! Can I take your surname first?"],
@@ -183,7 +183,7 @@
     "label": "Level 6 · Shopping — a lost bag at a shop",
     "src": "audio/skills/elem-6-listening.mp3",
     "lines": [
-      ["af_heart", "Level six. You will hear a woman phoning a department store about a lost bag. Listen and complete the form."],
+      ["af_heart", "Step sixteen. You will hear a woman phoning a department store about a lost bag. Listen and complete the form."],
       ["am_michael", "Good morning, Westgate Department Store. Customer service. How can I help you?"],
       ["af_heart", "Hello. I think I left my bag in your shop. Has anyone found it?"],
       ["am_michael", "I can check for you. What's your surname, please?"],
@@ -220,7 +220,7 @@
     "label": "Level 7 · My town — at the tourist office",
     "src": "audio/skills/elem-7-listening.mp3",
     "lines": [
-      ["af_heart", "Level seven. You will hear a man at a tourist office. He is asking about places in the town. Listen and complete the notes."],
+      ["af_heart", "Step seventeen. You will hear a man at a tourist office. He is asking about places in the town. Listen and complete the notes."],
       ["af_heart", "Good morning, and welcome to the tourist office. How can I help you?"],
       ["am_michael", "Hello. I'm here on holiday, and I'd like to see the town. Can you help me?"],
       ["af_heart", "Of course. Can I have your name, please? Then I can book a town walk for you."],
@@ -263,7 +263,7 @@
     "label": "Level 8 · Free time — signing up for a course",
     "src": "audio/skills/elem-8-listening.mp3",
     "lines": [
-      ["af_heart", "Level eight. You will hear a woman at a community centre. She wants to sign up for a course. Listen and complete the form."],
+      ["af_heart", "Step eighteen. You will hear a woman at a community centre. She wants to sign up for a course. Listen and complete the form."],
       ["am_michael", "Good evening, and welcome to Hillside Community Centre. How can I help you?"],
       ["af_heart", "Hello. I'd like to sign up for a course, please. I want to do something new in my free time."],
       ["am_michael", "Great. Which course are you interested in?"],

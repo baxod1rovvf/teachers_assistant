@@ -1223,7 +1223,7 @@ var TA_SKILLS = {
     {
       id: 'e1', no: 11, stage: 'Elementary', theme: 'Meeting people', emoji: '👋',
       listening: {
-        src: 'audio/skills/elem-1-listening.mp3?v=5',
+        src: 'audio/skills/elem-1-listening.mp3?v=6',
         title: 'Checking in at a hotel',
         intro: 'Listen to a man checking in at a hotel. Complete the form. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
         questions: [
@@ -1251,7 +1251,7 @@ var TA_SKILLS = {
           { w: 'check-out', emoji: '🧳', m: 'the time when you leave a hotel and give back the key', ex: "Check-out is at eleven o'clock." }
         ],
         transcript: [
-          { who: 'Woman', text: 'Level one. You will hear a conversation at a hotel. Listen and complete the form.', answers: [] },
+          { who: 'Woman', text: 'Step eleven. You will hear a conversation at a hotel. Listen and complete the form.', answers: [] },
           { who: 'Woman', text: 'Good afternoon, and welcome to the Riverside Hotel. How can I help you?', answers: [] },
           { who: 'Man', text: "Hello. I've got a booking for tonight. My surname is Thompson.", answers: [] },
           { who: 'Woman', text: 'Lovely. Could you spell your surname for me, please?', answers: [] },
@@ -1359,7 +1359,7 @@ var TA_SKILLS = {
     {
       id: 'e2', no: 12, stage: 'Elementary', theme: 'Family & friends', emoji: '👨‍👩‍👧',
       listening: {
-        src: 'audio/skills/elem-2-listening.mp3?v=5',
+        src: 'audio/skills/elem-2-listening.mp3?v=6',
         title: 'Joining a sports club',
         intro: 'Listen to a woman joining a sports club with her son. Complete the form. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
         questions: [
@@ -1387,7 +1387,7 @@ var TA_SKILLS = {
           { w: 'membership card', emoji: '💳', m: 'a card that shows you are a member of a club', ex: 'Please bring a photo for his membership card.' }
         ],
         transcript: [
-          { who: 'Woman', text: 'Level two. You will hear a conversation at a sports club. Listen and complete the form.', answers: [] },
+          { who: 'Woman', text: 'Step twelve. You will hear a conversation at a sports club. Listen and complete the form.', answers: [] },
           { who: 'Man', text: 'Good morning, Greenfield Sports Club. How can I help you?', answers: [] },
           { who: 'Woman', text: "Hello. I'd like to join the club with my son, please. He's very keen on sport.", answers: [] },
           { who: 'Man', text: "Wonderful. I'll fill in the form for you. What's your surname, please?", answers: [] },
@@ -1497,7 +1497,7 @@ var TA_SKILLS = {
     {
       id: 'e3', no: 13, stage: 'Elementary', theme: 'My home', emoji: '🏠',
       listening: {
-        src: 'audio/skills/elem-3-listening.mp3?v=5',
+        src: 'audio/skills/elem-3-listening.mp3?v=6',
         title: 'Renting a room',
         intro: 'Listen to a man phoning about a room to rent. Complete the notes. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
         questions: [
@@ -1525,7 +1525,7 @@ var TA_SKILLS = {
           { w: 'tidy', emoji: '🧹', m: 'clean, with everything in its place', ex: "They're both students, and they're very tidy." }
         ],
         transcript: [
-          { who: 'Woman', text: 'Level three. You will hear a phone call about a room to rent. Listen and complete the notes.', answers: [] },
+          { who: 'Woman', text: 'Step thirteen. You will hear a phone call about a room to rent. Listen and complete the notes.', answers: [] },
           { who: 'Man', text: "Hello. I'm calling about the room in your advert. Is it still free?", answers: [] },
           { who: 'Woman', text: "Yes, it is. I'm the owner of the house. My name is Mrs Fletcher.", answers: [1] },
           { who: 'Man', text: 'Sorry, could you spell your name for me, please?', answers: [] },
@@ -1636,7 +1636,7 @@ var TA_SKILLS = {
     {
       id: 'e4', no: 14, stage: 'Elementary', theme: 'My day', emoji: '⏰',
       listening: {
-        src: 'audio/skills/elem-4-listening.mp3?v=5',
+        src: 'audio/skills/elem-4-listening.mp3?v=6',
         title: "Booking a doctor's appointment",
         intro: "Listen to a woman phoning a doctor's surgery. Complete the notes. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.",
         questions: [
@@ -1664,7 +1664,7 @@ var TA_SKILLS = {
           { w: 'park', emoji: '🅿️', m: 'to leave your car in a place', ex: "It's better to park next to the library." }
         ],
         transcript: [
-          { who: 'Woman', text: "Level four. You will hear a phone call to a doctor's surgery. Listen and complete the notes.", answers: [] },
+          { who: 'Woman', text: "Step fourteen. You will hear a phone call to a doctor's surgery. Listen and complete the notes.", answers: [] },
           { who: 'Man', text: 'Good morning, Oakfield Surgery. How can I help you?', answers: [] },
           { who: 'Woman', text: "Hello. I'd like to make an appointment with a doctor, please.", answers: [] },
           { who: 'Man', text: 'Of course. Can I have your surname, please?', answers: [] },
@@ -1778,7 +1778,7 @@ var TA_SKILLS = {
     {
       id: 'e5', no: 15, stage: 'Elementary', theme: 'Food & cafés', emoji: '🍕',
       listening: {
-        src: 'audio/skills/elem-5-listening.mp3?v=5',
+        src: 'audio/skills/elem-5-listening.mp3?v=6',
         title: 'Ordering food for a party',
         intro: 'Listen to a man ordering food for a birthday party at a café. Complete the order form. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
         questions: [
@@ -1806,7 +1806,7 @@ var TA_SKILLS = {
           { w: 'pay', emoji: '💰', m: 'to give money for something you buy', ex: 'Can I pay on the day?' }
         ],
         transcript: [
-          { who: 'Woman', text: 'Level five. You will hear a phone call to a café. Listen and complete the order form.', answers: [] },
+          { who: 'Woman', text: 'Step fifteen. You will hear a phone call to a café. Listen and complete the order form.', answers: [] },
           { who: 'Woman', text: 'Hello, Sunflower Café. Jessica speaking. How can I help you?', answers: [] },
           { who: 'Man', text: "Hi. I'd like to order some food for my daughter's birthday party, please.", answers: [] },
           { who: 'Woman', text: 'How lovely! Can I take your surname first?', answers: [] },
@@ -1926,7 +1926,7 @@ var TA_SKILLS = {
     {
       id: 'e6', no: 16, stage: 'Elementary', theme: 'Shopping', emoji: '🛍️',
       listening: {
-        src: 'audio/skills/elem-6-listening.mp3?v=1',
+        src: 'audio/skills/elem-6-listening.mp3?v=2',
         title: 'A lost bag at a shop',
         intro: 'Listen to a woman phoning a department store about a lost bag. Complete the form. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
         questions: [
@@ -1954,7 +1954,7 @@ var TA_SKILLS = {
           { w: 'collect', emoji: '🙌', m: 'to go to a place and take something that is waiting for you', ex: 'You can collect it from the information desk.' }
         ],
         transcript: [
-          { who: 'Woman', text: 'Level six. You will hear a woman phoning a department store about a lost bag. Listen and complete the form.', answers: [] },
+          { who: 'Woman', text: 'Step sixteen. You will hear a woman phoning a department store about a lost bag. Listen and complete the form.', answers: [] },
           { who: 'Man', text: 'Good morning, Westgate Department Store. Customer service. How can I help you?', answers: [] },
           { who: 'Woman', text: 'Hello. I think I left my bag in your shop. Has anyone found it?', answers: [] },
           { who: 'Man', text: "I can check for you. What's your surname, please?", answers: [] },
@@ -2074,7 +2074,7 @@ var TA_SKILLS = {
     {
       id: 'e7', no: 17, stage: 'Elementary', theme: 'My town', emoji: '🏙️',
       listening: {
-        src: 'audio/skills/elem-7-listening.mp3?v=1',
+        src: 'audio/skills/elem-7-listening.mp3?v=2',
         title: 'At the tourist office',
         intro: 'Listen to a man asking about places in a town at the tourist office. Complete the notes. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
         questions: [
@@ -2102,7 +2102,7 @@ var TA_SKILLS = {
           { w: 'square', emoji: '⛲', m: 'an open space in a town with buildings all around it', ex: 'It starts in the market square, at ten o\'clock.' }
         ],
         transcript: [
-          { who: 'Woman', text: 'Level seven. You will hear a man at a tourist office. He is asking about places in the town. Listen and complete the notes.', answers: [] },
+          { who: 'Woman', text: 'Step seventeen. You will hear a man at a tourist office. He is asking about places in the town. Listen and complete the notes.', answers: [] },
           { who: 'Woman', text: 'Good morning, and welcome to the tourist office. How can I help you?', answers: [] },
           { who: 'Man', text: "Hello. I'm here on holiday, and I'd like to see the town. Can you help me?", answers: [] },
           { who: 'Woman', text: 'Of course. Can I have your name, please? Then I can book a town walk for you.', answers: [] },
@@ -2231,7 +2231,7 @@ var TA_SKILLS = {
     {
       id: 'e8', no: 18, stage: 'Elementary', theme: 'Free time', emoji: '🎨',
       listening: {
-        src: 'audio/skills/elem-8-listening.mp3?v=1',
+        src: 'audio/skills/elem-8-listening.mp3?v=2',
         title: 'Signing up for a course',
         intro: 'Listen to a woman signing up for a course at a community centre. Complete the form. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
         questions: [
@@ -2259,7 +2259,7 @@ var TA_SKILLS = {
           { w: 'floor', emoji: '🛗', m: 'one level of a building, for example the ground floor or the first floor', ex: "They're on the second floor, in the big room at the end." }
         ],
         transcript: [
-          { who: 'Woman', text: 'Level eight. You will hear a woman at a community centre. She wants to sign up for a course. Listen and complete the form.', answers: [] },
+          { who: 'Woman', text: 'Step eighteen. You will hear a woman at a community centre. She wants to sign up for a course. Listen and complete the form.', answers: [] },
           { who: 'Man', text: 'Good evening, and welcome to Hillside Community Centre. How can I help you?', answers: [] },
           { who: 'Woman', text: "Hello. I'd like to sign up for a course, please. I want to do something new in my free time.", answers: [] },
           { who: 'Man', text: 'Great. Which course are you interested in?', answers: [] },
