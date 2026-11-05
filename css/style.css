@@ -2676,7 +2676,7 @@ button.sk-dot:hover { transform: scale(1.1); }
 /* the level page */
 .sk-level-head { display: flex; align-items: center; gap: 14px; margin: 8px 0 18px; }
 .sk-level-head h3 { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.6rem; margin: 0; overflow-wrap: anywhere; }
-.sk-results { margin-bottom: 26px; }
+.sk-results { margin-top: 30px; margin-bottom: 26px; }
 .sk-results-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
 .sk-results-head h3 { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.25rem; margin: 0; }
 .sk-results-note { margin: 10px 0 0; }
