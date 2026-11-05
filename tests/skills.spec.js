@@ -74,6 +74,7 @@ test.describe('content', () => {
       const L = lv.listening;
       expect(L.questions.length).toBe(10);
       expect(L.words.length).toBe(10);
+      expect(L.words.every(w => typeof w.emoji === 'string' && w.emoji.length > 0), 'every listening word has a picture').toBe(true);
       L.words.forEach(w => { expect(w.w && w.m && w.ex).toBeTruthy(); });
       L.transcript.forEach(t => expect(['Woman', 'Man']).toContain(t.who));
       L.questions.forEach((q, i) => {
@@ -92,6 +93,7 @@ test.describe('content', () => {
       const sent = sentences(R.text);
       expect(R.questions.length).toBe(15);
       expect(R.words.length).toBe(10);
+      expect(R.words.every(w => typeof w.emoji === 'string' && w.emoji.length > 0), 'every reading word has a picture').toBe(true);
       ['tfng', 'gap', 'choose'].forEach(t => expect(R.questions.filter(q => q.type === t).length).toBe(5));
       R.questions.forEach((q, i) => {
         expect(sent[q.line], `reading question ${i + 1}`).toBeTruthy();
