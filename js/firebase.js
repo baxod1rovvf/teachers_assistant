@@ -398,8 +398,8 @@ window.startPlainCompletionsSync = function () {
       if (e.code) codes.push(e.code);
     } else if (e.code) codes.push(e.code);
   });
-  // Skills course: a level's code is kept in ta_skills_links even if its My Exercises item was deleted
-  // (the link still works), so its results still reach the Course page's results table
+  // Skills course: each step + part + group's code is kept in ta_skills_links (no My Exercises item since 2026-11-05;
+  // keys old or new — only the codes matter here), so its results reach the Course page's dots and results table
   try {
     const links = window.taSkillsLinks ? window.taSkillsLinks() : {};
     Object.keys(links).forEach(k => { const v = links[k]; if (v && typeof v === 'object' && v.code) codes.push(v.code); });

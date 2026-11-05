@@ -382,6 +382,8 @@
       if (nameEl && typeof getTeacherName === 'function') nameEl.textContent = getTeacherName();
       if (typeof switchTo === 'function' && typeof currentActiveTab !== 'undefined') switchTo(currentActiveTab);
       if (window.renderRecentExercises) window.renderRecentExercises();
+      // codes that came from another device (ta_skills_links: Course parts with no My Exercises item) get their results
+      if (window.startPlainCompletionsSync) window.startPlainCompletionsSync();
     } catch (e) { console.error(e); }
   }
 

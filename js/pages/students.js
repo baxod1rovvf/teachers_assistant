@@ -292,7 +292,7 @@ function renderStudentsList() {
         '<button class="sp-icon-btn danger" type="button" title="Delete group" aria-label="Delete group" onclick="deleteStudentGroup(' + jsAttr(b.id) + ')">🗑</button>') +
       '<span class="student-group-count">' + b.students.length + ' student' + (b.students.length === 1 ? '' : 's') + ' · <span data-group-pts="' + escapeForHtml(b.id) + '">🪙 ' + groupPts + '</span></span></div>';
     if (!b.unassigned) {
-      const exCount = getRecentExercises().filter(e => e.groupId === b.id).length;
+      const exCount = getRecentExercises().filter(e => e.groupId === b.id && !taIsSkillCourseItem(e)).length;
       html += '<div class="gd-actions">' +
         '<button class="mini-btn" type="button" onclick="taNavigate(\'my-exercises.html?group=\' + encodeURIComponent(' + jsAttr(b.id) + '))">📁 ' + exCount + ' exercise' + (exCount === 1 ? '' : 's') + '</button>' +
       '</div>';
