@@ -3037,3 +3037,6 @@ body.sk-calm::before, body.sk-calm::after { display: none !important; }
 .sk-calm .sk-speak-timer.done { color: var(--skc-ok); }
 .sk-calm .sk-well { font-size: 1.25rem; color: var(--skc-ok); }
 @media (max-width: 560px) { .sk-calm .sk-card { border-radius: 10px; padding: 16px 14px; } .sk-calm .sk-sq { font-size: 1.25rem; } }
+/* useful words: a picture for each word (teacher, 2026-11-05) */
+.sk-calm .sk-words li { position: relative; padding-right: 52px; }
+.sk-wemoji { position: absolute; top: 10px; right: 12px; font-size: 1.6rem; line-height: 1; }

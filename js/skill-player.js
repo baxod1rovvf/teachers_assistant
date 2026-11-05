@@ -325,7 +325,7 @@ function submit(level, content, info) {
   const words = content.words || [];
   const isReading = SK.skill === 'reading';
   $('#skAfter').innerHTML = `<section class="sk-card sk-words-card"><h2>${words.length} useful words</h2>
-      <ul class="sk-words">${words.map(w => `<li><b>${esc(w.w)}</b><span class="sk-m">${esc(w.m)}</span><i>${esc(w.ex)}</i></li>`).join('')}</ul>
+      <ul class="sk-words">${words.map(w => `<li>${w.emoji ? `<span class="sk-wemoji" aria-hidden="true">${esc(w.emoji)}</span>` : ''}<b>${esc(w.w)}</b><span class="sk-m">${esc(w.m)}</span><i>${esc(w.ex)}</i></li>`).join('')}</ul>
       <div class="sk-actions"><button type="button" class="sk-btn sk-btn-main" id="skAnalyze">Analyze ></button></div>
     </section>
     <div id="skAnalysis"></div>`;
