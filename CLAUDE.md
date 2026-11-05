@@ -488,14 +488,14 @@ real students' names or results into the repository (it is public).
   underline (`.ta-underline`, `.divider-dash`), cream name boxes (also `#dcNameInput`, `#ecNameInput`, `#ilNameInput`, `#irNameInput`,
   `#iwNameInput`), a pink → purple → blue Start button that sinks when pressed, Fredoka (Google Fonts, `@import`; offline: system
   font); slide-deck exercises (Flashcard, Sentences, Spelling, Test…) get the sticker on `.deck-container:has(#slide-welcome.active)`.
-  Set screens: cream page with confetti dots, 🎉 after the headline.
+  Set screens: plain cream page (no confetti dots since 2026-11-05), 🎉 after the headline.
 - **Playful design (teacher, 2026-11-02: "change Loom's design entirely, build it from 0 — colourful, playful,
   satisfying, use emojis")** — replaces the 2026-10-27 glass/black+red look and the line icons. The look lives in the
   "LOOM — PLAYFUL DESIGN" layer at the end of css/style.css (tokens in `:root` = Night, `body.light-theme` = Day); the
   rules above it only place things. Recipe: candy colours (`--c-red/orange/yellow/green/teal/blue/purple/pink`), every
   block is a "sticker" — 2.5 px dark outline `--line` + a hard shadow under it that the block sinks into when pressed
   (`--shadow-md` = `0 5px 0 var(--line)`), bouncy motion (`--bounce`), Fredoka headings + Nunito text, confetti dots on the
-  page. **Page background (teacher, 2026-11-05: the confetti dots looked childish): plain cool slate — Day `#EDF0F4`, Night deep navy `#121722`, no dots** (the sign-in screen too); only the students' course page (`body.sk-body`, skill.html) keeps cream `#FFF5E1` / plum `#1B1535` with confetti dots; body class `loom-fun` (no more `glass-ui`). Gradients are
+  page. **Page background (teacher, 2026-11-05: the confetti dots looked childish): plain cool slate — Day `#EDF0F4`, Night deep navy `#121722`, no dots** (the sign-in screen too); the students' course page (`body.sk-body`, skill.html) keeps cream `#FFF5E1` / plum `#1B1535`, also without dots (teacher, 2026-11-05: "delete background dots in exercises"; new exercise files' set screens too — files made before keep theirs); body class `loom-fun` (no more `glass-ui`). Gradients are
   allowed again. **Icons are emojis**: the top bar's sections (`TA_TOPBAR_TABS` `emoji` + `color` — the moving circle takes
   the section's colour, `--blob-c`), tools 🔍 ☀️/🌙 ⚙️ 🔄, logo 🧶 + "loom" in four colours; every exercise type's
   `picker-icon-<type>` gets an emoji (`--te`) on a sticker of its colour (`--tc`) from one CSS list

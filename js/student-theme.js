@@ -121,11 +121,7 @@ html { -webkit-text-size-adjust: 100%; }
 }
 
 /* ---------- a Homework / Class set: its own screens in the same look ---------- */
-.ta-screen { background:
-    radial-gradient(circle at 12% 18%, rgba(255,122,198,.35) 0 3px, transparent 4px) 0 0 / 140px 140px,
-    radial-gradient(circle at 62% 42%, rgba(255,210,63,.45) 0 3px, transparent 4px) 0 0 / 170px 170px,
-    radial-gradient(circle at 36% 78%, rgba(77,155,255,.35) 0 3px, transparent 4px) 0 0 / 120px 120px,
-    #FFF5E1 !important; color: var(--tas-ink) !important; }
+.ta-screen { background: #FFF5E1 !important; color: var(--tas-ink) !important; }
 .ta-screen h1 { color: var(--tas-ink) !important; font-family: var(--tas-font) !important; font-size: clamp(1.45rem, 5.2vw, 2rem) !important; }
 .ta-screen h1 .ta-accent { color: var(--tas-brand) !important; }
 .ta-screen h1::after { content: ' 🎉'; }
