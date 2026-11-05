@@ -866,7 +866,163 @@ var TA_SKILLS = {
           }
         }
       },
-      { no: 7, theme: 'My town', emoji: '🏙️' },
+      {
+        no: 7, theme: 'My town', emoji: '🏙️',
+        listening: {
+          src: 'audio/skills/elem-7-listening.mp3?v=1',
+          title: 'At the tourist office',
+          intro: 'Listen to a man asking about places in a town at the tourist office. Complete the notes. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
+          questions: [
+            { q: 'Name: Mr _____', a: ['Barton'] },
+            { q: 'Staying in town until: _____', a: ['Sunday', 'Sunday evening'] },
+            { q: 'The museum is on _____ Street', a: ['Morley'] },
+            { q: 'The museum opens at: _____', a: ['9.30', '9:30', 'nine thirty', 'half past nine', '9.30 am', '9:30 am', '9.30am', '9:30am'] },
+            { q: 'The museum is closed on: _____', a: ['Mondays', 'Monday'] },
+            { q: 'Ticket for an adult: £_____', a: ['6', 'six', '£6', '6.00', '£6.00', '6 pounds', 'six pounds'] },
+            { q: 'Lunch: the _____ café, by the river', a: ['Old Mill', 'the Old Mill'] },
+            { q: 'The castle closes at: _____', a: ["five o'clock", "5 o'clock", '5', 'five', '5 pm', '5pm', '5 p.m.', '5.00', '5:00', '5.00 pm', '5:00 pm', '17.00', '17:00'] },
+            { q: 'The free town walk starts in the _____', a: ['market square'] },
+            { q: 'Tourist office phone number: _____', a: ['07700 900 593', '07700900593'] }
+          ],
+          words: [
+            { w: 'tourist office', emoji: 'ℹ️', m: 'a place where visitors can get maps and information about a town', ex: 'Good morning, and welcome to the tourist office.' },
+            { w: 'on holiday', emoji: '🧳', m: 'away from home and work, visiting a new place for fun', ex: "I'm here on holiday, and I'd like to see the town." },
+            { w: 'stay', emoji: '🏨', m: 'to live in a place for a short time', ex: 'How long are you staying in town?' },
+            { w: 'museum', emoji: '🏛️', m: 'a building where you can look at old, interesting or beautiful things', ex: "I'd like to visit the museum." },
+            { w: 'next to', emoji: '↔️', m: 'very near something, at its side', ex: 'The museum is next to the library.' },
+            { w: 'closed', emoji: '🚫', m: 'not open, so you cannot go in', ex: "It's closed on Mondays." },
+            { w: 'adult', emoji: '🧑', m: 'a person who is not a child any more', ex: 'A ticket for an adult is six pounds.' },
+            { w: 'castle', emoji: '🏰', m: 'a big, strong, old building with high walls, where kings and queens lived', ex: 'The castle closes at five o\'clock.' },
+            { w: 'free', emoji: '🆓', m: 'costing no money', ex: "There's also a free town walk on Saturday morning." },
+            { w: 'square', emoji: '⛲', m: 'an open space in a town with buildings all around it', ex: 'It starts in the market square, at ten o\'clock.' }
+          ],
+          transcript: [
+            { who: 'Woman', text: 'Level seven. You will hear a man at a tourist office. He is asking about places in the town. Listen and complete the notes.', answers: [] },
+            { who: 'Woman', text: 'Good morning, and welcome to the tourist office. How can I help you?', answers: [] },
+            { who: 'Man', text: "Hello. I'm here on holiday, and I'd like to see the town. Can you help me?", answers: [] },
+            { who: 'Woman', text: 'Of course. Can I have your name, please? Then I can book a town walk for you.', answers: [] },
+            { who: 'Man', text: "Yes, it's Barton. I'll spell it for you.", answers: [1] },
+            { who: 'Man', text: "That's B, A, R, T, O, N.", answers: [1] },
+            { who: 'Woman', text: 'Thank you, Mr Barton. How long are you staying in town?', answers: [] },
+            { who: 'Man', text: "I'm here until Sunday. I go home on Sunday evening.", answers: [2] },
+            { who: 'Woman', text: 'Lovely. What would you like to see first?', answers: [] },
+            { who: 'Man', text: "I'd like to visit the museum. Where is it?", answers: [] },
+            { who: 'Woman', text: "The town museum is on Morley Street, next to the library. I'll spell Morley for you.", answers: [3] },
+            { who: 'Woman', text: "That's M, O, R, L, E, Y.", answers: [3] },
+            { who: 'Man', text: 'Thank you. And what time does it open?', answers: [] },
+            { who: 'Woman', text: 'It opens at nine thirty every morning.', answers: [4] },
+            { who: 'Man', text: 'Nine thirty?', answers: [4] },
+            { who: 'Woman', text: "Yes, that's right.", answers: [] },
+            { who: 'Man', text: 'Is the museum open every day?', answers: [] },
+            { who: 'Woman', text: "No, it isn't. It's closed on Mondays.", answers: [5] },
+            { who: 'Man', text: 'OK. And how much is a ticket?', answers: [] },
+            { who: 'Woman', text: 'A ticket for an adult is six pounds.', answers: [6] },
+            { who: 'Man', text: 'Six pounds for an adult?', answers: [6] },
+            { who: 'Woman', text: "Yes, that's right.", answers: [] },
+            { who: 'Man', text: 'Great. Is there a good place for lunch near the museum?', answers: [] },
+            { who: 'Woman', text: "Yes, try the Old Mill café. It's by the river, and the soup is lovely.", answers: [7] },
+            { who: 'Man', text: 'Thank you. What about the castle? When does it close?', answers: [] },
+            { who: 'Woman', text: "The castle closes at five o'clock, so go in the morning or early afternoon.", answers: [8] },
+            { who: 'Man', text: "Five o'clock?", answers: [8] },
+            { who: 'Woman', text: "Yes, that's right.", answers: [] },
+            { who: 'Woman', text: "There's also a free town walk on Saturday morning. Would you like to come?", answers: [] },
+            { who: 'Man', text: 'Yes, please! Where does it start?', answers: [] },
+            { who: 'Woman', text: "It starts in the market square, at ten o'clock.", answers: [9] },
+            { who: 'Man', text: 'And can I phone you if I have a question?', answers: [] },
+            { who: 'Woman', text: 'Of course. Our phone number is oh seven seven double oh, nine double oh, five nine three.', answers: [10] },
+            { who: 'Man', text: 'Oh seven seven double oh, nine double oh, five nine three?', answers: [10] },
+            { who: 'Woman', text: "Yes, that's right.", answers: [] },
+            { who: 'Man', text: 'Thank you very much for your help. Goodbye!', answers: [] },
+            { who: 'Woman', text: 'Goodbye, Mr Barton, and enjoy your stay!', answers: [] }
+          ]
+        },
+        reading: {
+          title: 'A town guide to Larkhaven',
+          text: "Welcome to Larkhaven, a small town by the sea in the south-west of England. " +
+            "About twelve thousand people live here, and in summer many more come for their holidays. " +
+            "This guide tells you about the best places to visit.\n\n" +
+            "Start your day in the old town, near the harbour. " +
+            "The streets here are narrow, and many of the houses are more than three hundred years old. " +
+            "On Market Street, there is a busy market every Wednesday and Saturday. " +
+            "You can buy fresh fish, local cheese and flowers there. " +
+            "Next, walk up the hill to Larkhaven Castle. " +
+            "It is open every day from ten in the morning until four in the afternoon, and a ticket costs eight pounds. " +
+            "From the top of the tower, you can see the whole town and the sea.\n\n" +
+            "If it rains, visit the Sea Museum on Bridge Street. " +
+            "It tells the story of the town's fishermen, and children love its big model ships. " +
+            "The museum is free, but it is closed on Tuesdays. " +
+            "Next to the museum is the town library, which has a small café on the first floor.\n\n" +
+            "Larkhaven is easy to explore on foot, because the centre is quite small. " +
+            "There is also a bus that goes along the coast every thirty minutes. " +
+            "You can hire a bike at the train station for twelve pounds a day.\n\n" +
+            "In the evening, have dinner at one of the fish restaurants by the harbour. " +
+            "Then walk along the beach and watch the sunset. " +
+            "On Friday nights in summer, there is free music in the park. " +
+            "For maps and more information, visit the tourist office in the main square. " +
+            "Enjoy your visit to Larkhaven!",
+          questions: [
+            { type: 'tfng', q: 'Larkhaven is a town by the sea.', a: ['True'], line: 0 },
+            { type: 'tfng', q: 'The market in the old town is open every day.', a: ['False'], line: 5 },
+            { type: 'tfng', q: 'You have to pay to go into the Sea Museum.', a: ['False'], line: 12 },
+            { type: 'tfng', q: 'The café in the library sells cakes.', a: ['Not given'], line: 13 },
+            { type: 'tfng', q: 'There is a bus along the coast every half an hour.', a: ['True'], line: 15 },
+            { type: 'gap', q: 'At the market, you can buy fresh fish, local _____ and flowers.', a: ['cheese'], line: 6 },
+            { type: 'gap', q: 'From the top of the castle _____, you can see the whole town and the sea.', a: ['tower'], line: 9 },
+            { type: 'gap', q: 'Children love the big model _____ in the Sea Museum.', a: ['ships'], line: 11 },
+            { type: 'gap', q: 'You can hire a _____ at the train station.', a: ['bike'], line: 16 },
+            { type: 'gap', q: 'On Friday nights in summer, there is free _____ in the park.', a: ['music'], line: 19 },
+            { type: 'choose', q: 'How many people live in Larkhaven?', opts: ['about two thousand', 'about twelve thousand', 'about twenty thousand'], a: ['about twelve thousand'], line: 1 },
+            { type: 'choose', q: 'How old are many of the houses in the old town?', opts: ['about fifty years old', 'about a hundred years old', 'more than three hundred years old'], a: ['more than three hundred years old'], line: 4 },
+            { type: 'choose', q: 'How much is a ticket for the castle?', opts: ['four pounds', 'eight pounds', 'twelve pounds'], a: ['eight pounds'], line: 8 },
+            { type: 'choose', q: 'Why is Larkhaven easy to explore on foot?', opts: ['There are no cars.', 'The streets are very wide.', 'The centre is quite small.'], a: ['The centre is quite small.'], line: 14 },
+            { type: 'choose', q: 'Where is the tourist office?', opts: ['by the harbour', 'in the main square', 'at the train station'], a: ['in the main square'], line: 20 }
+          ],
+          words: [
+            { w: 'harbour', emoji: '⚓', m: 'a place by the sea where boats can stay safely', ex: 'Start your day in the old town, near the harbour.' },
+            { w: 'narrow', emoji: '🤏', m: 'not wide; with only a little space from one side to the other', ex: 'The streets here are narrow.' },
+            { w: 'local', emoji: '🏡', m: 'from the place where you are, not from far away', ex: 'You can buy fresh fish, local cheese and flowers there.' },
+            { w: 'hill', emoji: '⛰️', m: 'a high piece of land, smaller than a mountain', ex: 'Walk up the hill to Larkhaven Castle.' },
+            { w: 'tower', emoji: '🗼', m: 'a tall, narrow building or part of a building', ex: 'From the top of the tower, you can see the whole town.' },
+            { w: 'model', emoji: '🚢', m: 'a small copy of something big', ex: 'Children love its big model ships.' },
+            { w: 'explore', emoji: '🧭', m: 'to go around a new place to see what is there', ex: 'Larkhaven is easy to explore on foot.' },
+            { w: 'on foot', emoji: '🚶', m: 'walking, not in a car or on a bus', ex: 'Larkhaven is easy to explore on foot.' },
+            { w: 'coast', emoji: '🏖️', m: 'the land next to the sea', ex: 'There is also a bus that goes along the coast.' },
+            { w: 'hire', emoji: '🚲', m: 'to pay money to use something for a short time', ex: 'You can hire a bike at the train station.' }
+          ]
+        },
+        writing: {
+          topic: 'My town',
+          task: 'Write a short text about the town or city where you live.',
+          points: ['where your town is and how big it is', 'two places you like there and why', 'what visitors can do in your town'],
+          minWords: 60, maxWords: 80, minutes: 20
+        },
+        speaking: {
+          words: [
+            { w: 'town', emoji: '🏘️', ex: 'I live in a small town near the mountains.' },
+            { w: 'city', emoji: '🏙️', ex: 'My uncle lives in a big city.' },
+            { w: 'park', emoji: '🌳', ex: 'There is a beautiful park in the centre.' },
+            { w: 'museum', emoji: '🏛️', ex: 'Our town has a small museum.' },
+            { w: 'library', emoji: '📚', ex: 'I often study in the library.' },
+            { w: 'bus station', emoji: '🚌', ex: 'The bus station is next to the market.' },
+            { w: 'near', emoji: '📍', ex: 'My school is near my house.' },
+            { w: 'far from', emoji: '🗺️', ex: 'The airport is far from the town centre.' },
+            { w: 'busy', emoji: '🚗', ex: 'The main street is very busy in the evening.' },
+            { w: 'quiet', emoji: '🤫', ex: 'My street is quiet at night.' }
+          ],
+          questions: [
+            { q: 'Where do you live?', use: ['I live in …', 'a town', 'a city', 'a village', 'near …'] },
+            { q: 'What is your favourite place in your town?', use: ['My favourite place is …', 'because …', 'the park', 'a café'] },
+            { q: 'Is your town busy or quiet?', use: ['It is very …', 'busy', 'quiet', 'at the weekend', 'in the evening'] },
+            { q: 'How do you get to school or work?', use: ['I go by …', 'bus', 'on foot', 'It takes … minutes.'] },
+            { q: 'What can visitors see in your town?', use: ['They can see …', 'the market', 'old buildings', 'a good restaurant'] }
+          ],
+          part2: {
+            topic: 'Talk about a place in your town',
+            hints: ['what the place is and where it is', 'what people do there', 'why you like it'],
+            seconds: 60
+          }
+        }
+      },
       { no: 8, theme: 'Free time', emoji: '🎨' },
       { no: 9, theme: 'Travel', emoji: '🚆' },
       { no: 10, theme: 'Weather & holidays', emoji: '☀️' }

@@ -507,7 +507,7 @@ real students' names or results into the repository (it is public).
   editor, Teach mode, handouts, exam marks, `audio/course/`, `js/course-data.js`, `js/course-slides.js`, `ta_course_*`) is deleted.
   `course.html` + `js/pages/course.js`, tab `course` 🗺️: four cards 🎧 Listening · 📖 Reading · ✍️ Writing · 🗣️ Speaking → Elementary →
   10 level tiles, **all open, nothing locked**. **Each level + skill has its own permanent link** the teacher sends to a group
-  (group chips at the top, `ta_course_group`). Content: `js/skills-data.js` (`TA_SKILLS.elementary`; **levels 1–6 are complete, 7–10 have
+  (group chips at the top, `ta_course_group`). Content: `js/skills-data.js` (`TA_SKILLS.elementary`; **levels 1–7 are complete, 8–10 have
   only `{no, theme, emoji}` = "Coming soon"**; `TA_BETTER_WORDS` for the writing tips). Tile buttons: ▶️ Try (`skTry`, `&preview=1`, sends
   nothing), 🔗 Copy link for <group> (`skCopyLink`), 📊 View Results, and a results-table button once any result exists.
 - **Student page** `skill.html` + `js/skill-player.js` (`js/skill-bands.js` shared): link `skill.html?s=<listening|reading|writing|speaking>&lv=<n>&c=<code>`

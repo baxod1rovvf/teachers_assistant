@@ -215,5 +215,48 @@
       ["am_michael", "Please bring something with your name on it, like your driving licence."],
       ["af_heart", "Thank you so much! I'll come this afternoon."]
     ]
+  },
+  {
+    "label": "Level 7 · My town — at the tourist office",
+    "src": "audio/skills/elem-7-listening.mp3",
+    "lines": [
+      ["af_heart", "Level seven. You will hear a man at a tourist office. He is asking about places in the town. Listen and complete the notes."],
+      ["af_heart", "Good morning, and welcome to the tourist office. How can I help you?"],
+      ["am_michael", "Hello. I'm here on holiday, and I'd like to see the town. Can you help me?"],
+      ["af_heart", "Of course. Can I have your name, please? Then I can book a town walk for you."],
+      ["am_michael", "Yes, it's Barton. I'll spell it for you."],
+      ["am_michael", "B. A. R. T. O. N.", 3.5],
+      ["af_heart", "Thank you, Mr Barton. How long are you staying in town?"],
+      ["am_michael", "I'm here until Sunday. I go home on Sunday evening.", 3.5],
+      ["af_heart", "Lovely. What would you like to see first?"],
+      ["am_michael", "I'd like to visit the museum. Where is it?"],
+      ["af_heart", "The town museum is on Morley Street, next to the library. I'll spell Morley for you."],
+      ["af_heart", "M. O. R. L. E. Y.", 3.5],
+      ["am_michael", "Thank you. And what time does it open?"],
+      ["af_heart", "It opens at nine thirty every morning."],
+      ["am_michael", "Nine thirty?"],
+      ["af_heart", "Yes, that's right.", 3.5],
+      ["am_michael", "Is the museum open every day?"],
+      ["af_heart", "No, it isn't. It's closed on Mondays.", 3.5],
+      ["am_michael", "OK. And how much is a ticket?"],
+      ["af_heart", "A ticket for an adult is six pounds."],
+      ["am_michael", "Six pounds for an adult?"],
+      ["af_heart", "Yes, that's right.", 3.5],
+      ["am_michael", "Great. Is there a good place for lunch near the museum?"],
+      ["af_heart", "Yes, try the Old Mill café. It's by the river, and the soup is lovely.", 3.5],
+      ["am_michael", "Thank you. What about the castle? When does it close?"],
+      ["af_heart", "The castle closes at five o'clock, so go in the morning or early afternoon."],
+      ["am_michael", "Five o'clock?"],
+      ["af_heart", "Yes, that's right.", 3.5],
+      ["af_heart", "There's also a free town walk on Saturday morning. Would you like to come?"],
+      ["am_michael", "Yes, please! Where does it start?"],
+      ["af_heart", "It starts in the market square, at ten o'clock.", 3.5],
+      ["am_michael", "And can I phone you if I have a question?"],
+      ["af_heart", "Of course. Our phone number is oh seven seven double oh, nine double oh, five nine three."],
+      ["am_michael", "Oh seven seven double oh, nine double oh, five nine three?"],
+      ["af_heart", "Yes, that's right.", 3.5],
+      ["am_michael", "Thank you very much for your help. Goodbye!"],
+      ["af_heart", "Goodbye, Mr Barton, and enjoy your stay!"]
+    ]
   }
 ]
