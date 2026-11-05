@@ -507,9 +507,9 @@ real students' names or results into the repository (it is public).
   editor, Teach mode, handouts, exam marks, `audio/course/`, `js/course-data.js`, `js/course-slides.js`, `ta_course_*`) is deleted.
   `course.html` + `js/pages/course.js`, tab `course` 🗺️. **Since 2026-11-05 (teacher) it opens on group cards** (`skCardsHtml`, one per
   Students-page group; none → "Add a group on the Students page"): name (its button covers the card), level chip (`skGroupLevel`: the
-  level kept on the group's lessons in `ta_weekly_schedule`, "—" if none), 20 squares `.sk-stepbox` in rows of 10 (green done, red outline
+  level kept on the group itself (`level` in `ta_student_groups`, saved by `saveGroup` since 2026-11-05), else on its lessons in `ta_weekly_schedule`, "—" if none), 20 squares `.sk-stepbox` in rows of 10 (green done, red outline
   the step the group is on = first ready step not done from its start, grey skipped, dashed coming soon), ⭐ the students' average band,
-  🐢 N behind, **▶ Teach STEP N** (`skTeach`). **Start** (`skStartNo`): Beginner or no level → Step 1, any other level → Step 11; steps
+  🐢 N behind, **▶ Teach STEP N** (`skTeach`; none left → "🎉 All ready steps done", or "🎉 All steps done" once every step is ready and done). **Start** (`skStartNo`): Beginner or no level → Step 1, any other level → Step 11; steps
   before are skipped (grey, still open). One `skResultsMap` for all cards; `skGroupStats(g, ctx)` works out everything per group.
   A card opens the **group page** (`skOpenGroup`, "← All groups", last group in `ta_course_group`) with tabs **🧭 Journey** / **📈 Progress**
   (`skShowTab`). Journey = the path Step 1 → … → Step 20 (`skPathHtml`; a winding snake on computers, straight down on phones ≤ 760 px)
@@ -518,7 +518,9 @@ real students' names or results into the repository (it is public).
   Progress (`skProgressHtml`): a row per roster student — ⭐ average band (`skOverall` of their per-step Overalls), "N of M steps done"
   (M = ready steps with Listening/Reading/Writing from the start; done = a result in every such part), 20 squares coloured by their
   band in each step (`skBandColour`: b-good/b-mid/b-low); **behind** students first with 🐢 and the reason as tooltip — missed ≥ 2
-  parts whose link was copied for the group, or average band < 5. **All steps open, nothing locked**; steps without content are greyed "Coming soon". **Each step + skill has its own permanent link** the teacher sends to a group
+  parts whose link was first copied for the group at least 2 days ago (`SK_MISSED_AFTER_DAYS`, the entry's `sentAt`; entries without one
+  = sent long ago — right after a lesson nobody is behind yet), or average band < 5. A drawing reads `ta_skills_links` once (`ctx.links`
+  from `skPathCtx`, passed down — never call `taSkillsLinks()` per dot). **All steps open, nothing locked**; steps without content are greyed "Coming soon". **Each step + skill has its own permanent link** the teacher sends to a group
   (from that group's page). **Steps (2026-11-05, "Level" → "Step" everywhere)**: content in `js/skills-data.js`,
   `TA_SKILLS.steps` = 20 entries `{id, no, stage, theme, emoji, listening?, reading?, writing?, speaking?}` — stable ids `b1…b10`
   (stage 'Beginner', Steps 1–10) then `e1…e10` ('Elementary', Steps 11–20); `no` = position, shown as "Step N". `e1…e8` = the old
@@ -527,7 +529,7 @@ real students' names or results into the repository (it is public).
   (~2 min with the writing pauses, 10 one-word/number gaps — names, ages, numbers, colours, prices, days, o'clock times, phone
   numbers —, two spelled names each, `audio/skills/beg-<n>-listening.mp3`, entries 9–18 of `elementary-scripts.json`, so
   `… audio/skills 9` remakes Step 1, `… 14` Step 6), readings of ~40/50/60/70/80/90/95/100/110/120 words with 10 questions (5 `tf` + 5
-  `choose`), writing 20–50 words / 10–15 min, Part 2 30–45 s (b1 keeps About me + Talk about yourself; b6 Days & times, b7 Food,
+  `choose`), writing 20–50 words / 10–15 min, Part 2 30–45 s (b1 keeps About me (25–35 words, 12 min, 3 simple points) + Talk about yourself (30 s); b6 Days & times, b7 Food,
   b8 Animals & pets, b9 My room, b10 My friend). A step with no part = "Coming soon". Use the ids, never the number, in links/keys/results. `TA_BETTER_WORDS` for the writing tips. **A dot is done** (`skDotState`) when at least half
   of the group's students (Students list, by ID) have a result for that step + skill (a group with no students: one result); Speaking
   (sends nothing) when the teacher copied its link for the group (`ta_skills_links["<groupId>|speaking|<stepId>"] = { sentAt }`, no My
@@ -541,17 +543,19 @@ real students' names or results into the repository (it is public).
   accepted), the code is checked. Listening: audio + 10 gaps, Submit → ✅/❌, score, 10 useful words, **Analyze >** = transcript with the
   answer lines marked. Reading: text + any number of questions (elementary: 15 — 5 T/F/NG, 5 gaps, 5 a/b/c; types `tfng`, `tf` = True/False for beginner steps, `gap`, `choose`), same flow. Writing: topic + 3 points, timer (submits by
   itself), word counter, Submit → LanguageTool + better words; the text + the clock's start are kept as the student types
-(`ta_skill_draft|<code>|<stepId>`, `{text, startedAt, id}`, the page's own key; not in preview) so a reload — phones reload background
+(`ta_skill_draft|<code>|<stepId>`, `{text, startedAt, id}`, the page's own key; not in preview; opened from an old `lv=N` link, a draft under the old key `…|<N>` is moved to it) so a reload — phones reload background
 tabs — brings them back with the clock going on (time already up → sent at once); cleared once sent. **Speaking is practice only**: topic words, simple questions, a Part 2 card
   with timers — no microphone, nothing sent, no ID screen. One result per Submit: record id from `skResultId`, `setDoc` with timeouts,
   "Send again" on failure; result `type` 'Listening course' / 'Reading course' / 'Writing course' with `code, name, studentId, step, stepNo, skill,
   correct, total, score, band` (writing: `text, words, minWords, mistakes, mistakeList, grammarChecked, band, timeSeconds`), `builtAt`
-  (= the Submit time, same as `date`: a page opened before "Delete all results" and sent after it counts), `submittedAt`. Preview sends nothing. Results sent before steps carry `level: n` and no `step` = `e<n>` (`taResultStepId(r)` in common.js).
-- **Teacher's side**: first Copy link for step + skill + group only keeps a fresh code (`skEnsureCode` in course.js) as `{ code }` in
+  (= the Submit time, same as `date`: a page opened before "Delete all results" and sent after it counts), `submittedAt`. Preview sends nothing. Results sent before steps carry `level: n` and no `step`; they belong to the step by their code (kept per step in `ta_skills_links`).
+- **Teacher's side**: first Copy link for step + skill + group only keeps a fresh code (`skEnsureCode` in course.js) as `{ code, sentAt }` in
   `ta_skills_links` under "<groupId>|<skill>|<stepId>" (`taSkillLinkKey`) — **no My Exercises item since 2026-11-05** (teacher). Older
   entries have `{uid, code}` and their "… course" items are **hidden** in My Exercises (list, type chips, counts — `taIsSkillCourseItem`;
   not deleted). Old keys ended in the level number ("g1|reading|3"): `taSkillsLinks()` hands them out as "…|e3", `taSaveSkillsLinks`
-  writes the new form, and Copy link rewrites old keys (`taSkillsLinksMigrate`); codes never change, so sent links and results stay. `firebase.js` loads the codes
+  writes the new form, and Copy link rewrites old keys (`taSkillsLinksMigrate`); codes never change, so sent links and results stay. When an old
+  and a new key hold the same slot with different codes, the new one wins and the old code is kept in its `alsoCodes` (`taSkillsEntryCodes`,
+  `skCodesFor`): both codes load (firebase.js also reads the raw stored object) and both count in dots, Progress and the table. `firebase.js` loads the codes
   from `ta_skills_links`; `isExpiredResult` falls back to the date for " course" types; the results table uses `isExpiredResult` too (`skResultsMap`, one
 read per drawing; the hidden/preloaded Course panel isn't redrawn). Listening/Reading bands are always worked out from correct/total
 (a result's own `band` is ignored); writing bands (estimate and teacher's mark) are kept to 1–9. **Skills course items and results are

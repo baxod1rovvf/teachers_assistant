@@ -480,9 +480,10 @@ const TA_PLAY_DAYS = 7;
    Steps have stable ids (js/skills-data.js): b1…b10 (Beginner, Steps 1–10), e1…e10 (Elementary, Steps 11–20).
    Before 2026-11-05 they were "Level 1…10" = e1…e10: a number given here (an old link's lv=N, an old key, a result's
    `level`) means e<N> (taSkillStepId).
-   ta_skills_links = { "<groupId>|<skill>|<stepId>": { code } (+ uid on entries made before 2026-11-05, when Copy link
-   also made a My Exercises item; speaking: { sentAt }) }. Old keys ended in the level number ("g1|reading|3"):
-   taSkillsLinks() hands them out as "g1|reading|e3" and taSaveSkillsLinks writes them back that way. */
+   ta_skills_links = { "<groupId>|<skill>|<stepId>": { code, sentAt } (+ uid on entries made before 2026-11-05, when Copy link
+   also made a My Exercises item; speaking: { sentAt }; entries made before 2026-11-05 have no sentAt) }. Old keys ended in
+   the level number ("g1|reading|3"): taSkillsLinks() hands them out as "g1|reading|e3" and taSaveSkillsLinks writes them
+   back that way; when both exist the new one wins and the old code is kept in its alsoCodes (its results still count). */
 function taSkillStepId(v) {
   const s = String(v == null ? '' : v).trim().toLowerCase();
   if (/^\d+$/.test(s)) return Number(s) > 0 ? 'e' + Number(s) : '';
@@ -503,8 +504,26 @@ function taSkillsLinksFix(v) {
     if (m) old.push([m[1] + '|' + m[2] + '|' + taSkillStepId(m[3]), v[k]]);
     else out[k] = v[k];
   });
-  old.forEach(([k, val]) => { if (!(k in out)) out[k] = val; });
+  old.forEach(([k, val]) => {
+    if (!(k in out)) { out[k] = val; return; }
+    // both kept: the new key wins, but the old code's results must still load and count (it was sent to students)
+    const cur = out[k], oldCode = val && typeof val === 'object' ? val.code : taSkillsLegacyCode(val);
+    if (!cur || typeof cur !== 'object' || !oldCode || oldCode === cur.code || (cur.alsoCodes || []).includes(oldCode)) return;
+    out[k] = Object.assign({}, cur, { alsoCodes: (cur.alsoCodes || []).concat(oldCode) });
+  });
   return out;
+}
+/* the code of an entry made before 2026-11-04's fix (just the My Exercises item's uid) */
+function taSkillsLegacyCode(uid) {
+  if (!uid || typeof uid !== 'string' || typeof getRecentExercises !== 'function') return '';
+  const item = getRecentExercises().find(e => e.uid === uid);
+  return item && item.code ? item.code : '';
+}
+/* Every code kept for one entry: its own and any old one (alsoCodes — an old numeric key with another code). */
+function taSkillsEntryCodes(v) {
+  if (!v) return [];
+  if (typeof v !== 'object') { const c = taSkillsLegacyCode(v); return c ? [c] : []; }
+  return [v.code].concat(Array.isArray(v.alsoCodes) ? v.alsoCodes : []).filter(Boolean);
 }
 function taSkillsLinks() {
   try { return taSkillsLinksFix(JSON.parse(localStorage.getItem('ta_skills_links') || 'null')); } catch (e) { return {}; }
@@ -519,8 +538,6 @@ function taSkillsLinksMigrate() {
     if (raw && typeof raw === 'object' && Object.keys(raw).some(k => /\|\d+$/.test(k))) taSaveSkillsLinks(raw);
   } catch (e) { /* ignore */ }
 }
-/* The step a course result belongs to: its `step`, or e<level> for a result sent before steps (2026-11-05). */
-function taResultStepId(r) { return r ? taSkillStepId(r.step) || taSkillStepId(r.level) : ''; }
 /* { skill, step } of a My Exercises "… course" item (made by Copy link before 2026-11-05), or null for any other item */
 function taSkillItemInfo(item) {
   if (!item || !/ course$/.test(item.typeLabel || '')) return null;

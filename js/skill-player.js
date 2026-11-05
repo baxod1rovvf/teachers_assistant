@@ -484,12 +484,25 @@ const fmtClock = secs => { const s = Math.max(0, Math.ceil(secs)); return String
 let writeTimer = null;
 function readDraft() {
   if (SK.preview) return null;
+  moveOldDraft();
   try {
     const d = JSON.parse(localStorage.getItem(draftKey()) || 'null');
     if (!d || typeof d !== 'object' || typeof d.startedAt !== 'number' || d.startedAt > Date.now()) return null;
     if (d.id && String(d.id) !== String(SK.studentId)) return null;   // another student on this device
     return { text: typeof d.text === 'string' ? d.text : '', startedAt: d.startedAt };
   } catch (e) { return null; }
+}
+// Before 2026-11-05 the key ended in the level number (ta_skill_draft|<code>|<N>): opened from an old lv=<N> link,
+// a writing begun before the update comes back — moved to the new key.
+function moveOldDraft() {
+  const lv = parseInt(params.get('lv'), 10);
+  if (!(lv > 0) || params.get('st')) return;
+  try {
+    const oldKey = 'ta_skill_draft|' + SK.code + '|' + lv, old = localStorage.getItem(oldKey);
+    if (old === null) return;
+    if (localStorage.getItem(draftKey()) === null) localStorage.setItem(draftKey(), old);
+    localStorage.removeItem(oldKey);
+  } catch (e) { /* ignore */ }
 }
 function saveDraft(text) {
   if (SK.preview) return;

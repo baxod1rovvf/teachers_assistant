@@ -401,8 +401,15 @@ window.startPlainCompletionsSync = function () {
   // Skills course: each step + part + group's code is kept in ta_skills_links (no My Exercises item since 2026-11-05;
   // keys old or new — only the codes matter here), so its results reach the Course page's dots and results table
   try {
+    // every code: the entries' own, old codes kept with them (alsoCodes), and the raw stored entries (an old numeric
+    // key whose slot now has a new key too — its code was sent to students, so its results must still load)
     const links = window.taSkillsLinks ? window.taSkillsLinks() : {};
-    Object.keys(links).forEach(k => { const v = links[k]; if (v && typeof v === 'object' && v.code) codes.push(v.code); });
+    let raw = null;
+    try { raw = JSON.parse(localStorage.getItem('ta_skills_links') || 'null'); } catch (e) { raw = null; }
+    [links, raw && typeof raw === 'object' ? raw : {}].forEach(o => Object.keys(o).forEach(k => {
+      const v = o[k];
+      if (v && typeof v === 'object') [v.code].concat(Array.isArray(v.alsoCodes) ? v.alsoCodes : []).forEach(c => { if (c) codes.push(c); });
+    }));
   } catch (e) { /* ignore */ }
   plainCodes = new Set(codes);
   rsEnsureCodes(codes).then(rsDerivePlain);

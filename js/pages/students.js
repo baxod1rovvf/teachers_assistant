@@ -37,7 +37,7 @@ function openGroupEditor(groupId) {
   const byDay = {};
   entries.forEach(e => { if (!(e.day in byDay)) byDay[e.day] = e; });
   const anyTime = (entries[0] && entries[0].time) || '16:00';
-  const level = (entries.find(e => e.level) || {}).level || '';
+  const level = (g && g.level) || (entries.find(e => e.level) || {}).level || '';   // kept on the group too since 2026-11-05
   const rows = GROUP_DAY_ORDER.map(d => {
     const on = d in byDay;
     return '<label class="gsched-day' + (on ? ' on' : '') + '" data-day="' + d + '">' +
@@ -91,6 +91,9 @@ function saveGroup(groupId, name, days, level) {
   } else {
     g.name = name;
   }
+  // the level is kept on the group itself too (a group with no lesson days has no schedule entries to hold it —
+  // the Course reads it to know where the group starts, skGroupLevel)
+  if (level) g.level = level; else delete g.level;
   saveStudentGroups(groups);
   // its lessons: keep the ones on days still ticked (and their lesson plans), add new days, take off the rest
   const key = String(oldName).trim().toLowerCase();

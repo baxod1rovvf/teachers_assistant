@@ -107,8 +107,8 @@ var TA_SKILLS = {
       writing: {
         topic: 'About me',
         task: 'Write an email to a new pen-friend about yourself.',
-        points: ['your name, your age and where you live', 'your family or your friends', 'what you like doing in your free time'],
-        minWords: 40, maxWords: 60, minutes: 15
+        points: ['your name and age', 'where you live', 'your family or your friends'],
+        minWords: 25, maxWords: 35, minutes: 12
       },
       speaking: {
         words: [
@@ -133,7 +133,7 @@ var TA_SKILLS = {
         part2: {
           topic: 'Talk about yourself',
           hints: ['your name, your age and where you are from', 'your family and your home', 'what you like doing in your free time'],
-          seconds: 45
+          seconds: 30
         }
       }
     },
@@ -451,7 +451,7 @@ var TA_SKILLS = {
           { type: 'tf', q: 'The pencil case is purple.', a: ['True'], line: 3 },
           { type: 'tf', q: 'The bottle of water is green.', a: ['False'], line: 6 },
           { type: 'tf', q: 'The phone is black.', a: ['False'], line: 9 },
-          { type: 'choose', q: 'What is in the bag with the books?', opts: ['a notebook', 'a ruler', 'a hat'], a: ['a notebook'], line: 2 },
+          { type: 'choose', q: 'What else is in the bag with the books?', opts: ['a notebook', 'a ruler', 'a hat'], a: ['a notebook'], line: 2 },
           { type: 'choose', q: 'How many pencils are in the pencil case?', opts: ['two', 'three', 'four'], a: ['three'], line: 4 },
           { type: 'choose', q: 'What food is in the bag?', opts: ['an apple', 'a banana', 'a sandwich'], a: ['a banana'], line: 7 },
           { type: 'choose', q: 'The banana is for …', opts: ['breakfast', 'lunch', 'dinner'], a: ['lunch'], line: 7 },

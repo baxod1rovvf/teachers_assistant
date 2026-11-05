@@ -41,26 +41,37 @@ function skGroup(g) {
   return getStudentGroups().find(x => x.id === id) || null;
 }
 function skLinkKey(skill, step, group) { return taSkillLinkKey(group.id, skill, step); }
-/* { code } kept for a step + part + group (an entry made before 2026-11-04's fix was just the My Exercises item's uid) */
-function skLinkEntry(skill, step, g) {
-  const v = taSkillsLinks()[skLinkKey(skill, step, g)];
+/* { code } kept for a step + part + group (an entry made before 2026-11-04's fix was just the My Exercises item's uid).
+   links = taSkillsLinks() read once by the caller (a drawing reads them once — skPathCtx's ctx.links). */
+function skLinkEntry(skill, step, g, links) {
+  const v = (links || taSkillsLinks())[skLinkKey(skill, step, g)];
   if (!v) return null;
   if (typeof v === 'object') return v.code ? v : null;
-  const item = getRecentExercises().find(e => e.uid === v);
-  return item && item.code ? { uid: v, code: item.code } : null;
+  const code = skLegacyCode(v, links);
+  return code ? { uid: v, code: code } : null;
+}
+/* a legacy uid entry's code — the My Exercises items are read once per links object (not once per dot) */
+function skLegacyCode(uid, links) {
+  if (!links) return taSkillsLegacyCode(uid);
+  if (!links.__uidCodes) {
+    const m = {};
+    getRecentExercises().forEach(e => { if (e && e.uid && e.code) m[e.uid] = e.code; });
+    Object.defineProperty(links, '__uidCodes', { value: m });
+  }
+  return links.__uidCodes[uid] || '';
 }
 /* The code of a step + part + group: made at the first call, the same one after that (a sent link must keep working).
    No My Exercises item (teacher, 2026-11-05). */
 function skEnsureCode(skill, step, group) {
   const g = skGroup(group), st = skStep(step);
   if (!g || !st || !skSkill(skill) || skill === 'speaking') return '';
-  const key = skLinkKey(skill, st.id, g), kept = skLinkEntry(skill, st.id, g), links = taSkillsLinks();
+  const key = skLinkKey(skill, st.id, g), links = taSkillsLinks(), kept = skLinkEntry(skill, st.id, g, links);
   if (kept) {
     if (typeof links[key] !== 'object' || links[key].code !== kept.code) { links[key] = Object.assign({}, kept); skWriteLinks(links); }
     return kept.code;
   }
   const code = generateClassCode();
-  links[key] = { code: code };
+  links[key] = { code: code, sentAt: new Date().toISOString() };   // sentAt: the 🐢 rule counts a part as missed 2 days after
   skWriteLinks(links);
   return code;
 }
@@ -84,20 +95,24 @@ window.skEnsureCode = skEnsureCode;
      · Listening / Reading / Writing: at least half of the group's students (Students list, matched by ID) have a result
        for that step + part (a group with no students: one result is enough);
      · Speaking (nothing is sent): the teacher has pressed 🔗 Copy link for it ({ sentAt } in ta_skills_links).
+     A slot's results are those of its code and of any old code kept with it (alsoCodes — skCodesFor).
      A step is done when all its dots are. The step the group is on (first ready step not done, from its start) is
      singled out: bigger, a ring, "Teach this step".
    - Progress: a row per student — ⭐ average band, "N of M steps done", a square per step coloured by their band there.
-     Behind (🐢, listed first): missed 2+ parts already sent to the group, or an average band below 5.
+     Behind (🐢, listed first): missed 2+ parts sent to the group at least 2 days ago (SK_MISSED_AFTER_DAYS; the link's
+     sentAt — entries without one were sent long ago), or an average band below 5.
    Where a group starts: level Beginner (or none) → Step 1; any other level → Step 11; steps before that are skipped
    (grey, still open). A step opens the step page: its parts (Try, Copy link), then its results table. */
-let skView = { group: '', tab: 'journey', step: '', teach: false, back: '' };   // not remembered (only the group: ta_course_group)
+let skView = { group: '', tab: 'journey', step: '' };   // not remembered (only the group: ta_course_group)
+const SK_MISSED_AFTER_DAYS = 2;   // a part sent to the group counts as missed only this many days after its link was first copied
 function skReady(st) { return !!st && SK_SKILLS.some(s => st[s.key]); }
 function skGroupRoster(g) { return g ? getPointsRoster().filter(s => s.group === g.id) : []; }
 function skShortDate(iso) {
   const d = new Date(iso);
   return isNaN(d) ? '' : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
-/* The group's level: set on the Students page (✏️ on a group) — kept on the group's lessons (ta_weekly_schedule) */
+/* The group's level: set on the Students page (✏️ on a group) — kept on the group itself (since 2026-11-05), and on its
+   lessons (ta_weekly_schedule; groups saved before only have it there) */
 function skGroupLevel(g) {
   if (!g) return '';
   if (g.level) return String(g.level);
@@ -111,13 +126,13 @@ function skStartNo(g) { const lv = skGroupLevel(g).trim().toLowerCase(); return 
 function skDotState(skill, step, g, ctx) {
   if (!g) return { done: false, text: 'Add a group first' };
   if (skill === 'speaking') {
-    const v = taSkillsLinks()[skLinkKey('speaking', step, g)];
+    const v = (ctx.links || taSkillsLinks())[skLinkKey('speaking', step, g)];
     const at = v && typeof v === 'object' && v.sentAt;
     return at ? { done: true, text: 'Link sent ' + skShortDate(at) } : { done: false, text: 'Link not sent yet' };
   }
-  const code = skCodeFor(skill, step, g), seen = new Set();
+  const seen = new Set();
   let any = 0;
-  ((code && ctx.map[code]) || []).forEach(r => {
+  skSlotResults(ctx.map, skCodesFor(skill, step, g, ctx.links)).forEach(r => {
     any++;
     const st = rosterStudentForResult(r, ctx.idx);
     if (st && st.group === g.id) seen.add(String(st.id).trim().toLowerCase());
@@ -126,13 +141,15 @@ function skDotState(skill, step, g, ctx) {
   if (!total) return { done: any > 0, text: any ? any + (any === 1 ? ' result' : ' results') : 'No results yet' };
   return { done: seen.size * 2 >= total, text: seen.size + ' of ' + total + ' students done' };
 }
-function skGroupCodes(g, steps) { return g ? [].concat(...steps.map(st => SK_TABLE_SKILLS.map(k => skCodeFor(k, st.id, g)))) : []; }
-function skPathCtx(g, steps, map, idx) {
-  return { map: map || skResultsMap(skGroupCodes(g, steps)), idx: idx || taRosterIndex(), roster: skGroupRoster(g) };
+function skGroupCodes(g, steps, links) { return g ? [].concat(...steps.map(st => [].concat(...SK_TABLE_SKILLS.map(k => skCodesFor(k, st.id, g, links))))) : []; }
+/* one drawing's reading: { map, idx, roster, links } — the kept links are read once here and passed down */
+function skPathCtx(g, steps, map, idx, links) {
+  links = links || taSkillsLinks();
+  return { map: map || skResultsMap(skGroupCodes(g, steps, links)), idx: idx || taRosterIndex(), roster: skGroupRoster(g), links: links };
 }
 /* Everything the card, the Journey and Progress show for one group (from one results map). */
 function skGroupStats(g, ctx) {
-  const start = skStartNo(g), links = taSkillsLinks();
+  const start = skStartNo(g), links = ctx.links || taSkillsLinks();
   const steps = skSteps().map(st => {
     const ready = skReady(st), parts = SK_SKILLS.filter(s => st[s.key]);
     const dots = ready ? parts.map(s => Object.assign({ skill: s }, skDotState(s.key, st.id, g, ctx))) : [];
@@ -147,8 +164,7 @@ function skGroupStats(g, ctx) {
   steps.forEach(x => {
     if (!x.ready) return;
     x.graded.forEach(k => {
-      const code = skCodeFor(k, x.st.id, g);
-      ((code && ctx.map[code]) || []).forEach(r => {
+      skSlotResults(ctx.map, skCodesFor(k, x.st.id, g, links)).forEach(r => {
         const rs = rosterStudentForResult(r, ctx.idx);
         const s = rs && rs.group === g.id && byKey[String(rs.id).trim().toLowerCase()];
         if (!s) return;
@@ -159,8 +175,18 @@ function skGroupStats(g, ctx) {
     });
   });
   const counted = steps.filter(x => x.ready && !x.skipped && x.graded.length);
-  const sent = [];   // the graded parts whose link was copied for this group
-  steps.forEach(x => { if (x.ready) x.graded.forEach(k => { if (links[skLinkKey(k, x.st.id, g)]) sent.push([x.st.id, k]); }); });
+  // the graded parts whose link was copied for this group at least SK_MISSED_AFTER_DAYS ago (right after a lesson
+  // nobody is behind yet); an entry without sentAt was made before 2026-11-05 — sent long ago
+  const sent = [], due = Date.now() - SK_MISSED_AFTER_DAYS * 864e5;
+  steps.forEach(x => {
+    if (!x.ready) return;
+    x.graded.forEach(k => {
+      const v = links[skLinkKey(k, x.st.id, g)];
+      if (!v) return;
+      const at = v && typeof v === 'object' && v.sentAt ? Date.parse(v.sentAt) : NaN;
+      if (isNaN(at) || at <= due) sent.push([x.st.id, k]);
+    });
+  });
   students.forEach(s => {
     s.bands = {};
     Object.keys(s.steps).forEach(id => { s.bands[id] = skOverall(SK_TABLE_SKILLS.map(k => s.steps[id][k])); });
@@ -175,7 +201,8 @@ function skGroupStats(g, ctx) {
     s.why = why.join(' · ');
   });
   students.sort((a, b) => (b.behind - a.behind) || a.name.localeCompare(b.name));
-  return { g: g, level: skGroupLevel(g), start: start, steps: steps, on: onStep, students: students, total: counted.length,
+  const allDone = steps.every(x => x.skipped || (x.ready && x.done));
+  return { g: g, level: skGroupLevel(g), start: start, steps: steps, on: onStep, allDone: allDone, students: students, total: counted.length,
     avg: skOverall(students.map(s => s.avg)), behind: students.filter(s => s.behind).length };
 }
 window.skGroupStats = skGroupStats;
@@ -188,7 +215,7 @@ function renderCourse() {
   const wrap = document.getElementById('courseWrap');
   if (!wrap) return;
   const groups = getStudentGroups();
-  if (skView.group && !groups.some(g => g.id === skView.group)) skView = { group: '', tab: 'journey', step: '', teach: false, back: '' };
+  if (skView.group && !groups.some(g => g.id === skView.group)) skView = { group: '', tab: 'journey', step: '' };
   if (!skView.group) { wrap.innerHTML = skCardsHtml(groups); return; }
   const g = skGroup(skView.group);
   const st = skView.step ? skStep(skView.step) : null;
@@ -200,7 +227,7 @@ function renderCourse() {
 /* ---- the group cards ---- */
 function skStatsHtml(s) {
   return '<span class="sk-stat" title="The students\' average band">⭐ <b>' + (s.avg === null ? '—' : s.avg) + '</b></span>' +
-    '<span class="sk-stat' + (s.behind ? ' sk-stat-behind' : '') + '" title="' + (s.behind ? 'Missed 2 or more parts, or an average band below 5' : 'Nobody is behind') + '">' +
+    '<span class="sk-stat' + (s.behind ? ' sk-stat-behind' : '') + '" title="' + (s.behind ? 'Missed 2 or more parts sent 2+ days ago, or an average band below 5' : 'Nobody is behind') + '">' +
     (s.behind ? '🐢 <b>' + s.behind + '</b> behind' : '🙂 Nobody behind') + '</span>';
 }
 function skGroupSquaresHtml(s) {
@@ -210,17 +237,17 @@ function skGroupSquaresHtml(s) {
     return '<span class="sk-stepbox' + (cls ? ' ' + cls : '') + '" data-step="' + x.st.id + '" title="Step ' + x.st.no + ' · ' + escapeForHtml(x.st.theme) + ' — ' + what + '"></span>';
   }).join('') + '</div>';
 }
-function skTeachLabel(s) { return s.on ? '▶ Teach STEP ' + s.on.st.no : '🎉 All steps done'; }
+function skTeachLabel(s) { return s.on ? '▶ Teach STEP ' + s.on.st.no : s.allDone ? '🎉 All steps done' : '🎉 All ready steps done'; }
 function skCardsHtml(groups) {
   if (!groups.length) {
     return '<div class="sk-results-empty sk-nogroups"><span class="sk-results-empty-emoji">👥</span><div><b>Add a group on the Students page</b>' +
       '<span>Each group gets its own links and its own place on the 20 steps.</span>' +
       '<button type="button" class="mini-btn solid" onclick="taNavigate(\'students.html\')">🧑‍🎓 Open Students</button></div></div>';
   }
-  const steps = skSteps().filter(skReady), idx = taRosterIndex();
-  const map = skResultsMap([].concat(...groups.map(g => skGroupCodes(g, steps))));   // one reading for every card
+  const steps = skSteps().filter(skReady), idx = taRosterIndex(), links = taSkillsLinks();
+  const map = skResultsMap([].concat(...groups.map(g => skGroupCodes(g, steps, links))));   // one reading for every card
   return '<div class="sk-cards">' + groups.map((g, i) => {
-    const s = skGroupStats(g, skPathCtx(g, steps, map, idx));
+    const s = skGroupStats(g, skPathCtx(g, steps, map, idx, links));
     return '<article class="sk-gcard" data-group="' + escapeForHtml(g.id) + '" style="--gc:var(' + ['--c-blue', '--c-pink', '--c-green', '--c-orange', '--c-purple', '--c-teal'][i % 6] + ')">' +
       '<div class="sk-gcard-top"><button type="button" class="sk-gcard-open" onclick="skOpenGroup(' + jsAttr(g.id) + ')" translate="no">' + escapeForHtml(g.name) + '</button>' +
       '<span class="sk-level-chip">' + escapeForHtml(s.level || '—') + '</span></div>' +
@@ -294,12 +321,12 @@ function skProgressHtml(s) {
       (st.behind ? '<span class="sk-turtle" title="' + escapeForHtml(st.why) + '" aria-label="Behind: ' + escapeForHtml(st.why) + '">🐢</span>' : '') + '</div>' +
       '<div class="sk-squares">' + squares + '</div></div>';
   }).join('');
-  return '<p class="sk-hint sk-path-hint">Each square is a step, coloured by the student\'s band in it. 🐢 = behind: missed 2 or more parts you sent, or an average band below 5 (they come first).</p>' +
+  return '<p class="sk-hint sk-path-hint">Each square is a step, coloured by the student\'s band in it. 🐢 = behind: missed 2 or more parts you sent at least 2 days ago, or an average band below 5 (they come first).</p>' +
     legend + '<div class="sk-prog">' + rows + '</div>';
 }
 function skStepPageHtml(lv, g) {
   const ctx = skPathCtx(g, [lv]);
-  const rows = g ? skTableRows(lv.id, g.id, ctx.map) : [];
+  const rows = g ? skTableRows(lv.id, g.id, ctx.map, ctx.links) : [];
   skWritingRes = rows.map(r => r.writing ? r.writing.res : null);
   const meta = skTableMeta(lv.id, g);
   const results = '<section class="sk-results" aria-label="Results">' +
@@ -331,7 +358,7 @@ function skTileSub(c) { return c.title || c.topic || (c.part2 && (c.part2.topic 
 
 /* ---- moving around (the group is remembered on this device: ta_course_group) ---- */
 function skOpenGroup(id) {
-  skView = { group: id || '', tab: 'journey', step: '', teach: false, back: '' };
+  skView = { group: id || '', tab: 'journey', step: '' };
   if (id) { try { localStorage.setItem(LS_COURSE_GROUP, id); } catch (e) { /* ignore */ } }
   renderCourse();
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -339,7 +366,6 @@ function skOpenGroup(id) {
 /* ▶ Teach STEP N: the Journey, scrolled to the step the group is on (singled out) */
 function skTeach(id) {
   skOpenGroup(id);
-  skView.teach = true;
   setTimeout(() => skCourseShownScroll('.sk-row.focus'), 60);
 }
 function skShowTab(tab) {
@@ -349,7 +375,6 @@ function skShowTab(tab) {
 function skOpenStep(id) {
   const back = skView.step;
   skView.step = (skStep(id) || {}).id || '';
-  if (skView.step) skView.back = skView.step;
   renderCourse();
   if (!skView.step && back) setTimeout(() => skCourseShownScroll('.sk-row[data-step="' + back + '"]'), 60);   // back where the teacher was
   else window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -410,7 +435,13 @@ function skResultsMap(codes) {
   });
   return map;
 }
-function skCodeFor(skill, step, g) { const e = skLinkEntry(skill, step, g); return e ? e.code : ''; }
+/* every code of a step + part + group: its own and an old one kept with it (alsoCodes, taSkillsLinksFix) */
+function skCodesFor(skill, step, g, links) {
+  const e = skLinkEntry(skill, step, g, links);
+  return e ? taSkillsEntryCodes(e) : [];
+}
+/* the results of a slot's codes, together */
+function skSlotResults(map, codes) { return [].concat(...(codes || []).map(c => (map && map[c]) || [])); }
 /* Listening/Reading: the band is worked out here from correct / total (kept to 0…total) — a result's own `band` is
    ignored, so a made-up record can't claim band 99. Writing: skWritingBandFor (kept to 1–9). */
 function skResultBand(skill, r) {
@@ -427,14 +458,15 @@ function skResultRaw(skill, r) {
   if (skill === 'writing') return (typeof r.words === 'number' ? r.words : 0) + ' words';
   return skResultRawNums(r);
 }
-function skTableRows(step, groupId, resultsMap) {
+function skTableRows(step, groupId, resultsMap, links) {
   const g = skGroup(groupId);
   if (!g) return [];
+  links = links || taSkillsLinks();
   const idx = taRosterIndex(), students = {};
-  const codes = SK_TABLE_SKILLS.map(skill => skCodeFor(skill, step, g));
-  const map = resultsMap || skResultsMap(codes);
+  const codes = SK_TABLE_SKILLS.map(skill => skCodesFor(skill, step, g, links));
+  const map = resultsMap || skResultsMap([].concat(...codes));
   SK_TABLE_SKILLS.forEach((skill, i) => {
-    (map[codes[i]] || []).forEach(r => {
+    skSlotResults(map, codes[i]).forEach(r => {
       const st = rosterStudentForResult(r, idx);
       if (!st || st.group !== g.id) return;
       const band = skResultBand(skill, r);

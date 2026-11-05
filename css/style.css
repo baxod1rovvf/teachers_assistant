@@ -2694,6 +2694,9 @@ button.sk-dot:hover { transform: scale(1.12); }
   overflow-wrap: anywhere; min-width: 0; }
 .sk-gcard-open::after { content: ''; position: absolute; inset: 0; border-radius: 22px; }
 .sk-gcard-open:focus-visible::after { outline: 3px solid var(--brand); outline-offset: 3px; }
+/* the squares and ⭐/🐢 sit above that click area so their tooltips show; the gaps between them still open the card */
+.sk-gcard .sk-squares, .sk-gcard .sk-gcard-stats { position: relative; z-index: 1; pointer-events: none; }
+.sk-gcard .sk-squares > *, .sk-gcard .sk-gcard-stats > * { pointer-events: auto; }
 .sk-level-chip { flex-shrink: 0; margin-left: auto; padding: 3px 12px; border-radius: 999px; border: 2px solid var(--line); background: var(--c-yellow); color: #2B2140;
   font-size: .85rem; font-weight: 700; transform: rotate(-2deg); white-space: nowrap; }
 .sk-gcard-stats { display: flex; flex-wrap: wrap; gap: 8px; }
