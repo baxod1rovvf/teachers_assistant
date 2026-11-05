@@ -82,7 +82,7 @@ const MASTHEAD_COPY = {
   createpicker: { eyebrow: "➕ Create", title: "Pick an exercise type", sub: "Ready to use, in process, or merge a few together — everything starts here." },
   hwcbuilder: { eyebrow: "📚 Homework & Class", title: "Build your set", sub: "Pick exercises from My Exercises, put them in order, then generate one combined file." },
   main: { eyebrow: "🎓 Loom", title: "Welcome back", sub: "Everything you need to build, share, and track classroom exercises." },
-  course: { eyebrow: "🗺️ Course", title: "Skills course", sub: "20 steps, each with Listening, Reading, Writing and Speaking. Follow your group along the path and send each part's link." },
+  course: { eyebrow: "🗺️ Course", title: "Skills course", sub: "Your groups on the 20 steps. Open a group to teach its next step, send each part's link and see how every student is doing." },
   dashboard: { eyebrow: "📊 Statistics", title: "Your classroom at a glance", sub: "Each exercise type's last 7 days, and today compared with yesterday." },
   myexercises: { eyebrow: "📁 My Exercises", title: "Everything you've built", sub: "Every exercise you've created — reopen it to make a new version, jump to its results, or turn off its points." },
   students: { eyebrow: "Students & Points", title: "Your groups and students", sub: "Groups, their lesson times, students' IDs and points." },
@@ -2511,7 +2511,7 @@ window.closeLessonPlanModal = closeLessonPlanModal;
 function renderLessonPlanModalBody(entry) {
   const wrap = document.getElementById('lessonPlanModalBody');
   if (!wrap) return;
-  const exercises = getRecentExercises();
+  const exercises = getRecentExercises().filter(e => !taIsSkillCourseItem(e));   // "… course" items are hidden (2026-11-05)
   const plan = entry.plan || { notes: '', exerciseUids: [], materialIds: [] };
 
   let html = '<div class="title-field"><label class="field-label">Notes — what will you cover?</label>' +
@@ -3434,7 +3434,7 @@ document.addEventListener('keydown', e => {
 const TA_TAB_LABELS = {
   main: ['🎓', 'Dashboard'], createpicker: ['➕', 'Create'], dashboard: ['📊', 'Statistics'],
   myexercises: ['📁', 'My Exercises'], students: ['👥', 'Students & Points'], results: ['📋', 'Results'],
-  settings: ['⚙️', 'Settings'],
+  settings: ['⚙️', 'Settings'], course: ['🗺️', 'Course'],
   flashcard: ['🎴', 'Flashcard'], wordorder: ['🧩', 'Word Order'], makeaword: ['🧱', 'Make a Word'],
   spelling: ['🔤', 'Spelling'], canknock: ['🥫', 'Can Knockdown'], cargame: ['🚗', 'Car Game'], sentences: ['✍️', 'Sentences'], bilingual: ['📖', 'Bidirectional Language'],
   engcontent: ['🎬', 'English Content'], dictation: ['🎧', 'Dictation'], jungle: ['🌴', 'Jungle'], bamboozle: ['🎯', 'Bamboozle'], presentation: ['🖥️', 'Presentation'],
@@ -3447,6 +3447,7 @@ function taQuickSearchItems() {
   Object.keys(TA_PAGES).forEach(tab => {
     if (tab === 'results') return; // Results opens from My Exercises ("View Results")
     const l = TA_TAB_LABELS[tab];
+    if (!l) return;   // a section without a label must not break the search
     items.push({ icon: l[0], label: l[1], kind: 'Section', go: () => switchTo(tab) });
   });
   BUILDER_TABS.forEach(tab => {
@@ -3474,7 +3475,7 @@ function taQuickSearchItems() {
         setTimeout(() => row.classList.remove('flash-highlight'), 1600);
       }) });
   });
-  getRecentExercises().forEach(e => {
+  getRecentExercises().filter(e => !taIsSkillCourseItem(e)).forEach(e => {
     const gName = groupNameFor(e.groupId);
     items.push({ icon: '📁', label: e.title, mine: true, kind: e.typeLabel + (gName ? ' · ' + gName : '') + (e.requiredCode ? ' · code ' + e.requiredCode : ''),
       extra: (e.requiredCode || '') + ' ' + (e.contentSummary || '').slice(0, 2000),

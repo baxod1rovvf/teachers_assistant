@@ -694,7 +694,7 @@ test.describe('speaking', () => {
 test.describe('course page', () => {
   // The links are absolute on the real site (https); the tests run on http, so pretend.
   const PRETEND_HTTPS = () => { window.skAppUrl = 'https://example.github.io/teachers_assistant/'; };
-  const open = async (page, context, opts) => {
+  const open = async (page, context, opts, group = 'g1') => {
     await prepare(context, opts);
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
     const errors = watchErrors(page);
@@ -702,11 +702,13 @@ test.describe('course page', () => {
     await page.waitForTimeout(1000);
     await hideNotices(page);
     await page.addStyleTag({ content: '#taNoticeStack { display: none !important; }' });   // notes that come later (old files…)
+    if (group) await page.locator('.sk-gcard[data-group="' + group + '"] .sk-gcard-open').click();   // the page opens on group cards
     return errors;
   };
 
-  test('the Course page opens on a path: 20 steps in order, 4 dots each, Steps 1 and 11–18 open, the rest Coming soon; Try opens a preview', async ({ page, context }) => {
+  test('a group\'s Journey: 20 steps in order, a plain dot per part (none inside), Steps 1 and 11–18 open, the rest Coming soon; Try opens a preview', async ({ page, context }) => {
     const errors = await open(page, context);
+    await expect(page.locator('.sk-tab[data-tab="journey"]')).toHaveAttribute('aria-selected', 'true');
     const rows = page.locator('.sk-row');
     await expect(rows).toHaveCount(20);
     const nodes = page.locator('.sk-node');
@@ -714,8 +716,8 @@ test.describe('course page', () => {
       /Step 11\s*Meeting people/, /Step 12/, /Step 13/, /Step 14/, /Step 15\s*Food & cafés/, /Step 16\s*Shopping/, /Step 17\s*My town/, /Step 18\s*Free time/, /Step 19/, /Step 20/]);
     const ready = [0, 10, 11, 12, 13, 14, 15, 16, 17];
     for (let i = 0; i < 20; i++) {
-      await expect(rows.nth(i).locator('.sk-dot')).toHaveCount(4);
-      expect(await rows.nth(i).locator('.sk-dot').evaluateAll(d => d.map(x => x.dataset.skill))).toEqual(['listening', 'reading', 'writing', 'speaking']);
+      await expect(rows.nth(i).locator('.sk-dot')).toHaveCount(i === 0 ? 2 : 4);
+      if (ready.includes(i) && i) expect(await rows.nth(i).locator('.sk-dot').evaluateAll(d => d.map(x => x.dataset.skill))).toEqual(['listening', 'reading', 'writing', 'speaking']);
       if (ready.includes(i)) {
         await expect(rows.nth(i).locator('button.sk-node')).toHaveCount(1);
         await expect(rows.nth(i)).not.toContainText('Coming soon');
@@ -726,12 +728,14 @@ test.describe('course page', () => {
     }
     // Step 1 has only Writing and Speaking for now
     await expect(rows.nth(0).locator('button.sk-dot')).toHaveCount(2);
+    // plain dots: no 🎧📖✍️🗣️ inside (a step's first part isn't always Listening)
+    expect(await page.locator('.sk-path .sk-dot').evaluateAll(d => d.map(x => x.textContent).join(''))).not.toMatch(/🎧|📖|✍️|🗣️/);
     // the old skill cards are gone, and nothing on the Course page is a separate results button
     await expect(page.locator('.sk-skill-card, .sk-level-tile')).toHaveCount(0);
     await expect(page.getByRole('button', { name: /View Results|Results table/ })).toHaveCount(0);
-    // nothing done yet: the first dot is "Next"; its tooltip says why
-    await expect(page.locator('.sk-dot.next')).toHaveCount(1);
-    await expect(rows.nth(0).locator('.sk-dot[data-skill="writing"]')).toHaveClass(/next/);
+    // nothing done yet: Step 1 is the one to teach; a dot's tooltip says why
+    await expect(page.locator('.sk-row.focus')).toHaveCount(1);
+    await expect(rows.nth(0)).toHaveClass(/focus/);
     await expect(rows.nth(0).locator('.sk-dot[data-skill="writing"]')).toHaveAttribute('title', 'Writing — 0 of 3 students done');
     await expect(rows.nth(10).locator('.sk-dot').first()).toHaveAttribute('title', 'Listening — 0 of 3 students done');
     await expect(rows.nth(10).locator('.sk-dot').nth(3)).toHaveAttribute('title', 'Speaking — Link not sent yet');
@@ -745,7 +749,7 @@ test.describe('course page', () => {
     await expect(page.getByRole('button', { name: /View Results|Results table/ })).toHaveCount(0);
     const [popup] = await Promise.all([page.waitForEvent('popup'), parts.nth(0).getByRole('button', { name: '▶️ Try' }).click()]);
     await popup.waitForURL(/skill\.html\?s=listening&st=e1&preview=1/);
-    await page.getByRole('button', { name: '← All steps' }).click();
+    await page.getByRole('button', { name: /^← Target · Journey$/ }).click();
     await expect(page.locator('.sk-row')).toHaveCount(20);
     // Step 1: Listening and Reading are still to come
     await nodes.nth(0).click();
@@ -784,6 +788,7 @@ test.describe('course page', () => {
     await page.reload();
     await page.waitForTimeout(800);
     await page.evaluate(PRETEND_HTTPS);
+    await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();
     await page.locator('.sk-node[data-step="e1"]').click();
     await page.evaluate(() => navigator.clipboard.writeText(''));
     await page.locator('.sk-part[data-skill="listening"]').getByRole('button', { name: /Copy link for/ }).click();
@@ -801,7 +806,7 @@ test.describe('course page', () => {
     const at = links[group.id + '|speaking|e1'].sentAt;
     await sp.getByRole('button', { name: /Copy link for/ }).click();
     expect(await page.evaluate(k => JSON.parse(localStorage.getItem('ta_skills_links'))[k].sentAt, group.id + '|speaking|e1')).toBe(at);
-    await page.getByRole('button', { name: '← All steps' }).click();
+    await page.getByRole('button', { name: /Journey$/ }).click();
     const dot = page.locator('.sk-row').nth(10).locator('.sk-dot[data-skill="speaking"]');
     await expect(dot).toHaveClass(/done/);
     await expect(dot).toHaveAttribute('title', /^Speaking — Link sent /);
@@ -865,15 +870,15 @@ test.describe('course page', () => {
     expect(errors).toEqual([]);
   });
 
-  test('without groups the step page asks for one; on a phone nothing scrolls sideways', async ({ page, context }) => {
-    const errors = await open(page, context, { storage: { ta_student_groups: '[]' } });
+  test('without groups the Course page asks for one; on a phone nothing scrolls sideways', async ({ page, context }) => {
+    const errors = await open(page, context, { storage: { ta_student_groups: '[]' } }, null);
     await page.setViewportSize({ width: 390, height: 800 });
-    await expect(page.locator('.sk-row')).toHaveCount(20);
-    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
-    await page.locator('.sk-node[data-step="e2"]').click();
-    await expect(page.locator('.sk-part').first()).toContainText('Add a group on the Students page first');
+    await expect(page.locator('.sk-gcard')).toHaveCount(0);
+    await expect(page.locator('#courseWrap')).toContainText('Add a group on the Students page');
     await expect(page.getByRole('button', { name: /Copy link for/ })).toHaveCount(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+    await page.getByRole('button', { name: '🧑‍🎓 Open Students' }).click();
+    await page.waitForURL(/students\.html/);
     expect(errors).toEqual([]);
   });
 
@@ -892,11 +897,156 @@ test.describe('course page', () => {
     await expect(page.locator('#myexTypeChips')).not.toContainText('course');
     await expect(page.locator('#myexCount')).toHaveText('2 exercises');
     expect(await page.evaluate(() => getRecentExercises().map(e => e.uid))).toEqual(['skold1', 'tst1', 'spl1']);
+    // nor in the quick search (🔍) or a lesson plan's exercise list
+    expect(await page.evaluate(() => taQuickSearchItems().filter(i => i.icon === '📁' && i.mine).map(i => i.label))).toEqual(['A test', 'A spelling']);
+    expect(await page.evaluate(() => taQuickSearchItems().some(i => i.kind === 'Section' && i.label === 'Course'))).toBe(true);
+    expect(await page.evaluate(() => {
+      renderLessonPlanModalBody({ plan: { notes: '', exerciseUids: [], materialIds: [] } });
+      return [...document.querySelectorAll('#lessonPlanModalBody .lp-exercise-check')].map(x => x.value);
+    })).toEqual(['tst1', 'spl1']);
     // its link (found through ta_skills_links) is the step's new link
     expect(await page.evaluate(() => { window.skAppUrl = 'https://x/'; return taSkillItemLink(getRecentExercises()[0]); })).toBe('https://x/skill.html?s=listening&st=e1&c=LSN123');
     // the ⋯ menu of a visible card still opens its own item
     await page.locator('.myex-card', { hasText: 'A spelling' }).locator('.myex-more').click();
     await expect(page.locator('#myexMenu')).toContainText('Spelling');
+    expect(errors).toEqual([]);
+  });
+
+  // Made-up groups for the group cards: Target (Beginner, did Step 1's Writing), Apex (Elementary, Steps 11–12 sent), Nexus (no level, nothing yet)
+  const CARD_SEED = () => {
+    const groups = [{ id: 'g1', name: 'Target' }, { id: 'g2', name: 'Apex' }, { id: 'g3', name: 'Nexus' }];
+    const roster = [
+      { name: 'Alice Test', id: '10001', group: 'g1' }, { name: 'Bobur Test', id: '10002', group: 'g1' }, { name: 'Cora Test', id: '10003', group: 'g1' },
+      { name: 'Dilya Test', id: '20001', group: 'g2' }, { name: 'Eldor Test', id: '20002', group: 'g2' }, { name: 'Farida Test', id: '20003', group: 'g2' }, { name: 'Gulya Test', id: '20004', group: 'g2' }];
+    const sched = [{ id: 's1', day: 1, time: '16:00', group: 'Target', level: 'Beginner' }, { id: 's2', day: 2, time: '17:00', group: 'Apex', level: 'Elementary' }];
+    const now = new Date().toISOString();
+    const links = { 'g1|writing|b1': { code: 'WRB001' }, 'g1|speaking|b1': { sentAt: now },
+      'g2|listening|e1': { code: 'LSE001' }, 'g2|reading|e1': { code: 'RDE001' }, 'g2|writing|e1': { code: 'WRE001' }, 'g2|speaking|e1': { sentAt: now },
+      'g2|listening|e2': { code: 'LSE002' }, 'g2|reading|e2': { code: 'RDE002' } };
+    let n = 0, t = Date.now() - 3600000;
+    const d = x => Object.assign({ __id: 'c' + (++n), v: 1, date: new Date(t += 60000).toISOString(), submittedAt: new Date(t).toISOString(), timeSeconds: 300, timeDisplay: '05:00' }, x);
+    const lr = (code, step, id, name, c, tot, skill) => d({ code, type: skill === 'reading' ? 'Reading course' : 'Listening course', skill, step, name, studentId: id, correct: c, total: tot, score: Math.round(c / tot * 100), answers: [] });
+    const w = (code, step, id, name, band) => d({ code, type: 'Writing course', skill: 'writing', step, name, studentId: id, text: 'My name is Test.', words: 50, minWords: 40, mistakes: 0, mistakeList: [], grammarChecked: true, band });
+    const docs = [
+      w('WRB001', 'b1', '10001', 'Alice Test', 7), w('WRB001', 'b1', '10002', 'Bobur Test', 4),
+      lr('LSE001', 'e1', '20001', 'Dilya Test', 9, 10, 'listening'), lr('RDE001', 'e1', '20001', 'Dilya Test', 14, 15, 'reading'), w('WRE001', 'e1', '20001', 'Dilya Test', 7),
+      lr('LSE001', 'e1', '20002', 'Eldor Test', 5, 10, 'listening'), lr('RDE001', 'e1', '20002', 'Eldor Test', 9, 15, 'reading'), w('WRE001', 'e1', '20002', 'Eldor Test', 6),
+      lr('LSE001', 'e1', '20003', 'Farida Test', 3, 10, 'listening'),
+      lr('LSE002', 'e2', '20001', 'Dilya Test', 8, 10, 'listening'), lr('RDE002', 'e2', '20001', 'Dilya Test', 12, 15, 'reading'),
+      lr('LSE002', 'e2', '20002', 'Eldor Test', 6, 10, 'listening'), lr('RDE002', 'e2', '20002', 'Eldor Test', 10, 15, 'reading')];
+    return { docs, storage: { ta_student_groups: JSON.stringify(groups), ta_points_roster: JSON.stringify(roster), ta_weekly_schedule: JSON.stringify(sched),
+      ta_skills_links: JSON.stringify(links), ta_recent_exercises: '[]' } };
+  };
+  const openCards = async (page, context) => {
+    const errors = await open(page, context, CARD_SEED(), null);
+    await page.waitForFunction(() => (window.__allResults || []).length >= 13, null, { timeout: 10000 });
+    await page.evaluate(() => renderCourse());
+    return errors;
+  };
+  const squareStates = card => card.locator('.sk-squares .sk-stepbox').evaluateAll(sq => sq.map(x => (x.className.replace('sk-stepbox', '').trim() || '-')));
+
+  test('the Course page opens on group cards: name, level, a square per step, ⭐ average, 🐢 behind, Teach STEP N', async ({ page, context }) => {
+    const errors = await openCards(page, context);
+    const cards = page.locator('.sk-gcard');
+    await expect(cards).toHaveCount(3);
+    await expect(cards.locator('.sk-gcard-open')).toHaveText(['Target', 'Apex', 'Nexus']);
+    await expect(cards.locator('.sk-level-chip')).toHaveText(['Beginner', 'Elementary', '—']);
+    await expect(page.locator('.sk-row, .sk-tabs')).toHaveCount(0);
+    const soon = Array(9).fill('soon');
+    // Target (Beginner): Step 1 done (Writing 2 of 3, Speaking sent) → on Step 11 (Steps 2–10 are still to come)
+    expect(await squareStates(cards.nth(0))).toEqual(['done', ...soon, 'on', '-', '-', '-', '-', '-', '-', '-', 'soon', 'soon']);
+    // Apex (Elementary) starts at Step 11: Steps 1–10 skipped (grey), Step 11 done, on Step 12
+    expect(await squareStates(cards.nth(1))).toEqual([...Array(10).fill('skipped'), 'done', 'on', '-', '-', '-', '-', '-', '-', 'soon', 'soon']);
+    // Nexus (no level = Beginner): on Step 1
+    expect(await squareStates(cards.nth(2))).toEqual(['on', ...soon, '-', '-', '-', '-', '-', '-', '-', '-', 'soon', 'soon']);
+    await expect(cards.nth(1).locator('.sk-stepbox').nth(11)).toHaveAttribute('title', 'Step 12 · Family & friends — teach next');
+    // ⭐ the students' average band: Target 7 and 4 → 5.5; Apex 4, 8, 6.5 (Gulya has none) → 6; Nexus none yet
+    await expect(cards.locator('.sk-stat').filter({ hasText: '⭐' })).toHaveText([/⭐\s*5\.5/, /⭐\s*6$/, /⭐\s*—/]);
+    // 🐢 behind: Target — Bobur (average 4); Apex — Farida (missed 4 parts, average 4) and Gulya (missed 5 parts)
+    await expect(cards.locator('.sk-stat').filter({ hasText: /behind/i })).toHaveText([/🐢\s*1\s*behind/, /🐢\s*2\s*behind/, /Nobody behind/]);
+    await expect(cards.locator('.sk-teach')).toHaveText(['▶ Teach STEP 11', '▶ Teach STEP 12', '▶ Teach STEP 1']);
+    expect(await page.evaluate(() => { const s = skGroupStats(skGroup('g2'), skPathCtx(skGroup('g2'), skSteps().filter(skReady)));
+      return s.students.map(x => [x.name, x.avg, x.did, x.missed, x.behind]); }))
+      .toEqual([['Farida Test', 4, 0, 4, true], ['Gulya Test', null, 0, 5, true], ['Dilya Test', 8, 1, 0, false], ['Eldor Test', 6.5, 1, 0, false]]);
+    // the card (its name) opens the group's Journey; ← All groups comes back
+    await cards.nth(2).locator('.sk-gcard-open').click();
+    await expect(page.locator('.sk-ghead h3')).toHaveText('Nexus');
+    await expect(page.locator('.sk-row')).toHaveCount(20);
+    expect(await page.evaluate(() => localStorage.getItem('ta_course_group'))).toBe('g3');
+    await page.getByRole('button', { name: '← All groups' }).click();
+    await expect(page.locator('.sk-gcard')).toHaveCount(3);
+    expect(errors).toEqual([]);
+  });
+
+  test('Teach STEP N opens the Journey at that step, singled out; skipped steps are grey but open; the tabs switch to Progress', async ({ page, context }) => {
+    const errors = await openCards(page, context);
+    await page.locator('.sk-gcard[data-group="g2"]').getByRole('button', { name: '▶ Teach STEP 12' }).click();
+    await expect(page.locator('.sk-ghead h3')).toHaveText('Apex');
+    await expect(page.locator('.sk-ghead .sk-level-chip')).toHaveText('Elementary');
+    await expect(page.getByRole('tab', { name: '🧭 Journey' })).toHaveAttribute('aria-selected', 'true');
+    const focus = page.locator('.sk-row.focus');
+    await expect(focus).toHaveCount(1);
+    await expect(focus).toHaveAttribute('data-step', 'e2');
+    await expect(focus).toContainText('Teach this step');
+    await expect(focus.locator('.sk-node')).toBeInViewport();
+    expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(300);
+    // the singled-out step is bigger than the others
+    const h = await page.evaluate(() => [document.querySelector('.sk-row.focus .sk-node').getBoundingClientRect().height, document.querySelector('.sk-row[data-step="e3"] .sk-node').getBoundingClientRect().height]);
+    expect(h[0]).toBeGreaterThan(h[1]);
+    // Steps 1–10 are skipped for Apex: grey, Step 1 still opens
+    await expect(page.locator('.sk-row.skipped')).toHaveCount(10);
+    await expect(page.locator('.sk-row[data-step="b1"]')).toContainText('Skipped');
+    await expect(page.locator('.sk-row[data-step="e1"]')).not.toHaveClass(/skipped/);
+    // plain dots, with their reason in the tooltip
+    await expect(page.locator('.sk-row[data-step="e2"] .sk-dot[data-skill="writing"]')).toHaveAttribute('title', 'Writing — 0 of 4 students done');
+    await expect(page.locator('.sk-row[data-step="e2"] .sk-dot.done')).toHaveCount(2);
+    // Progress: behind students first (🐢 with the reason), then the rest; a square per step, coloured by the band
+    await page.getByRole('tab', { name: '📈 Progress' }).click();
+    await expect(page.getByRole('tab', { name: '📈 Progress' })).toHaveAttribute('aria-selected', 'true');
+    await expect(page.locator('.sk-row')).toHaveCount(0);
+    const rows = page.locator('.sk-prow');
+    await expect(rows.locator('.sk-prow-text b')).toHaveText(['Farida Test', 'Gulya Test', 'Dilya Test', 'Eldor Test']);
+    await expect(rows.nth(0)).toHaveClass(/behind/);
+    await expect(rows.nth(0).locator('.sk-turtle')).toHaveAttribute('title', 'Missed 4 parts · Average 4');
+    await expect(rows.nth(1).locator('.sk-turtle')).toHaveAttribute('title', 'Missed 5 parts');
+    await expect(rows.nth(2).locator('.sk-turtle')).toHaveCount(0);
+    await expect(rows.locator('.sk-prow-did')).toHaveText(['0 of 8 steps done', '0 of 8 steps done', '1 of 8 steps done', '1 of 8 steps done']);
+    await expect(rows.locator('.sk-prow-avg')).toHaveText(['⭐ 4', '⭐ —', '⭐ 8', '⭐ 6.5']);
+    const st = i => squareStates(rows.nth(i));
+    const tail = ['-', '-', '-', '-', '-', '-', 'soon', 'soon'];
+    expect(await st(0)).toEqual([...Array(10).fill('skipped'), 'b-low', '-', ...tail]);
+    expect(await st(1)).toEqual([...Array(10).fill('skipped'), '-', '-', ...tail]);
+    expect(await st(2)).toEqual([...Array(10).fill('skipped'), 'b-good', 'b-good', ...tail]);
+    expect(await st(3)).toEqual([...Array(10).fill('skipped'), 'b-mid', 'b-good', ...tail]);
+    await expect(rows.nth(2).locator('.sk-stepbox').nth(10)).toHaveAttribute('title', 'Step 11 — band 8');
+    // back to the Journey
+    await page.getByRole('tab', { name: '🧭 Journey' }).click();
+    await expect(page.locator('.sk-row')).toHaveCount(20);
+    // a step opens its page; its back button returns to the Journey
+    await page.locator('.sk-node[data-step="b1"]').click();
+    await expect(page.locator('.sk-level-head')).toContainText('Step 1 · Hello!');
+    await page.getByRole('button', { name: /^← Apex · Journey$/ }).click();
+    await expect(page.locator('.sk-row')).toHaveCount(20);
+    expect(errors).toEqual([]);
+  });
+
+  test('on a phone the group cards, the Journey and Progress fit without sideways scrolling', async ({ page, context }) => {
+    await page.setViewportSize({ width: 390, height: 800 });
+    const errors = await openCards(page, context);
+    const fits = async () => expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+    await expect(page.locator('.sk-gcard')).toHaveCount(3);
+    await fits();
+    // the cards stack
+    const xs = await page.locator('.sk-gcard').evaluateAll(c => c.map(x => Math.round(x.getBoundingClientRect().left)));
+    expect(new Set(xs).size).toBe(1);
+    await page.locator('.sk-gcard[data-group="g2"] .sk-teach').click();
+    await expect(page.locator('.sk-row.focus')).toBeInViewport();
+    await fits();
+    await page.getByRole('tab', { name: '📈 Progress' }).click();
+    await expect(page.locator('.sk-prow')).toHaveCount(4);
+    await fits();
+    const tabs = await page.locator('.sk-tab').evaluateAll(t => t.map(x => x.getBoundingClientRect().right));
+    expect(Math.max(...tabs)).toBeLessThanOrEqual(390);
     expect(errors).toEqual([]);
   });
 
@@ -941,6 +1091,7 @@ test.describe('results', () => {
     await page.waitForTimeout(500);
     await hideNotices(page);
     await page.addStyleTag({ content: '#taNoticeStack { display: none !important; }' });
+    if (/course\.html/.test(url)) await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();   // Target's page
     return errors;
   };
 
@@ -986,9 +1137,11 @@ test.describe('results', () => {
     await expect(dot('speaking')).not.toHaveClass(/done/);
     await expect(row1.locator('.sk-node')).not.toHaveClass(/done/);
     // Dilya (Apex) did Step 11 Listening for Target's code: she doesn't count for Target, and Apex has no links yet
-    await page.locator('.sk-groups').getByRole('button', { name: 'Apex' }).click();
+    await page.getByRole('button', { name: '← All groups' }).click();
+    await page.locator('.sk-gcard', { hasText: 'Apex' }).locator('.sk-gcard-open').click();
     await expect(page.locator('.sk-row').nth(10).locator('.sk-dot.done')).toHaveCount(0);
-    await page.locator('.sk-groups').getByRole('button', { name: 'Target' }).click();
+    await page.getByRole('button', { name: '← All groups' }).click();
+    await page.locator('.sk-gcard', { hasText: 'Target' }).locator('.sk-gcard-open').click();
     // the Speaking link sent (an old-style key) → Step 11 is all done (✓)
     await page.evaluate(() => { const l = JSON.parse(localStorage.getItem('ta_skills_links')); l['g1|speaking|1'] = { sentAt: new Date().toISOString() }; localStorage.setItem('ta_skills_links', JSON.stringify(l)); renderCourse(); });
     await expect(row1.locator('.sk-dot.done')).toHaveCount(4);
@@ -1003,7 +1156,7 @@ test.describe('results', () => {
     const errors = watchErrors(page);
     await page.goto('/course.html');
     await page.waitForFunction(() => (window.__allResults || []).length >= 9, null, { timeout: 10000 });
-    await page.evaluate(() => renderCourse());
+    await page.evaluate(() => skOpenGroup('g1'));
     const dot = k => page.locator('.sk-row').nth(10).locator('.sk-dot[data-skill="' + k + '"]');
     await expect(dot('writing')).not.toHaveClass(/done/);
     await expect(dot('writing')).toHaveAttribute('title', 'Writing — 1 of 3 students done');
@@ -1020,7 +1173,7 @@ test.describe('results', () => {
     await page.locator('.sk-node[data-step="e2"]').click();
     await expect(page.locator('.sk-results-empty')).toContainText('No results yet');
     await expect(page.getByRole('button', { name: '⬇️ Download picture' })).toHaveCount(0);
-    await page.getByRole('button', { name: '← All steps' }).click();
+    await page.getByRole('button', { name: /Journey$/ }).click();
     await page.locator('.sk-node[data-step="e1"]').click();
     // the four parts come first and the results below them (teacher, 2026-11-05) — no separate results buttons
     expect(await page.evaluate(() => !!(document.querySelector('.sk-parts').compareDocumentPosition(document.querySelector('.sk-results')) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);

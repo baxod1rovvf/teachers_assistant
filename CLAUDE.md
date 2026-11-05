@@ -505,10 +505,21 @@ real students' names or results into the repository (it is public).
   unchanged. `tests/pages.spec.js` ("top bar: …"), `tests/my-exercises.spec.js`.
 - **Skills Course (2026-11-04, teacher: replace the old Course with four skills)**: the old lesson Course (Block 1 lessons, slide
   editor, Teach mode, handouts, exam marks, `audio/course/`, `js/course-data.js`, `js/course-slides.js`, `ta_course_*`) is deleted.
-  `course.html` + `js/pages/course.js`, tab `course` 🗺️: since 2026-11-05 (teacher) it opens on a **step path** for the chosen group:
-  Step 1 → 🎧 📖 ✍️ 🗣️ dots → Step 2 → … → Step 20 (`skPathHtml`; a winding snake on computers, straight down on phones ≤ 760 px),
-  **all open, nothing locked**; steps without content are greyed "Coming soon". **Each step + skill has its own permanent link** the teacher sends to a group
-  (group chips at the top, `ta_course_group`). **Steps (2026-11-05, "Level" → "Step" everywhere)**: content in `js/skills-data.js`,
+  `course.html` + `js/pages/course.js`, tab `course` 🗺️. **Since 2026-11-05 (teacher) it opens on group cards** (`skCardsHtml`, one per
+  Students-page group; none → "Add a group on the Students page"): name (its button covers the card), level chip (`skGroupLevel`: the
+  level kept on the group's lessons in `ta_weekly_schedule`, "—" if none), 20 squares `.sk-stepbox` in rows of 10 (green done, red outline
+  the step the group is on = first ready step not done from its start, grey skipped, dashed coming soon), ⭐ the students' average band,
+  🐢 N behind, **▶ Teach STEP N** (`skTeach`). **Start** (`skStartNo`): Beginner or no level → Step 1, any other level → Step 11; steps
+  before are skipped (grey, still open). One `skResultsMap` for all cards; `skGroupStats(g, ctx)` works out everything per group.
+  A card opens the **group page** (`skOpenGroup`, "← All groups", last group in `ta_course_group`) with tabs **🧭 Journey** / **📈 Progress**
+  (`skShowTab`). Journey = the path Step 1 → … → Step 20 (`skPathHtml`; a winding snake on computers, straight down on phones ≤ 760 px)
+  with **plain dots** (one per part the step has — no 🎧📖✍️🗣️, a step's first part isn't always Listening; the tooltip names the part);
+  the step the group is on is singled out (`.sk-row.focus`: bigger node, pulsing ring, "👉 Teach this step"), Teach scrolls to it.
+  Progress (`skProgressHtml`): a row per roster student — ⭐ average band (`skOverall` of their per-step Overalls), "N of M steps done"
+  (M = ready steps with Listening/Reading/Writing from the start; done = a result in every such part), 20 squares coloured by their
+  band in each step (`skBandColour`: b-good/b-mid/b-low); **behind** students first with 🐢 and the reason as tooltip — missed ≥ 2
+  parts whose link was copied for the group, or average band < 5. **All steps open, nothing locked**; steps without content are greyed "Coming soon". **Each step + skill has its own permanent link** the teacher sends to a group
+  (from that group's page). **Steps (2026-11-05, "Level" → "Step" everywhere)**: content in `js/skills-data.js`,
   `TA_SKILLS.steps` = 20 entries `{id, no, stage, theme, emoji, listening?, reading?, writing?, speaking?}` — stable ids `b1…b10`
   (stage 'Beginner', Steps 1–10) then `e1…e10` ('Elementary', Steps 11–20); `no` = position, shown as "Step N". `e1…e8` = the old
   Levels 1–8 (audio unchanged), `e9`, `e10` stubs; `b1` has old Level 1's writing (About me) + speaking (Talk about yourself), `e1` a new
@@ -516,8 +527,8 @@ real students' names or results into the repository (it is public).
   with no part = "Coming soon"). Use the ids, never the number, in links/keys/results. `TA_BETTER_WORDS` for the writing tips. **A dot is done** (`skDotState`) when at least half
   of the group's students (Students list, by ID) have a result for that step + skill (a group with no students: one result); Speaking
   (sends nothing) when the teacher copied its link for the group (`ta_skills_links["<groupId>|speaking|<stepId>"] = { sentAt }`, no My
-  Exercises item). Dot tooltips say why ("2 of 3 students done", "Link sent 5 Nov"); a step with all its parts done shows ✓; the first dot not done
-  is "Next". **A step opens its page** (`skStepPageHtml`, `skOpenStep(id)`, "← All steps", not remembered): the four parts first, then the results table below them (teacher, 2026-11-05), inline
+  Exercises item). Dot tooltips say why ("2 of 3 students done", "Link sent 5 Nov"); a step with all its parts done shows ✓.
+  **A step opens its page** (`skStepPageHtml`, `skOpenStep(id)`, "← <group> · Journey", not remembered): the four parts first, then the results table below them (teacher, 2026-11-05), inline
   (`skTableHtml`, ⬇️ Download picture; a ✍️ band opens the writing, `skViewWriting`; an empty state before any result); the parts
   (`.sk-part` — `.sk-card` belongs to the student page) with their done state, ▶️ Try (`skTry`, `&preview=1`, sends nothing) and 🔗 Copy link
   for <group> (`skCopyLink`). **No "View Results"/"Results table" buttons on the Course page** (one exercise's results: My Exercises).

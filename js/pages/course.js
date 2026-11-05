@@ -10,7 +10,7 @@
                       level number: taSkillsLinks() (common.js) reads them as e<N>, and the next save writes them anew.
                       Speaking: { sentAt } — when its link was first copied for the group (its dot on the path).
    - ta_skills_marks  the teacher's writing marks { "<code>|<studentId>": band } (common.js skWritingBandFor; synced, in the backup)
-   - ta_course_group  the group picked on this device (not synced) */
+   - ta_course_group  the group last opened on this device (not synced) */
 const LS_COURSE_GROUP = 'ta_course_group';
 const SK_SKILLS = [
   { key: 'listening', label: 'Listening', emoji: '🎧', color: 'var(--c-blue)', about: 'A recording and questions to answer while you listen.', results: true },
@@ -29,6 +29,7 @@ function skWriteLinks(v) {
   if (window.startPlainCompletionsSync) { clearTimeout(window.__taResyncTimer); window.__taResyncTimer = setTimeout(window.startPlainCompletionsSync, 1500); }
 }
 function skGroupId() {
+  if (typeof skView !== 'undefined' && skView.group) return skView.group;   // the group whose page is open
   let id = '';
   try { id = localStorage.getItem(LS_COURSE_GROUP) || ''; } catch (e) { /* ignore */ }
   const groups = getStudentGroups();
@@ -74,21 +75,38 @@ function skLinkFor(skill, step, group) {
 window.skLinkFor = skLinkFor;
 window.skEnsureCode = skEnsureCode;
 
-/* ================= THE PATH (teacher, 2026-11-05) =================
-   The page opens on a path for the chosen group: Step 1 → its parts → Step 2 → … → Step 20.
-   A dot is done for the group when (skDotState):
-   - Listening / Reading / Writing: at least half of the group's students (Students list, matched by ID) have a result
-     for that step + part (a group with no students: one result is enough);
-   - Speaking (nothing is sent): the teacher has pressed 🔗 Copy link for it ({ sentAt } in ta_skills_links).
-   A step whose dots are all done shows ✓; the first dot not done is "Next". Steps without content: "Coming soon".
-   A step opens the step page: its parts (Try, Copy link), then its results table. */
-let skView = { step: '' };   // the step open on this page ('' = the path); not remembered
+/* ================= GROUPS → JOURNEY / PROGRESS (teacher, 2026-11-05) =================
+   The page opens on one card per group (Students page): its level, a square per step (green done, red outline the
+   step the group is on, grey skipped, empty not yet), ⭐ the students' average band, 🐢 how many are behind, and
+   "▶ Teach STEP N". A group's page has two tabs:
+   - Journey: the path Step 1 → Step 20 with a plain dot per part (no skill icons — a step's first part isn't always
+     Listening). A dot is done for the group when (skDotState):
+     · Listening / Reading / Writing: at least half of the group's students (Students list, matched by ID) have a result
+       for that step + part (a group with no students: one result is enough);
+     · Speaking (nothing is sent): the teacher has pressed 🔗 Copy link for it ({ sentAt } in ta_skills_links).
+     A step is done when all its dots are. The step the group is on (first ready step not done, from its start) is
+     singled out: bigger, a ring, "Teach this step".
+   - Progress: a row per student — ⭐ average band, "N of M steps done", a square per step coloured by their band there.
+     Behind (🐢, listed first): missed 2+ parts already sent to the group, or an average band below 5.
+   Where a group starts: level Beginner (or none) → Step 1; any other level → Step 11; steps before that are skipped
+   (grey, still open). A step opens the step page: its parts (Try, Copy link), then its results table. */
+let skView = { group: '', tab: 'journey', step: '', teach: false, back: '' };   // not remembered (only the group: ta_course_group)
 function skReady(st) { return !!st && SK_SKILLS.some(s => st[s.key]); }
 function skGroupRoster(g) { return g ? getPointsRoster().filter(s => s.group === g.id) : []; }
 function skShortDate(iso) {
   const d = new Date(iso);
   return isNaN(d) ? '' : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
+/* The group's level: set on the Students page (✏️ on a group) — kept on the group's lessons (ta_weekly_schedule) */
+function skGroupLevel(g) {
+  if (!g) return '';
+  if (g.level) return String(g.level);
+  const name = String(g.name || '').trim().toLowerCase();
+  const e = (typeof getWeeklySchedule === 'function' ? getWeeklySchedule() : []).find(x => x && x.level && String(x.group || '').trim().toLowerCase() === name);
+  return e ? String(e.level) : '';
+}
+/* The first step of a group: Beginner (or no level) → 1, any other level → 11 */
+function skStartNo(g) { const lv = skGroupLevel(g).trim().toLowerCase(); return !lv || lv === 'beginner' ? 1 : 11; }
 /* { done, text } of one dot. ctx = { map, idx, roster } — one reading of the kept results per drawing. */
 function skDotState(skill, step, g, ctx) {
   if (!g) return { done: false, text: 'Add a group first' };
@@ -108,59 +126,176 @@ function skDotState(skill, step, g, ctx) {
   if (!total) return { done: any > 0, text: any ? any + (any === 1 ? ' result' : ' results') : 'No results yet' };
   return { done: seen.size * 2 >= total, text: seen.size + ' of ' + total + ' students done' };
 }
-function skPathCtx(g, steps) {
-  const codes = g ? [].concat(...steps.map(st => SK_TABLE_SKILLS.map(k => skCodeFor(k, st.id, g)))) : [];
-  return { map: skResultsMap(codes), idx: taRosterIndex(), roster: skGroupRoster(g) };
+function skGroupCodes(g, steps) { return g ? [].concat(...steps.map(st => SK_TABLE_SKILLS.map(k => skCodeFor(k, st.id, g)))) : []; }
+function skPathCtx(g, steps, map, idx) {
+  return { map: map || skResultsMap(skGroupCodes(g, steps)), idx: idx || taRosterIndex(), roster: skGroupRoster(g) };
 }
-function skGroupsHtml(groups, gid) {
-  return '<div class="sk-groups"><span class="sk-groups-label">👥 Group:</span>' +
-    (groups.length
-      ? groups.map(x => '<button type="button" class="myex-type-chip' + (x.id === gid ? ' active' : '') + '" onclick="skPickGroup(' + jsAttr(x.id) + ')" translate="no">' + escapeForHtml(x.name) + '</button>').join('')
-      : '<span class="sk-hint">Add a group on the Students page first — each group gets its own links.</span>') + '</div>';
+/* Everything the card, the Journey and Progress show for one group (from one results map). */
+function skGroupStats(g, ctx) {
+  const start = skStartNo(g), links = taSkillsLinks();
+  const steps = skSteps().map(st => {
+    const ready = skReady(st), parts = SK_SKILLS.filter(s => st[s.key]);
+    const dots = ready ? parts.map(s => Object.assign({ skill: s }, skDotState(s.key, st.id, g, ctx))) : [];
+    return { st: st, ready: ready, skipped: st.no < start, dots: dots, done: ready && dots.every(d => d.done),
+      graded: SK_TABLE_SKILLS.filter(k => st[k]) };
+  });
+  const onStep = steps.find(x => x.st.no >= start && x.ready && !x.done) || null;
+  // each roster student's best band per step + part (a result without a band still counts as done)
+  const students = ctx.roster.map(s => ({ name: s.name, id: s.id, key: String(s.id).trim().toLowerCase(), steps: {} }));
+  const byKey = {};
+  students.forEach(s => { byKey[s.key] = s; });
+  steps.forEach(x => {
+    if (!x.ready) return;
+    x.graded.forEach(k => {
+      const code = skCodeFor(k, x.st.id, g);
+      ((code && ctx.map[code]) || []).forEach(r => {
+        const rs = rosterStudentForResult(r, ctx.idx);
+        const s = rs && rs.group === g.id && byKey[String(rs.id).trim().toLowerCase()];
+        if (!s) return;
+        const cell = s.steps[x.st.id] || (s.steps[x.st.id] = {});
+        const band = skResultBand(k, r), cur = cell[k];
+        if (cur === undefined || (typeof band === 'number' && (cur === null || band > cur))) cell[k] = typeof band === 'number' ? band : null;
+      });
+    });
+  });
+  const counted = steps.filter(x => x.ready && !x.skipped && x.graded.length);
+  const sent = [];   // the graded parts whose link was copied for this group
+  steps.forEach(x => { if (x.ready) x.graded.forEach(k => { if (links[skLinkKey(k, x.st.id, g)]) sent.push([x.st.id, k]); }); });
+  students.forEach(s => {
+    s.bands = {};
+    Object.keys(s.steps).forEach(id => { s.bands[id] = skOverall(SK_TABLE_SKILLS.map(k => s.steps[id][k])); });
+    const have = Object.keys(s.bands).map(id => s.bands[id]).filter(b => typeof b === 'number');
+    s.avg = skOverall(have);
+    s.did = counted.filter(x => s.steps[x.st.id] && x.graded.every(k => k in s.steps[x.st.id])).length;
+    s.missed = sent.filter(([id, k]) => !(s.steps[id] && k in s.steps[id])).length;
+    const why = [];
+    if (s.missed >= 2) why.push('Missed ' + s.missed + ' parts');
+    if (s.avg !== null && s.avg < 5) why.push('Average ' + s.avg);
+    s.behind = why.length > 0;
+    s.why = why.join(' · ');
+  });
+  students.sort((a, b) => (b.behind - a.behind) || a.name.localeCompare(b.name));
+  return { g: g, level: skGroupLevel(g), start: start, steps: steps, on: onStep, students: students, total: counted.length,
+    avg: skOverall(students.map(s => s.avg)), behind: students.filter(s => s.behind).length };
+}
+window.skGroupStats = skGroupStats;
+
+function skCourseShownScroll(sel) {
+  const el = document.querySelector(sel);
+  if (el && el.scrollIntoView) el.scrollIntoView({ block: 'center', behavior: 'smooth' });
 }
 function renderCourse() {
   const wrap = document.getElementById('courseWrap');
   if (!wrap) return;
-  const groups = getStudentGroups(), gid = skGroupId(), g = skGroup(gid);
+  const groups = getStudentGroups();
+  if (skView.group && !groups.some(g => g.id === skView.group)) skView = { group: '', tab: 'journey', step: '', teach: false, back: '' };
+  if (!skView.group) { wrap.innerHTML = skCardsHtml(groups); return; }
+  const g = skGroup(skView.group);
   const st = skView.step ? skStep(skView.step) : null;
   if (skView.step && !skReady(st)) skView.step = '';
-  wrap.innerHTML = skGroupsHtml(groups, gid) + (skView.step ? skStepPageHtml(st, g) : skPathHtml(g));
+  if (skView.step) { wrap.innerHTML = skStepPageHtml(st, g); return; }
+  const stats = skGroupStats(g, skPathCtx(g, skSteps().filter(skReady)));
+  wrap.innerHTML = skGroupPageHtml(stats);
 }
-function skPathHtml(g) {
-  const steps = skSteps(), ctx = skPathCtx(g, steps.filter(skReady));
-  let nextFound = false;
-  const rows = steps.map((lv, i) => {
-    const ready = skReady(lv);
-    const states = SK_SKILLS.map(s => ready && lv[s.key] ? skDotState(s.key, lv.id, g, ctx) : { done: false, text: 'Coming soon', soon: true });
-    const complete = ready && states.every((st, j) => st.done || !lv[SK_SKILLS[j].key]);
-    const last = i === steps.length - 1;
+/* ---- the group cards ---- */
+function skStatsHtml(s) {
+  return '<span class="sk-stat" title="The students\' average band">⭐ <b>' + (s.avg === null ? '—' : s.avg) + '</b></span>' +
+    '<span class="sk-stat' + (s.behind ? ' sk-stat-behind' : '') + '" title="' + (s.behind ? 'Missed 2 or more parts, or an average band below 5' : 'Nobody is behind') + '">' +
+    (s.behind ? '🐢 <b>' + s.behind + '</b> behind' : '🙂 Nobody behind') + '</span>';
+}
+function skGroupSquaresHtml(s) {
+  return '<div class="sk-squares" aria-label="Steps">' + s.steps.map(x => {
+    const on = s.on === x, cls = x.done ? 'done' : on ? 'on' : x.skipped ? 'skipped' : x.ready ? '' : 'soon';
+    const what = x.done ? 'done' : on ? 'teach next' : x.skipped ? 'skipped' : x.ready ? 'not yet' : 'coming soon';
+    return '<span class="sk-stepbox' + (cls ? ' ' + cls : '') + '" data-step="' + x.st.id + '" title="Step ' + x.st.no + ' · ' + escapeForHtml(x.st.theme) + ' — ' + what + '"></span>';
+  }).join('') + '</div>';
+}
+function skTeachLabel(s) { return s.on ? '▶ Teach STEP ' + s.on.st.no : '🎉 All steps done'; }
+function skCardsHtml(groups) {
+  if (!groups.length) {
+    return '<div class="sk-results-empty sk-nogroups"><span class="sk-results-empty-emoji">👥</span><div><b>Add a group on the Students page</b>' +
+      '<span>Each group gets its own links and its own place on the 20 steps.</span>' +
+      '<button type="button" class="mini-btn solid" onclick="taNavigate(\'students.html\')">🧑‍🎓 Open Students</button></div></div>';
+  }
+  const steps = skSteps().filter(skReady), idx = taRosterIndex();
+  const map = skResultsMap([].concat(...groups.map(g => skGroupCodes(g, steps))));   // one reading for every card
+  return '<div class="sk-cards">' + groups.map((g, i) => {
+    const s = skGroupStats(g, skPathCtx(g, steps, map, idx));
+    return '<article class="sk-gcard" data-group="' + escapeForHtml(g.id) + '" style="--gc:var(' + ['--c-blue', '--c-pink', '--c-green', '--c-orange', '--c-purple', '--c-teal'][i % 6] + ')">' +
+      '<div class="sk-gcard-top"><button type="button" class="sk-gcard-open" onclick="skOpenGroup(' + jsAttr(g.id) + ')" translate="no">' + escapeForHtml(g.name) + '</button>' +
+      '<span class="sk-level-chip">' + escapeForHtml(s.level || '—') + '</span></div>' +
+      skGroupSquaresHtml(s) +
+      '<div class="sk-gcard-stats">' + skStatsHtml(s) + '</div>' +
+      '<button type="button" class="sk-teach" onclick="skTeach(' + jsAttr(g.id) + ')">' + skTeachLabel(s) + '</button>' +
+    '</article>';
+  }).join('') + '</div>';
+}
+/* ---- a group's page ---- */
+function skGroupPageHtml(s) {
+  const g = s.g, tab = skView.tab === 'progress' ? 'progress' : 'journey';
+  const tabBtn = (k, label) => '<button type="button" role="tab" class="sk-tab' + (tab === k ? ' active' : '') + '" aria-selected="' + (tab === k) + '" data-tab="' + k + '" onclick="skShowTab(' + jsAttr(k) + ')">' + label + '</button>';
+  return '<button type="button" class="back-to-picker-btn" onclick="skOpenGroup(\'\')">← All groups</button>' +
+    '<div class="sk-ghead"><div class="sk-ghead-name"><h3 translate="no">' + escapeForHtml(g.name) + '</h3><span class="sk-level-chip">' + escapeForHtml(s.level || '—') + '</span></div>' +
+    '<div class="sk-gcard-stats">' + skStatsHtml(s) + '</div></div>' +
+    '<div class="sk-tabs" role="tablist" aria-label="' + escapeForHtml(g.name) + '">' + tabBtn('journey', '🧭 Journey') + tabBtn('progress', '📈 Progress') + '</div>' +
+    '<div class="sk-tabpanel" role="tabpanel">' + (tab === 'progress' ? skProgressHtml(s) : skPathHtml(s)) + '</div>';
+}
+function skPathHtml(s) {
+  const g = s.g, steps = s.steps;
+  const rows = steps.map((x, i) => {
+    const lv = x.st, ready = x.ready, complete = x.done, focus = s.on === x, last = i === steps.length - 1;
     const node = ready
       ? '<button type="button" class="sk-node' + (complete ? ' done' : '') + '" data-step="' + lv.id + '" onclick="skOpenStep(' + jsAttr(lv.id) + ')" title="Open Step ' + lv.no + '">'
       : '<div class="sk-node soon" data-step="' + lv.id + '" aria-disabled="true">';
-    let html = '<div class="sk-row' + (i % 2 ? ' rev' : '') + (complete ? ' complete' : '') + (ready ? '' : ' soon') + '">' + node +
-      '<span class="sk-node-emoji">' + lv.emoji + '</span><span class="sk-node-text"><b>Step ' + lv.no + '</b><span>' + escapeForHtml(lv.theme) + '</span>' +
-      (ready ? (complete ? '<small class="sk-node-tag done">✓ All done</small>' : '') : '<small class="sk-node-tag">🛠️ Coming soon</small>') + '</span>' +
-      (complete ? '<span class="sk-node-check" aria-label="Done">✓</span>' : '') + (ready ? '</button>' : '</div>') +
+    const tag = !ready ? '<small class="sk-node-tag">🛠️ Coming soon</small>'
+      : complete ? '<small class="sk-node-tag done">✓ All done</small>'
+      : x.skipped ? '<small class="sk-node-tag">⏭️ Skipped</small>' : '';
+    let html = '<div class="sk-row' + (i % 2 ? ' rev' : '') + (complete ? ' complete' : '') + (ready ? '' : ' soon') + (x.skipped ? ' skipped' : '') + (focus ? ' focus' : '') + '" data-step="' + lv.id + '">' +
+      '<div class="sk-node-wrap">' + (focus ? '<span class="sk-teach-tag">👉 Teach this step</span>' : '') + node +
+      '<span class="sk-node-emoji">' + lv.emoji + '</span><span class="sk-node-text"><b>Step ' + lv.no + '</b><span>' + escapeForHtml(lv.theme) + '</span>' + tag + '</span>' +
+      (complete ? '<span class="sk-node-check" aria-label="Done">✓</span>' : '') + (ready ? '</button>' : '</div>') + '</div>' +
       '<div class="sk-track">';
-    SK_SKILLS.forEach((s, j) => {
-      const st = states[j];
-      const next = ready && !st.done && !st.soon && !nextFound && g;
-      if (next) nextFound = true;
-      const tip = s.label + ' — ' + st.text;
-      html += '<span class="sk-seg' + (st.done ? ' on' : '') + '" style="--skc:' + s.color + '"></span>' +
-        (ready && !st.soon
-          ? '<button type="button" class="sk-dot' + (st.done ? ' done' : '') + (next ? ' next' : '') + '" data-skill="' + s.key + '" style="--skc:' + s.color + '" title="' + escapeForHtml(tip) + '" aria-label="Step ' + lv.no + ' ' + escapeForHtml(tip) + '" onclick="skOpenStep(' + jsAttr(lv.id) + ')">' +
-            '<span class="sk-dot-emoji">' + s.emoji + '</span>' + (st.done ? '<span class="sk-dot-check">✓</span>' : '') + (next ? '<span class="sk-dot-next">Next</span>' : '') + '</button>'
-          : '<span class="sk-dot soon" data-skill="' + s.key + '" title="' + escapeForHtml(tip) + '"><span class="sk-dot-emoji">' + s.emoji + '</span></span>');
+    // plain dots, one per part the step has (teacher, 2026-11-05: no 🎧📖✍️🗣️ — a step's first part isn't always Listening)
+    const dots = ready ? x.dots : [0, 1, 2, 3].map(() => null);
+    dots.forEach(d => {
+      html += '<span class="sk-seg' + (d && d.done ? ' on' : '') + '"></span>';
+      if (!d) { html += '<span class="sk-dot soon" title="Coming soon"></span>'; return; }
+      const tip = d.skill.label + ' — ' + d.text;
+      html += '<button type="button" class="sk-dot' + (d.done ? ' done' : '') + '" data-skill="' + d.skill.key + '" title="' + escapeForHtml(tip) + '" aria-label="Step ' + lv.no + ' ' + escapeForHtml(tip) + '" onclick="skOpenStep(' + jsAttr(lv.id) + ')">' +
+        (d.done ? '<span class="sk-dot-check" aria-hidden="true">✓</span>' : '') + '</button>';
     });
     html += last ? '<span class="sk-seg sk-seg-end' + (complete ? ' on' : '') + '"></span><span class="sk-flag" aria-hidden="true">🏁</span>'
       : '<span class="sk-seg sk-seg-out' + (complete ? ' on' : '') + '"></span>';
     return html + '</div></div>';
   }).join('');
-  return '<div class="sk-path-head"><div><h3>🧭 Beginner → Elementary · ' + steps.length + ' steps</h3>' +
-    '<p class="sk-hint">Each step has 🎧 Listening, 📖 Reading, ✍️ Writing and 🗣️ Speaking. A dot turns green when half of ' +
-    (g ? '<span translate="no">' + escapeForHtml(g.name) + '</span>' : 'the group') + ' has done it (🗣️ Speaking: when you copy its link).</p></div></div>' +
+  return '<p class="sk-hint sk-path-hint">A dot is a part of the step (Listening, Reading, Writing, Speaking). It turns green when half of ' +
+    '<span translate="no">' + escapeForHtml(g.name) + '</span> has done it (Speaking: when you copy its link).' +
+    (s.start > 1 ? ' Steps 1–' + (s.start - 1) + ' are skipped for a ' + escapeForHtml(s.level) + ' group — you can still open them.' : '') + '</p>' +
     '<div class="sk-path">' + rows + '</div>';
+}
+function skProgressHtml(s) {
+  if (!s.students.length) {
+    return '<div class="sk-results-empty"><span class="sk-results-empty-emoji">🧑‍🎓</span><div><b>No students in <span translate="no">' + escapeForHtml(s.g.name) + '</span> yet</b>' +
+      '<span>Add them with their IDs on the Students page — their bands show here.</span></div></div>';
+  }
+  const legend = '<div class="sk-legend"><span><i class="sk-stepbox b-good"></i>6.5 or more</span><span><i class="sk-stepbox b-mid"></i>5.5–6</span><span><i class="sk-stepbox b-low"></i>5 or less</span>' +
+    '<span><i class="sk-stepbox"></i>Not done</span><span><i class="sk-stepbox skipped"></i>Skipped</span></div>';
+  const rows = s.students.map(st => {
+    const squares = s.steps.map(x => {
+      const b = st.bands[x.st.id], has = x.st.id in st.bands;
+      const cls = typeof b === 'number' ? 'b-' + skBandColour(b) : has ? 'b-none' : x.skipped ? 'skipped' : x.ready ? '' : 'soon';
+      const tip = 'Step ' + x.st.no + ' — ' + (typeof b === 'number' ? 'band ' + b : has ? 'done' : x.skipped ? 'skipped' : x.ready ? 'not done' : 'coming soon');
+      return '<span class="sk-stepbox' + (cls ? ' ' + cls : '') + '" data-step="' + x.st.id + '" title="' + tip + '"></span>';
+    }).join('');
+    return '<div class="sk-prow' + (st.behind ? ' behind' : '') + '" data-student="' + escapeForHtml(st.id) + '">' +
+      '<div class="sk-prow-who"><span class="res-avatar" style="background:' + avatarColorForName(st.name) + ';">' + escapeForHtml(initialsForName(st.name)) + '</span>' +
+      '<div class="sk-prow-text"><b translate="no">' + escapeForHtml(st.name) + '</b>' +
+      '<span><span class="sk-prow-avg">⭐ ' + (st.avg === null ? '—' : st.avg) + '</span> · <span class="sk-prow-did">' + st.did + ' of ' + s.total + ' steps done</span></span></div>' +
+      (st.behind ? '<span class="sk-turtle" title="' + escapeForHtml(st.why) + '" aria-label="Behind: ' + escapeForHtml(st.why) + '">🐢</span>' : '') + '</div>' +
+      '<div class="sk-squares">' + squares + '</div></div>';
+  }).join('');
+  return '<p class="sk-hint sk-path-hint">Each square is a step, coloured by the student\'s band in it. 🐢 = behind: missed 2 or more parts you sent, or an average band below 5 (they come first).</p>' +
+    legend + '<div class="sk-prog">' + rows + '</div>';
 }
 function skStepPageHtml(lv, g) {
   const ctx = skPathCtx(g, [lv]);
@@ -187,21 +322,37 @@ function skStepPageHtml(lv, g) {
       (g ? '<button type="button" class="mini-btn solid" onclick="skCopyLink(' + jsAttr(s.key) + ', ' + jsAttr(lv.id) + ')">🔗 Copy link for ' + escapeForHtml(g.name) + '</button>' : '') + '</div>' +
       (g ? '' : '<p class="sk-hint">Add a group on the Students page first.</p>') + '</div>';
   }).join('');
-  return '<button type="button" class="back-to-picker-btn" onclick="skOpenStep(\'\')">← All steps</button>' +
+  return '<button type="button" class="back-to-picker-btn" onclick="skOpenStep(\'\')">← ' + (g ? '<span translate="no">' + escapeForHtml(g.name) + '</span> · ' : '') + 'Journey</button>' +
     '<div class="sk-level-head"><span class="sk-node-emoji">' + lv.emoji + '</span><div><h3>Step ' + lv.no + ' · ' + escapeForHtml(lv.theme) + '</h3>' +
-    '<div class="sk-hint">' + escapeForHtml(lv.stage || '') + ' · ' + SK_SKILLS.filter(s => lv[s.key]).map(s => s.emoji).join(' ') + '</div></div></div>' +
+    '<div class="sk-hint">' + escapeForHtml(lv.stage || '') + ' · ' + SK_SKILLS.filter(s => lv[s.key]).map(s => s.label).join(', ') + '</div></div></div>' +
     '<div class="sk-parts">' + cards + '</div>' + results;   // the exercises first, their results below (teacher, 2026-11-05)
 }
 function skTileSub(c) { return c.title || c.topic || (c.part2 && (c.part2.topic || c.part2.title)) || ''; }
 
-function skPickGroup(id) {
-  try { localStorage.setItem(LS_COURSE_GROUP, id); } catch (e) { /* ignore */ }
+/* ---- moving around (the group is remembered on this device: ta_course_group) ---- */
+function skOpenGroup(id) {
+  skView = { group: id || '', tab: 'journey', step: '', teach: false, back: '' };
+  if (id) { try { localStorage.setItem(LS_COURSE_GROUP, id); } catch (e) { /* ignore */ } }
+  renderCourse();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+/* ▶ Teach STEP N: the Journey, scrolled to the step the group is on (singled out) */
+function skTeach(id) {
+  skOpenGroup(id);
+  skView.teach = true;
+  setTimeout(() => skCourseShownScroll('.sk-row.focus'), 60);
+}
+function skShowTab(tab) {
+  skView.tab = tab === 'progress' ? 'progress' : 'journey';
   renderCourse();
 }
 function skOpenStep(id) {
+  const back = skView.step;
   skView.step = (skStep(id) || {}).id || '';
+  if (skView.step) skView.back = skView.step;
   renderCourse();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (!skView.step && back) setTimeout(() => skCourseShownScroll('.sk-row[data-step="' + back + '"]'), 60);   // back where the teacher was
+  else window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function skTry(skill, step) {
   const w = window.open(taSkillLink(skill, step) + '&preview=1', '_blank');
