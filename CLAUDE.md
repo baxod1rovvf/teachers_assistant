@@ -523,11 +523,12 @@ real students' names or results into the repository (it is public).
   `TA_SKILLS.steps` = 20 entries `{id, no, stage, theme, emoji, listening?, reading?, writing?, speaking?}` — stable ids `b1…b10`
   (stage 'Beginner', Steps 1–10) then `e1…e10` ('Elementary', Steps 11–20); `no` = position, shown as "Step N". `e1…e8` = the old
   Levels 1–8 (audio unchanged), `e9`, `e10` stubs; `b1` has old Level 1's writing (About me) + speaking (Talk about yourself), `e1` a new
-  writing ("An email to a new classmate", 50–70 words, 20 min) + speaking ("A person you met recently", 45 s); **`b1…b5` complete (2026-11-05)**: very easy listenings (~2 min with the writing pauses, 10 one-word/number gaps — names, ages,
-  numbers, colours, prices, phone numbers —, two spelled names each, `audio/skills/beg-<n>-listening.mp3`, entries 9–13 of
-  `elementary-scripts.json`, so `… audio/skills 9` remakes Step 1), readings of ~40/50/60/70/80 words with 10 questions (5 `tf` + 5
-  `choose`), writing 20–40 words / 10–12 min, Part 2 30 s (b1 keeps About me + Talk about yourself); `b6…b10` stubs (a step
-  with no part = "Coming soon"). Use the ids, never the number, in links/keys/results. `TA_BETTER_WORDS` for the writing tips. **A dot is done** (`skDotState`) when at least half
+  writing ("An email to a new classmate", 50–70 words, 20 min) + speaking ("A person you met recently", 45 s); **`b1…b10` complete (2026-11-05) — so Steps 1–18 are complete, 19–20 (`e9`, `e10`) "Coming soon"**: very easy listenings
+  (~2 min with the writing pauses, 10 one-word/number gaps — names, ages, numbers, colours, prices, days, o'clock times, phone
+  numbers —, two spelled names each, `audio/skills/beg-<n>-listening.mp3`, entries 9–18 of `elementary-scripts.json`, so
+  `… audio/skills 9` remakes Step 1, `… 14` Step 6), readings of ~40/50/60/70/80/90/95/100/110/120 words with 10 questions (5 `tf` + 5
+  `choose`), writing 20–50 words / 10–15 min, Part 2 30–45 s (b1 keeps About me + Talk about yourself; b6 Days & times, b7 Food,
+  b8 Animals & pets, b9 My room, b10 My friend). A step with no part = "Coming soon". Use the ids, never the number, in links/keys/results. `TA_BETTER_WORDS` for the writing tips. **A dot is done** (`skDotState`) when at least half
   of the group's students (Students list, by ID) have a result for that step + skill (a group with no students: one result); Speaking
   (sends nothing) when the teacher copied its link for the group (`ta_skills_links["<groupId>|speaking|<stepId>"] = { sentAt }`, no My
   Exercises item). Dot tooltips say why ("2 of 3 students done", "Link sent 5 Nov"); a step with all its parts done shows ✓.

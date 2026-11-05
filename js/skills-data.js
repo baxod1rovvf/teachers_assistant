@@ -631,11 +631,595 @@ var TA_SKILLS = {
         }
       }
     },
-    { id: 'b6', no: 6, stage: 'Beginner', theme: 'Days & times', emoji: '📅' },
-    { id: 'b7', no: 7, stage: 'Beginner', theme: 'Food', emoji: '🍎' },
-    { id: 'b8', no: 8, stage: 'Beginner', theme: 'Animals & pets', emoji: '🐶' },
-    { id: 'b9', no: 9, stage: 'Beginner', theme: 'My room', emoji: '🛏️' },
-    { id: 'b10', no: 10, stage: 'Beginner', theme: 'My friend', emoji: '🧑‍🤝‍🧑' },
+    {
+      id: 'b6', no: 6, stage: 'Beginner', theme: 'Days & times', emoji: '📅',
+      listening: {
+        src: 'audio/skills/beg-6-listening.mp3?v=1',
+        title: 'Classes at a sports centre',
+        intro: 'Listen to a girl at a sports centre. She asks about classes. Write ONE WORD or A NUMBER for each answer.',
+        questions: [
+          { q: 'First name: _____', a: ['Lucy'] },
+          { q: 'Surname: _____', a: ['Webb'] },
+          { q: 'Swimming: on _____', a: ['Monday'] },
+          { q: "Swimming starts at _____ o'clock", a: ['4', 'four'] },
+          { q: 'Dance: on _____', a: ['Wednesday'] },
+          { q: "Dance starts at _____ o'clock", a: ['6', 'six'] },
+          { q: 'Tennis: on _____ morning', a: ['Saturday'] },
+          { q: "Tennis starts at _____ o'clock", a: ['10', 'ten'] },
+          { q: 'The sports centre is closed on _____', a: ['Sunday'] },
+          { q: "The sports centre opens at _____ o'clock", a: ['8', 'eight'] }
+        ],
+        words: [
+          { w: 'sports centre', emoji: '🏟️', m: 'a building where you can do sports', ex: 'You will hear a girl at a sports centre.' },
+          { w: 'class', emoji: '👩‍🏫', m: 'a time when a teacher shows you how to do something', ex: 'I want to join a class after school.' },
+          { w: 'swimming', emoji: '🏊', m: 'moving in water with your arms and legs', ex: 'There is swimming on Monday.' },
+          { w: 'dance', emoji: '💃', m: 'moving your body to music', ex: 'Dance is on Wednesday.' },
+          { w: 'tennis', emoji: '🎾', m: 'a sport with a ball and two rackets', ex: 'Tennis is on Saturday morning.' },
+          { w: 'Monday', emoji: '📅', m: 'the first day of the school week', ex: 'See you on Monday!' },
+          { w: 'Saturday', emoji: '🗓️', m: 'a day of the weekend, after Friday', ex: 'Tennis is on Saturday morning.' },
+          { w: "o'clock", emoji: '🕓', m: "we say it with the time: 4:00 is four o'clock", ex: "It starts at four o'clock." },
+          { w: 'closed', emoji: '🔒', m: "not open: you can't go in", ex: "We're closed on Sunday." },
+          { w: 'open', emoji: '🔓', m: 'you can go in', ex: "We open at eight o'clock." }
+        ],
+        transcript: [
+          { who: 'Woman', text: 'Step six. You will hear a girl at a sports centre. She asks about classes. Listen and write the answers.', answers: [] },
+          { who: 'Man', text: 'Hello. Can I help you?', answers: [] },
+          { who: 'Woman', text: 'Yes, please. I want to join a class after school.', answers: [] },
+          { who: 'Man', text: "OK. What's your first name?", answers: [] },
+          { who: 'Woman', text: "My first name is Lucy. I'll spell it for you.", answers: [] },
+          { who: 'Woman', text: "That's L, U, C, Y.", answers: [1] },
+          { who: 'Man', text: "And what's your surname?", answers: [] },
+          { who: 'Woman', text: "That's W, E, double B.", answers: [2] },
+          { who: 'Man', text: "Thank you, Lucy. There's swimming on Monday.", answers: [3] },
+          { who: 'Woman', text: 'On Monday? Great. I love swimming.', answers: [3] },
+          { who: 'Man', text: "It starts at four o'clock.", answers: [4] },
+          { who: 'Woman', text: "Four o'clock. That's good.", answers: [4] },
+          { who: 'Woman', text: 'Is there a dance class too?', answers: [] },
+          { who: 'Man', text: "Yes. Dance is on Wednesday, at six o'clock.", answers: [5, 6] },
+          { who: 'Woman', text: "Wednesday at six o'clock. OK.", answers: [5, 6] },
+          { who: 'Woman', text: 'And when is the tennis class?', answers: [] },
+          { who: 'Man', text: "Tennis is on Saturday morning, at ten o'clock.", answers: [7, 8] },
+          { who: 'Woman', text: 'Saturday at ten. Good.', answers: [7, 8] },
+          { who: 'Woman', text: 'Is the sports centre open on Sunday?', answers: [] },
+          { who: 'Man', text: "No, sorry. We're closed on Sunday.", answers: [9] },
+          { who: 'Woman', text: 'What time do you open in the morning?', answers: [] },
+          { who: 'Man', text: "We open at eight o'clock.", answers: [10] },
+          { who: 'Woman', text: "Eight o'clock. Thank you!", answers: [10] },
+          { who: 'Man', text: "You're welcome. See you on Monday, Lucy!", answers: [] }
+        ]
+      },
+      reading: {
+        title: "Leo's school week",
+        text: "My name is Leo and this is my school week. School starts at nine o'clock and finishes at three o'clock. On Monday, I have Maths and English. On Tuesday, I have Science and Art. " +
+          'Art is my favourite lesson! On Wednesday, I have Music. We sing songs. On Thursday, I have PE. ' +
+          "We play football. On Friday, I have Maths again and a test. Lunch is at twelve o'clock every day. I don't go to school on Saturday and Sunday. " +
+          'On Saturday, I play with my friends.',
+        questions: [
+          { type: 'tf', q: "School starts at nine o'clock.", a: ['True'], line: 1 },
+          { type: 'tf', q: "Art is Leo's favourite lesson.", a: ['True'], line: 4 },
+          { type: 'tf', q: 'Leo has PE on Monday.', a: ['False'], line: 7 },
+          { type: 'tf', q: "Lunch is at one o'clock.", a: ['False'], line: 10 },
+          { type: 'tf', q: 'Leo goes to school on Sunday.', a: ['False'], line: 11 },
+          { type: 'choose', q: 'When does school finish?', opts: ["at two o'clock", "at three o'clock", "at four o'clock"], a: ["at three o'clock"], line: 1 },
+          { type: 'choose', q: 'What does Leo have on Tuesday?', opts: ['Maths and English', 'Science and Art', 'Music'], a: ['Science and Art'], line: 3 },
+          { type: 'choose', q: 'What do they do in Music?', opts: ['sing songs', 'play football', 'read books'], a: ['sing songs'], line: 6 },
+          { type: 'choose', q: 'When is the test?', opts: ['on Monday', 'on Thursday', 'on Friday'], a: ['on Friday'], line: 9 },
+          { type: 'choose', q: 'What does Leo do on Saturday?', opts: ['He goes to school.', 'He plays with his friends.', 'He has a test.'], a: ['He plays with his friends.'], line: 12 }
+        ],
+        words: [
+          { w: 'week', emoji: '📆', m: 'seven days: Monday to Sunday', ex: 'This is my school week.' },
+          { w: 'start', emoji: '▶️', m: 'to begin', ex: "School starts at nine o'clock." },
+          { w: 'finish', emoji: '🏁', m: 'to stop at the end', ex: "School finishes at three o'clock." },
+          { w: 'Maths', emoji: '➗', m: 'the lesson with numbers', ex: 'On Monday, I have Maths and English.' },
+          { w: 'Science', emoji: '🔬', m: 'the lesson about plants, animals and the world', ex: 'On Tuesday, I have Science and Art.' },
+          { w: 'Art', emoji: '🎨', m: 'the lesson where you draw and paint', ex: 'Art is my favourite lesson!' },
+          { w: 'Music', emoji: '🎵', m: 'the lesson where you sing and play', ex: 'On Wednesday, I have Music.' },
+          { w: 'PE', emoji: '⚽', m: 'the sports lesson at school', ex: 'On Thursday, I have PE.' },
+          { w: 'test', emoji: '📝', m: 'questions the teacher gives to see what you know', ex: 'On Friday, I have a test.' },
+          { w: 'lunch', emoji: '🍽️', m: 'the food you eat in the middle of the day', ex: "Lunch is at twelve o'clock." }
+        ]
+      },
+      writing: {
+        topic: 'My week',
+        task: 'Write about your week.',
+        points: ['what you do on two or three days of the week — for example: On Monday, I have English.', 'what time you start and finish school (or work)', 'your favourite day and why'],
+        minWords: 30, maxWords: 40, minutes: 12
+      },
+      speaking: {
+        words: [
+          { w: 'Monday', emoji: '📅', ex: 'On Monday, I go to school.' },
+          { w: 'morning', emoji: '🌅', ex: 'I have breakfast in the morning.' },
+          { w: 'afternoon', emoji: '🌇', ex: 'I play football in the afternoon.' },
+          { w: 'evening', emoji: '🌙', ex: 'I watch TV in the evening.' },
+          { w: "o'clock", emoji: '🕓', ex: "I get up at seven o'clock." },
+          { w: 'get up', emoji: '⏰', ex: 'I get up early on Monday.' },
+          { w: 'go to bed', emoji: '🛏️', ex: "I go to bed at ten o'clock." },
+          { w: 'weekend', emoji: '🎉', ex: 'I see my friends at the weekend.' }
+        ],
+        questions: [
+          { q: 'What day is it today?', use: ["It's …", 'Monday', 'Friday'] },
+          { q: 'What time do you get up?', use: ["I get up at … o'clock."] },
+          { q: "What's your favourite day?", use: ['My favourite day is …', 'because …'] },
+          { q: 'What do you do on Saturday?', use: ['On Saturday, I …', 'play football', 'see my friends'] },
+          { q: 'What time do you go to bed?', use: ["I go to bed at … o'clock."] }
+        ],
+        part2: {
+          topic: 'My day',
+          hints: ['what time you get up', 'what you do in the morning and in the afternoon', 'what time you go to bed'],
+          seconds: 40
+        }
+      }
+    },
+    {
+      id: 'b7', no: 7, stage: 'Beginner', theme: 'Food', emoji: '🍎',
+      listening: {
+        src: 'audio/skills/beg-7-listening.mp3?v=1',
+        title: 'Ordering food at a café',
+        intro: 'Listen to a woman ordering food at a café. Write ONE WORD or A NUMBER for each answer.',
+        questions: [
+          { q: 'Her son likes: _____', a: ['pizza'] },
+          { q: 'Small pizza: £_____', a: ['6', 'six', '£6'] },
+          { q: 'Her daughter likes: _____', a: ['fish'] },
+          { q: 'Fish and chips: £_____', a: ['8', 'eight', '£8'] },
+          { q: 'For the woman: a _____ salad', a: ['chicken'] },
+          { q: 'Salad: £_____', a: ['5', 'five', '£5'] },
+          { q: 'Drinks: two _____ juices and a tea', a: ['orange'] },
+          { q: 'All the food and drinks: £_____', a: ['23', 'twenty-three', 'twenty three', '£23'] },
+          { q: 'First name: _____', a: ['Jane'] },
+          { q: 'Surname: _____', a: ['Hill'] }
+        ],
+        words: [
+          { w: 'café', emoji: '☕', m: 'a small place where you eat and drink', ex: 'You will hear a woman ordering food at a café.' },
+          { w: 'pizza', emoji: '🍕', m: 'a round, flat bread with cheese and tomato on it', ex: 'My son likes pizza.' },
+          { w: 'fish and chips', emoji: '🐟', m: 'fish and long pieces of hot potato', ex: 'Fish and chips is eight pounds.' },
+          { w: 'salad', emoji: '🥗', m: 'cold vegetables, like tomatoes and lettuce', ex: "I'd like a chicken salad, please." },
+          { w: 'chicken', emoji: '🍗', m: 'meat from a bird that lives on a farm', ex: 'A chicken salad is five pounds.' },
+          { w: 'drink', emoji: '🥤', m: 'something like water, tea or juice', ex: 'Would you like a drink?' },
+          { w: 'orange juice', emoji: '🧃', m: 'a drink made from oranges', ex: 'Two orange juices, please.' },
+          { w: 'tea', emoji: '🍵', m: 'a hot drink, often with milk', ex: 'And a cup of tea, please.' },
+          { w: 'daughter', emoji: '👧', m: 'a girl who is your child', ex: 'My daughter likes fish.' },
+          { w: 'order', emoji: '📝', m: 'what you ask for in a café', ex: 'Can I have your name for the order?' }
+        ],
+        transcript: [
+          { who: 'Woman', text: 'Step seven. You will hear a woman ordering food at a café. Listen and write the answers.', answers: [] },
+          { who: 'Man', text: 'Hello. What would you like?', answers: [] },
+          { who: 'Woman', text: 'Hello. My son likes pizza. How much is a small pizza?', answers: [1] },
+          { who: 'Man', text: 'A small pizza is six pounds.', answers: [2] },
+          { who: 'Woman', text: 'Six pounds? OK, one small pizza, please.', answers: [2] },
+          { who: 'Woman', text: 'My daughter likes fish. Have you got fish and chips?', answers: [3] },
+          { who: 'Man', text: 'Yes, we have. Fish and chips is eight pounds.', answers: [4] },
+          { who: 'Woman', text: 'Eight pounds. Good.', answers: [4] },
+          { who: 'Man', text: 'And what would you like?', answers: [] },
+          { who: 'Woman', text: "I'd like a chicken salad, please.", answers: [5] },
+          { who: 'Man', text: 'A chicken salad is five pounds.', answers: [5, 6] },
+          { who: 'Woman', text: 'Five pounds. Lovely.', answers: [6] },
+          { who: 'Man', text: 'Would you like a drink?', answers: [] },
+          { who: 'Woman', text: 'Yes. Two orange juices and a cup of tea, please.', answers: [7] },
+          { who: 'Man', text: 'Two orange juices and a tea. OK.', answers: [7] },
+          { who: 'Man', text: "That's twenty-three pounds, please.", answers: [8] },
+          { who: 'Woman', text: 'Twenty-three pounds? Here you are.', answers: [8] },
+          { who: 'Man', text: 'Thank you. Can I have your name for the order?', answers: [] },
+          { who: 'Woman', text: "Yes. My first name is Jane. I'll spell it for you.", answers: [] },
+          { who: 'Woman', text: "That's J, A, N, E.", answers: [9] },
+          { who: 'Man', text: 'And your surname?', answers: [] },
+          { who: 'Woman', text: "That's H, I, double L.", answers: [10] },
+          { who: 'Man', text: 'Thank you, Jane. Your food is ready in ten minutes.', answers: [] }
+        ]
+      },
+      reading: {
+        title: 'The Green Café menu',
+        text: "Welcome to the Green Café! We are open every day from eight o'clock to six o'clock. For breakfast, we have eggs and toast for £3.50. Pancakes with fruit are £4. " +
+          'Children love our pancakes! For lunch, a cheese sandwich is £3. Chicken soup with bread is £4.50. Our soup is hot and very good on a cold day. ' +
+          'A small pizza is £6. Tea and coffee are £1.50. Orange juice is £2, and a glass of milk is £1. For something sweet, try our chocolate cake for £2.50. ' +
+          'Come and eat with us!',
+        questions: [
+          { type: 'tf', q: 'The café is open every day.', a: ['True'], line: 1 },
+          { type: 'tf', q: 'Eggs and toast are £4.', a: ['False'], line: 2 },
+          { type: 'tf', q: 'Children love the pancakes.', a: ['True'], line: 4 },
+          { type: 'tf', q: 'The soup is cold.', a: ['False'], line: 7 },
+          { type: 'tf', q: 'A glass of milk is £1.', a: ['True'], line: 10 },
+          { type: 'choose', q: 'When does the café close?', opts: ["at five o'clock", "at six o'clock", "at eight o'clock"], a: ["at six o'clock"], line: 1 },
+          { type: 'choose', q: 'How much is a cheese sandwich?', opts: ['£3', '£4', '£6'], a: ['£3'], line: 5 },
+          { type: 'choose', q: 'What comes with the chicken soup?', opts: ['bread', 'toast', 'fruit'], a: ['bread'], line: 6 },
+          { type: 'choose', q: 'What is £6?', opts: ['a small pizza', 'a big pizza', 'a cheese sandwich'], a: ['a small pizza'], line: 8 },
+          { type: 'choose', q: 'What cake can you have?', opts: ['chocolate cake', 'lemon cake', 'apple cake'], a: ['chocolate cake'], line: 11 }
+        ],
+        words: [
+          { w: 'menu', emoji: '📋', m: 'a list of the food and drinks in a café', ex: 'Here is our menu.' },
+          { w: 'breakfast', emoji: '🍳', m: 'the food you eat in the morning', ex: 'For breakfast, we have eggs and toast.' },
+          { w: 'eggs', emoji: '🥚', m: 'food from a chicken; you can cook them', ex: 'We have eggs and toast for £3.50.' },
+          { w: 'toast', emoji: '🍞', m: 'hot bread, brown on the outside', ex: 'We have eggs and toast for £3.50.' },
+          { w: 'pancakes', emoji: '🥞', m: 'thin, round, sweet food from a pan', ex: 'Pancakes with fruit are £4.' },
+          { w: 'cheese', emoji: '🧀', m: 'a yellow or white food made from milk', ex: 'A cheese sandwich is £3.' },
+          { w: 'soup', emoji: '🍲', m: 'hot food you eat with a spoon', ex: 'Chicken soup with bread is £4.50.' },
+          { w: 'coffee', emoji: '☕', m: 'a hot brown drink', ex: 'Tea and coffee are £1.50.' },
+          { w: 'glass', emoji: '🥛', m: 'you drink water or milk from it', ex: 'A glass of milk is £1.' },
+          { w: 'chocolate', emoji: '🍫', m: 'a sweet brown food', ex: 'Try our chocolate cake!' }
+        ]
+      },
+      writing: {
+        topic: 'My food',
+        task: "Write about the food you like and the food you don't like.",
+        points: ['what you have for breakfast', 'your favourite food and drink', "a food you don't like"],
+        minWords: 30, maxWords: 40, minutes: 12
+      },
+      speaking: {
+        words: [
+          { w: 'breakfast', emoji: '🍳', ex: 'I have bread and eggs for breakfast.' },
+          { w: 'lunch', emoji: '🥪', ex: 'I have lunch at school.' },
+          { w: 'dinner', emoji: '🍽️', ex: "We have dinner at seven o'clock." },
+          { w: 'fruit', emoji: '🍎', ex: 'I eat a lot of fruit.' },
+          { w: 'vegetables', emoji: '🥦', ex: "I don't like vegetables." },
+          { w: 'rice', emoji: '🍚', ex: 'We often have rice with chicken.' },
+          { w: 'bread', emoji: '🍞', ex: 'I buy bread every day.' },
+          { w: 'delicious', emoji: '😋', ex: "My mum's soup is delicious." }
+        ],
+        questions: [
+          { q: 'What do you have for breakfast?', use: ['I have …', 'eggs', 'bread', 'tea'] },
+          { q: "What's your favourite food?", use: ['My favourite food is …'] },
+          { q: 'Do you like fish?', use: ['Yes, I do.', "No, I don't."] },
+          { q: 'What do you drink in the morning?', use: ['I drink …', 'tea', 'milk', 'juice'] },
+          { q: 'Who cooks in your family?', use: ['My mum cooks.', 'My … cooks.'] }
+        ],
+        part2: {
+          topic: 'Food I like',
+          hints: ['your favourite food', 'when you eat it', "a food you don't like"],
+          seconds: 40
+        }
+      }
+    },
+    {
+      id: 'b8', no: 8, stage: 'Beginner', theme: 'Animals & pets', emoji: '🐶',
+      listening: {
+        src: 'audio/skills/beg-8-listening.mp3?v=1',
+        title: "A girl at the vet's",
+        intro: "Listen to a girl at the vet's. She talks about her pets. Write ONE WORD or A NUMBER for each answer.",
+        questions: [
+          { q: "Dog's name: _____", a: ['Rex'] },
+          { q: 'Rex: _____ years old', a: ['2', 'two'] },
+          { q: 'Rex is brown and _____', a: ['white'] },
+          { q: 'Her other pet: a _____', a: ['cat'] },
+          { q: "Cat's name: _____", a: ['Luna'] },
+          { q: 'Luna: _____ years old', a: ['9', 'nine'] },
+          { q: 'Colour of Luna: _____', a: ['black'] },
+          { q: "Colour of Luna's eyes: _____", a: ['green'] },
+          { q: 'Number of fish: _____', a: ['3', 'three'] },
+          { q: "The vet can see Rex at _____ o'clock", a: ['4', 'four'] }
+        ],
+        words: [
+          { w: 'vet', emoji: '🩺', m: 'a doctor for animals', ex: 'Can the vet see him?' },
+          { w: 'pet', emoji: '🐾', m: 'an animal that lives with you at home', ex: 'Have you got any other pets?' },
+          { w: 'dog', emoji: '🐶', m: 'a pet that says "woof"', ex: "I've got a new dog." },
+          { w: 'cat', emoji: '🐱', m: 'a pet that says "miaow"', ex: "I've got a cat too." },
+          { w: 'fish', emoji: '🐟', m: 'an animal that lives in water', ex: "I've got three fish too." },
+          { w: 'brown', emoji: '🟤', m: 'the colour of chocolate', ex: "He's brown and white." },
+          { w: 'white', emoji: '⚪', m: 'the colour of milk', ex: "He's brown and white." },
+          { w: 'eyes', emoji: '👀', m: 'you see with them', ex: 'She has got green eyes.' },
+          { w: 'old', emoji: '👵', m: 'not young', ex: "She's nine. She's an old cat." },
+          { w: 'beautiful', emoji: '😍', m: 'very nice to look at', ex: 'A black cat with green eyes. Beautiful!' }
+        ],
+        transcript: [
+          { who: 'Woman', text: "Step eight. You will hear a girl at the vet's. She talks about her pets. Listen and write the answers.", answers: [] },
+          { who: 'Man', text: 'Hello. Can I help you?', answers: [] },
+          { who: 'Woman', text: "Hello. I've got a new dog. Can the vet see him today?", answers: [] },
+          { who: 'Man', text: "Yes, of course. What's your dog's name?", answers: [] },
+          { who: 'Woman', text: "His name is Rex. I'll spell it for you.", answers: [] },
+          { who: 'Woman', text: "That's R, E, X.", answers: [1] },
+          { who: 'Man', text: 'How old is Rex?', answers: [] },
+          { who: 'Woman', text: "He's two years old.", answers: [2] },
+          { who: 'Man', text: 'Two years old. OK.', answers: [2] },
+          { who: 'Man', text: 'What colour is he?', answers: [] },
+          { who: 'Woman', text: "He's brown and white.", answers: [3] },
+          { who: 'Man', text: 'Brown and white. Lovely.', answers: [3] },
+          { who: 'Man', text: 'Have you got any other pets?', answers: [] },
+          { who: 'Woman', text: "Yes, I've got a cat. Her name is Luna. I'll spell it for you.", answers: [4] },
+          { who: 'Woman', text: "That's L, U, N, A.", answers: [5] },
+          { who: 'Man', text: 'And how old is Luna?', answers: [] },
+          { who: 'Woman', text: "She's nine. She's an old cat.", answers: [6] },
+          { who: 'Man', text: 'Nine years old? OK.', answers: [6] },
+          { who: 'Man', text: 'What colour is she?', answers: [] },
+          { who: 'Woman', text: "She's black, and she has got green eyes.", answers: [7, 8] },
+          { who: 'Man', text: 'A black cat with green eyes. Beautiful!', answers: [7, 8] },
+          { who: 'Woman', text: "I've got three fish too.", answers: [9] },
+          { who: 'Man', text: "Three fish! You've got a lot of pets.", answers: [9] },
+          { who: 'Man', text: "The vet can see Rex at four o'clock today.", answers: [10] },
+          { who: 'Woman', text: "Four o'clock. Thank you very much!", answers: [10] }
+        ]
+      },
+      reading: {
+        title: 'Have you seen Bella?',
+        text: 'Have you seen our dog? Her name is Bella. She is a small dog, and she is three years old. She is white with a black ear. ' +
+          "She has a red collar with her name on it. Bella is very friendly. She loves children, and she likes to play with a ball. She doesn't like cats! " +
+          'We lost her on Sunday afternoon in Green Park. She is very small, so please look under cars and in gardens. Bella eats a lot, and her favourite food is chicken. If you find her, please bring her to 12 Hill Road. ' +
+          'Thank you!',
+        questions: [
+          { type: 'tf', q: 'Bella is a big dog.', a: ['False'], line: 2 },
+          { type: 'tf', q: 'Bella is three years old.', a: ['True'], line: 2 },
+          { type: 'tf', q: 'She has a red collar.', a: ['True'], line: 4 },
+          { type: 'tf', q: 'Bella likes cats.', a: ['False'], line: 7 },
+          { type: 'tf', q: 'They lost Bella on Saturday.', a: ['False'], line: 8 },
+          { type: 'choose', q: 'What colour is Bella?', opts: ['black with a white ear', 'white with a black ear', 'brown and white'], a: ['white with a black ear'], line: 3 },
+          { type: 'choose', q: 'What does Bella like to play with?', opts: ['a ball', 'a stick', 'a cat'], a: ['a ball'], line: 6 },
+          { type: 'choose', q: 'Where did they lose her?', opts: ['in Green Park', 'in the garden', 'at school'], a: ['in Green Park'], line: 8 },
+          { type: 'choose', q: "What is Bella's favourite food?", opts: ['fish', 'chicken', 'cheese'], a: ['chicken'], line: 10 },
+          { type: 'choose', q: 'Where do they live?', opts: ['12 Hill Road', '21 Hill Road', '12 Park Road'], a: ['12 Hill Road'], line: 11 }
+        ],
+        words: [
+          { w: 'seen', emoji: '👀', m: 'from "see": Have you seen …? = Did you see …?', ex: 'Have you seen our dog?' },
+          { w: 'ear', emoji: '👂', m: 'you hear with it', ex: 'She is white with a black ear.' },
+          { w: 'collar', emoji: '🏷️', m: "a band round a dog's neck", ex: 'She has a red collar.' },
+          { w: 'friendly', emoji: '😊', m: 'nice and kind to people', ex: 'Bella is very friendly.' },
+          { w: 'children', emoji: '🧒', m: 'more than one child', ex: 'She loves children.' },
+          { w: 'ball', emoji: '🎾', m: 'a round thing for games', ex: 'She likes to play with a ball.' },
+          { w: 'lost', emoji: '😢', m: "from \"lose\": we can't find her", ex: 'We lost her on Sunday afternoon.' },
+          { w: 'park', emoji: '🌳', m: 'a big green place with trees in a town', ex: 'We lost her in Green Park.' },
+          { w: 'garden', emoji: '🌷', m: 'the place with grass and flowers next to a house', ex: 'Please look in gardens.' },
+          { w: 'bring', emoji: '🤲', m: 'to come with something or someone', ex: 'Please bring her to 12 Hill Road.' }
+        ]
+      },
+      writing: {
+        topic: 'My pet',
+        task: 'Write about your pet, or a pet you would like to have.',
+        points: ['what animal it is and its name', 'how old it is and what colour it is', 'what it likes to eat or do'],
+        minWords: 35, maxWords: 45, minutes: 15
+      },
+      speaking: {
+        words: [
+          { w: 'dog', emoji: '🐶', ex: 'My dog is big and brown.' },
+          { w: 'cat', emoji: '🐱', ex: 'My cat sleeps on my bed.' },
+          { w: 'bird', emoji: '🐦', ex: 'There are a lot of birds in the park.' },
+          { w: 'fish', emoji: '🐟', ex: 'I have got two fish.' },
+          { w: 'horse', emoji: '🐴', ex: 'My uncle has got a horse.' },
+          { w: 'rabbit', emoji: '🐰', ex: 'Rabbits are small and soft.' },
+          { w: 'pet', emoji: '🐾', ex: "I haven't got a pet." },
+          { w: 'cute', emoji: '🥰', ex: "My friend's cat is very cute." }
+        ],
+        questions: [
+          { q: 'Have you got a pet?', use: ["Yes, I've got a …", "No, I haven't."] },
+          { q: "What's your favourite animal?", use: ['My favourite animal is …'] },
+          { q: 'Do you like cats or dogs?', use: ['I like …', "I don't like …"] },
+          { q: "What colour is your pet, or your friend's pet?", use: ["It's …", 'black', 'white', 'brown'] },
+          { q: 'What animals can you see in your town?', use: ['I can see …', 'dogs', 'birds', 'cats'] }
+        ],
+        part2: {
+          topic: 'An animal',
+          hints: ['what animal it is', 'what it looks like: its colour, big or small', 'why you like it'],
+          seconds: 40
+        }
+      }
+    },
+    {
+      id: 'b9', no: 9, stage: 'Beginner', theme: 'My room', emoji: '🛏️',
+      listening: {
+        src: 'audio/skills/beg-9-listening.mp3?v=1',
+        title: 'A room at a summer school',
+        intro: 'Listen to a girl at a summer school. A man shows her the room. Write ONE WORD or A NUMBER for each answer.',
+        questions: [
+          { q: 'First name: _____', a: ['Beth'] },
+          { q: 'Room number: _____', a: ['12', 'twelve'] },
+          { q: "The other girl's name: _____", a: ['Tess'] },
+          { q: "Beth's bed is next to the _____", a: ['window'] },
+          { q: 'The lamp is on the _____', a: ['desk'] },
+          { q: 'The cupboard is behind the _____', a: ['door'] },
+          { q: 'The mirror is on the _____', a: ['wall'] },
+          { q: 'The towels are under the _____', a: ['bed'] },
+          { q: 'The towels are in a _____ box', a: ['blue'] },
+          { q: "Dinner is at _____ o'clock", a: ['6', 'six'] }
+        ],
+        words: [
+          { w: 'summer school', emoji: '🏫', m: 'a school for a few weeks in the summer holidays', ex: 'You will hear a girl at a summer school.' },
+          { w: 'next to', emoji: '↔️', m: 'very near, at the side of', ex: 'Your bed is next to the window.' },
+          { w: 'window', emoji: '🪟', m: 'you can look out of it', ex: 'Your bed is next to the window.' },
+          { w: 'lamp', emoji: '💡', m: 'it gives light', ex: 'The lamp is on the desk.' },
+          { w: 'desk', emoji: '🖥️', m: 'a table where you work or study', ex: 'There is a desk and a lamp.' },
+          { w: 'cupboard', emoji: '🗄️', m: 'you keep clothes or things in it', ex: 'Put your clothes in the cupboard.' },
+          { w: 'behind', emoji: '🔙', m: 'at the back of', ex: "It's behind the door." },
+          { w: 'mirror', emoji: '🪞', m: 'you can see your face in it', ex: "There's a mirror on the wall." },
+          { w: 'towel', emoji: '🧺', m: 'you use it after a shower', ex: 'The towels are under your bed.' },
+          { w: 'under', emoji: '⬇️', m: 'below something', ex: 'The towels are under your bed.' }
+        ],
+        transcript: [
+          { who: 'Woman', text: 'Step nine. You will hear a girl at a summer school. A man shows her the room. Listen and write the answers.', answers: [] },
+          { who: 'Man', text: "Hello. Welcome to our summer school. What's your name?", answers: [] },
+          { who: 'Woman', text: "Hi. My first name is Beth. I'll spell it for you.", answers: [] },
+          { who: 'Woman', text: "That's B, E, T, H.", answers: [1] },
+          { who: 'Man', text: "Thank you, Beth. You're in room twelve.", answers: [2] },
+          { who: 'Woman', text: 'Room twelve. OK.', answers: [2] },
+          { who: 'Man', text: "There's another girl in your room. Her name is Tess.", answers: [] },
+          { who: 'Man', text: "That's T, E, double S.", answers: [3] },
+          { who: 'Man', text: "Here's the room. Your bed is next to the window.", answers: [4] },
+          { who: 'Woman', text: 'Next to the window? Great.', answers: [4] },
+          { who: 'Man', text: "There's a desk too, and the lamp is on the desk.", answers: [5] },
+          { who: 'Woman', text: 'Where can I put my clothes?', answers: [] },
+          { who: 'Man', text: "In the cupboard. It's behind the door.", answers: [6] },
+          { who: 'Woman', text: 'Is there a mirror in the room?', answers: [] },
+          { who: 'Man', text: "Yes, there's a mirror on the wall.", answers: [7] },
+          { who: 'Woman', text: 'And where are the towels?', answers: [] },
+          { who: 'Man', text: "They're under your bed, in a blue box.", answers: [8, 9] },
+          { who: 'Woman', text: 'Under the bed, in a blue box. Thanks.', answers: [8, 9] },
+          { who: 'Man', text: "Dinner is at six o'clock, in the big room downstairs.", answers: [10] },
+          { who: 'Woman', text: "Six o'clock. Thank you very much!", answers: [10] }
+        ]
+      },
+      reading: {
+        title: 'Welcome to my room',
+        text: "Hi, I'm Jack, and this is my room. It is not very big, but I love it. The walls are light blue. My bed is next to the window. " +
+          'There is a small table next to my bed with a lamp and a clock on it. My desk is in the corner, and my computer is on it. I do my homework there every evening. There are a lot of books on the shelf above the desk. ' +
+          'My clothes are in a big brown cupboard. There is a green rug on the floor. My cat, Tiger, often sleeps on it. On the wall, there is a poster of my favourite football team.',
+        questions: [
+          { type: 'tf', q: "Jack's room is very big.", a: ['False'], line: 1 },
+          { type: 'tf', q: 'The walls are light blue.', a: ['True'], line: 2 },
+          { type: 'tf', q: 'The bed is next to the door.', a: ['False'], line: 3 },
+          { type: 'tf', q: 'There is a clock on the small table.', a: ['True'], line: 4 },
+          { type: 'tf', q: "Jack's clothes are in a white cupboard.", a: ['False'], line: 8 },
+          { type: 'choose', q: 'Where is the desk?', opts: ['in the corner', 'next to the bed', 'under the window'], a: ['in the corner'], line: 5 },
+          { type: 'choose', q: 'When does Jack do his homework?', opts: ['in the morning', 'in the afternoon', 'in the evening'], a: ['in the evening'], line: 6 },
+          { type: 'choose', q: 'Where are the books?', opts: ['on the floor', 'on the shelf', 'in the cupboard'], a: ['on the shelf'], line: 7 },
+          { type: 'choose', q: 'Who sleeps on the rug?', opts: ['Jack', 'his dog', 'his cat'], a: ['his cat'], line: 10 },
+          { type: 'choose', q: 'What is the poster of?', opts: ['a football team', 'a singer', 'a film'], a: ['a football team'], line: 11 }
+        ],
+        words: [
+          { w: 'wall', emoji: '🧱', m: 'the side of a room', ex: 'The walls are light blue.' },
+          { w: 'light blue', emoji: '🩵', m: 'a pale blue colour, like the sky', ex: 'The walls are light blue.' },
+          { w: 'clock', emoji: '⏰', m: 'it shows the time', ex: 'There is a lamp and a clock on the table.' },
+          { w: 'corner', emoji: '📐', m: 'where two walls meet', ex: 'My desk is in the corner.' },
+          { w: 'computer', emoji: '💻', m: 'you use it to write, play and go online', ex: 'My computer is on the desk.' },
+          { w: 'homework', emoji: '📝', m: 'school work you do at home', ex: 'I do my homework there every evening.' },
+          { w: 'shelf', emoji: '📚', m: 'a long flat board on the wall for books', ex: 'There are books on the shelf.' },
+          { w: 'rug', emoji: '🟩', m: 'a small carpet on the floor', ex: 'There is a green rug on the floor.' },
+          { w: 'floor', emoji: '⬇️', m: 'you walk on it in a room', ex: 'There is a rug on the floor.' },
+          { w: 'poster', emoji: '🖼️', m: 'a big picture on the wall', ex: 'There is a poster of my favourite team.' }
+        ]
+      },
+      writing: {
+        topic: 'My room',
+        task: 'Write about your room.',
+        points: ['what is in your room: a bed, a desk, a cupboard…', 'where things are — for example: My lamp is on the desk.', 'what you like about your room'],
+        minWords: 35, maxWords: 45, minutes: 15
+      },
+      speaking: {
+        words: [
+          { w: 'bed', emoji: '🛏️', ex: 'My bed is next to the window.' },
+          { w: 'window', emoji: '🪟', ex: 'There is a big window in my room.' },
+          { w: 'lamp', emoji: '💡', ex: 'My lamp is on the desk.' },
+          { w: 'cupboard', emoji: '🗄️', ex: 'My clothes are in the cupboard.' },
+          { w: 'next to', emoji: '↔️', ex: 'My desk is next to my bed.' },
+          { w: 'under', emoji: '⬇️', ex: 'My bag is under my bed.' },
+          { w: 'on', emoji: '⬆️', ex: 'My books are on the shelf.' },
+          { w: 'picture', emoji: '🖼️', ex: 'There is a picture on the wall.' }
+        ],
+        questions: [
+          { q: 'Is your room big or small?', use: ["It's big.", "It's small.", "It's not very big."] },
+          { q: "What's in your room?", use: ["There's a …", 'There are …'] },
+          { q: 'Where is your bed?', use: ['My bed is next to …', "It's under …"] },
+          { q: 'What colour are the walls in your room?', use: ['They are …', 'white', 'blue'] },
+          { q: 'What do you do in your room?', use: ['I sleep …', 'I do my homework …', 'I read …'] }
+        ],
+        part2: {
+          topic: 'My room',
+          hints: ['what is in your room', 'where your bed and your desk are', 'what you do in your room'],
+          seconds: 45
+        }
+      }
+    },
+    {
+      id: 'b10', no: 10, stage: 'Beginner', theme: 'My friend', emoji: '🧑‍🤝‍🧑',
+      listening: {
+        src: 'audio/skills/beg-10-listening.mp3?v=1',
+        title: 'A new friend',
+        intro: 'Listen to a boy and his mum. They talk about his new friend. Write ONE WORD or A NUMBER for each answer.',
+        questions: [
+          { q: "Friend's first name: _____", a: ['Nick'] },
+          { q: 'Surname: _____', a: ['Grey'] },
+          { q: 'Age: _____', a: ['11', 'eleven'] },
+          { q: 'He likes: _____', a: ['football'] },
+          { q: 'He plays every _____', a: ['Saturday'] },
+          { q: 'His sister is _____ years old', a: ['7', 'seven'] },
+          { q: 'Favourite food: _____', a: ['pasta'] },
+          { q: "He doesn't like: _____", a: ['cheese'] },
+          { q: 'Phone number: _____', a: ['07700 900 639', '07700900639'] },
+          { q: 'The party is on _____', a: ['Friday'] }
+        ],
+        words: [
+          { w: 'friend', emoji: '🤝', m: 'a person you like and spend time with', ex: 'Tell me about your new friend.' },
+          { w: 'party', emoji: '🎉', m: 'a time when friends meet to eat, play and have fun', ex: 'I want to write a card for your party.' },
+          { w: 'card', emoji: '💌', m: 'a small paper with a picture and a message', ex: 'I want to write a party card for him.' },
+          { w: 'spell', emoji: '🔤', m: 'to say the letters of a word', ex: "I'll spell it for you." },
+          { w: 'football', emoji: '⚽', m: 'a game with a ball and two teams', ex: 'He likes football.' },
+          { w: 'sister', emoji: '👧', m: 'a girl with the same mum and dad as you', ex: "He's got a sister." },
+          { w: 'pasta', emoji: '🍝', m: 'food from Italy, like spaghetti', ex: 'He loves pasta.' },
+          { w: 'cheese', emoji: '🧀', m: 'a yellow or white food made from milk', ex: "He doesn't like cheese." },
+          { w: 'phone number', emoji: '📱', m: 'the number you call', ex: 'Have you got his phone number?' },
+          { w: 'call', emoji: '📞', m: 'to talk to someone on the phone', ex: "I'll call his mum." }
+        ],
+        transcript: [
+          { who: 'Woman', text: 'Step ten. You will hear a boy and his mum. They talk about his new friend. Listen and write the answers.', answers: [] },
+          { who: 'Woman', text: "Dan, I want to write a party card for your new friend. What's his name?", answers: [] },
+          { who: 'Man', text: "His first name is Nick. I'll spell it for you.", answers: [] },
+          { who: 'Man', text: "That's N, I, C, K.", answers: [1] },
+          { who: 'Woman', text: "And what's his surname?", answers: [] },
+          { who: 'Man', text: "That's G, R, E, Y.", answers: [2] },
+          { who: 'Woman', text: 'How old is Nick?', answers: [] },
+          { who: 'Man', text: "He's eleven, like me.", answers: [3] },
+          { who: 'Woman', text: 'Eleven years old. OK.', answers: [3] },
+          { who: 'Woman', text: 'What does he like?', answers: [] },
+          { who: 'Man', text: 'He likes football. He plays every Saturday.', answers: [4, 5] },
+          { who: 'Woman', text: 'Football on Saturday. Nice.', answers: [4, 5] },
+          { who: 'Man', text: "He's got a little sister. She's seven years old.", answers: [6] },
+          { who: 'Woman', text: 'Seven years old? OK.', answers: [6] },
+          { who: 'Woman', text: 'And what food does he like?', answers: [] },
+          { who: 'Man', text: "He loves pasta, but he doesn't like cheese.", answers: [7, 8] },
+          { who: 'Woman', text: 'Pasta, but no cheese. OK.', answers: [7, 8] },
+          { who: 'Woman', text: 'Have you got his phone number?', answers: [] },
+          { who: 'Man', text: "Yes. It's oh seven seven double oh, nine double oh, six three nine.", answers: [9] },
+          { who: 'Woman', text: 'Oh seven seven double oh, nine double oh, six three nine?', answers: [9] },
+          { who: 'Man', text: "Yes, that's right.", answers: [] },
+          { who: 'Woman', text: "Good. I'll call his mum about your party on Friday.", answers: [10] },
+          { who: 'Man', text: 'Thanks, Mum!', answers: [] }
+        ]
+      },
+      reading: {
+        title: 'Meet my friend Sophie',
+        text: 'This is my best friend, Sophie. She is twelve years old, and she is in my class at school. She has long brown hair and big blue eyes. Sophie lives in a flat near the park with her mum, her dad and her little brother, Alfie. ' +
+          "Alfie is five, and he is very funny. Sophie loves animals. She has two rabbits and a small grey cat. Her favourite subject at school is Science, but she doesn't like Maths. " +
+          "After school, we often go to the park together. We play tennis on Wednesdays, and on Saturdays we go swimming. Sophie's favourite food is pizza, and she drinks a lot of orange juice. Her birthday is in June. " +
+          'She is very kind.',
+        questions: [
+          { type: 'tf', q: 'Sophie is eleven years old.', a: ['False'], line: 1 },
+          { type: 'tf', q: 'Sophie has long brown hair.', a: ['True'], line: 2 },
+          { type: 'tf', q: "Alfie is Sophie's brother.", a: ['True'], line: 3 },
+          { type: 'tf', q: 'Sophie likes Maths.', a: ['False'], line: 7 },
+          { type: 'tf', q: "Sophie's birthday is in July.", a: ['False'], line: 11 },
+          { type: 'choose', q: 'Where does Sophie live?', opts: ['in a house in the town', 'in a flat near the park', 'in a flat near the school'], a: ['in a flat near the park'], line: 3 },
+          { type: 'choose', q: 'What pets has Sophie got?', opts: ['two cats and a rabbit', 'two rabbits and a cat', 'two dogs'], a: ['two rabbits and a cat'], line: 6 },
+          { type: 'choose', q: 'What do they do on Saturdays?', opts: ['play tennis', 'go swimming', 'go to the park'], a: ['go swimming'], line: 9 },
+          { type: 'choose', q: 'What does Sophie drink a lot of?', opts: ['milk', 'orange juice', 'water'], a: ['orange juice'], line: 10 },
+          { type: 'choose', q: 'What is Sophie like?', opts: ['kind', 'funny', 'quiet'], a: ['kind'], line: 12 }
+        ],
+        words: [
+          { w: 'best friend', emoji: '🤝', m: 'your number one friend', ex: 'This is my best friend, Sophie.' },
+          { w: 'hair', emoji: '💇', m: 'it grows on your head', ex: 'She has long brown hair.' },
+          { w: 'flat', emoji: '🏢', m: 'a home on one floor of a big building', ex: 'Sophie lives in a flat near the park.' },
+          { w: 'little brother', emoji: '👦', m: 'a brother who is younger than you', ex: 'She has a little brother, Alfie.' },
+          { w: 'funny', emoji: '😂', m: 'he or she makes you laugh', ex: 'Alfie is very funny.' },
+          { w: 'rabbit', emoji: '🐰', m: 'a small animal with long ears', ex: 'She has two rabbits.' },
+          { w: 'subject', emoji: '📚', m: 'a lesson at school, like Maths or Art', ex: 'Her favourite subject is Science.' },
+          { w: 'together', emoji: '👫', m: 'with each other', ex: 'We often go to the park together.' },
+          { w: 'birthday', emoji: '🎂', m: 'the day you were born, every year', ex: 'Her birthday is in June.' },
+          { w: 'kind', emoji: '💛', m: 'nice and good to other people', ex: 'She is kind.' }
+        ]
+      },
+      writing: {
+        topic: 'My best friend',
+        task: 'Write about your best friend.',
+        points: ['his or her name and age, and what he or she looks like', 'what he or she likes', 'what you do together'],
+        minWords: 40, maxWords: 50, minutes: 15
+      },
+      speaking: {
+        words: [
+          { w: 'friend', emoji: '🤝', ex: 'My friend lives near my house.' },
+          { w: 'tall', emoji: '📏', ex: 'My friend is very tall.' },
+          { w: 'hair', emoji: '💇', ex: 'She has short black hair.' },
+          { w: 'funny', emoji: '😂', ex: 'My friend is very funny.' },
+          { w: 'kind', emoji: '💛', ex: 'He is kind to everyone.' },
+          { w: 'together', emoji: '👫', ex: 'We walk to school together.' },
+          { w: 'play', emoji: '🎮', ex: 'We play games after school.' },
+          { w: 'talk', emoji: '💬', ex: 'We talk on the phone every day.' }
+        ],
+        questions: [
+          { q: "What's your best friend's name?", use: ["My best friend's name is …"] },
+          { q: 'How old is your friend?', use: ["He's …", "She's …"] },
+          { q: 'What does your friend like?', use: ['He likes …', 'She likes …'] },
+          { q: 'What do you do together?', use: ['We play …', 'We go to …'] },
+          { q: 'Is your friend tall or short?', use: ["He's …", "She's …", 'tall', 'short'] }
+        ],
+        part2: {
+          topic: 'A friend',
+          hints: ["your friend's name and age", 'what he or she likes', 'what you do together'],
+          seconds: 45
+        }
+      }
+    },
     {
       id: 'e1', no: 11, stage: 'Elementary', theme: 'Meeting people', emoji: '👋',
       listening: {

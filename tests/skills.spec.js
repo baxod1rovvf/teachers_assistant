@@ -53,7 +53,7 @@ test.describe('content', () => {
   };
   const sentences = text => text.trim().split(/(?<=[.!?])\s+/);
 
-  test('20 steps in order (b1…b10 Beginner, e1…e10 Elementary); Steps 1–5 and 11–18 have full, checked content; 6–10 and 19–20 are still to come', async ({ page, context, request }) => {
+  test('20 steps in order (b1…b10 Beginner, e1…e10 Elementary); Steps 1–10 and 11–18 have full, checked content; 19–20 are still to come', async ({ page, context, request }) => {
     await prepare(context);
     await page.goto('/skill.html?s=listening&st=e1&preview=1');
     const S = await page.evaluate(() => ({ skills: TA_SKILLS, better: TA_BETTER_WORDS }));
@@ -65,10 +65,9 @@ test.describe('content', () => {
     expect(steps.map(l => l.theme)).toEqual(['Hello!', 'Numbers 1–20', 'My family', 'Colours & things', 'Numbers 20–100', 'Days & times', 'Food', 'Animals & pets', 'My room', 'My friend',
       'Meeting people', 'Family & friends', 'My home', 'My day', 'Food & cafés', 'Shopping', 'My town', 'Free time', 'Travel', 'Weather & holidays']);
     steps.forEach(l => expect(l.emoji).toBeTruthy());
-    // Steps 1–5 (b1–b5) are complete (b1's writing + speaking came from old Level 1); Steps 6–10 are still to come
-    const beginners = steps.slice(0, 5);
+    // Steps 1–10 (b1–b10) are complete (b1's writing + speaking came from old Level 1) — no stubs left among them
+    const beginners = steps.slice(0, 10);
     beginners.forEach(l => expect(Object.keys(l).sort(), l.id).toEqual(['emoji', 'id', 'listening', 'no', 'reading', 'speaking', 'stage', 'theme', 'writing']));
-    steps.slice(5, 10).forEach(l => expect(Object.keys(l).sort(), l.id).toEqual(['emoji', 'id', 'no', 'stage', 'theme']));
     const levels = steps.slice(10).map(l => Object.assign({}, l, { n: Number(l.id.slice(1)) }));   // e<n> = old Level n
     expect(Object.keys(S.better).length).toBeGreaterThanOrEqual(30);
     ['good', 'nice', 'big', 'small', 'very happy', 'bad', 'like'].forEach(w => expect(S.better[w].length).toBeGreaterThan(0));
@@ -77,8 +76,8 @@ test.describe('content', () => {
     full.forEach(l => ['listening', 'reading', 'writing', 'speaking'].forEach(k => expect(l[k], l.id + ' ' + k).toBeTruthy()));
     levels.filter(l => l.n > 8).forEach(l => expect(Object.keys(l).sort(), l.id).toEqual(['emoji', 'id', 'n', 'no', 'stage', 'theme']));
     // every listening/reading is its own (no copy of another level)
-    expect(new Set(full.concat(beginners).map(l => l.listening.src)).size).toBe(13);
-    expect(new Set(full.concat(beginners).map(l => l.reading.title)).size).toBe(13);
+    expect(new Set(full.concat(beginners).map(l => l.listening.src)).size).toBe(18);
+    expect(new Set(full.concat(beginners).map(l => l.reading.title)).size).toBe(18);
     for (const lv of beginners.concat(full)) {
       const beg = lv.stage === 'Beginner';
       if (beg) {
@@ -122,8 +121,9 @@ test.describe('content', () => {
       });
 
     }
-    // beginner readings: very short, a little longer each step (~40, 50, 60, 70, 80 words)
-    beginners.forEach((lv, i) => expect(Math.abs(lv.reading.text.split(/\s+/).filter(Boolean).length - (40 + 10 * i)), lv.id + ' reading words').toBeLessThanOrEqual(10));
+    // beginner readings: very short, a little longer each step (~40, 50, 60, 70, 80, 90, 95, 100, 110, 120 words)
+    const readLen = [40, 50, 60, 70, 80, 90, 95, 100, 110, 120];
+    beginners.forEach((lv, i) => expect(Math.abs(lv.reading.text.split(/\s+/).filter(Boolean).length - readLen[i]), lv.id + ' reading words').toBeLessThanOrEqual(10));
     for (const lv of beginners.concat(full)) {
       const W = lv.writing;
       expect(W.topic).toBeTruthy();
@@ -160,18 +160,24 @@ test.describe('content', () => {
     expect(JSON.stringify(l1.speaking)).not.toBe(JSON.stringify(b1.speaking));
   });
 
-  test('Steps 1–5 (beginner) are as the plan says (themes, writing words/minutes, Part 2 seconds; two spelled names; short)', async ({ page, context }) => {
+  test('Steps 1–10 (beginner) are as the plan says (themes, writing words/minutes, Part 2 seconds; two spelled names; short)', async ({ page, context }) => {
     await prepare(context);
     await page.goto('/skill.html?s=listening&st=b1&preview=1');
-    const B = await page.evaluate(() => TA_SKILLS.steps.slice(0, 5));
+    const B = await page.evaluate(() => TA_SKILLS.steps.slice(0, 10));
     const plan = [
       { topic: 'About me', min: 40, max: 60, minutes: 15, talk: /Talk about yourself/, sec: 45 },
       { topic: 'My numbers', min: 20, max: 30, minutes: 10, talk: /age and my phone/i, sec: 30 },
       { topic: 'My family', min: 25, max: 35, minutes: 10, talk: /My family/, sec: 30 },
       { topic: 'My bag', min: 25, max: 35, minutes: 10, talk: /favourite thing/i, sec: 30 },
       { topic: 'Shopping list', min: 30, max: 40, minutes: 12, talk: /Prices/, sec: 30 },
+      { topic: 'My week', min: 30, max: 40, minutes: 12, talk: /^My day$/, sec: 40 },
+      { topic: 'My food', min: 30, max: 40, minutes: 12, talk: /^Food I like$/, sec: 40 },
+      { topic: 'My pet', min: 35, max: 45, minutes: 15, talk: /^An animal$/, sec: 40 },
+      { topic: 'My room', min: 35, max: 45, minutes: 15, talk: /^My room$/, sec: 45 },
+      { topic: 'My best friend', min: 40, max: 50, minutes: 15, talk: /^A friend$/, sec: 45 },
     ];
-    const ones = ['one', 'two', 'three', 'four', 'five'];
+    expect(B.length).toBe(plan.length);
+    const ones = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
     B.forEach((st, i) => {
       const p = plan[i];
       expect(st.writing, st.id).toMatchObject({ topic: p.topic, minWords: p.min, maxWords: p.max, minutes: p.minutes });
@@ -336,9 +342,10 @@ test.describe('student page', () => {
     expect(await page.evaluate(() => window.__writes ? window.__writes.length : 0)).toBe(0);
   });
 
-  test('Steps 1–5 (beginner): every listening and reading can be done — all right answers give 10 / 10', async ({ page, context }) => {
+  test('Steps 1–10 (beginner): every listening and reading can be done — all right answers give 10 / 10', async ({ page, context }) => {
+    test.setTimeout(90000);
     await prepare(context);
-    for (const id of ['b1', 'b2', 'b3', 'b4', 'b5']) {
+    for (const id of ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10']) {
       await page.goto('/skill.html?s=listening&st=' + id + '&preview=1');
       const n = id.slice(1);
       await expect(page.locator('audio')).toHaveAttribute('src', new RegExp('audio/skills/beg-' + n + '-listening\\.mp3'));
@@ -414,9 +421,9 @@ test.describe('student page', () => {
       await expect(page.locator('body')).toContainText("This step doesn't exist");
     }
     // a step that has no listening yet says so
-    await page.goto('/skill.html?s=listening&st=b6&c=ABC123');
+    await page.goto('/skill.html?s=listening&st=e9&c=ABC123');
     await expect(page.locator('body')).toContainText('Coming soon');
-    await expect(page.locator('.sk-head')).toContainText('Step 6 · Days & times');
+    await expect(page.locator('.sk-head')).toContainText('Step 19 · Travel');
   });
 
   test('an old link (lv=3) opens Step 13, the same as st=e3: "Step 13" on the chip, the start card and the tab', async ({ page, context }) => {
@@ -773,7 +780,8 @@ test.describe('course page', () => {
     return errors;
   };
 
-  test('a group\'s Journey: 20 steps in order, a plain dot per part (none inside), Steps 1–5 and 11–18 open, the rest Coming soon; Try opens a preview', async ({ page, context }) => {
+  test('a group\'s Journey: 20 steps in order, a plain dot per part (none inside), Steps 1–18 open, 19–20 Coming soon; Try opens a preview', async ({ page, context }) => {
+    test.setTimeout(120000);
     const errors = await open(page, context);
     await expect(page.locator('.sk-tab[data-tab="journey"]')).toHaveAttribute('aria-selected', 'true');
     const rows = page.locator('.sk-row');
@@ -781,7 +789,7 @@ test.describe('course page', () => {
     const nodes = page.locator('.sk-node');
     await expect(nodes).toHaveText([/Step 1\s*Hello!/, /Step 2/, /Step 3/, /Step 4/, /Step 5/, /Step 6/, /Step 7/, /Step 8/, /Step 9/, /Step 10\s*My friend/,
       /Step 11\s*Meeting people/, /Step 12/, /Step 13/, /Step 14/, /Step 15\s*Food & cafés/, /Step 16\s*Shopping/, /Step 17\s*My town/, /Step 18\s*Free time/, /Step 19/, /Step 20/]);
-    const ready = [0, 1, 2, 3, 4, 10, 11, 12, 13, 14, 15, 16, 17];
+    const ready = Array.from({ length: 18 }, (_, i) => i);
     for (let i = 0; i < 20; i++) {
       await expect(rows.nth(i).locator('.sk-dot')).toHaveCount(4);
       if (ready.includes(i)) expect(await rows.nth(i).locator('.sk-dot').evaluateAll(d => d.map(x => x.dataset.skill))).toEqual(['listening', 'reading', 'writing', 'speaking']);
@@ -793,8 +801,8 @@ test.describe('course page', () => {
         await expect(rows.nth(i).locator('button')).toHaveCount(0);
       }
     }
-    // Steps 1–5 have all four parts
-    for (let i = 0; i < 5; i++) await expect(rows.nth(i).locator('button.sk-dot')).toHaveCount(4);
+    // Steps 1–10 have all four parts
+    for (let i = 0; i < 10; i++) await expect(rows.nth(i).locator('button.sk-dot')).toHaveCount(4);
     // plain dots: no 🎧📖✍️🗣️ inside (a step's first part isn't always Listening)
     expect(await page.locator('.sk-path .sk-dot').evaluateAll(d => d.map(x => x.textContent).join(''))).not.toMatch(/🎧|📖|✍️|🗣️/);
     // the old skill cards are gone, and nothing on the Course page is a separate results button
@@ -818,8 +826,8 @@ test.describe('course page', () => {
     await popup.waitForURL(/skill\.html\?s=listening&st=e1&preview=1/);
     await page.getByRole('button', { name: /^← Target · Journey$/ }).click();
     await expect(page.locator('.sk-row')).toHaveCount(20);
-    // Steps 1–5 (beginner) open with all four parts, and each part can be tried
-    const beg = await page.evaluate(() => TA_SKILLS.steps.slice(0, 5).map(s => ({ id: s.id, no: s.no, theme: s.theme, w: s.writing.topic, t: s.speaking.part2.topic })));
+    // Steps 1–10 (beginner) open with all four parts, and each part can be tried
+    const beg = await page.evaluate(() => TA_SKILLS.steps.slice(0, 10).map(s => ({ id: s.id, no: s.no, theme: s.theme, w: s.writing.topic, t: s.speaking.part2.topic })));
     for (const st of beg) {
       await nodes.nth(st.no - 1).click();
       await expect(page.locator('.sk-level-head')).toContainText('Step ' + st.no + ' · ' + st.theme);
@@ -1031,15 +1039,14 @@ test.describe('course page', () => {
     await expect(cards.locator('.sk-gcard-open')).toHaveText(['Target', 'Apex', 'Nexus']);
     await expect(cards.locator('.sk-level-chip')).toHaveText(['Beginner', 'Elementary', '—']);
     await expect(page.locator('.sk-row, .sk-tabs')).toHaveCount(0);
-    const soon = Array(5).fill('soon'), eight = Array(8).fill('-');
+    const rest = Array(17).fill('-');
     // Target (Beginner): Step 1's Writing (2 of 3) and Speaking (sent) are done, its Listening and Reading not yet → on Step 1
-    // (Steps 6–10 are still to come)
-    expect(await squareStates(cards.nth(0))).toEqual(['on', '-', '-', '-', '-', ...soon, ...eight, 'soon', 'soon']);
+    expect(await squareStates(cards.nth(0))).toEqual(['on', ...rest, 'soon', 'soon']);
     expect(await cards.nth(0).locator('.sk-stepbox').first().getAttribute('title')).toMatch(/^Step 1 · Hello!/);
     // Apex (Elementary) starts at Step 11: Steps 1–10 skipped (grey), Step 11 done, on Step 12
     expect(await squareStates(cards.nth(1))).toEqual([...Array(10).fill('skipped'), 'done', 'on', '-', '-', '-', '-', '-', '-', 'soon', 'soon']);
     // Nexus (no level = Beginner): on Step 1
-    expect(await squareStates(cards.nth(2))).toEqual(['on', '-', '-', '-', '-', ...soon, ...eight, 'soon', 'soon']);
+    expect(await squareStates(cards.nth(2))).toEqual(['on', ...rest, 'soon', 'soon']);
     await expect(cards.nth(1).locator('.sk-stepbox').nth(11)).toHaveAttribute('title', 'Step 12 · Family & friends — teach next');
     // ⭐ the students' average band: Target 7 and 4 → 5.5; Apex 4, 8, 6.5 (Gulya has none) → 6; Nexus none yet
     await expect(cards.locator('.sk-stat').filter({ hasText: '⭐' })).toHaveText([/⭐\s*5\.5/, /⭐\s*6$/, /⭐\s*—/]);
