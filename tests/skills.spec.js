@@ -264,7 +264,7 @@ test.describe('student page', () => {
   test('preview sends nothing', async ({ page, context }) => {
     await prepare(context);
     await page.goto('/skill.html?s=listening&lv=1&preview=1');
-    await expect(page.locator('.sk-preview')).toContainText('👀 Preview');
+    await expect(page.locator('.sk-preview')).toContainText('Preview');
     await expect(page.locator('#studentNameInput')).toHaveCount(0);
     await page.locator('.sk-q input').first().fill('Thompson');
     await page.getByRole('button', { name: /Submit/ }).click();
@@ -576,7 +576,7 @@ test.describe('speaking', () => {
     await expect(page.getByRole('button', { name: 'Get ready (30 s)' })).toBeVisible();
     await page.getByRole('button', { name: 'Start speaking' }).click();
     await expect(page.locator('.sk-speak-timer')).toContainText('0:45', { timeout: 5000 });
-    await expect(page.locator('body')).toContainText('Well done! 🎉', { timeout: 15000 });
+    await expect(page.locator('body')).toContainText('Well done!', { timeout: 15000 });
     await page.getByRole('button', { name: 'Start again' }).click();
     await expect(page.getByRole('button', { name: 'Start speaking' })).toBeVisible();
     await page.getByRole('button', { name: 'Get ready (30 s)' }).click();
