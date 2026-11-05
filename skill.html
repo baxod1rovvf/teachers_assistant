@@ -4,15 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Skill — Loom</title>
-<meta name="theme-color" content="#F4F5F7">
+<meta name="theme-color" content="#FFF5E1">
 <link rel="icon" href="images/app/favicon-ta-64.png" type="image/png">
 <!-- The Skills course's student page: skill.html?s=<listening|reading|writing|speaking>&lv=<1…10>&c=<code> (&preview=1 = the teacher's Try). -->
-<link rel="stylesheet" href="css/style.css?v=20261105e">
-<script src="js/skill-bands.js?v=20261105e"></script>
-<script src="js/skills-data.js?v=20261105e"></script>
+<link rel="stylesheet" href="css/style.css?v=20261105f">
+<script src="js/skill-bands.js?v=20261105f"></script>
+<script src="js/skills-data.js?v=20261105f"></script>
+<script src="js/student-theme.js?v=20261105f"></script>
 </head>
-<body class="light-theme sk-body sk-calm">
+<body class="light-theme sk-body">
 <main class="sk-app" id="skApp" aria-live="polite"></main>
-<script type="module" src="js/skill-player.js?v=20261105e"></script>
+<script>
+  // the same student look as every exercise file (taApplyStudentTheme in common.js puts it last in the page)
+  if (typeof TA_STUDENT_THEME_CSS !== 'undefined') {
+    var taTheme = document.createElement('style');
+    taTheme.id = 'ta-student-theme';
+    taTheme.textContent = TA_STUDENT_THEME_CSS;
+    document.body.appendChild(taTheme);
+  }
+</script>
+<script type="module" src="js/skill-player.js?v=20261105f"></script>
 </body>
 </html>

@@ -126,10 +126,10 @@ function levelData() {
 function headerHtml(level) {
   const info = SKILL_INFO[SK.skill];
   return `<header class="sk-head">
-    <span class="sk-brand">Loom</span>
-    <span class="sk-chip sk-chip-skill">${info.name}</span>
-    <span class="sk-chip">Level ${level.no} · ${esc(level.theme)}</span>
-    ${SK.preview ? '<span class="sk-chip sk-preview" title="Nothing is sent from a preview">Preview</span>' : ''}
+    <span class="sk-brand">🧶 loom</span>
+    <span class="sk-chip sk-chip-skill">${info.emoji} ${info.name}</span>
+    <span class="sk-chip">${esc(level.emoji)} Level ${level.no} · ${esc(level.theme)}</span>
+    ${SK.preview ? '<span class="sk-chip sk-preview" title="Nothing is sent from a preview">👀 Preview</span>' : ''}
   </header>`;
 }
 
@@ -171,7 +171,7 @@ function showStart(level, content) {
         <h2>${esc(content.title || content.topic)}</h2>
         <div class="ta-login-type">${info.name} · Level ${level.no}</div>
         <div class="ta-underline"></div>
-        <p>${esc(level.theme)}. Write your name and your ID to begin.</p>
+        <p>${esc(level.emoji)} ${esc(level.theme)}. Write your name and your ID to begin.</p>
         <label class="sk-label" for="studentNameInput">Your name</label>
         <input type="text" id="studentNameInput" autocomplete="name" maxlength="80" placeholder="e.g. Anna Smith" value="${esc(saved.name || '')}">
         <label class="sk-label" for="skIdInput">Your ID</label>
@@ -253,18 +253,18 @@ function showExercise(level) {
   startedAt = Date.now();
   let top;
   if (isReading) {
-    top = `<section class="sk-card sk-text-card"><h2>${esc(content.title)}</h2>
+    top = `<section class="sk-card sk-text-card"><h2>📖 ${esc(content.title)}</h2>
       <p class="sk-intro">Read the text, then answer the 15 questions below.</p>
       <div class="sk-text" id="skText">${readingTextHtml(content.text)}</div></section>`;
   } else {
-    top = `<section class="sk-card sk-audio-card"><h2>${esc(content.title)}</h2>
+    top = `<section class="sk-card sk-audio-card"><h2>🎧 ${esc(content.title)}</h2>
       <p class="sk-intro">${esc(content.intro)}</p>
       <audio controls preload="metadata" src="${esc(content.src)}"></audio>
       <p class="sk-audio-err" id="skAudioErr" hidden>The recording couldn't load — check the internet and press ▶️ again.</p></section>`;
   }
   root().innerHTML = headerHtml(level) + top + `
-    <section class="sk-card sk-questions"><h2>Questions</h2>${questionsHtml(content.questions, isReading)}
-      <div class="sk-actions" id="skActions"><button type="button" class="sk-btn sk-btn-main" id="skSubmit">Submit my answers</button></div>
+    <section class="sk-card sk-questions"><h2>✏️ Questions</h2>${questionsHtml(content.questions, isReading)}
+      <div class="sk-actions" id="skActions"><button type="button" class="sk-btn sk-btn-main" id="skSubmit">📤 Submit my answers</button></div>
     </section>
     <div id="skAfter"></div>`;
   const audio = root().querySelector('audio');
@@ -317,14 +317,14 @@ function submit(level, content, info) {
   lastPayload.builtAt = lastPayload.date;   // see submitWriting
   lastPayload.__id = skResultId(lastPayload);   // the same record on every try and on "Send again"
   const pct = correct / total;
-  const cheer = pct >= 0.8 ? 'Excellent work!' : pct >= 0.6 ? 'Well done!' : pct >= 0.4 ? 'Good try — keep going!' : 'Keep practising — you can do it!';
+  const cheer = pct >= 0.8 ? '🌟 Excellent work!' : pct >= 0.6 ? '👏 Well done!' : pct >= 0.4 ? '💪 Good try — keep going!' : '🌱 Keep practising — you can do it!';
   $('#skActions').innerHTML = `<div class="sk-result">
       <div class="sk-score"><span class="sk-score-n">${correct} / ${total}</span><span class="sk-score-t">${cheer}</span></div>
       <div class="sk-send" id="skSend" role="status"></div>
     </div>`;
   const words = content.words || [];
   const isReading = SK.skill === 'reading';
-  $('#skAfter').innerHTML = `<section class="sk-card sk-words-card"><h2>${words.length} useful words</h2>
+  $('#skAfter').innerHTML = `<section class="sk-card sk-words-card"><h2>💡 ${words.length} useful words</h2>
       <ul class="sk-words">${words.map(w => `<li>${w.emoji ? `<span class="sk-wemoji" aria-hidden="true">${esc(w.emoji)}</span>` : ''}<b>${esc(w.w)}</b><span class="sk-m">${esc(w.m)}</span><i>${esc(w.ex)}</i></li>`).join('')}</ul>
       <div class="sk-actions"><button type="button" class="sk-btn sk-btn-main" id="skAnalyze">Analyze ></button></div>
     </section>
@@ -337,7 +337,7 @@ function setSend(state) {
   const box = $('#skSend');
   if (!box) return;
   if (state === 'preview') box.innerHTML = '<span class="sk-send-note">👀 Preview — nothing was sent.</span>';
-  else if (state === 'sending') box.innerHTML = '<span class="sk-send-note">Sending your answers to your teacher…</span>';
+  else if (state === 'sending') box.innerHTML = '<span class="sk-send-note">📤 Sending your answers to your teacher…</span>';
   else if (state === 'ok') box.innerHTML = '<span class="sk-send-ok">Saved ✅ Your teacher has your answers.</span>';
   else {
     box.innerHTML = '<span class="sk-send-bad">Not sent yet — press Send again</span> <button type="button" class="sk-btn sk-btn-small" id="skSendAgain">📤 Send again</button>';
@@ -367,12 +367,12 @@ function analyze(content, isReading) {
       s.classList.add('hl');
       s.insertAdjacentHTML('afterbegin', nums.map(n => `<span class="sk-qno">Q${n}</span>`).join(''));
     });
-    $('#skAnalysis').innerHTML = `<section class="sk-card sk-analysis"><h2>Where the answers are</h2>
+    $('#skAnalysis').innerHTML = `<section class="sk-card sk-analysis"><h2>🔍 Where the answers are</h2>
       <p class="sk-intro">The highlighted sentences in the text above hold the answers. The tag shows the question number.</p></section>`;
     $('#skText').closest('.sk-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
     return;
   }
-  $('#skAnalysis').innerHTML = `<section class="sk-card sk-analysis"><h2>What they said</h2>
+  $('#skAnalysis').innerHTML = `<section class="sk-card sk-analysis"><h2>🔍 What they said</h2>
     <p class="sk-intro">The highlighted lines hold the answers. The tag shows the question number.</p>
     <ol class="sk-transcript">${content.transcript.map(t => {
       const nums = t.answers || [];
@@ -498,7 +498,7 @@ function showWriting(level) {
   const secondsPerMinute = window.__skFast ? 1 : 60;   // tests: a minute lasts one second
   const totalMs = W.minutes * secondsPerMinute * 1000;
   root().innerHTML = headerHtml(level) + `
-    <section class="sk-card sk-task-card"><h2 class="sk-topic">${esc(W.topic)}</h2>
+    <section class="sk-card sk-task-card"><h2 class="sk-topic">✍️ ${esc(W.topic)}</h2>
       ${W.task ? `<p class="sk-intro">${esc(W.task)}</p>` : ''}
       <p class="sk-points-t">Write about:</p>
       <ul class="sk-points">${W.points.map(p => `<li>${esc(p)}</li>`).join('')}</ul>
@@ -506,13 +506,13 @@ function showWriting(level) {
     </section>
     <section class="sk-card sk-write-card">
       <div class="sk-write-bar">
-        <span class="sk-timer" id="skTimer" role="timer" aria-label="Time left">Time left: <b>${fmtClock(W.minutes * 60)}</b></span>
+        <span class="sk-timer" id="skTimer" role="timer" aria-label="Time left">⏳ <b>${fmtClock(W.minutes * 60)}</b></span>
         <span class="sk-count" id="skCount" aria-live="polite">0 / ${W.minWords}–${W.maxWords} words</span>
       </div>
       <label class="sk-label sk-write-label" for="skWriteBox">Your writing</label>
       <textarea id="skWriteBox" class="sk-write" rows="11" maxlength="4000" spellcheck="false" autocapitalize="sentences"
         placeholder="Hello! My name is …"></textarea>
-      <div class="sk-actions" id="skActions"><button type="button" class="sk-btn sk-btn-main" id="skSubmit">Submit my writing</button></div>
+      <div class="sk-actions" id="skActions"><button type="button" class="sk-btn sk-btn-main" id="skSubmit">📤 Submit my writing</button></div>
     </section>
     <div id="skAfter"></div>`;
   const box = $('#skWriteBox');
@@ -555,10 +555,10 @@ function grammarHtml(text, check) {
   if (!check.ok) {
     return `<p class="sk-check-note" role="status">The grammar check couldn't run this time — press Check again.</p>
       <div class="sk-checked" lang="en">${esc(text)}</div>
-      <div class="sk-actions"><button type="button" class="sk-btn sk-btn-small" id="skCheckAgain">Check again</button></div>`;
+      <div class="sk-actions"><button type="button" class="sk-btn sk-btn-small" id="skCheckAgain">🔁 Check again</button></div>`;
   }
   const ms = check.matches;
-  return `<p class="sk-intro">${ms.length ? `We found ${ms.length} thing${ms.length === 1 ? '' : 's'} to fix. They are underlined in your text.` : 'No grammar mistakes found. Great job!'}</p>
+  return `<p class="sk-intro">${ms.length ? `We found ${ms.length} thing${ms.length === 1 ? '' : 's'} to fix. They are underlined in your text.` : '🎉 No grammar mistakes found. Great job!'}</p>
     <div class="sk-checked" lang="en">${checkedTextHtml(text, ms)}</div>
     ${ms.length ? `<ol class="sk-mistakes">${ms.map((m, i) => {
       const bad = text.slice(m.offset, m.offset + m.length);
@@ -570,7 +570,7 @@ function grammarHtml(text, check) {
 }
 
 function betterHtml(list) {
-  return `<section class="sk-card sk-better-card"><h2>Better words</h2>
+  return `<section class="sk-card sk-better-card"><h2>💡 Better words</h2>
     ${list.length ? `<p class="sk-intro">Next time, try one of these instead:</p>
     <ul class="sk-better">${list.map(b => `<li><b>${esc(b.word)}</b> → ${b.better.map(esc).join(', ')}</li>`).join('')}</ul>`
     : '<p class="sk-intro">Your words are already strong. Keep using them!</p>'}</section>`;
@@ -604,7 +604,7 @@ async function submitWriting(level, W, timeUp) {
   lastPayload.__id = skResultId(lastPayload);
   $('#skActions .sk-result').insertAdjacentHTML('afterbegin', `<div class="sk-score sk-band"><span class="sk-score-n">${band}</span>
     <span class="sk-score-t">Estimated band · ${words} words</span></div>`);
-  $('#skAfter').innerHTML = `<div class="sk-stack"><section class="sk-card sk-check-card"><h2>Your writing, checked</h2><div id="skGrammar">${grammarHtml(text, check)}</div></section>
+  $('#skAfter').innerHTML = `<div class="sk-stack"><section class="sk-card sk-check-card"><h2>🔍 Your writing, checked</h2><div id="skGrammar">${grammarHtml(text, check)}</div></section>
     ${betterHtml(better)}</div>`;
   wireCheckAgain(text);
   sendNow();
@@ -643,7 +643,7 @@ function showSpeaking(level) {
   const shell = (n, inner) => { clearInterval(speakTimer); root().innerHTML = headerHtml(level) + stepsHtml(n) + inner; window.scrollTo(0, 0); };
 
   const stepWords = () => {
-    shell(1, `<section class="sk-card"><h2>Words to help you speak</h2>
+    shell(1, `<section class="sk-card"><h2>🗣️ Words to help you speak</h2>
       <p class="sk-intro">Read the words. Say each example out loud.</p>
       <ul class="sk-wordgrid">${S.words.map((w, i) => `<li class="sk-word"><span class="sk-word-emoji" aria-hidden="true">${esc(w.emoji)}</span>
         <div class="sk-word-body"><b>${esc(w.w)}</b><span>${esc(w.ex)}</span></div>
@@ -666,26 +666,26 @@ function showSpeaking(level) {
   const stepTalk = () => {
     const P = S.part2;
     const sec = window.__skFast ? 0.02 : 1;   // tests: one second lasts 20 ms
-    shell(3, `<section class="sk-card"><h2 class="sk-topic">${esc(P.topic)}</h2>
+    shell(3, `<section class="sk-card"><h2 class="sk-topic">🎤 ${esc(P.topic)}</h2>
       <p class="sk-points-t">Talk about:</p>
       <ul class="sk-points">${P.hints.map(h => `<li>${esc(h)}</li>`).join('')}</ul>
       <p class="sk-intro">You can talk for ${P.seconds} seconds. It is up to you: nothing is recorded or sent.</p>
       <div class="sk-speak-timer" id="skSpeakTimer" role="timer" aria-live="off">${fmtMinSec(P.seconds)}</div>
-      <p class="sk-well" id="skWell" hidden>Well done!</p>
+      <p class="sk-well" id="skWell" hidden>Well done! 🎉</p>
       <div class="sk-actions sk-actions-2" id="skTalkActions"></div>
       <div class="sk-actions"><button type="button" class="sk-btn sk-btn-ghost" id="skBack">← Back to the questions</button></div></section>`);
     const box = $('#skSpeakTimer'), acts = $('#skTalkActions'), well = $('#skWell');
     const idle = () => {
       clearInterval(speakTimer);
       box.textContent = fmtMinSec(P.seconds); box.className = 'sk-speak-timer'; well.hidden = true;
-      acts.innerHTML = `<button type="button" class="sk-btn sk-btn-ghost" id="skReady">Get ready (30 s)</button>
-        <button type="button" class="sk-btn sk-btn-main" id="skGo">Start speaking</button>`;
+      acts.innerHTML = `<button type="button" class="sk-btn sk-btn-ghost" id="skReady">⏳ Get ready (30 s)</button>
+        <button type="button" class="sk-btn sk-btn-main" id="skGo">🎤 Start speaking</button>`;
       $('#skReady').addEventListener('click', () => run(30, 'ready', () => idle()));
       $('#skGo').addEventListener('click', () => run(P.seconds, 'talk', finished));
     };
     const finished = () => {
       box.textContent = fmtMinSec(0); box.className = 'sk-speak-timer done'; well.hidden = false;
-      acts.innerHTML = '<button type="button" class="sk-btn sk-btn-main" id="skAgain">Start again</button>';
+      acts.innerHTML = '<button type="button" class="sk-btn sk-btn-main" id="skAgain">🔁 Start again</button>';
       $('#skAgain').addEventListener('click', idle);
     };
     const run = (secs, mode, onEnd) => {
