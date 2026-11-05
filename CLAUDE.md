@@ -495,7 +495,7 @@ real students' names or results into the repository (it is public).
   rules above it only place things. Recipe: candy colours (`--c-red/orange/yellow/green/teal/blue/purple/pink`), every
   block is a "sticker" — 2.5 px dark outline `--line` + a hard shadow under it that the block sinks into when pressed
   (`--shadow-md` = `0 5px 0 var(--line)`), bouncy motion (`--bounce`), Fredoka headings + Nunito text, confetti dots on the
-  page. Night = deep plum page `#1B1535`, Day = cream `#FFF5E1`; body class `loom-fun` (no more `glass-ui`). Gradients are
+  page. **Page background (teacher, 2026-11-05: the confetti dots looked childish): plain cool slate — Day `#EDF0F4`, Night deep navy `#121722`, no dots** (the sign-in screen too); only the students' course page (`body.sk-body`, skill.html) keeps cream `#FFF5E1` / plum `#1B1535` with confetti dots; body class `loom-fun` (no more `glass-ui`). Gradients are
   allowed again. **Icons are emojis**: the top bar's sections (`TA_TOPBAR_TABS` `emoji` + `color` — the moving circle takes
   the section's colour, `--blob-c`), tools 🔍 ☀️/🌙 ⚙️ 🔄, logo 🧶 + "loom" in four colours; every exercise type's
   `picker-icon-<type>` gets an emoji (`--te`) on a sticker of its colour (`--tc`) from one CSS list

@@ -6,7 +6,7 @@
      Night (this block) and Day (body.light-theme) share the same candy colours; everything is a "sticker":
      a thick dark outline (--line), a hard shadow that sits under it, and the shadow disappears when
      you press — so every click feels like pushing a real button. Fonts: Fredoka (headings) + Nunito. */
-  --surface-page: #1B1535;
+  --surface-page: #121722;   /* NIGHT page: plain deep navy (teacher 2026-11-05: the confetti dots looked childish) */
   --surface: #2A2252;
   --surface-sunken: #221B44;
   --border: rgba(255, 247, 236, 0.14);
@@ -64,21 +64,21 @@
 html, body { min-height: 100%; }
 
 body {
-  /* confetti dots sprinkled over the page */
+  /* confetti dots — now only on the students' course page (body.sk-body keeps its old look) */
   --mesh-page:
     radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--c-pink) 22%, transparent) 0 3px, transparent 4px) 0 0 / 140px 140px,
     radial-gradient(circle at 62% 42%, color-mix(in srgb, var(--c-yellow) 26%, transparent) 0 3px, transparent 4px) 0 0 / 170px 170px,
     radial-gradient(circle at 36% 78%, color-mix(in srgb, var(--c-blue) 22%, transparent) 0 3px, transparent 4px) 0 0 / 120px 120px,
     radial-gradient(circle at 86% 64%, color-mix(in srgb, var(--c-green) 24%, transparent) 0 3px, transparent 4px) 0 0 / 190px 190px,
     var(--surface-page);
-  background: var(--mesh-page);
+  background: var(--surface-page);   /* a plain, calm ground behind the sticker cards (teacher, 2026-11-05) */
   color: var(--ink);
   min-height: 100vh;
 }
 
 body.light-theme {
   /* DAY: warm cream paper with white stickers and the same candy colours */
-  --surface-page: #FFF5E1;
+  --surface-page: #EDF0F4;   /* DAY page: plain cool slate */
   --surface: #FFFFFF;
   --surface-sunken: #FFF0D4;
   --border: rgba(43, 33, 64, 0.16);
@@ -2581,7 +2581,7 @@ body.has-topbar :is(h1, h2) { color: var(--ink); }
 .ai-robot-bubble-tail { border-color: var(--line) !important; border-width: 2.5px !important; }
 
 /* ---------- sign in ---------- */
-.welcome-splash { background: var(--mesh-page) !important; }
+.welcome-splash { background: var(--surface-page) !important; }
 
 /* ---------- focus, motion ---------- */
 button:focus-visible, a:focus-visible, .picker-card:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
@@ -3065,3 +3065,7 @@ button.sk-dot:hover { transform: scale(1.12); }
 /* useful words: a picture for each word (teacher, 2026-11-05) */
 .sk-words li { position: relative; padding-right: 52px; }
 .sk-wemoji { position: absolute; top: 10px; right: 12px; font-size: 1.6rem; line-height: 1; }
+
+/* The students' course page (skill.html) keeps its cream / plum page with confetti dots (teacher, 2026-11-05: only Loom's own pages got the plain slate) */
+body.sk-body { --surface-page: #1B1535; background: var(--mesh-page); }
+body.sk-body.light-theme { --surface-page: #FFF5E1; }

@@ -943,7 +943,7 @@ function applyTheme() {
   document.body.classList.add('loom-fun');   // the playful look (2026-11-02; the glass look is gone)
   // the phone's status bar (installed app) takes the page colour
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', t === 'light' ? '#FFF6E5' : '#1A1433');
+  if (meta) meta.setAttribute('content', t === 'light' ? '#EDF0F4' : '#121722');
   const btn = document.getElementById('themeToggleBtn');
   if (btn) {
     btn.innerHTML = t === 'light' ? TA_MOON_SVG : TA_SUN_SVG;
