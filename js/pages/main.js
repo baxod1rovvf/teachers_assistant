@@ -98,7 +98,7 @@ function performanceScores(results) {
   return out;
 }
 
-// The Skills course (typeLabel / result type "… course") is left out of Top 5: its 10 levels are all open and their
+// The Skills course (typeLabel / result type "… course") is left out of Top 5: its 20 steps are all open and their
 // links are sent ahead, so levels a student hasn't reached yet would count as 0 %.
 const TA_SKILL_COURSE_RE = / course$/;
 // The exercise codes given to each group: { groupId: Set of codes } (a set's rounds one by one).
@@ -202,7 +202,7 @@ function renderDashboardStats() {
   set('dashStatStudents', String(getPointsRoster().length));
   // Every lesson taught so far, since each weekly lesson was added to the schedule.
   set('dashStatLessons', String(getLessonsTaughtTotal()));
-  set('dashStatExercises', String(getRecentExercises().length));
+  set('dashStatExercises', String(getRecentExercises().filter(e => !taIsSkillCourseItem(e)).length));
   // Average score of results from students on the Students list (same rule as Top Active Students).
   const rosterIdx = taRosterIndex();
   const scores = performanceScores(getAllScoredResultsCombined())

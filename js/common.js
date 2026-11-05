@@ -82,7 +82,7 @@ const MASTHEAD_COPY = {
   createpicker: { eyebrow: "➕ Create", title: "Pick an exercise type", sub: "Ready to use, in process, or merge a few together — everything starts here." },
   hwcbuilder: { eyebrow: "📚 Homework & Class", title: "Build your set", sub: "Pick exercises from My Exercises, put them in order, then generate one combined file." },
   main: { eyebrow: "🎓 Loom", title: "Welcome back", sub: "Everything you need to build, share, and track classroom exercises." },
-  course: { eyebrow: "🗺️ Course", title: "Skills course", sub: "10 levels, each with Listening, Reading, Writing and Speaking. Follow your group along the path and send each part's link." },
+  course: { eyebrow: "🗺️ Course", title: "Skills course", sub: "Your groups on the 20 steps. Open a group to teach its next step, send each part's link and see how every student is doing." },
   dashboard: { eyebrow: "📊 Statistics", title: "Your classroom at a glance", sub: "Each exercise type's last 7 days, and today compared with yesterday." },
   myexercises: { eyebrow: "📁 My Exercises", title: "Everything you've built", sub: "Every exercise you've created — reopen it to make a new version, jump to its results, or turn off its points." },
   students: { eyebrow: "Students & Points", title: "Your groups and students", sub: "Groups, their lesson times, students' IDs and points." },
@@ -475,32 +475,88 @@ const TA_APP_URL = /^https?:$/.test(location.protocol) ? new URL('.', location.h
    the microphone on a web page. After the 7 days the link stays expired.
    See CLAUDE.md for the limits this runs into. */
 const TA_PLAY_DAYS = 7;
-/* Skills course (course.html, skill.html): the students' link for a level — skill.html?s=<skill>&lv=<n>&c=<code>
+/* Skills course (course.html, skill.html): the students' link for a step — skill.html?s=<skill>&st=<id>&c=<code>
    (speaking: no code). Absolute on the real site (https), else relative; window.skAppUrl lets a test pretend.
-   ta_skills_links = { "<groupId>|<skill>|<level>": { uid, code } } (before 2026-11-04's fix: just the uid). */
-function taSkillLink(skill, level, code) {
+   Steps have stable ids (js/skills-data.js): b1…b10 (Beginner, Steps 1–10), e1…e10 (Elementary, Steps 11–20).
+   Before 2026-11-05 they were "Level 1…10" = e1…e10: a number given here (an old link's lv=N, an old key, a result's
+   `level`) means e<N> (taSkillStepId).
+   ta_skills_links = { "<groupId>|<skill>|<stepId>": { code, sentAt } (+ uid on entries made before 2026-11-05, when Copy link
+   also made a My Exercises item; speaking: { sentAt }; entries made before 2026-11-05 have no sentAt) }. Old keys ended in
+   the level number ("g1|reading|3"): taSkillsLinks() hands them out as "g1|reading|e3" and taSaveSkillsLinks writes them
+   back that way; when both exist the new one wins and the old code is kept in its alsoCodes (its results still count). */
+function taSkillStepId(v) {
+  const s = String(v == null ? '' : v).trim().toLowerCase();
+  if (/^\d+$/.test(s)) return Number(s) > 0 ? 'e' + Number(s) : '';
+  return /^[be]\d+$/.test(s) ? s : '';
+}
+function taSkillLink(skill, step, code) {
   const base = window.skAppUrl || (/^https:/.test(TA_APP_URL) ? TA_APP_URL : '');
-  return base + 'skill.html?s=' + encodeURIComponent(skill) + '&lv=' + Number(level) + (code ? '&c=' + encodeURIComponent(code) : '');
+  return base + 'skill.html?s=' + encodeURIComponent(skill) + '&st=' + encodeURIComponent(taSkillStepId(step)) + (code ? '&c=' + encodeURIComponent(code) : '');
+}
+function taSkillLinkKey(groupId, skill, step) { return groupId + '|' + skill + '|' + taSkillStepId(step); }
+/* The kept links with every key in the new form (an old numeric key → e<N>; when both exist, the new one wins). */
+function taSkillsLinksFix(v) {
+  const out = {};
+  if (!v || typeof v !== 'object') return out;
+  const old = [];
+  Object.keys(v).forEach(k => {
+    const m = /^(.*)\|(listening|reading|writing|speaking)\|(\d+)$/.exec(k);
+    if (m) old.push([m[1] + '|' + m[2] + '|' + taSkillStepId(m[3]), v[k]]);
+    else out[k] = v[k];
+  });
+  old.forEach(([k, val]) => {
+    if (!(k in out)) { out[k] = val; return; }
+    // both kept: the new key wins, but the old code's results must still load and count (it was sent to students)
+    const cur = out[k], oldCode = val && typeof val === 'object' ? val.code : taSkillsLegacyCode(val);
+    if (!cur || typeof cur !== 'object' || !oldCode || oldCode === cur.code || (cur.alsoCodes || []).includes(oldCode)) return;
+    out[k] = Object.assign({}, cur, { alsoCodes: (cur.alsoCodes || []).concat(oldCode) });
+  });
+  return out;
+}
+/* the code of an entry made before 2026-11-04's fix (just the My Exercises item's uid) */
+function taSkillsLegacyCode(uid) {
+  if (!uid || typeof uid !== 'string' || typeof getRecentExercises !== 'function') return '';
+  const item = getRecentExercises().find(e => e.uid === uid);
+  return item && item.code ? item.code : '';
+}
+/* Every code kept for one entry: its own and any old one (alsoCodes — an old numeric key with another code). */
+function taSkillsEntryCodes(v) {
+  if (!v) return [];
+  if (typeof v !== 'object') { const c = taSkillsLegacyCode(v); return c ? [c] : []; }
+  return [v.code].concat(Array.isArray(v.alsoCodes) ? v.alsoCodes : []).filter(Boolean);
 }
 function taSkillsLinks() {
-  try { const v = JSON.parse(localStorage.getItem('ta_skills_links') || 'null'); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; }
+  try { return taSkillsLinksFix(JSON.parse(localStorage.getItem('ta_skills_links') || 'null')); } catch (e) { return {}; }
 }
-/* { skill, level } of a My Exercises "… course" item, or null for any other item */
+function taSaveSkillsLinks(v) {
+  try { localStorage.setItem('ta_skills_links', JSON.stringify(taSkillsLinksFix(v))); return true; } catch (e) { return false; }
+}
+/* Writes the kept links back in the new form if some keys are still old (called when the teacher copies a link). */
+function taSkillsLinksMigrate() {
+  try {
+    const raw = JSON.parse(localStorage.getItem('ta_skills_links') || 'null');
+    if (raw && typeof raw === 'object' && Object.keys(raw).some(k => /\|\d+$/.test(k))) taSaveSkillsLinks(raw);
+  } catch (e) { /* ignore */ }
+}
+/* { skill, step } of a My Exercises "… course" item (made by Copy link before 2026-11-05), or null for any other item */
 function taSkillItemInfo(item) {
   if (!item || !/ course$/.test(item.typeLabel || '')) return null;
-  if (item.skill && item.level) return { skill: item.skill, level: Number(item.level) };
+  const own = taSkillStepId(item.step) || taSkillStepId(item.level);
+  if (item.skill && own) return { skill: item.skill, step: own };
   const links = taSkillsLinks();
   for (const k in links) {
     const v = links[k], uid = v && typeof v === 'object' ? v.uid : v;
-    const m = /\|(listening|reading|writing)\|(\d+)$/.exec(k);
-    if (uid === item.uid && m) return { skill: m[1], level: Number(m[2]) };
+    const m = /\|(listening|reading|writing)\|([be]\d+)$/.exec(k);
+    if (uid && uid === item.uid && m) return { skill: m[1], step: m[2] };
   }
   return null;
 }
 function taSkillItemLink(item) {
   const i = taSkillItemInfo(item);
-  return i && item.code ? taSkillLink(i.skill, i.level, item.code) : '';
+  return i && item.code ? taSkillLink(i.skill, i.step, item.code) : '';
 }
+/* "… course" items are no longer shown in My Exercises (the Course page has the parts); old ones are kept, hidden. */
+function taIsSkillCourseItem(item) { return !!item && / course$/.test(item.typeLabel || ''); }
 function taPlayUrl(uid) { return /^https:/.test(TA_APP_URL) && uid ? TA_APP_URL + 'play.html?x=' + encodeURIComponent(uid) : ''; }
 // online now, and for at least another hour
 function taPlayLive(item) {
@@ -887,7 +943,7 @@ function applyTheme() {
   document.body.classList.add('loom-fun');   // the playful look (2026-11-02; the glass look is gone)
   // the phone's status bar (installed app) takes the page colour
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', t === 'light' ? '#FFF6E5' : '#1A1433');
+  if (meta) meta.setAttribute('content', t === 'light' ? '#EDF0F4' : '#121722');
   const btn = document.getElementById('themeToggleBtn');
   if (btn) {
     btn.innerHTML = t === 'light' ? TA_MOON_SVG : TA_SUN_SVG;
@@ -1637,7 +1693,7 @@ function viewMazeResult(idx) {
 /* ================= SKILLS COURSE: WRITING MARKS =================
    A Writing course result carries the page's estimated band; the teacher can give their own.
    ta_skills_marks = { "<code>|<studentId>": band } (synced, in the backup). The mark is the student's for
-   that level + group (every try of it), so the results table and Results agree. */
+   that step + group (every try of it), so the results table and Results agree. */
 const LS_SKILLS_MARKS = 'ta_skills_marks';
 function skMarks() {
   try { const v = JSON.parse(localStorage.getItem(LS_SKILLS_MARKS) || 'null'); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; }
@@ -2472,7 +2528,7 @@ window.closeLessonPlanModal = closeLessonPlanModal;
 function renderLessonPlanModalBody(entry) {
   const wrap = document.getElementById('lessonPlanModalBody');
   if (!wrap) return;
-  const exercises = getRecentExercises();
+  const exercises = getRecentExercises().filter(e => !taIsSkillCourseItem(e));   // "… course" items are hidden (2026-11-05)
   const plan = entry.plan || { notes: '', exerciseUids: [], materialIds: [] };
 
   let html = '<div class="title-field"><label class="field-label">Notes — what will you cover?</label>' +
@@ -3395,7 +3451,7 @@ document.addEventListener('keydown', e => {
 const TA_TAB_LABELS = {
   main: ['🎓', 'Dashboard'], createpicker: ['➕', 'Create'], dashboard: ['📊', 'Statistics'],
   myexercises: ['📁', 'My Exercises'], students: ['👥', 'Students & Points'], results: ['📋', 'Results'],
-  settings: ['⚙️', 'Settings'],
+  settings: ['⚙️', 'Settings'], course: ['🗺️', 'Course'],
   flashcard: ['🎴', 'Flashcard'], wordorder: ['🧩', 'Word Order'], makeaword: ['🧱', 'Make a Word'],
   spelling: ['🔤', 'Spelling'], canknock: ['🥫', 'Can Knockdown'], cargame: ['🚗', 'Car Game'], sentences: ['✍️', 'Sentences'], bilingual: ['📖', 'Bidirectional Language'],
   engcontent: ['🎬', 'English Content'], dictation: ['🎧', 'Dictation'], jungle: ['🌴', 'Jungle'], bamboozle: ['🎯', 'Bamboozle'], presentation: ['🖥️', 'Presentation'],
@@ -3408,6 +3464,7 @@ function taQuickSearchItems() {
   Object.keys(TA_PAGES).forEach(tab => {
     if (tab === 'results') return; // Results opens from My Exercises ("View Results")
     const l = TA_TAB_LABELS[tab];
+    if (!l) return;   // a section without a label must not break the search
     items.push({ icon: l[0], label: l[1], kind: 'Section', go: () => switchTo(tab) });
   });
   BUILDER_TABS.forEach(tab => {
@@ -3435,7 +3492,7 @@ function taQuickSearchItems() {
         setTimeout(() => row.classList.remove('flash-highlight'), 1600);
       }) });
   });
-  getRecentExercises().forEach(e => {
+  getRecentExercises().filter(e => !taIsSkillCourseItem(e)).forEach(e => {
     const gName = groupNameFor(e.groupId);
     items.push({ icon: '📁', label: e.title, mine: true, kind: e.typeLabel + (gName ? ' · ' + gName : '') + (e.requiredCode ? ' · code ' + e.requiredCode : ''),
       extra: (e.requiredCode || '') + ' ' + (e.contentSummary || '').slice(0, 2000),

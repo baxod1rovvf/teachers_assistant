@@ -1,6 +1,7 @@
-// Skills course — the student page (skill.html?s=<skill>&lv=<level>&c=<code>, 2026-11-04).
-// A student opens a level from the teacher's link, writes name + ID on the start card, does the Listening or
-// Reading level, presses Submit: every answer is marked ✅ / ❌, the score shows, then 10 useful words and
+// Skills course — the student page (skill.html?s=<skill>&st=<step id>&c=<code>, 2026-11-04; steps since 2026-11-05).
+// An old link (before 2026-11-05) says lv=<N> instead of st: it opens step e<N> (old Level N = Step 10+N).
+// A student opens a step from the teacher's link, writes name + ID on the start card, does the Listening or
+// Reading part, presses Submit: every answer is marked ✅ / ❌, the score shows, then 10 useful words and
 // "Analyze >" (the transcript / text with the answers highlighted). One result goes to Firestore `results`
 // in the student-record shape exercises use (so the database lock lets it through), 3 tries, then "Send again".
 // Preview (&preview=1, the teacher's ▶️ Try): no start card, nothing imported from Firebase, nothing written.
@@ -25,15 +26,22 @@ const SKILL_INFO = {
   speaking: { name: 'Speaking', emoji: '🗣️', type: 'Speaking course' }
 };
 const NAME_KEY = 'ta_skill_student';   // the student's name + ID on this device (not one of the app's keys)
-// A writing in progress: { text, startedAt, id } under ta_skill_draft|<code>|<level> (this page's own key, like NAME_KEY).
+// A writing in progress: { text, startedAt, id } under ta_skill_draft|<code>|<step id> (this page's own key, like NAME_KEY).
 // Phones often reload a tab that was in the background: the text comes back and the clock goes on from the first start.
 // Cleared once the writing is sent. A preview keeps nothing.
-const draftKey = () => 'ta_skill_draft|' + SK.code + '|' + SK.level;
+const draftKey = () => 'ta_skill_draft|' + SK.code + '|' + SK.step;
 
 const params = new URLSearchParams(location.search);
+// the step's id: st=<b1…b10 | e1…e10>, or an old link's lv=<N> → e<N>
+function stepIdFrom(p) {
+  const st = String(p.get('st') || '').trim().toLowerCase();
+  if (st) return /^[be]\d+$/.test(st) ? st : '';
+  const lv = parseInt(p.get('lv'), 10);
+  return lv > 0 ? 'e' + lv : '';
+}
 const SK = window.SK = {
   skill: (params.get('s') || '').toLowerCase(),
-  level: parseInt(params.get('lv'), 10) || 0,
+  step: stepIdFrom(params),
   code: (params.get('c') || '').trim(),
   preview: params.get('preview') === '1',
   name: '',
@@ -118,9 +126,9 @@ window.skSendResult = skSendResult;
 /* ---------- the page ---------- */
 const root = () => $('#skApp');
 
-function levelData() {
-  const levels = (window.TA_SKILLS && TA_SKILLS.elementary && TA_SKILLS.elementary.levels) || [];
-  return levels.find(l => l.no === SK.level) || null;
+function stepData() {
+  const steps = (window.TA_SKILLS && TA_SKILLS.steps) || [];
+  return SK.step ? steps.find(l => l.id === SK.step) || null : null;
 }
 
 function headerHtml(level) {
@@ -128,16 +136,16 @@ function headerHtml(level) {
   return `<header class="sk-head">
     <span class="sk-brand">🧶 loom</span>
     <span class="sk-chip sk-chip-skill">${info.emoji} ${info.name}</span>
-    <span class="sk-chip">${esc(level.emoji)} Level ${level.no} · ${esc(level.theme)}</span>
+    <span class="sk-chip">${esc(level.emoji)} Step ${level.no} · ${esc(level.theme)}</span>
     ${SK.preview ? '<span class="sk-chip sk-preview" title="Nothing is sent from a preview">👀 Preview</span>' : ''}
   </header>`;
 }
 
 function showMissing() {
-  document.title = 'Level not found — Loom';
+  document.title = 'Step not found — Loom';
   root().innerHTML = `<div class="sk-card sk-center sk-missing">
     <div class="sk-big-emoji" aria-hidden="true">🧭</div>
-    <h1>This level doesn't exist</h1>
+    <h1>This step doesn't exist</h1>
     <p>The link may be cut short or mistyped. Ask your teacher to send it again.</p>
     <a class="sk-btn sk-btn-ghost" href="index.html">🏠 Go to Loom's home page</a>
   </div>`;
@@ -169,7 +177,7 @@ function showStart(level, content) {
       <div class="ta-login-anim" aria-hidden="true">${info.emoji}</div>
       <form class="ta-login-form" id="skStartForm" novalidate>
         <h2>${esc(content.title || content.topic)}</h2>
-        <div class="ta-login-type">${info.name} · Level ${level.no}</div>
+        <div class="ta-login-type">${info.name} · Step ${level.no}</div>
         <div class="ta-underline"></div>
         <p>${esc(level.emoji)} ${esc(level.theme)}. Write your name and your ID to begin.</p>
         <label class="sk-label" for="studentNameInput">Your name</label>
@@ -205,8 +213,8 @@ function gapHtml(q, n) {
 }
 function questionHtml(q, n, kind) {
   let body;
-  if (kind === 'tfng' || kind === 'choose') {
-    const opts = kind === 'tfng' ? ['True', 'False', 'Not given'] : q.opts;
+  if (kind === 'tfng' || kind === 'tf' || kind === 'choose') {
+    const opts = kind === 'tfng' ? ['True', 'False', 'Not given'] : kind === 'tf' ? ['True', 'False'] : q.opts;
     body = `<div class="sk-qtext">${esc(q.q)}</div><div class="sk-opts" role="group" aria-label="Answer ${n}">` +
       opts.map((o, i) => `<button type="button" class="sk-opt" aria-pressed="false" data-val="${esc(o)}">${kind === 'choose' ? `<b>${'abc'[i]}</b> ` : ''}${esc(o)}</button>`).join('') +
       '</div>';
@@ -217,6 +225,7 @@ function questionHtml(q, n, kind) {
 }
 const SECTION_TITLES = {
   tfng: 'True, False or Not given?',
+  tf: 'True or False?',
   gap: 'Complete the sentences with a word from the text.',
   choose: 'Choose a, b or c.'
 };
@@ -254,7 +263,7 @@ function showExercise(level) {
   let top;
   if (isReading) {
     top = `<section class="sk-card sk-text-card"><h2>📖 ${esc(content.title)}</h2>
-      <p class="sk-intro">Read the text, then answer the 15 questions below.</p>
+      <p class="sk-intro">Read the text, then answer the ${content.questions.length} questions below.</p>
       <div class="sk-text" id="skText">${readingTextHtml(content.text)}</div></section>`;
   } else {
     top = `<section class="sk-card sk-audio-card"><h2>🎧 ${esc(content.title)}</h2>
@@ -310,7 +319,7 @@ function submit(level, content, info) {
   const secs = Math.max(0, Math.round((Date.now() - startedAt) / 1000));
   const pad = n => String(n).padStart(2, '0');
   lastPayload = {
-    v: 1, code: SK.code, type: info.type, title: `Level ${level.no} · ${level.theme} — ${info.name}`, level: level.no, skill: SK.skill,
+    v: 1, code: SK.code, type: info.type, title: `Step ${level.no} · ${level.theme} — ${info.name}`, step: level.id, stepNo: level.no, skill: SK.skill,
     name: SK.name, studentId: SK.studentId, correct, total, score: Math.round(correct / total * 100), band: skBand(correct, total),
     answers, timeSeconds: secs, timeDisplay: pad(Math.floor(secs / 60)) + ':' + pad(secs % 60), date: new Date().toISOString()
   };
@@ -475,12 +484,25 @@ const fmtClock = secs => { const s = Math.max(0, Math.ceil(secs)); return String
 let writeTimer = null;
 function readDraft() {
   if (SK.preview) return null;
+  moveOldDraft();
   try {
     const d = JSON.parse(localStorage.getItem(draftKey()) || 'null');
     if (!d || typeof d !== 'object' || typeof d.startedAt !== 'number' || d.startedAt > Date.now()) return null;
     if (d.id && String(d.id) !== String(SK.studentId)) return null;   // another student on this device
     return { text: typeof d.text === 'string' ? d.text : '', startedAt: d.startedAt };
   } catch (e) { return null; }
+}
+// Before 2026-11-05 the key ended in the level number (ta_skill_draft|<code>|<N>): opened from an old lv=<N> link,
+// a writing begun before the update comes back — moved to the new key.
+function moveOldDraft() {
+  const lv = parseInt(params.get('lv'), 10);
+  if (!(lv > 0) || params.get('st')) return;
+  try {
+    const oldKey = 'ta_skill_draft|' + SK.code + '|' + lv, old = localStorage.getItem(oldKey);
+    if (old === null) return;
+    if (localStorage.getItem(draftKey()) === null) localStorage.setItem(draftKey(), old);
+    localStorage.removeItem(oldKey);
+  } catch (e) { /* ignore */ }
 }
 function saveDraft(text) {
   if (SK.preview) return;
@@ -592,7 +614,7 @@ async function submitWriting(level, W, timeUp) {
   const check = await skCheckGrammar(text);
   const band = skWritingBand(words, W.minWords, check.matches.length, check.ok);
   lastPayload = {
-    v: 1, code: SK.code, type: info.type, title: `Level ${level.no} · ${level.theme} — ${info.name}`, level: level.no, skill: 'writing',
+    v: 1, code: SK.code, type: info.type, title: `Step ${level.no} · ${level.theme} — ${info.name}`, step: level.id, stepNo: level.no, skill: 'writing',
     name: SK.name, studentId: SK.studentId, text, words, minWords: W.minWords, maxWords: W.maxWords,
     mistakes: check.matches.length,
     mistakeList: check.matches.map(m => ({ bad: text.slice(m.offset, m.offset + m.length), fix: m.replacements[0] || '', message: m.message })),
@@ -711,18 +733,18 @@ function showSpeaking(level) {
 
 /* ---------- start ---------- */
 function boot() {
-  const level = levelData();
+  const level = stepData();
   const info = SKILL_INFO[SK.skill];
   if (!level || !info) { showMissing(); return; }
-  document.title = `${info.name} · Level ${level.no} — Loom`;
+  document.title = `${info.name} · Step ${level.no} — Loom`;
   if (!SK.preview && SK.skill !== 'speaking' && SK.code.length !== 6) { showNoCode(); return; }
   if (SK.skill === 'speaking') {
     if (level.speaking) showSpeaking(level);
-    else showComingSoon(level, `Level ${level.no} (${level.theme}) is still being made. Ask your teacher which level to do now.`);
+    else showComingSoon(level, `Step ${level.no} (${level.theme}) is still being made. Ask your teacher which step to do now.`);
     return;
   }
   const content = level[SK.skill];
-  if (!content) { showComingSoon(level, `Level ${level.no} (${level.theme}) is still being made. Ask your teacher which level to do now.`); return; }
+  if (!content) { showComingSoon(level, `Step ${level.no} (${level.theme}) is still being made. Ask your teacher which step to do now.`); return; }
   if (SK.preview) { SK.name = 'Preview'; SK.studentId = ''; if (SK.skill === 'writing') showWriting(level); else showExercise(level); return; }
   showStart(level, content);
 }

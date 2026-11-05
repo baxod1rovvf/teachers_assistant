@@ -37,7 +37,7 @@ function openGroupEditor(groupId) {
   const byDay = {};
   entries.forEach(e => { if (!(e.day in byDay)) byDay[e.day] = e; });
   const anyTime = (entries[0] && entries[0].time) || '16:00';
-  const level = (entries.find(e => e.level) || {}).level || '';
+  const level = (g && g.level) || (entries.find(e => e.level) || {}).level || '';   // kept on the group too since 2026-11-05
   const rows = GROUP_DAY_ORDER.map(d => {
     const on = d in byDay;
     return '<label class="gsched-day' + (on ? ' on' : '') + '" data-day="' + d + '">' +
@@ -91,6 +91,9 @@ function saveGroup(groupId, name, days, level) {
   } else {
     g.name = name;
   }
+  // the level is kept on the group itself too (a group with no lesson days has no schedule entries to hold it —
+  // the Course reads it to know where the group starts, skGroupLevel)
+  if (level) g.level = level; else delete g.level;
   saveStudentGroups(groups);
   // its lessons: keep the ones on days still ticked (and their lesson plans), add new days, take off the rest
   const key = String(oldName).trim().toLowerCase();
@@ -292,7 +295,7 @@ function renderStudentsList() {
         '<button class="sp-icon-btn danger" type="button" title="Delete group" aria-label="Delete group" onclick="deleteStudentGroup(' + jsAttr(b.id) + ')">🗑</button>') +
       '<span class="student-group-count">' + b.students.length + ' student' + (b.students.length === 1 ? '' : 's') + ' · <span data-group-pts="' + escapeForHtml(b.id) + '">🪙 ' + groupPts + '</span></span></div>';
     if (!b.unassigned) {
-      const exCount = getRecentExercises().filter(e => e.groupId === b.id).length;
+      const exCount = getRecentExercises().filter(e => e.groupId === b.id && !taIsSkillCourseItem(e)).length;
       html += '<div class="gd-actions">' +
         '<button class="mini-btn" type="button" onclick="taNavigate(\'my-exercises.html?group=\' + encodeURIComponent(' + jsAttr(b.id) + '))">📁 ' + exCount + ' exercise' + (exCount === 1 ? '' : 's') + '</button>' +
       '</div>';

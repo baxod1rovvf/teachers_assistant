@@ -38,7 +38,10 @@ function myexTypeIconHtml(typeLabel, extraClass) {
 function renderRecentExercises() {
   const wrap = document.getElementById('recentExercisesWrap');
   if (!wrap) return;
-  const list = getRecentExercises();
+  const all = getRecentExercises();
+  // Skills course parts ("… course" items, made by the Course page's Copy link before 2026-11-05) live on the Course page:
+  // they stay in the list (indexes and sync unchanged) but aren't shown here
+  const list = all.filter(item => !taIsSkillCourseItem(item));
   const toolbar = document.getElementById('myexToolbar');
   const chipsEl = document.getElementById('myexTypeChips');
   if (toolbar) toolbar.style.display = list.length ? '' : 'none';
@@ -93,8 +96,8 @@ function renderRecentExercises() {
   let html = '';
   let shown = 0;
   let dayOpen = null;   // the teacher asked for the exercises to be separated by date (2026-10-27)
-  list.forEach((item, idx) => {
-    if (!matches(item)) return;
+  all.forEach((item, idx) => {
+    if (taIsSkillCourseItem(item) || !matches(item)) return;
     shown++;
     const day = myexDayLabel(item.date);
     if (day !== dayOpen) {
