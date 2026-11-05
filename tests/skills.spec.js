@@ -618,51 +618,54 @@ test.describe('course page', () => {
     return errors;
   };
 
-  test('the Course page: four skills, 10 levels each (1–8 ready, 9–10 coming soon), Try opens a preview', async ({ page, context }) => {
+  test('the Course page opens on a path: 10 levels in order, 4 dots each (🎧 📖 ✍️ 🗣️), 1–8 open, 9–10 Coming soon; Try opens a preview', async ({ page, context }) => {
     const errors = await open(page, context);
-    const cards = page.locator('.sk-skill-card');
-    await expect(cards).toHaveCount(4);
-    await expect(cards).toHaveText([/Listening/, /Reading/, /Writing/, /Speaking/]);
-    const tiles = page.locator('.sk-level-tile');
-    for (const skill of ['Reading', 'Writing', 'Speaking', 'Listening']) {
-      await cards.filter({ hasText: skill }).click();
-      await expect(page.locator('#courseWrap')).toContainText('Elementary');
-      await expect(tiles).toHaveCount(10);
-      for (let i = 0; i < 10; i++) {
-        if (i < 8) {
-          await expect(tiles.nth(i).getByRole('button', { name: '▶️ Try' })).toBeVisible();
-          await expect(tiles.nth(i)).not.toContainText('Coming soon');
-        } else {
-          await expect(tiles.nth(i)).toContainText('Coming soon');
-          await expect(tiles.nth(i).getByRole('button', { name: '▶️ Try' })).toHaveCount(0);
-        }
+    const rows = page.locator('.sk-row');
+    await expect(rows).toHaveCount(10);
+    const nodes = page.locator('.sk-node');
+    await expect(nodes).toHaveText([/Level 1\s*Meeting people/, /Level 2/, /Level 3/, /Level 4/, /Level 5\s*Food & cafés/, /Level 6\s*Shopping/, /Level 7\s*My town/, /Level 8\s*Free time/, /Level 9/, /Level 10/]);
+    for (let i = 0; i < 10; i++) {
+      await expect(rows.nth(i).locator('.sk-dot')).toHaveCount(4);
+      expect(await rows.nth(i).locator('.sk-dot').evaluateAll(d => d.map(x => x.dataset.skill))).toEqual(['listening', 'reading', 'writing', 'speaking']);
+      if (i < 8) {
+        await expect(rows.nth(i).locator('button.sk-node')).toHaveCount(1);
+        await expect(rows.nth(i)).not.toContainText('Coming soon');
+      } else {
+        await expect(rows.nth(i)).toContainText('Coming soon');
+        await expect(rows.nth(i).locator('button')).toHaveCount(0);
       }
-      if (skill !== 'Listening') await page.getByRole('button', { name: '← All skills' }).click();
     }
-    await expect(tiles.nth(0)).toContainText('Level 1 · Meeting people');
-    await expect(tiles.nth(4)).toContainText('Level 5 · Food & cafés');
-    await expect(tiles.nth(5)).toContainText('Level 6 · Shopping');
-    await expect(tiles.nth(6)).toContainText('Level 7 · My town');
-    await expect(tiles.nth(7)).toContainText('Level 8 · Free time');
-    const [popup] = await Promise.all([page.waitForEvent('popup'), tiles.nth(0).getByRole('button', { name: '▶️ Try' }).click()]);
+    // the old skill cards are gone, and nothing on the Course page is a separate results button
+    await expect(page.locator('.sk-skill-card, .sk-level-tile')).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /View Results|Results table/ })).toHaveCount(0);
+    // nothing done yet: the first dot is "Next"; its tooltip says why
+    await expect(page.locator('.sk-dot.next')).toHaveCount(1);
+    await expect(rows.nth(0).locator('.sk-dot').first()).toHaveClass(/next/);
+    await expect(rows.nth(0).locator('.sk-dot').first()).toHaveAttribute('title', 'Listening — 0 of 3 students done');
+    await expect(rows.nth(0).locator('.sk-dot').nth(3)).toHaveAttribute('title', 'Speaking — Link not sent yet');
+    // a level opens its page: four parts with Try and Copy link
+    await nodes.nth(0).click();
+    await expect(page.locator('.sk-level-head')).toContainText('Level 1 · Meeting people');
+    const parts = page.locator('.sk-part');
+    await expect(parts).toHaveText([/Listening/, /Reading/, /Writing/, /Speaking/]);
+    await expect(page.locator('.sk-results-empty')).toContainText('No results yet');
+    await expect(page.getByRole('button', { name: /View Results|Results table/ })).toHaveCount(0);
+    const [popup] = await Promise.all([page.waitForEvent('popup'), parts.nth(0).getByRole('button', { name: '▶️ Try' }).click()]);
     await popup.waitForURL(/skill\.html\?s=listening&lv=1&preview=1/);
-    // the chosen skill is remembered on this device; ← All skills goes back
-    await page.reload();
-    await expect(page.locator('.sk-level-tile')).toHaveCount(10);
-    await page.getByRole('button', { name: '← All skills' }).click();
-    await expect(page.locator('.sk-skill-card')).toHaveCount(4);
+    await page.getByRole('button', { name: '← All levels' }).click();
+    await expect(page.locator('.sk-row')).toHaveCount(10);
+    expect(await page.evaluate(() => localStorage.getItem('ta_skills_open'))).toBeNull();
     expect(errors).toEqual([]);
   });
 
-  test('Copy link makes one My Exercises item per level + skill + group', async ({ page, context }) => {
+  test('Copy link makes one My Exercises item per level + skill + group; Speaking makes none, but its dot turns done', async ({ page, context }) => {
     const errors = await open(page, context);
     await page.evaluate(PRETEND_HTTPS);
-    await page.locator('.sk-skill-card', { hasText: 'Listening' }).click();
-    const tile = page.locator('.sk-level-tile').first();
-    await expect(tile.getByRole('button', { name: '📊 View Results' })).toHaveCount(0);
+    await page.locator('.sk-node[data-level="1"]').click();
+    const part = page.locator('.sk-part[data-skill="listening"]');
     const before = await page.evaluate(() => getRecentExercises().length);
     const group = await page.evaluate(() => getStudentGroups().find(g => g.id === skGroupId()));
-    await tile.getByRole('button', { name: '🔗 Copy link for ' + group.name }).click();
+    await part.getByRole('button', { name: '🔗 Copy link for ' + group.name }).click();
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(/^https:\/\/example\.github\.io\/teachers_assistant\/skill\.html\?s=listening&lv=1&c=[A-Z0-9]{6}$/);
     const first = await page.evaluate(() => navigator.clipboard.readText());
     const item = await page.evaluate(() => getRecentExercises()[0]);
@@ -671,19 +674,30 @@ test.describe('course page', () => {
     expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skills_links')))).toEqual({ [group.id + '|listening|1']: { uid: item.uid, code: item.code } });
     expect(item).toMatchObject({ skill: 'listening', level: 1 });
     await page.evaluate(() => navigator.clipboard.writeText(''));
-    await tile.getByRole('button', { name: /Copy link for/ }).click();
+    await part.getByRole('button', { name: /Copy link for/ }).click();
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(first);
     expect(await page.evaluate(() => getRecentExercises().length)).toBe(before + 1);
     expect(await page.evaluate(() => (window.__writes || []).filter(w => w.type === 'TA_SYNC:PLAY').length)).toBe(0);
-    await expect(tile.getByRole('button', { name: '📊 View Results' })).toBeVisible();
-    // Speaking: just the link, no My Exercises item and no results
-    await page.getByRole('button', { name: '← All skills' }).click();
-    await page.locator('.sk-skill-card', { hasText: 'Speaking' }).click();
-    const sp = page.locator('.sk-level-tile').first();
+    // a copied link alone doesn't make Listening done (nobody has done it)
+    await expect(part.locator('.sk-part-state')).toHaveText('⏳ 0 of 3 students done');
+    // Speaking: just the link, no My Exercises item — and its dot is done ("Link sent …")
+    const sp = page.locator('.sk-part[data-skill="speaking"]');
+    await expect(sp.locator('.sk-part-state')).toHaveText('⏳ Link not sent yet');
     await sp.getByRole('button', { name: /Copy link for/ }).click();
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe('https://example.github.io/teachers_assistant/skill.html?s=speaking&lv=1');
     expect(await page.evaluate(() => getRecentExercises().length)).toBe(before + 1);
-    await expect(sp.getByRole('button', { name: '📊 View Results' })).toHaveCount(0);
+    const links = await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skills_links')));
+    expect(Object.keys(links[group.id + '|speaking|1'])).toEqual(['sentAt']);
+    await expect(sp.locator('.sk-part-state')).toHaveText(/^✅ Link sent \d{1,2} [A-Z][a-z]{2}$/);
+    // copying it again keeps the first date
+    const at = links[group.id + '|speaking|1'].sentAt;
+    await sp.getByRole('button', { name: /Copy link for/ }).click();
+    expect(await page.evaluate(k => JSON.parse(localStorage.getItem('ta_skills_links'))[k].sentAt, group.id + '|speaking|1')).toBe(at);
+    await page.getByRole('button', { name: '← All levels' }).click();
+    const dot = page.locator('.sk-row').first().locator('.sk-dot[data-skill="speaking"]');
+    await expect(dot).toHaveClass(/done/);
+    await expect(dot).toHaveAttribute('title', /^Speaking — Link sent /);
+    await expect(page.locator('.sk-row').first().locator('.sk-dot[data-skill="listening"]')).toHaveClass(/next/);
     expect(errors).toEqual([]);
   });
 
@@ -691,8 +705,8 @@ test.describe('course page', () => {
     const errors = await open(page, context, { storage: { ta_student_groups: JSON.stringify([{ id: 'g1', name: 'Kids & Teens' }]) } });
     await page.evaluate(PRETEND_HTTPS);
     await page.evaluate(() => { navigator.clipboard.writeText = () => Promise.reject(new Error('blocked')); });
-    await page.locator('.sk-skill-card', { hasText: 'Listening' }).click();
-    await page.locator('.sk-level-tile').first().getByRole('button', { name: '🔗 Copy link for Kids & Teens' }).click();
+    await page.locator('.sk-node[data-level="1"]').click();
+    await page.locator('.sk-part[data-skill="listening"]').getByRole('button', { name: '🔗 Copy link for Kids & Teens' }).click();
     await expect(page.locator('.ta-modal .points-modal-title')).toHaveText('🔗 The link for Kids & Teens');
     await expect(page.locator('.ta-modal input')).toHaveValue(/skill\.html\?s=listening&lv=1&c=[A-Z0-9]{6}$/);
     expect(errors).toEqual([]);
@@ -700,35 +714,38 @@ test.describe('course page', () => {
 
   test('results arriving while the Course page is hidden don\'t redraw it; each drawing reads the kept results once', async ({ page, context }) => {
     const errors = await open(page, context);
-    await page.locator('.sk-skill-card', { hasText: 'Listening' }).click();
-    const r = await page.evaluate(() => {
-      let draws = 0, reads = 0;
-      const realRender = window.renderCourse, realRead = window.getStoredResults;
-      window.renderCourse = function () { draws++; return realRender.apply(this, arguments); };
-      window.getStoredResults = function () { reads++; return realRead.apply(this, arguments); };
-      const wrap = document.getElementById('courseWrap');
-      wrap.style.display = 'none';
-      window.taCourseResultsChanged();
-      const hidden = draws;
-      wrap.style.display = '';
-      reads = 0;
-      window.taCourseResultsChanged();
-      const shown = draws - hidden;
-      window.renderCourse = realRender; window.getStoredResults = realRead;
-      return { hidden, shown, reads };
-    });
-    expect(r.hidden).toBe(0);
-    expect(r.shown).toBe(1);
-    expect(r.reads).toBeLessThanOrEqual(2);
+    for (const level of [0, 1]) {
+      if (level) await page.locator('.sk-node[data-level="1"]').click();
+      const r = await page.evaluate(() => {
+        let draws = 0, reads = 0;
+        const realRender = window.renderCourse, realRead = window.getStoredResults;
+        window.renderCourse = function () { draws++; return realRender.apply(this, arguments); };
+        window.getStoredResults = function () { reads++; return realRead.apply(this, arguments); };
+        const wrap = document.getElementById('courseWrap');
+        wrap.style.display = 'none';
+        window.taCourseResultsChanged();
+        const hidden = draws;
+        wrap.style.display = '';
+        reads = 0;
+        window.taCourseResultsChanged();
+        const shown = draws - hidden;
+        window.renderCourse = realRender; window.getStoredResults = realRead;
+        return { hidden, shown, reads };
+      });
+      expect(r.hidden).toBe(0);
+      expect(r.shown).toBe(1);
+      expect(r.reads).toBeLessThanOrEqual(level ? 2 : 1);
+    }
     expect(errors).toEqual([]);
   });
 
-  test('without groups the tiles ask for one; on a phone nothing scrolls sideways', async ({ page, context }) => {
+  test('without groups the level page asks for one; on a phone nothing scrolls sideways', async ({ page, context }) => {
     const errors = await open(page, context, { storage: { ta_student_groups: '[]' } });
     await page.setViewportSize({ width: 390, height: 800 });
+    await expect(page.locator('.sk-row')).toHaveCount(10);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
-    await page.locator('.sk-skill-card', { hasText: 'Reading' }).click();
-    await expect(page.locator('.sk-level-tile').first()).toContainText('Add a group on the Students page first');
+    await page.locator('.sk-node[data-level="2"]').click();
+    await expect(page.locator('.sk-part').first()).toContainText('Add a group on the Students page first');
     await expect(page.getByRole('button', { name: /Copy link for/ })).toHaveCount(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
     expect(errors).toEqual([]);
@@ -737,8 +754,8 @@ test.describe('course page', () => {
   test('a sent link stays valid: the item deleted in My Exercises comes back with the same code', async ({ page, context }) => {
     const errors = await open(page, context);
     await page.evaluate(PRETEND_HTTPS);
-    await page.locator('.sk-skill-card', { hasText: 'Reading' }).click();
-    const tile = page.locator('.sk-level-tile').first();
+    await page.locator('.sk-node[data-level="1"]').click();
+    const tile = page.locator('.sk-part[data-skill="reading"]');
     await tile.getByRole('button', { name: /Copy link for/ }).click();
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(/skill\.html\?s=reading&lv=1&c=[A-Z0-9]{6}$/);
     const first = await page.evaluate(() => navigator.clipboard.readText());
@@ -746,7 +763,6 @@ test.describe('course page', () => {
     await page.evaluate(uid => removeRecentExercise(uid), item.uid);
     expect(await page.evaluate(uid => getRecentExercises().filter(e => e.uid === uid).length, item.uid)).toBe(0);
     await page.evaluate(() => { renderCourse(); return navigator.clipboard.writeText(''); });
-    await expect(tile.getByRole('button', { name: '📊 View Results' })).toHaveCount(0);
     await tile.getByRole('button', { name: /Copy link for/ }).click();
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(first);
     const again = await page.evaluate(uid => getRecentExercises().filter(e => e.uid === uid), item.uid);
@@ -851,13 +867,68 @@ test.describe('results', () => {
     expect(errors).toEqual([]);
   });
 
+  test('the path: a dot is done when half of the group has done it; Speaking when its link was sent; a level with all four shows ✓', async ({ page, context }) => {
+    const errors = await open(page, context, '/course.html');
+    const row1 = page.locator('.sk-row').first();
+    const dot = k => row1.locator('.sk-dot[data-skill="' + k + '"]');
+    // Target has 3 students: Listening and Reading 3 of 3, Writing 2 of 3 (Alice, Cora) — half or more → done
+    await expect(dot('listening')).toHaveClass(/done/);
+    await expect(dot('listening')).toHaveAttribute('title', 'Listening — 3 of 3 students done');
+    await expect(dot('writing')).toHaveClass(/done/);
+    await expect(dot('writing')).toHaveAttribute('title', 'Writing — 2 of 3 students done');
+    await expect(dot('speaking')).not.toHaveClass(/done/);
+    await expect(dot('speaking')).toHaveClass(/next/);
+    await expect(row1.locator('.sk-node')).not.toHaveClass(/done/);
+    // Dilya (Apex) did Level 1 Listening for Target's code: she doesn't count for Target, and Apex has no links yet
+    await page.locator('.sk-groups').getByRole('button', { name: 'Apex' }).click();
+    await expect(page.locator('.sk-row').first().locator('.sk-dot.done')).toHaveCount(0);
+    await page.locator('.sk-groups').getByRole('button', { name: 'Target' }).click();
+    // the Speaking link sent → Level 1 is all done (✓), and "Next" moves to Level 2
+    await page.evaluate(() => { const l = taSkillsLinks(); l['g1|speaking|1'] = { sentAt: new Date().toISOString() }; localStorage.setItem('ta_skills_links', JSON.stringify(l)); renderCourse(); });
+    await expect(row1.locator('.sk-dot.done')).toHaveCount(4);
+    await expect(row1.locator('.sk-node')).toHaveClass(/done/);
+    await expect(row1.locator('.sk-node-check')).toHaveText('✓');
+    await expect(page.locator('.sk-row').nth(1).locator('.sk-dot[data-skill="listening"]')).toHaveClass(/next/);
+    expect(errors).toEqual([]);
+  });
+
+  test('the path: fewer than half → not done; a group with no students on the list needs one result', async ({ page, context }) => {
+    const docsLess = docs().filter(d => !(d.code === 'WRT001' && d.studentId === '10003'));   // Writing: only Alice → 1 of 3
+    await prepare(context, { docs: docsLess, storage: { ta_recent_exercises: JSON.stringify(items()), ta_skills_links: links(), ta_course_group: 'g1' } });
+    const errors = watchErrors(page);
+    await page.goto('/course.html');
+    await page.waitForFunction(() => (window.__allResults || []).length >= 9, null, { timeout: 10000 });
+    await page.evaluate(() => renderCourse());
+    const dot = k => page.locator('.sk-row').first().locator('.sk-dot[data-skill="' + k + '"]');
+    await expect(dot('writing')).not.toHaveClass(/done/);
+    await expect(dot('writing')).toHaveClass(/next/);
+    await expect(dot('writing')).toHaveAttribute('title', 'Writing — 1 of 3 students done');
+    // nobody on the Students list in Target: one result is enough
+    await page.evaluate(() => { localStorage.setItem('ta_points_roster', JSON.stringify([])); renderCourse(); });
+    await expect(dot('writing')).toHaveClass(/done/);
+    await expect(dot('writing')).toHaveAttribute('title', 'Writing — 1 result');
+    expect(errors).toEqual([]);
+  });
+
   test('results table: ranking with ties, missing skills, colours, picture', async ({ page, context }) => {
     const errors = await open(page, context, '/course.html', { ta_skills_marks: JSON.stringify({ 'WRT001|10003': 6 }) });
-    await page.locator('.sk-skill-card', { hasText: 'Writing' }).click();
-    const tile = page.locator('.sk-level-tile').first();
-    await expect(page.locator('.sk-level-tile').nth(1).getByRole('button', { name: '🏆 Results table' })).toHaveCount(0);
-    await tile.getByRole('button', { name: '🏆 Results table' }).click();
-    const table = page.locator('.sk-rt');
+    // Level 2 has no results: a friendly empty state, no picture button
+    await page.locator('.sk-node[data-level="2"]').click();
+    await expect(page.locator('.sk-results-empty')).toContainText('No results yet');
+    await expect(page.getByRole('button', { name: '⬇️ Download picture' })).toHaveCount(0);
+    await page.getByRole('button', { name: '← All levels' }).click();
+    await page.locator('.sk-node[data-level="1"]').click();
+    // the results sit on top of the level page, above the four parts — no separate results buttons
+    expect(await page.evaluate(() => !!(document.querySelector('.sk-results').compareDocumentPosition(document.querySelector('.sk-parts')) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
+    await expect(page.locator('.sk-part')).toHaveCount(4);
+    for (const k of ['listening', 'reading', 'writing', 'speaking']) {
+      await expect(page.locator('.sk-part[data-skill="' + k + '"]').getByRole('button', { name: '▶️ Try' })).toBeVisible();
+      await expect(page.locator('.sk-part[data-skill="' + k + '"]').getByRole('button', { name: '🔗 Copy link for Target' })).toBeVisible();
+    }
+    await expect(page.locator('.sk-part[data-skill="writing"] .sk-part-state')).toHaveText('✅ 2 of 3 students done');
+    await expect(page.getByRole('button', { name: /View Results|Results table/ })).toHaveCount(0);
+    await expect(page.locator('.ta-modal')).toHaveCount(0);
+    const table = page.locator('.sk-results .sk-rt');
     await expect(table.locator('.sk-rt-head')).toContainText('Level 1 · Meeting people');
     await expect(table.locator('.sk-rt-head')).toContainText('Target');
     await expect(table.locator('.sk-rt-chip')).toHaveText([/Listening/, /Reading/, /Writing/]);
@@ -898,6 +969,13 @@ test.describe('results', () => {
     const buf = require('fs').readFileSync(await download.path());
     expect(buf.length).toBeGreaterThan(5000);
     expect(buf.slice(1, 4).toString()).toBe('PNG');
+    // a Writing band opens the student's text, where the band can be changed
+    await page.evaluate(() => renderCourse());
+    await page.locator('.sk-rt-row', { hasText: 'Alice Test' }).locator('.sk-rt-wbtn').click();
+    await expect(page.locator('.sk-wv')).toContainText('I live in a small town near the sea.');
+    await page.locator('.sk-wv').getByLabel('Band').fill('8');
+    await page.locator('.sk-wv').getByRole('button', { name: 'Save band' }).click();
+    await expect(page.locator('.sk-rt-row', { hasText: 'Alice Test' }).locator('.sk-rt-cell').nth(2)).toContainText('8');
     expect(errors).toEqual([]);
   });
 
@@ -1003,8 +1081,7 @@ test.describe('results', () => {
   test('the Course page loads a level\'s results by itself, even when its My Exercises item was deleted', async ({ page, context }) => {
     const errors = await open(page, context, '/course.html', { ta_recent_exercises: JSON.stringify(items().filter(i => i.skill !== 'reading')) });
     expect(await page.evaluate(() => window.__allResults.filter(r => r.code === 'RDG001').length)).toBe(3);
-    await page.locator('.sk-skill-card', { hasText: 'Reading' }).click();
-    await page.locator('.sk-level-tile').first().getByRole('button', { name: '🏆 Results table' }).click();
+    await page.locator('.sk-node[data-level="1"]').click();
     await expect(page.locator('.sk-rt-row').first().locator('.sk-rt-cell').nth(1)).toContainText('15 / 15');
     expect(errors).toEqual([]);
   });
@@ -1012,8 +1089,9 @@ test.describe('results', () => {
   test('the results table fits a phone: it scrolls inside its own box', async ({ page, context }) => {
     const errors = await open(page, context, '/course.html');
     await page.setViewportSize({ width: 390, height: 800 });
-    await page.locator('.sk-skill-card', { hasText: 'Listening' }).click();
-    await page.locator('.sk-level-tile').first().getByRole('button', { name: '🏆 Results table' }).click();
+    await expect(page.locator('.sk-row')).toHaveCount(10);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+    await page.locator('.sk-node[data-level="1"]').click();
     await expect(page.locator('.sk-rt-row')).toHaveCount(3);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
     expect(errors).toEqual([]);

@@ -2614,49 +2614,111 @@ button:focus-visible, a:focus-visible, .picker-card:focus-visible, input:focus-v
 @media (max-width: 860px) { .tb-nav { left: 4px; right: 4px; } }
 
 /* ================= SKILLS COURSE — TEACHER (course.html, js/pages/course.js, 2026-11-04) =================
-   Four big skill cards → the 10 level tiles of the chosen skill. --skc = the skill's colour. */
+   The level path (10 levels × 🎧 📖 ✍️ 🗣️ dots) → a level page: its results table, then four skill cards. --skc = the skill's colour. */
 .sk-groups { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 4px 0 20px; }
 .sk-groups-label { font-weight: 700; color: var(--ink-soft); margin-right: 4px; }
 .sk-hint { color: var(--ink-soft); font-weight: 600; font-size: .9rem; }
-.sk-skills { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 20px; }
-.sk-skill-card { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; text-align: left; min-width: 0; cursor: pointer;
-  padding: 22px 20px 20px; border-radius: 24px; border: 2.5px solid var(--line); color: var(--ink); font: inherit;
-  background: linear-gradient(160deg, color-mix(in srgb, var(--skc) 34%, var(--surface)), var(--surface) 70%);
-  box-shadow: var(--shadow-md); transition: transform .25s var(--bounce), box-shadow .25s var(--bounce); }
-.sk-skill-card:hover { transform: translateY(-4px) rotate(-1deg); box-shadow: 0 9px 0 var(--line); }
-.sk-skill-card:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--line); }
-.sk-skill-card:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
-.sk-skill-emoji { width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; font-size: 2.1rem; line-height: 1;
-  border-radius: 20px; background: var(--skc); border: 2.5px solid var(--line); box-shadow: 0 3px 0 var(--line); flex-shrink: 0; }
-.sk-skill-card:hover .sk-skill-emoji { animation: loomWiggle .5s ease; }
-.sk-skill-name { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.5rem; margin-top: 6px; }
-.sk-skill-about { color: var(--ink-soft); font-weight: 600; line-height: 1.45; }
-.sk-skill-count { margin-top: auto; font-size: .82rem; font-weight: 700; padding: 3px 12px; border-radius: 999px; background: var(--surface);
-  border: 2px solid var(--line); }
-.sk-skill-head { display: flex; align-items: center; gap: 16px; margin: 6px 0 18px; padding: 16px 20px; border: 2.5px solid var(--line);
-  border-radius: 24px; box-shadow: var(--shadow-md); background: linear-gradient(160deg, color-mix(in srgb, var(--skc) 30%, var(--surface)), var(--surface) 70%); }
-.sk-skill-head h3 { font-family: 'Fredoka', sans-serif; font-size: 1.6rem; margin: 0; }
-.sk-skill-level { color: var(--ink-soft); font-weight: 700; }
-.sk-levels { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 16px; align-items: start; }
-.sk-level-tile { display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: 16px; border-radius: 20px; border: 2.5px solid var(--line);
-  background: var(--surface); box-shadow: 0 4px 0 var(--line); }
-.sk-level-tile:not(.soon) { background: linear-gradient(165deg, color-mix(in srgb, var(--skc) 18%, var(--surface)), var(--surface) 60%); }
-.sk-level-tile.soon { border-style: dashed; box-shadow: none; }
-.sk-level-tile.soon .sk-tile-name b { color: var(--ink-soft); }
-.sk-tile-top { display: flex; align-items: center; gap: 12px; min-width: 0; }
-.sk-tile-emoji { width: 48px; height: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
-  border-radius: 16px; background: var(--surface); border: 2px solid var(--line); }
-.sk-level-tile:not(.soon) .sk-tile-emoji { background: var(--skc); }
-.sk-tile-name { display: flex; flex-direction: column; gap: 2px; min-width: 0; overflow-wrap: anywhere; }
-.sk-tile-name b { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.1rem; }
-.sk-tile-name span { color: var(--ink-soft); font-weight: 600; font-size: .9rem; }
+/* The level path: one row per level — the level's sticker, then its four dots on a track. Rows wind like a snake on a
+   computer (every other row runs right → left, a rounded turn joins them); on a phone they go straight down. */
+.sk-path-head { margin: 0 0 18px; }
+.sk-path-head h3 { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.35rem; margin: 0 0 4px; }
+.sk-path-head .sk-hint { margin: 0; max-width: 70ch; line-height: 1.5; }
+.sk-path { --sk-row-h: 104px; --sk-row-gap: 30px; --sk-turn: 44px; --sk-off: color-mix(in srgb, var(--ink-soft) 38%, transparent);
+  display: flex; flex-direction: column; gap: var(--sk-row-gap); padding: 6px var(--sk-turn) 12px; }
+.sk-row { position: relative; display: flex; align-items: center; height: var(--sk-row-h); min-width: 0; }
+.sk-row.rev { flex-direction: row-reverse; }
+/* the turn down to the next row, on the side the row ends */
+.sk-row:not(:last-child)::after { content: ''; position: absolute; top: 50%; height: calc(var(--sk-row-h) + var(--sk-row-gap)); width: var(--sk-turn);
+  left: 100%; border: 6px dashed var(--sk-off); border-left: 0; border-radius: 0 999px 999px 0; box-sizing: border-box; }
+.sk-row.rev:not(:last-child)::after { left: auto; right: 100%; border: 6px dashed var(--sk-off); border-right: 0; border-radius: 999px 0 0 999px; }
+.sk-row.complete:not(:last-child)::after { border-style: solid; border-color: var(--c-green); }
+.sk-node { position: relative; z-index: 1; flex: 0 0 230px; display: flex; align-items: center; gap: 12px; height: 84px; padding: 10px 14px;
+  border-radius: 22px; border: 2.5px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; text-align: left;
+  box-shadow: var(--shadow-md); min-width: 0; }
+button.sk-node { cursor: pointer; transition: transform .25s var(--bounce), box-shadow .25s var(--bounce); }
+button.sk-node:hover { transform: translateY(-3px) rotate(-1deg); box-shadow: 0 8px 0 var(--line); }
+button.sk-node:hover .sk-node-emoji { animation: loomWiggle .5s ease; }
+button.sk-node:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--line); }
+button.sk-node:focus-visible, .sk-dot:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+.sk-node.done { background: linear-gradient(160deg, color-mix(in srgb, var(--c-green) 30%, var(--surface)), var(--surface) 75%); }
+.sk-node.soon { border-style: dashed; box-shadow: none; opacity: .6; }
+.sk-node-emoji { width: 52px; height: 52px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; line-height: 1;
+  border-radius: 16px; border: 2.5px solid var(--line); background: var(--c-yellow); box-shadow: 0 3px 0 var(--line); }
+.sk-node.soon .sk-node-emoji { background: var(--surface-sunken, var(--surface)); box-shadow: none; filter: grayscale(1); }
+.sk-node-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.sk-node-text b { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.2rem; line-height: 1.15; }
+.sk-node-text > span { color: var(--ink-soft); font-weight: 700; font-size: .9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sk-node-tag { font-size: .75rem; font-weight: 700; color: var(--ink-soft); }
+.sk-node-tag.done { color: var(--success, var(--c-green)); }
+.sk-node-check { position: absolute; top: -12px; right: -10px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; background: var(--c-green); color: #12321F; font-weight: 700; font-size: 1rem; border: 2.5px solid var(--line); box-shadow: 0 2px 0 var(--line); }
+.sk-track { flex: 1 1 auto; display: flex; align-items: center; min-width: 0; }
+.sk-row.rev .sk-track { flex-direction: row-reverse; }
+.sk-seg { flex: 1 1 18px; min-width: 10px; height: 6px; background: repeating-linear-gradient(90deg, var(--sk-off) 0 10px, transparent 10px 18px); border-radius: 3px; }
+.sk-seg.on { background: var(--c-green); }
+.sk-seg-end { flex: 0 1 28px; }
+.sk-flag { font-size: 1.6rem; line-height: 1; margin: 0 4px; }
+.sk-dot { position: relative; flex: 0 0 auto; width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; padding: 0; font: inherit;
+  border-radius: 50%; border: 3px dashed var(--sk-off); background: var(--surface); color: var(--ink); cursor: pointer;
+  transition: transform .2s var(--bounce); }
+.sk-dot-emoji { font-size: 1.45rem; line-height: 1; filter: grayscale(.85); opacity: .7; }
+button.sk-dot:hover { transform: scale(1.1); }
+.sk-dot.done { border: 2.5px solid var(--line); background: var(--skc); box-shadow: 0 3px 0 var(--line); }
+.sk-dot.done .sk-dot-emoji { filter: none; opacity: 1; }
+.sk-dot-check { position: absolute; right: -6px; bottom: -6px; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; background: var(--c-green); color: #12321F; border: 2px solid var(--line); font-size: .75rem; font-weight: 700; }
+.sk-dot.next { border: 3px solid var(--skc); box-shadow: 0 0 0 5px color-mix(in srgb, var(--skc) 30%, transparent); animation: skNextPulse 1.8s ease-in-out infinite; }
+.sk-dot.next .sk-dot-emoji { filter: none; opacity: 1; }
+.sk-dot-next { position: absolute; top: -26px; left: 50%; transform: translateX(-50%); padding: 1px 8px; border-radius: 999px; white-space: nowrap;
+  background: var(--c-yellow); color: #2B2140; border: 2px solid var(--line); font-size: .75rem; font-weight: 700; }
+.sk-dot.soon { cursor: default; opacity: .45; }
+@keyframes skNextPulse { 0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--skc) 28%, transparent); } 50% { box-shadow: 0 0 0 9px color-mix(in srgb, var(--skc) 12%, transparent); } }
+/* the level page */
+.sk-level-head { display: flex; align-items: center; gap: 14px; margin: 8px 0 18px; }
+.sk-level-head h3 { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.6rem; margin: 0; overflow-wrap: anywhere; }
+.sk-results { margin-bottom: 26px; }
+.sk-results-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.sk-results-head h3 { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.25rem; margin: 0; }
+.sk-results-note { margin: 10px 0 0; }
+.sk-results-empty { display: flex; align-items: center; gap: 14px; padding: 18px 20px; border-radius: 20px; border: 2.5px dashed var(--border);
+  background: var(--surface); }
+.sk-results-empty-emoji { font-size: 2rem; line-height: 1; }
+.sk-results-empty div { display: flex; flex-direction: column; gap: 2px; }
+.sk-results-empty b { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.1rem; }
+.sk-results-empty span { color: var(--ink-soft); font-weight: 600; line-height: 1.45; }
+.sk-parts { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 16px; align-items: stretch; }
+.sk-part { display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: 16px; border-radius: 20px; border: 2.5px solid var(--line);
+  background: linear-gradient(165deg, color-mix(in srgb, var(--skc) 22%, var(--surface)), var(--surface) 60%); box-shadow: 0 4px 0 var(--line); }
+.sk-part.soon { background: var(--surface); border-style: dashed; box-shadow: none; }
+.sk-part-top { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.sk-part-emoji { width: 50px; height: 50px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
+  border-radius: 16px; background: var(--skc); border: 2.5px solid var(--line); box-shadow: 0 3px 0 var(--line); }
+.sk-part-name { display: flex; flex-direction: column; gap: 2px; min-width: 0; overflow-wrap: anywhere; }
+.sk-part-name b { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.2rem; }
+.sk-part-name span { color: var(--ink-soft); font-weight: 600; font-size: .9rem; }
+.sk-part-state { align-self: flex-start; font-size: .85rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; border: 2px solid var(--line);
+  background: var(--surface); }
+.sk-part-state.done { background: color-mix(in srgb, var(--c-green) 35%, var(--surface)); }
+.sk-part .sk-tile-btns { margin-top: auto; }
+.sk-part .sk-hint { margin: 0; }
 .sk-tile-btns { display: flex; flex-wrap: wrap; gap: 8px; }
 .sk-tile-btns .mini-btn { flex: 1 1 auto; justify-content: center; }
 .sk-soon-tag { align-self: flex-start; font-size: .82rem; font-weight: 700; padding: 2px 10px; border-radius: 999px; color: var(--ink-soft);
   border: 2px dashed var(--border); }
-.sk-level-tile .sk-hint { margin: 0; }
+@media (max-width: 760px) {
+  .sk-path { --sk-row-gap: 26px; padding: 6px 0 12px; }
+  .sk-row, .sk-row.rev { flex-direction: column; align-items: stretch; height: auto; gap: 14px; }
+  .sk-row .sk-track, .sk-row.rev .sk-track { flex-direction: row; padding: 22px 6px 0; }
+  .sk-node { flex: 0 0 auto; width: 100%; }
+  .sk-row:not(:last-child)::after, .sk-row.rev:not(:last-child)::after { left: 50%; right: auto; top: 100%; width: 0; height: var(--sk-row-gap);
+    border: 0; border-left: 6px dashed var(--sk-off); border-radius: 0; transform: translateX(-3px); }
+  .sk-row.complete:not(:last-child)::after { border-left: 6px solid var(--c-green); }
+  .sk-seg-out { display: none; }
+  .sk-row .sk-track > .sk-seg:first-child { display: none; }
+  .sk-level-head h3 { font-size: 1.3rem; }
+}
+@media (prefers-reduced-motion: reduce) { button.sk-node, .sk-dot { transition: none; } button.sk-node:hover .sk-node-emoji { animation: none; } .sk-dot.next { animation: none; } }
 /* Results table (course.js skTableHtml) — fixed light colours in both themes, so it looks like the picture it downloads */
-.points-modal.sk-rt-modal { max-width: min(980px, 96vw); width: 96vw; }
 .sk-rt { --rt-line: #2B2140; --rt-ink: #2B2140; --rt-soft: #5A4E72; color: var(--rt-ink); background: #fff; border: 3px solid var(--rt-line);
   border-radius: 22px; box-shadow: 0 6px 0 var(--rt-line); overflow: hidden; font-family: 'Nunito', system-ui, sans-serif; }
 .sk-rt-head { background: #2B2140; color: #FFF7EC; padding: 16px 22px 18px; display: flex; flex-direction: column; gap: 6px; }
@@ -2686,12 +2748,14 @@ button:focus-visible, a:focus-visible, .picker-card:focus-visible, input:focus-v
 .sk-rt .low { background: #FFE0E0; color: #A31F1F; border-color: #FF6B6B; }
 .sk-rt .none { background: #F4EEE2; color: #7C6F95; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.3rem; }
 .sk-rt-overall { box-shadow: 0 3px 0 var(--rt-line); border-color: var(--rt-line) !important; }
+.sk-rt-wbtn { font: inherit; cursor: pointer; width: 100%; transition: transform .15s var(--bounce); }
+.sk-rt-wbtn:hover { transform: translateY(-2px); box-shadow: 0 3px 0 var(--rt-line); }
+.sk-rt-wbtn:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
 .sk-rt-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding: 14px 22px; border-top: 2px solid var(--rt-line);
   font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.1rem; }
 .sk-rt-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px 14px; margin-top: 16px; }
 .sk-rt-actions .sk-hint { margin-right: auto; }
 @media (max-width: 560px) {
-  .points-modal.sk-rt-modal { padding-left: 12px; padding-right: 12px; }
   .sk-rt-title { font-size: 1.3rem; }
   .sk-rt-head { padding: 14px 16px; }
   .sk-rt-cols, .sk-rt-row { padding: 0 12px; }
@@ -2714,15 +2778,6 @@ button:focus-visible, a:focus-visible, .picker-card:focus-visible, input:focus-v
 .sk-wv-band input { width: 90px; }
 .sk-wv-how { color: var(--ink-soft); font-weight: 700; font-size: .85rem; }
 .res-band { font-weight: 700; }
-@media (max-width: 560px) {
-  .sk-skills { gap: 14px; }
-  .sk-skill-card { padding: 16px; flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 14px; }
-  .sk-skill-emoji { width: 52px; height: 52px; font-size: 1.7rem; }
-  .sk-skill-name { margin-top: 0; font-size: 1.3rem; }
-  .sk-skill-about, .sk-skill-count { flex-basis: 100%; }
-  .sk-skill-head { padding: 12px 14px; }
-}
-@media (prefers-reduced-motion: reduce) { .sk-skill-card { transition: none; } .sk-skill-card:hover .sk-skill-emoji { animation: none; } }
 
 /* ================= SKILLS COURSE — STUDENT PAGE (skill.html, js/skill-player.js, 2026-11-04) =================
    The student's page for one level: start card (the student theme's .ta-login-* look), the recording or the text,

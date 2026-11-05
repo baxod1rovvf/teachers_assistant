@@ -82,7 +82,7 @@ const MASTHEAD_COPY = {
   createpicker: { eyebrow: "➕ Create", title: "Pick an exercise type", sub: "Ready to use, in process, or merge a few together — everything starts here." },
   hwcbuilder: { eyebrow: "📚 Homework & Class", title: "Build your set", sub: "Pick exercises from My Exercises, put them in order, then generate one combined file." },
   main: { eyebrow: "🎓 Loom", title: "Welcome back", sub: "Everything you need to build, share, and track classroom exercises." },
-  course: { eyebrow: "🗺️ Course", title: "Skill courses", sub: "Listening, Reading, Writing and Speaking, 10 levels each. Try a level, then send its link to a group." },
+  course: { eyebrow: "🗺️ Course", title: "Skills course", sub: "10 levels, each with Listening, Reading, Writing and Speaking. Follow your group along the path and send each part's link." },
   dashboard: { eyebrow: "📊 Statistics", title: "Your classroom at a glance", sub: "Each exercise type's last 7 days, and today compared with yesterday." },
   myexercises: { eyebrow: "📁 My Exercises", title: "Everything you've built", sub: "Every exercise you've created — reopen it to make a new version, jump to its results, or turn off its points." },
   students: { eyebrow: "Students & Points", title: "Your groups and students", sub: "Groups, their lesson times, students' IDs and points." },
