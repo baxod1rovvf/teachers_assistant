@@ -918,8 +918,8 @@ test.describe('results', () => {
     await expect(page.getByRole('button', { name: '⬇️ Download picture' })).toHaveCount(0);
     await page.getByRole('button', { name: '← All levels' }).click();
     await page.locator('.sk-node[data-level="1"]').click();
-    // the results sit on top of the level page, above the four parts — no separate results buttons
-    expect(await page.evaluate(() => !!(document.querySelector('.sk-results').compareDocumentPosition(document.querySelector('.sk-parts')) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
+    // the four parts come first and the results below them (teacher, 2026-11-05) — no separate results buttons
+    expect(await page.evaluate(() => !!(document.querySelector('.sk-parts').compareDocumentPosition(document.querySelector('.sk-results')) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
     await expect(page.locator('.sk-part')).toHaveCount(4);
     for (const k of ['listening', 'reading', 'writing', 'speaking']) {
       await expect(page.locator('.sk-part[data-skill="' + k + '"]').getByRole('button', { name: '▶️ Try' })).toBeVisible();

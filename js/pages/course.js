@@ -205,8 +205,8 @@ function skLevelPageHtml(lv, g) {
   }).join('');
   return '<button type="button" class="back-to-picker-btn" onclick="skOpenLevel(0)">← All levels</button>' +
     '<div class="sk-level-head"><span class="sk-node-emoji">' + lv.emoji + '</span><div><h3>Level ' + lv.no + ' · ' + escapeForHtml(lv.theme) + '</h3>' +
-    '<div class="sk-hint">Elementary · 🎧 📖 ✍️ 🗣️</div></div></div>' + results +
-    '<div class="sk-parts">' + cards + '</div>';
+    '<div class="sk-hint">Elementary · 🎧 📖 ✍️ 🗣️</div></div></div>' +
+    '<div class="sk-parts">' + cards + '</div>' + results;   // the exercises first, their results below (teacher, 2026-11-05)
 }
 function skTileSub(c) { return c.title || c.topic || (c.part2 && (c.part2.topic || c.part2.title)) || ''; }
 

@@ -513,8 +513,8 @@ real students' names or results into the repository (it is public).
   of the group's students (Students list, by ID) have a result for that level + skill (a group with no students: one result); Speaking
   (sends nothing) when the teacher copied its link for the group (`ta_skills_links["<groupId>|speaking|<level>"] = { sentAt }`, no My
   Exercises item). Dot tooltips say why ("2 of 3 students done", "Link sent 5 Nov"); a level with all four shows ✓; the first dot not done
-  is "Next". **A level opens its page** (`skLevelPageHtml`, "← All levels", not remembered): the results table on top, inline
-  (`skTableHtml`, ⬇️ Download picture; a ✍️ band opens the writing, `skViewWriting`; an empty state before any result), then four parts
+  is "Next". **A level opens its page** (`skLevelPageHtml`, "← All levels", not remembered): the four parts first, then the results table below them (teacher, 2026-11-05), inline
+  (`skTableHtml`, ⬇️ Download picture; a ✍️ band opens the writing, `skViewWriting`; an empty state before any result); the parts
   (`.sk-part` — `.sk-card` belongs to the student page) with their done state, ▶️ Try (`skTry`, `&preview=1`, sends nothing) and 🔗 Copy link
   for <group> (`skCopyLink`). **No "View Results"/"Results table" buttons on the Course page** (one exercise's results: My Exercises).
 - **Student page** `skill.html` + `js/skill-player.js` (`js/skill-bands.js` shared): link `skill.html?s=<listening|reading|writing|speaking>&lv=<n>&c=<code>`
