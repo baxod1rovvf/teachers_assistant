@@ -178,5 +178,42 @@
       ["am_michael", "Yes, that's right.", 3.5],
       ["af_heart", "Thank you, Mr Barton. We will see you and Rosie on Sunday!"]
     ]
+  },
+  {
+    "label": "Level 6 · Shopping — a lost bag at a shop",
+    "src": "audio/skills/elem-6-listening.mp3",
+    "lines": [
+      ["af_heart", "Level six. You will hear a woman phoning a department store about a lost bag. Listen and complete the form."],
+      ["am_michael", "Good morning, Westgate Department Store. Customer service. How can I help you?"],
+      ["af_heart", "Hello. I think I left my bag in your shop. Has anyone found it?"],
+      ["am_michael", "I can check for you. What's your surname, please?"],
+      ["af_heart", "It's Palmer. I'll spell it for you."],
+      ["af_heart", "P. A. L. M. E. R.", 3.5],
+      ["am_michael", "Thank you, Mrs Palmer. When were you in the shop?"],
+      ["af_heart", "I was here on Saturday morning, with my sister.", 3.5],
+      ["am_michael", "And where do you think you left the bag?"],
+      ["af_heart", "In the shoe department. I tried on some boots, and I put my bag on the floor.", 3.5],
+      ["am_michael", "I see. What does the bag look like?"],
+      ["af_heart", "It's a small leather bag. It's dark green, with a long strap.", 3.5],
+      ["am_michael", "And what's inside the bag?"],
+      ["af_heart", "There's a red purse inside it.", 3.5],
+      ["am_michael", "Is there any money in the purse?"],
+      ["af_heart", "Yes, about thirty-five pounds."],
+      ["am_michael", "Thirty-five pounds?"],
+      ["af_heart", "Yes, that's right.", 3.5],
+      ["am_michael", "Is there anything else in the bag?"],
+      ["af_heart", "Yes, there's a pair of sunglasses in a black case.", 3.5],
+      ["am_michael", "Good news, Mrs Palmer. I think we've got your bag here! Can I have your address, please?"],
+      ["af_heart", "Of course. I live at forty-two Ashby Road. I'll spell Ashby for you."],
+      ["af_heart", "A. S. H. B. Y.", 3.5],
+      ["am_michael", "Thank you. And what's your phone number?"],
+      ["af_heart", "It's oh seven seven double oh, nine double oh, eight four six."],
+      ["am_michael", "Oh seven seven double oh, nine double oh, eight four six?"],
+      ["af_heart", "Yes, that's right.", 3.5],
+      ["af_heart", "Can I come and get my bag today?"],
+      ["am_michael", "Yes, of course. You can collect it from the information desk on the ground floor.", 3.5],
+      ["am_michael", "Please bring something with your name on it, like your driving licence."],
+      ["af_heart", "Thank you so much! I'll come this afternoon."]
+    ]
   }
 ]

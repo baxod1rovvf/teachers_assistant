@@ -34,16 +34,16 @@ var TA_SKILLS = {
             { q: 'Check-out time: _____ a.m.', a: ['11', 'eleven', '11.00', '11:00', "eleven o'clock", "11 o'clock"] }
           ],
           words: [
-            { w: 'booking', m: 'a room or a table you ask for before you arrive', ex: "I've got a booking for tonight." },
-            { w: 'surname', m: 'your family name', ex: 'My surname is Thompson.' },
-            { w: 'spell', m: 'to say the letters of a word one by one', ex: 'Could you spell your surname, please?' },
-            { w: 'floor', m: 'one level of a building', ex: "Your room is on the second floor." },
-            { w: 'stay', m: 'to live in a place for a short time', ex: "You're staying with us for three nights." },
-            { w: 'ground floor', m: 'the level of a building that is on the street', ex: 'The restaurant is on the ground floor.' },
-            { w: 'car park', m: 'a place where you leave your car', ex: 'Our car park is behind the hotel.' },
-            { w: 'behind', m: 'at the back of something', ex: 'The car park is behind the hotel.' },
-            { w: 'opposite', m: 'on the other side of the street from something', ex: "There's a supermarket opposite the hotel." },
-            { w: 'check-out', m: 'the time when you leave a hotel and give back the key', ex: "Check-out is at eleven o'clock." }
+            { w: 'booking', emoji: '📝', m: 'a room or a table you ask for before you arrive', ex: "I've got a booking for tonight." },
+            { w: 'surname', emoji: '🪪', m: 'your family name', ex: 'My surname is Thompson.' },
+            { w: 'spell', emoji: '🔤', m: 'to say the letters of a word one by one', ex: 'Could you spell your surname, please?' },
+            { w: 'floor', emoji: '🏢', m: 'one level of a building', ex: "Your room is on the second floor." },
+            { w: 'stay', emoji: '🛏️', m: 'to live in a place for a short time', ex: "You're staying with us for three nights." },
+            { w: 'ground floor', emoji: '⬇️', m: 'the level of a building that is on the street', ex: 'The restaurant is on the ground floor.' },
+            { w: 'car park', emoji: '🅿️', m: 'a place where you leave your car', ex: 'Our car park is behind the hotel.' },
+            { w: 'behind', emoji: '🔙', m: 'at the back of something', ex: 'The car park is behind the hotel.' },
+            { w: 'opposite', emoji: '↔️', m: 'on the other side of the street from something', ex: "There's a supermarket opposite the hotel." },
+            { w: 'check-out', emoji: '🧳', m: 'the time when you leave a hotel and give back the key', ex: "Check-out is at eleven o'clock." }
           ],
           transcript: [
             { who: 'Woman', text: 'Level one. You will hear a conversation at a hotel. Listen and complete the form.', answers: [] },
@@ -106,16 +106,16 @@ var TA_SKILLS = {
             { type: 'choose', q: "What is Lucy's favourite food?", opts: ['pasta', 'fish and chips', 'pizza'], a: ['pizza'], line: 10 }
           ],
           words: [
-            { w: 'pen-friend', m: 'a friend in another place who you write to', ex: "I'm looking for a pen-friend from another country." },
-            { w: 'profile', m: 'a short text about a person', ex: "Read Lucy's profile and answer the questions." },
-            { w: 'flat', m: 'a home on one floor of a bigger building', ex: 'I live in a small flat with my family.' },
-            { w: 'subject', m: 'something you study at school, like maths or art', ex: 'My favourite subject is art.' },
-            { w: 'favourite', m: 'the one you like best', ex: 'My favourite food is pizza.' },
-            { w: 'difficult', m: 'not easy', ex: "I don't really like maths, because it's difficult for me." },
-            { w: 'usually', m: 'on most days; most of the time', ex: 'After school, I usually walk my dog.' },
-            { w: 'friendly', m: 'kind and nice to people', ex: "He's brown and white, and he's very friendly." },
-            { w: 'sometimes', m: 'not always, but on some days', ex: 'I sometimes go swimming with my friends.' },
-            { w: 'country', m: 'a nation, like England or Spain', ex: 'I want a pen-friend from another country.' }
+            { w: 'pen-friend', emoji: '✉️', m: 'a friend in another place who you write to', ex: "I'm looking for a pen-friend from another country." },
+            { w: 'profile', emoji: '📄', m: 'a short text about a person', ex: "Read Lucy's profile and answer the questions." },
+            { w: 'flat', emoji: '🏠', m: 'a home on one floor of a bigger building', ex: 'I live in a small flat with my family.' },
+            { w: 'subject', emoji: '📚', m: 'something you study at school, like maths or art', ex: 'My favourite subject is art.' },
+            { w: 'favourite', emoji: '❤️', m: 'the one you like best', ex: 'My favourite food is pizza.' },
+            { w: 'difficult', emoji: '🧩', m: 'not easy', ex: "I don't really like maths, because it's difficult for me." },
+            { w: 'usually', emoji: '🔁', m: 'on most days; most of the time', ex: 'After school, I usually walk my dog.' },
+            { w: 'friendly', emoji: '😊', m: 'kind and nice to people', ex: "He's brown and white, and he's very friendly." },
+            { w: 'sometimes', emoji: '🔀', m: 'not always, but on some days', ex: 'I sometimes go swimming with my friends.' },
+            { w: 'country', emoji: '🌍', m: 'a nation, like England or Spain', ex: 'I want a pen-friend from another country.' }
           ]
         },
         writing: {
@@ -170,16 +170,16 @@ var TA_SKILLS = {
             { q: 'For the first lesson, bring a _____', a: ['photo', 'photograph', 'photo of Callum'] }
           ],
           words: [
-            { w: 'join', m: 'to become a member of a club or a group', ex: "I'd like to join the club with my son." },
-            { w: 'keen on', m: 'liking something very much', ex: "He's very keen on sport." },
-            { w: 'form', m: 'a paper or a page where you write information about yourself', ex: "I'll fill in the form for you." },
-            { w: 'son', m: 'a boy who is your child', ex: "What's your son's name?" },
-            { w: 'energy', m: 'the power to be busy and active for a long time', ex: "He's got lots of energy!" },
-            { w: 'best friend', m: 'the friend you like most', ex: 'His best friend goes to your swimming club too.' },
-            { w: 'lesson', m: 'a time when someone teaches you something', ex: 'Our swimming lessons for children are on Saturday mornings.' },
-            { w: 'free', m: 'not busy; with time to do something', ex: "We're free at the weekend." },
-            { w: 'a month', m: 'for each month', ex: "It's thirty pounds a month." },
-            { w: 'membership card', m: 'a card that shows you are a member of a club', ex: 'Please bring a photo for his membership card.' }
+            { w: 'join', emoji: '🤝', m: 'to become a member of a club or a group', ex: "I'd like to join the club with my son." },
+            { w: 'keen on', emoji: '😍', m: 'liking something very much', ex: "He's very keen on sport." },
+            { w: 'form', emoji: '📋', m: 'a paper or a page where you write information about yourself', ex: "I'll fill in the form for you." },
+            { w: 'son', emoji: '👦', m: 'a boy who is your child', ex: "What's your son's name?" },
+            { w: 'energy', emoji: '⚡', m: 'the power to be busy and active for a long time', ex: "He's got lots of energy!" },
+            { w: 'best friend', emoji: '👫', m: 'the friend you like most', ex: 'His best friend goes to your swimming club too.' },
+            { w: 'lesson', emoji: '🏊', m: 'a time when someone teaches you something', ex: 'Our swimming lessons for children are on Saturday mornings.' },
+            { w: 'free', emoji: '🆓', m: 'not busy; with time to do something', ex: "We're free at the weekend." },
+            { w: 'a month', emoji: '📅', m: 'for each month', ex: "It's thirty pounds a month." },
+            { w: 'membership card', emoji: '💳', m: 'a card that shows you are a member of a club', ex: 'Please bring a photo for his membership card.' }
           ],
           transcript: [
             { who: 'Woman', text: 'Level two. You will hear a conversation at a sports club. Listen and complete the form.', answers: [] },
@@ -244,16 +244,16 @@ var TA_SKILLS = {
             { type: 'choose', q: 'What do Emma and Chloe do on Fridays?', opts: ['They watch films.', 'They play tennis.', 'They cook dinner.'], a: ['They watch films.'], line: 15 }
           ],
           words: [
-            { w: 'primary school', m: 'a school for children from about five to eleven years old', ex: 'My mum is a teacher at a primary school.' },
-            { w: 'patient', m: 'calm; not angry when you have to wait or help someone', ex: "She's kind and very patient." },
-            { w: 'city centre', m: 'the main part of a city, with shops and offices', ex: 'My dad works in a bank in the city centre.' },
-            { w: 'early', m: 'before the usual time; at the start of the day', ex: 'He gets up very early.' },
-            { w: 'older', m: 'born before someone else', ex: 'My older brother, Daniel, is twenty.' },
-            { w: 'university', m: 'a place where people study after school', ex: 'He studies music at university in Leeds.' },
-            { w: 'miss', m: 'to feel sad because someone is not with you', ex: 'He only comes home in the holidays, so I miss him.' },
-            { w: 'noisy', m: 'making a lot of sound', ex: "He's funny, but he's sometimes very noisy!" },
-            { w: 'village', m: 'a very small town in the countryside', ex: 'My grandparents live in a village near the sea.' },
-            { w: 'next to', m: 'very near; at the side of', ex: 'We sit next to each other in every lesson.' }
+            { w: 'primary school', emoji: '🏫', m: 'a school for children from about five to eleven years old', ex: 'My mum is a teacher at a primary school.' },
+            { w: 'patient', emoji: '🧘', m: 'calm; not angry when you have to wait or help someone', ex: "She's kind and very patient." },
+            { w: 'city centre', emoji: '🏙️', m: 'the main part of a city, with shops and offices', ex: 'My dad works in a bank in the city centre.' },
+            { w: 'early', emoji: '🌅', m: 'before the usual time; at the start of the day', ex: 'He gets up very early.' },
+            { w: 'older', emoji: '👴', m: 'born before someone else', ex: 'My older brother, Daniel, is twenty.' },
+            { w: 'university', emoji: '🎓', m: 'a place where people study after school', ex: 'He studies music at university in Leeds.' },
+            { w: 'miss', emoji: '😢', m: 'to feel sad because someone is not with you', ex: 'He only comes home in the holidays, so I miss him.' },
+            { w: 'noisy', emoji: '🔊', m: 'making a lot of sound', ex: "He's funny, but he's sometimes very noisy!" },
+            { w: 'village', emoji: '🏡', m: 'a very small town in the countryside', ex: 'My grandparents live in a village near the sea.' },
+            { w: 'next to', emoji: '👉', m: 'very near; at the side of', ex: 'We sit next to each other in every lesson.' }
           ]
         },
         writing: {
@@ -308,16 +308,16 @@ var TA_SKILLS = {
             { q: "Mrs Fletcher's mobile: _____", a: ['07700 900 718', '07700900718'] }
           ],
           words: [
-            { w: 'advert', m: 'a short text that tells people about something to buy or rent', ex: "I'm calling about the room in your advert." },
-            { w: 'owner', m: 'the person something belongs to', ex: "I'm the owner of the house." },
-            { w: 'rent', m: 'the money you pay every month to live in a place', ex: 'The rent is four hundred and fifty pounds a month.' },
-            { w: 'top floor', m: 'the highest level of a building', ex: "It's on the top floor." },
-            { w: 'view', m: 'what you can see from a window or a place', ex: 'It has a lovely view of the garden.' },
-            { w: 'furniture', m: 'things like beds, tables and chairs', ex: 'Is there any furniture in the room?' },
-            { w: 'wardrobe', m: 'a tall cupboard for your clothes', ex: "There's a big wardrobe for your clothes." },
-            { w: 'bills', m: 'money you pay for things like water and electricity', ex: 'That includes the bills.' },
-            { w: 'share', m: 'to have or use something together with other people', ex: 'You share the bathroom with two other people.' },
-            { w: 'tidy', m: 'clean, with everything in its place', ex: "They're both students, and they're very tidy." }
+            { w: 'advert', emoji: '📰', m: 'a short text that tells people about something to buy or rent', ex: "I'm calling about the room in your advert." },
+            { w: 'owner', emoji: '🔑', m: 'the person something belongs to', ex: "I'm the owner of the house." },
+            { w: 'rent', emoji: '💷', m: 'the money you pay every month to live in a place', ex: 'The rent is four hundred and fifty pounds a month.' },
+            { w: 'top floor', emoji: '🔝', m: 'the highest level of a building', ex: "It's on the top floor." },
+            { w: 'view', emoji: '🏞️', m: 'what you can see from a window or a place', ex: 'It has a lovely view of the garden.' },
+            { w: 'furniture', emoji: '🛋️', m: 'things like beds, tables and chairs', ex: 'Is there any furniture in the room?' },
+            { w: 'wardrobe', emoji: '🚪', m: 'a tall cupboard for your clothes', ex: "There's a big wardrobe for your clothes." },
+            { w: 'bills', emoji: '🧾', m: 'money you pay for things like water and electricity', ex: 'That includes the bills.' },
+            { w: 'share', emoji: '🍕', m: 'to have or use something together with other people', ex: 'You share the bathroom with two other people.' },
+            { w: 'tidy', emoji: '🧹', m: 'clean, with everything in its place', ex: "They're both students, and they're very tidy." }
           ],
           transcript: [
             { who: 'Woman', text: 'Level three. You will hear a phone call about a room to rent. Listen and complete the notes.', answers: [] },
@@ -383,16 +383,16 @@ var TA_SKILLS = {
             { type: 'choose', q: 'What does Grace think about the countryside?', opts: ['She never wants to live there.', 'She wants to live there one day.', 'She goes there every weekend.'], a: ['She never wants to live there.'], line: 12 }
           ],
           words: [
-            { w: 'countryside', m: 'land with fields and farms, away from towns', ex: 'Tom lives in a house in the countryside.' },
-            { w: 'fireplace', m: 'a place in a wall where you can have a fire', ex: 'The living room has a fireplace.' },
-            { w: 'large', m: 'big', ex: 'There is a large garden with apple trees.' },
-            { w: 'nearest', m: 'the one that is closest to you', ex: 'The nearest shop is three kilometres away.' },
-            { w: 'once a week', m: 'one time every week', ex: "Tom's mum drives to the supermarket once a week." },
-            { w: 'cycle', m: 'to ride a bike', ex: 'He cycles to school every day.' },
-            { w: 'modern', m: 'new and in today\'s style', ex: 'The flat is small and modern.' },
-            { w: 'balcony', m: 'a small place outside a flat, above the street, where you can stand or sit', ex: 'There is a balcony with lots of plants.' },
-            { w: 'close to', m: 'near', ex: 'Her flat is very close to shops.' },
-            { w: 'noise', m: 'a loud sound that you don\'t like', ex: 'The only problem is the noise from the street.' }
+            { w: 'countryside', emoji: '🌳', m: 'land with fields and farms, away from towns', ex: 'Tom lives in a house in the countryside.' },
+            { w: 'fireplace', emoji: '🔥', m: 'a place in a wall where you can have a fire', ex: 'The living room has a fireplace.' },
+            { w: 'large', emoji: '🐘', m: 'big', ex: 'There is a large garden with apple trees.' },
+            { w: 'nearest', emoji: '📍', m: 'the one that is closest to you', ex: 'The nearest shop is three kilometres away.' },
+            { w: 'once a week', emoji: '📆', m: 'one time every week', ex: "Tom's mum drives to the supermarket once a week." },
+            { w: 'cycle', emoji: '🚲', m: 'to ride a bike', ex: 'He cycles to school every day.' },
+            { w: 'modern', emoji: '✨', m: 'new and in today\'s style', ex: 'The flat is small and modern.' },
+            { w: 'balcony', emoji: '🌇', m: 'a small place outside a flat, above the street, where you can stand or sit', ex: 'There is a balcony with lots of plants.' },
+            { w: 'close to', emoji: '🤏', m: 'near', ex: 'Her flat is very close to shops.' },
+            { w: 'noise', emoji: '📢', m: 'a loud sound that you don\'t like', ex: 'The only problem is the noise from the street.' }
           ]
         },
         writing: {
@@ -447,16 +447,16 @@ var TA_SKILLS = {
             { q: 'Park next to the _____', a: ['library'] }
           ],
           words: [
-            { w: 'surgery', m: 'the place where you go to see a doctor', ex: 'Good morning, Oakfield Surgery.' },
-            { w: 'appointment', m: 'a time when you agree to see someone, for example a doctor', ex: "I'd like to make an appointment with a doctor." },
-            { w: 'usually', m: 'on most days; most of the time', ex: 'Which doctor do you usually see?' },
-            { w: 'headache', m: 'a pain in your head', ex: "I've had a bad headache every afternoon." },
-            { w: 'work too hard', m: 'to work a lot and get very tired', ex: "I think I'm working too hard." },
-            { w: 'finish work', m: 'to stop working at the end of the day', ex: 'I finish work at four o\'clock.' },
-            { w: 'meeting', m: 'a time when people come together to talk about work', ex: 'On Mondays, we always have a long meeting.' },
-            { w: 'medicine', m: 'something you take when you are ill, to get better', ex: 'Please bring any medicine you take at the moment.' },
-            { w: 'arrive', m: 'to get to a place', ex: 'Please arrive ten minutes early.' },
-            { w: 'park', m: 'to leave your car in a place', ex: "It's better to park next to the library." }
+            { w: 'surgery', emoji: '🏥', m: 'the place where you go to see a doctor', ex: 'Good morning, Oakfield Surgery.' },
+            { w: 'appointment', emoji: '📅', m: 'a time when you agree to see someone, for example a doctor', ex: "I'd like to make an appointment with a doctor." },
+            { w: 'usually', emoji: '🔁', m: 'on most days; most of the time', ex: 'Which doctor do you usually see?' },
+            { w: 'headache', emoji: '🤕', m: 'a pain in your head', ex: "I've had a bad headache every afternoon." },
+            { w: 'work too hard', emoji: '😓', m: 'to work a lot and get very tired', ex: "I think I'm working too hard." },
+            { w: 'finish work', emoji: '🏁', m: 'to stop working at the end of the day', ex: 'I finish work at four o\'clock.' },
+            { w: 'meeting', emoji: '👥', m: 'a time when people come together to talk about work', ex: 'On Mondays, we always have a long meeting.' },
+            { w: 'medicine', emoji: '💊', m: 'something you take when you are ill, to get better', ex: 'Please bring any medicine you take at the moment.' },
+            { w: 'arrive', emoji: '🚶', m: 'to get to a place', ex: 'Please arrive ten minutes early.' },
+            { w: 'park', emoji: '🅿️', m: 'to leave your car in a place', ex: "It's better to park next to the library." }
           ],
           transcript: [
             { who: 'Woman', text: "Level four. You will hear a phone call to a doctor's surgery. Listen and complete the notes.", answers: [] },
@@ -525,16 +525,16 @@ var TA_SKILLS = {
             { type: 'choose', q: 'Why does Hannah love her job?', opts: ['She helps children every day.', 'She has long holidays.', 'The work is easy.'], a: ['She helps children every day.'], line: 14 }
           ],
           words: [
-            { w: 'nurse', m: 'a person whose job is to look after people who are ill', ex: "Hannah is a nurse at a children's hospital." },
-            { w: 'days off', m: 'days when you don\'t go to work', ex: 'She has three days off every week.' },
-            { w: 'quick', m: 'fast; not taking a long time', ex: 'She has a quick shower.' },
-            { w: 'journey', m: 'the time you spend going from one place to another', ex: 'The journey takes about forty minutes.' },
-            { w: 'check', m: 'to look at something or someone to see if everything is OK', ex: 'Hannah checks the children every morning.' },
-            { w: 'worried', m: 'unhappy because you think something bad can happen', ex: 'The parents are often worried.' },
-            { w: 'lunchtime', m: 'the time in the middle of the day when people eat', ex: 'At lunchtime, she eats a sandwich.' },
-            { w: 'busiest', m: 'with the most things to do', ex: 'The afternoons are the busiest part of the day.' },
-            { w: 'patient', m: 'a person who is ill and sees a doctor or a nurse', ex: 'There are lots of new patients in the afternoon.' },
-            { w: 'sleep late', m: 'to get up later than usual in the morning', ex: 'On her days off, she sleeps late.' }
+            { w: 'nurse', emoji: '👩‍⚕️', m: 'a person whose job is to look after people who are ill', ex: "Hannah is a nurse at a children's hospital." },
+            { w: 'days off', emoji: '🌴', m: 'days when you don\'t go to work', ex: 'She has three days off every week.' },
+            { w: 'quick', emoji: '⚡', m: 'fast; not taking a long time', ex: 'She has a quick shower.' },
+            { w: 'journey', emoji: '🛣️', m: 'the time you spend going from one place to another', ex: 'The journey takes about forty minutes.' },
+            { w: 'check', emoji: '🔍', m: 'to look at something or someone to see if everything is OK', ex: 'Hannah checks the children every morning.' },
+            { w: 'worried', emoji: '😟', m: 'unhappy because you think something bad can happen', ex: 'The parents are often worried.' },
+            { w: 'lunchtime', emoji: '🥪', m: 'the time in the middle of the day when people eat', ex: 'At lunchtime, she eats a sandwich.' },
+            { w: 'busiest', emoji: '🐝', m: 'with the most things to do', ex: 'The afternoons are the busiest part of the day.' },
+            { w: 'patient', emoji: '🤒', m: 'a person who is ill and sees a doctor or a nurse', ex: 'There are lots of new patients in the afternoon.' },
+            { w: 'sleep late', emoji: '😴', m: 'to get up later than usual in the morning', ex: 'On her days off, she sleeps late.' }
           ]
         },
         writing: {
@@ -589,16 +589,16 @@ var TA_SKILLS = {
             { q: 'Phone number: _____', a: ['07700 900 365', '07700900365'] }
           ],
           words: [
-            { w: 'order', m: 'to ask for food or drink that you want to buy', ex: "I'd like to order some food for a party." },
-            { w: 'birthday party', m: 'a party on the day someone was born', ex: "It's for my daughter's birthday party." },
-            { w: 'daughter', m: 'a girl who is your child', ex: "Please write Rosie. That's my daughter's name." },
-            { w: 'sunny', m: 'bright, with a lot of light from the sun', ex: "The garden room is big and sunny." },
-            { w: 'each', m: 'for one of them', ex: "They're eight pounds each." },
-            { w: 'enough', m: 'as much as you need', ex: 'One pizza is enough for three children.' },
-            { w: 'anything else', m: 'some other thing', ex: 'Have you got anything else?' },
-            { w: 'popular', m: 'liked by a lot of people', ex: 'Our chocolate cake is very popular.' },
-            { w: 'total', m: 'all the money added together', ex: 'The total is one hundred and twenty pounds.' },
-            { w: 'pay', m: 'to give money for something you buy', ex: 'Can I pay on the day?' }
+            { w: 'order', emoji: '🛒', m: 'to ask for food or drink that you want to buy', ex: "I'd like to order some food for a party." },
+            { w: 'birthday party', emoji: '🎂', m: 'a party on the day someone was born', ex: "It's for my daughter's birthday party." },
+            { w: 'daughter', emoji: '👧', m: 'a girl who is your child', ex: "Please write Rosie. That's my daughter's name." },
+            { w: 'sunny', emoji: '☀️', m: 'bright, with a lot of light from the sun', ex: "The garden room is big and sunny." },
+            { w: 'each', emoji: '1️⃣', m: 'for one of them', ex: "They're eight pounds each." },
+            { w: 'enough', emoji: '👌', m: 'as much as you need', ex: 'One pizza is enough for three children.' },
+            { w: 'anything else', emoji: '➕', m: 'some other thing', ex: 'Have you got anything else?' },
+            { w: 'popular', emoji: '⭐', m: 'liked by a lot of people', ex: 'Our chocolate cake is very popular.' },
+            { w: 'total', emoji: '🧮', m: 'all the money added together', ex: 'The total is one hundred and twenty pounds.' },
+            { w: 'pay', emoji: '💰', m: 'to give money for something you buy', ex: 'Can I pay on the day?' }
           ],
           transcript: [
             { who: 'Woman', text: 'Level five. You will hear a phone call to a café. Listen and complete the order form.', answers: [] },
@@ -673,16 +673,16 @@ var TA_SKILLS = {
             { type: 'choose', q: 'How many stars does Oliver give the café?', opts: ['three', 'four', 'five'], a: ['four'], line: 17 }
           ],
           words: [
-            { w: 'menu', m: 'a list of the food and drinks in a café or a restaurant', ex: 'Read the menu and choose your lunch.' },
-            { w: 'served', m: 'given to customers in a café or a restaurant', ex: "Breakfast is served until eleven o'clock." },
-            { w: 'fresh', m: 'new and made or picked not long ago', ex: 'Pancakes come with fresh fruit.' },
-            { w: 'dish', m: 'one kind of food on a menu', ex: 'Children can have a small plate of any dish.' },
-            { w: 'half price', m: 'for half of the usual money', ex: 'Children under ten can eat for half price.' },
-            { w: 'review', m: 'a text where someone says what they think about a place, a film or a book', ex: 'Here is a review from a customer.' },
-            { w: 'waiter', m: 'a person who brings food and drinks to the tables', ex: 'The waiter was friendly.' },
-            { w: 'a bit', m: 'a little', ex: 'The chips were a bit cold.' },
-            { w: 'recipe', m: 'instructions that tell you how to cook something', ex: 'She asked the waiter for the recipe!' },
-            { w: 'dessert', m: 'sweet food you eat at the end of a meal', ex: 'The best thing was the dessert.' }
+            { w: 'menu', emoji: '📜', m: 'a list of the food and drinks in a café or a restaurant', ex: 'Read the menu and choose your lunch.' },
+            { w: 'served', emoji: '🍽️', m: 'given to customers in a café or a restaurant', ex: "Breakfast is served until eleven o'clock." },
+            { w: 'fresh', emoji: '🥬', m: 'new and made or picked not long ago', ex: 'Pancakes come with fresh fruit.' },
+            { w: 'dish', emoji: '🍲', m: 'one kind of food on a menu', ex: 'Children can have a small plate of any dish.' },
+            { w: 'half price', emoji: '🏷️', m: 'for half of the usual money', ex: 'Children under ten can eat for half price.' },
+            { w: 'review', emoji: '✍️', m: 'a text where someone says what they think about a place, a film or a book', ex: 'Here is a review from a customer.' },
+            { w: 'waiter', emoji: '🤵', m: 'a person who brings food and drinks to the tables', ex: 'The waiter was friendly.' },
+            { w: 'a bit', emoji: '🤏', m: 'a little', ex: 'The chips were a bit cold.' },
+            { w: 'recipe', emoji: '📖', m: 'instructions that tell you how to cook something', ex: 'She asked the waiter for the recipe!' },
+            { w: 'dessert', emoji: '🍰', m: 'sweet food you eat at the end of a meal', ex: 'The best thing was the dessert.' }
           ]
         },
         writing: {
@@ -718,7 +718,154 @@ var TA_SKILLS = {
           }
         }
       },
-      { no: 6, theme: 'Shopping', emoji: '🛍️' },
+      {
+        no: 6, theme: 'Shopping', emoji: '🛍️',
+        listening: {
+          src: 'audio/skills/elem-6-listening.mp3?v=1',
+          title: 'A lost bag at a shop',
+          intro: 'Listen to a woman phoning a department store about a lost bag. Complete the form. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
+          questions: [
+            { q: 'Name: Mrs _____', a: ['Palmer'] },
+            { q: 'Day she was in the shop: _____', a: ['Saturday'] },
+            { q: 'Left the bag in the _____ department', a: ['shoe', 'shoes'] },
+            { q: 'Colour of the bag: _____', a: ['dark green', 'green'] },
+            { q: 'Inside the bag: a red _____', a: ['purse'] },
+            { q: 'Money in the purse: about £_____', a: ['35', 'thirty-five', 'thirty five', '£35', '35.00'] },
+            { q: 'Also inside: a pair of _____', a: ['sunglasses', 'sun glasses'] },
+            { q: 'Address: 42 _____ Road', a: ['Ashby'] },
+            { q: 'Phone number: _____', a: ['07700 900 846', '07700900846'] },
+            { q: 'Collect the bag from the _____ desk', a: ['information'] }
+          ],
+          words: [
+            { w: 'department store', emoji: '🏬', m: 'a big shop that sells many different things on different floors', ex: 'Good morning, Westgate Department Store.' },
+            { w: 'leave (left)', emoji: '👜', m: 'to forget to take something with you', ex: 'I think I left my bag in your shop.' },
+            { w: 'try on', emoji: '👢', m: 'to put on clothes or shoes in a shop to see if they are good for you', ex: 'I tried on some boots.' },
+            { w: 'leather', emoji: '🐄', m: 'a strong material made from the skin of an animal', ex: "It's a small leather bag." },
+            { w: 'strap', emoji: '🎒', m: 'a long thin piece of material for carrying a bag', ex: "It's dark green, with a long strap." },
+            { w: 'purse', emoji: '👛', m: 'a small bag for your money and cards', ex: "There's a red purse inside it." },
+            { w: 'a pair of', emoji: '🕶️', m: 'two things that you use together', ex: "There's a pair of sunglasses in a black case." },
+            { w: 'case', emoji: '💼', m: 'a box or a bag that keeps something safe', ex: 'My sunglasses are in a black case.' },
+            { w: 'ground floor', emoji: '🚪', m: 'the floor of a building at the same level as the street', ex: 'The information desk is on the ground floor.' },
+            { w: 'collect', emoji: '🙌', m: 'to go to a place and take something that is waiting for you', ex: 'You can collect it from the information desk.' }
+          ],
+          transcript: [
+            { who: 'Woman', text: 'Level six. You will hear a woman phoning a department store about a lost bag. Listen and complete the form.', answers: [] },
+            { who: 'Man', text: 'Good morning, Westgate Department Store. Customer service. How can I help you?', answers: [] },
+            { who: 'Woman', text: 'Hello. I think I left my bag in your shop. Has anyone found it?', answers: [] },
+            { who: 'Man', text: "I can check for you. What's your surname, please?", answers: [] },
+            { who: 'Woman', text: "It's Palmer. I'll spell it for you.", answers: [1] },
+            { who: 'Woman', text: "That's P, A, L, M, E, R.", answers: [1] },
+            { who: 'Man', text: 'Thank you, Mrs Palmer. When were you in the shop?', answers: [] },
+            { who: 'Woman', text: 'I was here on Saturday morning, with my sister.', answers: [2] },
+            { who: 'Man', text: 'And where do you think you left the bag?', answers: [] },
+            { who: 'Woman', text: 'In the shoe department. I tried on some boots, and I put my bag on the floor.', answers: [3] },
+            { who: 'Man', text: 'I see. What does the bag look like?', answers: [] },
+            { who: 'Woman', text: "It's a small leather bag. It's dark green, with a long strap.", answers: [4] },
+            { who: 'Man', text: "And what's inside the bag?", answers: [] },
+            { who: 'Woman', text: "There's a red purse inside it.", answers: [5] },
+            { who: 'Man', text: 'Is there any money in the purse?', answers: [] },
+            { who: 'Woman', text: 'Yes, about thirty-five pounds.', answers: [6] },
+            { who: 'Man', text: 'Thirty-five pounds?', answers: [6] },
+            { who: 'Woman', text: "Yes, that's right.", answers: [] },
+            { who: 'Man', text: 'Is there anything else in the bag?', answers: [] },
+            { who: 'Woman', text: "Yes, there's a pair of sunglasses in a black case.", answers: [7] },
+            { who: 'Man', text: "Good news, Mrs Palmer. I think we've got your bag here! Can I have your address, please?", answers: [] },
+            { who: 'Woman', text: "Of course. I live at forty-two Ashby Road. I'll spell Ashby for you.", answers: [8] },
+            { who: 'Woman', text: "That's A, S, H, B, Y.", answers: [8] },
+            { who: 'Man', text: "Thank you. And what's your phone number?", answers: [] },
+            { who: 'Woman', text: "It's oh seven seven double oh, nine double oh, eight four six.", answers: [9] },
+            { who: 'Man', text: 'Oh seven seven double oh, nine double oh, eight four six?', answers: [9] },
+            { who: 'Woman', text: "Yes, that's right.", answers: [] },
+            { who: 'Woman', text: 'Can I come and get my bag today?', answers: [] },
+            { who: 'Man', text: 'Yes, of course. You can collect it from the information desk on the ground floor.', answers: [10] },
+            { who: 'Man', text: 'Please bring something with your name on it, like your driving licence.', answers: [] },
+            { who: 'Woman', text: "Thank you so much! I'll come this afternoon.", answers: [] }
+          ]
+        },
+        reading: {
+          title: 'Shopping in London',
+          text: "London is one of the best cities in the world for shopping. " +
+            "Every year, millions of visitors come to the city to buy clothes, presents and souvenirs. " +
+            "You can find everything here, from cheap T-shirts to very expensive watches.\n\n" +
+            "Oxford Street is the busiest shopping street in Europe. " +
+            "It has more than three hundred shops, from big department stores to small shoe shops. " +
+            "Most shops there are open from ten in the morning until nine in the evening. " +
+            "On Sundays, they open at twelve and close at six. " +
+            "If you want something special, visit Harrods, a famous department store in Knightsbridge. " +
+            "It is very big and very expensive, but many tourists go there just to look at its beautiful food hall.\n\n" +
+            "For cheaper shopping, try one of London's street markets. " +
+            "Camden Market is popular with young people because it sells unusual clothes, old records and street food from many countries. " +
+            "Portobello Road Market in Notting Hill is famous for antiques, and it is busiest on Saturdays. " +
+            "Remember to bring some cash, because a few small stalls do not take cards.\n\n" +
+            "Here are some tips for your shopping day. " +
+            "Go early in the morning, when the shops are still quiet. " +
+            "Wear comfortable shoes, because you will walk a lot. " +
+            "In January, many shops have big sales, and some clothes are half price. " +
+            "Finally, always keep your bag closed on busy streets, and never leave it on the floor. " +
+            "Have a great time, and happy shopping in London!",
+          questions: [
+            { type: 'tfng', q: 'Oxford Street has more than three hundred shops.', a: ['True'], line: 4 },
+            { type: 'tfng', q: 'Most shops on Oxford Street open at nine in the morning.', a: ['False'], line: 5 },
+            { type: 'tfng', q: 'Harrods is a cheap place to shop.', a: ['False'], line: 8 },
+            { type: 'tfng', q: 'Camden Market is open every day of the week.', a: ['Not given'], line: 10 },
+            { type: 'tfng', q: 'In January, you can buy some clothes for half the usual price.', a: ['True'], line: 16 },
+            { type: 'gap', q: 'Oxford Street is the busiest shopping street in _____.', a: ['Europe'], line: 3 },
+            { type: 'gap', q: 'Many tourists go to Harrods to see its beautiful food _____.', a: ['hall'], line: 8 },
+            { type: 'gap', q: 'Portobello Road Market is famous for _____.', a: ['antiques'], line: 11 },
+            { type: 'gap', q: 'Bring some _____, because a few small stalls do not take cards.', a: ['cash'], line: 12 },
+            { type: 'gap', q: 'Wear comfortable _____, because you will walk a lot.', a: ['shoes'], line: 15 },
+            { type: 'choose', q: 'When do the shops on Oxford Street close on Sundays?', opts: ['at six', 'at nine', 'at twelve'], a: ['at six'], line: 6 },
+            { type: 'choose', q: 'Where is Harrods?', opts: ['in Camden', 'in Knightsbridge', 'in Notting Hill'], a: ['in Knightsbridge'], line: 7 },
+            { type: 'choose', q: 'Why do young people like Camden Market?', opts: ['It is very quiet.', 'It has a famous food hall.', 'It sells unusual clothes.'], a: ['It sells unusual clothes.'], line: 10 },
+            { type: 'choose', q: 'When is Portobello Road Market busiest?', opts: ['on Saturdays', 'on Sundays', 'on Mondays'], a: ['on Saturdays'], line: 11 },
+            { type: 'choose', q: 'What is the best time to go shopping, the text says?', opts: ['late in the evening', 'at lunchtime', 'early in the morning'], a: ['early in the morning'], line: 14 }
+          ],
+          words: [
+            { w: 'souvenir', emoji: '🎁', m: 'a small thing you buy to remember a place you visited', ex: 'Visitors buy clothes, presents and souvenirs.' },
+            { w: 'expensive', emoji: '💎', m: 'costing a lot of money', ex: 'Harrods is very big and very expensive.' },
+            { w: 'department store', emoji: '🏬', m: 'a big shop that sells many different things on different floors', ex: 'Harrods is a famous department store.' },
+            { w: 'busy (busiest)', emoji: '👥', m: 'full of people', ex: 'Oxford Street is the busiest shopping street in Europe.' },
+            { w: 'market', emoji: '🧺', m: 'a place, often outside, where people sell things from tables', ex: 'Try one of London\'s street markets.' },
+            { w: 'unusual', emoji: '🦄', m: 'different from most things; not ordinary', ex: 'Camden Market sells unusual clothes.' },
+            { w: 'antiques', emoji: '🏺', m: 'old and beautiful things, for example furniture or clocks, that are worth a lot of money', ex: 'Portobello Road Market is famous for antiques.' },
+            { w: 'cash', emoji: '💵', m: 'money in coins and notes, not a card', ex: 'Remember to bring some cash.' },
+            { w: 'stall', emoji: '⛺', m: 'a small table or shop at a market', ex: 'A few small stalls do not take cards.' },
+            { w: 'sale', emoji: '🏷️', m: 'a time when a shop sells things for less money than usual', ex: 'In January, many shops have big sales.' }
+          ]
+        },
+        writing: {
+          topic: 'A shopping trip',
+          task: 'Write a short text about a shopping trip you remember.',
+          points: ['where you went and who you went with', 'what you bought and how much it cost', 'how you felt about the trip'],
+          minWords: 50, maxWords: 70, minutes: 20
+        },
+        speaking: {
+          words: [
+            { w: 'shop', emoji: '🏪', ex: 'There is a small shop near my house.' },
+            { w: 'shopping centre', emoji: '🏬', ex: 'We go to the shopping centre at the weekend.' },
+            { w: 'market', emoji: '🧺', ex: 'My mum buys fruit at the market.' },
+            { w: 'clothes', emoji: '👕', ex: 'I need some new clothes for school.' },
+            { w: 'price', emoji: '🏷️', ex: 'The price of this jacket is thirty pounds.' },
+            { w: 'cheap', emoji: '🪙', ex: 'These shoes are very cheap.' },
+            { w: 'expensive', emoji: '💎', ex: 'That watch is too expensive for me.' },
+            { w: 'size', emoji: '📏', ex: 'Have you got this T-shirt in a bigger size?' },
+            { w: 'pay', emoji: '💳', ex: 'Can I pay by card?' },
+            { w: 'present', emoji: '🎁', ex: 'I bought a present for my friend.' }
+          ],
+          questions: [
+            { q: 'How often do you go shopping?', use: ['I go shopping …', 'once a week', 'at the weekend', 'not very often'] },
+            { q: 'Do you like shopping for clothes? Why or why not?', use: ['I like …', "I don't like …", 'because …', 'boring', 'fun'] },
+            { q: 'Where does your family usually buy food?', use: ['We usually buy …', 'supermarket', 'market', 'near our home'] },
+            { q: 'Do you prefer shopping online or in shops?', use: ['I prefer …', 'online', 'in shops', 'easier', 'cheaper'] },
+            { q: 'What was the last thing you bought?', use: ['I bought …', 'last week', 'it cost …', 'for my …'] }
+          ],
+          part2: {
+            topic: 'Talk about a shop you like',
+            hints: ['what the shop is and where it is', 'what you can buy there', 'why you like it'],
+            seconds: 60
+          }
+        }
+      },
       { no: 7, theme: 'My town', emoji: '🏙️' },
       { no: 8, theme: 'Free time', emoji: '🎨' },
       { no: 9, theme: 'Travel', emoji: '🚆' },

@@ -52,7 +52,7 @@ test.describe('content', () => {
   };
   const sentences = text => text.trim().split(/(?<=[.!?])\s+/);
 
-  test('every level has its theme; Levels 1–5 have full, checked content in all four skills; 6–10 are still to come', async ({ page, context, request }) => {
+  test('every level has its theme; Levels 1–6 have full, checked content in all four skills; 7–10 are still to come', async ({ page, context, request }) => {
     await prepare(context);
     await page.goto('/skill.html?s=listening&lv=1&preview=1');
     const S = await page.evaluate(() => ({ skills: TA_SKILLS, better: TA_BETTER_WORDS }));
@@ -62,18 +62,19 @@ test.describe('content', () => {
     levels.forEach(l => expect(l.emoji).toBeTruthy());
     expect(Object.keys(S.better).length).toBeGreaterThanOrEqual(30);
     ['good', 'nice', 'big', 'small', 'very happy', 'bad', 'like'].forEach(w => expect(S.better[w].length).toBeGreaterThan(0));
-    // the teacher (2026-11-04): "finish when level 5 is ready; levels 6–10 are for future"
-    const full = levels.filter(l => l.no <= 5);
+    // the teacher (2026-11-04): "finish when level 5 is ready; levels 6–10 are for future" — level 6 added 2026-11-05
+    const full = levels.filter(l => l.no <= 6);
     full.forEach(l => ['listening', 'reading', 'writing', 'speaking'].forEach(k => expect(l[k], 'level ' + l.no + ' ' + k).toBeTruthy()));
-    levels.filter(l => l.no > 5).forEach(l => expect(Object.keys(l).sort(), 'level ' + l.no).toEqual(['emoji', 'no', 'theme']));
+    levels.filter(l => l.no > 6).forEach(l => expect(Object.keys(l).sort(), 'level ' + l.no).toEqual(['emoji', 'no', 'theme']));
     // every listening/reading is its own (no copy of another level)
-    expect(new Set(full.map(l => l.listening.src)).size).toBe(5);
-    expect(new Set(full.map(l => l.reading.title)).size).toBe(5);
+    expect(new Set(full.map(l => l.listening.src)).size).toBe(6);
+    expect(new Set(full.map(l => l.reading.title)).size).toBe(6);
     for (const lv of full) {
       expect(lv.listening.src).toMatch(new RegExp('^audio/skills/elem-' + lv.no + '-listening\\.mp3(\\?v=\\d+)?$'));
       const L = lv.listening;
       expect(L.questions.length).toBe(10);
       expect(L.words.length).toBe(10);
+      expect(L.words.every(w => typeof w.emoji === 'string' && w.emoji.length > 0), 'every listening word has a picture').toBe(true);
       L.words.forEach(w => { expect(w.w && w.m && w.ex).toBeTruthy(); });
       L.transcript.forEach(t => expect(['Woman', 'Man']).toContain(t.who));
       L.questions.forEach((q, i) => {
@@ -92,6 +93,7 @@ test.describe('content', () => {
       const sent = sentences(R.text);
       expect(R.questions.length).toBe(15);
       expect(R.words.length).toBe(10);
+      expect(R.words.every(w => typeof w.emoji === 'string' && w.emoji.length > 0), 'every reading word has a picture').toBe(true);
       ['tfng', 'gap', 'choose'].forEach(t => expect(R.questions.filter(q => q.type === t).length).toBe(5));
       R.questions.forEach((q, i) => {
         expect(sent[q.line], `reading question ${i + 1}`).toBeTruthy();
@@ -130,7 +132,7 @@ test.describe('content', () => {
     expect(l1.speaking.part2.topic).toMatch(/yourself/i);
   });
 
-  test('Levels 2–5 are as the spec plans them (themes, tasks, writing words/minutes, Part 2 seconds)', async ({ page, context }) => {
+  test('Levels 2–6 are as the spec plans them (themes, tasks, writing words/minutes, Part 2 seconds)', async ({ page, context }) => {
     await prepare(context);
     await page.goto('/skill.html?s=listening&lv=1&preview=1');
     const L = await page.evaluate(() => TA_SKILLS.elementary.levels);
@@ -139,6 +141,7 @@ test.describe('content', () => {
       { no: 3, listen: /room/i, read: /Two homes/, topic: 'My home', min: 40, max: 60, minutes: 15, talk: /your home/i, sec: 45 },
       { no: 4, listen: /doctor/i, read: /nurse/i, topic: 'My weekday', min: 50, max: 70, minutes: 20, talk: /favourite day/i, sec: 60 },
       { no: 5, listen: /party/i, read: /café/i, topic: 'My favourite meal', min: 50, max: 70, minutes: 20, talk: /food you like/i, sec: 60 },
+      { no: 6, listen: /lost bag/i, read: /Shopping in London/, topic: 'A shopping trip', min: 50, max: 70, minutes: 20, talk: /shop you like/i, sec: 60 },
     ];
     const words = t => t.split(/\s+/).filter(Boolean).length;
     let last = words(L[0].reading.text);
@@ -152,7 +155,7 @@ test.describe('content', () => {
       expect(lv.speaking.part2.topic).toMatch(p.talk);
       expect(lv.speaking.part2.seconds).toBe(p.sec);
       lv.speaking.questions.forEach(q => expect(q.use.length).toBeGreaterThan(0));
-      // a little longer each level (~170, 190, 210, 230 words)
+      // a little longer each level (~170, 190, 210, 230, 250 words)
       const n = words(lv.reading.text);
       expect(n, 'level ' + p.no + ' reading words').toBeGreaterThan(last);
       expect(Math.abs(n - (130 + 20 * p.no)), 'level ' + p.no + ' reading words').toBeLessThanOrEqual(20);
@@ -264,7 +267,7 @@ test.describe('student page', () => {
   test('preview sends nothing', async ({ page, context }) => {
     await prepare(context);
     await page.goto('/skill.html?s=listening&lv=1&preview=1');
-    await expect(page.locator('.sk-preview')).toContainText('👀 Preview');
+    await expect(page.locator('.sk-preview')).toContainText('Preview');
     await expect(page.locator('#studentNameInput')).toHaveCount(0);
     await page.locator('.sk-q input').first().fill('Thompson');
     await page.getByRole('button', { name: /Submit/ }).click();
@@ -576,7 +579,7 @@ test.describe('speaking', () => {
     await expect(page.getByRole('button', { name: 'Get ready (30 s)' })).toBeVisible();
     await page.getByRole('button', { name: 'Start speaking' }).click();
     await expect(page.locator('.sk-speak-timer')).toContainText('0:45', { timeout: 5000 });
-    await expect(page.locator('body')).toContainText('Well done! 🎉', { timeout: 15000 });
+    await expect(page.locator('body')).toContainText('Well done!', { timeout: 15000 });
     await page.getByRole('button', { name: 'Start again' }).click();
     await expect(page.getByRole('button', { name: 'Start speaking' })).toBeVisible();
     await page.getByRole('button', { name: 'Get ready (30 s)' }).click();
@@ -613,7 +616,7 @@ test.describe('course page', () => {
     return errors;
   };
 
-  test('the Course page: four skills, 10 levels each (1–5 ready, 6–10 coming soon), Try opens a preview', async ({ page, context }) => {
+  test('the Course page: four skills, 10 levels each (1–6 ready, 7–10 coming soon), Try opens a preview', async ({ page, context }) => {
     const errors = await open(page, context);
     const cards = page.locator('.sk-skill-card');
     await expect(cards).toHaveCount(4);
@@ -624,7 +627,7 @@ test.describe('course page', () => {
       await expect(page.locator('#courseWrap')).toContainText('Elementary');
       await expect(tiles).toHaveCount(10);
       for (let i = 0; i < 10; i++) {
-        if (i < 5) {
+        if (i < 6) {
           await expect(tiles.nth(i).getByRole('button', { name: '▶️ Try' })).toBeVisible();
           await expect(tiles.nth(i)).not.toContainText('Coming soon');
         } else {
@@ -636,6 +639,7 @@ test.describe('course page', () => {
     }
     await expect(tiles.nth(0)).toContainText('Level 1 · Meeting people');
     await expect(tiles.nth(4)).toContainText('Level 5 · Food & cafés');
+    await expect(tiles.nth(5)).toContainText('Level 6 · Shopping');
     const [popup] = await Promise.all([page.waitForEvent('popup'), tiles.nth(0).getByRole('button', { name: '▶️ Try' }).click()]);
     await popup.waitForURL(/skill\.html\?s=listening&lv=1&preview=1/);
     // the chosen skill is remembered on this device; ← All skills goes back

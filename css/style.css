@@ -2924,3 +2924,6 @@ button:focus-visible, a:focus-visible, .picker-card:focus-visible, input:focus-v
   .sk-sq { font-size: 1.4rem; }
   .sk-actions-2 .sk-btn { flex: 1 1 100%; }
 }
+/* useful words: a picture for each word (teacher, 2026-11-05) */
+.sk-words li { position: relative; padding-right: 52px; }
+.sk-wemoji { position: absolute; top: 10px; right: 12px; font-size: 1.6rem; line-height: 1; }
