@@ -505,39 +505,45 @@ real students' names or results into the repository (it is public).
   unchanged. `tests/pages.spec.js` ("top bar: …"), `tests/my-exercises.spec.js`.
 - **Skills Course (2026-11-04, teacher: replace the old Course with four skills)**: the old lesson Course (Block 1 lessons, slide
   editor, Teach mode, handouts, exam marks, `audio/course/`, `js/course-data.js`, `js/course-slides.js`, `ta_course_*`) is deleted.
-  `course.html` + `js/pages/course.js`, tab `course` 🗺️: since 2026-11-05 (teacher) it opens on a **level path** for the chosen group:
-  Level 1 → 🎧 📖 ✍️ 🗣️ dots → Level 2 → … → Level 10 (`skPathHtml`; a winding snake on computers, straight down on phones ≤ 760 px),
-  **all open, nothing locked**; levels without content are greyed "Coming soon". **Each level + skill has its own permanent link** the teacher sends to a group
-  (group chips at the top, `ta_course_group`). Content: `js/skills-data.js` (`TA_SKILLS.elementary`; **levels 1–8 are complete, 9–10 have
-  only `{no, theme, emoji}` = "Coming soon"**; `TA_BETTER_WORDS` for the writing tips). **A dot is done** (`skDotState`) when at least half
-  of the group's students (Students list, by ID) have a result for that level + skill (a group with no students: one result); Speaking
-  (sends nothing) when the teacher copied its link for the group (`ta_skills_links["<groupId>|speaking|<level>"] = { sentAt }`, no My
-  Exercises item). Dot tooltips say why ("2 of 3 students done", "Link sent 5 Nov"); a level with all four shows ✓; the first dot not done
-  is "Next". **A level opens its page** (`skLevelPageHtml`, "← All levels", not remembered): the four parts first, then the results table below them (teacher, 2026-11-05), inline
+  `course.html` + `js/pages/course.js`, tab `course` 🗺️: since 2026-11-05 (teacher) it opens on a **step path** for the chosen group:
+  Step 1 → 🎧 📖 ✍️ 🗣️ dots → Step 2 → … → Step 20 (`skPathHtml`; a winding snake on computers, straight down on phones ≤ 760 px),
+  **all open, nothing locked**; steps without content are greyed "Coming soon". **Each step + skill has its own permanent link** the teacher sends to a group
+  (group chips at the top, `ta_course_group`). **Steps (2026-11-05, "Level" → "Step" everywhere)**: content in `js/skills-data.js`,
+  `TA_SKILLS.steps` = 20 entries `{id, no, stage, theme, emoji, listening?, reading?, writing?, speaking?}` — stable ids `b1…b10`
+  (stage 'Beginner', Steps 1–10) then `e1…e10` ('Elementary', Steps 11–20); `no` = position, shown as "Step N". `e1…e8` = the old
+  Levels 1–8 (audio unchanged), `e9`, `e10` stubs; `b1` has old Level 1's writing (About me) + speaking (Talk about yourself), `e1` a new
+  writing ("An email to a new classmate", 50–70 words, 20 min) + speaking ("A person you met recently", 45 s); `b2…b10` stubs (a step
+  with no part = "Coming soon"). Use the ids, never the number, in links/keys/results. `TA_BETTER_WORDS` for the writing tips. **A dot is done** (`skDotState`) when at least half
+  of the group's students (Students list, by ID) have a result for that step + skill (a group with no students: one result); Speaking
+  (sends nothing) when the teacher copied its link for the group (`ta_skills_links["<groupId>|speaking|<stepId>"] = { sentAt }`, no My
+  Exercises item). Dot tooltips say why ("2 of 3 students done", "Link sent 5 Nov"); a step with all its parts done shows ✓; the first dot not done
+  is "Next". **A step opens its page** (`skStepPageHtml`, `skOpenStep(id)`, "← All steps", not remembered): the four parts first, then the results table below them (teacher, 2026-11-05), inline
   (`skTableHtml`, ⬇️ Download picture; a ✍️ band opens the writing, `skViewWriting`; an empty state before any result); the parts
   (`.sk-part` — `.sk-card` belongs to the student page) with their done state, ▶️ Try (`skTry`, `&preview=1`, sends nothing) and 🔗 Copy link
   for <group> (`skCopyLink`). **No "View Results"/"Results table" buttons on the Course page** (one exercise's results: My Exercises).
-- **Student page** `skill.html` + `js/skill-player.js` (`js/skill-bands.js` shared): link `skill.html?s=<listening|reading|writing|speaking>&lv=<n>&c=<code>`
-  (`taSkillLink` in common.js; speaking has no code, never expires, loads from GitHub Pages not Firebase). Start card (name + ID, any ID
+- **Student page** `skill.html` + `js/skill-player.js` (`js/skill-bands.js` shared): link `skill.html?s=<listening|reading|writing|speaking>&st=<step id>&c=<code>`
+  (`taSkillLink(skill, stepId, code)` in common.js; an old link's `lv=N` with no `st` opens `e<N>` — `taSkillStepId` turns a number into `e<N>`; speaking has no code, never expires, loads from GitHub Pages not Firebase). Start card (name + ID, any ID
   accepted), the code is checked. Listening: audio + 10 gaps, Submit → ✅/❌, score, 10 useful words, **Analyze >** = transcript with the
-  answer lines marked. Reading: text + 15 questions (5 T/F/NG, 5 gaps, 5 a/b/c), same flow. Writing: topic + 3 points, timer (submits by
+  answer lines marked. Reading: text + any number of questions (elementary: 15 — 5 T/F/NG, 5 gaps, 5 a/b/c; types `tfng`, `tf` = True/False for beginner steps, `gap`, `choose`), same flow. Writing: topic + 3 points, timer (submits by
   itself), word counter, Submit → LanguageTool + better words; the text + the clock's start are kept as the student types
-(`ta_skill_draft|<code>|<level>`, `{text, startedAt, id}`, the page's own key; not in preview) so a reload — phones reload background
+(`ta_skill_draft|<code>|<stepId>`, `{text, startedAt, id}`, the page's own key; not in preview) so a reload — phones reload background
 tabs — brings them back with the clock going on (time already up → sent at once); cleared once sent. **Speaking is practice only**: topic words, simple questions, a Part 2 card
   with timers — no microphone, nothing sent, no ID screen. One result per Submit: record id from `skResultId`, `setDoc` with timeouts,
-  "Send again" on failure; result `type` 'Listening course' / 'Reading course' / 'Writing course' with `code, name, studentId, level, skill,
+  "Send again" on failure; result `type` 'Listening course' / 'Reading course' / 'Writing course' with `code, name, studentId, step, stepNo, skill,
   correct, total, score, band` (writing: `text, words, minWords, mistakes, mistakeList, grammarChecked, band, timeSeconds`), `builtAt`
-  (= the Submit time, same as `date`: a page opened before "Delete all results" and sent after it counts), `submittedAt`. Preview sends nothing.
-- **Teacher's side**: first Copy link for level + skill + group makes a My Exercises item (type "… course", that group, a fresh code;
-  `skEnsureItem`, kept as `{uid, code}` in `ta_skills_links` under "<groupId>|<skill>|<level>", and a deleted item is re-created with the
-  same code); ⋯ there: Copy link = the skill.html link, no Redownload (`taSkillItemInfo`, `taSkillItemLink`). `firebase.js` loads the codes
+  (= the Submit time, same as `date`: a page opened before "Delete all results" and sent after it counts), `submittedAt`. Preview sends nothing. Results sent before steps carry `level: n` and no `step` = `e<n>` (`taResultStepId(r)` in common.js).
+- **Teacher's side**: first Copy link for step + skill + group only keeps a fresh code (`skEnsureCode` in course.js) as `{ code }` in
+  `ta_skills_links` under "<groupId>|<skill>|<stepId>" (`taSkillLinkKey`) — **no My Exercises item since 2026-11-05** (teacher). Older
+  entries have `{uid, code}` and their "… course" items are **hidden** in My Exercises (list, type chips, counts — `taIsSkillCourseItem`;
+  not deleted). Old keys ended in the level number ("g1|reading|3"): `taSkillsLinks()` hands them out as "…|e3", `taSaveSkillsLinks`
+  writes the new form, and Copy link rewrites old keys (`taSkillsLinksMigrate`); codes never change, so sent links and results stay. `firebase.js` loads the codes
   from `ta_skills_links`; `isExpiredResult` falls back to the date for " course" types; the results table uses `isExpiredResult` too (`skResultsMap`, one
 read per drawing; the hidden/preloaded Course panel isn't redrawn). Listening/Reading bands are always worked out from correct/total
 (a result's own `band` is ignored); writing bands (estimate and teacher's mark) are kept to 1–9. **Skills course items and results are
-left out of Top 5** (`TA_SKILL_COURSE_RE` in main.js: levels are open and sent ahead, unreached ones would count as 0 %). CSV: a
+left out of Top 5** (`TA_SKILL_COURSE_RE` in main.js: steps are open and sent ahead, unreached ones would count as 0 %). CSV: a
 writing's band goes in "Other result". Results for writing: `viewSkillWriting` (text, words,
   time, mistakes, a band box). **The teacher's mark wins everywhere**: `ta_skills_marks` keyed "<code>|<studentId>". Both keys are synced and
-  in the backup. **Results table** per level + group, on the level page (`skTableRows`, `skTableHtml`, PNG by `skDrawTablePng`): ranked by Overall (equal places
+  in the backup. **Results table** per step + group, on the step page (`skTableRows`, `skTableHtml`, PNG by `skDrawTablePng`): ranked by Overall (equal places
   share a number, medals), 🎧 📖 ✍️ bands with raw scores, best try per skill, a missing skill "—", footer average.
 - **Bands** (`js/skill-bands.js`): Listening/Reading = round(correct/total × 40) → IELTS table (19/20 → 8.5, 16/20 → 7.5, 9/20 → 5.5);
   Writing estimate = 3 + 3×min(1, words/min) + 3×max(0, 1 − mistakes per 100 words/10), nearest 0.5, 1–9 (grammar check didn't run → last
@@ -548,9 +554,9 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   audio/skills/elementary-scripts.json audio/skills` makes `audio/skills/elem-<n>-listening.mp3` (needs ffmpeg; `ASR_DIR` = a sherpa-onnx
   Whisper base.en folder checks every line and remakes it until heard right). Spelled names are said "That's T, H, O…" slowly; write full
   sentences (one-word lines garble); phone numbers in Ofcom drama ranges. The checker's false alarms: whose/who's, number words with a capital.
-  **To add a level**: fill `no, theme, emoji, listening {src, title, intro, questions[{q, a[]}], words, transcript[{who, text, answers}]},
-  reading {title, text, questions (tfng/gap/choose, `line` = sentence index)}, writing {topic, points, minutes, minWords, maxWords},
-  speaking {words, questions[{q, use}], part2}` like level 1; add its entry to `elementary-scripts.json`; run the audio command; keep
+  **To fill a step**: give its entry in `TA_SKILLS.steps` (keep `id`, `no`, `stage`) `theme, emoji, listening {src, title, intro, questions[{q, a[]}], words, transcript[{who, text, answers}]},
+  reading {title, text, questions (tfng/tf/gap/choose, `line` = sentence index)}, writing {topic, points, minutes, minWords, maxWords},
+  speaking {words, questions[{q, use}], part2}` like e1; add its entry to `elementary-scripts.json`; run the audio command; keep
   `transcript` in step with the script; English names only, no Uzbek. `tests/skills.spec.js`.
 - **🎧 Making course listening audio — do it exactly like this (teacher approved levels 1–5 on 2026-11-04).** When the teacher asks
   for a new level's recording (or to remake one), follow these steps; don't invent a new way. Setup in the scratchpad (not the repo):

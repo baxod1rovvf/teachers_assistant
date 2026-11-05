@@ -1676,7 +1676,7 @@ function viewMazeResult(idx) {
 /* ================= SKILLS COURSE: WRITING MARKS =================
    A Writing course result carries the page's estimated band; the teacher can give their own.
    ta_skills_marks = { "<code>|<studentId>": band } (synced, in the backup). The mark is the student's for
-   that level + group (every try of it), so the results table and Results agree. */
+   that step + group (every try of it), so the results table and Results agree. */
 const LS_SKILLS_MARKS = 'ta_skills_marks';
 function skMarks() {
   try { const v = JSON.parse(localStorage.getItem(LS_SKILLS_MARKS) || 'null'); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; }
