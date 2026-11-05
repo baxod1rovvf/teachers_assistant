@@ -258,5 +258,45 @@
       ["am_michael", "Thank you very much for your help. Goodbye!"],
       ["af_heart", "Goodbye, Mr Barton, and enjoy your stay!"]
     ]
+  },
+  {
+    "label": "Level 8 · Free time — signing up for a course",
+    "src": "audio/skills/elem-8-listening.mp3",
+    "lines": [
+      ["af_heart", "Level eight. You will hear a woman at a community centre. She wants to sign up for a course. Listen and complete the form."],
+      ["am_michael", "Good evening, and welcome to Hillside Community Centre. How can I help you?"],
+      ["af_heart", "Hello. I'd like to sign up for a course, please. I want to do something new in my free time."],
+      ["am_michael", "Great. Which course are you interested in?"],
+      ["af_heart", "I want to do the photography course. I saw it on your website."],
+      ["am_michael", "Photography for Beginners. That's a very popular course. Can I have your surname, please?", 3.5],
+      ["af_heart", "Yes, it's Dalton. I'll spell it for you."],
+      ["af_heart", "D. A. L. T. O. N.", 3.5],
+      ["am_michael", "Thank you, Ms Dalton. And what's your address?"],
+      ["af_heart", "I live at number twelve, Penford Road. I'll spell Penford for you."],
+      ["af_heart", "P. E. N. F. O. R. D.", 3.5],
+      ["am_michael", "Thank you. There are two groups for this course. One meets on Tuesday afternoon, and the other meets on Thursday evening. Which day is better for you?"],
+      ["af_heart", "I work in the afternoons, so Thursday is better for me.", 3.5],
+      ["am_michael", "No problem. The Thursday class starts at seven thirty in the evening."],
+      ["af_heart", "Seven thirty?"],
+      ["am_michael", "Yes, that's right.", 3.5],
+      ["af_heart", "And how long is the course?"],
+      ["am_michael", "It's eight weeks long, and each class is two hours."],
+      ["af_heart", "Eight weeks?"],
+      ["am_michael", "Yes, that's right.", 3.5],
+      ["af_heart", "Great. How much does it cost?"],
+      ["am_michael", "It's forty-five pounds for the whole course."],
+      ["af_heart", "Forty-five pounds for eight weeks?"],
+      ["am_michael", "Yes, that's right.", 3.5],
+      ["af_heart", "Do I need to bring a camera?"],
+      ["am_michael", "No, you don't. You can take photos with your phone. But please bring a notebook to write in.", 3.5],
+      ["af_heart", "OK. And where are the classes?"],
+      ["am_michael", "They're on the second floor, in the big room at the end.", 3.5],
+      ["af_heart", "And can I phone you if I can't come one week?"],
+      ["am_michael", "Of course. Our phone number is oh seven seven double oh, nine double oh, two six four."],
+      ["af_heart", "Oh seven seven double oh, nine double oh, two six four?"],
+      ["am_michael", "Yes, that's right.", 3.5],
+      ["af_heart", "Thank you very much. See you on Thursday!"],
+      ["am_michael", "See you on Thursday, Ms Dalton. Enjoy the course!"]
+    ]
   }
 ]
