@@ -18,6 +18,92 @@ var TA_SKILLS = {
   steps: [
     {
       id: 'b1', no: 1, stage: 'Beginner', theme: 'Hello!', emoji: '👋',
+      listening: {
+        src: 'audio/skills/beg-1-listening.mp3?v=1',
+        title: 'A new student at an English club',
+        intro: 'Listen to a teacher and a new student. Write ONE WORD or A NUMBER for each answer.',
+        questions: [
+          { q: "Teacher's name: _____", a: ['Kate'] },
+          { q: "Student's name: _____", a: ['Sam'] },
+          { q: "Sam's age: _____", a: ['16', 'sixteen'] },
+          { q: 'Sam is from: _____', a: ['London'] },
+          { q: "Sam's brother: _____", a: ['Tom'] },
+          { q: "Tom's age: _____", a: ['12', 'twelve'] },
+          { q: 'Classroom: room _____', a: ['9', 'nine'] },
+          { q: 'Students in the class: _____', a: ['14', 'fourteen'] },
+          { q: "The lesson starts at: _____ o'clock", a: ['4', 'four'] },
+          { q: 'Open the book at page: _____', a: ['5', 'five'] }
+        ],
+        words: [
+          { w: 'hello', emoji: '👋', m: 'what you say when you meet someone', ex: 'Hello, Kate. Nice to meet you.' },
+          { w: 'teacher', emoji: '👩‍🏫', m: 'a person who helps you learn at school', ex: "I'm your teacher." },
+          { w: 'student', emoji: '🎒', m: 'a person who learns at a school or a club', ex: 'Sam is a new student.' },
+          { w: 'nice to meet you', emoji: '🤝', m: 'what you say to a new person', ex: 'Hello, Kate. Nice to meet you.' },
+          { w: 'spell', emoji: '🔤', m: 'to say the letters of a word one by one', ex: 'How do you spell your name?' },
+          { w: 'years old', emoji: '🎂', m: 'how we say our age', ex: "I'm sixteen years old." },
+          { w: 'from', emoji: '🌍', m: 'the place where you were born or live', ex: "I'm from London." },
+          { w: 'brother', emoji: '👦', m: 'a boy in your family, with the same mum and dad', ex: "I've got a brother." },
+          { w: 'classroom', emoji: '🚪', m: 'the room where you have lessons', ex: 'Our classroom is room nine.' },
+          { w: 'page', emoji: '📖', m: 'one side of paper in a book', ex: 'Please open your book at page five.' }
+        ],
+        transcript: [
+          { who: 'Woman', text: "Step one. You will hear a teacher and a new student at an English club. Listen and write the answers.", answers: [] },
+          { who: 'Woman', text: "Hello, and welcome to the English club! I'm your teacher. My name is Kate.", answers: [] },
+          { who: 'Man', text: "Hello, Kate. Nice to meet you. How do you spell your name, please?", answers: [] },
+          { who: 'Woman', text: "That's K, A, T, E.", answers: [1] },
+          { who: 'Woman', text: "Thank you. And what's your name?", answers: [] },
+          { who: 'Man', text: "My name is Sam. I'll spell it for you.", answers: [] },
+          { who: 'Man', text: "That's S, A, M.", answers: [2] },
+          { who: 'Woman', text: "Thank you, Sam. How old are you?", answers: [] },
+          { who: 'Man', text: "I'm sixteen years old.", answers: [3] },
+          { who: 'Woman', text: "Sixteen years old? Good.", answers: [3] },
+          { who: 'Woman', text: "And where are you from, Sam?", answers: [] },
+          { who: 'Man', text: "I'm from London. I live here with my family.", answers: [4] },
+          { who: 'Woman', text: "Have you got a brother or a sister?", answers: [] },
+          { who: 'Man', text: "Yes, I've got a brother. His name is Tom.", answers: [5] },
+          { who: 'Woman', text: "How old is Tom?", answers: [] },
+          { who: 'Man', text: "He's twelve years old.", answers: [6] },
+          { who: 'Woman', text: "Twelve? OK.", answers: [6] },
+          { who: 'Woman', text: "Our classroom is room nine. It's next to the library.", answers: [7] },
+          { who: 'Man', text: "Room nine. Thank you.", answers: [7] },
+          { who: 'Woman', text: "There are fourteen students in our class.", answers: [8] },
+          { who: 'Man', text: "Fourteen students? That's a nice class.", answers: [8] },
+          { who: 'Woman', text: "Our lesson starts at four o'clock.", answers: [9] },
+          { who: 'Man', text: "Four o'clock. OK.", answers: [9] },
+          { who: 'Woman', text: "Now, please open your book at page five.", answers: [10] },
+          { who: 'Man', text: "Page five? OK, I've got it.", answers: [10] },
+          { who: 'Woman', text: "Very good, Sam. Let's start!", answers: [] }
+        ]
+      },
+      reading: {
+        title: "Amy's name card",
+        text: "Hello! My name is Amy Hill. I am fifteen years old. I am a student. I am from Manchester. " +
+          "I live with my mum and my dad. My cat's name is Lily. I like music and books. My best friend is Jess. She is fifteen too.",
+        questions: [
+          { type: 'tf', q: 'Amy is fifteen.', a: ['True'], line: 2 },
+          { type: 'tf', q: 'Amy is a teacher.', a: ['False'], line: 3 },
+          { type: 'tf', q: 'Amy lives with her mum and her dad.', a: ['True'], line: 5 },
+          { type: 'tf', q: 'Amy has got a dog.', a: ['False'], line: 6 },
+          { type: 'tf', q: 'Jess is sixteen.', a: ['False'], line: 9 },
+          { type: 'choose', q: "What is Amy's surname?", opts: ['Hill', 'Green', 'Brown'], a: ['Hill'], line: 1 },
+          { type: 'choose', q: 'Where is Amy from?', opts: ['London', 'Manchester', 'York'], a: ['Manchester'], line: 4 },
+          { type: 'choose', q: "What is the cat's name?", opts: ['Jess', 'Amy', 'Lily'], a: ['Lily'], line: 6 },
+          { type: 'choose', q: 'What does Amy like?', opts: ['music and books', 'football and films', 'maths and art'], a: ['music and books'], line: 7 },
+          { type: 'choose', q: "Who is Amy's best friend?", opts: ['Lily', 'Jess', 'Kate'], a: ['Jess'], line: 8 }
+        ],
+        words: [
+          { w: 'name card', emoji: '📇', m: 'a small card with your name and a few things about you', ex: "Read Amy's name card." },
+          { w: 'my name is', emoji: '📛', m: 'how you tell people your name', ex: 'My name is Amy Hill.' },
+          { w: 'fifteen', emoji: '🔢', m: 'the number 15', ex: 'I am fifteen years old.' },
+          { w: 'student', emoji: '🎒', m: 'a person who learns at a school', ex: 'I am a student.' },
+          { w: 'live', emoji: '🏠', m: 'to have your home in a place', ex: 'I live with my mum and my dad.' },
+          { w: 'mum', emoji: '👩', m: 'your mother', ex: 'I live with my mum.' },
+          { w: 'dad', emoji: '👨', m: 'your father', ex: 'I live with my dad.' },
+          { w: 'cat', emoji: '🐱', m: 'a small animal that lives in a home', ex: "My cat's name is Lily." },
+          { w: 'music', emoji: '🎵', m: 'songs and sounds that you listen to', ex: 'I like music and books.' },
+          { w: 'best friend', emoji: '🤝', m: 'the friend you like most', ex: 'My best friend is Jess.' }
+        ]
+      },
       writing: {
         topic: 'About me',
         task: 'Write an email to a new pen-friend about yourself.',
@@ -51,10 +137,500 @@ var TA_SKILLS = {
         }
       }
     },
-    { id: 'b2', no: 2, stage: 'Beginner', theme: 'Numbers 1–20', emoji: '🔢' },
-    { id: 'b3', no: 3, stage: 'Beginner', theme: 'My family', emoji: '👨‍👩‍👧' },
-    { id: 'b4', no: 4, stage: 'Beginner', theme: 'Colours & things', emoji: '🎨' },
-    { id: 'b5', no: 5, stage: 'Beginner', theme: 'Numbers 20–100', emoji: '💯' },
+    {
+      id: 'b2', no: 2, stage: 'Beginner', theme: 'Numbers 1–20', emoji: '🔢',
+      listening: {
+        src: 'audio/skills/beg-2-listening.mp3?v=1',
+        title: 'A new student at a school office',
+        intro: 'Listen to a new student at a school office. Write ONE WORD or A NUMBER for each answer.',
+        questions: [
+          { q: 'First name: _____', a: ['Ben'] },
+          { q: 'Surname: _____', a: ['Hart'] },
+          { q: 'Age: _____', a: ['13', 'thirteen'] },
+          { q: 'Classroom: room _____', a: ['17', 'seventeen'] },
+          { q: 'Phone number: _____', a: ['07700 900 517', '07700900517'] },
+          { q: 'Locker number: _____', a: ['11', 'eleven'] },
+          { q: 'Bus number: _____', a: ['20', 'twenty'] },
+          { q: 'Students in the class: _____', a: ['19', 'nineteen'] },
+          { q: 'Lessons every day: _____', a: ['6', 'six'] },
+          { q: "English teacher's room: room _____", a: ['14', 'fourteen'] }
+        ],
+        words: [
+          { w: 'new', emoji: '🆕', m: 'here for the first time', ex: 'Are you a new student?' },
+          { w: 'surname', emoji: '🪪', m: 'your family name', ex: 'Can you spell your surname?' },
+          { w: 'first name', emoji: '📛', m: 'the name your family calls you', ex: 'My first name is Ben.' },
+          { w: 'thirteen', emoji: '🔢', m: 'the number 13', ex: "I'm thirteen years old." },
+          { w: 'room', emoji: '🚪', m: 'a part of a building with walls and a door', ex: 'Your classroom is room seventeen.' },
+          { w: 'phone number', emoji: '📞', m: 'the numbers you use to call someone', ex: "What's your phone number, please?" },
+          { w: 'locker', emoji: '🔐', m: 'a small cupboard at school for your things', ex: "This is your locker. It's number eleven." },
+          { w: 'bus', emoji: '🚌', m: 'a big car for a lot of people', ex: 'I come on bus number twenty.' },
+          { w: 'lesson', emoji: '📚', m: 'a time when you learn something at school', ex: 'You have six lessons every day.' },
+          { w: 'every day', emoji: '📅', m: 'on all the days', ex: 'You have six lessons every day.' }
+        ],
+        transcript: [
+          { who: 'Woman', text: "Step two. You will hear a new student at a school office. Listen and write the answers.", answers: [] },
+          { who: 'Woman', text: "Hello. Are you a new student?", answers: [] },
+          { who: 'Man', text: "Yes, I am. My name is Ben Hart.", answers: [] },
+          { who: 'Woman', text: "Can you spell your first name, please?", answers: [] },
+          { who: 'Man', text: "That's B, E, N.", answers: [1] },
+          { who: 'Woman', text: "Thank you. And can you spell your surname?", answers: [] },
+          { who: 'Man', text: "That's H, A, R, T.", answers: [2] },
+          { who: 'Woman', text: "Thank you, Ben. How old are you?", answers: [] },
+          { who: 'Man', text: "I'm thirteen years old.", answers: [3] },
+          { who: 'Woman', text: "Thirteen years old? Good.", answers: [3] },
+          { who: 'Woman', text: "Your classroom is room seventeen.", answers: [4] },
+          { who: 'Man', text: "Room seventeen? OK, thank you.", answers: [4] },
+          { who: 'Woman', text: "What's your phone number, please?", answers: [] },
+          { who: 'Man', text: "It's oh seven seven double oh, nine double oh, five one seven.", answers: [5] },
+          { who: 'Woman', text: "Oh seven seven double oh, nine double oh, five one seven?", answers: [5] },
+          { who: 'Man', text: "Yes, that's right.", answers: [] },
+          { who: 'Woman', text: "This is your locker. It's number eleven.", answers: [6] },
+          { who: 'Man', text: "Number eleven? Great.", answers: [6] },
+          { who: 'Woman', text: "Do you come to school by bus?", answers: [] },
+          { who: 'Man', text: "Yes, I do. I come on bus number twenty.", answers: [7] },
+          { who: 'Woman', text: "Bus number twenty? OK.", answers: [7] },
+          { who: 'Woman', text: "There are nineteen students in your class.", answers: [8] },
+          { who: 'Man', text: "Nineteen students? That's a big class.", answers: [8] },
+          { who: 'Woman', text: "You have six lessons every day.", answers: [9] },
+          { who: 'Man', text: "Six lessons every day? OK.", answers: [9] },
+          { who: 'Woman', text: "Your English teacher is in room fourteen.", answers: [10] },
+          { who: 'Man', text: "Room fourteen. Thank you very much.", answers: [10] },
+          { who: 'Woman', text: "You're welcome, Ben. Have a good day.", answers: [] }
+        ]
+      },
+      reading: {
+        title: 'Our class list',
+        text: "This is our class list. We are Class 5B. There are eighteen students in our class. Our teacher is Mr Lee. " +
+          "Our classroom is Room 12. Sam is eleven years old. Ella is twelve. Max is eleven too. " +
+          "Ella has got two brothers. Sam has got one sister. There are six lessons every day.",
+        questions: [
+          { type: 'tf', q: 'There are eighteen students in the class.', a: ['True'], line: 2 },
+          { type: 'tf', q: 'The classroom is Room 20.', a: ['False'], line: 4 },
+          { type: 'tf', q: 'Sam is eleven.', a: ['True'], line: 5 },
+          { type: 'tf', q: 'Max is twelve.', a: ['False'], line: 7 },
+          { type: 'tf', q: 'There are six lessons every day.', a: ['True'], line: 10 },
+          { type: 'choose', q: 'What class are they?', opts: ['Class 5B', 'Class 7B', 'Class 8B'], a: ['Class 5B'], line: 1 },
+          { type: 'choose', q: 'Who is the teacher?', opts: ['Mr Hill', 'Mr Lee', 'Mrs Day'], a: ['Mr Lee'], line: 3 },
+          { type: 'choose', q: 'How old is Ella?', opts: ['ten', 'eleven', 'twelve'], a: ['twelve'], line: 6 },
+          { type: 'choose', q: 'How many brothers has Ella got?', opts: ['one', 'two', 'three'], a: ['two'], line: 8 },
+          { type: 'choose', q: 'Who has got one sister?', opts: ['Sam', 'Ella', 'Max'], a: ['Sam'], line: 9 }
+        ],
+        words: [
+          { w: 'class list', emoji: '📋', m: 'a list of the students in a class', ex: 'This is our class list.' },
+          { w: 'there are', emoji: '👉', m: 'we use it to say how many things or people', ex: 'There are eighteen students in our class.' },
+          { w: 'eighteen', emoji: '🔢', m: 'the number 18', ex: 'There are eighteen students.' },
+          { w: 'teacher', emoji: '👨‍🏫', m: 'a person who helps you learn at school', ex: 'Our teacher is Mr Lee.' },
+          { w: 'classroom', emoji: '🏫', m: 'the room where you have lessons', ex: 'Our classroom is Room 12.' },
+          { w: 'eleven', emoji: '1️⃣', m: 'the number 11', ex: 'Sam is eleven years old.' },
+          { w: 'twelve', emoji: '🕛', m: 'the number 12', ex: 'Ella is twelve.' },
+          { w: 'brother', emoji: '👦', m: 'a boy in your family, with the same mum and dad', ex: 'Ella has got two brothers.' },
+          { w: 'sister', emoji: '👧', m: 'a girl in your family, with the same mum and dad', ex: 'Sam has got one sister.' },
+          { w: 'lesson', emoji: '📚', m: 'a time when you learn something at school', ex: 'There are six lessons every day.' }
+        ]
+      },
+      writing: {
+        topic: 'My numbers',
+        task: 'Write about the numbers in your life.',
+        points: ['how old you are', 'your house or flat number and your classroom number', 'how many people there are in your family'],
+        minWords: 20, maxWords: 30, minutes: 10
+      },
+      speaking: {
+        words: [
+          { w: 'number', emoji: '🔢', ex: 'My favourite number is seven.' },
+          { w: 'years old', emoji: '🎂', ex: "I'm twelve years old." },
+          { w: 'phone number', emoji: '📞', ex: "My phone number is oh seven seven …" },
+          { w: 'double', emoji: '2️⃣', ex: 'Double five — that is five, five.' },
+          { w: 'room', emoji: '🚪', ex: 'Our classroom is room ten.' },
+          { w: 'class', emoji: '🏫', ex: 'There are fifteen students in my class.' },
+          { w: 'brother', emoji: '👦', ex: "I've got one brother." },
+          { w: 'sister', emoji: '👧', ex: "I've got two sisters." }
+        ],
+        questions: [
+          { q: 'How old are you?', use: ["I'm … years old."] },
+          { q: "What's your phone number?", use: ["It's …", 'oh', 'double'] },
+          { q: 'What number is your classroom?', use: ["It's room …"] },
+          { q: 'How many students are there in your class?', use: ['There are … students in my class.'] },
+          { q: 'How many brothers and sisters have you got?', use: ["I've got …", 'one brother', 'two sisters', "I haven't got any."] }
+        ],
+        part2: {
+          topic: 'My age and my phone number',
+          hints: ['how old you are', 'your phone number (you can make one up)', 'your house number or your classroom number'],
+          seconds: 30
+        }
+      }
+    },
+    {
+      id: 'b3', no: 3, stage: 'Beginner', theme: 'My family', emoji: '👨‍👩‍👧',
+      listening: {
+        src: 'audio/skills/beg-3-listening.mp3?v=1',
+        title: 'A family photo',
+        intro: 'Listen to a girl talking about a family photo. Write ONE WORD or A NUMBER for each answer.',
+        questions: [
+          { q: "Brother's name: _____", a: ['Jack'] },
+          { q: "Jack's age: _____", a: ['10', 'ten'] },
+          { q: "Sister's name: _____", a: ['Mia'] },
+          { q: "Mia's age: _____", a: ['6', 'six'] },
+          { q: "Mum's name: _____", a: ['Rose'] },
+          { q: "Dad's name: _____", a: ['Mark'] },
+          { q: "Grandma's name: _____", a: ['Ruby'] },
+          { q: "Grandma's cats: _____", a: ['2', 'two'] },
+          { q: "Dog's name: _____", a: ['Max'] },
+          { q: "Dog's age: _____", a: ['3', 'three'] }
+        ],
+        words: [
+          { w: 'photo', emoji: '📷', m: 'a picture you make with a camera or a phone', ex: 'Is this a photo of your family?' },
+          { w: 'family', emoji: '👨‍👩‍👧‍👦', m: 'your mum, dad, brothers, sisters…', ex: 'This is a photo of my family.' },
+          { w: 'brother', emoji: '👦', m: 'a boy in your family, with the same mum and dad', ex: 'This is my brother.' },
+          { w: 'sister', emoji: '👧', m: 'a girl in your family, with the same mum and dad', ex: 'This is my sister.' },
+          { w: 'little', emoji: '🤏', m: 'small or young', ex: 'Who is this little girl?' },
+          { w: 'tall', emoji: '🦒', m: 'big from the feet to the head', ex: "He's very tall." },
+          { w: 'grandma', emoji: '👵', m: 'the mother of your mum or your dad', ex: "That's my grandma." },
+          { w: 'cat', emoji: '🐱', m: 'a small animal that lives in a home', ex: 'Grandma has got two cats.' },
+          { w: 'dog', emoji: '🐶', m: 'an animal that lives with people and says "woof"', ex: 'Is this your dog?' },
+          { w: 'funny', emoji: '😂', m: 'he or she makes you laugh', ex: "He's very funny." }
+        ],
+        transcript: [
+          { who: 'Woman', text: "Step three. You will hear a girl talking about a family photo. Listen and write the answers.", answers: [] },
+          { who: 'Man', text: "Is this a photo of your family?", answers: [] },
+          { who: 'Woman', text: "Yes, it is. This is my brother. His name is Jack.", answers: [1] },
+          { who: 'Man', text: "How old is Jack?", answers: [] },
+          { who: 'Woman', text: "He's ten years old.", answers: [2] },
+          { who: 'Man', text: "Ten years old? He's very tall.", answers: [2] },
+          { who: 'Man', text: "And who is this little girl?", answers: [] },
+          { who: 'Woman', text: "This is my sister. Her name is Mia. I'll spell it for you.", answers: [] },
+          { who: 'Woman', text: "That's M, I, A.", answers: [3] },
+          { who: 'Man', text: "How old is Mia?", answers: [] },
+          { who: 'Woman', text: "She's six years old.", answers: [4] },
+          { who: 'Man', text: "Six years old? She's very sweet.", answers: [4] },
+          { who: 'Man', text: "Who is this woman?", answers: [] },
+          { who: 'Woman', text: "This is my mum. Her name is Rose.", answers: [5] },
+          { who: 'Man', text: "And is this your dad?", answers: [] },
+          { who: 'Woman', text: "Yes, it is. My dad's name is Mark.", answers: [6] },
+          { who: 'Man', text: "Who is the old woman with the cats?", answers: [] },
+          { who: 'Woman', text: "That's my grandma. Her name is Ruby. I'll spell it for you.", answers: [] },
+          { who: 'Woman', text: "That's R, U, B, Y.", answers: [7] },
+          { who: 'Woman', text: "Grandma has got two cats. She loves them.", answers: [8] },
+          { who: 'Man', text: "Two cats? That's nice.", answers: [8] },
+          { who: 'Man', text: "And is this your dog?", answers: [] },
+          { who: 'Woman', text: "Yes, it is. His name is Max.", answers: [9] },
+          { who: 'Man', text: "How old is Max?", answers: [] },
+          { who: 'Woman', text: "He's three years old.", answers: [10] },
+          { who: 'Man', text: "Three years old? He's very young.", answers: [10] },
+          { who: 'Woman', text: "Yes, and he's very funny. We all love him.", answers: [] }
+        ]
+      },
+      reading: {
+        title: 'My family photo',
+        text: "Look at my family photo. My name is Holly and I am thirteen. The tall man is my dad, Tom. " +
+          "The woman next to him is my mum, Sarah. My big brother is Leo. He is seventeen. My little sister is Rosie. She is five. " +
+          "The old man is my grandad, Bill. He has got a white beard. Our cat, Toby, is on my grandad's knee.",
+        questions: [
+          { type: 'tf', q: 'Holly is thirteen.', a: ['True'], line: 1 },
+          { type: 'tf', q: "Holly's dad is short.", a: ['False'], line: 2 },
+          { type: 'tf', q: "Leo is Holly's little brother.", a: ['False'], line: 4 },
+          { type: 'tf', q: 'Rosie is five.', a: ['True'], line: 7 },
+          { type: 'tf', q: 'Grandad has got a beard.', a: ['True'], line: 9 },
+          { type: 'choose', q: 'Who is Sarah?', opts: ["Holly's mum", "Holly's sister", "Holly's grandma"], a: ["Holly's mum"], line: 3 },
+          { type: 'choose', q: 'How old is Leo?', opts: ['seven', 'fifteen', 'seventeen'], a: ['seventeen'], line: 5 },
+          { type: 'choose', q: 'Who is Rosie?', opts: ["Holly's little sister", "Holly's mum", "Holly's friend"], a: ["Holly's little sister"], line: 6 },
+          { type: 'choose', q: 'Who is Bill?', opts: ["Holly's dad", "Holly's grandad", "Holly's brother"], a: ["Holly's grandad"], line: 8 },
+          { type: 'choose', q: 'Who is Toby?', opts: ['the cat', 'the dog', 'the baby'], a: ['the cat'], line: 10 }
+        ],
+        words: [
+          { w: 'look at', emoji: '👀', m: 'to turn your eyes to something', ex: 'Look at my family photo.' },
+          { w: 'man', emoji: '👨', m: 'a grown-up boy', ex: 'The tall man is my dad.' },
+          { w: 'woman', emoji: '👩', m: 'a grown-up girl', ex: 'The woman next to him is my mum.' },
+          { w: 'next to', emoji: '↔️', m: 'very near, at the side of', ex: 'The woman next to him is my mum.' },
+          { w: 'big brother', emoji: '🧑', m: 'a brother who is older than you', ex: 'My big brother is Leo.' },
+          { w: 'little sister', emoji: '👧', m: 'a sister who is younger than you', ex: 'My little sister is Rosie.' },
+          { w: 'old', emoji: '⏳', m: 'not young', ex: 'The old man is my grandad.' },
+          { w: 'grandad', emoji: '👴', m: 'the father of your mum or your dad', ex: 'The old man is my grandad, Bill.' },
+          { w: 'beard', emoji: '🧔', m: 'hair on a man\'s face', ex: 'He has got a white beard.' },
+          { w: 'knee', emoji: '🦵', m: 'the middle part of your leg', ex: "Our cat is on my grandad's knee." }
+        ]
+      },
+      writing: {
+        topic: 'My family',
+        task: 'Write about your family.',
+        points: ['how many people there are in your family', 'their names and how old they are', 'one thing about each person (tall, funny, kind…)'],
+        minWords: 25, maxWords: 35, minutes: 10
+      },
+      speaking: {
+        words: [
+          { w: 'mum', emoji: '👩', ex: 'My mum is very kind.' },
+          { w: 'dad', emoji: '👨', ex: 'My dad is tall.' },
+          { w: 'brother', emoji: '👦', ex: 'My brother is ten years old.' },
+          { w: 'sister', emoji: '👧', ex: 'My sister is very funny.' },
+          { w: 'grandma', emoji: '👵', ex: 'My grandma has got a cat.' },
+          { w: 'grandad', emoji: '👴', ex: 'My grandad is seventy.' },
+          { w: 'tall', emoji: '🦒', ex: 'My brother is very tall.' },
+          { w: 'funny', emoji: '😂', ex: 'My dad is funny.' }
+        ],
+        questions: [
+          { q: 'How many people are there in your family?', use: ['There are … people in my family.'] },
+          { q: 'Have you got a brother or a sister?', use: ["Yes, I've got …", "No, I haven't."] },
+          { q: "What's your mum's name?", use: ['Her name is …'] },
+          { q: 'How old is your brother or your sister?', use: ["He's … years old.", "She's … years old."] },
+          { q: 'Who is funny in your family?', use: ['My … is funny.', 'kind', 'tall'] }
+        ],
+        part2: {
+          topic: 'My family',
+          hints: ['who is in your family', 'their names and how old they are', 'who you like to play or talk with'],
+          seconds: 30
+        }
+      }
+    },
+    {
+      id: 'b4', no: 4, stage: 'Beginner', theme: 'Colours & things', emoji: '🎨',
+      listening: {
+        src: 'audio/skills/beg-4-listening.mp3?v=1',
+        title: 'A lost school bag',
+        intro: 'Listen to a boy at a school office. He can\'t find his bag. Write ONE WORD or A NUMBER for each answer.',
+        questions: [
+          { q: 'First name: _____', a: ['Luke'] },
+          { q: 'Surname: _____', a: ['Cole'] },
+          { q: 'Colour of the bag: _____', a: ['blue'] },
+          { q: 'On the bag: a _____ star', a: ['yellow'] },
+          { q: 'Number of books: _____', a: ['3', 'three'] },
+          { q: 'Colour of the pencil case: _____', a: ['green'] },
+          { q: 'Number of pens: _____', a: ['4', 'four'] },
+          { q: 'Food in the bag: an _____', a: ['apple'] },
+          { q: 'Also in the bag: a black _____', a: ['hat'] },
+          { q: 'The bag was in room _____', a: ['16', 'sixteen'] }
+        ],
+        words: [
+          { w: 'bag', emoji: '🎒', m: 'you carry your things in it', ex: "I can't find my school bag." },
+          { w: 'colour', emoji: '🎨', m: 'red, blue, green and yellow are colours', ex: 'What colour is your bag?' },
+          { w: 'blue', emoji: '🔵', m: 'the colour of the sky on a sunny day', ex: "It's a big blue bag." },
+          { w: 'yellow', emoji: '🟡', m: 'the colour of a banana', ex: "There's a yellow star on it." },
+          { w: 'star', emoji: '⭐', m: 'a shape with five points', ex: "There's a yellow star on it." },
+          { w: 'pencil case', emoji: '✏️', m: 'a small bag or box for your pens and pencils', ex: "There's a green pencil case too." },
+          { w: 'pen', emoji: '🖊️', m: 'you write with it', ex: 'There are four pens in it.' },
+          { w: 'apple', emoji: '🍎', m: 'a round red or green fruit', ex: "There's an apple in my bag." },
+          { w: 'hat', emoji: '🧢', m: 'you wear it on your head', ex: "There's a black hat." },
+          { w: 'find', emoji: '🔍', m: 'to see something you are looking for', ex: 'A teacher found it in room sixteen.' }
+        ],
+        transcript: [
+          { who: 'Woman', text: "Step four. You will hear a boy at a school office. He can't find his bag. Listen and write the answers.", answers: [] },
+          { who: 'Woman', text: "Hello. Can I help you?", answers: [] },
+          { who: 'Man', text: "Yes, please. I can't find my school bag.", answers: [] },
+          { who: 'Woman', text: "OK. What's your first name?", answers: [] },
+          { who: 'Man', text: "My first name is Luke. I'll spell it for you.", answers: [] },
+          { who: 'Man', text: "That's L, U, K, E.", answers: [1] },
+          { who: 'Woman', text: "And what's your surname?", answers: [] },
+          { who: 'Man', text: "That's C, O, L, E.", answers: [2] },
+          { who: 'Woman', text: "Thank you, Luke. What colour is your bag?", answers: [] },
+          { who: 'Man', text: "It's blue. It's a big blue bag.", answers: [3] },
+          { who: 'Woman', text: "A big blue bag. OK.", answers: [3] },
+          { who: 'Man', text: "And there's a yellow star on it.", answers: [4] },
+          { who: 'Woman', text: "A yellow star. Good.", answers: [4] },
+          { who: 'Woman', text: "What's in your bag?", answers: [] },
+          { who: 'Man', text: "There are three books in it. They're my English books.", answers: [5] },
+          { who: 'Woman', text: "Three English books? OK.", answers: [5] },
+          { who: 'Man', text: "There's a green pencil case too.", answers: [6] },
+          { who: 'Woman', text: "A green pencil case?", answers: [6] },
+          { who: 'Man', text: "Yes, and there are four pens in it.", answers: [7] },
+          { who: 'Woman', text: "Four pens. OK.", answers: [7] },
+          { who: 'Man', text: "There's an apple, and there's a black hat.", answers: [8, 9] },
+          { who: 'Woman', text: "An apple and a black hat?", answers: [8, 9] },
+          { who: 'Man', text: "Yes, that's right.", answers: [] },
+          { who: 'Woman', text: "Look, I've got a blue bag here. A teacher found it in room sixteen.", answers: [10] },
+          { who: 'Man', text: "Room sixteen? That's my classroom. Yes, that's my bag!", answers: [10] },
+          { who: 'Woman', text: "Here you are, Luke.", answers: [] },
+          { who: 'Man', text: "Thank you very much.", answers: [] }
+        ]
+      },
+      reading: {
+        title: "What's in my bag?",
+        text: "This is my school bag. It is red and black. In my bag, there are two books and a notebook. My pencil case is purple. " +
+          "There are three pencils, a pen and a rubber in it. I have got a bottle of water. It is blue. There is a banana for lunch. " +
+          "My phone is in my bag too. It is white. I have got my keys. They are small and silver.",
+        questions: [
+          { type: 'tf', q: 'The bag is red and black.', a: ['True'], line: 1 },
+          { type: 'tf', q: 'There are three books in the bag.', a: ['False'], line: 2 },
+          { type: 'tf', q: 'The pencil case is purple.', a: ['True'], line: 3 },
+          { type: 'tf', q: 'The bottle of water is green.', a: ['False'], line: 6 },
+          { type: 'tf', q: 'The phone is black.', a: ['False'], line: 9 },
+          { type: 'choose', q: 'What is in the bag with the books?', opts: ['a notebook', 'a ruler', 'a hat'], a: ['a notebook'], line: 2 },
+          { type: 'choose', q: 'How many pencils are in the pencil case?', opts: ['two', 'three', 'four'], a: ['three'], line: 4 },
+          { type: 'choose', q: 'What food is in the bag?', opts: ['an apple', 'a banana', 'a sandwich'], a: ['a banana'], line: 7 },
+          { type: 'choose', q: 'The banana is for …', opts: ['breakfast', 'lunch', 'dinner'], a: ['lunch'], line: 7 },
+          { type: 'choose', q: 'What colour are the keys?', opts: ['gold', 'silver', 'black'], a: ['silver'], line: 11 }
+        ],
+        words: [
+          { w: 'school bag', emoji: '🎒', m: 'the bag you take to school', ex: 'This is my school bag.' },
+          { w: 'notebook', emoji: '📓', m: 'a small book with empty pages for writing', ex: 'There are two books and a notebook.' },
+          { w: 'purple', emoji: '🟣', m: 'a colour: red and blue together', ex: 'My pencil case is purple.' },
+          { w: 'pencil', emoji: '✏️', m: 'you write or draw with it', ex: 'There are three pencils in it.' },
+          { w: 'rubber', emoji: '🧽', m: 'a small thing that takes pencil off paper', ex: 'There is a rubber in my pencil case.' },
+          { w: 'bottle', emoji: '💧', m: 'you keep water or milk in it', ex: 'I have got a bottle of water.' },
+          { w: 'banana', emoji: '🍌', m: 'a long yellow fruit', ex: 'There is a banana for lunch.' },
+          { w: 'phone', emoji: '📱', m: 'you call people with it', ex: 'My phone is in my bag too.' },
+          { w: 'keys', emoji: '🔑', m: 'you open a door with them', ex: 'I have got my keys.' },
+          { w: 'silver', emoji: '🥈', m: 'a grey colour that shines', ex: 'My keys are small and silver.' }
+        ]
+      },
+      writing: {
+        topic: 'My bag',
+        task: 'Write about your bag and the things in it.',
+        points: ['what colour your bag is', 'what is in your bag (books, pens…) and how many', 'your favourite thing in your bag and its colour'],
+        minWords: 25, maxWords: 35, minutes: 10
+      },
+      speaking: {
+        words: [
+          { w: 'colour', emoji: '🎨', ex: 'My favourite colour is green.' },
+          { w: 'red', emoji: '🔴', ex: 'My bag is red.' },
+          { w: 'blue', emoji: '🔵', ex: 'My pencil case is blue.' },
+          { w: 'black', emoji: '⚫', ex: 'My shoes are black.' },
+          { w: 'bag', emoji: '🎒', ex: 'There are three books in my bag.' },
+          { w: 'phone', emoji: '📱', ex: 'My phone is white.' },
+          { w: 'ball', emoji: '⚽', ex: 'My favourite thing is my ball.' },
+          { w: 'favourite', emoji: '❤️', ex: 'My favourite thing is my bike.' }
+        ],
+        questions: [
+          { q: 'What colour is your bag?', use: ["It's …", 'red', 'blue', 'black'] },
+          { q: "What's in your bag today?", use: ["There's a …", 'There are …', 'books', 'pens'] },
+          { q: "What's your favourite colour?", use: ['My favourite colour is …'] },
+          { q: 'What colour are your shoes?', use: ["They're …", 'white', 'black'] },
+          { q: "What's your favourite thing?", use: ['My favourite thing is my …', "It's …"] }
+        ],
+        part2: {
+          topic: 'My favourite thing',
+          hints: ['what it is', 'what colour it is', 'why you like it'],
+          seconds: 30
+        }
+      }
+    },
+    {
+      id: 'b5', no: 5, stage: 'Beginner', theme: 'Numbers 20–100', emoji: '💯',
+      listening: {
+        src: 'audio/skills/beg-5-listening.mp3?v=1',
+        title: 'Phoning a sports shop',
+        intro: 'Listen to a woman phoning a sports shop. Write ONE WORD or A NUMBER for each answer.',
+        questions: [
+          { q: 'Football: £_____', a: ['25', 'twenty-five', 'twenty five', '£25'] },
+          { q: 'Sports bag: £_____', a: ['40', 'forty', '£40'] },
+          { q: 'Trainers: £_____', a: ['65', 'sixty-five', 'sixty five', '£65'] },
+          { q: 'T-shirt: £_____', a: ['22', 'twenty-two', 'twenty two', '£22'] },
+          { q: 'Tennis racket: £_____', a: ['100', 'a hundred', 'one hundred', 'hundred', '£100'] },
+          { q: 'First name: _____', a: ['Anna'] },
+          { q: 'Surname: _____', a: ['Shaw'] },
+          { q: 'Phone number: _____', a: ['07700 900 281', '07700900281'] },
+          { q: 'The shop: _____ Park Road', a: ['91', 'ninety-one', 'ninety one'] },
+          { q: "The shop's phone number: _____", a: ['01632 960 539', '01632960539'] }
+        ],
+        words: [
+          { w: 'how much', emoji: '💰', m: 'we ask this about a price', ex: 'How much is a football, please?' },
+          { w: 'pound (£)', emoji: '💷', m: 'British money', ex: 'A football is twenty-five pounds.' },
+          { w: 'football', emoji: '⚽', m: 'a ball you kick', ex: 'A football is twenty-five pounds.' },
+          { w: 'sports bag', emoji: '👜', m: 'a bag for your sports clothes', ex: 'A sports bag is forty pounds.' },
+          { w: 'trainers', emoji: '👟', m: 'shoes for sport', ex: 'I need some trainers for my son.' },
+          { w: 'T-shirt', emoji: '👕', m: 'a shirt with short arms', ex: "We've got football T-shirts too." },
+          { w: 'tennis racket', emoji: '🎾', m: 'you hit the ball with it in tennis', ex: 'How much is a tennis racket?' },
+          { w: 'cheap', emoji: '👍', m: 'it does not cost a lot of money', ex: "Twenty-two pounds? That's cheap." },
+          { w: 'too much', emoji: '😮', m: 'more money than you want to pay', ex: "A hundred pounds? That's too much." },
+          { w: 'son', emoji: '👦', m: 'a boy who is your child', ex: 'I need some trainers for my son.' }
+        ],
+        transcript: [
+          { who: 'Woman', text: "Step five. You will hear a woman phoning a sports shop. Listen and write the answers.", answers: [] },
+          { who: 'Man', text: "Hello, City Sports. How can I help you?", answers: [] },
+          { who: 'Woman', text: "Hello. How much is a football, please?", answers: [] },
+          { who: 'Man', text: "A football is twenty-five pounds.", answers: [1] },
+          { who: 'Woman', text: "Twenty-five pounds? OK.", answers: [1] },
+          { who: 'Woman', text: "And how much is a sports bag?", answers: [] },
+          { who: 'Man', text: "A sports bag is forty pounds.", answers: [2] },
+          { who: 'Woman', text: "Forty pounds? Is that right?", answers: [2] },
+          { who: 'Man', text: "Yes, that's right.", answers: [] },
+          { who: 'Woman', text: "I need some trainers for my son. How much are they?", answers: [] },
+          { who: 'Man', text: "Our trainers are sixty-five pounds.", answers: [3] },
+          { who: 'Woman', text: "Sixty-five pounds. That's fine.", answers: [3] },
+          { who: 'Man', text: "We've got football T-shirts too. They're twenty-two pounds.", answers: [4] },
+          { who: 'Woman', text: "Twenty-two pounds? That's cheap.", answers: [4] },
+          { who: 'Woman', text: "And how much is a tennis racket?", answers: [] },
+          { who: 'Man', text: "This tennis racket is a hundred pounds.", answers: [5] },
+          { who: 'Woman', text: "A hundred pounds? Oh no, that's too much.", answers: [5] },
+          { who: 'Woman', text: "OK. I'd like the trainers, please. Can you keep them for me?", answers: [] },
+          { who: 'Man', text: "Yes, of course. What's your name, please?", answers: [] },
+          { who: 'Woman', text: "My first name is Anna. I'll spell it for you.", answers: [] },
+          { who: 'Woman', text: "That's A, double N, A.", answers: [6] },
+          { who: 'Man', text: "Thank you. And your surname?", answers: [] },
+          { who: 'Woman', text: "That's S, H, A, W.", answers: [7] },
+          { who: 'Man', text: "And what's your phone number?", answers: [] },
+          { who: 'Woman', text: "It's oh seven seven double oh, nine double oh, two eight one.", answers: [8] },
+          { who: 'Man', text: "Oh seven seven double oh, nine double oh, two eight one?", answers: [8] },
+          { who: 'Woman', text: "Yes, that's right.", answers: [] },
+          { who: 'Woman', text: "And where is your shop?", answers: [] },
+          { who: 'Man', text: "We're at ninety-one Park Road.", answers: [9] },
+          { who: 'Woman', text: "Ninety-one Park Road. Thank you.", answers: [9] },
+          { who: 'Woman', text: "And what's the shop's phone number, please?", answers: [] },
+          { who: 'Man', text: "Yes. It's oh one six three two, nine six oh, five three nine.", answers: [10] },
+          { who: 'Woman', text: "Oh one six three two, nine six oh, five three nine?", answers: [10] },
+          { who: 'Man', text: "Yes, that's right. See you soon!", answers: [] },
+          { who: 'Woman', text: "Thank you. Goodbye!", answers: [] }
+        ]
+      },
+      reading: {
+        title: "Bell's Shop: our price list",
+        text: "Welcome to Bell's Shop! We are at 36 King Street. We are open every day. Here is our price list. " +
+          "Bread is 85p. Milk is 60p. An apple is 30p, and a banana is 25p. A bottle of water is 50p. A small cake is 75p. " +
+          "Our cakes are very good! An ice cream is 90p. Children love it. A sandwich is £2. Birthday cards are 99p. " +
+          "Our phone number is 01632 960 714. Come and see us!",
+        questions: [
+          { type: 'tf', q: 'The shop is open every day.', a: ['True'], line: 2 },
+          { type: 'tf', q: 'Bread is 58p.', a: ['False'], line: 4 },
+          { type: 'tf', q: 'A banana is 30p.', a: ['False'], line: 6 },
+          { type: 'tf', q: 'A bottle of water is 50p.', a: ['True'], line: 7 },
+          { type: 'tf', q: 'A sandwich is £2.', a: ['True'], line: 12 },
+          { type: 'choose', q: 'Where is the shop?', opts: ['36 King Street', '63 King Street', '36 Queen Street'], a: ['36 King Street'], line: 1 },
+          { type: 'choose', q: 'How much is a small cake?', opts: ['57p', '75p', '70p'], a: ['75p'], line: 8 },
+          { type: 'choose', q: 'How much is an ice cream?', opts: ['19p', '90p', '99p'], a: ['90p'], line: 10 },
+          { type: 'choose', q: 'What is 99p?', opts: ['a birthday card', 'a cake', 'a sandwich'], a: ['a birthday card'], line: 13 },
+          { type: 'choose', q: "What is the shop's phone number?", opts: ['01632 960 714', '01632 960 741', '01632 690 714'], a: ['01632 960 714'], line: 14 }
+        ],
+        words: [
+          { w: 'shop', emoji: '🏪', m: 'a place where you buy things', ex: "Welcome to Bell's Shop!" },
+          { w: 'price list', emoji: '📋', m: 'a list of things and how much they are', ex: 'Here is our price list.' },
+          { w: 'open', emoji: '🔓', m: 'you can go in and buy things', ex: 'We are open every day.' },
+          { w: 'bread', emoji: '🍞', m: 'a food made from flour; you make sandwiches with it', ex: 'Bread is 85p.' },
+          { w: 'milk', emoji: '🥛', m: 'a white drink from cows', ex: 'Milk is 60p.' },
+          { w: 'cake', emoji: '🍰', m: 'a sweet food for birthdays and parties', ex: 'A small cake is 75p.' },
+          { w: 'ice cream', emoji: '🍦', m: 'a cold, sweet food', ex: 'An ice cream is 90p.' },
+          { w: 'sandwich', emoji: '🥪', m: 'two pieces of bread with food between them', ex: 'A sandwich is £2.' },
+          { w: 'birthday card', emoji: '💌', m: 'a card you give a friend on his or her birthday', ex: 'Birthday cards are 99p.' },
+          { w: 'p (pence)', emoji: '🪙', m: 'small British money: 100p is £1', ex: 'Milk is 60p.' }
+        ]
+      },
+      writing: {
+        topic: 'Shopping list',
+        task: 'You are going to the shop for your family. Write your shopping list in sentences.',
+        points: ['what you need from the shop (five or six things)', 'how many of each thing — for example: two apples, one bottle of milk', 'how much each thing is — for example: The bread is 85p.'],
+        minWords: 30, maxWords: 40, minutes: 12
+      },
+      speaking: {
+        words: [
+          { w: 'how much', emoji: '💰', ex: 'How much is this bag?' },
+          { w: 'pounds', emoji: '💷', ex: 'It is twenty-five pounds.' },
+          { w: 'pence', emoji: '🪙', ex: 'An apple is thirty pence.' },
+          { w: 'price', emoji: '🏷️', ex: 'The price is on the card.' },
+          { w: 'cheap', emoji: '👍', ex: 'This T-shirt is cheap.' },
+          { w: 'expensive', emoji: '💎', ex: 'This phone is very expensive.' },
+          { w: 'shop', emoji: '🏪', ex: 'There is a small shop near my house.' },
+          { w: 'buy', emoji: '🛒', ex: 'I buy bread and milk every day.' }
+        ],
+        questions: [
+          { q: 'What do you like to buy?', use: ['I like to buy …', 'books', 'clothes', 'sweets'] },
+          { q: 'How much is an ice cream in your town?', use: ["It's about …"] },
+          { q: "What's your favourite shop?", use: ['My favourite shop is …', "It's on … Street."] },
+          { q: 'Is your bag cheap or expensive?', use: ["It's cheap.", "It's expensive.", 'It was about …'] },
+          { q: "What's your favourite number from twenty to a hundred?", use: ['My favourite number is …', 'twenty-five', 'fifty', 'a hundred'] }
+        ],
+        part2: {
+          topic: 'Prices',
+          hints: ['three things you like to buy', 'how much each thing is', 'which thing is cheap and which is expensive'],
+          seconds: 30
+        }
+      }
+    },
     { id: 'b6', no: 6, stage: 'Beginner', theme: 'Days & times', emoji: '📅' },
     { id: 'b7', no: 7, stage: 'Beginner', theme: 'Food', emoji: '🍎' },
     { id: 'b8', no: 8, stage: 'Beginner', theme: 'Animals & pets', emoji: '🐶' },
