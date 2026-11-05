@@ -1023,7 +1023,162 @@ var TA_SKILLS = {
           }
         }
       },
-      { no: 8, theme: 'Free time', emoji: '🎨' },
+      {
+        no: 8, theme: 'Free time', emoji: '🎨',
+        listening: {
+          src: 'audio/skills/elem-8-listening.mp3?v=1',
+          title: 'Signing up for a course',
+          intro: 'Listen to a woman signing up for a course at a community centre. Complete the form. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
+          questions: [
+            { q: 'Course: _____ for Beginners', a: ['Photography'] },
+            { q: 'Name: Ms _____', a: ['Dalton'] },
+            { q: 'Address: 12 _____ Road', a: ['Penford'] },
+            { q: 'Day: _____', a: ['Thursday', 'Thursdays', 'Thursday evening', 'Thursday evenings'] },
+            { q: 'The class starts at: _____', a: ['7.30', '7:30', 'seven thirty', 'half past seven', '7.30 pm', '7:30 pm', '7.30pm', '7:30pm', '19.30', '19:30'] },
+            { q: 'Length of the course: _____ weeks', a: ['8', 'eight'] },
+            { q: 'Price: £_____', a: ['45', 'forty-five', 'forty five', '£45', '45.00', '£45.00', '45 pounds', 'forty-five pounds'] },
+            { q: 'Bring: a _____', a: ['notebook', 'note book'] },
+            { q: 'The classes are on the _____ floor', a: ['second', '2nd', '2'] },
+            { q: 'Community centre phone number: _____', a: ['07700 900 264', '07700900264'] }
+          ],
+          words: [
+            { w: 'sign up', emoji: '✍️', m: 'to put your name on a list because you want to join something', ex: "I'd like to sign up for a course, please." },
+            { w: 'community centre', emoji: '🏢', m: 'a building where people from the same town meet, learn and do activities', ex: 'Good evening, and welcome to Hillside Community Centre.' },
+            { w: 'free time', emoji: '🕒', m: 'the time when you are not working or studying', ex: 'I want to do something new in my free time.' },
+            { w: 'interested in', emoji: '🤩', m: 'wanting to know more about something or to do it', ex: 'Which course are you interested in?' },
+            { w: 'photography', emoji: '📷', m: 'taking photos, as a hobby or as a job', ex: 'I want to do the photography course.' },
+            { w: 'popular', emoji: '🌟', m: 'liked by a lot of people', ex: "That's a very popular course." },
+            { w: 'cost', emoji: '💷', m: 'to have a price; to need this much money to buy or do it', ex: 'How much does it cost?' },
+            { w: 'whole', emoji: '🧩', m: 'all of something, with no part missing', ex: "It's forty-five pounds for the whole course." },
+            { w: 'notebook', emoji: '📓', m: 'a small book with empty pages for writing in', ex: 'Please bring a notebook to write in.' },
+            { w: 'floor', emoji: '🛗', m: 'one level of a building, for example the ground floor or the first floor', ex: "They're on the second floor, in the big room at the end." }
+          ],
+          transcript: [
+            { who: 'Woman', text: 'Level eight. You will hear a woman at a community centre. She wants to sign up for a course. Listen and complete the form.', answers: [] },
+            { who: 'Man', text: 'Good evening, and welcome to Hillside Community Centre. How can I help you?', answers: [] },
+            { who: 'Woman', text: "Hello. I'd like to sign up for a course, please. I want to do something new in my free time.", answers: [] },
+            { who: 'Man', text: 'Great. Which course are you interested in?', answers: [] },
+            { who: 'Woman', text: 'I want to do the photography course. I saw it on your website.', answers: [1] },
+            { who: 'Man', text: "Photography for Beginners. That's a very popular course. Can I have your surname, please?", answers: [1] },
+            { who: 'Woman', text: "Yes, it's Dalton. I'll spell it for you.", answers: [2] },
+            { who: 'Woman', text: "That's D, A, L, T, O, N.", answers: [2] },
+            { who: 'Man', text: "Thank you, Ms Dalton. And what's your address?", answers: [] },
+            { who: 'Woman', text: "I live at number twelve, Penford Road. I'll spell Penford for you.", answers: [3] },
+            { who: 'Woman', text: "That's P, E, N, F, O, R, D.", answers: [3] },
+            { who: 'Man', text: 'Thank you. There are two groups for this course. One meets on Tuesday afternoon, and the other meets on Thursday evening. Which day is better for you?', answers: [] },
+            { who: 'Woman', text: 'I work in the afternoons, so Thursday is better for me.', answers: [4] },
+            { who: 'Man', text: 'No problem. The Thursday class starts at seven thirty in the evening.', answers: [5] },
+            { who: 'Woman', text: 'Seven thirty?', answers: [5] },
+            { who: 'Man', text: "Yes, that's right.", answers: [] },
+            { who: 'Woman', text: 'And how long is the course?', answers: [] },
+            { who: 'Man', text: "It's eight weeks long, and each class is two hours.", answers: [6] },
+            { who: 'Woman', text: 'Eight weeks?', answers: [6] },
+            { who: 'Man', text: "Yes, that's right.", answers: [] },
+            { who: 'Woman', text: 'Great. How much does it cost?', answers: [] },
+            { who: 'Man', text: "It's forty-five pounds for the whole course.", answers: [7] },
+            { who: 'Woman', text: 'Forty-five pounds for eight weeks?', answers: [7] },
+            { who: 'Man', text: "Yes, that's right.", answers: [] },
+            { who: 'Woman', text: 'Do I need to bring a camera?', answers: [] },
+            { who: 'Man', text: "No, you don't. You can take photos with your phone. But please bring a notebook to write in.", answers: [8] },
+            { who: 'Woman', text: 'OK. And where are the classes?', answers: [] },
+            { who: 'Man', text: "They're on the second floor, in the big room at the end.", answers: [9] },
+            { who: 'Woman', text: "And can I phone you if I can't come one week?", answers: [] },
+            { who: 'Man', text: 'Of course. Our phone number is oh seven seven double oh, nine double oh, two six four.', answers: [10] },
+            { who: 'Woman', text: 'Oh seven seven double oh, nine double oh, two six four?', answers: [10] },
+            { who: 'Man', text: "Yes, that's right.", answers: [] },
+            { who: 'Woman', text: 'Thank you very much. See you on Thursday!', answers: [] },
+            { who: 'Man', text: 'See you on Thursday, Ms Dalton. Enjoy the course!', answers: [] }
+          ]
+        },
+        reading: {
+          title: 'Hobby club adverts',
+          text: "Are you looking for something new to do in your free time? " +
+            "Here are five clubs in Millbrook that are looking for new members.\n\n" +
+            "The Millbrook Walking Club goes for a long walk in the hills every Sunday morning. " +
+            "We meet at nine o'clock outside the train station, and we usually walk about ten kilometres. " +
+            "Wear good shoes, and bring some water and a snack. " +
+            "The club is free, and everyone is welcome.\n\n" +
+            "Do you love board games? " +
+            "Come to Games Night at the Blue Door Café on Wednesdays, from seven until ten in the evening. " +
+            "We play old favourites like chess, and lots of new games too. " +
+            "It costs three pounds, and the price includes a hot drink.\n\n" +
+            "The Millbrook Book Club meets in the town library on the first Thursday of every month. " +
+            "Each month we read one book, and then we talk about it over tea and biscuits. " +
+            "This month's book is a funny story about a family who move to a farm. " +
+            "New members are always welcome, and you don't have to finish the book!\n\n" +
+            "Would you like to learn to cook? " +
+            "The Saturday Kitchen Club has cooking classes for beginners at Millbrook College. " +
+            "Every week, you learn to make a different dish, from simple soups to fresh pasta. " +
+            "Classes cost ten pounds, and you can take your food home with you. " +
+            "There are only eight places in each class, so book early.\n\n" +
+            "The Millbrook Choir is looking for new singers. " +
+            "You don't need to read music, and you don't need a beautiful voice. " +
+            "You just need to enjoy singing. " +
+            "We practise every Tuesday evening in the Market Hall, and every summer we sing at a concert in the park. " +
+            "To join, just come to one of our practices and say hello!",
+          questions: [
+            { type: 'tfng', q: 'The Walking Club meets on Sunday mornings.', a: ['True'], line: 2 },
+            { type: 'tfng', q: 'You have to pay to join the Walking Club.', a: ['False'], line: 5 },
+            { type: 'tfng', q: 'Games Night finishes at eleven o\'clock.', a: ['False'], line: 7 },
+            { type: 'tfng', q: 'The Book Club meets in the town library.', a: ['True'], line: 10 },
+            { type: 'tfng', q: 'The teacher at the Kitchen Club is a famous chef.', a: ['Not given'], line: 15 },
+            { type: 'gap', q: 'Walkers should wear good _____ and bring some water and a snack.', a: ['shoes'], line: 4 },
+            { type: 'gap', q: 'At Games Night, the price includes a hot _____.', a: ['drink'], line: 9 },
+            { type: 'gap', q: 'The Book Club talks about the book over tea and _____.', a: ['biscuits'], line: 11 },
+            { type: 'gap', q: "This month's book is about a family who move to a _____.", a: ['farm'], line: 12 },
+            { type: 'gap', q: 'Every summer, the choir sings at a concert in the _____.', a: ['park'], line: 22 },
+            { type: 'choose', q: 'How far does the Walking Club usually walk?', opts: ['about five kilometres', 'about ten kilometres', 'about twenty kilometres'], a: ['about ten kilometres'], line: 3 },
+            { type: 'choose', q: 'When is Games Night?', opts: ['on Mondays', 'on Wednesdays', 'on Fridays'], a: ['on Wednesdays'], line: 7 },
+            { type: 'choose', q: 'Where are the cooking classes?', opts: ['at the Blue Door Café', 'in the town library', 'at Millbrook College'], a: ['at Millbrook College'], line: 15 },
+            { type: 'choose', q: 'Why should you book the cooking classes early?', opts: ['They are very cheap.', 'There are only eight places in each class.', 'The teacher is leaving soon.'], a: ['There are only eight places in each class.'], line: 18 },
+            { type: 'choose', q: 'What do you need to join the choir?', opts: ['You need to read music.', 'You need a beautiful voice.', 'You need to enjoy singing.'], a: ['You need to enjoy singing.'], line: 21 }
+          ],
+          words: [
+            { w: 'member', emoji: '🧑‍🤝‍🧑', m: 'a person who is part of a club or group', ex: 'Here are five clubs in Millbrook that are looking for new members.' },
+            { w: 'snack', emoji: '🍎', m: 'a small amount of food that you eat between meals', ex: 'Wear good shoes, and bring some water and a snack.' },
+            { w: 'board game', emoji: '🎲', m: 'a game that you play on a board, often with dice and small pieces', ex: 'Do you love board games?' },
+            { w: 'include', emoji: '✅', m: 'to have something as one part of the whole', ex: 'It costs three pounds, and the price includes a hot drink.' },
+            { w: 'biscuit', emoji: '🍪', m: 'a small, flat, dry cake, often sweet', ex: 'We talk about it over tea and biscuits.' },
+            { w: 'dish', emoji: '🍝', m: 'food that is cooked in a special way, as part of a meal', ex: 'Every week, you learn to make a different dish.' },
+            { w: 'book', emoji: '📅', m: 'to ask for a place, a seat or a ticket before the day', ex: 'There are only eight places in each class, so book early.' },
+            { w: 'choir', emoji: '🎤', m: 'a group of people who sing together', ex: 'The Millbrook Choir is looking for new singers.' },
+            { w: 'practise', emoji: '🔁', m: 'to do something again and again to get better at it', ex: 'We practise every Tuesday evening in the Market Hall.' },
+            { w: 'concert', emoji: '🎶', m: 'a show where people play music or sing for other people', ex: 'Every summer we sing at a concert in the park.' }
+          ]
+        },
+        writing: {
+          topic: 'My free time',
+          task: 'Write a short text about what you do in your free time.',
+          points: ['what you like doing in your free time', 'when and where you do it, and who with', 'a new hobby you would like to try and why'],
+          minWords: 60, maxWords: 80, minutes: 25
+        },
+        speaking: {
+          words: [
+            { w: 'hobby', emoji: '🎨', ex: 'My favourite hobby is drawing.' },
+            { w: 'free time', emoji: '🕒', ex: 'In my free time, I read books.' },
+            { w: 'at the weekend', emoji: '📅', ex: 'At the weekend, I play football with my friends.' },
+            { w: 'play', emoji: '⚽', ex: 'I play basketball twice a week.' },
+            { w: 'watch films', emoji: '🎬', ex: 'I often watch films with my family.' },
+            { w: 'listen to music', emoji: '🎧', ex: 'I listen to music on the bus.' },
+            { w: 'draw', emoji: '🖍️', ex: 'My sister likes to draw animals.' },
+            { w: 'club', emoji: '👥', ex: 'I go to a chess club after school.' },
+            { w: 'relax', emoji: '😌', ex: 'I relax at home on Sunday evenings.' },
+            { w: 'enjoy', emoji: '😊', ex: 'I really enjoy cooking for my friends.' }
+          ],
+          questions: [
+            { q: 'What do you do in your free time?', use: ['In my free time, I …', 'I like …ing', 'read books', 'play games'] },
+            { q: 'What do you usually do at the weekend?', use: ['At the weekend, I usually …', 'with my friends', 'go to the park', 'relax at home'] },
+            { q: 'Do you play any sports?', use: ['Yes, I play …', "No, I don't, but I …", 'football', 'twice a week'] },
+            { q: 'What kind of music or films do you like?', use: ['I really like …', 'funny films', 'pop music', 'My favourite … is …'] },
+            { q: 'Would you like to join a club? Which one?', use: ["I'd like to join …", 'a sports club', 'a book club', 'because …'] }
+          ],
+          part2: {
+            topic: 'Talk about a hobby you enjoy',
+            hints: ['what the hobby is and when you started it', 'how often and where you do it', 'why you enjoy it'],
+            seconds: 90
+          }
+        }
+      },
       { no: 9, theme: 'Travel', emoji: '🚆' },
       { no: 10, theme: 'Weather & holidays', emoji: '☀️' }
     ]

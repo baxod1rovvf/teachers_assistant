@@ -505,11 +505,18 @@ real students' names or results into the repository (it is public).
   unchanged. `tests/pages.spec.js` ("top bar: …"), `tests/my-exercises.spec.js`.
 - **Skills Course (2026-11-04, teacher: replace the old Course with four skills)**: the old lesson Course (Block 1 lessons, slide
   editor, Teach mode, handouts, exam marks, `audio/course/`, `js/course-data.js`, `js/course-slides.js`, `ta_course_*`) is deleted.
-  `course.html` + `js/pages/course.js`, tab `course` 🗺️: four cards 🎧 Listening · 📖 Reading · ✍️ Writing · 🗣️ Speaking → Elementary →
-  10 level tiles, **all open, nothing locked**. **Each level + skill has its own permanent link** the teacher sends to a group
-  (group chips at the top, `ta_course_group`). Content: `js/skills-data.js` (`TA_SKILLS.elementary`; **levels 1–7 are complete, 8–10 have
-  only `{no, theme, emoji}` = "Coming soon"**; `TA_BETTER_WORDS` for the writing tips). Tile buttons: ▶️ Try (`skTry`, `&preview=1`, sends
-  nothing), 🔗 Copy link for <group> (`skCopyLink`), 📊 View Results, and a results-table button once any result exists.
+  `course.html` + `js/pages/course.js`, tab `course` 🗺️: since 2026-11-05 (teacher) it opens on a **level path** for the chosen group:
+  Level 1 → 🎧 📖 ✍️ 🗣️ dots → Level 2 → … → Level 10 (`skPathHtml`; a winding snake on computers, straight down on phones ≤ 760 px),
+  **all open, nothing locked**; levels without content are greyed "Coming soon". **Each level + skill has its own permanent link** the teacher sends to a group
+  (group chips at the top, `ta_course_group`). Content: `js/skills-data.js` (`TA_SKILLS.elementary`; **levels 1–8 are complete, 9–10 have
+  only `{no, theme, emoji}` = "Coming soon"**; `TA_BETTER_WORDS` for the writing tips). **A dot is done** (`skDotState`) when at least half
+  of the group's students (Students list, by ID) have a result for that level + skill (a group with no students: one result); Speaking
+  (sends nothing) when the teacher copied its link for the group (`ta_skills_links["<groupId>|speaking|<level>"] = { sentAt }`, no My
+  Exercises item). Dot tooltips say why ("2 of 3 students done", "Link sent 5 Nov"); a level with all four shows ✓; the first dot not done
+  is "Next". **A level opens its page** (`skLevelPageHtml`, "← All levels", not remembered): the results table on top, inline
+  (`skTableHtml`, ⬇️ Download picture; a ✍️ band opens the writing, `skViewWriting`; an empty state before any result), then four parts
+  (`.sk-part` — `.sk-card` belongs to the student page) with their done state, ▶️ Try (`skTry`, `&preview=1`, sends nothing) and 🔗 Copy link
+  for <group> (`skCopyLink`). **No "View Results"/"Results table" buttons on the Course page** (one exercise's results: My Exercises).
 - **Student page** `skill.html` + `js/skill-player.js` (`js/skill-bands.js` shared): link `skill.html?s=<listening|reading|writing|speaking>&lv=<n>&c=<code>`
   (`taSkillLink` in common.js; speaking has no code, never expires, loads from GitHub Pages not Firebase). Start card (name + ID, any ID
   accepted), the code is checked. Listening: audio + 10 gaps, Submit → ✅/❌, score, 10 useful words, **Analyze >** = transcript with the
@@ -530,7 +537,7 @@ read per drawing; the hidden/preloaded Course panel isn't redrawn). Listening/Re
 left out of Top 5** (`TA_SKILL_COURSE_RE` in main.js: levels are open and sent ahead, unreached ones would count as 0 %). CSV: a
 writing's band goes in "Other result". Results for writing: `viewSkillWriting` (text, words,
   time, mistakes, a band box). **The teacher's mark wins everywhere**: `ta_skills_marks` keyed "<code>|<studentId>". Both keys are synced and
-  in the backup. **Results table** per level + group (`skTableRows`, `skTableHtml`, PNG by `skDrawTablePng`): ranked by Overall (equal places
+  in the backup. **Results table** per level + group, on the level page (`skTableRows`, `skTableHtml`, PNG by `skDrawTablePng`): ranked by Overall (equal places
   share a number, medals), 🎧 📖 ✍️ bands with raw scores, best try per skill, a missing skill "—", footer average.
 - **Bands** (`js/skill-bands.js`): Listening/Reading = round(correct/total × 40) → IELTS table (19/20 → 8.5, 16/20 → 7.5, 9/20 → 5.5);
   Writing estimate = 3 + 3×min(1, words/min) + 3×max(0, 1 − mistakes per 100 words/10), nearest 0.5, 1–9 (grammar check didn't run → last
