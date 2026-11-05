@@ -718,7 +718,154 @@ var TA_SKILLS = {
           }
         }
       },
-      { no: 6, theme: 'Shopping', emoji: '🛍️' },
+      {
+        no: 6, theme: 'Shopping', emoji: '🛍️',
+        listening: {
+          src: 'audio/skills/elem-6-listening.mp3?v=1',
+          title: 'A lost bag at a shop',
+          intro: 'Listen to a woman phoning a department store about a lost bag. Complete the form. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.',
+          questions: [
+            { q: 'Name: Mrs _____', a: ['Palmer'] },
+            { q: 'Day she was in the shop: _____', a: ['Saturday'] },
+            { q: 'Left the bag in the _____ department', a: ['shoe', 'shoes'] },
+            { q: 'Colour of the bag: _____', a: ['dark green', 'green'] },
+            { q: 'Inside the bag: a red _____', a: ['purse'] },
+            { q: 'Money in the purse: about £_____', a: ['35', 'thirty-five', 'thirty five', '£35', '35.00'] },
+            { q: 'Also inside: a pair of _____', a: ['sunglasses', 'sun glasses'] },
+            { q: 'Address: 42 _____ Road', a: ['Ashby'] },
+            { q: 'Phone number: _____', a: ['07700 900 846', '07700900846'] },
+            { q: 'Collect the bag from the _____ desk', a: ['information'] }
+          ],
+          words: [
+            { w: 'department store', emoji: '🏬', m: 'a big shop that sells many different things on different floors', ex: 'Good morning, Westgate Department Store.' },
+            { w: 'leave (left)', emoji: '👜', m: 'to forget to take something with you', ex: 'I think I left my bag in your shop.' },
+            { w: 'try on', emoji: '👢', m: 'to put on clothes or shoes in a shop to see if they are good for you', ex: 'I tried on some boots.' },
+            { w: 'leather', emoji: '🐄', m: 'a strong material made from the skin of an animal', ex: "It's a small leather bag." },
+            { w: 'strap', emoji: '🎒', m: 'a long thin piece of material for carrying a bag', ex: "It's dark green, with a long strap." },
+            { w: 'purse', emoji: '👛', m: 'a small bag for your money and cards', ex: "There's a red purse inside it." },
+            { w: 'a pair of', emoji: '🕶️', m: 'two things that you use together', ex: "There's a pair of sunglasses in a black case." },
+            { w: 'case', emoji: '💼', m: 'a box or a bag that keeps something safe', ex: 'My sunglasses are in a black case.' },
+            { w: 'ground floor', emoji: '🚪', m: 'the floor of a building at the same level as the street', ex: 'The information desk is on the ground floor.' },
+            { w: 'collect', emoji: '🙌', m: 'to go to a place and take something that is waiting for you', ex: 'You can collect it from the information desk.' }
+          ],
+          transcript: [
+            { who: 'Woman', text: 'Level six. You will hear a woman phoning a department store about a lost bag. Listen and complete the form.', answers: [] },
+            { who: 'Man', text: 'Good morning, Westgate Department Store. Customer service. How can I help you?', answers: [] },
+            { who: 'Woman', text: 'Hello. I think I left my bag in your shop. Has anyone found it?', answers: [] },
+            { who: 'Man', text: "I can check for you. What's your surname, please?", answers: [] },
+            { who: 'Woman', text: "It's Palmer. I'll spell it for you.", answers: [1] },
+            { who: 'Woman', text: "That's P, A, L, M, E, R.", answers: [1] },
+            { who: 'Man', text: 'Thank you, Mrs Palmer. When were you in the shop?', answers: [] },
+            { who: 'Woman', text: 'I was here on Saturday morning, with my sister.', answers: [2] },
+            { who: 'Man', text: 'And where do you think you left the bag?', answers: [] },
+            { who: 'Woman', text: 'In the shoe department. I tried on some boots, and I put my bag on the floor.', answers: [3] },
+            { who: 'Man', text: 'I see. What does the bag look like?', answers: [] },
+            { who: 'Woman', text: "It's a small leather bag. It's dark green, with a long strap.", answers: [4] },
+            { who: 'Man', text: "And what's inside the bag?", answers: [] },
+            { who: 'Woman', text: "There's a red purse inside it.", answers: [5] },
+            { who: 'Man', text: 'Is there any money in the purse?', answers: [] },
+            { who: 'Woman', text: 'Yes, about thirty-five pounds.', answers: [6] },
+            { who: 'Man', text: 'Thirty-five pounds?', answers: [6] },
+            { who: 'Woman', text: "Yes, that's right.", answers: [] },
+            { who: 'Man', text: 'Is there anything else in the bag?', answers: [] },
+            { who: 'Woman', text: "Yes, there's a pair of sunglasses in a black case.", answers: [7] },
+            { who: 'Man', text: "Good news, Mrs Palmer. I think we've got your bag here! Can I have your address, please?", answers: [] },
+            { who: 'Woman', text: "Of course. I live at forty-two Ashby Road. I'll spell Ashby for you.", answers: [8] },
+            { who: 'Woman', text: "That's A, S, H, B, Y.", answers: [8] },
+            { who: 'Man', text: "Thank you. And what's your phone number?", answers: [] },
+            { who: 'Woman', text: "It's oh seven seven double oh, nine double oh, eight four six.", answers: [9] },
+            { who: 'Man', text: 'Oh seven seven double oh, nine double oh, eight four six?', answers: [9] },
+            { who: 'Woman', text: "Yes, that's right.", answers: [] },
+            { who: 'Woman', text: 'Can I come and get my bag today?', answers: [] },
+            { who: 'Man', text: 'Yes, of course. You can collect it from the information desk on the ground floor.', answers: [10] },
+            { who: 'Man', text: 'Please bring something with your name on it, like your driving licence.', answers: [] },
+            { who: 'Woman', text: "Thank you so much! I'll come this afternoon.", answers: [] }
+          ]
+        },
+        reading: {
+          title: 'Shopping in London',
+          text: "London is one of the best cities in the world for shopping. " +
+            "Every year, millions of visitors come to the city to buy clothes, presents and souvenirs. " +
+            "You can find everything here, from cheap T-shirts to very expensive watches.\n\n" +
+            "Oxford Street is the busiest shopping street in Europe. " +
+            "It has more than three hundred shops, from big department stores to small shoe shops. " +
+            "Most shops there are open from ten in the morning until nine in the evening. " +
+            "On Sundays, they open at twelve and close at six. " +
+            "If you want something special, visit Harrods, a famous department store in Knightsbridge. " +
+            "It is very big and very expensive, but many tourists go there just to look at its beautiful food hall.\n\n" +
+            "For cheaper shopping, try one of London's street markets. " +
+            "Camden Market is popular with young people because it sells unusual clothes, old records and street food from many countries. " +
+            "Portobello Road Market in Notting Hill is famous for antiques, and it is busiest on Saturdays. " +
+            "Remember to bring some cash, because a few small stalls do not take cards.\n\n" +
+            "Here are some tips for your shopping day. " +
+            "Go early in the morning, when the shops are still quiet. " +
+            "Wear comfortable shoes, because you will walk a lot. " +
+            "In January, many shops have big sales, and some clothes are half price. " +
+            "Finally, always keep your bag closed on busy streets, and never leave it on the floor. " +
+            "Have a great time, and happy shopping in London!",
+          questions: [
+            { type: 'tfng', q: 'Oxford Street has more than three hundred shops.', a: ['True'], line: 4 },
+            { type: 'tfng', q: 'Most shops on Oxford Street open at nine in the morning.', a: ['False'], line: 5 },
+            { type: 'tfng', q: 'Harrods is a cheap place to shop.', a: ['False'], line: 8 },
+            { type: 'tfng', q: 'Camden Market is open every day of the week.', a: ['Not given'], line: 10 },
+            { type: 'tfng', q: 'In January, you can buy some clothes for half the usual price.', a: ['True'], line: 16 },
+            { type: 'gap', q: 'Oxford Street is the busiest shopping street in _____.', a: ['Europe'], line: 3 },
+            { type: 'gap', q: 'Many tourists go to Harrods to see its beautiful food _____.', a: ['hall'], line: 8 },
+            { type: 'gap', q: 'Portobello Road Market is famous for _____.', a: ['antiques'], line: 11 },
+            { type: 'gap', q: 'Bring some _____, because a few small stalls do not take cards.', a: ['cash'], line: 12 },
+            { type: 'gap', q: 'Wear comfortable _____, because you will walk a lot.', a: ['shoes'], line: 15 },
+            { type: 'choose', q: 'When do the shops on Oxford Street close on Sundays?', opts: ['at six', 'at nine', 'at twelve'], a: ['at six'], line: 6 },
+            { type: 'choose', q: 'Where is Harrods?', opts: ['in Camden', 'in Knightsbridge', 'in Notting Hill'], a: ['in Knightsbridge'], line: 7 },
+            { type: 'choose', q: 'Why do young people like Camden Market?', opts: ['It is very quiet.', 'It has a famous food hall.', 'It sells unusual clothes.'], a: ['It sells unusual clothes.'], line: 10 },
+            { type: 'choose', q: 'When is Portobello Road Market busiest?', opts: ['on Saturdays', 'on Sundays', 'on Mondays'], a: ['on Saturdays'], line: 11 },
+            { type: 'choose', q: 'What is the best time to go shopping, the text says?', opts: ['late in the evening', 'at lunchtime', 'early in the morning'], a: ['early in the morning'], line: 14 }
+          ],
+          words: [
+            { w: 'souvenir', emoji: '🗽', m: 'a small thing you buy to remember a place you visited', ex: 'Visitors buy clothes, presents and souvenirs.' },
+            { w: 'expensive', emoji: '💎', m: 'costing a lot of money', ex: 'Harrods is very big and very expensive.' },
+            { w: 'department store', emoji: '🏬', m: 'a big shop that sells many different things on different floors', ex: 'Harrods is a famous department store.' },
+            { w: 'busy (busiest)', emoji: '👥', m: 'full of people', ex: 'Oxford Street is the busiest shopping street in Europe.' },
+            { w: 'market', emoji: '🧺', m: 'a place, often outside, where people sell things from tables', ex: 'Try one of London\'s street markets.' },
+            { w: 'unusual', emoji: '🦄', m: 'different from most things; not ordinary', ex: 'Camden Market sells unusual clothes.' },
+            { w: 'antiques', emoji: '🏺', m: 'old and beautiful things, for example furniture or clocks, that are worth a lot of money', ex: 'Portobello Road Market is famous for antiques.' },
+            { w: 'cash', emoji: '💵', m: 'money in coins and notes, not a card', ex: 'Remember to bring some cash.' },
+            { w: 'stall', emoji: '⛺', m: 'a small table or shop at a market', ex: 'A few small stalls do not take cards.' },
+            { w: 'sale', emoji: '🏷️', m: 'a time when a shop sells things for less money than usual', ex: 'In January, many shops have big sales.' }
+          ]
+        },
+        writing: {
+          topic: 'A shopping trip',
+          task: 'Write a short text about a shopping trip you remember.',
+          points: ['where you went and who you went with', 'what you bought and how much it cost', 'how you felt about the trip'],
+          minWords: 50, maxWords: 70, minutes: 20
+        },
+        speaking: {
+          words: [
+            { w: 'shop', emoji: '🏪', ex: 'There is a small shop near my house.' },
+            { w: 'shopping centre', emoji: '🏬', ex: 'We go to the shopping centre at the weekend.' },
+            { w: 'market', emoji: '🧺', ex: 'My mum buys fruit at the market.' },
+            { w: 'clothes', emoji: '👕', ex: 'I need some new clothes for school.' },
+            { w: 'price', emoji: '🏷️', ex: 'The price of this jacket is thirty pounds.' },
+            { w: 'cheap', emoji: '🪙', ex: 'These shoes are very cheap.' },
+            { w: 'expensive', emoji: '💎', ex: 'That watch is too expensive for me.' },
+            { w: 'size', emoji: '📏', ex: 'Have you got this T-shirt in a bigger size?' },
+            { w: 'pay', emoji: '💳', ex: 'Can I pay by card?' },
+            { w: 'present', emoji: '🎁', ex: 'I bought a present for my friend.' }
+          ],
+          questions: [
+            { q: 'How often do you go shopping?', use: ['I go shopping …', 'once a week', 'at the weekend', 'not very often'] },
+            { q: 'Do you like shopping for clothes? Why or why not?', use: ['I like …', "I don't like …", 'because …', 'boring', 'fun'] },
+            { q: 'Where does your family usually buy food?', use: ['We usually buy …', 'supermarket', 'market', 'near our home'] },
+            { q: 'Do you prefer shopping online or in shops?', use: ['I prefer …', 'online', 'in shops', 'easier', 'cheaper'] },
+            { q: 'What was the last thing you bought?', use: ['I bought …', 'last week', 'it cost …', 'for my …'] }
+          ],
+          part2: {
+            topic: 'Talk about a shop you like',
+            hints: ['what the shop is and where it is', 'what you can buy there', 'why you like it'],
+            seconds: 60
+          }
+        }
+      },
       { no: 7, theme: 'My town', emoji: '🏙️' },
       { no: 8, theme: 'Free time', emoji: '🎨' },
       { no: 9, theme: 'Travel', emoji: '🚆' },
