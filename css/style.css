@@ -64,13 +64,6 @@
 html, body { min-height: 100%; }
 
 body {
-  /* confetti dots — now only on the students' course page (body.sk-body keeps its old look) */
-  --mesh-page:
-    radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--c-pink) 22%, transparent) 0 3px, transparent 4px) 0 0 / 140px 140px,
-    radial-gradient(circle at 62% 42%, color-mix(in srgb, var(--c-yellow) 26%, transparent) 0 3px, transparent 4px) 0 0 / 170px 170px,
-    radial-gradient(circle at 36% 78%, color-mix(in srgb, var(--c-blue) 22%, transparent) 0 3px, transparent 4px) 0 0 / 120px 120px,
-    radial-gradient(circle at 86% 64%, color-mix(in srgb, var(--c-green) 24%, transparent) 0 3px, transparent 4px) 0 0 / 190px 190px,
-    var(--surface-page);
   background: var(--surface-page);   /* a plain, calm ground behind the sticker cards (teacher, 2026-11-05) */
   color: var(--ink);
   min-height: 100vh;
@@ -3066,6 +3059,6 @@ button.sk-dot:hover { transform: scale(1.12); }
 .sk-words li { position: relative; padding-right: 52px; }
 .sk-wemoji { position: absolute; top: 10px; right: 12px; font-size: 1.6rem; line-height: 1; }
 
-/* The students' course page (skill.html) keeps its cream / plum page with confetti dots (teacher, 2026-11-05: only Loom's own pages got the plain slate) */
-body.sk-body { --surface-page: #1B1535; background: var(--mesh-page); }
+/* The students' course page (skill.html) keeps its cream / plum colours, without the confetti dots (teacher, 2026-11-05) */
+body.sk-body { --surface-page: #1B1535; background: var(--surface-page); }   /* plain, no confetti dots (teacher, 2026-11-05) */
 body.sk-body.light-theme { --surface-page: #FFF5E1; }
