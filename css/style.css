@@ -3062,3 +3062,7 @@ button.sk-dot:hover { transform: scale(1.12); }
 /* The students' course page (skill.html) keeps its cream / plum colours, without the confetti dots (teacher, 2026-11-05) */
 body.sk-body { --surface-page: #1B1535; background: var(--surface-page); }   /* plain, no confetti dots (teacher, 2026-11-05) */
 body.sk-body.light-theme { --surface-page: #FFF5E1; }
+
+/* Course: "Starts at Step N" on a group's page (2026-11-07) */
+.sk-start-pick { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 0.95rem; }
+.sk-start-pick select { font: inherit; padding: 4px 8px; border-radius: 10px; border: 2px solid var(--line); background: var(--surface-1, #fff); color: inherit; }
