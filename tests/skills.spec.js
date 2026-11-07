@@ -1167,6 +1167,13 @@ test.describe('course page', () => {
     await expect(page.locator('.sk-gcard .sk-level-chip')).toHaveText('Elementary');
     await expect(page.locator('.sk-gcard .sk-teach')).toHaveText('▶ Teach STEP 11');
     expect(await page.evaluate(() => skStartNo(skGroup('g1')))).toBe(11);
+    // the teacher picks where the group starts on its page ("Starts at Step 4")
+    await page.locator('.sk-gcard .sk-gcard-name, .sk-gcard button').first().click();
+    await page.locator('.sk-start-pick select').selectOption('4');
+    expect(await page.evaluate(() => skStartNo(skGroup('g1')))).toBe(4);
+    await page.evaluate(() => skOpenGroup(''));
+    await expect(page.locator('.sk-gcard .sk-teach')).toHaveText('▶ Teach STEP 4');
+    await page.evaluate(() => { const l = getStudentGroups(); delete l[0].courseStart; saveStudentGroups(l); });
     // the editor shows the group's own level
     await page.goto('/students.html');
     await page.waitForTimeout(500);

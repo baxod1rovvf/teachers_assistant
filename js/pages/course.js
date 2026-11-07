@@ -120,8 +120,26 @@ function skGroupLevel(g) {
   const e = (typeof getWeeklySchedule === 'function' ? getWeeklySchedule() : []).find(x => x && x.level && String(x.group || '').trim().toLowerCase() === name);
   return e ? String(e.level) : '';
 }
-/* The first step of a group: Beginner (or no level) → 1, any other level → 11 */
-function skStartNo(g) { const lv = skGroupLevel(g).trim().toLowerCase(); return !lv || lv === 'beginner' ? 1 : 11; }
+/* The first step of a group: the teacher's choice on the group page (courseStart, 2026-11-07), else Beginner (or no level) → 1,
+   any other level → 11 */
+function skStartNo(g) {
+  const n = g && parseInt(g.courseStart, 10), max = (TA_SKILLS.steps || []).length || 20;
+  if (n >= 1 && n <= max) return n;
+  const lv = skGroupLevel(g).trim().toLowerCase(); return !lv || lv === 'beginner' ? 1 : 11;
+}
+function skSetStart(id, no) {
+  const list = getStudentGroups(), g = list.find(x => x.id === id);
+  if (!g) return;
+  g.courseStart = parseInt(no, 10) || 1;
+  saveStudentGroups(list);
+  renderCourse();
+}
+function skStartPickHtml(g) {
+  const cur = skStartNo(g);
+  return '<label class="sk-start-pick">Starts at <select onchange="skSetStart(' + jsAttr(g.id) + ', this.value)">' +
+    (TA_SKILLS.steps || []).map(x => '<option value="' + x.no + '"' + (x.no === cur ? ' selected' : '') + '>Step ' + x.no + '</option>').join('') +
+    '</select></label>';
+}
 /* { done, text } of one dot. ctx = { map, idx, roster } — one reading of the kept results per drawing. */
 function skDotState(skill, step, g, ctx) {
   if (!g) return { done: false, text: 'Add a group first' };
@@ -262,7 +280,7 @@ function skGroupPageHtml(s) {
   const g = s.g, tab = skView.tab === 'progress' ? 'progress' : 'journey';
   const tabBtn = (k, label) => '<button type="button" role="tab" class="sk-tab' + (tab === k ? ' active' : '') + '" aria-selected="' + (tab === k) + '" data-tab="' + k + '" onclick="skShowTab(' + jsAttr(k) + ')">' + label + '</button>';
   return '<button type="button" class="back-to-picker-btn" onclick="skOpenGroup(\'\')">← All groups</button>' +
-    '<div class="sk-ghead"><div class="sk-ghead-name"><h3 translate="no">' + escapeForHtml(g.name) + '</h3><span class="sk-level-chip">' + escapeForHtml(s.level || '—') + '</span></div>' +
+    '<div class="sk-ghead"><div class="sk-ghead-name"><h3 translate="no">' + escapeForHtml(g.name) + '</h3><span class="sk-level-chip">' + escapeForHtml(s.level || '—') + '</span>' + skStartPickHtml(g) + '</div>' +
     '<div class="sk-gcard-stats">' + skStatsHtml(s) + '</div></div>' +
     '<div class="sk-tabs" role="tablist" aria-label="' + escapeForHtml(g.name) + '">' + tabBtn('journey', '🧭 Journey') + tabBtn('progress', '📈 Progress') + '</div>' +
     '<div class="sk-tabpanel" role="tabpanel">' + (tab === 'progress' ? skProgressHtml(s) : skPathHtml(s)) + '</div>';

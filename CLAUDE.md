@@ -509,7 +509,7 @@ real students' names or results into the repository (it is public).
   Students-page group; none → "Add a group on the Students page"): name (its button covers the card), level chip (`skGroupLevel`: the
   level kept on the group itself (`level` in `ta_student_groups`, saved by `saveGroup` since 2026-11-05), else on its lessons in `ta_weekly_schedule`, "—" if none), 20 squares `.sk-stepbox` in rows of 10 (green done, red outline
   the step the group is on = first ready step not done from its start, grey skipped, dashed coming soon), ⭐ the students' average band,
-  🐢 N behind, **▶ Teach STEP N** (`skTeach`; none left → "🎉 All ready steps done", or "🎉 All steps done" once every step is ready and done). **Start** (`skStartNo`): Beginner or no level → Step 1, any other level → Step 11; steps
+  🐢 N behind, **▶ Teach STEP N** (`skTeach`; none left → "🎉 All ready steps done", or "🎉 All steps done" once every step is ready and done). **Start** (`skStartNo`): the teacher's choice "Starts at Step N" on the group page (`courseStart` on the group, `skSetStart`, 2026-11-07), else Beginner or no level → Step 1, any other level → Step 11; steps
   before are skipped (grey, still open). One `skResultsMap` for all cards; `skGroupStats(g, ctx)` works out everything per group.
   A card opens the **group page** (`skOpenGroup`, "← All groups", last group in `ta_course_group`) with tabs **🧭 Journey** / **📈 Progress**
   (`skShowTab`). Journey = the path Step 1 → … → Step 20 (`skPathHtml`; a winding snake on computers, straight down on phones ≤ 760 px)
