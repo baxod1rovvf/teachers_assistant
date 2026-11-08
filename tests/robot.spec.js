@@ -16,7 +16,7 @@ test('the robot is an AI chat: any question goes to the AI with Loom\'s notes; w
   await expect(body.locator('.ai-chip')).toHaveCount(2);
   await expect(page.locator('#aiRobotInput')).toBeFocused();
   await expect(page.locator('#aiRobotSend')).toHaveAttribute('aria-label', 'Send question');
-  // no AI address yet → the closest saved answer, marked as such
+  // the AI can't be reached (the tests block the internet) → the closest saved answer, marked as such
   await page.locator('#aiRobotInput').fill('how do I punish a student who did not do it');
   await page.locator('#aiRobotSend').click();
   await expect(body.locator('.ai-msg-user')).toHaveText('how do I punish a student who did not do it');

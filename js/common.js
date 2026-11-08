@@ -3243,11 +3243,11 @@ function aiRobotBowl() {
 }
 
 /* ---- the AI chat (2026-11-07, teacher: "AI robot should be AI completely… user should ask any question") ----
-   The teacher types any question; it goes to Claude through a small helper on Cloudflare (tools/ai-worker.js — it keeps the
+   The teacher types any question; it goes to Google Gemini (free plan, 2026-11-08; Claude before) through a small helper on Cloudflare (tools/ai-worker.js — it keeps the
    secret API key, so the key is never inside this public site). The robot's old questions + answers (AI_ROBOT_FAQ_BY_TAB,
    AI_ROBOT_TYPE_FAQ) are sent along as what the AI knows about Loom; two of this section's questions are offered as chips.
    Without a helper address yet (TA_AI_URL empty) or when it fails, the best matching saved answer is shown instead. */
-const TA_AI_URL = '';   // the Cloudflare helper's address, e.g. 'https://loom-ai.<name>.workers.dev' — set once it exists
+const TA_AI_URL = 'https://loom-ai.toxiraxii010.workers.dev';   // the Cloudflare helper's address (it asks Google Gemini, free plan), e.g. 'https://loom-ai.<name>.workers.dev' — set once it exists
 function taAiUrl() { try { return localStorage.getItem('ta_ai_url') || TA_AI_URL; } catch (e) { return TA_AI_URL; } }
 let aiRobotBubbleOpen = false;
 let aiRobotChat = [];        // [{role: 'user'|'assistant', text}] — this visit only
