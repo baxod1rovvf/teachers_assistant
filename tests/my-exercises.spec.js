@@ -35,7 +35,7 @@ test('My Exercises has no "Disable Points", "Make it a…", "Worksheet" or "Answ
   // no Worksheet or Answers either; Delete is just 🗑
   await expect(page.locator('.recent-exercise-actions', { hasText: 'Worksheet' })).toHaveCount(0);
   await expect(page.locator('.recent-exercise-actions', { hasText: 'Answers' })).toHaveCount(0);
-  await expect(page.locator('.recent-exercise-row').first().locator('.myex-delete .myex-pic')).toHaveAttribute('data-emo', '🗑️');   // an emoji since the playful design (2026-11-02)
+  await expect(page.locator('.recent-exercise-row').first().locator('.myex-delete .lc')).toHaveClass(/lc-trash-2/);   // a Lucide icon since 2026-11-07
 });
 
 test('Redownload is in the ⋯ menu (not a button on the card)', async ({ page, context }) => {
@@ -109,10 +109,10 @@ test('My Exercises shows cards, 4 in a row: title ✎ ⋯, then 🗑 and View Re
   expect(tops[4]).toBeGreaterThan(tops[0]);                        // the 5th on the next line
   const card = page.locator('.myex-card[data-uid="uc1"]');
   await expect(card.locator('.myex-card-foot button')).toHaveText(['', 'View Results']);
-  await expect(card.locator('.myex-results .myex-pic')).toHaveAttribute('data-emo', '📊');
+  await expect(card.locator('.myex-results .lc')).toHaveClass(/lc-chart-column/);
   await card.locator('.myex-more').click();
   await expect(page.locator('#myexMenu .myex-menu-item')).toHaveText(['Use again', 'Redownload']);
-  await expect(page.locator('#myexMenu .myex-menu-item .myex-ic')).toHaveCount(2);   // each with its icon // + 🔗 Copy link on the real site
+  await expect(page.locator('#myexMenu .myex-menu-item .lc')).toHaveCount(2);   // each with its icon // + 🔗 Copy link on the real site
   await expect(page.locator('.myex-day')).toHaveText(['Today']);   // all made today: one date heading
   // the card shows only the title; type, group and date (without the year) are at the top of ⋯
   await expect(card.locator('.myex-card-badges, .recent-exercise-date')).toHaveCount(0);
@@ -136,9 +136,10 @@ test('every card and type chip shows the exercise type\'s emoji (as on the Creat
   expect(n).toBeGreaterThan(0);
   expect(await page.locator('.myex-card .myex-card-head > .myex-type-ic').count()).toBe(n);
   // each type has its own emoji on a sticker of its own colour (playful design, 2026-11-02)
-  const emo = await page.locator('.myex-card .myex-type-ic').first().evaluate(el => getComputedStyle(el, '::before').content);
-  expect(emo).toMatch(/\p{Extended_Pictographic}/u);
-  expect(await page.locator('.myex-type-chip .myex-type-ic').first().evaluate(el => getComputedStyle(el, '::before').content)).toMatch(/\p{Extended_Pictographic}/u);
+  // since 2026-11-07: a Lucide icon drawn through a mask (no emoji)
+  const mask = el => getComputedStyle(el, '::before').maskImage || getComputedStyle(el, '::before').webkitMaskImage;
+  expect(await page.locator('.myex-card .myex-type-ic').first().evaluate(mask)).toContain('svg');
+  expect(await page.locator('.myex-type-chip .myex-type-ic').first().evaluate(mask)).toContain('svg');
   expect(await page.locator('.myex-card[data-uid="uset"] .myex-type-ic').getAttribute('class')).toMatch(/picker-icon-(homework|class)/);
   await page.screenshot({ path: info.outputPath('my-exercises.png') });
 });

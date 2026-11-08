@@ -3235,3 +3235,50 @@ body.loom-studio .top-group-tab { border: 1px solid var(--border) !important; bo
 body.loom-studio .top-group-tab.active { background: var(--brand) !important; color: #fff !important; }
 body.loom-studio .picker-section-title { background: var(--brand-soft) !important; color: #C7D2FE !important; border: 1px solid rgba(129,140,248,0.3) !important;
   box-shadow: none !important; transform: none !important; font-size: 0.95rem; font-weight: 600; }
+
+/* the AI chat (2026-11-07): a round indigo button with the bot icon, a dark chat panel */
+body.loom-studio .ai-robot-anim { width: 64px !important; height: 64px !important; border-radius: 50%; display: grid; place-items: center; font-size: 1.7rem;
+  background: var(--brand) !important; color: #fff; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 12px 30px -8px rgba(99,102,241,0.75); cursor: pointer; padding: 0; }
+body.loom-studio .ai-robot-anim:hover { background: #7376F5 !important; }
+body.loom-studio .ai-robot-bubble { width: min(420px, calc(100vw - 24px)) !important; padding: 0 !important; border-radius: 18px !important; overflow: hidden;
+  background: #161922 !important; border: 1px solid rgba(129,140,248,0.25) !important; box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8) !important; }
+body.loom-studio .ai-robot-bubble-tail { display: none; }
+body.loom-studio .ai-robot-bubble-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; background: #1A1D35; border-bottom: 1px solid var(--border); }
+body.loom-studio .ai-robot-bubble-title { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; color: #fff; }
+body.loom-studio .ai-robot-bubble-title .lc { color: #A5B4FC; }
+body.loom-studio .ai-robot-bubble-close { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: none; border: 0; color: var(--ink-soft); font-size: 1.1rem; cursor: pointer; }
+body.loom-studio .ai-robot-bubble-close:hover { background: #242937; color: #fff; }
+body.loom-studio .ai-robot-bubble-body { padding: 0 !important; max-height: none !important; }
+.ai-chat-log { display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; max-height: min(52vh, 420px); overflow-y: auto; }
+.ai-msg { max-width: 88%; padding: 11px 14px; border-radius: 14px; line-height: 1.5; font-size: 0.95rem; overflow-wrap: anywhere; }
+.ai-msg-assistant { align-self: flex-start; background: #1F2330; color: var(--ink, #F3F4F8); border-top-left-radius: 4px; }
+.ai-msg-user { align-self: flex-end; background: var(--brand, #6366F1); color: #fff; border-top-right-radius: 4px; }
+.ai-msg-note { border: 1px dashed rgba(251,191,36,0.45); }
+.ai-msg-busy { color: var(--ink-soft, #B4B8C7); display: flex; align-items: center; gap: 8px; }
+.ai-dots { display: inline-flex; gap: 4px; }
+.ai-dots i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; animation: aiDot 1s infinite ease-in-out; }
+.ai-dots i:nth-child(2) { animation-delay: .15s; } .ai-dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes aiDot { 0%, 80%, 100% { opacity: .3; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+@media (prefers-reduced-motion: reduce) { .ai-dots i { animation: none; } }
+.ai-chips { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 0 18px 14px; }
+.ai-chip { padding: 7px 14px; border-radius: 999px; background: rgba(99,102,241,0.12); color: #A5B4FC; border: 1px solid rgba(129,140,248,0.3); font-weight: 500; font-size: 0.88rem; cursor: pointer; text-align: left; }
+.ai-chip:hover { background: rgba(99,102,241,0.22); color: #fff; }
+.ai-chat-form { display: flex; gap: 10px; padding: 14px 18px; border-top: 1px solid var(--border, rgba(255,255,255,0.08)); }
+.ai-chat-form input { flex: 1 1 auto; min-width: 0; height: 48px; padding: 0 14px; }
+.ai-send { width: 52px; height: 48px; flex: 0 0 auto; border-radius: 12px; display: grid; place-items: center; background: var(--brand, #6366F1); color: #fff; border: 0; font-size: 1.2rem; cursor: pointer; }
+.ai-send:hover { background: #7376F5; } .ai-send:disabled { opacity: .5; cursor: default; }
+/* the chat panel stays on screen: fixed in the bottom-right corner above the robot button, the messages scroll */
+body.loom-studio .ai-robot-bubble.show { display: flex !important; }
+body.loom-studio .ai-robot-bubble { position: fixed !important; right: 24px !important; left: auto !important; top: auto !important; bottom: 112px !important;
+  margin: 0 !important; flex-direction: column; max-height: calc(100vh - 190px); transform-origin: bottom right; }
+body.loom-studio .ai-robot-bubble-body { display: flex; flex-direction: column; min-height: 0; flex: 1 1 auto; }
+body.loom-studio .ai-chat-log { flex: 1 1 auto; min-height: 0; max-height: none; }
+@media (max-width: 860px) { body.loom-studio .ai-robot-bubble { right: 12px !important; bottom: 168px !important; max-height: calc(100vh - 240px); } }
+/* the playful yellow highlights become a soft indigo (dark text stays readable on it) */
+body.loom-studio, body.loom-studio.light-theme { --c-yellow: #A5B4FC; }
+body.loom-studio .myex-day::after { background: var(--border) !important; height: 1px; }
+body.loom-studio .myex-type-chip, body.loom-studio .myex-group-chip { box-shadow: none !important; border-width: 1px !important; }
+@media (max-width: 560px) { body.loom-studio #mainGreetingName { white-space: normal; overflow: visible; text-overflow: clip; } }
+/* calm: course step boxes don't jump or tilt on hover (it also kept them moving under the mouse) */
+body.loom-studio button.sk-node:hover { transform: none; box-shadow: 0 0 0 1px rgba(129,140,248,0.5); }
+body.loom-studio button.sk-node:hover .sk-node-emoji { animation: none; }

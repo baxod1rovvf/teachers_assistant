@@ -794,7 +794,7 @@ test.describe('course page', () => {
   };
 
   test('a group\'s Journey: 20 steps in order, a plain dot per part (none inside), Steps 1–18 open, 19–20 Coming soon; Try opens a preview', async ({ page, context }) => {
-    test.setTimeout(120000);
+    test.setTimeout(300000);   // opens 40 preview tabs; some take ~2 s each in headless Chromium
     const errors = await open(page, context);
     await expect(page.locator('.sk-tab[data-tab="journey"]')).toHaveAttribute('aria-selected', 'true');
     const rows = page.locator('.sk-row');
