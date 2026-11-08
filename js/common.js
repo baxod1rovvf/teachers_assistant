@@ -3317,7 +3317,7 @@ async function aiRobotAsk(question) {
   renderAiRobotChat();
   playAiRobotOnce('thinking');
   const url = taAiUrl();
-  let answer = '', note = '';
+  let answer = '', note = '', why = '';
   if (url) {
     try {
       const ctrl = new AbortController(), timer = setTimeout(() => ctrl.abort(), 45000);
@@ -3325,10 +3325,12 @@ async function aiRobotAsk(question) {
         body: JSON.stringify({ question, lang: window.taUiLang ? window.taUiLang() : 'en', section: currentActiveTab, teacher: getTeacherName() || '',
           history: aiRobotChat.slice(-9, -1).map(m => ({ role: m.role, text: m.text })), knowledge: aiRobotKnowledge() }) });
       clearTimeout(timer);
-      const data = res.ok ? await res.json() : null;
-      answer = data && typeof data.answer === 'string' ? data.answer.trim() : '';
-    } catch (e) { answer = ''; }
-    if (!answer) note = aiRobotUi('fail');
+      let data = null;
+      try { data = await res.json(); } catch (e) { data = null; }
+      answer = res.ok && data && typeof data.answer === 'string' ? data.answer.trim() : '';
+      if (!answer && data && data.error) why = String(data.error).slice(0, 220);   // the helper says why (shown, to send a screenshot)
+    } catch (e) { answer = ''; why = e && e.name === 'AbortError' ? 'no answer in 45 s' : 'the helper could not be reached'; }
+    if (!answer) note = aiRobotUi('fail') + (why ? '\n(' + why + ')' : '');
   } else note = aiRobotUi('off');
   if (!answer) {
     const best = aiRobotBestFaq(question);

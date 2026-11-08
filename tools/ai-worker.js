@@ -55,17 +55,28 @@ export default {
       'For questions about how Loom works, rely only on the notes below; if they don\'t cover it, say you are not sure and suggest ' +
       'writing to Toxirjon on Telegram. Never invent buttons or features.\n\nNOTES ABOUT LOOM:\n' + knowledge;
 
-    const model = env.GEMINI_MODEL || DEFAULT_MODEL;
-    const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + encodeURIComponent(model) + ':generateContent', {
-      method: 'POST',
-      headers: { 'x-goog-api-key': env.GEMINI_API_KEY, 'content-type': 'application/json' },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: system }] },
-        contents: history.concat([{ role: 'user', parts: [{ text: question }] }]),
-        generationConfig: { maxOutputTokens: 2048, temperature: 0.6 }
-      })
-    });
-    if (!res.ok) return reply({ error: 'The AI is busy (' + res.status + ')' }, 502, origin);
+    if (!env.GEMINI_API_KEY) return reply({ error: 'The helper has no GEMINI_API_KEY secret yet' }, 500, origin);
+    // the first model Google knows wins (names change over time; a 404 means "no such model here", so the next is tried)
+    const models = [env.GEMINI_MODEL, DEFAULT_MODEL, 'gemini-2.5-flash', 'gemini-2.0-flash'].filter((m, i, a) => m && a.indexOf(m) === i);
+    let res = null, why = '';
+    for (const model of models) {
+      res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + encodeURIComponent(model) + ':generateContent', {
+        method: 'POST',
+        headers: { 'x-goog-api-key': env.GEMINI_API_KEY, 'content-type': 'application/json' },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: system }] },
+          contents: history.concat([{ role: 'user', parts: [{ text: question }] }]),
+          generationConfig: { maxOutputTokens: 2048, temperature: 0.6 }
+        })
+      });
+      if (res.ok) break;
+      try { why = ((await res.json()).error || {}).message || ''; } catch (e) { why = ''; }
+      if (res.status !== 404) break;
+    }
+    if (!res.ok) {
+      const plain = res.status === 400 || res.status === 403 ? 'Google refused the key' : res.status === 429 ? "today's free limit is used up" : 'Google is busy';
+      return reply({ error: plain + ' (' + res.status + (why ? ': ' + why.slice(0, 160) : '') + ')' }, 502, origin);
+    }
     const data = await res.json();
     const parts = (((data.candidates || [])[0] || {}).content || {}).parts || [];
     const answer = parts.filter(p => typeof p.text === 'string' && !p.thought).map(p => p.text).join('').trim();
