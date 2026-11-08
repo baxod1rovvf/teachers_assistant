@@ -504,8 +504,9 @@ real students' names or results into the repository (it is public).
   those rules, run the tool again.** The word emojis stay (the teacher asked for them). Exercise files (Create page) keep their look.
 - **AI robot (2026-11-07, teacher: "AI robot should be AI completely… user should ask any question")**: the robot is a chat (`renderAiRobotChat`,
   `aiRobotAsk` in common.js): a greeting, two of the section's questions as chips, a box + Send. Questions go to `TA_AI_URL` — a
-  Cloudflare Worker (`tools/ai-worker.js`, Claude `claude-haiku-5-5`, the key kept as its secret `ANTHROPIC_API_KEY`, only the teacher's
-  site allowed, 8 questions/min per IP) — with the chat so far, the section, the language, and all the saved questions + answers as
+  Cloudflare Worker (`tools/ai-worker.js`; **Google Gemini's free plan since 2026-11-08** — teacher chose free over Claude — model
+  `gemini-flash-latest` or the variable `GEMINI_MODEL`, the key kept as its secret `GEMINI_API_KEY`, only the teacher's site allowed,
+  8 questions/min per IP; on the free plan Google may use the questions — no students' private details) — with the chat so far, the section, the language, and all the saved questions + answers as
   Loom's notes (`aiRobotKnowledge`). **The saved FAQ stays** (it's the AI's knowledge and the fallback): with no `TA_AI_URL` or when the
   AI fails, the closest saved answer shows (`aiRobotBestFaq`, rare words weigh more). `localStorage.ta_ai_url` overrides the address
   (tests). `tests/robot.spec.js`.
