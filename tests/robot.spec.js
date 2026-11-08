@@ -39,10 +39,11 @@ test('the robot is an AI chat: any question goes to the AI with Loom\'s notes; w
   expect(sent.knowledge).toContain('will be punished');
   // the AI fails → the closest saved answer instead
   await page.unroute('https://loom-ai.test/**');
-  await page.route('https://loom-ai.test/**', route => route.fulfill({ status: 502, headers: { 'Access-Control-Allow-Origin': '*' }, body: '{}' }));
+  await page.route('https://loom-ai.test/**', route => route.fulfill({ status: 502, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify({ error: 'Google refused the key (400)' }) }));
   await page.locator('#aiRobotInput').fill('change the language');
   await page.keyboard.press('Enter');
   await expect(body.locator('.ai-msg-note').last()).toContainText('didn’t answer');
+  await expect(body.locator('.ai-msg-note').last()).toContainText('Google refused the key');   // the helper's reason, for a screenshot
   expect(errors).toEqual([]);
 });
 
@@ -71,5 +72,22 @@ test('in Uzbek and Russian the robot speaks that language', async ({ page, conte
     await page.locator('#aiRobotInput').fill(word);
     await page.keyboard.press('Enter');
     await expect(body.locator('.ai-msg-note').last()).toContainText(a);
+  }
+});
+
+test('a real click (or tap on a phone) on the round robot button opens the chat', async ({ page, context }) => {
+  await prepare(context);
+  for (const size of [{ width: 1440, height: 900 }, { width: 390, height: 800 }]) {
+    await page.setViewportSize(size);
+    await page.goto('/index.html');
+    await page.waitForTimeout(1500);
+    await hideNotices(page);
+    const box = await page.locator('#aiRobotAnim').boundingBox();
+    expect(box.x + box.width).toBeLessThanOrEqual(size.width);   // fully on the screen
+    // what's under the middle of the button is the button itself, not the page
+    expect(await page.evaluate(([x, y]) => !!document.elementFromPoint(x, y).closest('#aiRobotAnim'), [box.x + box.width / 2, box.y + box.height / 2])).toBe(true);
+    await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+    await expect(page.locator('#aiRobotBubble')).toHaveClass(/show/, { timeout: 3000 });
+    await expect(page.locator('#aiRobotInput')).toBeVisible();
   }
 });

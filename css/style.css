@@ -3282,3 +3282,7 @@ body.loom-studio .myex-type-chip, body.loom-studio .myex-group-chip { box-shadow
 /* calm: course step boxes don't jump or tilt on hover (it also kept them moving under the mouse) */
 body.loom-studio button.sk-node:hover { transform: none; box-shadow: 0 0 0 1px rgba(129,140,248,0.5); }
 body.loom-studio button.sk-node:hover .sk-node-emoji { animation: none; }
+/* the round bot button sits in the middle of the robot's square (where its click circle is) and takes clicks itself
+   (2026-11-08: it sat in the corner, outside the circle, so a click went to the page) */
+body.loom-studio .ai-robot-anim { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) !important; pointer-events: auto; filter: none; }
+@media (max-width: 860px) { body.loom-studio .ai-robot-anim { width: 56px !important; height: 56px !important; font-size: 1.5rem; } }
