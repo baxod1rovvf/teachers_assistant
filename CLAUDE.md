@@ -498,6 +498,10 @@ real students' names or results into the repository (it is public).
   `<i class="lc lc-<name>">` draws in the text colour; `--ic-<name>` for `::before` masks. Top bar: logo square + "loom / Teacher Studio",
   `TA_TOPBAR_TABS[].icon`; exercise types: `--ti` per `picker-icon-*`; My Exercises: `MYEX_ICON`. Dashboard greeting: date + session line
   (`#heroEyebrow`) and "Next class on schedule" (`renderHeroNext`). Many emojis inside texts/messages remain.
+- **Students' course pages dark too (teacher, 2026-11-08: "now change course exercises design")**: skill.html has `id="skBody"`
+  + `sk-studio` and loads `css/skill-dark.css`, made by `node tools/make-skill-dark.js` from the "SKILLS COURSE — STUDENT PAGE" rules
+  in css/style.css (only colours, borders, shadows and fonts, turned dark; `#skBody` in front outweighs the student theme). **After changing
+  those rules, run the tool again.** The word emojis stay (the teacher asked for them). Exercise files (Create page) keep their look.
 - **AI robot (2026-11-07, teacher: "AI robot should be AI completely… user should ask any question")**: the robot is a chat (`renderAiRobotChat`,
   `aiRobotAsk` in common.js): a greeting, two of the section's questions as chips, a box + Send. Questions go to `TA_AI_URL` — a
   Cloudflare Worker (`tools/ai-worker.js`, Claude `claude-haiku-5-5`, the key kept as its secret `ANTHROPIC_API_KEY`, only the teacher's

@@ -1,0 +1,129 @@
+/* made by tools/make-skill-dark.js — do not edit by hand */
+#skBody.sk-studio { font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important; color: #F3F4F8 !important; }
+#skBody.sk-studio .sk-app h1, #skBody.sk-studio .sk-app h2, #skBody.sk-studio .sk-app h3 { font-family: 'Plus Jakarta Sans', 'Plus Jakarta Sans', sans-serif !important; color: #F3F4F8 !important; }
+#skBody.sk-studio .sk-brand { font-family: 'Plus Jakarta Sans', sans-serif !important; }
+#skBody.sk-studio .sk-chip { background: #161922 !important; border: 1px solid rgba(255,255,255,0.1) !important; box-shadow: none !important; }
+#skBody.sk-studio .sk-chip-skill { background: rgba(99,102,241,0.18) !important; transform: none !important; }
+#skBody.sk-studio .sk-preview { background: rgba(99,102,241,0.18) !important; }
+#skBody.sk-studio .sk-card { background: #161922 !important; border: 1px solid rgba(255,255,255,0.1) !important; box-shadow: none !important; }
+#skBody.sk-studio .sk-center p { color: #B4B8C7 !important; }
+#skBody.sk-studio .sk-intro { color: #B4B8C7 !important; }
+#skBody.sk-studio .sk-label { color: #B4B8C7 !important; }
+#skBody.sk-studio  #skIdInput { background: #1C202B !important; border: 1px solid rgba(255,255,255,0.1) !important; color: #F3F4F8 !important; }
+#skBody.sk-studio  #skIdInput:focus { border-color: #818CF8 !important; }
+#skBody.sk-studio .sk-start-err { color: #FB7185 !important; }
+#skBody.sk-studio .sk-audio-err { color: #FB7185 !important; }
+#skBody.sk-studio .sk-sent.hl { background: rgba(251,191,36,0.16) !important; box-shadow: 0 0 0 2px rgba(251,191,36,0.16) !important; }
+#skBody.sk-studio .sk-q { background: #1C202B !important; }
+#skBody.sk-studio .sk-num { background: #161922 !important; border: 1px solid rgba(255,255,255,0.1) !important; font-family: 'Plus Jakarta Sans', sans-serif !important; }
+#skBody.sk-studio  .sk-gap { border: 1px solid rgba(255,255,255,0.1) !important; background: #161922 !important; color: #F3F4F8 !important; }
+#skBody.sk-studio  .sk-gap:focus { border-color: #818CF8 !important; }
+#skBody.sk-studio .sk-opt { border: 1px solid rgba(255,255,255,0.1) !important; background: #161922 !important; color: #F3F4F8 !important; font: 700 .98rem/1.3 'Plus Jakarta Sans', sans-serif !important; box-shadow: none !important; }
+#skBody.sk-studio .sk-opt b { font-family: 'Plus Jakarta Sans', sans-serif !important; color: #818CF8 !important; }
+#skBody.sk-studio .sk-opt:hover:not(:disabled) { background: #242937 !important; }
+#skBody.sk-studio .sk-opt.on { background: #6366F1 !important; }
+#skBody.sk-studio .sk-opt.on b { color: #FBBF24 !important; }
+#skBody.sk-studio .sk-opt:disabled { box-shadow: none !important; }
+#skBody.sk-studio .sk-q.right { background: rgba(16,185,129,0.15) !important; border-color: #34D399 !important; }
+#skBody.sk-studio .sk-q.wrong { background: rgba(244,63,94,0.15) !important; border-color: #FB7185 !important; }
+#skBody.sk-studio .sk-q.right .sk-num { background: rgba(16,185,129,0.25) !important; }
+#skBody.sk-studio .sk-q.wrong .sk-num { background: rgba(244,63,94,0.25) !important; }
+#skBody.sk-studio .sk-opt.is-answer { background: rgba(16,185,129,0.25) !important; color: #F3F4F8 !important; }
+#skBody.sk-studio .sk-opt.is-answer b { color: #F3F4F8 !important; }
+#skBody.sk-studio .sk-fix { color: #B4B8C7 !important; }
+#skBody.sk-studio .sk-q.right .sk-fix { color: #34D399 !important; }
+#skBody.sk-studio .sk-q.wrong .sk-fix { color: #FB7185 !important; }
+#skBody.sk-studio .sk-q.wrong .sk-fix b { color: #F3F4F8 !important; background: #161922 !important; border: 1px solid rgba(255,255,255,0.1) !important; }
+#skBody.sk-studio .sk-btn { border: 1px solid rgba(255,255,255,0.1) !important; background: #161922 !important; color: #F3F4F8 !important; font: 700 1.08rem/1.2 'Plus Jakarta Sans', 'Plus Jakarta Sans', sans-serif !important; box-shadow: none !important; }
+#skBody.sk-studio .sk-btn:hover { box-shadow: none !important; }
+#skBody.sk-studio .sk-btn:active { box-shadow: none !important; }
+#skBody.sk-studio .sk-btn:focus-visible, #skBody.sk-studio .sk-opt:focus-visible { outline: 3px solid #818CF8 !important; }
+#skBody.sk-studio .sk-btn-main { background: #6366F1 !important; text-shadow: none !important; }
+#skBody.sk-studio .sk-btn-small { box-shadow: none !important; }
+#skBody.sk-studio .sk-score { background: rgba(99,102,241,0.18) !important; border: 1px solid rgba(255,255,255,0.1) !important; box-shadow: none !important; transform: none !important; }
+#skBody.sk-studio .sk-score-n { font-family: 'Plus Jakarta Sans', sans-serif !important; }
+#skBody.sk-studio .sk-send-ok { color: #34D399 !important; }
+#skBody.sk-studio .sk-send-bad { color: #FB7185 !important; }
+#skBody.sk-studio .sk-send-note { color: #B4B8C7 !important; }
+#skBody.sk-studio .sk-words li { background: #1C202B !important; border: 1px solid rgba(255,255,255,0.1) !important; }
+#skBody.sk-studio .sk-words li b { font-family: 'Plus Jakarta Sans', sans-serif !important; }
+#skBody.sk-studio .sk-words .sk-m { color: #F3F4F8 !important; }
+#skBody.sk-studio .sk-words i { color: #B4B8C7 !important; }
+#skBody.sk-studio .sk-qno { background: #6366F1 !important; font: 700 .8rem/1.6 'Plus Jakarta Sans', sans-serif !important; }
+#skBody.sk-studio .sk-line.hl { background: rgba(251,191,36,0.16) !important; border: 1px solid rgba(255,255,255,0.1) !important; }
+#skBody.sk-studio .sk-who-w { color: #F472B6 !important; }
+#skBody.sk-studio .sk-who-m { color: #818CF8 !important; }
+#skBody.sk-studio .sk-points li { background: #1C202B !important; }
+#skBody.sk-studio .sk-points li::before { color: #818CF8 !important; }
+#skBody.sk-studio .sk-timer, #skBody.sk-studio .sk-count { border: 1px solid rgba(255,255,255,0.1) !important; background: #161922 !important; box-shadow: none !important; }
+#skBody.sk-studio .sk-timer b { font-family: 'Plus Jakarta Sans', sans-serif !important; }
+#skBody.sk-studio .sk-timer.low { background: rgba(244,63,94,0.15) !important; color: #FB7185 !important; }
+#skBody.sk-studio .sk-count { background: #1C202B !important; color: #B4B8C7 !important; }
+#skBody.sk-studio .sk-count.ok { background: rgba(16,185,129,0.15) !important; color: #34D399 !important; border-color: #34D399 !important; }
+#skBody.sk-studio .sk-count.over { background: #242937 !important; color: #FBBF24 !important; }
+#skBody.sk-studio  .sk-write { border: 1px solid rgba(255,255,255,0.1) !important; background: #161922 !important; color: #F3F4F8 !important; font: 600 1.06rem/1.7 'Plus Jakarta Sans', system-ui, sans-serif !important; }
+#skBody.sk-studio  .sk-write:focus { border-color: #818CF8 !important; }
+#skBody.sk-studio  .sk-write.locked { background: #1C202B !important; color: #B4B8C7 !important; }
+#skBody.sk-studio .sk-timeup { color: #FB7185 !important; }
+#skBody.sk-studio .sk-checked { background: #161922 !important; border: 2.5px dashed rgba(255,255,255,0.25) !important; }
+#skBody.sk-studio .sk-err { background: rgba(244,63,94,0.15) !important; }
+#skBody.sk-studio .sk-err-gap { color: #FB7185 !important; }
+#skBody.sk-studio .sk-check-note { background: #242937 !important; border: 1px solid rgba(255,255,255,0.1) !important; }
+#skBody.sk-studio .sk-mistake { background: #1C202B !important; border: 1px solid rgba(255,255,255,0.1) !important; }
+#skBody.sk-studio .sk-mistake .sk-num { background: rgba(244,63,94,0.25) !important; }
+#skBody.sk-studio .sk-bad { color: #FB7185 !important; }
+#skBody.sk-studio .sk-good { color: #F3F4F8 !important; background: rgba(16,185,129,0.15) !important; border: 2px solid #34D399 !important; }
+#skBody.sk-studio .sk-mmsg { color: #B4B8C7 !important; }
+#skBody.sk-studio .sk-better li { background: #1C202B !important; border: 1px solid rgba(255,255,255,0.1) !important; }
+#skBody.sk-studio .sk-better li b { font-family: 'Plus Jakarta Sans', sans-serif !important; }
+@media (max-width: 560px) {
+}
+@media (prefers-reduced-motion: reduce) {
+}
+#skBody.sk-studio .sk-steps li { background: #161922 !important; border: 1px solid rgba(255,255,255,0.1) !important; color: #B4B8C7 !important; }
+#skBody.sk-studio .sk-steps li span { background: #1C202B !important; font-family: 'Plus Jakarta Sans', sans-serif !important; }
+#skBody.sk-studio .sk-steps li.on { background: rgba(99,102,241,0.18) !important; color: #F3F4F8 !important; box-shadow: none !important; }
+#skBody.sk-studio .sk-steps li.on span { background: #161922 !important; }
+#skBody.sk-studio .sk-steps li.done span { background: rgba(16,185,129,0.15) !important; }
+#skBody.sk-studio .sk-word { background: #1C202B !important; border: 1px solid rgba(255,255,255,0.1) !important; }
+#skBody.sk-studio .sk-word-body b { font-family: 'Plus Jakarta Sans', sans-serif !important; }
+#skBody.sk-studio .sk-word-body span { color: #B4B8C7 !important; }
+#skBody.sk-studio .sk-say { border: 1px solid rgba(255,255,255,0.1) !important; background: rgba(99,102,241,0.18) !important; box-shadow: none !important; }
+#skBody.sk-studio .sk-say:active { box-shadow: none !important; }
+#skBody.sk-studio .sk-qcount { color: #B4B8C7 !important; }
+#skBody.sk-studio .sk-use-chip { background: #1C202B !important; border: 1px solid rgba(255,255,255,0.1) !important; }
+#skBody.sk-studio .sk-btn-ghost { background: #161922 !important; color: #F3F4F8 !important; }
+#skBody.sk-studio .sk-speak-timer { font-family: 'Plus Jakarta Sans', sans-serif !important; color: #F3F4F8 !important; }
+#skBody.sk-studio .sk-speak-timer.ready { color: #818CF8 !important; }
+#skBody.sk-studio .sk-speak-timer.talk { color: #F472B6 !important; }
+#skBody.sk-studio .sk-well { font-family: 'Plus Jakarta Sans', sans-serif !important; }
+@media (max-width: 560px) {
+}
+
+/* the page, the start card (the student theme's .ta-login-* look), inputs and the Start button */
+#skBody.sk-studio { background: #0E1017 !important; color: #F3F4F8 !important; color-scheme: dark; }
+#skBody.sk-studio, #skBody.sk-studio * { font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif !important; }
+#skBody.sk-studio .sk-card { border-radius: 18px !important; box-shadow: 0 1px 2px rgba(0,0,0,0.25), 0 8px 24px -12px rgba(0,0,0,0.5) !important; }
+#skBody.sk-studio :is(.ta-login-card, .ta-login-form) { background: #161922 !important; color: #F3F4F8 !important; border-color: rgba(255,255,255,0.1) !important; box-shadow: none !important; }
+#skBody.sk-studio .sk-start-card { background: #161922 !important; border: 1px solid rgba(255,255,255,0.1) !important; box-shadow: 0 20px 50px -20px rgba(0,0,0,0.7) !important; }
+#skBody.sk-studio :is(.ta-login-form h1, .ta-login-form h2, .ta-login-form .headline, .ta-login-form p, .ta-login-form label) { color: #F3F4F8 !important; }
+#skBody.sk-studio .ta-login-form p { color: #B4B8C7 !important; }
+#skBody.sk-studio .ta-login-type { background: rgba(99,102,241,0.18) !important; color: #C7D2FE !important; border: 1px solid rgba(129,140,248,0.35) !important; box-shadow: none !important; transform: none !important; }
+#skBody.sk-studio .ta-underline { background: #6366F1 !important; height: 3px !important; border: 0 !important; }
+#skBody.sk-studio :is(input[type="text"], input:not([type]), textarea, select, .sk-gap) { background: #12141C !important; color: #F3F4F8 !important; border: 1px solid rgba(255,255,255,0.1) !important; box-shadow: none !important; border-radius: 12px !important; }
+#skBody.sk-studio :is(input, textarea, select)::placeholder { color: #868B9C !important; }
+#skBody.sk-studio :is(input, textarea, select):focus { border-color: #6366F1 !important; box-shadow: 0 0 0 3px rgba(99,102,241,0.3) !important; outline: none !important; }
+#skBody.sk-studio :is(.start-btn, .sk-btn-main) { background: #6366F1 !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.08) !important; box-shadow: 0 8px 22px -8px rgba(99,102,241,0.6) !important; text-shadow: none !important; border-radius: 12px !important; }
+#skBody.sk-studio :is(.start-btn, .sk-btn-main):hover { background: #7376F5 !important; transform: translateY(-1px) !important; }
+#skBody.sk-studio .sk-btn:not(.sk-btn-main) { background: #1C202B !important; color: #F3F4F8 !important; border: 1px solid rgba(255,255,255,0.1) !important; box-shadow: none !important; border-radius: 12px !important; }
+#skBody.sk-studio .sk-btn:not(.sk-btn-main):hover { background: #242937 !important; transform: none !important; }
+#skBody.sk-studio .sk-opt { box-shadow: none !important; }
+#skBody.sk-studio .sk-opt:hover:not(:disabled) { transform: none !important; }
+#skBody.sk-studio .sk-opt.on b { color: #fff !important; }
+#skBody.sk-studio .sk-score { color: #fff !important; border: 1px solid rgba(129,140,248,0.35) !important; box-shadow: none !important; }
+#skBody.sk-studio audio { color-scheme: dark; }
+/* the student theme names the name box and the Start button by id, so these use the page's id twice to stay on top */
+#skBody#skBody.sk-studio :is(#studentNameInput, #skIdInput) { background: #12141C !important; color: #F3F4F8 !important; border: 1px solid rgba(255,255,255,0.1) !important; box-shadow: none !important; }
+#skBody#skBody.sk-studio :is(#studentNameInput, #skIdInput):focus { border-color: #6366F1 !important; box-shadow: 0 0 0 3px rgba(99,102,241,0.3) !important; }
+#skBody#skBody.sk-studio .ta-login-form :is(.start-btn, button) { background: #6366F1 !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.08) !important; box-shadow: 0 8px 22px -8px rgba(99,102,241,0.6) !important; text-shadow: none !important; }
+#skBody#skBody.sk-studio .ta-login-form :is(.start-btn, button):hover { background: #7376F5 !important; transform: translateY(-1px) !important; }
