@@ -14,7 +14,27 @@ function renderMainGreeting() {
     const firstChild = titleEl.firstChild;
     if (firstChild && firstChild.nodeType === 3) firstChild.textContent = greeting + ', ';
   }
+  // "SATURDAY, NOVEMBER 7, 2026 • EVENING SESSION" over the greeting (2026-11-07)
+  const eb = document.getElementById('heroEyebrow');
+  if (eb) {
+    const now = new Date();
+    const part = hour < 12 ? 'Morning session' : hour < 18 ? 'Afternoon session' : 'Evening session';
+    eb.textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) + ' • ' + part;
+  }
+  renderHeroNext();
 }
+// The next lesson in the greeting card: "Next class on schedule — 17:30 • Apex" (2026-11-07)
+function renderHeroNext() {
+  const el = document.getElementById('heroNext');
+  if (!el || typeof getNextLessonOccurrences !== 'function') return;
+  const o = getNextLessonOccurrences(1)[0];
+  if (!o) { el.hidden = true; return; }
+  const day = o.date.toDateString() === new Date().toDateString() ? '' : SCHEDULE_DAY_SHORT[o.date.getDay()] + ' ';
+  el.innerHTML = '<span class="hero-next-ic" aria-hidden="true"><i class="lc lc-clock"></i></span><span><small>Next class on schedule</small>' +
+    '<b>' + escapeForHtml(day + formatTimeDisplay(o.entry.time)) + ' • <span translate="no">' + escapeForHtml(o.entry.group || 'Lesson') + '</span></b></span>';
+  el.hidden = false;
+}
+window.renderHeroNext = renderHeroNext;
 window.renderMainGreeting = renderMainGreeting;
 
 /* ================= MAIN DASHBOARD: top active students =================
@@ -213,6 +233,7 @@ function renderDashboardStats() {
 
 // Same animation as the sidebar's Create entry.
 function initQuickCreateAnim() {
+  if (document.body.classList.contains('loom-studio')) return;   // icons, no animations, since 2026-11-07
   const el = document.getElementById('quickCreateAnim');
   if (!el || el.dataset.ready || typeof lottie === 'undefined') return;
   try {

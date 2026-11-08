@@ -156,23 +156,20 @@ test('top bar: 6 sections in the middle, the one you\'re in has the coloured cir
   // icons only (the names show when you point at one)
   expect(await page.locator('#taTopbar .tb-tab').evaluateAll(l => l.map(a => a.title))).toEqual(['Dashboard', 'Create', 'Course', 'My Exercises', 'Statistics', 'Students']);
   await expect(page.locator('#taTopbar .tb-tab')).toHaveText(['', '', '', '', '', '']);
-  for (const id of ['#quickSearchBtn', '#themeToggleBtn', '#taTopbar [data-tab="settings"]', '#tbAvatarBtn']) await expect(page.locator(id)).toBeVisible();
+  for (const id of ['#quickSearchBtn', '#taTopbar [data-tab="settings"]', '#tbAvatarBtn']) await expect(page.locator(id)).toBeVisible();
   await expect(page.locator('#mainSidebar')).toHaveCount(0);
   await expect(page.locator('#soundToggleBtn')).toHaveCount(0);   // no sound button
   // only Day and Night: no design picker; the playful look (2026-11-02) — the sections are emojis
   await expect(page.locator('#designPickerBtn, .design-option, .style-option')).toHaveCount(0);
   await expect(page.locator('body')).toHaveClass(/loom-fun/);
   await expect(page.locator('body')).not.toHaveClass(/glass-ui/);
-  expect(await page.locator('#taTopbar .tb-ic').evaluateAll(l => l.map(e => getComputedStyle(e, '::before').content.replace(/"/g, '')))).toEqual(['🏠', '✨', '🗺️', '📚', '📊', '🧑‍🎓']);
+  // the dark "Teacher Studio" look (2026-11-07): Lucide icons, dark only (no day/night button), thin card borders
+  expect(await page.locator('#taTopbar .tb-ic i').evaluateAll(l => l.map(e => e.className))).toEqual(['lc lc-house', 'lc lc-sparkles', 'lc lc-map', 'lc lc-library', 'lc lc-chart-column', 'lc lc-graduation-cap']);
+  await expect(page.locator('#themeToggleBtn')).toHaveCount(0);
+  await expect(page.locator('body')).toHaveClass(/loom-studio/);
   await expect(page.locator('body')).not.toHaveClass(/light-theme/);
-  await page.locator('#themeToggleBtn').click();
-  await expect(page.locator('body')).toHaveClass(/light-theme/);
-  await expect(page.locator('#themeToggleBtn')).toHaveAttribute('title', 'Night mode');
-  await page.locator('#themeToggleBtn').click();
-  await expect(page.locator('body')).not.toHaveClass(/light-theme/);
-  // playful: rounded Fredoka headlines, stickers with a thick outline
-  expect(await page.locator('h2').first().evaluate(el => getComputedStyle(el).fontFamily)).toContain('Fredoka');
-  expect(await page.locator('.dash-card').first().evaluate(el => parseFloat(getComputedStyle(el).borderTopWidth))).toBeGreaterThanOrEqual(2);
+  expect(await page.locator('h2').first().evaluate(el => getComputedStyle(el).fontFamily)).toContain('Plus Jakarta Sans');
+  expect(await page.locator('.dash-card').first().evaluate(el => parseFloat(getComputedStyle(el).borderTopWidth))).toBe(1);
   // in the middle, and fixed at the top
   const nav = await page.locator('#taTabNav').boundingBox();
   expect(Math.abs(nav.x + nav.width / 2 - 650)).toBeLessThan(40);
@@ -203,11 +200,9 @@ test('on a phone, the sections are a tab bar at the bottom', async ({ page, cont
   const nav = await page.locator('#taTabNav').boundingBox();
   expect(nav.y + nav.height).toBeGreaterThan(780);
   expect(nav.width).toBeGreaterThan(380);
-  // the greeting: no animation, and the robot on the same line as the name
-  await expect(page.locator('#heroTaskAnim')).toBeHidden();
-  const name = await page.locator('#mainGreetingName').boundingBox(), robot = await page.locator('#robotHiAnim').boundingBox();
-  expect(Math.abs((robot.y + robot.height / 2) - (name.y + name.height / 2))).toBeLessThan(14);
-  expect(robot.x + robot.width).toBeLessThan(390);
+  // the greeting fits the screen
+  const name = await page.locator('#mainGreetingName').boundingBox();
+  expect(name.x + name.width).toBeLessThan(390);
   await page.locator('.tb-tab[data-tab="dashboard"]').click();
   await expect(page.locator('#panel-dashboard')).toHaveClass(/active/, { timeout: 8000 });
 });
@@ -227,7 +222,7 @@ test('buttons show the app\'s own tooltip (mouse and keyboard), small buttons ar
   await expect(page.locator('#taTip')).toBeHidden();
   await expect(page.locator('#quickSearchBtn')).toHaveAttribute('title', 'Search');
   // keyboard: at once on focus
-  await page.locator('#themeToggleBtn').focus();
+  await page.locator('#taTopbar [data-tab="settings"]').focus();
   await page.keyboard.press('Shift+Tab');
   await page.keyboard.press('Tab');
   await expect(page.locator('#taTip')).toBeVisible();

@@ -928,9 +928,8 @@ function setTeacherName(v) {
 /* ================= THEME (day / night) ================= */
 const LS_THEME = 'ta_theme';
 
-function getTheme() {
-  try { return localStorage.getItem(LS_THEME) || 'dark'; } catch (e) { return 'dark'; }
-}
+/* Loom has only the dark look since 2026-11-07 (teacher: "it should have only dark mode") */
+function getTheme() { return 'dark'; }
 
 function setTheme(t) {
   try { localStorage.setItem(LS_THEME, t); } catch (e) { /* ignore */ }
@@ -940,10 +939,10 @@ function setTheme(t) {
 function applyTheme() {
   const t = getTheme();
   document.body.classList.toggle('light-theme', t === 'light');
-  document.body.classList.add('loom-fun');   // the playful look (2026-11-02; the glass look is gone)
+  document.body.classList.add('loom-fun', 'loom-studio');   // the dark "Teacher Studio" look (2026-11-07) on top of the 2026-11-02 layout
   // the phone's status bar (installed app) takes the page colour
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', t === 'light' ? '#EDF0F4' : '#121722');
+  if (meta) meta.setAttribute('content', '#0E1017');
   const btn = document.getElementById('themeToggleBtn');
   if (btn) {
     btn.innerHTML = t === 'light' ? TA_MOON_SVG : TA_SUN_SVG;
@@ -957,7 +956,7 @@ function applyTheme() {
    Classic style: the ☀️/🌙 button in the top bar switches Day and Night (css/style.css). */
 const TA_SUN_SVG = '<span class="tb-emo" aria-hidden="true">☀️</span>';
 const TA_MOON_SVG = '<span class="tb-emo" aria-hidden="true">🌙</span>';
-function toggleDayNight() { setTheme(getTheme() === 'light' ? 'dark' : 'light'); }
+function toggleDayNight() { /* dark only since 2026-11-07 */ }
 window.toggleDayNight = toggleDayNight;
 
 /* ================= PROFILE PICTURE ================= */
@@ -2599,6 +2598,7 @@ function goToScheduleSettings() {
 /* ================= LOTTIE ANIMATIONS ================= */
 
 function initRobotHiAnim() {
+  if (document.body.classList.contains('loom-studio')) return;   // no waving robot in the dark studio look (2026-11-07)
   const el = document.getElementById('robotHiAnim');
   if (!el || typeof lottie === 'undefined') return;
   try {
@@ -3018,6 +3018,7 @@ function getAiRobotAllFaq() {
 let aiRobotLottieAnim = null;
 let aiRobotReturnToIdle = false;
 function initAiRobotAnimPlayer() {
+  if (document.body.classList.contains('loom-studio')) return;   // a round button with the bot icon since 2026-11-07
   const el = document.getElementById('aiRobotAnim');
   if (!el || typeof lottie === 'undefined' || aiRobotLottieAnim) return;
   try {
@@ -3241,52 +3242,109 @@ function aiRobotBowl() {
   aiRobotBowlFrame = requestAnimationFrame(step);
 }
 
-/* ---- FAQ thought bubble ---- */
+/* ---- the AI chat (2026-11-07, teacher: "AI robot should be AI completely… user should ask any question") ----
+   The teacher types any question; it goes to Claude through a small helper on Cloudflare (tools/ai-worker.js — it keeps the
+   secret API key, so the key is never inside this public site). The robot's old questions + answers (AI_ROBOT_FAQ_BY_TAB,
+   AI_ROBOT_TYPE_FAQ) are sent along as what the AI knows about Loom; two of this section's questions are offered as chips.
+   Without a helper address yet (TA_AI_URL empty) or when it fails, the best matching saved answer is shown instead. */
+const TA_AI_URL = '';   // the Cloudflare helper's address, e.g. 'https://loom-ai.<name>.workers.dev' — set once it exists
+function taAiUrl() { try { return localStorage.getItem('ta_ai_url') || TA_AI_URL; } catch (e) { return TA_AI_URL; } }
 let aiRobotBubbleOpen = false;
-let aiRobotShown = [];   // the questions in the list right now
-let aiRobotQuery = '';   // what's typed in the search box
-function renderAiRobotQuestionList() {
-  const body = document.getElementById('aiRobotBubbleBody');
-  if (!body) return;
-  body.innerHTML = '<input type="search" class="ai-robot-search" id="aiRobotSearch" placeholder="🔍 Search all questions…" autocomplete="off" oninput="aiRobotFilter(this.value)">' +
-    '<div id="aiRobotQList"></div>';
-  const input = document.getElementById('aiRobotSearch');
-  input.value = aiRobotQuery;
-  aiRobotFilter(aiRobotQuery);
-}
-// empty: this section's questions; otherwise every question with all the typed words
-function aiRobotFilter(text) {
-  aiRobotQuery = String(text || '');
-  const list = document.getElementById('aiRobotQList');
-  if (!list) return;
-  const words = aiRobotQuery.toLowerCase().split(/\s+/).filter(Boolean);
-  aiRobotShown = words.length
-    ? getAiRobotAllFaq().filter(it => { const x = aiRobotText(it); const t = (x.q + ' ' + x.a + ' ' + it.q + ' ' + it.a).toLowerCase(); return words.every(w => t.indexOf(w) !== -1); }).concat([AI_ROBOT_CONTACT_ITEM])
-    : getAiRobotFaqForTab(currentActiveTab);
+let aiRobotChat = [];        // [{role: 'user'|'assistant', text}] — this visit only
+let aiRobotBusy = false;
+function aiRobotUi(key) {
   const lang = window.taUiLang ? window.taUiLang() : 'en';
-  const none = lang === 'uz' ? 'Hech bir javobda “%” yoʻq.' : lang === 'ru' ? 'Ни в одном ответе нет «%».' : 'No answer mentions “%”.';
-  list.innerHTML = (words.length && aiRobotShown.length === 1 ? '<div class="ai-robot-none" translate="no">' + escapeForHtml(none).replace('%', escapeForHtml(aiRobotQuery.trim())) + '</div>' : '') +
-    aiRobotShown.map(function (item, i) {
-      const x = aiRobotText(item);
-      return '<button type="button" class="ai-robot-q-item" onclick="showAiRobotAnswer(' + i + ')"' + (x.own ? ' translate="no"' : '') + '>' + escapeForHtml(x.q) + '</button>';
-    }).join('');
+  const T = {
+    hello: { en: 'Hi %! Ask me anything about Loom — or about teaching: a quick warm-up, gap-fill sentences, ideas for a lesson.', uz: 'Salom, %! Loom haqida yoki dars haqida istalgan savolni bering.', ru: 'Привет, %! Спросите что угодно о Loom или об уроке.' },
+    ph: { en: 'Ask Loom AI assistant…', uz: 'Loom AI yordamchisidan soʻrang…', ru: 'Спросите ИИ-помощника Loom…' },
+    send: { en: 'Send question', uz: 'Savolni yuborish', ru: 'Отправить вопрос' },
+    think: { en: 'Thinking…', uz: 'Oʻylayapman…', ru: 'Думаю…' },
+    off: { en: 'The AI isn’t connected yet, so here is the closest saved answer:', uz: 'AI hali ulanmagan, eng yaqin saqlangan javob:', ru: 'ИИ ещё не подключён, вот ближайший сохранённый ответ:' },
+    fail: { en: 'The AI didn’t answer (no internet or it’s busy). The closest saved answer:', uz: 'AI javob bermadi. Eng yaqin saqlangan javob:', ru: 'ИИ не ответил. Ближайший сохранённый ответ:' },
+    none: { en: 'I couldn’t find a saved answer for that. Try other words, or write to Toxirjon on Telegram.', uz: 'Saqlangan javob topilmadi. Boshqa soʻzlar bilan soʻrang.', ru: 'Сохранённого ответа нет. Попробуйте другими словами.' }
+  };
+  return (T[key] && (T[key][lang] || T[key].en)) || '';
 }
-function showAiRobotAnswer(i) {
-  const item = aiRobotShown[i];
-  if (!item) return;
+// the saved answer that shares the most words with the question (used when the AI can't answer)
+function aiRobotBestFaq(question) {
+  const words = String(question || '').toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w => w.length > 2);
+  // rare words count more ("punish" beats "student"): each word weighs 1 / how many answers have it
+  const all = getAiRobotAllFaq().map(it => { const x = aiRobotText(it); return { it, t: (x.q + ' ' + x.a + ' ' + it.q + ' ' + it.a).toLowerCase() }; });
+  const weight = {};
+  words.forEach(w => { const n = all.filter(e => e.t.indexOf(w) !== -1).length; weight[w] = n ? 1 / n : 0; });
+  let best = null, bestScore = 0;
+  all.forEach(e => {
+    const score = words.reduce((n, w) => n + (e.t.indexOf(w) !== -1 ? weight[w] : 0), 0);
+    if (score > bestScore) { best = e.it; bestScore = score; }
+  });
+  return best;
+}
+// what the AI is told about Loom: every saved question + answer, this section first
+function aiRobotKnowledge() {
+  const here = getAiRobotFaqForTab(currentActiveTab), seen = new Set();
+  return here.concat(getAiRobotAllFaq()).filter(it => it !== AI_ROBOT_CONTACT_ITEM && !seen.has(it.q) && seen.add(it.q))
+    .map(it => 'Q: ' + it.q + '\nA: ' + it.a).join('\n\n').slice(0, 30000);
+}
+function aiRobotMsgHtml(m) {
+  const text = escapeForHtml(m.text).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+  return '<div class="ai-msg ai-msg-' + m.role + (m.note ? ' ai-msg-note' : '') + '">' + text + '</div>';
+}
+function renderAiRobotChat() {
   const body = document.getElementById('aiRobotBubbleBody');
   if (!body) return;
+  const name = (getTeacherName() || 'Teacher').split(' ')[0];
+  const chips = aiRobotChat.length ? [] : getAiRobotFaqForTab(currentActiveTab).filter(it => it !== AI_ROBOT_CONTACT_ITEM).slice(0, 2);
   body.innerHTML =
-    '<button type="button" class="ai-robot-back-btn" onclick="renderAiRobotQuestionList()">← Back to questions</button>' +
-    (function (x) {
-      const no = x.own ? ' translate="no"' : '';
-      return '<div class="ai-robot-answer-q"' + no + '>' + escapeForHtml(x.q) + '</div>' +
-        '<div class="ai-robot-answer-a"' + no + '>' + escapeForHtml(x.a) + '</div>';
-    })(aiRobotText(item));
-  playAiRobotOnce('yes');
+    '<div class="ai-chat-log" id="aiChatLog" aria-live="polite">' +
+      aiRobotMsgHtml({ role: 'assistant', text: aiRobotUi('hello').replace('%', name) }) +
+      aiRobotChat.map(aiRobotMsgHtml).join('') +
+      (aiRobotBusy ? '<div class="ai-msg ai-msg-assistant ai-msg-busy"><span class="ai-dots"><i></i><i></i><i></i></span> ' + aiRobotUi('think') + '</div>' : '') +
+    '</div>' +
+    (chips.length ? '<div class="ai-chips">' + chips.map(it => { const x = aiRobotText(it);
+      return '<button type="button" class="ai-chip" onclick="aiRobotAsk(this.textContent)"' + (x.own ? ' translate="no"' : '') + '>' + escapeForHtml(x.q) + '</button>'; }).join('') + '</div>' : '') +
+    '<form class="ai-chat-form" onsubmit="event.preventDefault(); aiRobotAsk(document.getElementById(\'aiRobotInput\').value)">' +
+      '<input type="text" class="ai-robot-search" id="aiRobotInput" autocomplete="off" maxlength="1000" placeholder="' + escapeForHtml(aiRobotUi('ph')) + '" aria-label="' + escapeForHtml(aiRobotUi('ph')) + '"' + (aiRobotBusy ? ' disabled' : '') + '>' +
+      '<button type="submit" class="ai-send" id="aiRobotSend" aria-label="' + escapeForHtml(aiRobotUi('send')) + '" title="' + escapeForHtml(aiRobotUi('send')) + '"' + (aiRobotBusy ? ' disabled' : '') + '><i class="lc lc-send" aria-hidden="true"></i></button>' +
+    '</form>';
+  const log = document.getElementById('aiChatLog');
+  if (log) log.scrollTop = log.scrollHeight;
 }
-window.aiRobotFilter = aiRobotFilter;
-window.showAiRobotAnswer = showAiRobotAnswer;
+async function aiRobotAsk(question) {
+  question = String(question || '').trim();
+  if (!question || aiRobotBusy) return;
+  aiRobotChat.push({ role: 'user', text: question });
+  aiRobotBusy = true;
+  renderAiRobotChat();
+  playAiRobotOnce('thinking');
+  const url = taAiUrl();
+  let answer = '', note = '';
+  if (url) {
+    try {
+      const ctrl = new AbortController(), timer = setTimeout(() => ctrl.abort(), 45000);
+      const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctrl.signal,
+        body: JSON.stringify({ question, lang: window.taUiLang ? window.taUiLang() : 'en', section: currentActiveTab, teacher: getTeacherName() || '',
+          history: aiRobotChat.slice(-9, -1).map(m => ({ role: m.role, text: m.text })), knowledge: aiRobotKnowledge() }) });
+      clearTimeout(timer);
+      const data = res.ok ? await res.json() : null;
+      answer = data && typeof data.answer === 'string' ? data.answer.trim() : '';
+    } catch (e) { answer = ''; }
+    if (!answer) note = aiRobotUi('fail');
+  } else note = aiRobotUi('off');
+  if (!answer) {
+    const best = aiRobotBestFaq(question);
+    answer = best ? note + '\n\n**' + aiRobotText(best).q + '**\n' + aiRobotText(best).a : aiRobotUi('none');
+  }
+  aiRobotChat.push({ role: 'assistant', text: answer, note: !!note });
+  aiRobotBusy = false;
+  renderAiRobotChat();
+  playAiRobotOnce('yes');
+  const input = document.getElementById('aiRobotInput');
+  if (input) input.focus();
+}
+window.aiRobotAsk = aiRobotAsk;
+window.renderAiRobotChat = renderAiRobotChat;
+// the language changed while the chat is open
+function renderAiRobotQuestionList() { renderAiRobotChat(); }
 window.renderAiRobotQuestionList = renderAiRobotQuestionList;
 function positionAiRobotBubble() {
   const widget = document.getElementById('aiRobotWidget');
@@ -3295,7 +3353,7 @@ function positionAiRobotBubble() {
   const rect = widget.getBoundingClientRect();
   bubble.classList.remove('above', 'below', 'align-left', 'align-right');
   bubble.classList.add(rect.top > 340 ? 'above' : 'below');
-  const bubbleWidth = 300;
+  const bubbleWidth = 420;
   if (rect.left + rect.width / 2 - bubbleWidth / 2 < 8) bubble.classList.add('align-left');
   else if (rect.left + rect.width / 2 + bubbleWidth / 2 > window.innerWidth - 8) bubble.classList.add('align-right');
 }
@@ -3305,9 +3363,10 @@ function toggleAiRobotBubble() {
 function openAiRobotBubble() {
   const bubble = document.getElementById('aiRobotBubble');
   if (!bubble) return;
-  renderAiRobotQuestionList();
+  renderAiRobotChat();
   positionAiRobotBubble();
   bubble.classList.add('show');
+  setTimeout(() => { const i = document.getElementById('aiRobotInput'); if (i) i.focus(); }, 50);
   aiRobotBubbleOpen = true;
   aiRobotPauseWander();
   playAiRobotOnce('thinking');
@@ -3344,6 +3403,9 @@ function initAiRobotWidget() {
   widget.style.top = (TA_LOW_POWER ? Math.max(b.minY, b.maxY - 70) : b.maxY) + 'px';
   initAiRobotAnimPlayer();
   aiRobotInitDrag();
+  // the keyboard (Enter / Space on the robot button) opens the chat too; mouse and finger taps go through the drag code
+  const btn = document.getElementById('aiRobotAnim');
+  if (btn && !btn.dataset.kb) { btn.dataset.kb = '1'; btn.addEventListener('click', e => { if (e.detail === 0) toggleAiRobotBubble(); }); }
   aiRobotScheduleWander();
 }
 window.initAiRobotWidget = initAiRobotWidget;
@@ -3582,12 +3644,12 @@ document.addEventListener('keydown', function (e) {
    right search, design (which also picks day or night), Settings and the profile.
    Phones (860px and narrower): the 5 sections become a tab bar at the bottom. */
 const TA_TOPBAR_TABS = [
-  { tab: 'main', href: 'index.html', label: 'Dashboard', emoji: '🏠', color: '#FF6B6B' },
-  { tab: 'createpicker', href: 'create.html', label: 'Create', emoji: '✨', color: '#FFB020' },
-  { tab: 'course', href: 'course.html', label: 'Course', emoji: '🗺️', color: '#22C3D6' },
-  { tab: 'myexercises', href: 'my-exercises.html', label: 'My Exercises', emoji: '📚', color: '#22C58B' },
-  { tab: 'dashboard', href: 'statistics.html', label: 'Statistics', emoji: '📊', color: '#3D8BFF' },
-  { tab: 'students', href: 'students.html', label: 'Students', emoji: '🧑‍🎓', color: '#A25CF5' }
+  { tab: 'main', href: 'index.html', label: 'Dashboard', emoji: '🏠', color: '#FF6B6B', icon: 'house' },
+  { tab: 'createpicker', href: 'create.html', label: 'Create', emoji: '✨', color: '#FFB020', icon: 'sparkles' },
+  { tab: 'course', href: 'course.html', label: 'Course', emoji: '🗺️', color: '#22C3D6', icon: 'map' },
+  { tab: 'myexercises', href: 'my-exercises.html', label: 'My Exercises', emoji: '📚', color: '#22C58B', icon: 'library' },
+  { tab: 'dashboard', href: 'statistics.html', label: 'Statistics', emoji: '📊', color: '#3D8BFF', icon: 'chart-column' },
+  { tab: 'students', href: 'students.html', label: 'Students', emoji: '🧑‍🎓', color: '#A25CF5', icon: 'graduation-cap' }
 ];
 function taMountTopBar() {
   if (document.getElementById('taTopbar')) return;
@@ -3596,29 +3658,28 @@ function taMountTopBar() {
   bar.className = 'ta-topbar';
   bar.id = 'taTopbar';
   bar.innerHTML =
-    '<a class="tb-brand tb-link" href="index.html" title="Dashboard" aria-label="Loom — Dashboard"><span class="tb-brand-emoji" aria-hidden="true">🧶</span>' +
-      '<span class="brand-name" translate="no"><b><i>l</i><i>o</i><i>o</i><i>m</i></b></span></a>' +
+    '<a class="tb-brand tb-link" href="index.html" title="Dashboard" aria-label="Loom — Dashboard"><span class="tb-logo" aria-hidden="true"><i class="lc lc-layers"></i></span>' +
+      '<span class="brand-name" translate="no"><b>loom</b><small>Teacher Studio</small></span></a>' +
     '<nav class="tb-nav" id="taTabNav" aria-label="Sections">' +
       '<svg class="tb-blob-svg" aria-hidden="true"><path id="taTabBlob" class="tb-blob-path"/></svg>' +
       TA_TOPBAR_TABS.map(t => '<a class="tb-tab tb-link" href="' + t.href + '" data-tab="' + t.tab + '" title="' + t.label + '" aria-label="' + t.label + '">' +
-        '<span class="tb-ic" aria-hidden="true" data-emo="' + t.emoji + '" style="--tab-c:' + t.color + '"></span></a>').join('') +
+        '<span class="tb-ic" aria-hidden="true" style="--tab-c:' + t.color + '"><i class="lc lc-' + t.icon + '"></i></span></a>').join('') +
     '</nav>' +
     '<div class="tb-tools">' +
       '<button class="tb-tool tb-refresh" id="taRefreshBtn" type="button" onclick="taRefreshApp(this)" title="Refresh" aria-label="Refresh">' +
-        '<span class="tb-emo" aria-hidden="true">🔄</span></button>' +
+        '<i class="lc lc-refresh-cw tb-emo" aria-hidden="true"></i></button>' +
       '<button class="tb-tool" id="quickSearchBtn" type="button" onclick="openQuickSearch()" title="Search" data-kbd="' + (mac ? '⌘ K' : 'Ctrl K') + '" aria-label="Search">' +
-        '<span class="tb-emo" aria-hidden="true">🔍</span></button>' +
-      '<button class="tb-tool tb-theme" id="themeToggleBtn" type="button" onclick="toggleDayNight()" title="Day / night" aria-label="Day / night"></button>' +
+        '<i class="lc lc-search tb-emo" aria-hidden="true"></i></button>' +
       '<a class="tb-tool tb-link" href="settings.html" data-tab="settings" title="Settings" aria-label="Settings">' +
-        '<span class="tb-emo" aria-hidden="true">⚙️</span></a>' +
+        '<i class="lc lc-settings tb-emo" aria-hidden="true"></i></a>' +
       '<div class="tb-profile-wrap">' +
         '<button class="tb-avatar avatar-btn" id="tbAvatarBtn" type="button" onclick="taToggleProfileMenu(event)" title="Your profile" aria-label="Your profile" aria-expanded="false">' +
           '<img class="avatar-img" style="display:none;" alt=""><div class="avatar-fallback" id="tbAvatarFallback">T</div></button>' +
         '<div class="tb-profile-menu" id="tbProfileMenu" hidden>' +
           '<button type="button" class="tb-menu-head" onclick="taOpenProfile()" title="Your name and language"><b id="tbProfileName" translate="no">Teacher</b><small id="tbProfileLogin" translate="no"></small></button>' +
           '<div class="tb-sync-slot" id="tbSyncSlot"></div>' +
-          '<button type="button" class="tb-menu-item" onclick="taPickAvatar()">🖼️ Change profile picture</button>' +
-          '<button type="button" class="tb-menu-item danger" onclick="taLogout()">🚪 Log out</button>' +
+          '<button type="button" class="tb-menu-item" onclick="taPickAvatar()"><i class="lc lc-image" aria-hidden="true"></i> Change profile picture</button>' +
+          '<button type="button" class="tb-menu-item danger" onclick="taLogout()"><i class="lc lc-log-out" aria-hidden="true"></i> Log out</button>' +
         '</div>' +
       '</div>' +
     '</div>';

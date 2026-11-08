@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 :root {
   /* ================= LOOM — PLAYFUL DESIGN (2026-11-02) =================
@@ -3066,3 +3066,219 @@ body.sk-body.light-theme { --surface-page: #FFF5E1; }
 /* Course: "Starts at Step N" on a group's page (2026-11-07) */
 .sk-start-pick { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 0.95rem; }
 .sk-start-pick select { font: inherit; padding: 4px 8px; border-radius: 10px; border: 2px solid var(--line); background: var(--surface-1, #fff); color: inherit; }
+
+/* =====================================================================================
+   LOOM — TEACHER STUDIO (2026-11-07, the teacher: "make loom's design like this" + two screenshots:
+   dark only, calm navy cards with thin borders, an indigo button, Lucide icons instead of emojis).
+   Sits on top of the 2026-11-02 layout (body.loom-studio, set by applyTheme on the teacher's pages;
+   the students' pages — skill.html, exercise files — keep their own look). Icons: css/icons.css.
+   ===================================================================================== */
+body.loom-studio, body.loom-studio.light-theme {
+  --surface-page: #0E1017; --surface: #161922; --surface-sunken: #12141C; --surface-2: #1C202B;
+  --border: rgba(255,255,255,0.08); --border-line: rgba(255,255,255,0.06); --line: rgba(255,255,255,0.08);
+  --ink: #F3F4F8; --ink-soft: #B4B8C7; --ink-faint: #868B9C;
+  --brand: #6366F1; --brand-strong: #5457E5; --brand-soft: rgba(99,102,241,0.14); --on-brand: #fff;
+  --accent-green: #34D399;
+  --grad-brand: linear-gradient(135deg, #6366F1, #7C5CF5);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3); --shadow-md: 0 1px 2px rgba(0,0,0,0.25), 0 8px 24px -12px rgba(0,0,0,0.5);
+  --shadow-lg: 0 20px 50px -20px rgba(0,0,0,0.7); --shadow-brand: 0 8px 22px -8px rgba(99,102,241,0.6); --shadow-celebrate: var(--shadow-md);
+  --radius-sm: 10px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 18px;
+  --bounce: cubic-bezier(.2, .7, .2, 1);
+  background: var(--surface-page) !important; color: var(--ink); color-scheme: dark;
+}
+body.loom-studio, body.loom-studio * { font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif; }
+body.loom-studio :is(h1, h2, h3, .dash-card-title, .picker-section-title, .card-head h2, .points-modal-title, .tb-brand, .results-stat-value, .create-btn, .tab-btn) {
+  font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif; letter-spacing: -0.01em;
+}
+body.loom-studio ::selection { background: rgba(99,102,241,0.45); color: #fff; }
+
+/* cards: flat navy, a thin border, a soft shadow — no stickers, no tilting */
+body.loom-studio :is(.card, .dash-card, .hero-card, .results-stat-card, .picker-card, .recent-exercise-row, .group-block, .student-group,
+.points-modal, .chart-wrap.stats-chart, .stats-card, .login-card, .sync-unlock-card, .tb-profile-menu, .myex-menu, .ai-robot-bubble,
+.qs-box, .wheel-winner-card, .hwc-student-row, .set-round-row, .myex-card, .masthead, .sk-gcard, .sk-part) {
+  background: var(--surface) !important; border: 1px solid var(--border) !important; box-shadow: var(--shadow-md) !important;
+}
+body.loom-studio :is(.card, .dash-card, .results-stat-card, .myex-card, .masthead, .picker-card) { border-radius: var(--radius-xl) !important; }
+body.loom-studio :is(.picker-card, .quick-action-btn, .results-stat-card, .myex-card, .group-block):hover {
+  transform: translateY(-2px); box-shadow: 0 14px 30px -16px rgba(0,0,0,0.8) !important; border-color: rgba(255,255,255,0.14) !important;
+}
+body.loom-studio :is(.picker-card, .quick-action-btn, .results-stat-card, .myex-card, .group-block):active { transform: translateY(0); }
+body.loom-studio button:active:not(:disabled) { transform: translateY(1px); }
+
+/* the masthead "Build exercises in minutes" and the greeting card */
+body.loom-studio .masthead { padding: 26px 30px; }
+body.loom-studio .masthead::before { content: ''; }
+body.loom-studio.loom-studio .hero-card {
+  background: linear-gradient(110deg, #1E1B4B 0%, #1A1A3C 50%, #12281F 100%) !important; border: 1px solid rgba(129,140,248,0.35) !important;
+  border-radius: 20px !important;
+}
+body.loom-studio .hero-eyebrow { color: var(--accent-green); font-weight: 600; font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+body.loom-studio .hero-card h1 { font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 700; color: #fff; }
+body.loom-studio .hero-card p { color: var(--ink-soft); }
+body.loom-studio .hero-robot-anim:empty { display: none; }
+body.loom-studio .hero-next { display: flex; align-items: center; gap: 14px; padding: 16px 22px; border-radius: 16px; background: rgba(10,12,20,0.55); border: 1px solid var(--border); }
+body.loom-studio .hero-next[hidden] { display: none; }
+body.loom-studio .hero-next small { display: block; color: var(--ink-faint); font-size: 0.85rem; margin-bottom: 2px; }
+body.loom-studio .hero-next b { font-weight: 700; color: #fff; }
+body.loom-studio .hero-next-ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--brand-soft); color: #A5B4FC; border: 1px solid rgba(129,140,248,0.3); font-size: 1.25rem; }
+body:not(.loom-studio) .hero-eyebrow, body:not(.loom-studio) .hero-next { display: none; }
+
+/* the four numbers: a tinted icon square + the number */
+body.loom-studio .results-stat-icon { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; font-size: 1.45rem;
+  background: var(--brand-soft); color: #A5B4FC; border: 1px solid rgba(129,140,248,0.3); }
+body.loom-studio .results-stat-icon.si-blue { background: rgba(99,102,241,0.14); color: #A5B4FC; border-color: rgba(129,140,248,0.3); }
+body.loom-studio .results-stat-icon.si-red { background: rgba(244,63,94,0.14); color: #FB7185; border-color: rgba(244,63,94,0.3); }
+body.loom-studio .results-stat-icon.si-green { background: rgba(16,185,129,0.14); color: #34D399; border-color: rgba(16,185,129,0.3); }
+body.loom-studio .results-stat-icon.si-amber { background: rgba(245,158,11,0.14); color: #FBBF24; border-color: rgba(245,158,11,0.3); }
+body.loom-studio .results-stat-value { font-size: 1.9rem; font-weight: 700; color: #fff; }
+body.loom-studio #dashStatResults { color: var(--accent-green); }
+body.loom-studio .results-stat-label { color: var(--ink-soft); font-weight: 500; }
+body.loom-studio .dash-card-title { font-weight: 700; color: #fff; display: flex; align-items: center; gap: 10px; }
+body.loom-studio .dash-card-emoji.lc { color: #A5B4FC; font-size: 1.1em; }
+body.loom-studio .main-block-top-students .dash-card-emoji.lc { color: #FBBF24; }
+
+/* buttons */
+body.loom-studio :is(.create-btn, .login-submit, .lesson-plan-btn, .sync-unlock-btns .sync-unlock-ok, .masthead-btn.primary, .sk-teach) {
+  background: var(--brand) !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.08) !important; border-radius: 12px;
+  box-shadow: var(--shadow-brand) !important; text-shadow: none; font-weight: 600;
+}
+body.loom-studio :is(.create-btn, .login-submit, .lesson-plan-btn, .sk-teach):hover { background: #7376F5 !important; transform: translateY(-1px); filter: none; }
+body.loom-studio .create-btn::before { content: ''; display: inline-block; width: 1.1em; height: 1.1em; margin-right: 8px; vertical-align: -0.18em;
+  background: currentColor; -webkit-mask: var(--ic-plus) center/contain no-repeat; mask: var(--ic-plus) center/contain no-repeat; }
+body.loom-studio :is(.mini-btn, .reset-btn, .ta-btn, .ta-modal-btns button, .sync-unlock-btns button, .res-view-btn, .results-upload-btn, .compose-enter-btn, .dash-manage-link, .quick-action-btn, .back-to-picker-btn) {
+  background: var(--surface-2) !important; color: var(--ink) !important; border: 1px solid var(--border) !important; border-radius: 12px; box-shadow: none !important; font-weight: 600;
+}
+body.loom-studio :is(.mini-btn, .reset-btn, .ta-modal-btns button, .res-view-btn, .dash-manage-link, .quick-action-btn, .back-to-picker-btn):hover {
+  background: #242937 !important; border-color: rgba(255,255,255,0.14) !important; transform: none;
+}
+body.loom-studio .mini-btn.solid { background: var(--brand) !important; color: #fff !important; }
+body.loom-studio :is(.mini-btn.danger, .reset-btn):hover { background: rgba(244,63,94,0.16) !important; color: #FDA4AF !important; }
+body.loom-studio .dash-manage-link { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; }
+body.loom-studio .quick-action-btn { display: flex; align-items: center; gap: 10px; }
+body.loom-studio .quick-action-icon { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; background: var(--brand-soft); color: #A5B4FC; font-size: 1rem; }
+
+/* inputs */
+body.loom-studio :is(input[type="text"], input[type="number"], input[type="password"], input[type="email"], input[type="search"], select, textarea, .ai-robot-search, .sync-unlock-card input, .ta-modal-body textarea) {
+  background: var(--surface-sunken) !important; border: 1px solid var(--border) !important; color: var(--ink); font-weight: 500; border-radius: 12px !important;
+}
+body.loom-studio :is(input, select, textarea):focus { border-color: var(--brand) !important; box-shadow: 0 0 0 3px rgba(99,102,241,0.3) !important; }
+body.loom-studio :focus-visible { outline: 2px solid #818CF8; outline-offset: 2px; }
+
+/* top bar: a dark strip with a bottom line, the logo square, the sections as icons */
+body.loom-studio #taTopbar { background: #12141C; border-bottom: 1px solid var(--border); }
+body.loom-studio .tb-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+body.loom-studio .tb-logo { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: #fff; font-size: 1.35rem;
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 55%, #2DD4BF 130%); box-shadow: 0 6px 18px -6px rgba(99,102,241,0.7); }
+body.loom-studio .tb-brand .brand-name { display: flex; flex-direction: column; line-height: 1.15; }
+body.loom-studio .tb-brand .brand-name b { font-size: 1.3rem; font-weight: 700; color: #fff; display: block; letter-spacing: -0.01em; }
+body.loom-studio .tb-brand .brand-name small { font-size: 0.82rem; color: var(--ink-faint); font-weight: 500; }
+body.loom-studio .tb-nav { background: #161922; border: 1px solid var(--border); box-shadow: none; }
+body.loom-studio .tb-blob-path { fill: var(--brand); stroke: none; }
+body.loom-studio .tb-ic { font-size: 1.2rem; color: var(--ink-faint); filter: none; transition: color .15s ease; }
+body.loom-studio .tb-tab:hover .tb-ic { color: #fff; transform: none; }
+body.loom-studio .tb-tab.active .tb-ic { color: #fff; transform: none; }
+body.loom-studio .tb-tool { background: #161922; border: 1px solid var(--border); box-shadow: none; color: var(--ink-soft); }
+body.loom-studio .tb-tool:hover { background: #1F2330; color: #fff; transform: none; }
+body.loom-studio .tb-emo { font-size: 1.15rem; }
+body.loom-studio .tb-avatar .avatar-fallback, body.loom-studio .tb-avatar .avatar-img { border: 1px solid var(--border); box-shadow: none; }
+body.loom-studio .avatar-fallback { background: var(--brand); color: #fff; }
+body.loom-studio :is(.tb-menu-head, .tb-menu-item, .myex-menu-item):hover { background: #1F2330; }
+body.loom-studio .tb-menu-item { display: flex; align-items: center; gap: 10px; }
+
+/* exercise types: an icon on a tinted square of the type's colour */
+body.loom-studio [class*="picker-icon-"]::before { content: ''; width: 1.45rem; height: 1.45rem; font-size: 0; background: currentColor;
+  -webkit-mask: var(--ti, var(--ic-sparkles)) center/contain no-repeat; mask: var(--ti, var(--ic-sparkles)) center/contain no-repeat; }
+body.loom-studio [class*="picker-icon-"] { background: color-mix(in srgb, var(--tc, #6366F1) 16%, transparent) !important; color: var(--tc, #A5B4FC) !important;
+  border: 1px solid color-mix(in srgb, var(--tc, #6366F1) 35%, transparent) !important; box-shadow: none !important; }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-flashcard), .picker-icon-flashcard { --ti: var(--ic-layers); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-wordorder), .picker-icon-wordorder { --ti: var(--ic-arrow-left-right); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-makeaword), .picker-icon-makeaword { --ti: var(--ic-puzzle); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-spelling), .picker-icon-spelling { --ti: var(--ic-spell-check); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-canknock), .picker-icon-canknock { --ti: var(--ic-target); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-cargame), .picker-icon-cargame { --ti: var(--ic-car); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-pronunciation), .picker-icon-pronunciation { --ti: var(--ic-mic); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-rocket), .picker-icon-rocket { --ti: var(--ic-rocket); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-maze), .picker-icon-maze { --ti: var(--ic-route); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-sentences), .picker-icon-sentences { --ti: var(--ic-pen-line); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-bilingual), .picker-icon-bilingual { --ti: var(--ic-languages); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-engcontent), .picker-icon-engcontent { --ti: var(--ic-clapperboard); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-listening), .picker-icon-listening { --ti: var(--ic-headphones); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-jungle), .picker-icon-jungle { --ti: var(--ic-trees); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-bamboozle), .picker-icon-bamboozle { --ti: var(--ic-dices); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-presentation), .picker-icon-presentation { --ti: var(--ic-presentation); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-test), .picker-icon-test { --ti: var(--ic-clipboard-check); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-homework), .picker-icon-homework { --ti: var(--ic-backpack); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-class), .picker-icon-class { --ti: var(--ic-school); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-reading), .picker-icon-reading { --ti: var(--ic-book-open); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-speaking), .picker-icon-speaking { --ti: var(--ic-message-circle); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-sklistening), .picker-icon-sklistening { --ti: var(--ic-headphones); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-skreading), .picker-icon-skreading { --ti: var(--ic-book-open); }
+:is(.picker-card, .tab-btn, .myex-card, .myex-type-chip):has(.picker-icon-skwriting), .picker-icon-skwriting { --ti: var(--ic-pen-line); }
+/* My Exercises' icons */
+body.loom-studio .myex-lc { font-size: 1.05rem; }
+
+/* emojis that sat inside buttons (data-emo) are not drawn any more */
+body.loom-studio [data-emo]::before { content: none; }
+body.loom-studio .hero-content h1 span { background: none; color: #fff; padding: 0; border: 0; box-shadow: none; transform: none; display: inline; border-radius: 0; }
+body.loom-studio .hero-content p { font-weight: 500; }
+body.loom-studio .hero-content p::after { content: none; }
+body.loom-studio .results-stats-grid > .results-stat-card .results-stat-icon.lc, body.loom-studio .results-stats-grid > .results-stat-card .results-stat-icon { transform: none; animation: none; box-shadow: none !important; }
+body.loom-studio .results-stats-grid > .results-stat-card .results-stat-icon.si-blue { background: rgba(99,102,241,0.14) !important; }
+body.loom-studio .results-stats-grid > .results-stat-card .results-stat-icon.si-red { background: rgba(244,63,94,0.14) !important; }
+body.loom-studio .results-stats-grid > .results-stat-card .results-stat-icon.si-green { background: rgba(16,185,129,0.14) !important; }
+body.loom-studio .results-stats-grid > .results-stat-card .results-stat-icon.si-amber { background: rgba(245,158,11,0.14) !important; }
+body.loom-studio .results-stats-grid > .results-stat-card .results-stat-icon:not([class*="si-"]) { background: var(--brand-soft) !important; color: #A5B4FC; }
+body.loom-studio .results-stat-icon { border: 1px solid rgba(255,255,255,0.08) !important; }
+body.loom-studio .quick-actions .quick-action-btn { background: var(--surface-2) !important; border: 1px solid var(--border) !important; box-shadow: none !important; }
+body.loom-studio .quick-actions .quick-action-btn:hover { background: #242937 !important; }
+body.loom-studio .top-group-tab { border: 1px solid var(--border) !important; box-shadow: none; background: var(--surface-2); color: var(--ink-soft); border-radius: 10px; }
+body.loom-studio .top-group-tab.active { background: var(--brand) !important; color: #fff !important; }
+body.loom-studio .picker-section-title { background: var(--brand-soft) !important; color: #C7D2FE !important; border: 1px solid rgba(129,140,248,0.3) !important;
+  box-shadow: none !important; transform: none !important; font-size: 0.95rem; font-weight: 600; }
+
+/* the AI chat (2026-11-07): a round indigo button with the bot icon, a dark chat panel */
+body.loom-studio .ai-robot-anim { width: 64px !important; height: 64px !important; border-radius: 50%; display: grid; place-items: center; font-size: 1.7rem;
+  background: var(--brand) !important; color: #fff; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 12px 30px -8px rgba(99,102,241,0.75); cursor: pointer; padding: 0; }
+body.loom-studio .ai-robot-anim:hover { background: #7376F5 !important; }
+body.loom-studio .ai-robot-bubble { width: min(420px, calc(100vw - 24px)) !important; padding: 0 !important; border-radius: 18px !important; overflow: hidden;
+  background: #161922 !important; border: 1px solid rgba(129,140,248,0.25) !important; box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8) !important; }
+body.loom-studio .ai-robot-bubble-tail { display: none; }
+body.loom-studio .ai-robot-bubble-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; background: #1A1D35; border-bottom: 1px solid var(--border); }
+body.loom-studio .ai-robot-bubble-title { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; color: #fff; }
+body.loom-studio .ai-robot-bubble-title .lc { color: #A5B4FC; }
+body.loom-studio .ai-robot-bubble-close { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: none; border: 0; color: var(--ink-soft); font-size: 1.1rem; cursor: pointer; }
+body.loom-studio .ai-robot-bubble-close:hover { background: #242937; color: #fff; }
+body.loom-studio .ai-robot-bubble-body { padding: 0 !important; max-height: none !important; }
+.ai-chat-log { display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; max-height: min(52vh, 420px); overflow-y: auto; }
+.ai-msg { max-width: 88%; padding: 11px 14px; border-radius: 14px; line-height: 1.5; font-size: 0.95rem; overflow-wrap: anywhere; }
+.ai-msg-assistant { align-self: flex-start; background: #1F2330; color: var(--ink, #F3F4F8); border-top-left-radius: 4px; }
+.ai-msg-user { align-self: flex-end; background: var(--brand, #6366F1); color: #fff; border-top-right-radius: 4px; }
+.ai-msg-note { border: 1px dashed rgba(251,191,36,0.45); }
+.ai-msg-busy { color: var(--ink-soft, #B4B8C7); display: flex; align-items: center; gap: 8px; }
+.ai-dots { display: inline-flex; gap: 4px; }
+.ai-dots i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; animation: aiDot 1s infinite ease-in-out; }
+.ai-dots i:nth-child(2) { animation-delay: .15s; } .ai-dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes aiDot { 0%, 80%, 100% { opacity: .3; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+@media (prefers-reduced-motion: reduce) { .ai-dots i { animation: none; } }
+.ai-chips { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 0 18px 14px; }
+.ai-chip { padding: 7px 14px; border-radius: 999px; background: rgba(99,102,241,0.12); color: #A5B4FC; border: 1px solid rgba(129,140,248,0.3); font-weight: 500; font-size: 0.88rem; cursor: pointer; text-align: left; }
+.ai-chip:hover { background: rgba(99,102,241,0.22); color: #fff; }
+.ai-chat-form { display: flex; gap: 10px; padding: 14px 18px; border-top: 1px solid var(--border, rgba(255,255,255,0.08)); }
+.ai-chat-form input { flex: 1 1 auto; min-width: 0; height: 48px; padding: 0 14px; }
+.ai-send { width: 52px; height: 48px; flex: 0 0 auto; border-radius: 12px; display: grid; place-items: center; background: var(--brand, #6366F1); color: #fff; border: 0; font-size: 1.2rem; cursor: pointer; }
+.ai-send:hover { background: #7376F5; } .ai-send:disabled { opacity: .5; cursor: default; }
+/* the chat panel stays on screen: fixed in the bottom-right corner above the robot button, the messages scroll */
+body.loom-studio .ai-robot-bubble.show { display: flex !important; }
+body.loom-studio .ai-robot-bubble { position: fixed !important; right: 24px !important; left: auto !important; top: auto !important; bottom: 112px !important;
+  margin: 0 !important; flex-direction: column; max-height: calc(100vh - 190px); transform-origin: bottom right; }
+body.loom-studio .ai-robot-bubble-body { display: flex; flex-direction: column; min-height: 0; flex: 1 1 auto; }
+body.loom-studio .ai-chat-log { flex: 1 1 auto; min-height: 0; max-height: none; }
+@media (max-width: 860px) { body.loom-studio .ai-robot-bubble { right: 12px !important; bottom: 168px !important; max-height: calc(100vh - 240px); } }
+/* the playful yellow highlights become a soft indigo (dark text stays readable on it) */
+body.loom-studio, body.loom-studio.light-theme { --c-yellow: #A5B4FC; }
+body.loom-studio .myex-day::after { background: var(--border) !important; height: 1px; }
+body.loom-studio .myex-type-chip, body.loom-studio .myex-group-chip { box-shadow: none !important; border-width: 1px !important; }
+@media (max-width: 560px) { body.loom-studio #mainGreetingName { white-space: normal; overflow: visible; text-overflow: clip; } }
+/* calm: course step boxes don't jump or tilt on hover (it also kept them moving under the mouse) */
+body.loom-studio button.sk-node:hover { transform: none; box-shadow: 0 0 0 1px rgba(129,140,248,0.5); }
+body.loom-studio button.sk-node:hover .sk-node-emoji { animation: none; }

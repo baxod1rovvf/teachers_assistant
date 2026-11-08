@@ -489,6 +489,22 @@ real students' names or results into the repository (it is public).
   `#iwNameInput`), a pink → purple → blue Start button that sinks when pressed, Fredoka (Google Fonts, `@import`; offline: system
   font); slide-deck exercises (Flashcard, Sentences, Spelling, Test…) get the sticker on `.deck-container:has(#slide-welcome.active)`.
   Set screens: plain cream page (no confetti dots since 2026-11-05), 🎉 after the headline.
+- **Teacher Studio design (teacher, 2026-11-07: "make loom's design like this" + 2 screenshots; dark only; icons instead of emojis)** —
+  a layer at the very end of css/style.css on `body.loom-studio` (added by `applyTheme` on the teacher's pages; skill.html and exercise
+  files keep their own look): page `#0E1017`, cards `#161922` with a 1 px border and soft shadow (no stickers, no tilting), indigo
+  `#6366F1` buttons, green eyebrow `#34D399`, Plus Jakarta Sans, the playful yellow highlights turned soft indigo (`--c-yellow`).
+  **Dark only**: `getTheme()` always 'dark', no ☀️/🌙 button (`toggleDayNight` does nothing). **Icons are Lucide** (ISC, the set the
+  teacher liked in WeWeb) — `css/icons.css` made by `node tools/make-icons.js <lucide-static icons folder>` (add a name to its list):
+  `<i class="lc lc-<name>">` draws in the text colour; `--ic-<name>` for `::before` masks. Top bar: logo square + "loom / Teacher Studio",
+  `TA_TOPBAR_TABS[].icon`; exercise types: `--ti` per `picker-icon-*`; My Exercises: `MYEX_ICON`. Dashboard greeting: date + session line
+  (`#heroEyebrow`) and "Next class on schedule" (`renderHeroNext`). Many emojis inside texts/messages remain.
+- **AI robot (2026-11-07, teacher: "AI robot should be AI completely… user should ask any question")**: the robot is a chat (`renderAiRobotChat`,
+  `aiRobotAsk` in common.js): a greeting, two of the section's questions as chips, a box + Send. Questions go to `TA_AI_URL` — a
+  Cloudflare Worker (`tools/ai-worker.js`, Claude `claude-haiku-5-5`, the key kept as its secret `ANTHROPIC_API_KEY`, only the teacher's
+  site allowed, 8 questions/min per IP) — with the chat so far, the section, the language, and all the saved questions + answers as
+  Loom's notes (`aiRobotKnowledge`). **The saved FAQ stays** (it's the AI's knowledge and the fallback): with no `TA_AI_URL` or when the
+  AI fails, the closest saved answer shows (`aiRobotBestFaq`, rare words weigh more). `localStorage.ta_ai_url` overrides the address
+  (tests). `tests/robot.spec.js`.
 - **Playful design (teacher, 2026-11-02: "change Loom's design entirely, build it from 0 — colourful, playful,
   satisfying, use emojis")** — replaces the 2026-10-27 glass/black+red look and the line icons. The look lives in the
   "LOOM — PLAYFUL DESIGN" layer at the end of css/style.css (tokens in `:root` = Night, `body.light-theme` = Day); the
