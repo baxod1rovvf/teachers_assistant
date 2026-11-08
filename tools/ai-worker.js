@@ -10,7 +10,9 @@
 // Free plan: Google may use the questions to improve its products — don't type students' private details into the robot.
 
 const ALLOWED_ORIGINS = ['https://baxod1rovvf.github.io'];
-const DEFAULT_MODEL = 'gemini-flash-latest';   // Google's current fast model on the free plan
+const VERSION = '2026-11-08b';
+const DEFAULT_MODEL = 'gemini-flash-lite-latest';   // Google's fastest model on the free plan (answers in a few seconds)
+const PER_MODEL_SECONDS = 18, TOTAL_SECONDS = 40;   // Loom waits 60 s, so the helper always answers before that
 const PER_MINUTE = 8;                          // questions per visitor (IP) per minute, kept in this worker's memory
 const seen = new Map();
 
@@ -25,6 +27,10 @@ function reply(body, status, origin) {
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';
+    // a check page anyone can open: https://loom-ai.<name>.workers.dev/status (says whether the key is saved, never the key)
+    if (request.method === 'GET' && new URL(request.url).pathname === '/status') {
+      return new Response(JSON.stringify({ running: true, version: VERSION, keySaved: !!env.GEMINI_API_KEY }), { headers: { 'Content-Type': 'application/json' } });
+    }
     if (!ALLOWED_ORIGINS.includes(origin)) return new Response('Not allowed', { status: 403 });
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors(origin) });
     if (request.method !== 'POST') return reply({ error: 'POST only' }, 405, origin);
@@ -39,7 +45,7 @@ export default {
     const question = String(q.question || '').slice(0, 1000).trim();
     if (!question) return reply({ error: 'No question' }, 400, origin);
     const lang = { uz: 'Uzbek (Latin script)', ru: 'Russian' }[q.lang] || 'English';
-    const knowledge = String(q.knowledge || '').slice(0, 30000);
+    const knowledge = String(q.knowledge || '').slice(0, 16000);
     // the chat so far, in Gemini's shape (it calls the assistant "model")
     const history = (Array.isArray(q.history) ? q.history : []).slice(-8)
       .filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.text === 'string')
@@ -56,23 +62,32 @@ export default {
       'writing to Toxirjon on Telegram. Never invent buttons or features.\n\nNOTES ABOUT LOOM:\n' + knowledge;
 
     if (!env.GEMINI_API_KEY) return reply({ error: 'The helper has no GEMINI_API_KEY secret yet' }, 500, origin);
-    // the first model Google knows wins (names change over time; a 404 means "no such model here", so the next is tried)
-    const models = [env.GEMINI_MODEL, DEFAULT_MODEL, 'gemini-2.5-flash', 'gemini-2.0-flash'].filter((m, i, a) => m && a.indexOf(m) === i);
+    // the first model that answers wins: names change over time (404 → the next), and a slow one (thinking too long) gives way to the next
+    const models = [env.GEMINI_MODEL, DEFAULT_MODEL, 'gemini-2.5-flash-lite', 'gemini-2.0-flash', 'gemini-flash-latest', 'gemini-2.5-flash']
+      .filter((m, i, a) => m && a.indexOf(m) === i);
+    const started = Date.now();
     let res = null, why = '';
     for (const model of models) {
-      res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + encodeURIComponent(model) + ':generateContent', {
-        method: 'POST',
-        headers: { 'x-goog-api-key': env.GEMINI_API_KEY, 'content-type': 'application/json' },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: system }] },
-          contents: history.concat([{ role: 'user', parts: [{ text: question }] }]),
-          generationConfig: { maxOutputTokens: 2048, temperature: 0.6 }
-        })
-      });
+      const left = TOTAL_SECONDS * 1000 - (Date.now() - started);
+      if (left < 3000) { why = why || 'Google took too long'; res = null; break; }
+      const ctrl = new AbortController(), timer = setTimeout(() => ctrl.abort(), Math.min(PER_MODEL_SECONDS * 1000, left));
+      try {
+        res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/' + encodeURIComponent(model) + ':generateContent', {
+          method: 'POST', signal: ctrl.signal,
+          headers: { 'x-goog-api-key': env.GEMINI_API_KEY, 'content-type': 'application/json' },
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: system }] },
+            contents: history.concat([{ role: 'user', parts: [{ text: question }] }]),
+            generationConfig: { maxOutputTokens: 1500, temperature: 0.6 }
+          })
+        });
+      } catch (e) { clearTimeout(timer); res = null; why = model + ' took too long'; continue; }
+      clearTimeout(timer);
       if (res.ok) break;
       try { why = ((await res.json()).error || {}).message || ''; } catch (e) { why = ''; }
       if (res.status !== 404) break;
     }
+    if (!res) return reply({ error: 'Google took too long (' + why + ')' }, 504, origin);
     if (!res.ok) {
       const plain = res.status === 400 || res.status === 403 ? 'Google refused the key' : res.status === 429 ? "today's free limit is used up" : 'Google is busy';
       return reply({ error: plain + ' (' + res.status + (why ? ': ' + why.slice(0, 160) : '') + ')' }, 502, origin);
