@@ -167,12 +167,13 @@ function myexDayLabel(iso) {
 // The teacher's line icons (images/icons/myex/), drawn in the design's colours with a CSS mask
 // the teacher's coloured pictures (Delete, View Results), shown in their own colours
 // emojis since the playful redesign (2026-11-02) — the old pictures stay in images/icons/myex/
-const MYEX_EMOJI = { 'delete': '🗑️', 'view-results': '📊', 'use-again': '♻️', 'get-one': '🎯', 'copy-link': '🔗', 'redownload': '⬇️' };
+// Lucide icons (2026-11-07, the teacher's WeWeb set) instead of emojis
+const MYEX_ICON = { 'delete': 'trash-2', 'view-results': 'chart-column', 'use-again': 'repeat', 'get-one': 'target', 'copy-link': 'link', 'redownload': 'download' };
 function myexPicHtml(name) {
-  return '<span class="myex-pic" aria-hidden="true" data-emo="' + (MYEX_EMOJI[name] || '✨') + '"></span>';
+  return '<i class="lc lc-' + (MYEX_ICON[name] || 'sparkles') + ' myex-lc" aria-hidden="true"></i>';
 }
 function myexIconHtml(name) {
-  return '<span class="myex-ic" aria-hidden="true" data-emo="' + (MYEX_EMOJI[name] || '✨') + '"></span>';
+  return '<i class="lc lc-' + (MYEX_ICON[name] || 'sparkles') + ' myex-lc" aria-hidden="true"></i>';
 }
 
 /* ---------- ⋯ on a card ---------- */

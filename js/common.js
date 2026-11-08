@@ -928,9 +928,8 @@ function setTeacherName(v) {
 /* ================= THEME (day / night) ================= */
 const LS_THEME = 'ta_theme';
 
-function getTheme() {
-  try { return localStorage.getItem(LS_THEME) || 'dark'; } catch (e) { return 'dark'; }
-}
+/* Loom has only the dark look since 2026-11-07 (teacher: "it should have only dark mode") */
+function getTheme() { return 'dark'; }
 
 function setTheme(t) {
   try { localStorage.setItem(LS_THEME, t); } catch (e) { /* ignore */ }
@@ -940,10 +939,10 @@ function setTheme(t) {
 function applyTheme() {
   const t = getTheme();
   document.body.classList.toggle('light-theme', t === 'light');
-  document.body.classList.add('loom-fun');   // the playful look (2026-11-02; the glass look is gone)
+  document.body.classList.add('loom-fun', 'loom-studio');   // the dark "Teacher Studio" look (2026-11-07) on top of the 2026-11-02 layout
   // the phone's status bar (installed app) takes the page colour
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', t === 'light' ? '#EDF0F4' : '#121722');
+  if (meta) meta.setAttribute('content', '#0E1017');
   const btn = document.getElementById('themeToggleBtn');
   if (btn) {
     btn.innerHTML = t === 'light' ? TA_MOON_SVG : TA_SUN_SVG;
@@ -957,7 +956,7 @@ function applyTheme() {
    Classic style: the ☀️/🌙 button in the top bar switches Day and Night (css/style.css). */
 const TA_SUN_SVG = '<span class="tb-emo" aria-hidden="true">☀️</span>';
 const TA_MOON_SVG = '<span class="tb-emo" aria-hidden="true">🌙</span>';
-function toggleDayNight() { setTheme(getTheme() === 'light' ? 'dark' : 'light'); }
+function toggleDayNight() { /* dark only since 2026-11-07 */ }
 window.toggleDayNight = toggleDayNight;
 
 /* ================= PROFILE PICTURE ================= */
@@ -2599,6 +2598,7 @@ function goToScheduleSettings() {
 /* ================= LOTTIE ANIMATIONS ================= */
 
 function initRobotHiAnim() {
+  if (document.body.classList.contains('loom-studio')) return;   // no waving robot in the dark studio look (2026-11-07)
   const el = document.getElementById('robotHiAnim');
   if (!el || typeof lottie === 'undefined') return;
   try {
@@ -3582,12 +3582,12 @@ document.addEventListener('keydown', function (e) {
    right search, design (which also picks day or night), Settings and the profile.
    Phones (860px and narrower): the 5 sections become a tab bar at the bottom. */
 const TA_TOPBAR_TABS = [
-  { tab: 'main', href: 'index.html', label: 'Dashboard', emoji: '🏠', color: '#FF6B6B' },
-  { tab: 'createpicker', href: 'create.html', label: 'Create', emoji: '✨', color: '#FFB020' },
-  { tab: 'course', href: 'course.html', label: 'Course', emoji: '🗺️', color: '#22C3D6' },
-  { tab: 'myexercises', href: 'my-exercises.html', label: 'My Exercises', emoji: '📚', color: '#22C58B' },
-  { tab: 'dashboard', href: 'statistics.html', label: 'Statistics', emoji: '📊', color: '#3D8BFF' },
-  { tab: 'students', href: 'students.html', label: 'Students', emoji: '🧑‍🎓', color: '#A25CF5' }
+  { tab: 'main', href: 'index.html', label: 'Dashboard', emoji: '🏠', color: '#FF6B6B', icon: 'house' },
+  { tab: 'createpicker', href: 'create.html', label: 'Create', emoji: '✨', color: '#FFB020', icon: 'sparkles' },
+  { tab: 'course', href: 'course.html', label: 'Course', emoji: '🗺️', color: '#22C3D6', icon: 'map' },
+  { tab: 'myexercises', href: 'my-exercises.html', label: 'My Exercises', emoji: '📚', color: '#22C58B', icon: 'library' },
+  { tab: 'dashboard', href: 'statistics.html', label: 'Statistics', emoji: '📊', color: '#3D8BFF', icon: 'chart-column' },
+  { tab: 'students', href: 'students.html', label: 'Students', emoji: '🧑‍🎓', color: '#A25CF5', icon: 'graduation-cap' }
 ];
 function taMountTopBar() {
   if (document.getElementById('taTopbar')) return;
@@ -3596,29 +3596,28 @@ function taMountTopBar() {
   bar.className = 'ta-topbar';
   bar.id = 'taTopbar';
   bar.innerHTML =
-    '<a class="tb-brand tb-link" href="index.html" title="Dashboard" aria-label="Loom — Dashboard"><span class="tb-brand-emoji" aria-hidden="true">🧶</span>' +
-      '<span class="brand-name" translate="no"><b><i>l</i><i>o</i><i>o</i><i>m</i></b></span></a>' +
+    '<a class="tb-brand tb-link" href="index.html" title="Dashboard" aria-label="Loom — Dashboard"><span class="tb-logo" aria-hidden="true"><i class="lc lc-layers"></i></span>' +
+      '<span class="brand-name" translate="no"><b>loom</b><small>Teacher Studio</small></span></a>' +
     '<nav class="tb-nav" id="taTabNav" aria-label="Sections">' +
       '<svg class="tb-blob-svg" aria-hidden="true"><path id="taTabBlob" class="tb-blob-path"/></svg>' +
       TA_TOPBAR_TABS.map(t => '<a class="tb-tab tb-link" href="' + t.href + '" data-tab="' + t.tab + '" title="' + t.label + '" aria-label="' + t.label + '">' +
-        '<span class="tb-ic" aria-hidden="true" data-emo="' + t.emoji + '" style="--tab-c:' + t.color + '"></span></a>').join('') +
+        '<span class="tb-ic" aria-hidden="true" style="--tab-c:' + t.color + '"><i class="lc lc-' + t.icon + '"></i></span></a>').join('') +
     '</nav>' +
     '<div class="tb-tools">' +
       '<button class="tb-tool tb-refresh" id="taRefreshBtn" type="button" onclick="taRefreshApp(this)" title="Refresh" aria-label="Refresh">' +
-        '<span class="tb-emo" aria-hidden="true">🔄</span></button>' +
+        '<i class="lc lc-refresh-cw tb-emo" aria-hidden="true"></i></button>' +
       '<button class="tb-tool" id="quickSearchBtn" type="button" onclick="openQuickSearch()" title="Search" data-kbd="' + (mac ? '⌘ K' : 'Ctrl K') + '" aria-label="Search">' +
-        '<span class="tb-emo" aria-hidden="true">🔍</span></button>' +
-      '<button class="tb-tool tb-theme" id="themeToggleBtn" type="button" onclick="toggleDayNight()" title="Day / night" aria-label="Day / night"></button>' +
+        '<i class="lc lc-search tb-emo" aria-hidden="true"></i></button>' +
       '<a class="tb-tool tb-link" href="settings.html" data-tab="settings" title="Settings" aria-label="Settings">' +
-        '<span class="tb-emo" aria-hidden="true">⚙️</span></a>' +
+        '<i class="lc lc-settings tb-emo" aria-hidden="true"></i></a>' +
       '<div class="tb-profile-wrap">' +
         '<button class="tb-avatar avatar-btn" id="tbAvatarBtn" type="button" onclick="taToggleProfileMenu(event)" title="Your profile" aria-label="Your profile" aria-expanded="false">' +
           '<img class="avatar-img" style="display:none;" alt=""><div class="avatar-fallback" id="tbAvatarFallback">T</div></button>' +
         '<div class="tb-profile-menu" id="tbProfileMenu" hidden>' +
           '<button type="button" class="tb-menu-head" onclick="taOpenProfile()" title="Your name and language"><b id="tbProfileName" translate="no">Teacher</b><small id="tbProfileLogin" translate="no"></small></button>' +
           '<div class="tb-sync-slot" id="tbSyncSlot"></div>' +
-          '<button type="button" class="tb-menu-item" onclick="taPickAvatar()">🖼️ Change profile picture</button>' +
-          '<button type="button" class="tb-menu-item danger" onclick="taLogout()">🚪 Log out</button>' +
+          '<button type="button" class="tb-menu-item" onclick="taPickAvatar()"><i class="lc lc-image" aria-hidden="true"></i> Change profile picture</button>' +
+          '<button type="button" class="tb-menu-item danger" onclick="taLogout()"><i class="lc lc-log-out" aria-hidden="true"></i> Log out</button>' +
         '</div>' +
       '</div>' +
     '</div>';

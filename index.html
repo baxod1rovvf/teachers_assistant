@@ -11,11 +11,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Loom">
 <!-- Shared by every page: accounts must load first (it scopes this browser's storage to the signed-in teacher). -->
-<script src="js/accounts.js?v=20261107a"></script>
-<script src="js/i18n.js?v=20261107a"></script>
-<script src="js/sync.js?v=20261107a"></script>
-<script src="js/lottie.min.js?v=20261107a"></script>
-<link rel="stylesheet" href="css/style.css?v=20261107a">
+<script src="js/accounts.js?v=20261108a"></script>
+<script src="js/i18n.js?v=20261108a"></script>
+<script src="js/sync.js?v=20261108a"></script>
+<script src="js/lottie.min.js?v=20261108a"></script>
+<link rel="stylesheet" href="css/style.css?v=20261108a">
+<link rel="stylesheet" href="css/icons.css?v=20261108a">
 </head>
 <body>
 
@@ -60,38 +61,39 @@
   <div class="panel" id="panel-main">
     <div class="hero-card">
       <div class="hero-content">
-        <h1 id="mainGreetingTitle">Good evening, <span id="mainGreetingName">Toxirjon</span><div class="hero-robot-anim" id="robotHiAnim">👋</div></h1>
+        <div class="hero-eyebrow" id="heroEyebrow"></div>
+        <h1 id="mainGreetingTitle">Good evening, <span id="mainGreetingName">Toxirjon</span><div class="hero-robot-anim" id="robotHiAnim"></div></h1>
         <p>Your skills build brighter futures. Let's make today's lessons count!</p>
       </div>
       <div class="hero-topbar-actions">
-        <div class="hero-task-anim" id="heroTaskAnim" aria-hidden="true"></div>
+        <div class="hero-next" id="heroNext" hidden></div>
       </div>
     </div>
 
     <div class="results-stats-grid dash-stats-grid">
       <div class="results-stat-card">
-        <div class="results-stat-icon" aria-hidden="true">🧑‍🎓</div>
+        <div class="results-stat-icon si-blue" aria-hidden="true"><i class="lc lc-users"></i></div>
         <div>
           <div class="results-stat-value" id="dashStatStudents">—</div>
           <div class="results-stat-label">Students</div>
         </div>
       </div>
       <div class="results-stat-card">
-        <div class="results-stat-icon" aria-hidden="true">🍎</div>
+        <div class="results-stat-icon si-red" aria-hidden="true"><i class="lc lc-book-open"></i></div>
         <div>
           <div class="results-stat-value" id="dashStatLessons">—</div>
           <div class="results-stat-label">Lessons taught</div>
         </div>
       </div>
       <div class="results-stat-card">
-        <div class="results-stat-icon" aria-hidden="true">📚</div>
+        <div class="results-stat-icon si-green" aria-hidden="true"><i class="lc lc-layers"></i></div>
         <div>
           <div class="results-stat-value" id="dashStatExercises">—</div>
           <div class="results-stat-label">Exercises created</div>
         </div>
       </div>
       <div class="results-stat-card">
-        <div class="results-stat-icon" aria-hidden="true">🏆</div>
+        <div class="results-stat-icon si-amber" aria-hidden="true"><i class="lc lc-trophy"></i></div>
         <div>
           <div class="results-stat-value" id="dashStatResults">—</div>
           <div class="results-stat-label">Students' overall results</div>
@@ -103,8 +105,8 @@
       <div class="main-block-lessons">
         <div class="dash-card" style="height:auto;">
           <div class="dash-card-head">
-            <div class="dash-card-title"><span class="dash-card-emoji" aria-hidden="true">📅</span> Upcoming Lessons</div>
-            <button class="dash-manage-link" type="button" onclick="goToScheduleSettings()">✏️ Change schedule</button>
+            <div class="dash-card-title"><i class="lc lc-calendar dash-card-emoji" aria-hidden="true"></i> Upcoming Lessons</div>
+            <button class="dash-manage-link" type="button" onclick="goToScheduleSettings()"><i class="lc lc-pencil" aria-hidden="true"></i> Change schedule</button>
           </div>
           <div id="mainLessonsList"><div class="empty-results">No lessons scheduled yet.</div></div>
         </div>
@@ -112,18 +114,18 @@
       <div class="main-block-side">
         <div class="dash-card main-block-top-students">
           <div class="dash-card-head">
-            <div class="dash-card-title"><span class="dash-card-emoji" aria-hidden="true">🌟</span> Top 5 Active Students</div>
+            <div class="dash-card-title"><i class="lc lc-award dash-card-emoji" aria-hidden="true"></i> Top 5 Active Students</div>
           </div>
           <div id="mainTopStudentsList"><div class="empty-results">No scored results yet.</div></div>
         </div>
         <div class="dash-card main-block-quick">
           <div class="dash-card-head">
-            <div class="dash-card-title">⚡ Quick actions</div>
+            <div class="dash-card-title"><i class="lc lc-zap dash-card-emoji" aria-hidden="true"></i> Quick actions</div>
           </div>
           <div class="quick-actions">
-            <button class="quick-action-btn" type="button" onclick="switchTo('createpicker')"><span class="quick-action-icon" id="quickCreateAnim">➕</span> Create Exercise</button>
-            <button class="quick-action-btn" type="button" onclick="switchTo('students')"><span class="quick-action-icon" aria-hidden="true">🧑‍🎓</span> Add Students</button>
-            <a class="quick-action-btn quick-action-wide" href="https://edunest-academy.github.io/PAYMENT/teacher" target="_blank" rel="noopener">🎓 Edunest system <span class="quick-action-arrow" aria-hidden="true">↗</span></a>
+            <button class="quick-action-btn" type="button" onclick="switchTo('createpicker')"><span class="quick-action-icon" id="quickCreateAnim"><i class="lc lc-plus" aria-hidden="true"></i></span> Create Exercise</button>
+            <button class="quick-action-btn" type="button" onclick="switchTo('students')"><span class="quick-action-icon" aria-hidden="true"><i class="lc lc-users"></i></span> Add Students</button>
+            <a class="quick-action-btn quick-action-wide" href="https://edunest-academy.github.io/PAYMENT/teacher" target="_blank" rel="noopener"><span class="quick-action-icon" aria-hidden="true"><i class="lc lc-graduation-cap"></i></span> Edunest system <i class="lc lc-external-link quick-action-arrow" aria-hidden="true"></i></a>
           </div>
         </div>
       </div>
@@ -174,9 +176,9 @@
   </div>
 </div>
 
-<script src="js/animations.js?v=20261107a"></script>
-<script src="js/common.js?v=20261107a"></script>
-<script src="js/pages/main.js?v=20261107a"></script>
-<script type="module" src="js/firebase.js?v=20261107a"></script>
+<script src="js/animations.js?v=20261108a"></script>
+<script src="js/common.js?v=20261108a"></script>
+<script src="js/pages/main.js?v=20261108a"></script>
+<script type="module" src="js/firebase.js?v=20261108a"></script>
 </body>
 </html>
