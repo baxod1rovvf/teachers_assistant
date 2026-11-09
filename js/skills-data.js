@@ -1512,30 +1512,28 @@ var TA_SKILLS = {
         minWords: 100, maxWords: 120, minutes: 20
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09) — made by tools/build-speaking.js from docs/speaking-journey-11-20.json
+        topic: "Holidays",
         words: [
-          { w: 'meet', emoji: '🤝', ex: 'I met a new friend at the sports club.' },
-          { w: 'introduce', emoji: '🙋', ex: 'Let me introduce my friend Tom.' },
-          { w: 'nice to meet you', emoji: '😊', ex: 'Hello, Sarah. Nice to meet you!' },
-          { w: 'classmate', emoji: '🎒', ex: 'My classmate sits next to me in English.' },
-          { w: 'neighbour', emoji: '🏡', ex: 'Our new neighbour has got a big dog.' },
-          { w: 'first time', emoji: '1️⃣', ex: 'It was the first time I saw him.' },
-          { w: 'shy', emoji: '🙈', ex: 'She was a bit shy at first.' },
-          { w: 'chat', emoji: '💬', ex: 'We chatted for an hour after the lesson.' },
-          { w: 'get on well', emoji: '👍', ex: 'We get on well because we like the same music.' },
-          { w: 'invite', emoji: '✉️', ex: 'I invited her to my birthday party.' }
+          { w: "Holiday", uz: "Ta'til", emoji: "🏖️", ex: "We go on holiday every summer." },
+          { w: "Travel", uz: "Sayohat qilmoq", emoji: "✈️", ex: "I love to travel with my family." },
+          { w: "Visit", uz: "Tashrif buyurmoq", emoji: "🏛️", ex: "Last year we visited London." },
+          { w: "Hotel", uz: "Mehmonxona", emoji: "🏨", ex: "Our hotel was near the sea." },
+          { w: "Beach", uz: "Plyaj", emoji: "🌊", ex: "We swam and played on the beach." },
+          { w: "Mountain", uz: "Tog'", emoji: "⛰️", ex: "We walked up a high mountain." },
+          { w: "Take photos", uz: "Rasmga olmoq", emoji: "📸", ex: "I took a lot of photos on holiday." },
+          { w: "Enjoy the trip", uz: "Sayohatdan zavqlanmoq", emoji: "😊", ex: "We all enjoyed the trip very much." },
+          { w: "Weather", uz: "Ob-havo", emoji: "🌤️", ex: "The weather was sunny and warm." },
+          { w: "Memorable", uz: "Esda qolarli", emoji: "⭐", ex: "It was a memorable holiday." }
         ],
         questions: [
-          { q: 'How do you say hello to a new person?', use: ['I usually say …', 'Nice to meet you.', 'shake hands', 'smile'] },
-          { q: 'Where do you usually meet new people?', use: ['I usually meet new people at …', 'school', 'a club', 'the park'] },
-          { q: 'Is it easy for you to make new friends?', use: ['Yes, it is easy because …', "No, it isn't easy because …", 'shy', 'friendly'] },
-          { q: 'Tell me about a new classmate or neighbour.', use: ['My new … is called …', "He's / She's …", 'from', 'friendly'] },
-          { q: 'What do you like to talk about with new friends?', use: ['We usually talk about …', 'music', 'films', 'sport', 'school'] }
+          { q: "Where do you like to go on holiday?", use: ["I like to go to …","the beach","the mountains","because …"] },
+          { q: "Do you prefer the beach or the mountains? Why?", use: ["I prefer … because …","swim","walk","fresh air"] },
+          { q: "Who do you usually travel with?", use: ["I usually travel with …","my family","my friends"] },
+          { q: "What do you like to do on holiday?", use: ["I like to …","take photos","visit new places","relax"] },
+          { q: "Where did you go on your last holiday?", use: ["Last summer I went to …","We stayed in a hotel","It was …"] }
         ],
-        part2: {
-          topic: 'A person you met recently',
-          hints: ['who this person is and where you met', 'what this person looks like and what he or she is like', 'what you talked about or did together'],
-          seconds: 45
-        }
+        part2: { topic: "Talk about a memorable holiday", hints: ["where you went and who you went with","what you did there and what the weather was like","why it was memorable"], seconds: 45 }
       }
     },
     {
@@ -1663,30 +1661,28 @@ var TA_SKILLS = {
         minWords: 100, maxWords: 120, minutes: 20
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09) — made by tools/build-speaking.js from docs/speaking-journey-11-20.json
+        topic: "Future Plans",
         words: [
-          { w: 'mum', emoji: '👩', ex: 'My mum is a doctor.' },
-          { w: 'dad', emoji: '👨', ex: 'My dad likes cooking.' },
-          { w: 'brother', emoji: '👦', ex: 'I have got one brother.' },
-          { w: 'sister', emoji: '👧', ex: 'My sister is younger than me.' },
-          { w: 'grandparents', emoji: '👵', ex: 'My grandparents live in a village.' },
-          { w: 'cousin', emoji: '🧒', ex: 'My cousin and I play football together.' },
-          { w: 'kind', emoji: '😊', ex: 'My grandma is very kind.' },
-          { w: 'funny', emoji: '😂', ex: 'My brother is really funny.' },
-          { w: 'tall', emoji: '📏', ex: 'My dad is tall and he has got short hair.' },
-          { w: 'together', emoji: '🤝', ex: 'We watch films together on Sundays.' }
+          { w: "Future", uz: "Kelajak", emoji: "🔮", ex: "I think about my future a lot." },
+          { w: "Plan", uz: "Reja", emoji: "🗒️", ex: "My plan is to study at university." },
+          { w: "Dream", uz: "Orzu", emoji: "💭", ex: "My dream is to live by the sea." },
+          { w: "Goal", uz: "Maqsad", emoji: "🎯", ex: "My goal this year is to speak English well." },
+          { w: "Hope", uz: "Umid qilmoq", emoji: "🤞", ex: "I hope to visit London one day." },
+          { w: "Travel abroad", uz: "Chet elga sayohat qilmoq", emoji: "🌍", ex: "I want to travel abroad after school." },
+          { w: "Find a job", uz: "Ish topmoq", emoji: "💼", ex: "My brother wants to find a job in the city." },
+          { w: "Learn a language", uz: "Til o'rganmoq", emoji: "🗣️", ex: "I'm going to learn a language every year." },
+          { w: "Become", uz: "Bo'lmoq", emoji: "👩‍⚕️", ex: "I want to become a doctor." },
+          { w: "In the future", uz: "Kelajakda", emoji: "🚀", ex: "In the future, I'm going to have a big family." }
         ],
         questions: [
-          { q: 'How many people are there in your family?', use: ['There are … people in my family.', 'I have got …', 'brothers', 'sisters'] },
-          { q: 'Tell me about your best friend.', use: ['My best friend is …', "He's / She's …", 'kind', 'funny'] },
-          { q: 'What do you do with your family at the weekend?', use: ['We usually …', 'together', 'at the weekend'] },
-          { q: 'Have you got any cousins?', use: ['Yes, I have got …', "No, I haven't.", 'cousin', 'aunt', 'uncle'] },
-          { q: 'Who is the funniest person in your family?', use: ['… is the funniest.', 'because he / she …', 'jokes'] }
+          { q: "What are your plans for next year?", use: ["Next year I'm going to …","study","work hard"] },
+          { q: "What do you want to become in the future?", use: ["I want to become a …","because …"] },
+          { q: "Do you want to travel abroad? Where?", use: ["Yes, I hope to travel to …","I'd like to see …"] },
+          { q: "Which language do you want to learn next?", use: ["I want to learn …","because …"] },
+          { q: "What is your biggest dream?", use: ["My dream is to …","I hope …","one day"] }
         ],
-        part2: {
-          topic: 'Talk about a family member',
-          hints: ['who this person is and how old he or she is', 'what this person looks like and what he or she is like', 'what you do together'],
-          seconds: 45
-        }
+        part2: { topic: "Talk about your plans for the future", hints: ["what you want to do after school","what job you want to find","one big dream you hope to make true"], seconds: 45 }
       }
     },
     {
@@ -1813,30 +1809,28 @@ var TA_SKILLS = {
         minWords: 110, maxWords: 130, minutes: 20
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09) — made by tools/build-speaking.js from docs/speaking-journey-11-20.json
+        topic: "Jobs & Careers",
         words: [
-          { w: 'house', emoji: '🏠', ex: 'I live in a house with a small garden.' },
-          { w: 'flat', emoji: '🏢', ex: 'Our flat is on the fourth floor.' },
-          { w: 'bedroom', emoji: '🛏️', ex: 'My bedroom is small but cosy.' },
-          { w: 'kitchen', emoji: '🍳', ex: 'We eat dinner in the kitchen.' },
-          { w: 'living room', emoji: '🛋️', ex: 'There is a big sofa in the living room.' },
-          { w: 'garden', emoji: '🌳', ex: 'We have got flowers in the garden.' },
-          { w: 'upstairs', emoji: '⬆️', ex: 'My bedroom is upstairs.' },
-          { w: 'neighbours', emoji: '👋', ex: 'Our neighbours are very friendly.' },
-          { w: 'quiet', emoji: '🤫', ex: 'My street is quiet at night.' },
-          { w: 'comfortable', emoji: '😌', ex: 'My bed is very comfortable.' }
+          { w: "Job", uz: "Ish", emoji: "💼", ex: "My mother has a good job." },
+          { w: "Career", uz: "Kasbiy faoliyat", emoji: "📈", ex: "He started his career as a teacher." },
+          { w: "Teacher", uz: "O'qituvchi", emoji: "👩‍🏫", ex: "Our teacher helps us every day." },
+          { w: "Doctor", uz: "Shifokor", emoji: "👨‍⚕️", ex: "A doctor works in a hospital." },
+          { w: "Engineer", uz: "Muhandis", emoji: "👷", ex: "My uncle is an engineer. He builds bridges." },
+          { w: "Office", uz: "Ofis", emoji: "🏢", ex: "My father works in an office." },
+          { w: "Salary", uz: "Maosh", emoji: "💰", ex: "Doctors usually get a good salary." },
+          { w: "Colleague", uz: "Hamkasb", emoji: "🤝", ex: "She has lunch with her colleagues." },
+          { w: "Hard-working", uz: "Mehnatkash", emoji: "💪", ex: "My sister is very hard-working." },
+          { w: "Experience", uz: "Tajriba", emoji: "🧰", ex: "He has ten years of experience." }
         ],
         questions: [
-          { q: 'Do you live in a house or a flat?', use: ['I live in a …', 'house', 'flat', 'on the … floor'] },
-          { q: 'How many rooms are there in your home?', use: ['There are … rooms.', "There's a …", 'bedroom', 'kitchen'] },
-          { q: 'What is your favourite room? Why?', use: ['My favourite room is …', 'because …', 'comfortable'] },
-          { q: 'What can you see from your window?', use: ['I can see …', 'street', 'garden', 'trees'] },
-          { q: 'What is near your home?', use: ['There is a … near my home.', 'shop', 'park', 'school'] }
+          { q: "What do your parents do?", use: ["My mother is a …","My father works in …"] },
+          { q: "What job do you want to do in the future?", use: ["I want to be a …","because …"] },
+          { q: "Is it better to work in an office or outside? Why?", use: ["I think it's better to work … because …"] },
+          { q: "Which jobs get a good salary in your country?", use: ["I think … get a good salary","doctors","engineers"] },
+          { q: "Are you a hard-working person?", use: ["Yes, I am. I …","I always …","I sometimes …"] }
         ],
-        part2: {
-          topic: 'Talk about your home',
-          hints: ['where it is and what kind of home it is', 'the rooms and your favourite room', "what you like or don't like about it"],
-          seconds: 45
-        }
+        part2: { topic: "Talk about a job you would like to do", hints: ["what the job is and where people do it","what a person in this job does every day","why you would like this job"], seconds: 45 }
       }
     },
     {
@@ -1965,30 +1959,28 @@ var TA_SKILLS = {
         minWords: 110, maxWords: 130, minutes: 20
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09) — made by tools/build-speaking.js from docs/speaking-journey-11-20.json
+        topic: "Clothes & Fashion",
         words: [
-          { w: 'get up', emoji: '⏰', ex: "I get up at seven o'clock." },
-          { w: 'have breakfast', emoji: '🥣', ex: 'I have breakfast with my family.' },
-          { w: 'go to school', emoji: '🏫', ex: 'I go to school by bus.' },
-          { w: 'start work', emoji: '💼', ex: 'My mum starts work at nine.' },
-          { w: 'lunch', emoji: '🥪', ex: 'I have lunch at one o\'clock.' },
-          { w: 'homework', emoji: '📚', ex: 'I do my homework after dinner.' },
-          { w: 'relax', emoji: '🛋️', ex: 'In the evening, I relax and watch TV.' },
-          { w: 'go to bed', emoji: '🛏️', ex: 'I go to bed at about ten.' },
-          { w: 'early', emoji: '🌅', ex: 'I get up early on weekdays.' },
-          { w: 'late', emoji: '🌙', ex: 'On Sundays, I get up late.' }
+          { w: "T-shirt", uz: "Futbolka", emoji: "👕", ex: "I wear a T-shirt in summer." },
+          { w: "Jeans", uz: "Jinsi shim", emoji: "👖", ex: "These jeans are my favourite." },
+          { w: "Jacket", uz: "Kurtka", emoji: "🧥", ex: "Take a jacket. It's cold outside." },
+          { w: "Trainers", uz: "Sport oyoq kiyimi", emoji: "👟", ex: "I wear trainers to school." },
+          { w: "Comfortable", uz: "Qulay", emoji: "🛋️", ex: "My trainers are very comfortable." },
+          { w: "Casual", uz: "Kundalik", emoji: "🙂", ex: "At the weekend I wear casual clothes." },
+          { w: "Formal", uz: "Rasmiy", emoji: "👔", ex: "My father wears formal clothes at work." },
+          { w: "Wear", uz: "Kiyib yurmoq", emoji: "🧢", ex: "I usually wear a cap in summer." },
+          { w: "Fit", uz: "Mos kelmoq", emoji: "📏", ex: "This jacket doesn't fit me. It's too big." },
+          { w: "Favourite colour", uz: "Sevimli rang", emoji: "🎨", ex: "My favourite colour is blue." }
         ],
         questions: [
-          { q: 'What time do you usually get up?', use: ['I usually get up at …', 'early', 'late'] },
-          { q: 'What do you have for breakfast?', use: ['I usually have …', 'tea', 'eggs', "I don't eat breakfast."] },
-          { q: 'How do you get to school or work?', use: ['I go by …', 'bus', 'car', 'I walk.', 'It takes … minutes.'] },
-          { q: 'What do you do in the evening?', use: ['In the evening, I …', 'homework', 'relax', 'watch TV'] },
-          { q: 'What is your favourite day of the week? Why?', use: ['My favourite day is …', 'because …', "I don't have to …"] }
+          { q: "What do you usually wear at the weekend?", use: ["At the weekend I usually wear …","jeans","a T-shirt","trainers"] },
+          { q: "What is your favourite colour for clothes?", use: ["My favourite colour is …","I often wear …"] },
+          { q: "Do you like casual or formal clothes? Why?", use: ["I like … clothes because …","comfortable"] },
+          { q: "What do you wear to school or work?", use: ["I wear …","a uniform","formal clothes"] },
+          { q: "Where do you buy your clothes?", use: ["I buy my clothes at …","a shop","the market","online"] }
         ],
-        part2: {
-          topic: 'Talk about your favourite day of the week',
-          hints: ['which day it is and what time you get up', 'what you do in the morning and in the afternoon', 'why you like this day'],
-          seconds: 60
-        }
+        part2: { topic: "Talk about your favourite clothes", hints: ["what the clothes are and what colour they are","when and where you wear them","why you like them"], seconds: 60 }
       }
     },
     {
@@ -2120,30 +2112,28 @@ var TA_SKILLS = {
         minWords: 110, maxWords: 130, minutes: 20
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09) — made by tools/build-speaking.js from docs/speaking-journey-11-20.json
+        topic: "Transport",
         words: [
-          { w: 'breakfast', emoji: '🍳', ex: 'I have eggs for breakfast.' },
-          { w: 'lunch', emoji: '🥗', ex: 'I usually have a salad for lunch.' },
-          { w: 'dinner', emoji: '🍝', ex: 'We have dinner at seven o\'clock.' },
-          { w: 'delicious', emoji: '😋', ex: "My mum's soup is delicious." },
-          { w: 'spicy', emoji: '🌶️', ex: "I don't like spicy food." },
-          { w: 'sweet', emoji: '🍰', ex: 'This cake is very sweet.' },
-          { w: 'café', emoji: '☕', ex: 'There is a nice café near my school.' },
-          { w: 'order', emoji: '📝', ex: 'I usually order a hot chocolate.' },
-          { w: 'menu', emoji: '📋', ex: 'Can I see the menu, please?' },
-          { w: 'cook', emoji: '👩‍🍳', ex: 'My dad likes to cook pasta.' }
+          { w: "Bus", uz: "Avtobus", emoji: "🚌", ex: "I go to school by bus." },
+          { w: "Train", uz: "Poyezd", emoji: "🚆", ex: "The train to the capital is fast." },
+          { w: "Taxi", uz: "Taksi", emoji: "🚕", ex: "We took a taxi to the airport." },
+          { w: "Bicycle", uz: "Velosiped", emoji: "🚲", ex: "I ride my bicycle in the park." },
+          { w: "Car", uz: "Mashina", emoji: "🚗", ex: "My father drives a white car." },
+          { w: "Traffic", uz: "Yo'l harakati", emoji: "🚦", ex: "There is a lot of traffic in the morning." },
+          { w: "Traffic jam", uz: "Tirbandlik", emoji: "🚙", ex: "We were in a traffic jam for an hour." },
+          { w: "Journey", uz: "Safar", emoji: "🗺️", ex: "The journey to my grandma's house takes two hours." },
+          { w: "Travel by bus", uz: "Avtobusda sayohat qilmoq", emoji: "🎫", ex: "I like to travel by bus because it's cheap." },
+          { w: "On foot", uz: "Piyoda", emoji: "🚶", ex: "My school is near, so I go on foot." }
         ],
         questions: [
-          { q: 'What do you usually eat for lunch?', use: ['I usually have …', 'sandwich', 'soup', 'rice'] },
-          { q: 'Do you like cooking? What can you cook?', use: ['I can cook …', "I can't cook.", 'pasta', 'eggs'] },
-          { q: 'Is there a café or restaurant you like? Why?', use: ['I like …', 'because …', 'delicious', 'friendly'] },
-          { q: 'Do you prefer sweet or spicy food?', use: ['I prefer …', 'sweet', 'spicy', "I don't like …"] },
-          { q: "What food don't you like?", use: ["I don't like …", "because it's …", 'too spicy', 'too sweet'] }
+          { q: "How do you go to school or work?", use: ["I go by … / on foot","It takes … minutes"] },
+          { q: "Do you like to travel by train? Why?", use: ["Yes, I do, because …","No, I don't, because …"] },
+          { q: "Is there a lot of traffic in your city?", use: ["Yes, there is a lot of traffic in the morning","traffic jams"] },
+          { q: "Can you ride a bicycle?", use: ["Yes, I can. I ride it …","No, I can't, but …"] },
+          { q: "What is the best way to travel in your city? Why?", use: ["I think the best way is … because …","fast","cheap"] }
         ],
-        part2: {
-          topic: 'Talk about food you like',
-          hints: ['what the food is and what it tastes like', 'when and where you eat it', 'why you like it'],
-          seconds: 60
-        }
+        part2: { topic: "Talk about a long journey you made", hints: ["where you went and how you travelled","how long the journey took and who was with you","what you liked or didn't like about it"], seconds: 60 }
       }
     },
     {
@@ -2273,30 +2263,28 @@ var TA_SKILLS = {
         minWords: 120, maxWords: 140, minutes: 20
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09) — made by tools/build-speaking.js from docs/speaking-journey-11-20.json
+        topic: "Animals & Pets",
         words: [
-          { w: 'shop', emoji: '🏪', ex: 'There is a small shop near my house.' },
-          { w: 'shopping centre', emoji: '🏬', ex: 'We go to the shopping centre at the weekend.' },
-          { w: 'market', emoji: '🧺', ex: 'My mum buys fruit at the market.' },
-          { w: 'clothes', emoji: '👕', ex: 'I need some new clothes for school.' },
-          { w: 'price', emoji: '🏷️', ex: 'The price of this jacket is thirty pounds.' },
-          { w: 'cheap', emoji: '🪙', ex: 'These shoes are very cheap.' },
-          { w: 'expensive', emoji: '💎', ex: 'That watch is too expensive for me.' },
-          { w: 'size', emoji: '📏', ex: 'Have you got this T-shirt in a bigger size?' },
-          { w: 'pay', emoji: '💳', ex: 'Can I pay by card?' },
-          { w: 'present', emoji: '🎁', ex: 'I bought a present for my friend.' }
+          { w: "Pet", uz: "Uy hayvoni", emoji: "🐾", ex: "Have you got a pet?" },
+          { w: "Dog", uz: "It", emoji: "🐕", ex: "Our dog likes to play in the garden." },
+          { w: "Cat", uz: "Mushuk", emoji: "🐈", ex: "My cat sleeps on my bed." },
+          { w: "Bird", uz: "Qush", emoji: "🐦", ex: "A small bird sings outside my window." },
+          { w: "Rabbit", uz: "Quyon", emoji: "🐇", ex: "My little sister has a white rabbit." },
+          { w: "Feed", uz: "Ovqat bermoq", emoji: "🥕", ex: "I feed my cat twice a day." },
+          { w: "Take care of", uz: "G'amxo'rlik qilmoq", emoji: "🤲", ex: "I take care of our dog when my parents are busy." },
+          { w: "Wild animals", uz: "Yovvoyi hayvonlar", emoji: "🦁", ex: "We saw wild animals at the zoo." },
+          { w: "Friendly", uz: "Do'stona", emoji: "🙂", ex: "Our dog is very friendly." },
+          { w: "Cute", uz: "Yoqimtoy", emoji: "🥰", ex: "Look at this cute rabbit!" }
         ],
         questions: [
-          { q: 'How often do you go shopping?', use: ['I go shopping …', 'once a week', 'at the weekend', 'not very often'] },
-          { q: 'Do you like shopping for clothes? Why or why not?', use: ['I like …', "I don't like …", 'because …', 'boring', 'fun'] },
-          { q: 'Where does your family usually buy food?', use: ['We usually buy …', 'supermarket', 'market', 'near our home'] },
-          { q: 'Do you prefer shopping online or in shops?', use: ['I prefer …', 'online', 'in shops', 'easier', 'cheaper'] },
-          { q: 'What was the last thing you bought?', use: ['I bought …', 'last week', 'it cost …', 'for my …'] }
+          { q: "Have you got a pet? What is it?", use: ["Yes, I've got a …","No, I haven't, but I'd like a …"] },
+          { q: "Do you like dogs or cats more? Why?", use: ["I like … more because …","friendly","cute"] },
+          { q: "Who takes care of pets in your family?", use: ["… takes care of our …","feed","play with"] },
+          { q: "What is your favourite wild animal?", use: ["My favourite wild animal is …","It lives in …"] },
+          { q: "Did you see any animals at a zoo or farm?", use: ["Yes, I saw …","It was …"] }
         ],
-        part2: {
-          topic: 'Talk about a shop you like',
-          hints: ['what the shop is and where it is', 'what you can buy there', 'why you like it'],
-          seconds: 60
-        }
+        part2: { topic: "Talk about a pet you have or would like to have", hints: ["what animal it is and what it looks like","how you take care of it (or would take care of it)","why you like this animal"], seconds: 60 }
       }
     },
     {
@@ -2433,30 +2421,28 @@ var TA_SKILLS = {
         minWords: 120, maxWords: 140, minutes: 25
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09) — made by tools/build-speaking.js from docs/speaking-journey-11-20.json
+        topic: "Health & Lifestyle",
         words: [
-          { w: 'town', emoji: '🏘️', ex: 'I live in a small town near the mountains.' },
-          { w: 'city', emoji: '🏙️', ex: 'My uncle lives in a big city.' },
-          { w: 'park', emoji: '🌳', ex: 'There is a beautiful park in the centre.' },
-          { w: 'museum', emoji: '🏛️', ex: 'Our town has a small museum.' },
-          { w: 'library', emoji: '📚', ex: 'I often study in the library.' },
-          { w: 'bus station', emoji: '🚌', ex: 'The bus station is next to the market.' },
-          { w: 'near', emoji: '📍', ex: 'My school is near my house.' },
-          { w: 'far from', emoji: '🗺️', ex: 'The airport is far from the town centre.' },
-          { w: 'busy', emoji: '🚗', ex: 'The main street is very busy in the evening.' },
-          { w: 'quiet', emoji: '🤫', ex: 'My street is quiet at night.' }
+          { w: "Healthy", uz: "Sog'lom", emoji: "🥗", ex: "I try to eat healthy food." },
+          { w: "Unhealthy", uz: "Nosog'lom", emoji: "🍟", ex: "Chips and cola are unhealthy." },
+          { w: "Exercise", uz: "Jismoniy mashq", emoji: "🏃", ex: "I do exercise every morning." },
+          { w: "Sleep well", uz: "Yaxshi uxlamoq", emoji: "😴", ex: "I sleep well when I go to bed early." },
+          { w: "Drink water", uz: "Suv ichmoq", emoji: "💧", ex: "Drink water when you play sport." },
+          { w: "Fresh fruit", uz: "Yangi meva", emoji: "🍎", ex: "I eat fresh fruit every day." },
+          { w: "Feel tired", uz: "Charchoqni his qilmoq", emoji: "🥱", ex: "I feel tired after a long day." },
+          { w: "Feel better", uz: "O'zini yaxshiroq his qilmoq", emoji: "😌", ex: "I feel better after a walk." },
+          { w: "Daily habits", uz: "Kundalik odatlar", emoji: "📅", ex: "Good daily habits keep you healthy." },
+          { w: "Keep fit", uz: "Formada bo'lmoq", emoji: "💪", ex: "My father plays football to keep fit." }
         ],
         questions: [
-          { q: 'Where do you live?', use: ['I live in …', 'a town', 'a city', 'a village', 'near …'] },
-          { q: 'What is your favourite place in your town?', use: ['My favourite place is …', 'because …', 'the park', 'a café'] },
-          { q: 'Is your town busy or quiet?', use: ['It is very …', 'busy', 'quiet', 'at the weekend', 'in the evening'] },
-          { q: 'How do you get to school or work?', use: ['I go by …', 'bus', 'on foot', 'It takes … minutes.'] },
-          { q: 'What can visitors see in your town?', use: ['They can see …', 'the market', 'old buildings', 'a good restaurant'] }
+          { q: "What do you do to keep fit?", use: ["To keep fit, I …","run","swim","walk"] },
+          { q: "Do you eat healthy food?", use: ["Yes, I eat …","fresh fruit","Sometimes I eat unhealthy food like …"] },
+          { q: "How many hours do you sleep?", use: ["I usually sleep … hours","I sleep well when …"] },
+          { q: "What do you do when you feel tired?", use: ["When I feel tired, I …","Then I feel better"] },
+          { q: "What is one good daily habit you have?", use: ["Every day I …","drink water","do exercise"] }
         ],
-        part2: {
-          topic: 'Talk about a place in your town',
-          hints: ['what the place is and where it is', 'what people do there', 'why you like it'],
-          seconds: 60
-        }
+        part2: { topic: "Talk about how you stay healthy", hints: ["what you eat and drink","what exercise you do and how often","one habit you want to change"], seconds: 60 }
       }
     },
     {
@@ -2590,30 +2576,28 @@ var TA_SKILLS = {
         minWords: 120, maxWords: 140, minutes: 25
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09) — made by tools/build-speaking.js from docs/speaking-journey-11-20.json
+        topic: "Technology",
         words: [
-          { w: 'hobby', emoji: '🎨', ex: 'My favourite hobby is drawing.' },
-          { w: 'free time', emoji: '🕒', ex: 'In my free time, I read books.' },
-          { w: 'at the weekend', emoji: '📅', ex: 'At the weekend, I play football with my friends.' },
-          { w: 'play', emoji: '⚽', ex: 'I play basketball twice a week.' },
-          { w: 'watch films', emoji: '🎬', ex: 'I often watch films with my family.' },
-          { w: 'listen to music', emoji: '🎧', ex: 'I listen to music on the bus.' },
-          { w: 'draw', emoji: '🖍️', ex: 'My sister likes to draw animals.' },
-          { w: 'club', emoji: '👥', ex: 'I go to a chess club after school.' },
-          { w: 'relax', emoji: '😌', ex: 'I relax at home on Sunday evenings.' },
-          { w: 'enjoy', emoji: '😊', ex: 'I really enjoy cooking for my friends.' }
+          { w: "Smartphone", uz: "Smartfon", emoji: "📱", ex: "I use my smartphone every day." },
+          { w: "Laptop", uz: "Noutbuk", emoji: "💻", ex: "I do my homework on my laptop." },
+          { w: "Internet", uz: "Internet", emoji: "🌐", ex: "The internet is very fast at school." },
+          { w: "Website", uz: "Veb-sayt", emoji: "🖥️", ex: "This website has good English games." },
+          { w: "Application", uz: "Ilova", emoji: "📲", ex: "I learn words with an application." },
+          { w: "Download", uz: "Yuklab olmoq", emoji: "⬇️", ex: "I downloaded a new game yesterday." },
+          { w: "Upload", uz: "Yuklamoq", emoji: "⬆️", ex: "She uploads photos to the internet." },
+          { w: "Search for", uz: "Qidirmoq", emoji: "🔍", ex: "I search for information online." },
+          { w: "Online", uz: "Onlayn", emoji: "🟢", ex: "I talk to my friends online." },
+          { w: "Useful", uz: "Foydali", emoji: "👍", ex: "A laptop is very useful for students." }
         ],
         questions: [
-          { q: 'What do you do in your free time?', use: ['In my free time, I …', 'I like …ing', 'read books', 'play games'] },
-          { q: 'What do you usually do at the weekend?', use: ['At the weekend, I usually …', 'with my friends', 'go to the park', 'relax at home'] },
-          { q: 'Do you play any sports?', use: ['Yes, I play …', "No, I don't, but I …", 'football', 'twice a week'] },
-          { q: 'What kind of music or films do you like?', use: ['I really like …', 'funny films', 'pop music', 'My favourite … is …'] },
-          { q: 'Would you like to join a club? Which one?', use: ["I'd like to join …", 'a sports club', 'a book club', 'because …'] }
+          { q: "What do you use your smartphone for?", use: ["I use it to …","talk to friends","play games","take photos"] },
+          { q: "What is your favourite application? Why?", use: ["My favourite application is … because …"] },
+          { q: "How many hours are you online every day?", use: ["I'm online for about … hours","I think it's too much / OK"] },
+          { q: "What do you search for on the internet?", use: ["I search for …","music","films","information for school"] },
+          { q: "Is technology useful for learning? Why?", use: ["Yes, it is useful because …","websites","applications"] }
         ],
-        part2: {
-          topic: 'Talk about a hobby you enjoy',
-          hints: ['what the hobby is and when you started it', 'how often and where you do it', 'why you enjoy it'],
-          seconds: 90
-        }
+        part2: { topic: "Talk about a piece of technology you use every day", hints: ["what it is and when you got it","what you use it for","why it is useful for you"], seconds: 90 }
       }
     },
     { id: 'e9', no: 19, stage: 'Elementary', theme: 'Travel', emoji: '🚆',
@@ -2679,6 +2663,30 @@ var TA_SKILLS = {
           { w: "recommend", uz: "tavsiya qilmoq" }
         ],
         minWords: 120, maxWords: 140, minutes: 25
+      },
+      speaking: {
+        // the teacher's Speaking Journey (2026-11-09) — made by tools/build-speaking.js from docs/speaking-journey-11-20.json
+        topic: "Movies & Music",
+        words: [
+          { w: "Movie", uz: "Film", emoji: "🎬", ex: "We watched a funny movie last night." },
+          { w: "Actor", uz: "Aktyor", emoji: "🤵", ex: "He is my favourite actor." },
+          { w: "Actress", uz: "Aktrisa", emoji: "👩", ex: "The actress in this film is very good." },
+          { w: "Comedy", uz: "Komediya", emoji: "😂", ex: "I love comedies because they make me laugh." },
+          { w: "Action film", uz: "Jangari film", emoji: "💥", ex: "My brother likes action films." },
+          { w: "Cartoon", uz: "Multfilm", emoji: "🐭", ex: "Children love cartoons." },
+          { w: "Singer", uz: "Qo'shiqchi", emoji: "🎤", ex: "She is a famous singer." },
+          { w: "Song", uz: "Qo'shiq", emoji: "🎵", ex: "This song is on the radio every day." },
+          { w: "Lyrics", uz: "Qo'shiq matni", emoji: "📝", ex: "I know all the lyrics of this song." },
+          { w: "Favourite character", uz: "Sevimli qahramon", emoji: "🦸", ex: "My favourite character in the film is the little dog." }
+        ],
+        questions: [
+          { q: "What kind of movies do you like?", use: ["I like …","comedies","action films","cartoons","because …"] },
+          { q: "Who is your favourite actor or actress?", use: ["My favourite … is …","He / She plays in …"] },
+          { q: "What music do you listen to?", use: ["I usually listen to …","pop","rock","folk music"] },
+          { q: "Who is your favourite singer?", use: ["My favourite singer is …","I like the song …"] },
+          { q: "Do you watch movies at home or at the cinema?", use: ["I usually watch movies …","with my family","because …"] }
+        ],
+        part2: { topic: "Talk about your favourite movie", hints: ["what the movie is called and what kind of movie it is","who your favourite character is","why you like it (don't tell the ending!)"], seconds: 90 }
       }
     },
     { id: 'e10', no: 20, stage: 'Elementary', theme: 'Weather & holidays', emoji: '☀️',
@@ -2746,6 +2754,30 @@ var TA_SKILLS = {
           { w: "spend", uz: "o'tkazmoq" }
         ],
         minWords: 120, maxWords: 150, minutes: 25
+      },
+      speaking: {
+        // the teacher's Speaking Journey (2026-11-09) — made by tools/build-speaking.js from docs/speaking-journey-11-20.json
+        topic: "Weather & Seasons",
+        words: [
+          { w: "Sunny", uz: "Quyoshli", emoji: "☀️", ex: "It is sunny today, so we can play outside." },
+          { w: "Cloudy", uz: "Bulutli", emoji: "☁️", ex: "The sky is cloudy this morning." },
+          { w: "Rainy", uz: "Yomg'irli", emoji: "🌧️", ex: "Take an umbrella. It's a rainy day." },
+          { w: "Windy", uz: "Shamolli", emoji: "🌬️", ex: "It's very windy near the sea." },
+          { w: "Snowy", uz: "Qorli", emoji: "❄️", ex: "In winter it is snowy in the mountains." },
+          { w: "Warm", uz: "Iliq", emoji: "🌡️", ex: "Spring is warm in my country." },
+          { w: "Cold", uz: "Sovuq", emoji: "🥶", ex: "It's cold in January." },
+          { w: "Season", uz: "Fasl", emoji: "🍂", ex: "Autumn is my favourite season." },
+          { w: "Weather forecast", uz: "Ob-havo ma'lumoti", emoji: "📺", ex: "The weather forecast says it will rain tomorrow." },
+          { w: "Temperature", uz: "Harorat", emoji: "🌡️", ex: "The temperature is 35 degrees today." }
+        ],
+        questions: [
+          { q: "What is the weather like today?", use: ["Today it is …","sunny","cloudy","cold","warm"] },
+          { q: "What is your favourite season? Why?", use: ["My favourite season is … because …"] },
+          { q: "What do you do on a rainy day?", use: ["On a rainy day, I …","stay at home","watch films"] },
+          { q: "Do you like snowy weather?", use: ["Yes, I do, because …","No, I don't, because …","cold"] },
+          { q: "Do you watch the weather forecast?", use: ["Yes, I watch it …","It tells me the temperature"] }
+        ],
+        part2: { topic: "Talk about your favourite season", hints: ["what the weather and temperature are like","what you do in this season","why you love it"], seconds: 90 }
       }
     }
   ]

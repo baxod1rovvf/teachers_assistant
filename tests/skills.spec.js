@@ -81,7 +81,7 @@ test.describe('content', () => {
     // the teacher (2026-11-04): "finish when level 5 is ready; levels 6–10 are for future" — levels 6, 7 and 8 added 2026-11-05
     const full = levels.filter(l => l.n <= 8);
     full.forEach(l => ['listening', 'reading', 'writing', 'speaking'].forEach(k => expect(l[k], l.id + ' ' + k).toBeTruthy()));
-    levels.filter(l => l.n > 8).forEach(l => expect(Object.keys(l).sort(), l.id).toEqual(['emoji', 'id', 'n', 'no', 'reading', 'stage', 'theme', 'writing']));   // Steps 19–20: the Reading and Writing Journeys so far
+    levels.filter(l => l.n > 8).forEach(l => expect(Object.keys(l).sort(), l.id).toEqual(['emoji', 'id', 'n', 'no', 'reading', 'speaking', 'stage', 'theme', 'writing']));   // Steps 19–20: Reading, Writing and Speaking so far (no Listening yet)
     // every listening/reading is its own (no copy of another level)
     expect(new Set(full.concat(beginners).map(l => l.listening.src)).size).toBe(18);
     for (const lv of beginners.concat(full)) {
@@ -144,7 +144,7 @@ test.describe('content', () => {
     expect(l1.listening.src).toMatch(/^audio\/skills\/elem-1-listening\.mp3(\?v=\d+)?$/);
     expect(l1.reading.title).toBe('My First Big Trip');   // the Reading Journey (2026-11-09)
     expect(l1.writing).toMatchObject({ topic: 'My Last Holiday', minWords: 100, maxWords: 120, minutes: 20 });   // the Writing Journey (2026-11-09)
-    expect(l1.speaking.part2).toMatchObject({ topic: 'A person you met recently', seconds: 45 });
+    expect(l1.speaking.part2).toMatchObject({ topic: 'Talk about a memorable holiday', seconds: 45 });   // the Speaking Journey (2026-11-09)
     l1.speaking.questions.forEach(q => expect(q.use.length).toBeGreaterThan(0));
     expect(JSON.stringify(l1.speaking)).not.toBe(JSON.stringify(b1.speaking));
   });
@@ -189,13 +189,13 @@ test.describe('content', () => {
     await page.goto('/skill.html?s=listening&st=e1&preview=1');
     const L = await page.evaluate(() => TA_SKILLS.steps.filter(s => s.stage === 'Elementary'));
     const plan = [
-      { no: 2, listen: /sports club/i, topic: 'My family', min: 40, max: 60, minutes: 15, talk: /family member/i, sec: 45 },
-      { no: 3, listen: /room/i, topic: 'My home', min: 40, max: 60, minutes: 15, talk: /your home/i, sec: 45 },
-      { no: 4, listen: /doctor/i, topic: 'My weekday', min: 50, max: 70, minutes: 20, talk: /favourite day/i, sec: 60 },
-      { no: 5, listen: /party/i, topic: 'My favourite meal', min: 50, max: 70, minutes: 20, talk: /food you like/i, sec: 60 },
-      { no: 6, listen: /lost bag/i, topic: 'A shopping trip', min: 50, max: 70, minutes: 20, talk: /shop you like/i, sec: 60 },
-      { no: 7, listen: /tourist/i, topic: 'My town', min: 60, max: 80, minutes: 20, talk: /place in your town/i, sec: 60 },
-      { no: 8, listen: /course/i, topic: 'My free time', min: 60, max: 80, minutes: 25, talk: /hobby/i, sec: 90 },
+      { no: 2, listen: /sports club/i, topic: 'My family', min: 40, max: 60, minutes: 15, talk: /future/i, sec: 45 },
+      { no: 3, listen: /room/i, topic: 'My home', min: 40, max: 60, minutes: 15, talk: /job/i, sec: 45 },
+      { no: 4, listen: /doctor/i, topic: 'My weekday', min: 50, max: 70, minutes: 20, talk: /clothes/i, sec: 60 },
+      { no: 5, listen: /party/i, topic: 'My favourite meal', min: 50, max: 70, minutes: 20, talk: /journey/i, sec: 60 },
+      { no: 6, listen: /lost bag/i, topic: 'A shopping trip', min: 50, max: 70, minutes: 20, talk: /pet/i, sec: 60 },
+      { no: 7, listen: /tourist/i, topic: 'My town', min: 60, max: 80, minutes: 20, talk: /healthy/i, sec: 60 },
+      { no: 8, listen: /course/i, topic: 'My free time', min: 60, max: 80, minutes: 25, talk: /technology/i, sec: 90 },
     ];
     const words = t => t.split(/\s+/).filter(Boolean).length;
     for (const p of plan) {
@@ -793,7 +793,7 @@ test.describe('course page', () => {
     return errors;
   };
 
-  test('a group\'s Journey: 20 steps in order, a plain dot per part (none inside), all open (19–20: Reading and Writing only); Try opens a preview', async ({ page, context }) => {
+  test('a group\'s Journey: 20 steps in order, a plain dot per part (none inside), all open (19–20: no Listening yet); Try opens a preview', async ({ page, context }) => {
     test.setTimeout(300000);   // opens 40 preview tabs; some take ~2 s each in headless Chromium
     const errors = await open(page, context);
     await expect(page.locator('.sk-tab[data-tab="journey"]')).toHaveAttribute('aria-selected', 'true');
@@ -802,9 +802,9 @@ test.describe('course page', () => {
     const nodes = page.locator('.sk-node');
     await expect(nodes).toHaveText([/Step 1\s*Hello!/, /Step 2/, /Step 3/, /Step 4/, /Step 5/, /Step 6/, /Step 7/, /Step 8/, /Step 9/, /Step 10\s*My friend/,
       /Step 11\s*Meeting people/, /Step 12/, /Step 13/, /Step 14/, /Step 15\s*Food & cafés/, /Step 16\s*Shopping/, /Step 17\s*My town/, /Step 18\s*Free time/, /Step 19/, /Step 20/]);
-    // Steps 1–18: all four parts; Steps 19–20: only the Reading Journey so far (2026-11-09) — open, with one dot
+    // Steps 1–18: all four parts; Steps 19–20: Reading, Writing and Speaking so far (no Listening yet)
     for (let i = 0; i < 20; i++) {
-      const parts = i < 18 ? ['listening', 'reading', 'writing', 'speaking'] : ['reading', 'writing'];
+      const parts = i < 18 ? ['listening', 'reading', 'writing', 'speaking'] : ['reading', 'writing', 'speaking'];
       await expect(rows.nth(i).locator('.sk-dot')).toHaveCount(parts.length);
       expect(await rows.nth(i).locator('.sk-dot').evaluateAll(d => d.map(x => x.dataset.skill))).toEqual(parts);
       await expect(rows.nth(i).locator('button.sk-node')).toHaveCount(1);
@@ -828,7 +828,7 @@ test.describe('course page', () => {
     await expect(page.locator('.sk-level-head')).toContainText('Step 11 · Meeting people');
     await expect(page.locator('.sk-level-head')).toContainText('Elementary');
     const parts = page.locator('.sk-part');
-    await expect(parts).toHaveText([/Listening/, /Reading/, /Writing\s*My Last Holiday/, /Speaking\s*A person you met recently/]);
+    await expect(parts).toHaveText([/Listening/, /Reading/, /Writing\s*My Last Holiday/, /Speaking\s*Holidays/]);
     await expect(page.locator('.sk-results-empty')).toContainText('No results yet');
     await expect(page.getByRole('button', { name: /View Results|Results table/ })).toHaveCount(0);
     const [popup] = await Promise.all([page.waitForEvent('popup'), parts.nth(0).getByRole('button', { name: '▶️ Try' }).click()]);

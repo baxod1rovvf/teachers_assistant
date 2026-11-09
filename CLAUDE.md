@@ -629,8 +629,9 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   11 Holidays, 12 Future Plans, 13 Jobs & Careers, 14 Clothes & Fashion, 15 Transport, 16 Animals & Pets, 17 Health & Lifestyle,
   18 Technology, 19 Movies & Music, 20 Weather & Seasons): `speaking.topic` + `words[{w, uz, emoji, ex}]` — **`uz` = the teacher's
   Uzbek meaning, shown under the word (`.sk-uz`); the teacher asked for it, the only Uzbek in the course** — + 5 questions + a Part 2
-  card on the topic (seconds unchanged). **Steps 1–10 done; 11–20 wait for the teacher's next 10 word lists** (then also give
-  Steps 19–20 a Speaking part). `tests/course-fairness.spec.js`.
+  card on the topic (seconds unchanged). **All 20 done** (Steps 11–20 on 2026-11-09: source `docs/speaking-journey-11-20.json`,
+  put in by `node tools/build-speaking.js` — keeps each Part 2's seconds, Steps 19–20 got a Speaking part, 90 s; example sentences
+  use no Uzbek names). Steps 19–20 still have no Listening. `tests/course-fairness.spec.js`.
 - **Bands** (`js/skill-bands.js`): Listening/Reading = round(correct/total × 40) → IELTS table (19/20 → 8.5, 16/20 → 7.5, 9/20 → 5.5);
   Writing estimate = 3 + 3×length (words/min below the minimum, else 1; +0.5 when over the maximum) + 3×max(0, 1 − mistakes per 100 words/10), nearest 0.5, 1–9 (grammar check didn't run → last
   part 1.5; **blank writing = band 1**); Overall = average of the present skills, rounded like IELTS; CEFR from Overall.

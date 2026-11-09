@@ -1,0 +1,212 @@
+[
+ { "no": 11, "topic": "Holidays",
+   "words": [
+     ["Holiday", "Ta'til", "🏖️", "We go on holiday every summer."],
+     ["Travel", "Sayohat qilmoq", "✈️", "I love to travel with my family."],
+     ["Visit", "Tashrif buyurmoq", "🏛️", "Last year we visited London."],
+     ["Hotel", "Mehmonxona", "🏨", "Our hotel was near the sea."],
+     ["Beach", "Plyaj", "🌊", "We swam and played on the beach."],
+     ["Mountain", "Tog'", "⛰️", "We walked up a high mountain."],
+     ["Take photos", "Rasmga olmoq", "📸", "I took a lot of photos on holiday."],
+     ["Enjoy the trip", "Sayohatdan zavqlanmoq", "😊", "We all enjoyed the trip very much."],
+     ["Weather", "Ob-havo", "🌤️", "The weather was sunny and warm."],
+     ["Memorable", "Esda qolarli", "⭐", "It was a memorable holiday."]
+   ],
+   "questions": [
+     ["Where do you like to go on holiday?", ["I like to go to …", "the beach", "the mountains", "because …"]],
+     ["Do you prefer the beach or the mountains? Why?", ["I prefer … because …", "swim", "walk", "fresh air"]],
+     ["Who do you usually travel with?", ["I usually travel with …", "my family", "my friends"]],
+     ["What do you like to do on holiday?", ["I like to …", "take photos", "visit new places", "relax"]],
+     ["Where did you go on your last holiday?", ["Last summer I went to …", "We stayed in a hotel", "It was …"]]
+   ],
+   "part2": ["Talk about a memorable holiday", ["where you went and who you went with", "what you did there and what the weather was like", "why it was memorable"]] },
+ { "no": 12, "topic": "Future Plans",
+   "words": [
+     ["Future", "Kelajak", "🔮", "I think about my future a lot."],
+     ["Plan", "Reja", "🗒️", "My plan is to study at university."],
+     ["Dream", "Orzu", "💭", "My dream is to live by the sea."],
+     ["Goal", "Maqsad", "🎯", "My goal this year is to speak English well."],
+     ["Hope", "Umid qilmoq", "🤞", "I hope to visit London one day."],
+     ["Travel abroad", "Chet elga sayohat qilmoq", "🌍", "I want to travel abroad after school."],
+     ["Find a job", "Ish topmoq", "💼", "My brother wants to find a job in the city."],
+     ["Learn a language", "Til o'rganmoq", "🗣️", "I'm going to learn a language every year."],
+     ["Become", "Bo'lmoq", "👩‍⚕️", "I want to become a doctor."],
+     ["In the future", "Kelajakda", "🚀", "In the future, I'm going to have a big family."]
+   ],
+   "questions": [
+     ["What are your plans for next year?", ["Next year I'm going to …", "study", "work hard"]],
+     ["What do you want to become in the future?", ["I want to become a …", "because …"]],
+     ["Do you want to travel abroad? Where?", ["Yes, I hope to travel to …", "I'd like to see …"]],
+     ["Which language do you want to learn next?", ["I want to learn …", "because …"]],
+     ["What is your biggest dream?", ["My dream is to …", "I hope …", "one day"]]
+   ],
+   "part2": ["Talk about your plans for the future", ["what you want to do after school", "what job you want to find", "one big dream you hope to make true"]] },
+ { "no": 13, "topic": "Jobs & Careers",
+   "words": [
+     ["Job", "Ish", "💼", "My mother has a good job."],
+     ["Career", "Kasbiy faoliyat", "📈", "He started his career as a teacher."],
+     ["Teacher", "O'qituvchi", "👩‍🏫", "Our teacher helps us every day."],
+     ["Doctor", "Shifokor", "👨‍⚕️", "A doctor works in a hospital."],
+     ["Engineer", "Muhandis", "👷", "My uncle is an engineer. He builds bridges."],
+     ["Office", "Ofis", "🏢", "My father works in an office."],
+     ["Salary", "Maosh", "💰", "Doctors usually get a good salary."],
+     ["Colleague", "Hamkasb", "🤝", "She has lunch with her colleagues."],
+     ["Hard-working", "Mehnatkash", "💪", "My sister is very hard-working."],
+     ["Experience", "Tajriba", "🧰", "He has ten years of experience."]
+   ],
+   "questions": [
+     ["What do your parents do?", ["My mother is a …", "My father works in …"]],
+     ["What job do you want to do in the future?", ["I want to be a …", "because …"]],
+     ["Is it better to work in an office or outside? Why?", ["I think it's better to work … because …"]],
+     ["Which jobs get a good salary in your country?", ["I think … get a good salary", "doctors", "engineers"]],
+     ["Are you a hard-working person?", ["Yes, I am. I …", "I always …", "I sometimes …"]]
+   ],
+   "part2": ["Talk about a job you would like to do", ["what the job is and where people do it", "what a person in this job does every day", "why you would like this job"]] },
+ { "no": 14, "topic": "Clothes & Fashion",
+   "words": [
+     ["T-shirt", "Futbolka", "👕", "I wear a T-shirt in summer."],
+     ["Jeans", "Jinsi shim", "👖", "These jeans are my favourite."],
+     ["Jacket", "Kurtka", "🧥", "Take a jacket. It's cold outside."],
+     ["Trainers", "Sport oyoq kiyimi", "👟", "I wear trainers to school."],
+     ["Comfortable", "Qulay", "🛋️", "My trainers are very comfortable."],
+     ["Casual", "Kundalik", "🙂", "At the weekend I wear casual clothes."],
+     ["Formal", "Rasmiy", "👔", "My father wears formal clothes at work."],
+     ["Wear", "Kiyib yurmoq", "🧢", "I usually wear a cap in summer."],
+     ["Fit", "Mos kelmoq", "📏", "This jacket doesn't fit me. It's too big."],
+     ["Favourite colour", "Sevimli rang", "🎨", "My favourite colour is blue."]
+   ],
+   "questions": [
+     ["What do you usually wear at the weekend?", ["At the weekend I usually wear …", "jeans", "a T-shirt", "trainers"]],
+     ["What is your favourite colour for clothes?", ["My favourite colour is …", "I often wear …"]],
+     ["Do you like casual or formal clothes? Why?", ["I like … clothes because …", "comfortable"]],
+     ["What do you wear to school or work?", ["I wear …", "a uniform", "formal clothes"]],
+     ["Where do you buy your clothes?", ["I buy my clothes at …", "a shop", "the market", "online"]]
+   ],
+   "part2": ["Talk about your favourite clothes", ["what the clothes are and what colour they are", "when and where you wear them", "why you like them"]] },
+ { "no": 15, "topic": "Transport",
+   "words": [
+     ["Bus", "Avtobus", "🚌", "I go to school by bus."],
+     ["Train", "Poyezd", "🚆", "The train to the capital is fast."],
+     ["Taxi", "Taksi", "🚕", "We took a taxi to the airport."],
+     ["Bicycle", "Velosiped", "🚲", "I ride my bicycle in the park."],
+     ["Car", "Mashina", "🚗", "My father drives a white car."],
+     ["Traffic", "Yo'l harakati", "🚦", "There is a lot of traffic in the morning."],
+     ["Traffic jam", "Tirbandlik", "🚙", "We were in a traffic jam for an hour."],
+     ["Journey", "Safar", "🗺️", "The journey to my grandma's house takes two hours."],
+     ["Travel by bus", "Avtobusda sayohat qilmoq", "🎫", "I like to travel by bus because it's cheap."],
+     ["On foot", "Piyoda", "🚶", "My school is near, so I go on foot."]
+   ],
+   "questions": [
+     ["How do you go to school or work?", ["I go by … / on foot", "It takes … minutes"]],
+     ["Do you like to travel by train? Why?", ["Yes, I do, because …", "No, I don't, because …"]],
+     ["Is there a lot of traffic in your city?", ["Yes, there is a lot of traffic in the morning", "traffic jams"]],
+     ["Can you ride a bicycle?", ["Yes, I can. I ride it …", "No, I can't, but …"]],
+     ["What is the best way to travel in your city? Why?", ["I think the best way is … because …", "fast", "cheap"]]
+   ],
+   "part2": ["Talk about a long journey you made", ["where you went and how you travelled", "how long the journey took and who was with you", "what you liked or didn't like about it"]] },
+ { "no": 16, "topic": "Animals & Pets",
+   "words": [
+     ["Pet", "Uy hayvoni", "🐾", "Have you got a pet?"],
+     ["Dog", "It", "🐕", "Our dog likes to play in the garden."],
+     ["Cat", "Mushuk", "🐈", "My cat sleeps on my bed."],
+     ["Bird", "Qush", "🐦", "A small bird sings outside my window."],
+     ["Rabbit", "Quyon", "🐇", "My little sister has a white rabbit."],
+     ["Feed", "Ovqat bermoq", "🥕", "I feed my cat twice a day."],
+     ["Take care of", "G'amxo'rlik qilmoq", "🤲", "I take care of our dog when my parents are busy."],
+     ["Wild animals", "Yovvoyi hayvonlar", "🦁", "We saw wild animals at the zoo."],
+     ["Friendly", "Do'stona", "🙂", "Our dog is very friendly."],
+     ["Cute", "Yoqimtoy", "🥰", "Look at this cute rabbit!"]
+   ],
+   "questions": [
+     ["Have you got a pet? What is it?", ["Yes, I've got a …", "No, I haven't, but I'd like a …"]],
+     ["Do you like dogs or cats more? Why?", ["I like … more because …", "friendly", "cute"]],
+     ["Who takes care of pets in your family?", ["… takes care of our …", "feed", "play with"]],
+     ["What is your favourite wild animal?", ["My favourite wild animal is …", "It lives in …"]],
+     ["Did you see any animals at a zoo or farm?", ["Yes, I saw …", "It was …"]]
+   ],
+   "part2": ["Talk about a pet you have or would like to have", ["what animal it is and what it looks like", "how you take care of it (or would take care of it)", "why you like this animal"]] },
+ { "no": 17, "topic": "Health & Lifestyle",
+   "words": [
+     ["Healthy", "Sog'lom", "🥗", "I try to eat healthy food."],
+     ["Unhealthy", "Nosog'lom", "🍟", "Chips and cola are unhealthy."],
+     ["Exercise", "Jismoniy mashq", "🏃", "I do exercise every morning."],
+     ["Sleep well", "Yaxshi uxlamoq", "😴", "I sleep well when I go to bed early."],
+     ["Drink water", "Suv ichmoq", "💧", "Drink water when you play sport."],
+     ["Fresh fruit", "Yangi meva", "🍎", "I eat fresh fruit every day."],
+     ["Feel tired", "Charchoqni his qilmoq", "🥱", "I feel tired after a long day."],
+     ["Feel better", "O'zini yaxshiroq his qilmoq", "😌", "I feel better after a walk."],
+     ["Daily habits", "Kundalik odatlar", "📅", "Good daily habits keep you healthy."],
+     ["Keep fit", "Formada bo'lmoq", "💪", "My father plays football to keep fit."]
+   ],
+   "questions": [
+     ["What do you do to keep fit?", ["To keep fit, I …", "run", "swim", "walk"]],
+     ["Do you eat healthy food?", ["Yes, I eat …", "fresh fruit", "Sometimes I eat unhealthy food like …"]],
+     ["How many hours do you sleep?", ["I usually sleep … hours", "I sleep well when …"]],
+     ["What do you do when you feel tired?", ["When I feel tired, I …", "Then I feel better"]],
+     ["What is one good daily habit you have?", ["Every day I …", "drink water", "do exercise"]]
+   ],
+   "part2": ["Talk about how you stay healthy", ["what you eat and drink", "what exercise you do and how often", "one habit you want to change"]] },
+ { "no": 18, "topic": "Technology",
+   "words": [
+     ["Smartphone", "Smartfon", "📱", "I use my smartphone every day."],
+     ["Laptop", "Noutbuk", "💻", "I do my homework on my laptop."],
+     ["Internet", "Internet", "🌐", "The internet is very fast at school."],
+     ["Website", "Veb-sayt", "🖥️", "This website has good English games."],
+     ["Application", "Ilova", "📲", "I learn words with an application."],
+     ["Download", "Yuklab olmoq", "⬇️", "I downloaded a new game yesterday."],
+     ["Upload", "Yuklamoq", "⬆️", "She uploads photos to the internet."],
+     ["Search for", "Qidirmoq", "🔍", "I search for information online."],
+     ["Online", "Onlayn", "🟢", "I talk to my friends online."],
+     ["Useful", "Foydali", "👍", "A laptop is very useful for students."]
+   ],
+   "questions": [
+     ["What do you use your smartphone for?", ["I use it to …", "talk to friends", "play games", "take photos"]],
+     ["What is your favourite application? Why?", ["My favourite application is … because …"]],
+     ["How many hours are you online every day?", ["I'm online for about … hours", "I think it's too much / OK"]],
+     ["What do you search for on the internet?", ["I search for …", "music", "films", "information for school"]],
+     ["Is technology useful for learning? Why?", ["Yes, it is useful because …", "websites", "applications"]]
+   ],
+   "part2": ["Talk about a piece of technology you use every day", ["what it is and when you got it", "what you use it for", "why it is useful for you"]] },
+ { "no": 19, "topic": "Movies & Music",
+   "words": [
+     ["Movie", "Film", "🎬", "We watched a funny movie last night."],
+     ["Actor", "Aktyor", "🤵", "He is my favourite actor."],
+     ["Actress", "Aktrisa", "👩", "The actress in this film is very good."],
+     ["Comedy", "Komediya", "😂", "I love comedies because they make me laugh."],
+     ["Action film", "Jangari film", "💥", "My brother likes action films."],
+     ["Cartoon", "Multfilm", "🐭", "Children love cartoons."],
+     ["Singer", "Qo'shiqchi", "🎤", "She is a famous singer."],
+     ["Song", "Qo'shiq", "🎵", "This song is on the radio every day."],
+     ["Lyrics", "Qo'shiq matni", "📝", "I know all the lyrics of this song."],
+     ["Favourite character", "Sevimli qahramon", "🦸", "My favourite character in the film is the little dog."]
+   ],
+   "questions": [
+     ["What kind of movies do you like?", ["I like …", "comedies", "action films", "cartoons", "because …"]],
+     ["Who is your favourite actor or actress?", ["My favourite … is …", "He / She plays in …"]],
+     ["What music do you listen to?", ["I usually listen to …", "pop", "rock", "folk music"]],
+     ["Who is your favourite singer?", ["My favourite singer is …", "I like the song …"]],
+     ["Do you watch movies at home or at the cinema?", ["I usually watch movies …", "with my family", "because …"]]
+   ],
+   "part2": ["Talk about your favourite movie", ["what the movie is called and what kind of movie it is", "who your favourite character is", "why you like it (don't tell the ending!)"]] },
+ { "no": 20, "topic": "Weather & Seasons",
+   "words": [
+     ["Sunny", "Quyoshli", "☀️", "It is sunny today, so we can play outside."],
+     ["Cloudy", "Bulutli", "☁️", "The sky is cloudy this morning."],
+     ["Rainy", "Yomg'irli", "🌧️", "Take an umbrella. It's a rainy day."],
+     ["Windy", "Shamolli", "🌬️", "It's very windy near the sea."],
+     ["Snowy", "Qorli", "❄️", "In winter it is snowy in the mountains."],
+     ["Warm", "Iliq", "🌡️", "Spring is warm in my country."],
+     ["Cold", "Sovuq", "🥶", "It's cold in January."],
+     ["Season", "Fasl", "🍂", "Autumn is my favourite season."],
+     ["Weather forecast", "Ob-havo ma'lumoti", "📺", "The weather forecast says it will rain tomorrow."],
+     ["Temperature", "Harorat", "🌡️", "The temperature is 35 degrees today."]
+   ],
+   "questions": [
+     ["What is the weather like today?", ["Today it is …", "sunny", "cloudy", "cold", "warm"]],
+     ["What is your favourite season? Why?", ["My favourite season is … because …"]],
+     ["What do you do on a rainy day?", ["On a rainy day, I …", "stay at home", "watch films"]],
+     ["Do you like snowy weather?", ["Yes, I do, because …", "No, I don't, because …", "cold"]],
+     ["Do you watch the weather forecast?", ["Yes, I watch it …", "It tells me the temperature"]]
+   ],
+   "part2": ["Talk about your favourite season", ["what the weather and temperature are like", "what you do in this season", "why you love it"]] }
+]
