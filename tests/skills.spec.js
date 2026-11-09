@@ -122,8 +122,9 @@ test.describe('content', () => {
 
     }
     // beginner readings: very short, a little longer each step (~40, 50, 60, 70, 80, 90, 95, 100, 110, 120 words)
-    const readLen = [40, 50, 60, 70, 80, 90, 95, 100, 110, 120];
-    beginners.forEach((lv, i) => expect(Math.abs(lv.reading.text.split(/\s+/).filter(Boolean).length - readLen[i]), lv.id + ' reading words').toBeLessThanOrEqual(10));
+    // doubled on 2026-11-09 (teacher: "their texts are too small … double it: 40 → 80")
+    const readLen = [92, 108, 132, 144, 156, 174, 186, 200, 224, 240];
+    beginners.forEach((lv, i) => expect(Math.abs(lv.reading.text.split(/\s+/).filter(Boolean).length - readLen[i]), lv.id + ' reading words').toBeLessThanOrEqual(30));
     for (const lv of beginners.concat(full)) {
       const W = lv.writing;
       expect(W.topic).toBeTruthy();
@@ -221,10 +222,10 @@ test.describe('content', () => {
       expect(lv.speaking.part2.topic).toMatch(p.talk);
       expect(lv.speaking.part2.seconds).toBe(p.sec);
       lv.speaking.questions.forEach(q => expect(q.use.length).toBeGreaterThan(0));
-      // a little longer each level (~170, 190, 210, 230, 250, 270, 290 words)
+      // a little longer each level — doubled on 2026-11-09 (~340, 380, 420, 460, 500, 540, 580 words)
       const n = words(lv.reading.text);
       expect(n, 'level ' + p.no + ' reading words').toBeGreaterThan(last);
-      expect(Math.abs(n - (130 + 20 * p.no)), 'level ' + p.no + ' reading words').toBeLessThanOrEqual(20);
+      expect(Math.abs(n - 2 * (130 + 20 * p.no)), 'level ' + p.no + ' reading words').toBeLessThanOrEqual(40);
       last = n;
     }
   });

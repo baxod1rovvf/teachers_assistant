@@ -549,7 +549,7 @@ real students' names or results into the repository (it is public).
   writing ("An email to a new classmate", 50–70 words, 20 min) + speaking ("A person you met recently", 45 s); **`b1…b10` complete (2026-11-05) — so Steps 1–18 are complete, 19–20 (`e9`, `e10`) "Coming soon"**: very easy listenings
   (~2 min with the writing pauses, 10 one-word/number gaps — names, ages, numbers, colours, prices, days, o'clock times, phone
   numbers —, two spelled names each, `audio/skills/beg-<n>-listening.mp3`, entries 9–18 of `elementary-scripts.json`, so
-  `… audio/skills 9` remakes Step 1, `… 14` Step 6), readings of ~40/50/60/70/80/90/95/100/110/120 words with 10 questions (5 `tf` + 5
+  `… audio/skills 9` remakes Step 1, `… 14` Step 6), readings of ~92/108/132/144/156/174/186/200/224/240 words (doubled 2026-11-09 by adding a second half after the old text, so every question's `line` stays right; Steps 11–18 doubled the same way, ~340–550 words) with 10 questions (5 `tf` + 5
   `choose`), writing 20–50 words / 10–15 min, Part 2 30–45 s (b1 keeps About me (25–35 words, 12 min, 3 simple points) + Talk about yourself (30 s); b6 Days & times, b7 Food,
   b8 Animals & pets, b9 My room, b10 My friend). A step with no part = "Coming soon". Use the ids, never the number, in links/keys/results. `TA_BETTER_WORDS` for the writing tips. **A dot is done** (`skDotState`) when at least half
   of the group's students (Students list, by ID) have a result for that step + skill (a group with no students: one result); Speaking
