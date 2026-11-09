@@ -595,7 +595,14 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   Capitalised, lower]) → `showAlreadyDone` ("You have already done this …", the result); a failed check lets the student in;
   preview never blocked. Create-page exercise files are unchanged. **IDs**: `taIdKey` (common.js) — case, spaces/dots/dashes,
   a leading "ID"/"№"/"#", leading zeros, full-width digits and Cyrillic look-alikes don't matter; used by `taRosterIndex` /
-  `rosterStudentForId` / `rosterStudentForResult` (a swapped name/ID box matches too). `tests/course-fairness.spec.js`.
+  `rosterStudentForId` / `rosterStudentForResult` (a swapped name/ID box matches too); it lives in skill-bands.js (the student page uses it).
+  **Only the group's students can start (teacher, 2026-11-09)**: every Copy link (not Speaking) also writes `class-<code>` =
+  `{ code: 'TAUSER', type: 'TA_SYNC:CLASS', title: code, data: JSON [{h, n}] }` (`taPublishClassList` in firebase.js, delete then
+  create; h = `skClassHash(code, id)` = first 24 hex of sha256("<code>|<taIdKey(id)>"), so IDs can't be read from the database;
+  names are). On Start, `skCheckStudent` (skill-player.js): the typed ID's hash must be on the list ("This ID is not on your
+  teacher's list…") and the typed name must fit that student (`skNameFits`: one word of 3+ letters, or its start — "Mohlaroy" fits
+  "Yuldasheva Mohlaroy"; else "This ID belongs to another student…"); the result carries the listed name. No list (links copied
+  before 2026-11-09 until Copy link is pressed again; a group with no students) or no internet → let in. `tests/course-fairness.spec.js`.
 - **Bands** (`js/skill-bands.js`): Listening/Reading = round(correct/total × 40) → IELTS table (19/20 → 8.5, 16/20 → 7.5, 9/20 → 5.5);
   Writing estimate = 3 + 3×length (words/min below the range, 1 inside, 1 − over/max above) + 3×max(0, 1 − mistakes per 100 words/10), nearest 0.5, 1–9 (grammar check didn't run → last
   part 1.5; **blank writing = band 1**); Overall = average of the present skills, rounded like IELTS; CEFR from Overall.
