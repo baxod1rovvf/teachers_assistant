@@ -123,6 +123,60 @@ async function skSendResult(payload) {
 }
 window.skSendResult = skSendResult;
 
+/* ---------- one try per exercise (teacher, 2026-11-09: "once they finish and get a score, they can't open this exercise again") ----------
+   Finished = Submit pressed. This device remembers it at once (ta_skill_done, the page's own key: "<code>|id:<id>" and
+   "<code>|name:<name>"), and on Start the database is asked whether this code already has a result with the same ID or the
+   same name (2 small reads). If the check can't run (no internet), the student is let in — never blocked by an error. */
+const DONE_KEY = 'ta_skill_done';
+const doneKeys = (code, name, id) => [code + '|id:' + String(id || '').trim().toLowerCase(), code + '|name:' + String(name || '').trim().toLowerCase().replace(/\s+/g, ' ')]
+  .filter(k => !/:$/.test(k));
+function doneSummary(r) {
+  if (!r) return '';
+  if (r.skill === 'writing' || /^Writing/.test(r.type || '')) return (typeof r.words === 'number' ? r.words + ' words' : '') + (typeof r.band === 'number' ? (r.words ? ' · ' : '') + 'band ' + r.band : '');
+  return typeof r.correct === 'number' && typeof r.total === 'number' ? r.correct + ' / ' + r.total : '';
+}
+function markDone(payload) {
+  if (SK.preview || !payload) return;
+  try {
+    const all = JSON.parse(localStorage.getItem(DONE_KEY) || '{}') || {};
+    const info = { at: payload.date, summary: doneSummary(payload) };
+    doneKeys(payload.code, payload.name, payload.studentId).forEach(k => { all[k] = info; });
+    localStorage.setItem(DONE_KEY, JSON.stringify(all));
+  } catch (e) { /* private window */ }
+}
+async function skAlreadyDone(name, id) {
+  if (SK.preview) return null;
+  try {
+    const all = JSON.parse(localStorage.getItem(DONE_KEY) || '{}') || {};
+    const hit = doneKeys(SK.code, name, id).map(k => all[k]).find(Boolean);
+    if (hit) return hit;
+  } catch (e) { /* ignore */ }
+  try {
+    const { fs, db } = await within(loadFirestore(), 8000);
+    const col = fs.collection(db, 'results');
+    const ask = (field, value) => within(fs.getDocsFromServer(fs.query(col, fs.where('code', '==', SK.code), fs.where(field, '==', value))), 8000);
+    // the name as typed, and with capitals ("alice test" → "Alice Test") — the database compares letters exactly
+    const title = name.toLowerCase().replace(/(^|[\s'-])(\p{L})/gu, (m, a, c) => a + c.toUpperCase());
+    const names = Array.from(new Set([name, title, name.toLowerCase()]));
+    const snaps = await Promise.all([ask('studentId', id), within(fs.getDocsFromServer(fs.query(col, fs.where('code', '==', SK.code), fs.where('name', 'in', names))), 8000)]);
+    for (const snap of snaps) {
+      const doc = (snap.docs || []).map(d => d.data()).find(r => r && (r.skill === SK.skill || /course$/.test(r.type || '')));
+      if (doc) return { at: doc.date, summary: doneSummary(doc) };
+    }
+  } catch (e) { console.warn('Skills course: could not check for an earlier try', e); }
+  return null;
+}
+window.skAlreadyDone = skAlreadyDone;
+function showAlreadyDone(level, done) {
+  const info = SKILL_INFO[SK.skill];
+  root().innerHTML = `${headerHtml(level)}<section class="sk-card sk-center sk-done-card">
+    <div class="sk-big-emoji" aria-hidden="true">✅</div>
+    <h2>You have already done this ${esc(info.name.toLowerCase())}</h2>
+    ${done.summary ? `<p class="sk-done-score">Your result: <b>${esc(done.summary)}</b></p>` : ''}
+    <p>Each exercise can be done only once. Your teacher already has your answers.</p>
+  </section>`;
+}
+
 /* ---------- the page ---------- */
 const root = () => $('#skApp');
 
@@ -189,7 +243,7 @@ function showStart(level, content) {
       </form>
     </div>
   </div>`;
-  $('#skStartForm').addEventListener('submit', e => {
+  $('#skStartForm').addEventListener('submit', async e => {
     e.preventDefault();
     const name = $('#studentNameInput').value.trim().replace(/\s+/g, ' ');
     const id = $('#skIdInput').value.trim();
@@ -198,9 +252,16 @@ function showStart(level, content) {
       (!name ? $('#studentNameInput') : $('#skIdInput')).focus();
       return;
     }
+    const btn = $('#skStartForm .start-btn');
+    if (btn.disabled) return;
+    btn.disabled = true;
+    const label = btn.textContent;
+    btn.textContent = 'Checking…';
     SK.name = name; SK.studentId = id;
     try { localStorage.setItem(NAME_KEY, JSON.stringify({ name, id })); } catch (err) { /* private window */ }
-    loadFirestore().catch(() => {});   // get the database ready while the student works
+    const done = await skAlreadyDone(name, id);   // one try per exercise (2026-11-09)
+    if (done) { showAlreadyDone(level, done); return; }
+    btn.textContent = label; btn.disabled = false;
     if (SK.skill === 'writing') showWriting(level); else showExercise(level);
   });
 }
@@ -325,6 +386,7 @@ function submit(level, content, info) {
   };
   lastPayload.builtAt = lastPayload.date;   // see submitWriting
   lastPayload.__id = skResultId(lastPayload);   // the same record on every try and on "Send again"
+  markDone(lastPayload);   // finished: this device won't open it again (one try per exercise)
   const pct = correct / total;
   const cheer = pct >= 0.8 ? '🌟 Excellent work!' : pct >= 0.6 ? '👏 Well done!' : pct >= 0.4 ? '💪 Good try — keep going!' : '🌱 Keep practising — you can do it!';
   $('#skActions').innerHTML = `<div class="sk-result">
@@ -422,9 +484,12 @@ async function skCheckGrammar(text) {
     const len = String(text).length;
     const matches = data.matches.map(m => ({
       offset: Number(m.offset), length: Number(m.length) || 0, message: String(m.message || ''),
+      rule: String((m.rule && m.rule.id) || ''), kind: String((m.rule && m.rule.issueType) || ''),
       replacements: (Array.isArray(m.replacements) ? m.replacements : []).slice(0, 5).map(r => String(r && r.value != null ? r.value : '')).filter(Boolean)
     })).filter(m => Number.isInteger(m.offset) && m.offset >= 0 && m.offset <= len && m.length >= 0)
       .map(m => Object.assign(m, { length: Math.min(m.length, len - m.offset) }))
+      // only real mistakes: not extra spaces, American spelling or names (skCountsAsMistake in skill-bands.js, 2026-11-09)
+      .filter(m => typeof skCountsAsMistake !== 'function' || skCountsAsMistake({ bad: String(text).slice(m.offset, m.offset + m.length), message: m.message, rule: m.rule, kind: m.kind }))
       .sort((a, b) => a.offset - b.offset);
     return { ok: true, matches };
   } catch (e) {
@@ -612,18 +677,21 @@ async function submitWriting(level, W, timeUp) {
     </div>`;
   const better = skBetterWords(text);
   const check = await skCheckGrammar(text);
-  const band = skWritingBand(words, W.minWords, check.matches.length, check.ok);
+  const band = skWritingBand(words, W.minWords, check.matches.length, check.ok, W.maxWords);
   lastPayload = {
     v: 1, code: SK.code, type: info.type, title: `Step ${level.no} · ${level.theme} — ${info.name}`, step: level.id, stepNo: level.no, skill: 'writing',
     name: SK.name, studentId: SK.studentId, text, words, minWords: W.minWords, maxWords: W.maxWords,
     mistakes: check.matches.length,
-    mistakeList: check.matches.map(m => ({ bad: text.slice(m.offset, m.offset + m.length), fix: m.replacements[0] || '', message: m.message })),
+    // `at` = where the mistake is in the text, so Loom underlines the right place (before 2026-11-09 it searched for it and
+    // marked the "i" inside "pencils"); `rule` = the check's rule id
+    mistakeList: check.matches.map(m => ({ bad: text.slice(m.offset, m.offset + m.length), fix: m.replacements[0] || '', message: m.message, at: m.offset, rule: m.rule })),
     grammarChecked: check.ok, band, timeSeconds: secs, timeDisplay: fmtClock(secs), date: new Date().toISOString()
   };
   // builtAt = the Submit time (= date): Loom hides results "built" before a "Delete all results" (isExpiredResult in common.js);
   // a page opened before a reset and sent after it is a new result, in Results and the Course's results table alike.
   lastPayload.builtAt = lastPayload.date;
   lastPayload.__id = skResultId(lastPayload);
+  markDone(lastPayload);   // finished: this device won't open it again (one try per exercise)
   $('#skActions .sk-result').insertAdjacentHTML('afterbegin', `<div class="sk-score sk-band"><span class="sk-score-n">${band}</span>
     <span class="sk-score-t">Estimated band · ${words} words</span></div>`);
   $('#skAfter').innerHTML = `<div class="sk-stack"><section class="sk-card sk-check-card"><h2>🔍 Your writing, checked</h2><div id="skGrammar">${grammarHtml(text, check)}</div></section>

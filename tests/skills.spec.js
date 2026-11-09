@@ -2,6 +2,13 @@
 const { test, expect } = require('@playwright/test');
 const { prepare, watchErrors, hideNotices } = require('./support/app');
 
+// Writing words since 2026-11-09 (teacher: "double it — Step 1 60, last step 200"): about 60 + (step − 1) × 140/17 words, ±10,
+// rounded to 5; the minutes at least the old ones and about 7 words a minute.
+function skPlanWords(no, oldMinutes) {
+  const t = 60 + (no - 1) * 140 / 17, r5 = x => Math.round(x / 5) * 5;
+  return { minWords: r5(t - 10), maxWords: r5(t + 10), minutes: Math.max(oldMinutes, Math.ceil(t / 7 / 5) * 5) };
+}
+
 test.describe('bands', () => {
   test('listening/reading bands, writing estimate, overall and CEFR follow the rules', async ({ page, context }) => {
     await prepare(context);
@@ -149,13 +156,13 @@ test.describe('content', () => {
     await page.goto('/skill.html?s=listening&st=e1&preview=1');
     const [b1, l1] = await page.evaluate(() => [TA_SKILLS.steps[0], TA_SKILLS.steps.find(s => s.id === 'e1')]);
     expect(b1).toMatchObject({ id: 'b1', no: 1, stage: 'Beginner', theme: 'Hello!' });
-    expect(b1.writing).toMatchObject({ topic: 'About me', minWords: 25, maxWords: 35, minutes: 12 });
+    expect(b1.writing).toMatchObject({ topic: 'About me', minWords: 50, maxWords: 70, minutes: 12 });   // doubled 2026-11-09 (teacher: Step 1 ≈ 60 words)
     expect(b1.writing.points).toEqual(['your name and age', 'where you live', 'your family or your friends']);
     expect(b1.speaking.part2).toMatchObject({ topic: 'Talk about yourself', seconds: 30 });
     expect(l1).toMatchObject({ id: 'e1', no: 11, stage: 'Elementary', theme: 'Meeting people', emoji: '👋' });
     expect(l1.listening.src).toMatch(/^audio\/skills\/elem-1-listening\.mp3(\?v=\d+)?$/);
     expect(l1.reading.title).toMatch(/pen-friend/i);
-    expect(l1.writing).toMatchObject({ topic: 'An email to a new classmate', minWords: 50, maxWords: 70, minutes: 20 });
+    expect(l1.writing).toMatchObject(Object.assign({ topic: 'An email to a new classmate' }, skPlanWords(11, 20)));
     expect(l1.writing.task).toBeTruthy();
     expect(l1.speaking.part2).toMatchObject({ topic: 'A person you met recently', seconds: 45 });
     l1.speaking.questions.forEach(q => expect(q.use.length).toBeGreaterThan(0));
@@ -182,7 +189,7 @@ test.describe('content', () => {
     const ones = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
     B.forEach((st, i) => {
       const p = plan[i];
-      expect(st.writing, st.id).toMatchObject({ topic: p.topic, minWords: p.min, maxWords: p.max, minutes: p.minutes });
+      expect(st.writing, st.id).toMatchObject(Object.assign({ topic: p.topic }, skPlanWords(st.no, p.minutes)));
       expect(st.speaking.part2.topic).toMatch(p.talk);
       expect(st.speaking.part2.seconds).toBe(p.sec);
       st.speaking.questions.forEach(q => expect(q.use.length).toBeGreaterThan(0));
@@ -217,7 +224,7 @@ test.describe('content', () => {
       expect(lv.listening.title).toMatch(p.listen);
       expect(lv.listening.intro).toMatch(/NO MORE THAN TWO WORDS AND\/OR A NUMBER/);
       expect(lv.reading.title).toMatch(p.read);
-      expect(lv.writing).toMatchObject({ topic: p.topic, minWords: p.min, maxWords: p.max, minutes: p.minutes });
+      expect(lv.writing).toMatchObject(Object.assign({ topic: p.topic }, skPlanWords(lv.no, p.minutes)));
       expect(lv.writing.task).toBeTruthy();
       expect(lv.speaking.part2.topic).toMatch(p.talk);
       expect(lv.speaking.part2.seconds).toBe(p.sec);
@@ -548,15 +555,19 @@ test.describe('writing', () => {
     await expect(page.locator('.sk-points li')).toHaveCount(3);
     await expect(page.locator('.sk-timer')).toContainText('12:00');
     const box = page.locator('#skWriteBox');
-    await expect(page.locator('.sk-count')).toContainText('0 / 25–35 words');
+    // Step 1 asks 50–70 words since 2026-11-09
+    await expect(page.locator('.sk-count')).toContainText('0 / 50–70 words');
     await expect(page.locator('.sk-count')).not.toHaveClass(/ok/);
     await box.fill(TEXT + ' <b>');
-    await expect(page.locator('.sk-count')).toContainText('46 / 25–35 words');
+    await expect(page.locator('.sk-count')).toContainText('46 / 50–70 words');
     await box.fill(TEXT);
-    await expect(page.locator('.sk-count')).toContainText('45 / 25–35 words');
-    await expect(page.locator('.sk-count')).not.toHaveClass(/ok/);   // over the most
-    await box.fill(TEXT.split(' ').slice(0, 30).join(' '));
-    await expect(page.locator('.sk-count')).toContainText('30 / 25–35 words');
+    await expect(page.locator('.sk-count')).toContainText('45 / 50–70 words');
+    await expect(page.locator('.sk-count')).not.toHaveClass(/ok/);   // under the least
+    await box.fill(TEXT + ' ' + TEXT);
+    await expect(page.locator('.sk-count')).toContainText('90 / 50–70 words');
+    await expect(page.locator('.sk-count')).toHaveClass(/over/);   // over the most
+    await box.fill((TEXT + ' ' + TEXT).split(' ').slice(0, 60).join(' '));
+    await expect(page.locator('.sk-count')).toContainText('60 / 50–70 words');
     await expect(page.locator('.sk-count')).toHaveClass(/ok/);
     await box.fill(TEXT + ' <b> & more');
     await page.getByRole('button', { name: /Submit my writing/ }).click();
@@ -587,14 +598,16 @@ test.describe('writing', () => {
 
     const recs = await sentRecords(page);
     expect(recs).toHaveLength(1);
-    const band = await page.evaluate(() => skWritingBand(47, 25, 2, true));
+    const band = await page.evaluate(() => skWritingBand(47, 50, 2, true, 70));
     expect(recs[0]).toMatchObject({ v: 1, code: 'WRT789', type: 'Writing course', title: 'Step 1 · Hello! — Writing', step: 'b1', stepNo: 1,
-      skill: 'writing', name: 'Test Student', studentId: '10001', text: TEXT + ' <b> & more', words: 47, minWords: 25, maxWords: 35,
+      skill: 'writing', name: 'Test Student', studentId: '10001', text: TEXT + ' <b> & more', words: 47, minWords: 50, maxWords: 70,
       mistakes: 2, grammarChecked: true, band });
     expect(recs[0].score).toBeUndefined();
-    expect(recs[0].mistakeList).toEqual([
+    expect(recs[0].mistakeList.map(({ bad, fix, message }) => ({ bad, fix, message }))).toEqual([
       { bad: 'have got', fix: 'have', message: 'Use "have" here.' },
       { bad: '<b>', fix: '<i>', message: 'A <b> tag & "quotes" must stay text.' }]);
+    // each mistake keeps where it is in the text (2026-11-09), so Loom underlines the right place
+    recs[0].mistakeList.forEach(m => expect(recs[0].text.slice(m.at, m.at + m.bad.length)).toBe(m.bad));
     expect(recs[0].timeDisplay).toMatch(/^\d\d:\d\d$/);
     expect(recs[0].builtAt).toBe(recs[0].date);
     await expect(page.locator('.sk-band')).toContainText(String(band));
@@ -609,7 +622,7 @@ test.describe('writing', () => {
     await page.getByRole('button', { name: /Submit my writing/ }).click();
     await expect(page.locator('.sk-send')).toContainText('Saved ✅');
     const recs = await sentRecords(page);
-    expect(recs[0]).toMatchObject({ words: 45, mistakes: 1, grammarChecked: true, band: await page.evaluate(() => skWritingBand(45, 40, 1, true)) });
+    expect(recs[0]).toMatchObject({ words: 45, mistakes: 1, grammarChecked: true, band: await page.evaluate(() => skWritingBand(45, 50, 1, true, 70)) });   // Step 1 asks 50–70 words since 2026-11-09
   });
 
   test('writing: grammar checker down', async ({ page, context }) => {
@@ -624,7 +637,7 @@ test.describe('writing', () => {
     await expect(page.locator('.sk-send')).toContainText('Saved ✅');
     let recs = await sentRecords(page);
     expect(recs).toHaveLength(1);
-    expect(recs[0]).toMatchObject({ words: 45, mistakes: 0, mistakeList: [], grammarChecked: false, band: await page.evaluate(() => skWritingBand(45, 40, 0, false)) });
+    expect(recs[0]).toMatchObject({ words: 45, mistakes: 0, mistakeList: [], grammarChecked: false, band: await page.evaluate(() => skWritingBand(45, 50, 0, false, 70)) });
     // Check again: the checker works now → the mistakes show, but no second result is sent
     await context.unroute('**/api.languagetool.org/**');
     await mockGrammar(context, { calls });

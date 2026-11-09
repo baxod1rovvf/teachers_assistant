@@ -108,7 +108,7 @@ var TA_SKILLS = {
         topic: 'About me',
         task: 'Write an email to a new pen-friend about yourself.',
         points: ['your name and age', 'where you live', 'your family or your friends'],
-        minWords: 25, maxWords: 35, minutes: 12
+        minWords: 50, maxWords: 70, minutes: 12
       },
       speaking: {
         words: [
@@ -231,7 +231,7 @@ var TA_SKILLS = {
         topic: 'My numbers',
         task: 'Write about the numbers in your life.',
         points: ['how old you are', 'your house or flat number and your classroom number', 'how many people there are in your family'],
-        minWords: 20, maxWords: 30, minutes: 10
+        minWords: 60, maxWords: 80, minutes: 10
       },
       speaking: {
         words: [
@@ -351,7 +351,7 @@ var TA_SKILLS = {
         topic: 'My family',
         task: 'Write about your family.',
         points: ['how many people there are in your family', 'their names and how old they are', 'one thing about each person (tall, funny, kind…)'],
-        minWords: 25, maxWords: 35, minutes: 10
+        minWords: 65, maxWords: 85, minutes: 15
       },
       speaking: {
         words: [
@@ -471,7 +471,7 @@ var TA_SKILLS = {
         topic: 'My bag',
         task: 'Write about your bag and the things in it.',
         points: ['what colour your bag is', 'what is in your bag (books, pens…) and how many', 'your favourite thing in your bag and its colour'],
-        minWords: 25, maxWords: 35, minutes: 10
+        minWords: 75, maxWords: 95, minutes: 15
       },
       speaking: {
         words: [
@@ -599,7 +599,7 @@ var TA_SKILLS = {
         topic: 'Shopping list',
         task: 'You are going to the shop for your family. Write your shopping list in sentences.',
         points: ['what you need from the shop (five or six things)', 'how many of each thing — for example: two apples, one bottle of milk', 'how much each thing is — for example: The bread is 85p.'],
-        minWords: 30, maxWords: 40, minutes: 12
+        minWords: 85, maxWords: 105, minutes: 15
       },
       speaking: {
         words: [
@@ -716,7 +716,7 @@ var TA_SKILLS = {
         topic: 'My week',
         task: 'Write about your week.',
         points: ['what you do on two or three days of the week — for example: On Monday, I have English.', 'what time you start and finish school (or work)', 'your favourite day and why'],
-        minWords: 30, maxWords: 40, minutes: 12
+        minWords: 90, maxWords: 110, minutes: 15
       },
       speaking: {
         words: [
@@ -832,7 +832,7 @@ var TA_SKILLS = {
         topic: 'My food',
         task: "Write about the food you like and the food you don't like.",
         points: ['what you have for breakfast', 'your favourite food and drink', "a food you don't like"],
-        minWords: 30, maxWords: 40, minutes: 12
+        minWords: 100, maxWords: 120, minutes: 20
       },
       speaking: {
         words: [
@@ -950,7 +950,7 @@ var TA_SKILLS = {
         topic: 'My pet',
         task: 'Write about your pet, or a pet you would like to have.',
         points: ['what animal it is and its name', 'how old it is and what colour it is', 'what it likes to eat or do'],
-        minWords: 35, maxWords: 45, minutes: 15
+        minWords: 110, maxWords: 130, minutes: 20
       },
       speaking: {
         words: [
@@ -1063,7 +1063,7 @@ var TA_SKILLS = {
         topic: 'My room',
         task: 'Write about your room.',
         points: ['what is in your room: a bed, a desk, a cupboard…', 'where things are — for example: My lamp is on the desk.', 'what you like about your room'],
-        minWords: 35, maxWords: 45, minutes: 15
+        minWords: 115, maxWords: 135, minutes: 20
       },
       speaking: {
         words: [
@@ -1179,7 +1179,7 @@ var TA_SKILLS = {
         topic: 'My best friend',
         task: 'Write about your best friend.',
         points: ['his or her name and age, and what he or she looks like', 'what he or she likes', 'what you do together'],
-        minWords: 40, maxWords: 50, minutes: 15
+        minWords: 125, maxWords: 145, minutes: 20
       },
       speaking: {
         words: [
@@ -1313,7 +1313,7 @@ var TA_SKILLS = {
         topic: 'An email to a new classmate',
         task: 'A new student has joined your class. Write an email to welcome him or her.',
         points: ['who you are and what you like about your class', 'your teacher and the other students', 'something you can do together after school'],
-        minWords: 50, maxWords: 70, minutes: 20
+        minWords: 130, maxWords: 150, minutes: 25
       },
       speaking: {
         words: [
@@ -1450,7 +1450,7 @@ var TA_SKILLS = {
         topic: 'My family',
         task: 'Write an email to a pen-friend about your family.',
         points: ['who is in your family', 'what each person is like and what they do', 'what you do together at the weekend'],
-        minWords: 40, maxWords: 60, minutes: 15
+        minWords: 140, maxWords: 160, minutes: 25
       },
       speaking: {
         words: [
@@ -1581,7 +1581,7 @@ var TA_SKILLS = {
         topic: 'My home',
         task: 'Write an email to a friend about your home.',
         points: ['where your home is and what kind of home it is', 'the rooms in your home', 'your favourite room and why you like it'],
-        minWords: 40, maxWords: 60, minutes: 15
+        minWords: 150, maxWords: 170, minutes: 25
       },
       speaking: {
         words: [
@@ -1716,7 +1716,7 @@ var TA_SKILLS = {
         topic: 'My weekday',
         task: 'Write a short text about a normal weekday in your life.',
         points: ['what time you get up and what you do in the morning', 'what you do in the afternoon', 'what you do in the evening and when you go to bed'],
-        minWords: 50, maxWords: 70, minutes: 20
+        minWords: 155, maxWords: 175, minutes: 25
       },
       speaking: {
         words: [
@@ -1853,7 +1853,7 @@ var TA_SKILLS = {
         topic: 'My favourite meal',
         task: 'Write a short text about your favourite meal.',
         points: ['what the meal is and what is in it', 'who makes it and when you eat it', 'why you like it'],
-        minWords: 50, maxWords: 70, minutes: 20
+        minWords: 165, maxWords: 185, minutes: 30
       },
       speaking: {
         words: [
@@ -1990,7 +1990,7 @@ var TA_SKILLS = {
         topic: 'A shopping trip',
         task: 'Write a short text about a shopping trip you remember.',
         points: ['where you went and who you went with', 'what you bought and how much it cost', 'how you felt about the trip'],
-        minWords: 50, maxWords: 70, minutes: 20
+        minWords: 175, maxWords: 195, minutes: 30
       },
       speaking: {
         words: [
@@ -2134,7 +2134,7 @@ var TA_SKILLS = {
         topic: 'My town',
         task: 'Write a short text about the town or city where you live.',
         points: ['where your town is and how big it is', 'two places you like there and why', 'what visitors can do in your town'],
-        minWords: 60, maxWords: 80, minutes: 20
+        minWords: 180, maxWords: 200, minutes: 30
       },
       speaking: {
         words: [
@@ -2278,7 +2278,7 @@ var TA_SKILLS = {
         topic: 'My free time',
         task: 'Write a short text about what you do in your free time.',
         points: ['what you like doing in your free time', 'when and where you do it, and who with', 'a new hobby you would like to try and why'],
-        minWords: 60, maxWords: 80, minutes: 25
+        minWords: 190, maxWords: 210, minutes: 30
       },
       speaking: {
         words: [
