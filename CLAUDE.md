@@ -509,7 +509,7 @@ real students' names or results into the repository (it is public).
   8 questions/min per IP; on the free plan Google may use the questions — no students' private details) — with the chat so far, the section, the language, and all the saved questions + answers as
   Loom's notes (`aiRobotKnowledge`). **The saved FAQ stays** (it's the AI's knowledge and the fallback): with no `TA_AI_URL` or when the
   AI fails, the closest saved answer shows (`aiRobotBestFaq`, rare words weigh more). `localStorage.ta_ai_url` overrides the address
-  (tests). `tests/robot.spec.js`.
+  (tests). The chat's text is selectable (the widget is `user-select: none` + grab for dragging; `.ai-robot-bubble` turns it back). `tests/robot.spec.js`.
 - **Playful design (teacher, 2026-11-02: "change Loom's design entirely, build it from 0 — colourful, playful,
   satisfying, use emojis")** — replaces the 2026-10-27 glass/black+red look and the line icons. The look lives in the
   "LOOM — PLAYFUL DESIGN" layer at the end of css/style.css (tokens in `:root` = Night, `body.light-theme` = Day); the

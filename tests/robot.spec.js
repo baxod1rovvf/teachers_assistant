@@ -33,6 +33,10 @@ test('the robot is an AI chat: any question goes to the AI with Loom\'s notes; w
   await page.keyboard.press('Enter');
   await expect(body.locator('.ai-msg-assistant').last()).toContainText('5 warm-up questions');
   await expect(body.locator('.ai-msg-assistant b').last()).toHaveText('5 warm-up questions');
+  // the answer can be selected and copied: a text cursor, not the robot's grab hand (2026-11-09)
+  expect(await body.locator('.ai-msg-assistant').last().evaluate(e => [getComputedStyle(e).userSelect, getComputedStyle(e).cursor])).toEqual(['text', 'text']);
+  await body.locator('.ai-msg-assistant').last().dblclick();
+  expect(await page.evaluate(() => String(getSelection()).trim().length)).toBeGreaterThan(0);
   expect(sent.question).toBe('Give me 5 warm-up questions for Grade 8A');
   expect(sent.section).toBe('main');
   expect(sent.history.length).toBe(2);
