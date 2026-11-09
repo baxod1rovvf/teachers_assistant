@@ -1,8 +1,8 @@
 // Skills course: how marks turn into IELTS-style bands (shared by the student page and Loom).
 // - Listening and Reading: the score is scaled to 40 (round(correct / total x 40)), then the IELTS table below.
 // - Writing estimate: 3 + 3 x length + 3 x (1 - mistakes per 100 words / 10, at least 0), rounded to the nearest half band,
-//   kept between 1 and 9. length = words / minimum below the minimum, 1 inside the asked range, and 1 - (words - maximum) / maximum
-//   above it (teacher, 2026-11-09: "the check should also focus on words counting" — 52 words for 25–35 asked got 7.5).
+//   kept between 1 and 9. length = words / minimum below the minimum, 1 from the minimum up; more words than the maximum add
+//   half a band (teacher, 2026-11-09: writing more must not lower the band — it raises it a little).
 //   If the grammar check didn't run, the last part is 1.5. Only real mistakes count (skCountsAsMistake).
 //   A blank writing (0 words) is band 1. The teacher's own mark replaces this estimate.
 // - Overall: the average of the skills present, rounded like IELTS (x.25 goes up to x.5, x.75 to the next whole band).
@@ -22,13 +22,15 @@ function skBand(correct, total) {
 function skWritingBand(words, minWords, mistakes, checked, maxWords) {
   if (!(words > 0)) return 1;   // a blank writing (e.g. the time ran out on an empty box)
   var lengthPart = minWords > 0 ? Math.min(1, words / minWords) : 1;
-  if (maxWords > 0 && words > maxWords) lengthPart = Math.max(0, 1 - (words - maxWords) / maxWords);
+
   var grammarPart = 1.5;
   if (checked) {
     var per100 = words > 0 ? (mistakes / words) * 100 : 0;
     grammarPart = 3 * Math.max(0, 1 - per100 / 10);
   }
-  var band = Math.round((3 + 3 * lengthPart + grammarPart) * 2) / 2;
+  // more than asked: a small bonus, half a band (teacher, 2026-11-09: "it should not lower, it should increase by a little")
+  var bonus = maxWords > 0 && words > maxWords ? 0.5 : 0;
+  var band = Math.round((3 + 3 * lengthPart + grammarPart) * 2) / 2 + bonus;
   return Math.max(1, Math.min(9, band));
 }
 

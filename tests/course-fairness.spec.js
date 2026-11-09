@@ -15,20 +15,22 @@ const OLD_LIST = [
   { bad: 'favorite', fix: 'favourite', message: 'Possible spelling mistake. ‘favorite’ is American English.' }
 ];
 
-test('writing rules: only real mistakes count, and too many words lower the band as well as too few', async ({ page, context }) => {
+test('writing rules: only real mistakes count; too few words lower the band, more than asked adds a little', async ({ page, context }) => {
   await prepare(context);
   await page.goto('/skill.html?s=writing&st=b1&preview=1');
   const out = await page.evaluate(list => ({
     counted: list.filter(skCountsAsMistake).map(m => m.bad),
     inRange: skWritingBand(60, 50, 0, true, 70),
     over: skWritingBand(105, 50, 0, true, 70),
+    noMaxGiven: skWritingBand(105, 50, 6, true),
+    overWithMistakes: skWritingBand(105, 50, 6, true, 70),
     under: skWritingBand(25, 50, 0, true, 70),
     oldCall: skWritingBand(45, 40, 1, true)   // no maximum given: as before
   }), OLD_LIST);
   expect(out.counted).toEqual(['i', ',,']);
   expect(out.inRange).toBe(9);
-  expect(out.over).toBeLessThan(out.inRange);
-  expect(out.over).toBe(7.5);   // 105 words for 50–70: half over the most
+  expect(out.over).toBe(9);   // more than asked never lowers the band (2026-11-09) — 9 is the most anyway
+  expect(out.overWithMistakes).toBe(out.noMaxGiven + 0.5);   // the same writing, half a band more for going past the maximum
   expect(out.under).toBe(7.5);  // 25 for 50–70: half the least
   expect(out.oldCall).toBe(8.5);
 });

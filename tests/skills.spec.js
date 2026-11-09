@@ -565,7 +565,7 @@ test.describe('writing', () => {
     await expect(page.locator('.sk-count')).not.toHaveClass(/ok/);   // under the least
     await box.fill(TEXT + ' ' + TEXT);
     await expect(page.locator('.sk-count')).toContainText('90 / 50–70 words');
-    await expect(page.locator('.sk-count')).toHaveClass(/over/);   // over the most
+    await expect(page.locator('.sk-count')).toHaveClass(/ok/);   // more than asked is fine (2026-11-09)
     await box.fill((TEXT + ' ' + TEXT).split(' ').slice(0, 60).join(' '));
     await expect(page.locator('.sk-count')).toContainText('60 / 50–70 words');
     await expect(page.locator('.sk-count')).toHaveClass(/ok/);

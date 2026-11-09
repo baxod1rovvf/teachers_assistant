@@ -639,8 +639,8 @@ function showWriting(level) {
   const updateCount = () => {
     const n = skCountWords(box.value);
     count.textContent = `${n} / ${W.minWords}–${W.maxWords} words`;
-    count.classList.toggle('ok', n >= W.minWords && n <= W.maxWords);
-    count.classList.toggle('over', n > W.maxWords);
+    count.classList.toggle('ok', n >= W.minWords);   // more than asked is fine — it even adds a little (2026-11-09)
+    count.classList.toggle('over', false);
   };
   box.addEventListener('input', () => { updateCount(); if (!done) saveDraft(box.value); });
   updateCount();
