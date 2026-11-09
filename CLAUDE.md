@@ -588,8 +588,8 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
 - **Fairer writing check + one try + forgiving IDs (teacher, 2026-11-09)**: only real mistakes count (`skCountsAsMistake` in
   skill-bands.js — not extra spaces, American/British spelling, or spelling "mistakes" in capitalised words = names; old results
   are filtered the same way when shown, `skWritingMistakes`); each mistake is saved with its position `at` (+ `rule`), and Loom
-  finds older ones as whole words (`skFindMistake` — before, "i" was marked inside "pencils"); `skWritingBand(…, maxWords)` lowers
-  the band for too many words too. Old writings keep the band they were sent with (the teacher can Save band). Writing words:
+  finds older ones as whole words (`skFindMistake` — before, "i" was marked inside "pencils"); `skWritingBand(…, maxWords)`: more words
+  than asked add half a band (teacher: never lower it for writing more). Old writings keep the band they were sent with (the teacher can Save band). Writing words:
   ~60 at Step 1 → ~200 at Step 18 (±10; minutes ≥ ~7 words a minute). **One try per course exercise**: on Start, `skAlreadyDone`
   checks this device (`ta_skill_done`, set at Submit by `markDone`) and the database (code + studentId, code + name in [typed,
   Capitalised, lower]) → `showAlreadyDone` ("You have already done this …", the result); a failed check lets the student in;
@@ -604,7 +604,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   "Yuldasheva Mohlaroy"; else "This ID belongs to another student…"); the result carries the listed name. No list (links copied
   before 2026-11-09 until Copy link is pressed again; a group with no students) or no internet → let in. `tests/course-fairness.spec.js`.
 - **Bands** (`js/skill-bands.js`): Listening/Reading = round(correct/total × 40) → IELTS table (19/20 → 8.5, 16/20 → 7.5, 9/20 → 5.5);
-  Writing estimate = 3 + 3×length (words/min below the range, 1 inside, 1 − over/max above) + 3×max(0, 1 − mistakes per 100 words/10), nearest 0.5, 1–9 (grammar check didn't run → last
+  Writing estimate = 3 + 3×length (words/min below the minimum, else 1; +0.5 when over the maximum) + 3×max(0, 1 − mistakes per 100 words/10), nearest 0.5, 1–9 (grammar check didn't run → last
   part 1.5; **blank writing = band 1**); Overall = average of the present skills, rounded like IELTS; CEFR from Overall.
 - **LanguageTool** (`https://api.languagetool.org/v2/check`, `en-GB`, free, no key): about 20 checks a minute per connection. A busy or
   offline check shows "press Check again", the text is still sent, the band then uses only the length.
