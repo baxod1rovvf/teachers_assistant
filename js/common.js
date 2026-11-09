@@ -3320,7 +3320,7 @@ async function aiRobotAsk(question) {
   let answer = '', note = '', why = '';
   if (url) {
     try {
-      const ctrl = new AbortController(), timer = setTimeout(() => ctrl.abort(), 45000);
+      const ctrl = new AbortController(), timer = setTimeout(() => ctrl.abort(), 60000);
       const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctrl.signal,
         body: JSON.stringify({ question, lang: window.taUiLang ? window.taUiLang() : 'en', section: currentActiveTab, teacher: getTeacherName() || '',
           history: aiRobotChat.slice(-9, -1).map(m => ({ role: m.role, text: m.text })), knowledge: aiRobotKnowledge() }) });
@@ -3329,7 +3329,7 @@ async function aiRobotAsk(question) {
       try { data = await res.json(); } catch (e) { data = null; }
       answer = res.ok && data && typeof data.answer === 'string' ? data.answer.trim() : '';
       if (!answer && data && data.error) why = String(data.error).slice(0, 220);   // the helper says why (shown, to send a screenshot)
-    } catch (e) { answer = ''; why = e && e.name === 'AbortError' ? 'no answer in 45 s' : 'the helper could not be reached'; }
+    } catch (e) { answer = ''; why = e && e.name === 'AbortError' ? 'no answer in 60 s — the helper may still have the old code' : 'the helper could not be reached'; }
     if (!answer) note = aiRobotUi('fail') + (why ? '\n(' + why + ')' : '');
   } else note = aiRobotUi('off');
   if (!answer) {
