@@ -892,6 +892,12 @@ test.describe('course page', () => {
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(first);
     expect(await page.evaluate(() => JSON.stringify(getRecentExercises()))).toBe(before);
     expect(await page.evaluate(() => (window.__writes || []).filter(w => w.type === 'TA_SYNC:PLAY').length)).toBe(0);
+    // the group's list goes online with the link, the IDs scrambled (2026-11-09: only the group's students can start)
+    await expect.poll(() => page.evaluate(c => (window.__writes || []).filter(w => w.type === 'TA_SYNC:CLASS' && w.id === 'class-' + c).length, code)).toBeGreaterThan(0);
+    const list = await page.evaluate(async c => { const w = (window.__writes || []).filter(x => x.id === 'class-' + c).pop();
+      return { w, hash: await skClassHash(c, '10001') }; }, code);
+    expect(list.w).toMatchObject({ code: 'TAUSER', title: code });
+    expect(list.hash).toMatch(/^[0-9a-f]{24}$/);
     // a copied link alone doesn't make Listening done (nobody has done it)
     await expect(part.locator('.sk-part-state')).toHaveText('⏳ 0 of 3 students done');
     // the new code's results are loaded, though no My Exercises item has it (firebase.js reads the codes from ta_skills_links)

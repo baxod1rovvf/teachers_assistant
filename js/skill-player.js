@@ -167,6 +167,28 @@ async function skAlreadyDone(name, id) {
   return null;
 }
 window.skAlreadyDone = skAlreadyDone;
+
+/* Only the group's students (teacher, 2026-11-09: "student can only enter exercise with ID, if they wrong ID or name, they
+   cannot enter"): Copy link puts the group's list online as `class-<code>` (IDs scrambled, skClassHash). The typed ID must be
+   on it and the typed name must fit that student's name (skNameFits — first name or surname is enough); the result then
+   carries the name from the list. No list (a link copied before this, or a group without students) or no internet → let in. */
+async function skCheckStudent(name, id) {
+  try {
+    const { fs, db } = await within(loadFirestore(), 8000);
+    const snap = await within(fs.getDocFromServer(fs.doc(db, 'results', 'class-' + SK.code)), 8000);
+    if (!snap.exists()) return {};
+    let list = [];
+    try { list = JSON.parse(snap.data().data || '[]'); } catch (e) { list = []; }
+    if (!Array.isArray(list) || !list.length) return {};
+    const h = await skClassHash(SK.code, id);
+    if (!h) return {};
+    const st = list.find(s => s && s.h === h);
+    if (!st) return { refuse: 'This ID is not on your teacher\'s list. Check your ID and try again.', field: 'id' };
+    if (!skNameFits(name, st.n)) return { refuse: 'This ID belongs to another student. Write your own name and ID.', field: 'name' };
+    return { name: st.n };
+  } catch (e) { console.warn('Skills course: could not check the class list', e); return {}; }
+}
+window.skCheckStudent = skCheckStudent;
 function showAlreadyDone(level, done) {
   const info = SKILL_INFO[SK.skill];
   root().innerHTML = `${headerHtml(level)}<section class="sk-card sk-center sk-done-card">
@@ -257,9 +279,17 @@ function showStart(level, content) {
     btn.disabled = true;
     const label = btn.textContent;
     btn.textContent = 'Checking…';
-    SK.name = name; SK.studentId = id;
+    // only the teacher's students: the ID must be on the group's list and the name must fit it (2026-11-09)
+    const who = await skCheckStudent(name, id);
+    if (who.refuse) {
+      btn.textContent = label; btn.disabled = false;
+      $('#skStartErr').textContent = who.refuse;
+      (who.field === 'name' ? $('#studentNameInput') : $('#skIdInput')).focus();
+      return;
+    }
+    SK.name = who.name || name; SK.studentId = id;
     try { localStorage.setItem(NAME_KEY, JSON.stringify({ name, id })); } catch (err) { /* private window */ }
-    const done = await skAlreadyDone(name, id);   // one try per exercise (2026-11-09)
+    const done = await skAlreadyDone(SK.name, id);   // one try per exercise (2026-11-09)
     if (done) { showAlreadyDone(level, done); return; }
     btn.textContent = label; btn.disabled = false;
     if (SK.skill === 'writing') showWriting(level); else showExercise(level);

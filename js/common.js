@@ -841,19 +841,7 @@ function removePointsStudent(id) {
    your Students list. Returns that roster student, or null for anyone who
    just typed a name. Works for older results too (before exercises
    recorded the ID), by matching the resolved name. */
-/* An ID as the app compares it (teacher, 2026-11-09: a student who typed his ID was listed under "name only").
-   Small differences in how an ID is typed don't matter: case, spaces/dots/dashes inside ("10 001"), a leading "ID"/"№"/"#",
-   leading zeros ("0071" = "71"), full-width digits (NFKC) and Cyrillic letters that look Latin (А12 = A12). */
-const TA_ID_LOOKALIKE = { 'а': 'a', 'в': 'b', 'е': 'e', 'к': 'k', 'м': 'm', 'н': 'h', 'о': 'o', 'р': 'p', 'с': 'c', 'т': 't', 'у': 'y', 'х': 'x', 'і': 'i' };
-function taIdKey(v) {
-  let s = String(v == null ? '' : v);
-  try { s = s.normalize('NFKC'); } catch (e) { /* old browser */ }
-  s = s.trim().toLowerCase().replace(/[авекмнорстухі]/g, c => TA_ID_LOOKALIKE[c] || c);
-  s = s.replace(/^(?:id|№|#|no\.?)(?:\s*[:.#-]\s*|\s+|(?=\d))(?=\S)/, '').replace(/[\s._\-#'"`]/g, '');
-  if (/^\d+$/.test(s)) s = s.replace(/^0+(?=\d)/, '');
-  return s;
-}
-window.taIdKey = taIdKey;
+/* taIdKey (how an ID is compared) lives in js/skill-bands.js — the student page uses it too. */
 function taRosterIndex() {
   const byId = {}, byName = {};
   getPointsRoster().forEach(s => {

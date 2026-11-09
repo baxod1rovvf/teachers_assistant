@@ -112,3 +112,30 @@ test('a student who typed the ID a little differently ("ID 10 001", "010001", Cy
   });
   expect(out).toEqual({ spaced: 'Alice Test', zeros: 'Alice Test', wide: 'Alice Test', swapped: 'Alice Test', wrong: null, cyr: true, keepsWords: 'idris' });
 });
+
+test('only the group\'s students can start a course exercise: the ID must be on the list and the name must fit it', async ({ page, context }) => {
+  const crypto = require('crypto');
+  const code = 'RDG777', hash = id => crypto.createHash('sha256').update(code + '|' + id).digest('hex').slice(0, 24);
+  const list = [{ h: hash('10001'), n: 'Alice Test' }, { h: hash('10002'), n: 'Yuldasheva Mohlaroy' }];
+  await prepare(context, { docs: [{ __id: 'class-' + code, v: 1, code: 'TAUSER', type: 'TA_SYNC:CLASS', title: code, name: '', data: JSON.stringify(list), date: new Date().toISOString() }] });
+  const errors = watchErrors(page);
+  const begin = async (name, id) => {
+    await page.goto('/skill.html?s=reading&st=b1&c=' + code);
+    await page.locator('#studentNameInput').fill(name);
+    await page.locator('#skIdInput').fill(id);
+    await page.getByRole('button', { name: /Start/ }).click();
+  };
+  await begin('Alice Test', '99999');
+  await expect(page.locator('#skStartErr')).toHaveText("This ID is not on your teacher's list. Check your ID and try again.");
+  await expect(page.locator('#skSubmit')).toHaveCount(0);
+  await begin('Bobur', '10001');
+  await expect(page.locator('#skStartErr')).toHaveText('This ID belongs to another student. Write your own name and ID.');
+  // the ID typed a little differently and only the first name: let in, and the result carries the name from the list
+  await begin('mohlaroy', ' 10 002 ');
+  await expect(page.locator('#skSubmit')).toBeVisible();
+  await page.locator('#skSubmit').click();
+  await expect(page.locator('.sk-send')).toContainText('Saved ✅');
+  const rec = await page.evaluate(() => window.__writes.map(w => window.__fakeDocs.find(d => d.__id === w.id)).find(d => d && d.type === 'Reading course'));
+  expect(rec).toMatchObject({ code, name: 'Yuldasheva Mohlaroy', studentId: '10 002' });
+  expect(errors).toEqual([]);
+});

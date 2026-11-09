@@ -67,3 +67,35 @@ function skCountsAsMistake(m) {
   if (spelling && /^[A-Z\u00C0-\u024F\u0400-\u042F]/.test(bad.trim())) return false;
   return true;
 }
+
+/* An ID as the app compares it (teacher, 2026-11-09: a student who typed his ID was listed under "name only").
+   Small differences in how an ID is typed don't matter: case, spaces/dots/dashes inside ("10 001"), a leading "ID"/"№"/"#",
+   leading zeros ("0071" = "71"), full-width digits (NFKC) and Cyrillic letters that look Latin (А12 = A12). */
+var TA_ID_LOOKALIKE = { 'а': 'a', 'в': 'b', 'е': 'e', 'к': 'k', 'м': 'm', 'н': 'h', 'о': 'o', 'р': 'p', 'с': 'c', 'т': 't', 'у': 'y', 'х': 'x', 'і': 'i' };
+function taIdKey(v) {
+  var s = String(v == null ? '' : v);
+  try { s = s.normalize('NFKC'); } catch (e) { /* old browser */ }
+  s = s.trim().toLowerCase().replace(/[авекмнорстухі]/g, function (c) { return TA_ID_LOOKALIKE[c] || c; });
+  s = s.replace(/^(?:id|№|#|no\.?)(?:\s*[:.#-]\s*|\s+|(?=\d))(?=\S)/, '').replace(/[\s._\-#'"`]/g, '');
+  if (/^\d+$/.test(s)) s = s.replace(/^0+(?=\d)/, '');
+  return s;
+}
+if (typeof window !== 'undefined') window.taIdKey = taIdKey;
+
+/* The course's class list online (teacher, 2026-11-09: "student can only enter exercise with ID"): Copy link puts the group's
+   list under the link's code with each ID scrambled — sha256("<code>|<taIdKey(id)>"), first 24 hex — so the page can check a
+   typed ID while nobody can read the IDs from the database. Resolves to '' where the browser can't hash (very old). */
+function skClassHash(code, id) {
+  var key = taIdKey(id);
+  if (!key || typeof crypto === 'undefined' || !crypto.subtle || typeof TextEncoder === 'undefined') return Promise.resolve('');
+  return crypto.subtle.digest('SHA-256', new TextEncoder().encode(String(code) + '|' + key)).then(function (buf) {
+    return Array.from(new Uint8Array(buf)).map(function (x) { return ('0' + x.toString(16)).slice(-2); }).join('').slice(0, 24);
+  }, function () { return ''; });
+}
+/* Does a typed name fit the name on the list? Case, ʻ ’ ' marks and order don't matter; one word of 3+ letters is enough
+   ("Mohlaroy" fits "Yuldasheva Mohlaroy"; "Mohla" fits too — the start of a name). */
+function skNameFits(typed, listed) {
+  var words = function (v) { return String(v || '').toLowerCase().replace(/[ʻʼ’'`‘]/g, '').split(/[^\p{L}\p{N}]+/u).filter(function (w) { return w.length >= 3; }); };
+  var a = words(typed), b = words(listed);
+  return a.some(function (x) { return b.some(function (y) { return y === x || y.indexOf(x) === 0 || x.indexOf(y) === 0; }); });
+}
