@@ -80,16 +80,20 @@ var TA_SKILLS = {
         text: "Hello! My name is Amy Hill. I am fifteen years old. I am a student. I am from Manchester. I live with my mum and my dad. My cat's name is Lily. I like music and books. My best friend is Jess. She is fifteen too.\n\n" +
           "My school is big and new. My favourite teacher is Mrs Taylor. She is very nice. I go to school by bus. My mum is a doctor, and my dad is a cook. At the weekend, I play the guitar with Jess. Lily sleeps on my bed every night.",
         questions: [
-          { type: 'tf', q: 'Amy is fifteen.', a: ['True'], line: 2 },
-          { type: 'tf', q: 'Amy is a teacher.', a: ['False'], line: 3 },
-          { type: 'tf', q: 'Amy lives with her mum and her dad.', a: ['True'], line: 5 },
-          { type: 'tf', q: 'Amy has got a dog.', a: ['False'], line: 6 },
-          { type: 'tf', q: 'Jess is sixteen.', a: ['False'], line: 9 },
-          { type: 'choose', q: "What is Amy's surname?", opts: ['Hill', 'Green', 'Brown'], a: ['Hill'], line: 1 },
-          { type: 'choose', q: 'Where is Amy from?', opts: ['London', 'Manchester', 'York'], a: ['Manchester'], line: 4 },
-          { type: 'choose', q: "What is the cat's name?", opts: ['Jess', 'Amy', 'Lily'], a: ['Lily'], line: 6 },
-          { type: 'choose', q: 'What does Amy like?', opts: ['music and books', 'football and films', 'maths and art'], a: ['music and books'], line: 7 },
-          { type: 'choose', q: "Who is Amy's best friend?", opts: ['Lily', 'Jess', 'Kate'], a: ['Jess'], line: 8 }
+          { type: "tf", q: "Amy is fifteen.", a: ["True"], line: 2 },
+          { type: "tf", q: "Amy is a teacher.", a: ["False"], line: 3 },
+          { type: "tf", q: "Amy lives with her mum and her dad.", a: ["True"], line: 5 },
+          { type: "tf", q: "Amy has got a dog.", a: ["False"], line: 6 },
+          { type: "tf", q: "Jess is sixteen.", a: ["False"], line: 9 },
+          { type: "tf", q: "Amy goes to school by bus.", a: ["True"], line: 13 },
+          { type: "tf", q: "Amy's mum is a cook.", a: ["False"], line: 14 },
+          { type: "choose", q: "What is Amy's surname?", opts: ["Hill","Green","Brown"], a: ["Hill"], line: 1 },
+          { type: "choose", q: "Where is Amy from?", opts: ["London","Manchester","York"], a: ["Manchester"], line: 4 },
+          { type: "choose", q: "What is the cat's name?", opts: ["Jess","Amy","Lily"], a: ["Lily"], line: 6 },
+          { type: "choose", q: "What does Amy like?", opts: ["music and books","football and films","maths and art"], a: ["music and books"], line: 7 },
+          { type: "choose", q: "Who is Amy's best friend?", opts: ["Lily","Jess","Kate"], a: ["Jess"], line: 8 },
+          { type: "choose", q: "Who is Amy's favourite teacher?", opts: ["Mrs Taylor","Mrs Green","Mrs Brown"], a: ["Mrs Taylor"], line: 11 },
+          { type: "choose", q: "What does Amy play at the weekend?", opts: ["football","the guitar","the piano"], a: ["the guitar"], line: 15 }
         ],
         words: [
           { w: 'name card', emoji: '📇', m: 'a small card with your name and a few things about you', ex: "Read Amy's name card." },
@@ -111,30 +115,28 @@ var TA_SKILLS = {
         minWords: 50, maxWords: 70, minutes: 12
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
+        topic: "Daily Routine",
         words: [
-          { w: 'name', emoji: '📛', ex: 'My name is Anna.' },
-          { w: 'years old', emoji: '🎂', ex: "I'm fourteen years old." },
-          { w: 'come from', emoji: '🌍', ex: 'I come from a small town.' },
-          { w: 'live', emoji: '🏠', ex: 'I live in a flat with my family.' },
-          { w: 'family', emoji: '👨‍👩‍👧', ex: "There are four people in my family." },
-          { w: 'student', emoji: '🎒', ex: "I'm a student at a big school." },
-          { w: 'free time', emoji: '⚽', ex: 'In my free time, I play football.' },
-          { w: 'favourite', emoji: '❤️', ex: 'My favourite colour is blue.' },
-          { w: 'best friend', emoji: '🤝', ex: 'My best friend is very funny.' },
-          { w: 'speak', emoji: '🗣️', ex: 'I speak two languages.' }
+          { w: "Wake up", uz: "Uyg'onmoq", emoji: "⏰", ex: "I wake up at seven o'clock." },
+          { w: "Get dressed", uz: "Kiyinmoq", emoji: "👕", ex: "I get dressed after breakfast." },
+          { w: "Have breakfast", uz: "Nonushta qilmoq", emoji: "🍳", ex: "I have breakfast with my family." },
+          { w: "Go to work", uz: "Ishga bormoq", emoji: "💼", ex: "My dad goes to work by bus." },
+          { w: "Come home", uz: "Uyga kelmoq", emoji: "🏠", ex: "I come home at four o'clock." },
+          { w: "Do homework", uz: "Uy vazifasini bajarmoq", emoji: "📝", ex: "I do my homework in the evening." },
+          { w: "Take a shower", uz: "Dush qabul qilmoq", emoji: "🚿", ex: "I take a shower every morning." },
+          { w: "Have a rest", uz: "Dam olmoq", emoji: "🛋️", ex: "After school, I have a rest." },
+          { w: "Go to bed", uz: "Uxlashga yotmoq", emoji: "🛏️", ex: "I go to bed at ten o'clock." },
+          { w: "Every day", uz: "Har kuni", emoji: "📅", ex: "I read a book every day." }
         ],
         questions: [
-          { q: "What's your name?", use: ['My name is …', 'You can call me …'] },
-          { q: 'Where are you from?', use: ["I'm from …", 'I come from …'] },
-          { q: 'Who do you live with?', use: ['I live with my …', 'mum', 'dad', 'brother', 'sister'] },
-          { q: 'Are you a student, or do you work?', use: ["I'm a student at …", 'I work at …', 'My favourite subject is …'] },
-          { q: 'What do you like doing in your free time?', use: ['I like …ing', 'In my free time, I …', 'at the weekend'] }
+          { q: "What time do you wake up?", use: ["I wake up at …","every day","on Sundays"] },
+          { q: "What do you have for breakfast?", use: ["I have … for breakfast","bread","eggs","tea"] },
+          { q: "How do you go to school or work?", use: ["I go to … by bus / on foot","It takes … minutes"] },
+          { q: "What do you do after school?", use: ["I come home and …","I do my homework","I have a rest"] },
+          { q: "What time do you go to bed?", use: ["I go to bed at …","before that, I …"] }
         ],
-        part2: {
-          topic: 'Talk about yourself',
-          hints: ['your name, your age and where you are from', 'your family and your home', 'what you like doing in your free time'],
-          seconds: 30
-        }
+        part2: { topic: "Talk about your daily routine", hints: ["what you do in the morning","what you do in the afternoon","what you do in the evening"], seconds: 30 }
       }
     },
     {
@@ -203,16 +205,20 @@ var TA_SKILLS = {
         text: "This is our class list. We are Class 5B. There are eighteen students in our class. Our teacher is Mr Lee. Our classroom is Room 12. Sam is eleven years old. Ella is twelve. Max is eleven too. Ella has got two brothers. Sam has got one sister. There are six lessons every day.\n\n" +
           "Our classroom is big and sunny. It has got ten tables and a big whiteboard. Mr Lee is from London. He is a good teacher, and he is very funny. Our first lesson is at nine o'clock. Lunch is at half past twelve. There are four girls and two boys in my group. Ella sits next to me. Max sits behind us. Sam likes Maths, and Ella likes English. Max likes PE best. We go home at three o'clock.",
         questions: [
-          { type: 'tf', q: 'There are eighteen students in the class.', a: ['True'], line: 2 },
-          { type: 'tf', q: 'The classroom is Room 20.', a: ['False'], line: 4 },
-          { type: 'tf', q: 'Sam is eleven.', a: ['True'], line: 5 },
-          { type: 'tf', q: 'Max is twelve.', a: ['False'], line: 7 },
-          { type: 'tf', q: 'There are six lessons every day.', a: ['True'], line: 10 },
-          { type: 'choose', q: 'What class are they?', opts: ['Class 5B', 'Class 7B', 'Class 8B'], a: ['Class 5B'], line: 1 },
-          { type: 'choose', q: 'Who is the teacher?', opts: ['Mr Hill', 'Mr Lee', 'Mrs Day'], a: ['Mr Lee'], line: 3 },
-          { type: 'choose', q: 'How old is Ella?', opts: ['ten', 'eleven', 'twelve'], a: ['twelve'], line: 6 },
-          { type: 'choose', q: 'How many brothers has Ella got?', opts: ['one', 'two', 'three'], a: ['two'], line: 8 },
-          { type: 'choose', q: 'Who has got one sister?', opts: ['Sam', 'Ella', 'Max'], a: ['Sam'], line: 9 }
+          { type: "tf", q: "There are eighteen students in the class.", a: ["True"], line: 2 },
+          { type: "tf", q: "The classroom is Room 20.", a: ["False"], line: 4 },
+          { type: "tf", q: "Sam is eleven.", a: ["True"], line: 5 },
+          { type: "tf", q: "Max is twelve.", a: ["False"], line: 7 },
+          { type: "tf", q: "There are six lessons every day.", a: ["True"], line: 10 },
+          { type: "tf", q: "Mr Lee is from London.", a: ["True"], line: 13 },
+          { type: "tf", q: "Lunch is at one o'clock.", a: ["False"], line: 16 },
+          { type: "choose", q: "What class are they?", opts: ["Class 5B","Class 7B","Class 8B"], a: ["Class 5B"], line: 1 },
+          { type: "choose", q: "Who is the teacher?", opts: ["Mr Hill","Mr Lee","Mrs Day"], a: ["Mr Lee"], line: 3 },
+          { type: "choose", q: "How old is Ella?", opts: ["ten","eleven","twelve"], a: ["twelve"], line: 6 },
+          { type: "choose", q: "How many brothers has Ella got?", opts: ["one","two","three"], a: ["two"], line: 8 },
+          { type: "choose", q: "Who has got one sister?", opts: ["Sam","Ella","Max"], a: ["Sam"], line: 9 },
+          { type: "choose", q: "How many tables are in the classroom?", opts: ["twelve","eighteen","ten"], a: ["ten"], line: 12 },
+          { type: "choose", q: "What does Max like best?", opts: ["PE","Maths","English"], a: ["PE"], line: 21 }
         ],
         words: [
           { w: 'class list', emoji: '📋', m: 'a list of the students in a class', ex: 'This is our class list.' },
@@ -234,28 +240,28 @@ var TA_SKILLS = {
         minWords: 60, maxWords: 80, minutes: 10
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
+        topic: "Family",
         words: [
-          { w: 'number', emoji: '🔢', ex: 'My favourite number is seven.' },
-          { w: 'years old', emoji: '🎂', ex: "I'm twelve years old." },
-          { w: 'phone number', emoji: '📞', ex: "My phone number is oh seven seven …" },
-          { w: 'double', emoji: '2️⃣', ex: 'Double five — that is five, five.' },
-          { w: 'room', emoji: '🚪', ex: 'Our classroom is room ten.' },
-          { w: 'class', emoji: '🏫', ex: 'There are fifteen students in my class.' },
-          { w: 'brother', emoji: '👦', ex: "I've got one brother." },
-          { w: 'sister', emoji: '👧', ex: "I've got two sisters." }
+          { w: "Parents", uz: "Ota-ona", emoji: "👨‍👩‍👧", ex: "My parents are very kind." },
+          { w: "Only child", uz: "Yolg'iz farzand", emoji: "🧒", ex: "I'm an only child, so I have no brothers or sisters." },
+          { w: "Older brother", uz: "Aka", emoji: "👦", ex: "My older brother is seventeen." },
+          { w: "Younger sister", uz: "Singil", emoji: "👧", ex: "My younger sister is five years old." },
+          { w: "Get along with", uz: "Yaxshi chiqishmoq", emoji: "🤝", ex: "I get along with my brother." },
+          { w: "Spend time together", uz: "Birga vaqt o'tkazmoq", emoji: "⏳", ex: "We spend time together at the weekend." },
+          { w: "Take care of", uz: "G'amxo'rlik qilmoq", emoji: "💞", ex: "My mum takes care of my grandma." },
+          { w: "Helpful", uz: "Yordam berishga tayyor", emoji: "🙌", ex: "My sister is very helpful at home." },
+          { w: "Kind", uz: "Mehribon", emoji: "😊", ex: "My grandad is a kind man." },
+          { w: "Close family", uz: "Ahil oila", emoji: "🏡", ex: "We are a close family." }
         ],
         questions: [
-          { q: 'How old are you?', use: ["I'm … years old."] },
-          { q: "What's your phone number?", use: ["It's …", 'oh', 'double'] },
-          { q: 'What number is your classroom?', use: ["It's room …"] },
-          { q: 'How many students are there in your class?', use: ['There are … students in my class.'] },
-          { q: 'How many brothers and sisters have you got?', use: ["I've got …", 'one brother', 'two sisters', "I haven't got any."] }
+          { q: "How many people are there in your family?", use: ["There are … people in my family","my parents","my brother / sister"] },
+          { q: "Have you got brothers or sisters?", use: ["I have got an older brother / a younger sister","I'm an only child"] },
+          { q: "Who do you get along with best?", use: ["I get along with my … best","because he / she is kind"] },
+          { q: "What do you do together as a family?", use: ["We spend time together …","at the weekend","we have dinner together"] },
+          { q: "Who helps you at home?", use: ["My … helps me","he / she is very helpful","we take care of each other"] }
         ],
-        part2: {
-          topic: 'My age and my phone number',
-          hints: ['how old you are', 'your phone number (you can make one up)', 'your house number or your classroom number'],
-          seconds: 30
-        }
+        part2: { topic: "Talk about your family", hints: ["who is in your family","what they are like","what you do together"], seconds: 30 }
       }
     },
     {
@@ -323,16 +329,20 @@ var TA_SKILLS = {
         text: "Look at my family photo. My name is Holly and I am thirteen. The tall man is my dad, Tom. The woman next to him is my mum, Sarah. My big brother is Leo. He is seventeen. My little sister is Rosie. She is five. The old man is my grandad, Bill. He has got a white beard. Our cat, Toby, is on my grandad's knee.\n\n" +
           "This photo is from my grandad's birthday party. It was in the garden of our house. My dad is a bus driver, and my mum is a nurse. Leo plays the guitar, and he is very good. Rosie loves dolls and pink dresses. My grandad is seventy-five, but he is very happy and active. He lives with us in our house. My grandma is not in the photo, because she is the photographer! We have got a big cake on the table. It is a chocolate cake. Everyone in the photo is smiling.",
         questions: [
-          { type: 'tf', q: 'Holly is thirteen.', a: ['True'], line: 1 },
-          { type: 'tf', q: "Holly's dad is short.", a: ['False'], line: 2 },
-          { type: 'tf', q: "Leo is Holly's little brother.", a: ['False'], line: 4 },
-          { type: 'tf', q: 'Rosie is five.', a: ['True'], line: 7 },
-          { type: 'tf', q: 'Grandad has got a beard.', a: ['True'], line: 9 },
-          { type: 'choose', q: 'Who is Sarah?', opts: ["Holly's mum", "Holly's sister", "Holly's grandma"], a: ["Holly's mum"], line: 3 },
-          { type: 'choose', q: 'How old is Leo?', opts: ['seven', 'fifteen', 'seventeen'], a: ['seventeen'], line: 5 },
-          { type: 'choose', q: 'Who is Rosie?', opts: ["Holly's little sister", "Holly's mum", "Holly's friend"], a: ["Holly's little sister"], line: 6 },
-          { type: 'choose', q: 'Who is Bill?', opts: ["Holly's dad", "Holly's grandad", "Holly's brother"], a: ["Holly's grandad"], line: 8 },
-          { type: 'choose', q: 'Who is Toby?', opts: ['the cat', 'the dog', 'the baby'], a: ['the cat'], line: 10 }
+          { type: "tf", q: "Holly is thirteen.", a: ["True"], line: 1 },
+          { type: "tf", q: "Holly's dad is short.", a: ["False"], line: 2 },
+          { type: "tf", q: "Leo is Holly's little brother.", a: ["False"], line: 4 },
+          { type: "tf", q: "Rosie is five.", a: ["True"], line: 7 },
+          { type: "tf", q: "Grandad has got a beard.", a: ["True"], line: 9 },
+          { type: "tf", q: "Holly's mum is a nurse.", a: ["True"], line: 13 },
+          { type: "tf", q: "Holly's grandma is in the photo.", a: ["False"], line: 18 },
+          { type: "choose", q: "Who is Sarah?", opts: ["Holly's mum","Holly's sister","Holly's grandma"], a: ["Holly's mum"], line: 3 },
+          { type: "choose", q: "How old is Leo?", opts: ["seven","fifteen","seventeen"], a: ["seventeen"], line: 5 },
+          { type: "choose", q: "Who is Rosie?", opts: ["Holly's little sister","Holly's mum","Holly's friend"], a: ["Holly's little sister"], line: 6 },
+          { type: "choose", q: "Who is Bill?", opts: ["Holly's dad","Holly's grandad","Holly's brother"], a: ["Holly's grandad"], line: 8 },
+          { type: "choose", q: "Who is Toby?", opts: ["the cat","the dog","the baby"], a: ["the cat"], line: 10 },
+          { type: "choose", q: "Whose birthday party is in the photo?", opts: ["Holly's","Holly's grandad's","Rosie's"], a: ["Holly's grandad's"], line: 11 },
+          { type: "choose", q: "What does Leo play?", opts: ["football","the piano","the guitar"], a: ["the guitar"], line: 14 }
         ],
         words: [
           { w: 'look at', emoji: '👀', m: 'to turn your eyes to something', ex: 'Look at my family photo.' },
@@ -354,28 +364,28 @@ var TA_SKILLS = {
         minWords: 65, maxWords: 85, minutes: 15
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
+        topic: "Home & Living",
         words: [
-          { w: 'mum', emoji: '👩', ex: 'My mum is very kind.' },
-          { w: 'dad', emoji: '👨', ex: 'My dad is tall.' },
-          { w: 'brother', emoji: '👦', ex: 'My brother is ten years old.' },
-          { w: 'sister', emoji: '👧', ex: 'My sister is very funny.' },
-          { w: 'grandma', emoji: '👵', ex: 'My grandma has got a cat.' },
-          { w: 'grandad', emoji: '👴', ex: 'My grandad is seventy.' },
-          { w: 'tall', emoji: '🦒', ex: 'My brother is very tall.' },
-          { w: 'funny', emoji: '😂', ex: 'My dad is funny.' }
+          { w: "Living room", uz: "Mehmonxona", emoji: "🛋️", ex: "We watch TV in the living room." },
+          { w: "Bedroom", uz: "Yotoqxona", emoji: "🛏️", ex: "My bedroom is small but nice." },
+          { w: "Kitchen", uz: "Oshxona", emoji: "🍳", ex: "My mum cooks in the kitchen." },
+          { w: "Bathroom", uz: "Hammom", emoji: "🛁", ex: "Our bathroom is next to my bedroom." },
+          { w: "Furniture", uz: "Mebel", emoji: "🪑", ex: "We have new furniture in the living room." },
+          { w: "Comfortable", uz: "Qulay", emoji: "😌", ex: "My bed is very comfortable." },
+          { w: "Spacious", uz: "Keng", emoji: "📐", ex: "Our kitchen is spacious and bright." },
+          { w: "Tidy", uz: "Ozoda", emoji: "🧹", ex: "I keep my room tidy." },
+          { w: "Garden", uz: "Bog'", emoji: "🌳", ex: "There are apple trees in our garden." },
+          { w: "Neighbour", uz: "Qo'shni", emoji: "👋", ex: "Our neighbour is very friendly." }
         ],
         questions: [
-          { q: 'How many people are there in your family?', use: ['There are … people in my family.'] },
-          { q: 'Have you got a brother or a sister?', use: ["Yes, I've got …", "No, I haven't."] },
-          { q: "What's your mum's name?", use: ['Her name is …'] },
-          { q: 'How old is your brother or your sister?', use: ["He's … years old.", "She's … years old."] },
-          { q: 'Who is funny in your family?', use: ['My … is funny.', 'kind', 'tall'] }
+          { q: "Do you live in a house or a flat?", use: ["I live in a house / a flat","It has … rooms"] },
+          { q: "What is your favourite room? Why?", use: ["My favourite room is …","because it is comfortable / spacious"] },
+          { q: "What is in your bedroom?", use: ["There is a … in my bedroom","There are …","furniture"] },
+          { q: "Is your room tidy?", use: ["My room is usually tidy / messy","I clean it on …"] },
+          { q: "Do you know your neighbours?", use: ["Our neighbour is …","he / she is friendly","we say hello"] }
         ],
-        part2: {
-          topic: 'My family',
-          hints: ['who is in your family', 'their names and how old they are', 'who you like to play or talk with'],
-          seconds: 30
-        }
+        part2: { topic: "Talk about your home", hints: ["where your home is and how big it is","the rooms in it","your favourite room and why"], seconds: 30 }
       }
     },
     {
@@ -443,16 +453,20 @@ var TA_SKILLS = {
         text: "This is my school bag. It is red and black. In my bag, there are two books and a notebook. My pencil case is purple. There are three pencils, a pen and a rubber in it. I have got a bottle of water. It is blue. There is a banana for lunch. My phone is in my bag too. It is white. I have got my keys. They are small and silver.\n\n" +
           "I have got a small umbrella in my bag too. It is for rainy days. My bus card is in a small pocket. On Mondays, my sports shoes are in my bag, because I have got PE. They are white and blue. My glasses are in a brown box. My bag is very heavy every morning! In the afternoon, it is lighter, because I eat my banana and I drink my water.",
         questions: [
-          { type: 'tf', q: 'The bag is red and black.', a: ['True'], line: 1 },
-          { type: 'tf', q: 'There are three books in the bag.', a: ['False'], line: 2 },
-          { type: 'tf', q: 'The pencil case is purple.', a: ['True'], line: 3 },
-          { type: 'tf', q: 'The bottle of water is green.', a: ['False'], line: 6 },
-          { type: 'tf', q: 'The phone is black.', a: ['False'], line: 9 },
-          { type: 'choose', q: 'What else is in the bag with the books?', opts: ['a notebook', 'a ruler', 'a hat'], a: ['a notebook'], line: 2 },
-          { type: 'choose', q: 'How many pencils are in the pencil case?', opts: ['two', 'three', 'four'], a: ['three'], line: 4 },
-          { type: 'choose', q: 'What food is in the bag?', opts: ['an apple', 'a banana', 'a sandwich'], a: ['a banana'], line: 7 },
-          { type: 'choose', q: 'The banana is for …', opts: ['breakfast', 'lunch', 'dinner'], a: ['lunch'], line: 7 },
-          { type: 'choose', q: 'What colour are the keys?', opts: ['gold', 'silver', 'black'], a: ['silver'], line: 11 }
+          { type: "tf", q: "The bag is red and black.", a: ["True"], line: 1 },
+          { type: "tf", q: "There are three books in the bag.", a: ["False"], line: 2 },
+          { type: "tf", q: "The pencil case is purple.", a: ["True"], line: 3 },
+          { type: "tf", q: "The bottle of water is green.", a: ["False"], line: 6 },
+          { type: "tf", q: "The phone is black.", a: ["False"], line: 9 },
+          { type: "tf", q: "The sports shoes are white and blue.", a: ["True"], line: 16 },
+          { type: "tf", q: "The bag is light in the morning.", a: ["False"], line: 18 },
+          { type: "choose", q: "What else is in the bag with the books?", opts: ["a notebook","a ruler","a hat"], a: ["a notebook"], line: 2 },
+          { type: "choose", q: "How many pencils are in the pencil case?", opts: ["two","three","four"], a: ["three"], line: 4 },
+          { type: "choose", q: "What food is in the bag?", opts: ["an apple","a banana","a sandwich"], a: ["a banana"], line: 7 },
+          { type: "choose", q: "The banana is for …", opts: ["breakfast","lunch","dinner"], a: ["lunch"], line: 7 },
+          { type: "choose", q: "What colour are the keys?", opts: ["gold","silver","black"], a: ["silver"], line: 11 },
+          { type: "choose", q: "When are the sports shoes in the bag?", opts: ["on Mondays","on Fridays","every day"], a: ["on Mondays"], line: 15 },
+          { type: "choose", q: "Where are the glasses?", opts: ["in a small pocket","in a brown box","in the pencil case"], a: ["in a brown box"], line: 17 }
         ],
         words: [
           { w: 'school bag', emoji: '🎒', m: 'the bag you take to school', ex: 'This is my school bag.' },
@@ -474,28 +488,28 @@ var TA_SKILLS = {
         minWords: 75, maxWords: 95, minutes: 15
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
+        topic: "Food & Meals",
         words: [
-          { w: 'colour', emoji: '🎨', ex: 'My favourite colour is green.' },
-          { w: 'red', emoji: '🔴', ex: 'My bag is red.' },
-          { w: 'blue', emoji: '🔵', ex: 'My pencil case is blue.' },
-          { w: 'black', emoji: '⚫', ex: 'My shoes are black.' },
-          { w: 'bag', emoji: '🎒', ex: 'There are three books in my bag.' },
-          { w: 'phone', emoji: '📱', ex: 'My phone is white.' },
-          { w: 'ball', emoji: '⚽', ex: 'My favourite thing is my ball.' },
-          { w: 'favourite', emoji: '❤️', ex: 'My favourite thing is my bike.' }
+          { w: "Breakfast", uz: "Nonushta", emoji: "🥣", ex: "I have eggs for breakfast." },
+          { w: "Lunch", uz: "Tushlik", emoji: "🥪", ex: "I have lunch at school." },
+          { w: "Dinner", uz: "Kechki ovqat", emoji: "🍲", ex: "We have dinner at seven o'clock." },
+          { w: "Delicious", uz: "Mazali", emoji: "😋", ex: "My mum's soup is delicious." },
+          { w: "Spicy", uz: "Achchiq", emoji: "🌶️", ex: "I don't like spicy food." },
+          { w: "Sweet", uz: "Shirin", emoji: "🍰", ex: "This cake is very sweet." },
+          { w: "Sour", uz: "Nordon", emoji: "🍋", ex: "Lemons are sour." },
+          { w: "Homemade", uz: "Uyda tayyorlangan", emoji: "🏠", ex: "I love homemade bread." },
+          { w: "Ingredients", uz: "Masalliqlar", emoji: "🧂", ex: "Rice and carrots are the main ingredients." },
+          { w: "Favourite dish", uz: "Sevimli taom", emoji: "🍽️", ex: "My favourite dish is plov." }
         ],
         questions: [
-          { q: 'What colour is your bag?', use: ["It's …", 'red', 'blue', 'black'] },
-          { q: "What's in your bag today?", use: ["There's a …", 'There are …', 'books', 'pens'] },
-          { q: "What's your favourite colour?", use: ['My favourite colour is …'] },
-          { q: 'What colour are your shoes?', use: ["They're …", 'white', 'black'] },
-          { q: "What's your favourite thing?", use: ['My favourite thing is my …', "It's …"] }
+          { q: "What do you usually have for breakfast?", use: ["I usually have …","for breakfast","with tea / milk"] },
+          { q: "Where do you have lunch?", use: ["I have lunch at school / at home","at … o'clock"] },
+          { q: "What is your favourite dish?", use: ["My favourite dish is …","it is delicious","my mum makes it"] },
+          { q: "Do you like spicy or sweet food?", use: ["I like … food","I don't like …","because it is too spicy / sweet"] },
+          { q: "Who cooks in your family?", use: ["My … cooks","homemade food","the ingredients are …"] }
         ],
-        part2: {
-          topic: 'My favourite thing',
-          hints: ['what it is', 'what colour it is', 'why you like it'],
-          seconds: 30
-        }
+        part2: { topic: "Talk about your favourite dish", hints: ["what it is and what it tastes like","its ingredients","when you eat it and who makes it"], seconds: 30 }
       }
     },
     {
@@ -571,16 +585,20 @@ var TA_SKILLS = {
         text: "Welcome to Bell's Shop! We are at 36 King Street. We are open every day. Here is our price list. Bread is 85p. Milk is 60p. An apple is 30p, and a banana is 25p. A bottle of water is 50p. A small cake is 75p. Our cakes are very good! An ice cream is 90p. Children love it. A sandwich is £2. Birthday cards are 99p. Our phone number is 01632 960 714. Come and see us!\n\n" +
           "We have got a lot of fruit and vegetables too. Carrots are 40p, and a big orange is 45p. A box of eggs is £1.80. Our cheese is from a farm near the town. Cheese is £2.50. A small bottle of orange juice is 80p. We sell newspapers and magazines too. A newspaper is £1. We have got pens, pencils and notebooks for school. A notebook is £1.20. On Saturdays, children get a free sweet with every ice cream. The shop opens at seven o'clock in the morning and closes at nine o'clock in the evening.",
         questions: [
-          { type: 'tf', q: 'The shop is open every day.', a: ['True'], line: 2 },
-          { type: 'tf', q: 'Bread is 58p.', a: ['False'], line: 4 },
-          { type: 'tf', q: 'A banana is 30p.', a: ['False'], line: 6 },
-          { type: 'tf', q: 'A bottle of water is 50p.', a: ['True'], line: 7 },
-          { type: 'tf', q: 'A sandwich is £2.', a: ['True'], line: 12 },
-          { type: 'choose', q: 'Where is the shop?', opts: ['36 King Street', '63 King Street', '36 Queen Street'], a: ['36 King Street'], line: 1 },
-          { type: 'choose', q: 'How much is a small cake?', opts: ['57p', '75p', '70p'], a: ['75p'], line: 8 },
-          { type: 'choose', q: 'How much is an ice cream?', opts: ['19p', '90p', '99p'], a: ['90p'], line: 10 },
-          { type: 'choose', q: 'What is 99p?', opts: ['a birthday card', 'a cake', 'a sandwich'], a: ['a birthday card'], line: 13 },
-          { type: 'choose', q: "What is the shop's phone number?", opts: ['01632 960 714', '01632 960 741', '01632 690 714'], a: ['01632 960 714'], line: 14 }
+          { type: "tf", q: "The shop is open every day.", a: ["True"], line: 2 },
+          { type: "tf", q: "Bread is 58p.", a: ["False"], line: 4 },
+          { type: "tf", q: "A banana is 30p.", a: ["False"], line: 6 },
+          { type: "tf", q: "A bottle of water is 50p.", a: ["True"], line: 7 },
+          { type: "tf", q: "A sandwich is £2.", a: ["True"], line: 12 },
+          { type: "tf", q: "A box of eggs is £1.80.", a: ["True"], line: 18 },
+          { type: "tf", q: "The shop closes at seven o'clock in the evening.", a: ["False"], line: 27 },
+          { type: "choose", q: "Where is the shop?", opts: ["36 King Street","63 King Street","36 Queen Street"], a: ["36 King Street"], line: 1 },
+          { type: "choose", q: "How much is a small cake?", opts: ["57p","75p","70p"], a: ["75p"], line: 8 },
+          { type: "choose", q: "How much is an ice cream?", opts: ["19p","90p","99p"], a: ["90p"], line: 10 },
+          { type: "choose", q: "What is 99p?", opts: ["a birthday card","a cake","a sandwich"], a: ["a birthday card"], line: 13 },
+          { type: "choose", q: "What is the shop's phone number?", opts: ["01632 960 714","01632 960 741","01632 690 714"], a: ["01632 960 714"], line: 14 },
+          { type: "choose", q: "Where is the cheese from?", opts: ["a big supermarket","another country","a farm near the town"], a: ["a farm near the town"], line: 19 },
+          { type: "choose", q: "What do children get on Saturdays?", opts: ["a free sweet","a free ice cream","a free notebook"], a: ["a free sweet"], line: 26 }
         ],
         words: [
           { w: 'shop', emoji: '🏪', m: 'a place where you buy things', ex: "Welcome to Bell's Shop!" },
@@ -602,28 +620,28 @@ var TA_SKILLS = {
         minWords: 85, maxWords: 105, minutes: 15
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
+        topic: "Free Time",
         words: [
-          { w: 'how much', emoji: '💰', ex: 'How much is this bag?' },
-          { w: 'pounds', emoji: '💷', ex: 'It is twenty-five pounds.' },
-          { w: 'pence', emoji: '🪙', ex: 'An apple is thirty pence.' },
-          { w: 'price', emoji: '🏷️', ex: 'The price is on the card.' },
-          { w: 'cheap', emoji: '👍', ex: 'This T-shirt is cheap.' },
-          { w: 'expensive', emoji: '💎', ex: 'This phone is very expensive.' },
-          { w: 'shop', emoji: '🏪', ex: 'There is a small shop near my house.' },
-          { w: 'buy', emoji: '🛒', ex: 'I buy bread and milk every day.' }
+          { w: "Free time", uz: "Bo'sh vaqt", emoji: "🕒", ex: "In my free time, I read books." },
+          { w: "Hang out", uz: "Vaqt o'tkazmoq", emoji: "🧑‍🤝‍🧑", ex: "I hang out with my friends in the park." },
+          { w: "Listen to music", uz: "Musiqa tinglamoq", emoji: "🎧", ex: "I listen to music on the bus." },
+          { w: "Watch videos", uz: "Videolar ko'rmoq", emoji: "📱", ex: "I watch videos in the evening." },
+          { w: "Go for a walk", uz: "Sayrga chiqmoq", emoji: "🚶", ex: "We go for a walk after dinner." },
+          { w: "Play games", uz: "O'yin o'ynamoq", emoji: "🎮", ex: "I play games with my brother." },
+          { w: "Read books", uz: "Kitob o'qimoq", emoji: "📚", ex: "I like to read books about animals." },
+          { w: "Meet friends", uz: "Do'stlar bilan uchrashmoq", emoji: "👋", ex: "I meet friends on Saturdays." },
+          { w: "Stay at home", uz: "Uyda qolmoq", emoji: "🏠", ex: "When it rains, I stay at home." },
+          { w: "Enjoy", uz: "Rohatlanmoq", emoji: "😄", ex: "I enjoy playing football." }
         ],
         questions: [
-          { q: 'What do you like to buy?', use: ['I like to buy …', 'books', 'clothes', 'sweets'] },
-          { q: 'How much is an ice cream in your town?', use: ["It's about …"] },
-          { q: "What's your favourite shop?", use: ['My favourite shop is …', "It's on … Street."] },
-          { q: 'Is your bag cheap or expensive?', use: ["It's cheap.", "It's expensive.", 'It was about …'] },
-          { q: "What's your favourite number from twenty to a hundred?", use: ['My favourite number is …', 'twenty-five', 'fifty', 'a hundred'] }
+          { q: "What do you do in your free time?", use: ["In my free time, I …","I enjoy …ing"] },
+          { q: "Do you like listening to music?", use: ["Yes, I listen to music …","My favourite singer is …"] },
+          { q: "Where do you hang out with your friends?", use: ["We hang out in / at …","we play games","we go for a walk"] },
+          { q: "Do you prefer to go out or stay at home?", use: ["I prefer to …","because …"] },
+          { q: "What did you do last weekend?", use: ["Last weekend, I …","I met friends","I stayed at home"] }
         ],
-        part2: {
-          topic: 'Prices',
-          hints: ['three things you like to buy', 'how much each thing is', 'which thing is cheap and which is expensive'],
-          seconds: 30
-        }
+        part2: { topic: "Talk about your free time", hints: ["what you like doing","who you do it with","why you enjoy it"], seconds: 30 }
       }
     },
     {
@@ -688,16 +706,20 @@ var TA_SKILLS = {
         text: "My name is Leo and this is my school week. School starts at nine o'clock and finishes at three o'clock. On Monday, I have Maths and English. On Tuesday, I have Science and Art. Art is my favourite lesson! On Wednesday, I have Music. We sing songs. On Thursday, I have PE. We play football. On Friday, I have Maths again and a test. Lunch is at twelve o'clock every day. I don't go to school on Saturday and Sunday. On Saturday, I play with my friends.\n\n" +
           "In the morning, I get up at seven o'clock. I have breakfast with my sister, Mia. Mia is eight, and she goes to my school too. We walk to school with our mum. My best friend at school is Ben. Ben sits next to me in every lesson. My English teacher is Miss Brown. She reads stories to us. After school, I do my homework at four o'clock. I watch TV for one hour. Then we have dinner at six o'clock. I go to bed at nine o'clock. On Sunday, I visit my grandma and grandad. They live in a small house near the sea.",
         questions: [
-          { type: 'tf', q: "School starts at nine o'clock.", a: ['True'], line: 1 },
-          { type: 'tf', q: "Art is Leo's favourite lesson.", a: ['True'], line: 4 },
-          { type: 'tf', q: 'Leo has PE on Monday.', a: ['False'], line: 7 },
-          { type: 'tf', q: "Lunch is at one o'clock.", a: ['False'], line: 10 },
-          { type: 'tf', q: 'Leo goes to school on Sunday.', a: ['False'], line: 11 },
-          { type: 'choose', q: 'When does school finish?', opts: ["at two o'clock", "at three o'clock", "at four o'clock"], a: ["at three o'clock"], line: 1 },
-          { type: 'choose', q: 'What does Leo have on Tuesday?', opts: ['Maths and English', 'Science and Art', 'Music'], a: ['Science and Art'], line: 3 },
-          { type: 'choose', q: 'What do they do in Music?', opts: ['sing songs', 'play football', 'read books'], a: ['sing songs'], line: 6 },
-          { type: 'choose', q: 'When is the test?', opts: ['on Monday', 'on Thursday', 'on Friday'], a: ['on Friday'], line: 9 },
-          { type: 'choose', q: 'What does Leo do on Saturday?', opts: ['He goes to school.', 'He plays with his friends.', 'He has a test.'], a: ['He plays with his friends.'], line: 12 }
+          { type: "tf", q: "School starts at nine o'clock.", a: ["True"], line: 1 },
+          { type: "tf", q: "Art is Leo's favourite lesson.", a: ["True"], line: 4 },
+          { type: "tf", q: "Leo has PE on Monday.", a: ["False"], line: 7 },
+          { type: "tf", q: "Lunch is at one o'clock.", a: ["False"], line: 10 },
+          { type: "tf", q: "Leo goes to school on Sunday.", a: ["False"], line: 11 },
+          { type: "tf", q: "Leo gets up at seven o'clock.", a: ["True"], line: 13 },
+          { type: "tf", q: "Leo goes to school by bus.", a: ["False"], line: 16 },
+          { type: "choose", q: "When does school finish?", opts: ["at two o'clock","at three o'clock","at four o'clock"], a: ["at three o'clock"], line: 1 },
+          { type: "choose", q: "What does Leo have on Tuesday?", opts: ["Maths and English","Science and Art","Music"], a: ["Science and Art"], line: 3 },
+          { type: "choose", q: "What do they do in Music?", opts: ["sing songs","play football","read books"], a: ["sing songs"], line: 6 },
+          { type: "choose", q: "When is the test?", opts: ["on Monday","on Thursday","on Friday"], a: ["on Friday"], line: 9 },
+          { type: "choose", q: "What does Leo do on Saturday?", opts: ["He goes to school.","He plays with his friends.","He has a test."], a: ["He plays with his friends."], line: 12 },
+          { type: "choose", q: "Who is Leo's best friend at school?", opts: ["Mia","Ben","Tom"], a: ["Ben"], line: 17 },
+          { type: "choose", q: "When does Leo do his homework?", opts: ["at six o'clock","at nine o'clock","at four o'clock"], a: ["at four o'clock"], line: 21 }
         ],
         words: [
           { w: 'week', emoji: '📆', m: 'seven days: Monday to Sunday', ex: 'This is my school week.' },
@@ -719,28 +741,28 @@ var TA_SKILLS = {
         minWords: 90, maxWords: 110, minutes: 15
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
+        topic: "Friends",
         words: [
-          { w: 'Monday', emoji: '📅', ex: 'On Monday, I go to school.' },
-          { w: 'morning', emoji: '🌅', ex: 'I have breakfast in the morning.' },
-          { w: 'afternoon', emoji: '🌇', ex: 'I play football in the afternoon.' },
-          { w: 'evening', emoji: '🌙', ex: 'I watch TV in the evening.' },
-          { w: "o'clock", emoji: '🕓', ex: "I get up at seven o'clock." },
-          { w: 'get up', emoji: '⏰', ex: 'I get up early on Monday.' },
-          { w: 'go to bed', emoji: '🛏️', ex: "I go to bed at ten o'clock." },
-          { w: 'weekend', emoji: '🎉', ex: 'I see my friends at the weekend.' }
+          { w: "Best friend", uz: "Eng yaqin do'st", emoji: "🤝", ex: "My best friend lives next to me." },
+          { w: "Friendly", uz: "Do'stona", emoji: "😊", ex: "Our new classmate is very friendly." },
+          { w: "Funny", uz: "Kulgili", emoji: "😂", ex: "My friend tells funny stories." },
+          { w: "Honest", uz: "Rostgo'y", emoji: "🙂", ex: "A good friend is honest." },
+          { w: "Helpful", uz: "Yordamchi", emoji: "🙌", ex: "She is helpful with my homework." },
+          { w: "Trust", uz: "Ishonmoq", emoji: "🔒", ex: "I trust my best friend." },
+          { w: "Share", uz: "Bo'lishmoq", emoji: "🍪", ex: "We share our lunch at school." },
+          { w: "Spend time together", uz: "Birga vaqt o'tkazmoq", emoji: "⏳", ex: "We spend time together after school." },
+          { w: "Have fun", uz: "Mazza qilmoq", emoji: "🎉", ex: "We always have fun at the park." },
+          { w: "Make friends", uz: "Do'stlashmoq", emoji: "🧑‍🤝‍🧑", ex: "It is easy to make friends at school." }
         ],
         questions: [
-          { q: 'What day is it today?', use: ["It's …", 'Monday', 'Friday'] },
-          { q: 'What time do you get up?', use: ["I get up at … o'clock."] },
-          { q: "What's your favourite day?", use: ['My favourite day is …', 'because …'] },
-          { q: 'What do you do on Saturday?', use: ['On Saturday, I …', 'play football', 'see my friends'] },
-          { q: 'What time do you go to bed?', use: ["I go to bed at … o'clock."] }
+          { q: "Who is your best friend?", use: ["My best friend is …","we met at …"] },
+          { q: "What is your best friend like?", use: ["He / She is friendly / funny / honest","and very helpful"] },
+          { q: "What do you do together?", use: ["We spend time together …","we have fun","we play / talk / watch …"] },
+          { q: "Is it easy for you to make friends?", use: ["Yes / No, it is easy / difficult","because I am …"] },
+          { q: "What makes a good friend?", use: ["A good friend is …","you can trust him / her","he / she shares …"] }
         ],
-        part2: {
-          topic: 'My day',
-          hints: ['what time you get up', 'what you do in the morning and in the afternoon', 'what time you go to bed'],
-          seconds: 40
-        }
+        part2: { topic: "Talk about your best friend", hints: ["who your best friend is and how you met","what he or she is like","what you do together"], seconds: 40 }
       }
     },
     {
@@ -804,16 +826,20 @@ var TA_SKILLS = {
         text: "Welcome to the Green Café! We are open every day from eight o'clock to six o'clock. For breakfast, we have eggs and toast for £3.50. Pancakes with fruit are £4. Children love our pancakes! For lunch, a cheese sandwich is £3. Chicken soup with bread is £4.50. Our soup is hot and very good on a cold day. A small pizza is £6. Tea and coffee are £1.50. Orange juice is £2, and a glass of milk is £1. For something sweet, try our chocolate cake for £2.50. Come and eat with us!\n\n" +
           "The café is in a small street near the station. It is green and white inside, and there are flowers on every table. The café has got twenty tables. On sunny days, you can sit in the garden. The cook is Mr Green. He makes the bread every morning. His wife, Anna, makes the cakes. We have got a special menu for children. It has small pizzas and small sandwiches. A children's lunch is £4. On Fridays, we have fish and chips for £7. Our café is busy at lunchtime. Please come early! We have free water for everyone.",
         questions: [
-          { type: 'tf', q: 'The café is open every day.', a: ['True'], line: 1 },
-          { type: 'tf', q: 'Eggs and toast are £4.', a: ['False'], line: 2 },
-          { type: 'tf', q: 'Children love the pancakes.', a: ['True'], line: 4 },
-          { type: 'tf', q: 'The soup is cold.', a: ['False'], line: 7 },
-          { type: 'tf', q: 'A glass of milk is £1.', a: ['True'], line: 10 },
-          { type: 'choose', q: 'When does the café close?', opts: ["at five o'clock", "at six o'clock", "at eight o'clock"], a: ["at six o'clock"], line: 1 },
-          { type: 'choose', q: 'How much is a cheese sandwich?', opts: ['£3', '£4', '£6'], a: ['£3'], line: 5 },
-          { type: 'choose', q: 'What comes with the chicken soup?', opts: ['bread', 'toast', 'fruit'], a: ['bread'], line: 6 },
-          { type: 'choose', q: 'What is £6?', opts: ['a small pizza', 'a big pizza', 'a cheese sandwich'], a: ['a small pizza'], line: 8 },
-          { type: 'choose', q: 'What cake can you have?', opts: ['chocolate cake', 'lemon cake', 'apple cake'], a: ['chocolate cake'], line: 11 }
+          { type: "tf", q: "The café is open every day.", a: ["True"], line: 1 },
+          { type: "tf", q: "Eggs and toast are £4.", a: ["False"], line: 2 },
+          { type: "tf", q: "Children love the pancakes.", a: ["True"], line: 4 },
+          { type: "tf", q: "The soup is cold.", a: ["False"], line: 7 },
+          { type: "tf", q: "A glass of milk is £1.", a: ["True"], line: 10 },
+          { type: "tf", q: "The café has got twenty tables.", a: ["True"], line: 15 },
+          { type: "tf", q: "Anna makes the bread.", a: ["False"], line: 18 },
+          { type: "choose", q: "When does the café close?", opts: ["at five o'clock","at six o'clock","at eight o'clock"], a: ["at six o'clock"], line: 1 },
+          { type: "choose", q: "How much is a cheese sandwich?", opts: ["£3","£4","£6"], a: ["£3"], line: 5 },
+          { type: "choose", q: "What comes with the chicken soup?", opts: ["bread","toast","fruit"], a: ["bread"], line: 6 },
+          { type: "choose", q: "What is £6?", opts: ["a small pizza","a big pizza","a cheese sandwich"], a: ["a small pizza"], line: 8 },
+          { type: "choose", q: "What cake can you have?", opts: ["chocolate cake","lemon cake","apple cake"], a: ["chocolate cake"], line: 11 },
+          { type: "choose", q: "Where is the café?", opts: ["near the station","near the park","near the school"], a: ["near the station"], line: 13 },
+          { type: "choose", q: "What can you eat on Fridays?", opts: ["pizza","fish and chips","chicken soup"], a: ["fish and chips"], line: 23 }
         ],
         words: [
           { w: 'menu', emoji: '📋', m: 'a list of the food and drinks in a café', ex: 'Here is our menu.' },
@@ -835,28 +861,28 @@ var TA_SKILLS = {
         minWords: 100, maxWords: 120, minutes: 20
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
+        topic: "School & Education",
         words: [
-          { w: 'breakfast', emoji: '🍳', ex: 'I have bread and eggs for breakfast.' },
-          { w: 'lunch', emoji: '🥪', ex: 'I have lunch at school.' },
-          { w: 'dinner', emoji: '🍽️', ex: "We have dinner at seven o'clock." },
-          { w: 'fruit', emoji: '🍎', ex: 'I eat a lot of fruit.' },
-          { w: 'vegetables', emoji: '🥦', ex: "I don't like vegetables." },
-          { w: 'rice', emoji: '🍚', ex: 'We often have rice with chicken.' },
-          { w: 'bread', emoji: '🍞', ex: 'I buy bread every day.' },
-          { w: 'delicious', emoji: '😋', ex: "My mum's soup is delicious." }
+          { w: "Classroom", uz: "Sinfxona", emoji: "🏫", ex: "Our classroom is on the second floor." },
+          { w: "Subject", uz: "Fan", emoji: "📘", ex: "English is my favourite subject." },
+          { w: "Lesson", uz: "Dars", emoji: "🕘", ex: "Our first lesson starts at nine o'clock." },
+          { w: "Break", uz: "Tanaffus", emoji: "🔔", ex: "We play outside during the break." },
+          { w: "Classmate", uz: "Sinfdosh", emoji: "🧑‍🎓", ex: "My classmate sits next to me." },
+          { w: "Homework", uz: "Uy vazifasi", emoji: "📝", ex: "We have a lot of homework today." },
+          { w: "Difficult", uz: "Qiyin", emoji: "😓", ex: "Maths is difficult for me." },
+          { w: "Easy", uz: "Oson", emoji: "😎", ex: "This exercise is easy." },
+          { w: "Improve", uz: "Yaxshilamoq", emoji: "📈", ex: "I want to improve my English." },
+          { w: "Learn new things", uz: "Yangi narsalarni o'rganmoq", emoji: "💡", ex: "I like to learn new things at school." }
         ],
         questions: [
-          { q: 'What do you have for breakfast?', use: ['I have …', 'eggs', 'bread', 'tea'] },
-          { q: "What's your favourite food?", use: ['My favourite food is …'] },
-          { q: 'Do you like fish?', use: ['Yes, I do.', "No, I don't."] },
-          { q: 'What do you drink in the morning?', use: ['I drink …', 'tea', 'milk', 'juice'] },
-          { q: 'Who cooks in your family?', use: ['My mum cooks.', 'My … cooks.'] }
+          { q: "What is your favourite subject? Why?", use: ["My favourite subject is …","because it is easy / interesting"] },
+          { q: "Which subject is difficult for you?", use: ["… is difficult for me","but I want to improve"] },
+          { q: "What do you do during the break?", use: ["During the break, I …","with my classmates"] },
+          { q: "How much homework do you have?", use: ["I have a lot of / a little homework","I do it in the evening"] },
+          { q: "What would you like to learn?", use: ["I would like to learn …","I like learning new things"] }
         ],
-        part2: {
-          topic: 'Food I like',
-          hints: ['your favourite food', 'when you eat it', "a food you don't like"],
-          seconds: 40
-        }
+        part2: { topic: "Talk about your school", hints: ["where your school is and what it is like","your favourite and least favourite subject","your classmates and teachers"], seconds: 40 }
       }
     },
     {
@@ -922,16 +948,20 @@ var TA_SKILLS = {
         text: "Have you seen our dog? Her name is Bella. She is a small dog, and she is three years old. She is white with a black ear. She has a red collar with her name on it. Bella is very friendly. She loves children, and she likes to play with a ball. She doesn't like cats! We lost her on Sunday afternoon in Green Park. She is very small, so please look under cars and in gardens. Bella eats a lot, and her favourite food is chicken. If you find her, please bring her to 12 Hill Road. Thank you!\n\n" +
           "Bella is a very good dog. She sleeps in a small bed in our kitchen. In the morning, she walks with my dad in the park. She can sit and give you her paw. Bella can't swim, so please look near the lake too. She is shy with men, but she likes women and children. Please don't run after her. Call her name, \"Bella!\", and show her some food. She will come to you. Our children are very sad. They want Bella to come home. You can call us at any time. My name is Kate, and our phone number is 07700 900 461. There is a small present for the person who finds her.",
         questions: [
-          { type: 'tf', q: 'Bella is a big dog.', a: ['False'], line: 2 },
-          { type: 'tf', q: 'Bella is three years old.', a: ['True'], line: 2 },
-          { type: 'tf', q: 'She has a red collar.', a: ['True'], line: 4 },
-          { type: 'tf', q: 'Bella likes cats.', a: ['False'], line: 7 },
-          { type: 'tf', q: 'They lost Bella on Saturday.', a: ['False'], line: 8 },
-          { type: 'choose', q: 'What colour is Bella?', opts: ['black with a white ear', 'white with a black ear', 'brown and white'], a: ['white with a black ear'], line: 3 },
-          { type: 'choose', q: 'What does Bella like to play with?', opts: ['a ball', 'a stick', 'a cat'], a: ['a ball'], line: 6 },
-          { type: 'choose', q: 'Where did they lose her?', opts: ['in Green Park', 'in the garden', 'at school'], a: ['in Green Park'], line: 8 },
-          { type: 'choose', q: "What is Bella's favourite food?", opts: ['fish', 'chicken', 'cheese'], a: ['chicken'], line: 10 },
-          { type: 'choose', q: 'Where do they live?', opts: ['12 Hill Road', '21 Hill Road', '12 Park Road'], a: ['12 Hill Road'], line: 11 }
+          { type: "tf", q: "Bella is a big dog.", a: ["False"], line: 2 },
+          { type: "tf", q: "Bella is three years old.", a: ["True"], line: 2 },
+          { type: "tf", q: "She has a red collar.", a: ["True"], line: 4 },
+          { type: "tf", q: "Bella likes cats.", a: ["False"], line: 7 },
+          { type: "tf", q: "They lost Bella on Saturday.", a: ["False"], line: 8 },
+          { type: "tf", q: "Bella sleeps in the kitchen.", a: ["True"], line: 14 },
+          { type: "tf", q: "Bella can swim.", a: ["False"], line: 17 },
+          { type: "choose", q: "What colour is Bella?", opts: ["black with a white ear","white with a black ear","brown and white"], a: ["white with a black ear"], line: 3 },
+          { type: "choose", q: "What does Bella like to play with?", opts: ["a ball","a stick","a cat"], a: ["a ball"], line: 6 },
+          { type: "choose", q: "Where did they lose her?", opts: ["in Green Park","in the garden","at school"], a: ["in Green Park"], line: 8 },
+          { type: "choose", q: "What is Bella's favourite food?", opts: ["fish","chicken","cheese"], a: ["chicken"], line: 10 },
+          { type: "choose", q: "Where do they live?", opts: ["12 Hill Road","21 Hill Road","12 Park Road"], a: ["12 Hill Road"], line: 11 },
+          { type: "choose", q: "What is the owner's name?", opts: ["Bella","Anna","Kate"], a: ["Kate"], line: 25 },
+          { type: "choose", q: "What should you do if you see Bella?", opts: ["call her name and show her some food","run after her","take her to the lake"], a: ["call her name and show her some food"], line: 20 }
         ],
         words: [
           { w: 'seen', emoji: '👀', m: 'from "see": Have you seen …? = Did you see …?', ex: 'Have you seen our dog?' },
@@ -953,28 +983,28 @@ var TA_SKILLS = {
         minWords: 110, maxWords: 130, minutes: 20
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
+        topic: "Hobbies & Sports",
         words: [
-          { w: 'dog', emoji: '🐶', ex: 'My dog is big and brown.' },
-          { w: 'cat', emoji: '🐱', ex: 'My cat sleeps on my bed.' },
-          { w: 'bird', emoji: '🐦', ex: 'There are a lot of birds in the park.' },
-          { w: 'fish', emoji: '🐟', ex: 'I have got two fish.' },
-          { w: 'horse', emoji: '🐴', ex: 'My uncle has got a horse.' },
-          { w: 'rabbit', emoji: '🐰', ex: 'Rabbits are small and soft.' },
-          { w: 'pet', emoji: '🐾', ex: "I haven't got a pet." },
-          { w: 'cute', emoji: '🥰', ex: "My friend's cat is very cute." }
+          { w: "Hobby", uz: "Sevimli mashg'ulot", emoji: "🎨", ex: "My hobby is drawing." },
+          { w: "Football", uz: "Futbol", emoji: "⚽", ex: "I play football with my friends." },
+          { w: "Swimming", uz: "Suzish", emoji: "🏊", ex: "Swimming is good for your health." },
+          { w: "Cycling", uz: "Velosiped haydash", emoji: "🚴", ex: "I go cycling in the park." },
+          { w: "Drawing", uz: "Rasm chizish", emoji: "✏️", ex: "She is very good at drawing." },
+          { w: "Dancing", uz: "Raqsga tushish", emoji: "💃", ex: "My sister loves dancing." },
+          { w: "Playing chess", uz: "Shaxmat o'ynash", emoji: "♟️", ex: "Playing chess makes me think." },
+          { w: "Practice", uz: "Mashq qilmoq", emoji: "🔁", ex: "I practise every afternoon." },
+          { w: "Team", uz: "Jamoa", emoji: "👥", ex: "Our team won the game." },
+          { w: "Competition", uz: "Musobaqa", emoji: "🏆", ex: "There is a chess competition next week." }
         ],
         questions: [
-          { q: 'Have you got a pet?', use: ["Yes, I've got a …", "No, I haven't."] },
-          { q: "What's your favourite animal?", use: ['My favourite animal is …'] },
-          { q: 'Do you like cats or dogs?', use: ['I like …', "I don't like …"] },
-          { q: "What colour is your pet, or your friend's pet?", use: ["It's …", 'black', 'white', 'brown'] },
-          { q: 'What animals can you see in your town?', use: ['I can see …', 'dogs', 'birds', 'cats'] }
+          { q: "What is your hobby?", use: ["My hobby is …","I started it when I was …"] },
+          { q: "Do you like sports? Which ones?", use: ["I like …","football / swimming / cycling","I don't like …"] },
+          { q: "How often do you practise?", use: ["I practise … times a week","every day / at the weekend"] },
+          { q: "Do you play in a team?", use: ["Yes, I play in a … team","No, I prefer to …"] },
+          { q: "Have you ever been in a competition?", use: ["Yes, I was in a … competition","No, but I want to"] }
         ],
-        part2: {
-          topic: 'An animal',
-          hints: ['what animal it is', 'what it looks like: its colour, big or small', 'why you like it'],
-          seconds: 40
-        }
+        part2: { topic: "Talk about your hobby", hints: ["what your hobby is","when and where you do it","why you like it"], seconds: 40 }
       }
     },
     {
@@ -1035,16 +1065,20 @@ var TA_SKILLS = {
         text: "Hi, I'm Jack, and this is my room. It is not very big, but I love it. The walls are light blue. My bed is next to the window. There is a small table next to my bed with a lamp and a clock on it. My desk is in the corner, and my computer is on it. I do my homework there every evening. There are a lot of books on the shelf above the desk. My clothes are in a big brown cupboard. There is a green rug on the floor. My cat, Tiger, often sleeps on it. On the wall, there is a poster of my favourite football team.\n\n" +
           "I like my room in the morning, because the sun comes in through the window. My curtains are white with small blue stars. Next to my cupboard, there is a big box of old toys. I don't play with them now, but I love them. My guitar is next to the desk. I play it every afternoon after school. My friends come to my room at the weekend, and we play computer games together. My mum says my room is often messy. It's true! On Saturday mornings, I clean my room. I put my books on the shelf and my clothes in the cupboard. Then my room looks great again.",
         questions: [
-          { type: 'tf', q: "Jack's room is very big.", a: ['False'], line: 1 },
-          { type: 'tf', q: 'The walls are light blue.', a: ['True'], line: 2 },
-          { type: 'tf', q: 'The bed is next to the door.', a: ['False'], line: 3 },
-          { type: 'tf', q: 'There is a clock on the small table.', a: ['True'], line: 4 },
-          { type: 'tf', q: "Jack's clothes are in a white cupboard.", a: ['False'], line: 8 },
-          { type: 'choose', q: 'Where is the desk?', opts: ['in the corner', 'next to the bed', 'under the window'], a: ['in the corner'], line: 5 },
-          { type: 'choose', q: 'When does Jack do his homework?', opts: ['in the morning', 'in the afternoon', 'in the evening'], a: ['in the evening'], line: 6 },
-          { type: 'choose', q: 'Where are the books?', opts: ['on the floor', 'on the shelf', 'in the cupboard'], a: ['on the shelf'], line: 7 },
-          { type: 'choose', q: 'Who sleeps on the rug?', opts: ['Jack', 'his dog', 'his cat'], a: ['his cat'], line: 10 },
-          { type: 'choose', q: 'What is the poster of?', opts: ['a football team', 'a singer', 'a film'], a: ['a football team'], line: 11 }
+          { type: "tf", q: "Jack's room is very big.", a: ["False"], line: 1 },
+          { type: "tf", q: "The walls are light blue.", a: ["True"], line: 2 },
+          { type: "tf", q: "The bed is next to the door.", a: ["False"], line: 3 },
+          { type: "tf", q: "There is a clock on the small table.", a: ["True"], line: 4 },
+          { type: "tf", q: "Jack's clothes are in a white cupboard.", a: ["False"], line: 8 },
+          { type: "tf", q: "Jack's curtains are white with small blue stars.", a: ["True"], line: 13 },
+          { type: "tf", q: "Jack cleans his room on Sunday evenings.", a: ["False"], line: 21 },
+          { type: "choose", q: "Where is the desk?", opts: ["in the corner","next to the bed","under the window"], a: ["in the corner"], line: 5 },
+          { type: "choose", q: "When does Jack do his homework?", opts: ["in the morning","in the afternoon","in the evening"], a: ["in the evening"], line: 6 },
+          { type: "choose", q: "Where are the books?", opts: ["on the floor","on the shelf","in the cupboard"], a: ["on the shelf"], line: 7 },
+          { type: "choose", q: "Who sleeps on the rug?", opts: ["Jack","his dog","his cat"], a: ["his cat"], line: 10 },
+          { type: "choose", q: "What is the poster of?", opts: ["a football team","a singer","a film"], a: ["a football team"], line: 11 },
+          { type: "choose", q: "Where is Jack's guitar?", opts: ["under the bed","next to the desk","in the cupboard"], a: ["next to the desk"], line: 16 },
+          { type: "choose", q: "What is next to the cupboard?", opts: ["a lamp","a big plant","a box of old toys"], a: ["a box of old toys"], line: 14 }
         ],
         words: [
           { w: 'wall', emoji: '🧱', m: 'the side of a room', ex: 'The walls are light blue.' },
@@ -1066,28 +1100,28 @@ var TA_SKILLS = {
         minWords: 115, maxWords: 135, minutes: 20
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
+        topic: "Shopping",
         words: [
-          { w: 'bed', emoji: '🛏️', ex: 'My bed is next to the window.' },
-          { w: 'window', emoji: '🪟', ex: 'There is a big window in my room.' },
-          { w: 'lamp', emoji: '💡', ex: 'My lamp is on the desk.' },
-          { w: 'cupboard', emoji: '🗄️', ex: 'My clothes are in the cupboard.' },
-          { w: 'next to', emoji: '↔️', ex: 'My desk is next to my bed.' },
-          { w: 'under', emoji: '⬇️', ex: 'My bag is under my bed.' },
-          { w: 'on', emoji: '⬆️', ex: 'My books are on the shelf.' },
-          { w: 'picture', emoji: '🖼️', ex: 'There is a picture on the wall.' }
+          { w: "Shopping centre", uz: "Savdo markazi", emoji: "🏬", ex: "There is a big shopping centre near my house." },
+          { w: "Supermarket", uz: "Supermarket", emoji: "🛒", ex: "We buy food at the supermarket." },
+          { w: "Price", uz: "Narx", emoji: "🏷️", ex: "What is the price of this bag?" },
+          { w: "Cheap", uz: "Arzon", emoji: "💲", ex: "These shoes are cheap." },
+          { w: "Expensive", uz: "Qimmat", emoji: "💎", ex: "This phone is too expensive." },
+          { w: "Try on", uz: "Kiyib ko'rmoq", emoji: "👗", ex: "Can I try on this jacket?" },
+          { w: "Buy", uz: "Sotib olmoq", emoji: "🛍️", ex: "I want to buy a new T-shirt." },
+          { w: "Sell", uz: "Sotmoq", emoji: "🤝", ex: "This shop sells books and pens." },
+          { w: "Cash", uz: "Naqd pul", emoji: "💵", ex: "I pay in cash." },
+          { w: "Shopping list", uz: "Xaridlar ro'yxati", emoji: "📝", ex: "My mum writes a shopping list." }
         ],
         questions: [
-          { q: 'Is your room big or small?', use: ["It's big.", "It's small.", "It's not very big."] },
-          { q: "What's in your room?", use: ["There's a …", 'There are …'] },
-          { q: 'Where is your bed?', use: ['My bed is next to …', "It's under …"] },
-          { q: 'What colour are the walls in your room?', use: ['They are …', 'white', 'blue'] },
-          { q: 'What do you do in your room?', use: ['I sleep …', 'I do my homework …', 'I read …'] }
+          { q: "Do you like shopping?", use: ["Yes / No, I … shopping","because …"] },
+          { q: "Where do you usually go shopping?", use: ["I usually go to …","the supermarket / the shopping centre"] },
+          { q: "What did you buy last?", use: ["The last thing I bought was …","it was cheap / expensive"] },
+          { q: "Do you try on clothes before you buy them?", use: ["Yes, I always try on …","No, I …"] },
+          { q: "Do you pay in cash or by card?", use: ["I usually pay in cash / by card","because …"] }
         ],
-        part2: {
-          topic: 'My room',
-          hints: ['what is in your room', 'where your bed and your desk are', 'what you do in your room'],
-          seconds: 45
-        }
+        part2: { topic: "Talk about a shop you like", hints: ["where it is and what it sells","how often you go there","why you like it"], seconds: 45 }
       }
     },
     {
@@ -1151,16 +1185,20 @@ var TA_SKILLS = {
         text: "This is my best friend, Sophie. She is twelve years old, and she is in my class at school. She has long brown hair and big blue eyes. Sophie lives in a flat near the park with her mum, her dad and her little brother, Alfie. Alfie is five, and he is very funny. Sophie loves animals. She has two rabbits and a small grey cat. Her favourite subject at school is Science, but she doesn't like Maths. After school, we often go to the park together. We play tennis on Wednesdays, and on Saturdays we go swimming. Sophie's favourite food is pizza, and she drinks a lot of orange juice. Her birthday is in June. She is very kind.\n\n" +
           "Sophie and I are friends from when we were six years old. We sit together in every lesson. Sophie is very good at drawing, and she wants to be an artist. She draws animals and flowers in her notebook. Sophie's dad is a teacher at another school, and her mum works in a bank. Every summer, Sophie goes to the sea with her family. She sends me postcards from there. Sophie has a bike, and it is purple. We ride our bikes in the park on Sunday mornings. Sometimes Sophie comes to my house for dinner. My mum makes pizza for her, because it is her favourite food. Sophie is a great friend.",
         questions: [
-          { type: 'tf', q: 'Sophie is eleven years old.', a: ['False'], line: 1 },
-          { type: 'tf', q: 'Sophie has long brown hair.', a: ['True'], line: 2 },
-          { type: 'tf', q: "Alfie is Sophie's brother.", a: ['True'], line: 3 },
-          { type: 'tf', q: 'Sophie likes Maths.', a: ['False'], line: 7 },
-          { type: 'tf', q: "Sophie's birthday is in July.", a: ['False'], line: 11 },
-          { type: 'choose', q: 'Where does Sophie live?', opts: ['in a house in the town', 'in a flat near the park', 'in a flat near the school'], a: ['in a flat near the park'], line: 3 },
-          { type: 'choose', q: 'What pets has Sophie got?', opts: ['two cats and a rabbit', 'two rabbits and a cat', 'two dogs'], a: ['two rabbits and a cat'], line: 6 },
-          { type: 'choose', q: 'What do they do on Saturdays?', opts: ['play tennis', 'go swimming', 'go to the park'], a: ['go swimming'], line: 9 },
-          { type: 'choose', q: 'What does Sophie drink a lot of?', opts: ['milk', 'orange juice', 'water'], a: ['orange juice'], line: 10 },
-          { type: 'choose', q: 'What is Sophie like?', opts: ['kind', 'funny', 'quiet'], a: ['kind'], line: 12 }
+          { type: "tf", q: "Sophie is eleven years old.", a: ["False"], line: 1 },
+          { type: "tf", q: "Sophie has long brown hair.", a: ["True"], line: 2 },
+          { type: "tf", q: "Alfie is Sophie's brother.", a: ["True"], line: 3 },
+          { type: "tf", q: "Sophie likes Maths.", a: ["False"], line: 7 },
+          { type: "tf", q: "Sophie's birthday is in July.", a: ["False"], line: 11 },
+          { type: "tf", q: "Sophie wants to be an artist.", a: ["True"], line: 15 },
+          { type: "tf", q: "Sophie's bike is pink.", a: ["False"], line: 20 },
+          { type: "choose", q: "Where does Sophie live?", opts: ["in a house in the town","in a flat near the park","in a flat near the school"], a: ["in a flat near the park"], line: 3 },
+          { type: "choose", q: "What pets has Sophie got?", opts: ["two cats and a rabbit","two rabbits and a cat","two dogs"], a: ["two rabbits and a cat"], line: 6 },
+          { type: "choose", q: "What do they do on Saturdays?", opts: ["play tennis","go swimming","go to the park"], a: ["go swimming"], line: 9 },
+          { type: "choose", q: "What does Sophie drink a lot of?", opts: ["milk","orange juice","water"], a: ["orange juice"], line: 10 },
+          { type: "choose", q: "What is Sophie like?", opts: ["kind","funny","quiet"], a: ["kind"], line: 12 },
+          { type: "choose", q: "Where does Sophie's mum work?", opts: ["in a bank","in a school","in a shop"], a: ["in a bank"], line: 17 },
+          { type: "choose", q: "When do they ride their bikes in the park?", opts: ["on Saturday afternoons","on Sunday mornings","every evening"], a: ["on Sunday mornings"], line: 21 }
         ],
         words: [
           { w: 'best friend', emoji: '🤝', m: 'your number one friend', ex: 'This is my best friend, Sophie.' },
@@ -1182,28 +1220,28 @@ var TA_SKILLS = {
         minWords: 125, maxWords: 145, minutes: 20
       },
       speaking: {
+        // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
+        topic: "Your City",
         words: [
-          { w: 'friend', emoji: '🤝', ex: 'My friend lives near my house.' },
-          { w: 'tall', emoji: '📏', ex: 'My friend is very tall.' },
-          { w: 'hair', emoji: '💇', ex: 'She has short black hair.' },
-          { w: 'funny', emoji: '😂', ex: 'My friend is very funny.' },
-          { w: 'kind', emoji: '💛', ex: 'He is kind to everyone.' },
-          { w: 'together', emoji: '👫', ex: 'We walk to school together.' },
-          { w: 'play', emoji: '🎮', ex: 'We play games after school.' },
-          { w: 'talk', emoji: '💬', ex: 'We talk on the phone every day.' }
+          { w: "City centre", uz: "Shahar markazi", emoji: "🏙️", ex: "The city centre is always busy." },
+          { w: "Park", uz: "Bog'", emoji: "🌳", ex: "We walk in the park on Sundays." },
+          { w: "Shopping centre", uz: "Savdo markazi", emoji: "🏬", ex: "The shopping centre has a cinema." },
+          { w: "Hospital", uz: "Kasalxona", emoji: "🏥", ex: "My mum works at the hospital." },
+          { w: "Library", uz: "Kutubxona", emoji: "📚", ex: "I read books in the library." },
+          { w: "Crowded", uz: "Odamlar bilan gavjum", emoji: "👥", ex: "The market is crowded on Saturdays." },
+          { w: "Quiet", uz: "Tinch", emoji: "🤫", ex: "My street is quiet at night." },
+          { w: "Beautiful", uz: "Chiroyli", emoji: "🌸", ex: "Our city is beautiful in spring." },
+          { w: "Famous", uz: "Mashhur", emoji: "⭐", ex: "This building is famous." },
+          { w: "Near", uz: "Yaqin", emoji: "📍", ex: "The school is near my house." }
         ],
         questions: [
-          { q: "What's your best friend's name?", use: ["My best friend's name is …"] },
-          { q: 'How old is your friend?', use: ["He's …", "She's …"] },
-          { q: 'What does your friend like?', use: ['He likes …', 'She likes …'] },
-          { q: 'What do you do together?', use: ['We play …', 'We go to …'] },
-          { q: 'Is your friend tall or short?', use: ["He's …", "She's …", 'tall', 'short'] }
+          { q: "Where do you live?", use: ["I live in …","it is a big / small city","near …"] },
+          { q: "What is your favourite place in your city?", use: ["My favourite place is …","because it is beautiful / quiet"] },
+          { q: "Is your city crowded or quiet?", use: ["It is crowded / quiet","especially in …"] },
+          { q: "What is your city famous for?", use: ["My city is famous for …","many tourists visit …"] },
+          { q: "What is near your home?", use: ["There is a … near my home","a park / a library / a shop"] }
         ],
-        part2: {
-          topic: 'A friend',
-          hints: ["your friend's name and age", 'what he or she likes', 'what you do together'],
-          seconds: 45
-        }
+        part2: { topic: "Talk about your city", hints: ["where it is and how big it is","your favourite place there","what you like and don't like about it"], seconds: 45 }
       }
     },
     {
@@ -1280,21 +1318,26 @@ var TA_SKILLS = {
           "My school day starts at half past eight and finishes at half past three. I take the bus to school because it's too far to walk. My best friend at school is called Mia. She's very funny, and we sit together in most lessons.\n\n" +
           "In your first email, please tell me about your family, your school and your hobbies. What is your town like? What do people eat there? I can send you photos of Bristol and of Biscuit too!",
         questions: [
-          { type: 'tfng', q: 'Lucy lives in a big city.', a: ['True'], line: 1 },
-          { type: 'tfng', q: 'Lucy lives with her grandparents.', a: ['False'], line: 2 },
-          { type: 'tfng', q: 'Sam plays in a football team.', a: ['Not given'], line: 3 },
-          { type: 'tfng', q: 'Lucy likes maths.', a: ['False'], line: 5 },
-          { type: 'tfng', q: "Lucy's dog is friendly.", a: ['True'], line: 7 },
-          { type: 'gap', q: 'Lucy lives in a small _____ with her family.', a: ['flat'], line: 2 },
-          { type: 'gap', q: "Lucy's favourite subject at school is _____.", a: ['art'], line: 4 },
-          { type: 'gap', q: 'After school, Lucy walks her dog in the _____.', a: ['park'], line: 6 },
-          { type: 'gap', q: 'Lucy wants a pen-friend from another _____.', a: ['country'], line: 11 },
-          { type: 'gap', q: 'Lucy would like to write _____ in English every week.', a: ['emails', 'email'], line: 12 },
-          { type: 'choose', q: 'How old is Lucy?', opts: ['thirteen', 'fifteen', 'eighteen'], a: ['fifteen'], line: 0 },
-          { type: 'choose', q: 'Who is Biscuit?', opts: ["Lucy's brother", "Lucy's dog", "Lucy's friend"], a: ["Lucy's dog"], line: 6 },
-          { type: 'choose', q: 'What does Lucy do at the weekend?', opts: ['She plays the guitar.', 'She plays football.', 'She cooks pizza.'], a: ['She plays the guitar.'], line: 8 },
-          { type: 'choose', q: 'Which language is Lucy learning?', opts: ['French', 'Spanish', 'German'], a: ['Spanish'], line: 9 },
-          { type: 'choose', q: "What is Lucy's favourite food?", opts: ['pasta', 'fish and chips', 'pizza'], a: ['pizza'], line: 10 }
+          { type: "tfng", q: "Lucy lives in a big city.", a: ["True"], line: 1 },
+          { type: "tfng", q: "Lucy lives with her grandparents.", a: ["False"], line: 2 },
+          { type: "tfng", q: "Sam plays in a football team.", a: ["Not given"], line: 3 },
+          { type: "tfng", q: "Lucy likes maths.", a: ["False"], line: 5 },
+          { type: "tfng", q: "Lucy's dog is friendly.", a: ["True"], line: 7 },
+          { type: "tfng", q: "Lucy's mum is a dentist.", a: ["True"], line: 15 },
+          { type: "tfng", q: "Lucy walks to school.", a: ["False"], line: 24 },
+          { type: "gap", q: "Lucy lives in a small _____ with her family.", a: ["flat"], line: 2 },
+          { type: "gap", q: "Lucy's favourite subject at school is _____.", a: ["art"], line: 4 },
+          { type: "gap", q: "After school, Lucy walks her dog in the _____.", a: ["park"], line: 6 },
+          { type: "gap", q: "Lucy wants a pen-friend from another _____.", a: ["country"], line: 11 },
+          { type: "gap", q: "Lucy would like to write _____ in English every week.", a: ["emails","email"], line: 12 },
+          { type: "gap", q: "Lucy's grandparents live in _____.", a: ["Wales"], line: 17 },
+          { type: "choose", q: "How old is Lucy?", opts: ["thirteen","fifteen","eighteen"], a: ["fifteen"], line: 0 },
+          { type: "choose", q: "Who is Biscuit?", opts: ["Lucy's brother","Lucy's dog","Lucy's friend"], a: ["Lucy's dog"], line: 6 },
+          { type: "choose", q: "What does Lucy do at the weekend?", opts: ["She plays the guitar.","She plays football.","She cooks pizza."], a: ["She plays the guitar."], line: 8 },
+          { type: "choose", q: "Which language is Lucy learning?", opts: ["French","Spanish","German"], a: ["Spanish"], line: 9 },
+          { type: "choose", q: "What is Lucy's favourite food?", opts: ["pasta","fish and chips","pizza"], a: ["pizza"], line: 10 },
+          { type: "choose", q: "When does Lucy's family always have dinner together?", opts: ["on Friday evenings","every evening","on Sunday evenings"], a: ["on Sunday evenings"], line: 16 },
+          { type: "choose", q: "What does Lucy like taking photos of?", opts: ["nature","her friends","food"], a: ["nature"], line: 22 }
         ],
         words: [
           { w: 'pen-friend', emoji: '✉️', m: 'a friend in another place who you write to', ex: "I'm looking for a pen-friend from another country." },
@@ -1417,21 +1460,26 @@ var TA_SKILLS = {
           "In the summer, we go on holiday together. Last year we went to Scotland, and we stayed in a small cottage near a lake. Daniel came with us, and we were very happy because the whole family was together again.\n\n" +
           "I love my family, but sometimes I want some quiet time. Then I go to my room, close the door and read a good book. My parents say that next year I can have my own laptop for school, and I'm very excited about that.",
         questions: [
-          { type: 'tfng', q: 'Emma has got two brothers.', a: ['True'], line: 1 },
-          { type: 'tfng', q: "Emma's mum works in a bank.", a: ['False'], line: 3 },
-          { type: 'tfng', q: 'Daniel plays the piano.', a: ['Not given'], line: 7 },
-          { type: 'tfng', q: "Emma's grandparents live in a big city.", a: ['False'], line: 11 },
-          { type: 'tfng', q: 'Emma and Chloe go to the same school.', a: ['True'], line: 14 },
-          { type: 'gap', q: "Emma's family has got a cat called _____.", a: ['Pepper'], line: 2 },
-          { type: 'gap', q: "Emma's dad works in a _____ in the city centre.", a: ['bank'], line: 5 },
-          { type: 'gap', q: 'Daniel studies music at _____ in Leeds.', a: ['university'], line: 7 },
-          { type: 'gap', q: 'Ben is _____ years old.', a: ['ten', '10'], line: 9 },
-          { type: 'gap', q: 'Emma\'s grandma always makes a big chocolate _____.', a: ['cake'], line: 12 },
-          { type: 'choose', q: 'How old is Emma?', opts: ['fifteen', 'sixteen', 'seventeen'], a: ['sixteen'], line: 0 },
-          { type: 'choose', q: "What is Emma's mum like?", opts: ['kind and patient', 'funny and noisy', 'quiet and shy'], a: ['kind and patient'], line: 4 },
-          { type: 'choose', q: "What does Emma's dad do every morning?", opts: ['He makes breakfast.', 'He goes swimming.', 'He walks the cat.'], a: ['He makes breakfast.'], line: 6 },
-          { type: 'choose', q: 'How often does Emma visit her grandparents?', opts: ['every week', 'every month', 'every year'], a: ['every month'], line: 12 },
-          { type: 'choose', q: 'What do Emma and Chloe do on Fridays?', opts: ['They watch films.', 'They play tennis.', 'They cook dinner.'], a: ['They watch films.'], line: 15 }
+          { type: "tfng", q: "Emma has got two brothers.", a: ["True"], line: 1 },
+          { type: "tfng", q: "Emma's mum works in a bank.", a: ["False"], line: 3 },
+          { type: "tfng", q: "Daniel plays the piano.", a: ["Not given"], line: 7 },
+          { type: "tfng", q: "Emma's grandparents live in a big city.", a: ["False"], line: 11 },
+          { type: "tfng", q: "Emma and Chloe go to the same school.", a: ["True"], line: 14 },
+          { type: "tfng", q: "Emma's house is very big.", a: ["False"], line: 17 },
+          { type: "tfng", q: "Emma can see the park from her bedroom window.", a: ["True"], line: 18 },
+          { type: "gap", q: "Emma's family has got a cat called _____.", a: ["Pepper"], line: 2 },
+          { type: "gap", q: "Emma's dad works in a _____ in the city centre.", a: ["bank"], line: 5 },
+          { type: "gap", q: "Daniel studies music at _____ in Leeds.", a: ["university"], line: 7 },
+          { type: "gap", q: "Ben is _____ years old.", a: ["ten","10"], line: 9 },
+          { type: "gap", q: "Emma's grandma always makes a big chocolate _____.", a: ["cake"], line: 12 },
+          { type: "gap", q: "Last year, the family stayed in a small cottage near a _____.", a: ["lake"], line: 25 },
+          { type: "choose", q: "How old is Emma?", opts: ["fifteen","sixteen","seventeen"], a: ["sixteen"], line: 0 },
+          { type: "choose", q: "What is Emma's mum like?", opts: ["kind and patient","funny and noisy","quiet and shy"], a: ["kind and patient"], line: 4 },
+          { type: "choose", q: "What does Emma's dad do every morning?", opts: ["He makes breakfast.","He goes swimming.","He walks the cat."], a: ["He makes breakfast."], line: 6 },
+          { type: "choose", q: "How often does Emma visit her grandparents?", opts: ["every week","every month","every year"], a: ["every month"], line: 12 },
+          { type: "choose", q: "What do Emma and Chloe do on Fridays?", opts: ["They watch films.","They play tennis.","They cook dinner."], a: ["They watch films."], line: 15 },
+          { type: "choose", q: "Who makes the dessert on Sundays?", opts: ["Emma's dad","Emma's mum","Emma's grandma"], a: ["Emma's mum"], line: 21 },
+          { type: "choose", q: "What can Emma have next year?", opts: ["a new phone","a dog","her own laptop"], a: ["her own laptop"], line: 29 }
         ],
         words: [
           { w: 'primary school', emoji: '🏫', m: 'a school for children from about five to eleven years old', ex: 'My mum is a teacher at a primary school.' },
@@ -1548,21 +1596,26 @@ var TA_SKILLS = {
           "When Tom visits Grace, he is always surprised by how many people there are in Manchester. They go to the cinema, eat in different cafés and visit museums. Tom likes the city, especially the football stadium, but he finds it tiring. He says the traffic is very slow, and he doesn't like the crowds on the trams.\n\n" +
           "Both homes have good and bad points. In the countryside, life is calm and there is a lot of space, but you need a car or a bike for everything. In the city, everything is close and there is always something to do, but it can be noisy and expensive. Tom and Grace often talk about this, and they never agree!",
         questions: [
-          { type: 'tfng', q: "Tom's house is new.", a: ['False'], line: 1 },
-          { type: 'tfng', q: "Tom's family eats in the kitchen.", a: ['True'], line: 2 },
-          { type: 'tfng', q: "Tom's school is in York.", a: ['Not given'], line: 5 },
-          { type: 'tfng', q: "Grace's flat has got a garden.", a: ['False'], line: 8 },
-          { type: 'tfng', q: "Grace's flat is near a cinema.", a: ['True'], line: 10 },
-          { type: 'gap', q: "Tom's house has got three _____.", a: ['bedrooms'], line: 1 },
-          { type: 'gap', q: 'There are apple trees in the _____ behind the house.', a: ['garden'], line: 3 },
-          { type: 'gap', q: "Tom cycles to school because there isn't a _____.", a: ['bus'], line: 5 },
-          { type: 'gap', q: 'Grace has got lots of _____ on her balcony.', a: ['plants'], line: 8 },
-          { type: 'gap', q: 'Because of the noise, Grace sometimes sleeps with _____.', a: ['earplugs'], line: 11 },
-          { type: 'choose', q: 'Where does Tom live?', opts: ['in a city', 'in the countryside', 'by the sea'], a: ['in the countryside'], line: 0 },
-          { type: 'choose', q: "How often does Tom's mum go to the supermarket?", opts: ['every day', 'once a week', 'once a month'], a: ['once a week'], line: 4 },
-          { type: 'choose', q: "Which floor is Grace's flat on?", opts: ['the third floor', 'the fifth floor', 'the ninth floor'], a: ['the ninth floor'], line: 6 },
-          { type: 'choose', q: 'What can Grace see from her balcony at night?', opts: ['the sea', 'the whole city', 'the mountains'], a: ['the whole city'], line: 9 },
-          { type: 'choose', q: 'What does Grace think about the countryside?', opts: ['She never wants to live there.', 'She wants to live there one day.', 'She goes there every weekend.'], a: ['She never wants to live there.'], line: 12 }
+          { type: "tfng", q: "Tom's house is new.", a: ["False"], line: 1 },
+          { type: "tfng", q: "Tom's family eats in the kitchen.", a: ["True"], line: 2 },
+          { type: "tfng", q: "Tom's school is in York.", a: ["Not given"], line: 5 },
+          { type: "tfng", q: "Grace's flat has got a garden.", a: ["False"], line: 8 },
+          { type: "tfng", q: "Grace's flat is near a cinema.", a: ["True"], line: 10 },
+          { type: "tfng", q: "Tom and Grace are brother and sister.", a: ["False"], line: 13 },
+          { type: "tfng", q: "After a few days in the countryside, Grace misses her flat.", a: ["True"], line: 17 },
+          { type: "gap", q: "Tom's house has got three _____.", a: ["bedrooms"], line: 1 },
+          { type: "gap", q: "There are apple trees in the _____ behind the house.", a: ["garden"], line: 3 },
+          { type: "gap", q: "Tom cycles to school because there isn't a _____.", a: ["bus"], line: 5 },
+          { type: "gap", q: "Grace has got lots of _____ on her balcony.", a: ["plants"], line: 8 },
+          { type: "gap", q: "Because of the noise, Grace sometimes sleeps with _____.", a: ["earplugs"], line: 11 },
+          { type: "gap", q: "Tom and Grace often stop at a farm to buy fresh _____.", a: ["eggs"], line: 16 },
+          { type: "choose", q: "Where does Tom live?", opts: ["in a city","in the countryside","by the sea"], a: ["in the countryside"], line: 0 },
+          { type: "choose", q: "How often does Tom's mum go to the supermarket?", opts: ["every day","once a week","once a month"], a: ["once a week"], line: 4 },
+          { type: "choose", q: "Which floor is Grace's flat on?", opts: ["the third floor","the fifth floor","the ninth floor"], a: ["the ninth floor"], line: 6 },
+          { type: "choose", q: "What can Grace see from her balcony at night?", opts: ["the sea","the whole city","the mountains"], a: ["the whole city"], line: 9 },
+          { type: "choose", q: "What does Grace think about the countryside?", opts: ["She never wants to live there.","She wants to live there one day.","She goes there every weekend."], a: ["She never wants to live there."], line: 12 },
+          { type: "choose", q: "What does Tom like most in Manchester?", opts: ["the football stadium","the trams","the museums"], a: ["the football stadium"], line: 20 },
+          { type: "choose", q: "What does Tom say about the traffic in the city?", opts: ["It is very fast.","It is very slow.","There isn't any."], a: ["It is very slow."], line: 21 }
         ],
         words: [
           { w: 'countryside', emoji: '🌳', m: 'land with fields and farms, away from towns', ex: 'Tom lives in a house in the countryside.' },
@@ -1683,21 +1736,26 @@ var TA_SKILLS = {
           "Hannah's favourite moment is when a child is well again and goes home. The families sometimes send her cards and letters to say thank you. She keeps them all in a big box at home, and she reads them when she has a bad day.\n\n" +
           "Next year, Hannah wants to do a special course to become a senior nurse. It will be a lot of work, but she is excited. She says that every day at the hospital is different, and she is never bored.",
         questions: [
-          { type: 'tfng', q: 'Hannah works at a hospital for children.', a: ['True'], line: 0 },
-          { type: 'tfng', q: 'Hannah works five days a week.', a: ['False'], line: 2 },
-          { type: 'tfng', q: 'Hannah drives to the hospital.', a: ['False'], line: 5 },
-          { type: 'tfng', q: 'Hannah is tired when she gets home.', a: ['True'], line: 11 },
-          { type: 'tfng', q: "Hannah's husband is a doctor.", a: ['Not given'], line: 12 },
-          { type: 'gap', q: 'On work days, Hannah gets up at _____ o\'clock.', a: ['six', '6'], line: 3 },
-          { type: 'gap', q: 'Hannah never eats _____ at home.', a: ['breakfast'], line: 4 },
-          { type: 'gap', q: 'Hannah often reads a _____ on the bus.', a: ['book'], line: 6 },
-          { type: 'gap', q: 'At lunchtime, Hannah eats a _____ with the other nurses.', a: ['sandwich'], line: 9 },
-          { type: 'gap', q: 'On her days off, Hannah goes to a _____ class.', a: ['yoga'], line: 13 },
-          { type: 'choose', q: 'When does Hannah finish work?', opts: ["at six o'clock in the evening", "at eight o'clock in the evening", "at ten o'clock in the evening"], a: ["at eight o'clock in the evening"], line: 1 },
-          { type: 'choose', q: "How long is Hannah's journey to the hospital?", opts: ['about twenty minutes', 'about forty minutes', 'about an hour'], a: ['about forty minutes'], line: 5 },
-          { type: 'choose', q: 'Why does Hannah talk to the parents?', opts: ['They are often worried.', 'They want to be nurses.', 'They bring her lunch.'], a: ['They are often worried.'], line: 8 },
-          { type: 'choose', q: 'When is Hannah busiest at work?', opts: ['in the morning', 'at lunchtime', 'in the afternoon'], a: ['in the afternoon'], line: 10 },
-          { type: 'choose', q: 'Why does Hannah love her job?', opts: ['She helps children every day.', 'She has long holidays.', 'The work is easy.'], a: ['She helps children every day.'], line: 14 }
+          { type: "tfng", q: "Hannah works at a hospital for children.", a: ["True"], line: 0 },
+          { type: "tfng", q: "Hannah works five days a week.", a: ["False"], line: 2 },
+          { type: "tfng", q: "Hannah drives to the hospital.", a: ["False"], line: 5 },
+          { type: "tfng", q: "Hannah is tired when she gets home.", a: ["True"], line: 11 },
+          { type: "tfng", q: "Hannah's husband is a doctor.", a: ["Not given"], line: 12 },
+          { type: "tfng", q: "Hannah has worked at the hospital for eight years.", a: ["True"], line: 15 },
+          { type: "tfng", q: "Hannah felt calm in her first week.", a: ["False"], line: 17 },
+          { type: "gap", q: "On work days, Hannah gets up at _____ o'clock.", a: ["six","6"], line: 3 },
+          { type: "gap", q: "Hannah never eats _____ at home.", a: ["breakfast"], line: 4 },
+          { type: "gap", q: "Hannah often reads a _____ on the bus.", a: ["book"], line: 6 },
+          { type: "gap", q: "At lunchtime, Hannah eats a _____ with the other nurses.", a: ["sandwich"], line: 9 },
+          { type: "gap", q: "On her days off, Hannah goes to a _____ class.", a: ["yoga"], line: 13 },
+          { type: "gap", q: "Hannah keeps the families' cards and letters in a big _____ at home.", a: ["box"], line: 26 },
+          { type: "choose", q: "When does Hannah finish work?", opts: ["at six o'clock in the evening","at eight o'clock in the evening","at ten o'clock in the evening"], a: ["at eight o'clock in the evening"], line: 1 },
+          { type: "choose", q: "How long is Hannah's journey to the hospital?", opts: ["about twenty minutes","about forty minutes","about an hour"], a: ["about forty minutes"], line: 5 },
+          { type: "choose", q: "Why does Hannah talk to the parents?", opts: ["They are often worried.","They want to be nurses.","They bring her lunch."], a: ["They are often worried."], line: 8 },
+          { type: "choose", q: "When is Hannah busiest at work?", opts: ["in the morning","at lunchtime","in the afternoon"], a: ["in the afternoon"], line: 10 },
+          { type: "choose", q: "Why does Hannah love her job?", opts: ["She helps children every day.","She has long holidays.","The work is easy."], a: ["She helps children every day."], line: 14 },
+          { type: "choose", q: "Who helped Hannah in her first week?", opts: ["a doctor","her husband","an older nurse"], a: ["an older nurse"], line: 18 },
+          { type: "choose", q: "What does Hannah want to do next year?", opts: ["do a special course","work in another hospital","stop working"], a: ["do a special course"], line: 27 }
         ],
         words: [
           { w: 'nurse', emoji: '👩‍⚕️', m: 'a person whose job is to look after people who are ill', ex: "Hannah is a nurse at a children's hospital." },
@@ -1820,21 +1878,26 @@ var TA_SKILLS = {
           "Here is a second review, from a student called Amy Ross. I come to the Blue Door Café on Monday mornings before my classes, because it is quiet and the Wi-Fi is free. I usually order a cup of tea and a piece of toast with jam. The staff remember my name, and they always ask about my studies. It's a perfect place to read or study for an hour. My only problem is that it closes at six, so I can't come in the evening. I give it five stars!\n\n" +
           "If you want to visit, it's a good idea to arrive before twelve o'clock, because the café is very busy at lunchtime, especially at the weekend.",
         questions: [
-          { type: 'tfng', q: 'The café is open on Sundays.', a: ['True'], line: 1 },
-          { type: 'tfng', q: "You can order breakfast at twelve o'clock.", a: ['False'], line: 2 },
-          { type: 'tfng', q: 'Children under ten pay less for a small plate.', a: ['True'], line: 5 },
-          { type: 'tfng', q: 'Oliver and his wife sat at a table by the window.', a: ['Not given'], line: 9 },
-          { type: 'tfng', q: "Oliver's chips were hot.", a: ['False'], line: 12 },
-          { type: 'gap', q: 'The café is on _____ Street.', a: ['Market'], line: 0 },
-          { type: 'gap', q: 'The pancakes come with fresh _____.', a: ['fruit'], line: 3 },
-          { type: 'gap', q: 'Oliver and his wife waited _____ minutes for a table.', a: ['fifteen', '15'], line: 9 },
-          { type: 'gap', q: "Oliver's wife asked for the _____ of the soup.", a: ['recipe'], line: 13 },
-          { type: 'gap', q: "The lemon cake was made by the owner's _____.", a: ['grandmother'], line: 14 },
-          { type: 'choose', q: 'How much is the chicken salad?', opts: ['£4.50', '£6', '£8.95'], a: ['£6'], line: 4 },
-          { type: 'choose', q: 'How much is a large hot chocolate?', opts: ['£2', '£3.20', '£5'], a: ['£3.20'], line: 6 },
-          { type: 'choose', q: 'What did Oliver eat?', opts: ['the soup', 'fish and chips', 'pancakes'], a: ['fish and chips'], line: 11 },
-          { type: 'choose', q: 'What was the best thing about the meal, for Oliver?', opts: ['the lemon cake', 'the bread', 'the hot chocolate'], a: ['the lemon cake'], line: 14 },
-          { type: 'choose', q: 'How many stars does Oliver give the café?', opts: ['three', 'four', 'five'], a: ['four'], line: 17 }
+          { type: "tfng", q: "The café is open on Sundays.", a: ["True"], line: 1 },
+          { type: "tfng", q: "You can order breakfast at twelve o'clock.", a: ["False"], line: 2 },
+          { type: "tfng", q: "Children under ten pay less for a small plate.", a: ["True"], line: 5 },
+          { type: "tfng", q: "Oliver and his wife sat at a table by the window.", a: ["Not given"], line: 9 },
+          { type: "tfng", q: "Oliver's chips were hot.", a: ["False"], line: 12 },
+          { type: "tfng", q: "Peter Hill opened the café twenty years ago.", a: ["True"], line: 19 },
+          { type: "tfng", q: "The café buys its bread from a shop in Bath.", a: ["False"], line: 23 },
+          { type: "gap", q: "The café is on _____ Street.", a: ["Market"], line: 0 },
+          { type: "gap", q: "The pancakes come with fresh _____.", a: ["fruit"], line: 3 },
+          { type: "gap", q: "Oliver and his wife waited _____ minutes for a table.", a: ["fifteen","15"], line: 9 },
+          { type: "gap", q: "Oliver's wife asked for the _____ of the soup.", a: ["recipe"], line: 13 },
+          { type: "gap", q: "The lemon cake was made by the owner's _____.", a: ["grandmother"], line: 14 },
+          { type: "gap", q: "Inside the café, there are twelve wooden _____.", a: ["tables"], line: 21 },
+          { type: "choose", q: "How much is the chicken salad?", opts: ["£4.50","£6","£8.95"], a: ["£6"], line: 4 },
+          { type: "choose", q: "How much is a large hot chocolate?", opts: ["£2","£3.20","£5"], a: ["£3.20"], line: 6 },
+          { type: "choose", q: "What did Oliver eat?", opts: ["the soup","fish and chips","pancakes"], a: ["fish and chips"], line: 11 },
+          { type: "choose", q: "What was the best thing about the meal, for Oliver?", opts: ["the lemon cake","the bread","the hot chocolate"], a: ["the lemon cake"], line: 14 },
+          { type: "choose", q: "How many stars does Oliver give the café?", opts: ["three","four","five"], a: ["four"], line: 17 },
+          { type: "choose", q: "Why does Amy come to the café on Monday mornings?", opts: ["The food is cheaper then.","It is quiet and the Wi-Fi is free.","Her friends work there."], a: ["It is quiet and the Wi-Fi is free."], line: 27 },
+          { type: "choose", q: "How many stars does Amy give the café?", opts: ["four","three","five"], a: ["five"], line: 32 }
         ],
         words: [
           { w: 'menu', emoji: '📜', m: 'a list of the food and drinks in a café or a restaurant', ex: 'Read the menu and choose your lunch.' },
@@ -1957,21 +2020,26 @@ var TA_SKILLS = {
           "Getting around London is easy. The Underground, called \"the Tube\", has stations near all the big shopping areas. The best way to pay is with a contactless bank card or an Oyster card. Buses are cheaper than the Tube, and from the top of a red double-decker bus you can see the city while you travel.\n\n" +
           "Finally, think about your budget. London can be very expensive, and it's easy to spend too much money. Before you go, decide how much you want to spend, and try to keep to it. Some visitors write a list of the things they want to buy. It's also a good idea to compare prices in a few shops before you buy something expensive.",
         questions: [
-          { type: 'tfng', q: 'Oxford Street has more than three hundred shops.', a: ['True'], line: 4 },
-          { type: 'tfng', q: 'Most shops on Oxford Street open at nine in the morning.', a: ['False'], line: 5 },
-          { type: 'tfng', q: 'Harrods is a cheap place to shop.', a: ['False'], line: 8 },
-          { type: 'tfng', q: 'Camden Market is open every day of the week.', a: ['Not given'], line: 10 },
-          { type: 'tfng', q: 'In January, you can buy some clothes for half the usual price.', a: ['True'], line: 16 },
-          { type: 'gap', q: 'Oxford Street is the busiest shopping street in _____.', a: ['Europe'], line: 3 },
-          { type: 'gap', q: 'Many tourists go to Harrods to see its beautiful food _____.', a: ['hall'], line: 8 },
-          { type: 'gap', q: 'Portobello Road Market is famous for _____.', a: ['antiques'], line: 11 },
-          { type: 'gap', q: 'Bring some _____, because a few small stalls do not take cards.', a: ['cash'], line: 12 },
-          { type: 'gap', q: 'Wear comfortable _____, because you will walk a lot.', a: ['shoes'], line: 15 },
-          { type: 'choose', q: 'When do the shops on Oxford Street close on Sundays?', opts: ['at six', 'at nine', 'at twelve'], a: ['at six'], line: 6 },
-          { type: 'choose', q: 'Where is Harrods?', opts: ['in Camden', 'in Knightsbridge', 'in Notting Hill'], a: ['in Knightsbridge'], line: 7 },
-          { type: 'choose', q: 'Why do young people like Camden Market?', opts: ['It is very quiet.', 'It has a famous food hall.', 'It sells unusual clothes.'], a: ['It sells unusual clothes.'], line: 10 },
-          { type: 'choose', q: 'When is Portobello Road Market busiest?', opts: ['on Saturdays', 'on Sundays', 'on Mondays'], a: ['on Saturdays'], line: 11 },
-          { type: 'choose', q: 'What is the best time to go shopping, the text says?', opts: ['late in the evening', 'at lunchtime', 'early in the morning'], a: ['early in the morning'], line: 14 }
+          { type: "tfng", q: "Oxford Street has more than three hundred shops.", a: ["True"], line: 4 },
+          { type: "tfng", q: "Most shops on Oxford Street open at nine in the morning.", a: ["False"], line: 5 },
+          { type: "tfng", q: "Harrods is a cheap place to shop.", a: ["False"], line: 8 },
+          { type: "tfng", q: "Camden Market is open every day of the week.", a: ["Not given"], line: 10 },
+          { type: "tfng", q: "In January, you can buy some clothes for half the usual price.", a: ["True"], line: 16 },
+          { type: "tfng", q: "Many of London's big museums are free.", a: ["True"], line: 20 },
+          { type: "tfng", q: "Buses are more expensive than the Tube.", a: ["False"], line: 30 },
+          { type: "gap", q: "Oxford Street is the busiest shopping street in _____.", a: ["Europe"], line: 3 },
+          { type: "gap", q: "Many tourists go to Harrods to see its beautiful food _____.", a: ["hall"], line: 8 },
+          { type: "gap", q: "Portobello Road Market is famous for _____.", a: ["antiques"], line: 11 },
+          { type: "gap", q: "Bring some _____, because a few small stalls do not take cards.", a: ["cash"], line: 12 },
+          { type: "gap", q: "Wear comfortable _____, because you will walk a lot.", a: ["shoes"], line: 15 },
+          { type: "gap", q: "In December, the shopping streets are full of Christmas _____.", a: ["lights"], line: 23 },
+          { type: "choose", q: "When do the shops on Oxford Street close on Sundays?", opts: ["at six","at nine","at twelve"], a: ["at six"], line: 6 },
+          { type: "choose", q: "Where is Harrods?", opts: ["in Camden","in Knightsbridge","in Notting Hill"], a: ["in Knightsbridge"], line: 7 },
+          { type: "choose", q: "Why do young people like Camden Market?", opts: ["It is very quiet.","It has a famous food hall.","It sells unusual clothes."], a: ["It sells unusual clothes."], line: 10 },
+          { type: "choose", q: "When is Portobello Road Market busiest?", opts: ["on Saturdays","on Sundays","on Mondays"], a: ["on Saturdays"], line: 11 },
+          { type: "choose", q: "What is the best time to go shopping, the text says?", opts: ["late in the evening","at lunchtime","early in the morning"], a: ["early in the morning"], line: 14 },
+          { type: "choose", q: "What is \"the Tube\"?", opts: ["the Underground","a red bus","a big shop"], a: ["the Underground"], line: 28 },
+          { type: "choose", q: "What should you do before you go shopping, the text says?", opts: ["buy an Oyster card","decide how much you want to spend","visit a museum"], a: ["decide how much you want to spend"], line: 33 }
         ],
         words: [
           { w: 'souvenir', emoji: '🎁', m: 'a small thing you buy to remember a place you visited', ex: 'Visitors buy clothes, presents and souvenirs.' },
@@ -2101,21 +2169,26 @@ var TA_SKILLS = {
           "There are many places to stay in Larkhaven, from big hotels by the beach to small guesthouses in the old town. There is also a campsite just outside the town. In July and August, the town is very busy, so it's a good idea to book a room early.\n\n" +
           "Every year in September, Larkhaven has a food festival. Local farmers, fishermen and cooks sell their food on the harbour, and there are cooking shows and music all weekend. Thousands of people come, and the hotels are often full, so plan your trip carefully if you want to visit then.",
         questions: [
-          { type: 'tfng', q: 'Larkhaven is a town by the sea.', a: ['True'], line: 0 },
-          { type: 'tfng', q: 'The market in the old town is open every day.', a: ['False'], line: 5 },
-          { type: 'tfng', q: 'You have to pay to go into the Sea Museum.', a: ['False'], line: 12 },
-          { type: 'tfng', q: 'The café in the library sells cakes.', a: ['Not given'], line: 13 },
-          { type: 'tfng', q: 'There is a bus along the coast every half an hour.', a: ['True'], line: 15 },
-          { type: 'gap', q: 'At the market, you can buy fresh fish, local _____ and flowers.', a: ['cheese'], line: 6 },
-          { type: 'gap', q: 'From the top of the castle _____, you can see the whole town and the sea.', a: ['tower'], line: 9 },
-          { type: 'gap', q: 'Children love the big model _____ in the Sea Museum.', a: ['ships'], line: 11 },
-          { type: 'gap', q: 'You can hire a _____ at the train station.', a: ['bike'], line: 16 },
-          { type: 'gap', q: 'On Friday nights in summer, there is free _____ in the park.', a: ['music'], line: 19 },
-          { type: 'choose', q: 'How many people live in Larkhaven?', opts: ['about two thousand', 'about twelve thousand', 'about twenty thousand'], a: ['about twelve thousand'], line: 1 },
-          { type: 'choose', q: 'How old are many of the houses in the old town?', opts: ['about fifty years old', 'about a hundred years old', 'more than three hundred years old'], a: ['more than three hundred years old'], line: 4 },
-          { type: 'choose', q: 'How much is a ticket for the castle?', opts: ['four pounds', 'eight pounds', 'twelve pounds'], a: ['eight pounds'], line: 8 },
-          { type: 'choose', q: 'Why is Larkhaven easy to explore on foot?', opts: ['There are no cars.', 'The streets are very wide.', 'The centre is quite small.'], a: ['The centre is quite small.'], line: 14 },
-          { type: 'choose', q: 'Where is the tourist office?', opts: ['by the harbour', 'in the main square', 'at the train station'], a: ['in the main square'], line: 20 }
+          { type: "tfng", q: "Larkhaven is a town by the sea.", a: ["True"], line: 0 },
+          { type: "tfng", q: "The market in the old town is open every day.", a: ["False"], line: 5 },
+          { type: "tfng", q: "You have to pay to go into the Sea Museum.", a: ["False"], line: 12 },
+          { type: "tfng", q: "The café in the library sells cakes.", a: ["Not given"], line: 13 },
+          { type: "tfng", q: "There is a bus along the coast every half an hour.", a: ["True"], line: 15 },
+          { type: "tfng", q: "Larkhaven was once a small fishing village.", a: ["True"], line: 23 },
+          { type: "tfng", q: "The coast path is a good walk for very young children.", a: ["False"], line: 30 },
+          { type: "gap", q: "At the market, you can buy fresh fish, local _____ and flowers.", a: ["cheese"], line: 6 },
+          { type: "gap", q: "From the top of the castle _____, you can see the whole town and the sea.", a: ["tower"], line: 9 },
+          { type: "gap", q: "Children love the big model _____ in the Sea Museum.", a: ["ships"], line: 11 },
+          { type: "gap", q: "You can hire a _____ at the train station.", a: ["bike"], line: 16 },
+          { type: "gap", q: "On Friday nights in summer, there is free _____ in the park.", a: ["music"], line: 19 },
+          { type: "gap", q: "On a clear day, you can see seals and _____ from the coast path.", a: ["seabirds"], line: 28 },
+          { type: "choose", q: "How many people live in Larkhaven?", opts: ["about two thousand","about twelve thousand","about twenty thousand"], a: ["about twelve thousand"], line: 1 },
+          { type: "choose", q: "How old are many of the houses in the old town?", opts: ["about fifty years old","about a hundred years old","more than three hundred years old"], a: ["more than three hundred years old"], line: 4 },
+          { type: "choose", q: "How much is a ticket for the castle?", opts: ["four pounds","eight pounds","twelve pounds"], a: ["eight pounds"], line: 8 },
+          { type: "choose", q: "Why is Larkhaven easy to explore on foot?", opts: ["There are no cars.","The streets are very wide.","The centre is quite small."], a: ["The centre is quite small."], line: 14 },
+          { type: "choose", q: "Where is the tourist office?", opts: ["by the harbour","in the main square","at the train station"], a: ["in the main square"], line: 20 },
+          { type: "choose", q: "When do the fishing boats come back into the harbour?", opts: ["at about four o'clock","in the evening","at about eleven o'clock"], a: ["at about eleven o'clock"], line: 26 },
+          { type: "choose", q: "When is Larkhaven's food festival?", opts: ["in September","in July","in August"], a: ["in September"], line: 34 }
         ],
         words: [
           { w: 'harbour', emoji: '⚓', m: 'a place by the sea where boats can stay safely', ex: 'Start your day in the old town, near the harbour.' },
@@ -2245,21 +2318,26 @@ var TA_SKILLS = {
           "Tom, 45, started the Kitchen Club classes in January. \"Before, I couldn't even cook an egg,\" he laughs. \"Now I make dinner for my family three times a week. My children love my pasta!\"\n\n" +
           "If you would like more information about any of these clubs, visit the Millbrook community website or look at the notice board in the town library. There is something for everyone, so why not try a new hobby this month?",
         questions: [
-          { type: 'tfng', q: 'The Walking Club meets on Sunday mornings.', a: ['True'], line: 2 },
-          { type: 'tfng', q: 'You have to pay to join the Walking Club.', a: ['False'], line: 5 },
-          { type: 'tfng', q: 'Games Night finishes at eleven o\'clock.', a: ['False'], line: 7 },
-          { type: 'tfng', q: 'The Book Club meets in the town library.', a: ['True'], line: 10 },
-          { type: 'tfng', q: 'The teacher at the Kitchen Club is a famous chef.', a: ['Not given'], line: 15 },
-          { type: 'gap', q: 'Walkers should wear good _____ and bring some water and a snack.', a: ['shoes'], line: 4 },
-          { type: 'gap', q: 'At Games Night, the price includes a hot _____.', a: ['drink'], line: 9 },
-          { type: 'gap', q: 'The Book Club talks about the book over tea and _____.', a: ['biscuits'], line: 11 },
-          { type: 'gap', q: "This month's book is about a family who move to a _____.", a: ['farm'], line: 12 },
-          { type: 'gap', q: 'Every summer, the choir sings at a concert in the _____.', a: ['park'], line: 22 },
-          { type: 'choose', q: 'How far does the Walking Club usually walk?', opts: ['about five kilometres', 'about ten kilometres', 'about twenty kilometres'], a: ['about ten kilometres'], line: 3 },
-          { type: 'choose', q: 'When is Games Night?', opts: ['on Mondays', 'on Wednesdays', 'on Fridays'], a: ['on Wednesdays'], line: 7 },
-          { type: 'choose', q: 'Where are the cooking classes?', opts: ['at the Blue Door Café', 'in the town library', 'at Millbrook College'], a: ['at Millbrook College'], line: 15 },
-          { type: 'choose', q: 'Why should you book the cooking classes early?', opts: ['They are very cheap.', 'There are only eight places in each class.', 'The teacher is leaving soon.'], a: ['There are only eight places in each class.'], line: 18 },
-          { type: 'choose', q: 'What do you need to join the choir?', opts: ['You need to read music.', 'You need a beautiful voice.', 'You need to enjoy singing.'], a: ['You need to enjoy singing.'], line: 21 }
+          { type: "tfng", q: "The Walking Club meets on Sunday mornings.", a: ["True"], line: 2 },
+          { type: "tfng", q: "You have to pay to join the Walking Club.", a: ["False"], line: 5 },
+          { type: "tfng", q: "Games Night finishes at eleven o'clock.", a: ["False"], line: 7 },
+          { type: "tfng", q: "The Book Club meets in the town library.", a: ["True"], line: 10 },
+          { type: "tfng", q: "The teacher at the Kitchen Club is a famous chef.", a: ["Not given"], line: 15 },
+          { type: "tfng", q: "Jack works in an office.", a: ["True"], line: 27 },
+          { type: "tfng", q: "Margaret is the youngest member of the Book Club.", a: ["False"], line: 33 },
+          { type: "gap", q: "Walkers should wear good _____ and bring some water and a snack.", a: ["shoes"], line: 4 },
+          { type: "gap", q: "At Games Night, the price includes a hot _____.", a: ["drink"], line: 9 },
+          { type: "gap", q: "The Book Club talks about the book over tea and _____.", a: ["biscuits"], line: 11 },
+          { type: "gap", q: "This month's book is about a family who move to a _____.", a: ["farm"], line: 12 },
+          { type: "gap", q: "Every summer, the choir sings at a concert in the _____.", a: ["park"], line: 22 },
+          { type: "gap", q: "Sara's favourite game is a card game about building _____.", a: ["cities"], line: 33 },
+          { type: "choose", q: "How far does the Walking Club usually walk?", opts: ["about five kilometres","about ten kilometres","about twenty kilometres"], a: ["about ten kilometres"], line: 3 },
+          { type: "choose", q: "When is Games Night?", opts: ["on Mondays","on Wednesdays","on Fridays"], a: ["on Wednesdays"], line: 7 },
+          { type: "choose", q: "Where are the cooking classes?", opts: ["at the Blue Door Café","in the town library","at Millbrook College"], a: ["at Millbrook College"], line: 15 },
+          { type: "choose", q: "Why should you book the cooking classes early?", opts: ["They are very cheap.","There are only eight places in each class.","The teacher is leaving soon."], a: ["There are only eight places in each class."], line: 18 },
+          { type: "choose", q: "What do you need to join the choir?", opts: ["You need to read music.","You need a beautiful voice.","You need to enjoy singing."], a: ["You need to enjoy singing."], line: 21 },
+          { type: "choose", q: "Why did Sara start going to Games Night?", opts: ["She loves chess.","She was shy and wanted to meet people.","Her teacher told her to."], a: ["She was shy and wanted to meet people."], line: 31 },
+          { type: "choose", q: "How often does Tom cook dinner for his family now?", opts: ["every day","once a week","three times a week"], a: ["three times a week"], line: 38 }
         ],
         words: [
           { w: 'member', emoji: '🧑‍🤝‍🧑', m: 'a person who is part of a club or group', ex: 'Here are five clubs in Millbrook that are looking for new members.' },

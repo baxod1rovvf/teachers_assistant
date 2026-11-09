@@ -763,10 +763,10 @@ function showSpeaking(level) {
   const shell = (n, inner) => { clearInterval(speakTimer); root().innerHTML = headerHtml(level) + stepsHtml(n) + inner; window.scrollTo(0, 0); };
 
   const stepWords = () => {
-    shell(1, `<section class="sk-card"><h2>🗣️ Words to help you speak</h2>
+    shell(1, `<section class="sk-card"><h2>🗣️ ${S.topic ? esc(S.topic) + ' — words' : 'Words to help you speak'}</h2>
       <p class="sk-intro">Read the words. Say each example out loud.</p>
       <ul class="sk-wordgrid">${S.words.map((w, i) => `<li class="sk-word"><span class="sk-word-emoji" aria-hidden="true">${esc(w.emoji)}</span>
-        <div class="sk-word-body"><b>${esc(w.w)}</b><span>${esc(w.ex)}</span></div>
+        <div class="sk-word-body"><b>${esc(w.w)}</b>${w.uz ? `<small class="sk-uz" lang="uz" translate="no">${esc(w.uz)}</small>` : ''}<span>${esc(w.ex)}</span></div>
         ${canSpeak ? `<button type="button" class="sk-say" data-i="${i}" title="Listen" aria-label="Listen to ${esc(w.w)}">🔊</button>` : ''}</li>`).join('')}</ul>
       <div class="sk-actions"><button type="button" class="sk-btn sk-btn-main" id="skNext">Next →</button></div></section>`);
     root().querySelectorAll('.sk-say').forEach(b => b.addEventListener('click', () => { const w = S.words[+b.dataset.i]; skSay(w.w + '. ' + w.ex); }));

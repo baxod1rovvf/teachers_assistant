@@ -141,3 +141,15 @@ test('only the group\'s students can start a course exercise: the ID must be on 
   expect(rec).toMatchObject({ code, name: 'Yuldasheva Mohlaroy', studentId: '10 002' });
   expect(errors).toEqual([]);
 });
+
+test('Speaking Journey: each of Steps 1–10 has its topic and 10 words with their Uzbek meaning, shown under the word', async ({ page, context }) => {
+  await prepare(context);
+  await page.goto('/skill.html?s=speaking&st=b1');
+  await expect(page.locator('.sk-card h2').first()).toContainText('Daily Routine');
+  await expect(page.locator('.sk-word')).toHaveCount(10);
+  await expect(page.locator('.sk-word').first().locator('b')).toHaveText('Wake up');
+  await expect(page.locator('.sk-word').first().locator('.sk-uz')).toHaveText("Uyg'onmoq");
+  const topics = await page.evaluate(() => TA_SKILLS.steps.slice(0, 10).map(s => [s.speaking.topic, s.speaking.words.length, s.speaking.words.every(w => w.uz && w.ex && w.emoji)]));
+  expect(topics.map(t => t[0])).toEqual(['Daily Routine', 'Family', 'Home & Living', 'Food & Meals', 'Free Time', 'Friends', 'School & Education', 'Hobbies & Sports', 'Shopping', 'Your City']);
+  topics.forEach(t => { expect(t[1]).toBe(10); expect(t[2]).toBe(true); });
+});

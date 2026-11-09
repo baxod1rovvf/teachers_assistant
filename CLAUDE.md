@@ -603,6 +603,15 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   teacher's list…") and the typed name must fit that student (`skNameFits`: one word of 3+ letters, or its start — "Mohlaroy" fits
   "Yuldasheva Mohlaroy"; else "This ID belongs to another student…"); the result carries the listed name. No list (links copied
   before 2026-11-09 until Copy link is pressed again; a group with no students) or no internet → let in. `tests/course-fairness.spec.js`.
+- **Reading questions about the added half + Speaking Journey (teacher, 2026-11-09)**: every reading got questions about its
+  second half (Steps 1–10: +2 tf +2 choose = 14; Steps 11–18: +2 tfng +1 gap +2 choose = 20), each placed after the last of its
+  kind, `line` = its sentence in the second half. **Speaking** follows the teacher's "Speaking Journey" (20 topics: 1 Daily Routine,
+  2 Family, 3 Home & Living, 4 Food & Meals, 5 Free Time, 6 Friends, 7 School & Education, 8 Hobbies & Sports, 9 Shopping, 10 Your City,
+  11 Holidays, 12 Future Plans, 13 Jobs & Careers, 14 Clothes & Fashion, 15 Transport, 16 Animals & Pets, 17 Health & Lifestyle,
+  18 Technology, 19 Movies & Music, 20 Weather & Seasons): `speaking.topic` + `words[{w, uz, emoji, ex}]` — **`uz` = the teacher's
+  Uzbek meaning, shown under the word (`.sk-uz`); the teacher asked for it, the only Uzbek in the course** — + 5 questions + a Part 2
+  card on the topic (seconds unchanged). **Steps 1–10 done; 11–20 wait for the teacher's next 10 word lists** (then also give
+  Steps 19–20 a Speaking part). `tests/course-fairness.spec.js`.
 - **Bands** (`js/skill-bands.js`): Listening/Reading = round(correct/total × 40) → IELTS table (19/20 → 8.5, 16/20 → 7.5, 9/20 → 5.5);
   Writing estimate = 3 + 3×length (words/min below the minimum, else 1; +0.5 when over the maximum) + 3×max(0, 1 − mistakes per 100 words/10), nearest 0.5, 1–9 (grammar check didn't run → last
   part 1.5; **blank writing = band 1**); Overall = average of the present skills, rounded like IELTS; CEFR from Overall.
@@ -615,7 +624,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   **To fill a step**: give its entry in `TA_SKILLS.steps` (keep `id`, `no`, `stage`) `theme, emoji, listening {src, title, intro, questions[{q, a[]}], words, transcript[{who, text, answers}]},
   reading {title, text, questions (tfng/tf/gap/choose, `line` = sentence index)}, writing {topic, points, minutes, minWords, maxWords},
   speaking {words, questions[{q, use}], part2}` like e1; add its entry to `elementary-scripts.json`; run the audio command; keep
-  `transcript` in step with the script; English names only, no Uzbek. `tests/skills.spec.js`.
+  `transcript` in step with the script; English names only, no Uzbek (except the Speaking words' `uz` meanings the teacher gave). `tests/skills.spec.js`.
 - **🎧 Making course listening audio — do it exactly like this (teacher approved levels 1–5 on 2026-11-04).** When the teacher asks
   for a new level's recording (or to remake one), follow these steps; don't invent a new way. Setup in the scratchpad (not the repo):
   `python3 -m venv venv && ./venv/bin/pip install kokoro-onnx soundfile sherpa-onnx onnx`; download from GitHub releases (Hugging Face

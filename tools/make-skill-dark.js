@@ -93,6 +93,7 @@ out += `
 #skBody.sk-studio .sk-opt.on b { color: #fff !important; }
 #skBody.sk-studio .sk-score { color: #fff !important; border: 1px solid rgba(129,140,248,0.35) !important; box-shadow: none !important; }
 #skBody.sk-studio audio { color-scheme: dark; }
+#skBody.sk-studio .sk-uz { color: #A5B4FC !important; }   /* Speaking words' Uzbek meaning */
 /* the student theme names the name box and the Start button by id, so these use the page's id twice to stay on top */
 #skBody#skBody.sk-studio :is(#studentNameInput, #skIdInput) { background: #12141C !important; color: ${INK} !important; border: 1px solid ${LINE} !important; box-shadow: none !important; }
 #skBody#skBody.sk-studio :is(#studentNameInput, #skIdInput):focus { border-color: #6366F1 !important; box-shadow: 0 0 0 3px rgba(99,102,241,0.3) !important; }

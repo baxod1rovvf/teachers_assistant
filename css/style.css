@@ -3290,3 +3290,6 @@ body.loom-studio .ai-robot-anim { position: absolute; left: 50%; top: 50%; trans
 .ai-robot-bubble { cursor: auto; user-select: text; -webkit-user-select: text; }
 .ai-robot-bubble :is(.ai-msg, .ai-msg *) { cursor: text; user-select: text; -webkit-user-select: text; }
 .ai-robot-bubble :is(button, .ai-chip, .ai-send) { cursor: pointer; }
+
+/* Speaking words: the Uzbek meaning under the word (teacher, 2026-11-09) */
+.sk-uz { display: block; font-weight: 600; font-size: .9rem; color: #7B4DFF; margin: 1px 0 2px; }
