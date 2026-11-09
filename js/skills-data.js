@@ -76,37 +76,38 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: "Amy's name card",
-        text: "Hello! My name is Amy Hill. I am fifteen years old. I am a student. I am from Manchester. I live with my mum and my dad. My cat's name is Lily. I like music and books. My best friend is Jess. She is fifteen too.\n\n" +
-          "My school is big and new. My favourite teacher is Mrs Taylor. She is very nice. I go to school by bus. My mum is a doctor, and my dad is a cook. At the weekend, I play the guitar with Jess. Lily sleeps on my bed every night.",
-        questions: [
-          { type: "tf", q: "Amy is fifteen.", a: ["True"], line: 2 },
-          { type: "tf", q: "Amy is a teacher.", a: ["False"], line: 3 },
-          { type: "tf", q: "Amy lives with her mum and her dad.", a: ["True"], line: 5 },
-          { type: "tf", q: "Amy has got a dog.", a: ["False"], line: 6 },
-          { type: "tf", q: "Jess is sixteen.", a: ["False"], line: 9 },
-          { type: "tf", q: "Amy goes to school by bus.", a: ["True"], line: 13 },
-          { type: "tf", q: "Amy's mum is a cook.", a: ["False"], line: 14 },
-          { type: "choose", q: "What is Amy's surname?", opts: ["Hill","Green","Brown"], a: ["Hill"], line: 1 },
-          { type: "choose", q: "Where is Amy from?", opts: ["London","Manchester","York"], a: ["Manchester"], line: 4 },
-          { type: "choose", q: "What is the cat's name?", opts: ["Jess","Amy","Lily"], a: ["Lily"], line: 6 },
-          { type: "choose", q: "What does Amy like?", opts: ["music and books","football and films","maths and art"], a: ["music and books"], line: 7 },
-          { type: "choose", q: "Who is Amy's best friend?", opts: ["Lily","Jess","Kate"], a: ["Jess"], line: 8 },
-          { type: "choose", q: "Who is Amy's favourite teacher?", opts: ["Mrs Taylor","Mrs Green","Mrs Brown"], a: ["Mrs Taylor"], line: 11 },
-          { type: "choose", q: "What does Amy play at the weekend?", opts: ["football","the guitar","the piano"], a: ["the guitar"], line: 15 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "A Day in My Life",
+        text: "My name is Daniel, and I am a 17-year-old student. I usually wake up at 7 o'clock in the morning. First, I take a shower and get dressed. Then, I have breakfast with my family. I usually eat eggs and bread and drink a cup of tea.\n\n" +
+          "I go to school at 8 o'clock. My lessons start at 8:30 and finish at 2 p.m. My favourite subjects are English and history because I enjoy learning new things. During the break, I talk to my classmates and sometimes play games with them.\n\n" +
+          "After school, I come home and have lunch. Then, I do my homework and help my parents with some housework. In the evening, I sometimes watch movies, listen to music or go for a walk with my friends.\n\n" +
+          "I usually have dinner at 8 p.m. After dinner, I spend some time with my family. Before going to bed, I read a book or watch a few videos. I usually go to bed at 10:30.\n\n" +
+          "I like my daily routine because I have enough time for studying, relaxing and spending time with people I love.",
         words: [
-          { w: 'name card', emoji: '📇', m: 'a small card with your name and a few things about you', ex: "Read Amy's name card." },
-          { w: 'my name is', emoji: '📛', m: 'how you tell people your name', ex: 'My name is Amy Hill.' },
-          { w: 'fifteen', emoji: '🔢', m: 'the number 15', ex: 'I am fifteen years old.' },
-          { w: 'student', emoji: '🎒', m: 'a person who learns at a school', ex: 'I am a student.' },
-          { w: 'live', emoji: '🏠', m: 'to have your home in a place', ex: 'I live with my mum and my dad.' },
-          { w: 'mum', emoji: '👩', m: 'your mother', ex: 'I live with my mum.' },
-          { w: 'dad', emoji: '👨', m: 'your father', ex: 'I live with my dad.' },
-          { w: 'cat', emoji: '🐱', m: 'a small animal that lives in a home', ex: "My cat's name is Lily." },
-          { w: 'music', emoji: '🎵', m: 'songs and sounds that you listen to', ex: 'I like music and books.' },
-          { w: 'best friend', emoji: '🤝', m: 'the friend you like most', ex: 'My best friend is Jess.' }
-        ]
+          { w: "Usually", uz: "Odatda", emoji: "🔁", ex: "I usually wake up at 7 o'clock in the morning." },
+          { w: "Get dressed", uz: "Kiyinmoq", emoji: "👕", ex: "First, I take a shower and get dressed." },
+          { w: "Have breakfast", uz: "Nonushta qilmoq", emoji: "🍳", ex: "Then, I have breakfast with my family." },
+          { w: "Lesson", uz: "Dars", emoji: "📘", ex: "My lessons start at 8:30 and finish at 2 p.m." },
+          { w: "Favourite subject", uz: "Sevimli fan", emoji: "❤️", ex: "My favourite subjects are English and history because I enjoy learning new things." },
+          { w: "Classmate", uz: "Sinfdosh", emoji: "🧑‍🎓", ex: "During the break, I talk to my classmates and sometimes play games with them." },
+          { w: "Break", uz: "Tanaffus", emoji: "🔔", ex: "Then, I have breakfast with my family." },
+          { w: "Housework", uz: "Uy ishlari", emoji: "🧹", ex: "Then, I do my homework and help my parents with some housework." },
+          { w: "Spend time", uz: "Vaqt o'tkazmoq", emoji: "⏳", ex: "After dinner, I spend some time with my family." },
+          { w: "Daily routine", uz: "Kundalik tartib", emoji: "📅", ex: "I like my daily routine because I have enough time for studying, relaxing and spending time with people I love." }
+        ],
+        questions: [
+          { type: "tf", q: "Daniel is 16 years old.", a: ["False"], line: 0 },
+          { type: "tf", q: "He wakes up at 7 o'clock.", a: ["True"], line: 1 },
+          { type: "tf", q: "He goes to school at 9 o'clock.", a: ["False"], line: 5 },
+          { type: "tf", q: "His favourite subjects are English and history.", a: ["True"], line: 7 },
+          { type: "tf", q: "He sometimes plays games with his classmates.", a: ["True"], line: 8 },
+          { type: "open", q: "What does Daniel do after waking up?", keys: ["shower","dressed"], line: 2 },
+          { type: "open", q: "What time do his lessons finish?", keys: ["2","two"], line: 6 },
+          { type: "open", q: "What does he do after school?", keys: ["lunch","homework","housework"], line: 9 },
+          { type: "open", q: "How does he spend his evenings?", keys: ["movie","music","walk"], line: 11 },
+          { type: "open", q: "Why does he like his daily routine?", keys: ["enough time","studying","relaxing","people he loves","people i love"], line: 16 }
+        ],
+        retell: "Retell Daniel's day in your own words, from the morning to the evening."
       },
       writing: {
         topic: 'About me',
@@ -201,37 +202,39 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: 'Our class list',
-        text: "This is our class list. We are Class 5B. There are eighteen students in our class. Our teacher is Mr Lee. Our classroom is Room 12. Sam is eleven years old. Ella is twelve. Max is eleven too. Ella has got two brothers. Sam has got one sister. There are six lessons every day.\n\n" +
-          "Our classroom is big and sunny. It has got ten tables and a big whiteboard. Mr Lee is from London. He is a good teacher, and he is very funny. Our first lesson is at nine o'clock. Lunch is at half past twelve. There are four girls and two boys in my group. Ella sits next to me. Max sits behind us. Sam likes Maths, and Ella likes English. Max likes PE best. We go home at three o'clock.",
-        questions: [
-          { type: "tf", q: "There are eighteen students in the class.", a: ["True"], line: 2 },
-          { type: "tf", q: "The classroom is Room 20.", a: ["False"], line: 4 },
-          { type: "tf", q: "Sam is eleven.", a: ["True"], line: 5 },
-          { type: "tf", q: "Max is twelve.", a: ["False"], line: 7 },
-          { type: "tf", q: "There are six lessons every day.", a: ["True"], line: 10 },
-          { type: "tf", q: "Mr Lee is from London.", a: ["True"], line: 13 },
-          { type: "tf", q: "Lunch is at one o'clock.", a: ["False"], line: 16 },
-          { type: "choose", q: "What class are they?", opts: ["Class 5B","Class 7B","Class 8B"], a: ["Class 5B"], line: 1 },
-          { type: "choose", q: "Who is the teacher?", opts: ["Mr Hill","Mr Lee","Mrs Day"], a: ["Mr Lee"], line: 3 },
-          { type: "choose", q: "How old is Ella?", opts: ["ten","eleven","twelve"], a: ["twelve"], line: 6 },
-          { type: "choose", q: "How many brothers has Ella got?", opts: ["one","two","three"], a: ["two"], line: 8 },
-          { type: "choose", q: "Who has got one sister?", opts: ["Sam","Ella","Max"], a: ["Sam"], line: 9 },
-          { type: "choose", q: "How many tables are in the classroom?", opts: ["twelve","eighteen","ten"], a: ["ten"], line: 12 },
-          { type: "choose", q: "What does Max like best?", opts: ["PE","Maths","English"], a: ["PE"], line: 21 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "My Family",
+        text: "There are five people in our family: my parents, my two brothers and me. We live in a flat on the fourth floor of a tall building.\n\n" +
+          "My father, Michael, works at a bank. He is a calm and patient man. He leaves home early, but he always comes back for dinner. My mother, Helen, is a nurse. She works long hours, but she is never too tired to listen to us.\n\n" +
+          "Jack is my older brother. He is twenty and studies at university in another city, so we only see him at the weekends. Sam is my younger brother. He is only eight, and he is very funny and full of energy.\n\n" +
+          "We are a close family. We get along well, but sometimes Sam and I argue about the TV! Every Sunday, we have a big lunch together at my grandparents' house. My grandmother cooks delicious soup, and my grandfather tells us stories about his childhood.\n\n" +
+          "Our flat is not very big, so Sam and I share a bedroom. It is sometimes noisy, but at night we often talk and laugh before we fall asleep.\n\n" +
+          "I love my family because they always support me, and I know I can talk to them about anything.",
         words: [
-          { w: 'class list', emoji: '📋', m: 'a list of the students in a class', ex: 'This is our class list.' },
-          { w: 'there are', emoji: '👉', m: 'we use it to say how many things or people', ex: 'There are eighteen students in our class.' },
-          { w: 'eighteen', emoji: '🔢', m: 'the number 18', ex: 'There are eighteen students.' },
-          { w: 'teacher', emoji: '👨‍🏫', m: 'a person who helps you learn at school', ex: 'Our teacher is Mr Lee.' },
-          { w: 'classroom', emoji: '🏫', m: 'the room where you have lessons', ex: 'Our classroom is Room 12.' },
-          { w: 'eleven', emoji: '1️⃣', m: 'the number 11', ex: 'Sam is eleven years old.' },
-          { w: 'twelve', emoji: '🕛', m: 'the number 12', ex: 'Ella is twelve.' },
-          { w: 'brother', emoji: '👦', m: 'a boy in your family, with the same mum and dad', ex: 'Ella has got two brothers.' },
-          { w: 'sister', emoji: '👧', m: 'a girl in your family, with the same mum and dad', ex: 'Sam has got one sister.' },
-          { w: 'lesson', emoji: '📚', m: 'a time when you learn something at school', ex: 'There are six lessons every day.' }
-        ]
+          { w: "Parents", uz: "Ota-ona", emoji: "👨‍👩‍👦", ex: "There are five people in our family: my parents, my two brothers and me." },
+          { w: "Older brother", uz: "Aka", emoji: "👦", ex: "Jack is my older brother." },
+          { w: "Younger brother", uz: "Uka", emoji: "🧒", ex: "Sam is my younger brother." },
+          { w: "Calm", uz: "Xotirjam", emoji: "😌", ex: "He is a calm and patient man." },
+          { w: "Patient", uz: "Sabrli", emoji: "🕰️", ex: "He is a calm and patient man." },
+          { w: "Works long hours", uz: "Uzoq soat ishlaydi", emoji: "⏰", ex: "She works long hours, but she is never too tired to listen to us." },
+          { w: "Get along well", uz: "Yaxshi chiqishmoq", emoji: "🤝", ex: "We get along well, but sometimes Sam and I argue about the TV!" },
+          { w: "Argue", uz: "Bahslashmoq", emoji: "🗯️", ex: "We get along well, but sometimes Sam and I argue about the TV!" },
+          { w: "Childhood", uz: "Bolalik", emoji: "🧸", ex: "My grandmother cooks delicious soup, and my grandfather tells us stories about his childhood." },
+          { w: "Support", uz: "Qo'llab-quvvatlamoq", emoji: "🙌", ex: "I love my family because they always support me, and I know I can talk to them about anything." }
+        ],
+        questions: [
+          { type: "tf", q: "The family lives in a house.", a: ["False"], line: 1 },
+          { type: "tf", q: "The writer's father has a job in a bank.", a: ["True"], line: 2 },
+          { type: "tf", q: "Jack lives at home with the rest of the family.", a: ["False"], line: 8 },
+          { type: "tf", q: "The youngest brother is eight years old.", a: ["True"], line: 10 },
+          { type: "tf", q: "The family has lunch with the grandparents every Saturday.", a: ["False"], line: 13 },
+          { type: "gap", q: "My mother, Helen, is a _____.", a: ["nurse"], line: 5 },
+          { type: "gap", q: "Jack studies at _____ in another city.", a: ["university"], line: 8 },
+          { type: "gap", q: "Sam is very funny and full of _____.", a: ["energy"], line: 10 },
+          { type: "gap", q: "Every _____, the family has a big lunch at the grandparents' house.", a: ["Sunday"], line: 13 },
+          { type: "gap", q: "Sam and the writer share a _____.", a: ["bedroom"], line: 15 }
+        ],
+        retell: "Retell the text in your own words. Talk about each person in the family and what they do on Sundays."
       },
       writing: {
         topic: 'My numbers',
@@ -325,37 +328,40 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: 'My family photo',
-        text: "Look at my family photo. My name is Holly and I am thirteen. The tall man is my dad, Tom. The woman next to him is my mum, Sarah. My big brother is Leo. He is seventeen. My little sister is Rosie. She is five. The old man is my grandad, Bill. He has got a white beard. Our cat, Toby, is on my grandad's knee.\n\n" +
-          "This photo is from my grandad's birthday party. It was in the garden of our house. My dad is a bus driver, and my mum is a nurse. Leo plays the guitar, and he is very good. Rosie loves dolls and pink dresses. My grandad is seventy-five, but he is very happy and active. He lives with us in our house. My grandma is not in the photo, because she is the photographer! We have got a big cake on the table. It is a chocolate cake. Everyone in the photo is smiling.",
-        questions: [
-          { type: "tf", q: "Holly is thirteen.", a: ["True"], line: 1 },
-          { type: "tf", q: "Holly's dad is short.", a: ["False"], line: 2 },
-          { type: "tf", q: "Leo is Holly's little brother.", a: ["False"], line: 4 },
-          { type: "tf", q: "Rosie is five.", a: ["True"], line: 7 },
-          { type: "tf", q: "Grandad has got a beard.", a: ["True"], line: 9 },
-          { type: "tf", q: "Holly's mum is a nurse.", a: ["True"], line: 13 },
-          { type: "tf", q: "Holly's grandma is in the photo.", a: ["False"], line: 18 },
-          { type: "choose", q: "Who is Sarah?", opts: ["Holly's mum","Holly's sister","Holly's grandma"], a: ["Holly's mum"], line: 3 },
-          { type: "choose", q: "How old is Leo?", opts: ["seven","fifteen","seventeen"], a: ["seventeen"], line: 5 },
-          { type: "choose", q: "Who is Rosie?", opts: ["Holly's little sister","Holly's mum","Holly's friend"], a: ["Holly's little sister"], line: 6 },
-          { type: "choose", q: "Who is Bill?", opts: ["Holly's dad","Holly's grandad","Holly's brother"], a: ["Holly's grandad"], line: 8 },
-          { type: "choose", q: "Who is Toby?", opts: ["the cat","the dog","the baby"], a: ["the cat"], line: 10 },
-          { type: "choose", q: "Whose birthday party is in the photo?", opts: ["Holly's","Holly's grandad's","Rosie's"], a: ["Holly's grandad's"], line: 11 },
-          { type: "choose", q: "What does Leo play?", opts: ["football","the piano","the guitar"], a: ["the guitar"], line: 14 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "My Dream House",
+        text: "Close your eyes and imagine your perfect home. Here is mine.\n\n" +
+          "My dream house is not in a busy city. It is near a quiet lake, with mountains behind it. The house has two floors and big windows, so there is a lot of light in every room.\n\n" +
+          "On the ground floor, there is a spacious living room with a fireplace and a comfortable sofa. Next to it, there is a modern kitchen. I want a big table there because I love cooking for my friends.\n\n" +
+          "Upstairs, there are three bedrooms and two bathrooms. My bedroom has a balcony with a view of the lake. Every morning, I want to drink my tea there and watch the sunrise.\n\n" +
+          "Outside, there is a large garden with fruit trees and flowers. I also want a small vegetable garden, like my grandmother has. In the corner of the garden, there is a little wooden house for my dog.\n\n" +
+          "I also have a plan for the inside. The walls will be light green, my favourite colour, and there will be a small library under the stairs with shelves full of books. On rainy days, I want to sit there with a cup of hot chocolate and read for hours.\n\n" +
+          "Of course, a house like this is expensive. But I am saving money every month, and one day I hope to build it.",
         words: [
-          { w: 'look at', emoji: '👀', m: 'to turn your eyes to something', ex: 'Look at my family photo.' },
-          { w: 'man', emoji: '👨', m: 'a grown-up boy', ex: 'The tall man is my dad.' },
-          { w: 'woman', emoji: '👩', m: 'a grown-up girl', ex: 'The woman next to him is my mum.' },
-          { w: 'next to', emoji: '↔️', m: 'very near, at the side of', ex: 'The woman next to him is my mum.' },
-          { w: 'big brother', emoji: '🧑', m: 'a brother who is older than you', ex: 'My big brother is Leo.' },
-          { w: 'little sister', emoji: '👧', m: 'a sister who is younger than you', ex: 'My little sister is Rosie.' },
-          { w: 'old', emoji: '⏳', m: 'not young', ex: 'The old man is my grandad.' },
-          { w: 'grandad', emoji: '👴', m: 'the father of your mum or your dad', ex: 'The old man is my grandad, Bill.' },
-          { w: 'beard', emoji: '🧔', m: 'hair on a man\'s face', ex: 'He has got a white beard.' },
-          { w: 'knee', emoji: '🦵', m: 'the middle part of your leg', ex: "Our cat is on my grandad's knee." }
-        ]
+          { w: "Dream house", uz: "Orzudagi uy", emoji: "🏡", ex: "My dream house is not in a busy city." },
+          { w: "Imagine", uz: "Tasavvur qilmoq", emoji: "💭", ex: "Close your eyes and imagine your perfect home." },
+          { w: "Floor", uz: "Qavat", emoji: "🏢", ex: "The house has two floors and big windows, so there is a lot of light in every room." },
+          { w: "Spacious", uz: "Keng", emoji: "📐", ex: "On the ground floor, there is a spacious living room with a fireplace and a comfortable sofa." },
+          { w: "Fireplace", uz: "Kamin", emoji: "🔥", ex: "On the ground floor, there is a spacious living room with a fireplace and a comfortable sofa." },
+          { w: "Comfortable", uz: "Qulay", emoji: "🛋️", ex: "On the ground floor, there is a spacious living room with a fireplace and a comfortable sofa." },
+          { w: "Upstairs", uz: "Yuqori qavatda", emoji: "⬆️", ex: "Upstairs, there are three bedrooms and two bathrooms." },
+          { w: "View", uz: "Manzara", emoji: "🏞️", ex: "My bedroom has a balcony with a view of the lake." },
+          { w: "Sunrise", uz: "Quyosh chiqishi", emoji: "🌅", ex: "Every morning, I want to drink my tea there and watch the sunrise." },
+          { w: "Save money", uz: "Pul yig'moq", emoji: "💰", ex: "But I am saving money every month, and one day I hope to build it." }
+        ],
+        questions: [
+          { type: "tf", q: "The dream house is in the centre of a big city.", a: ["False"], line: 2 },
+          { type: "tf", q: "The house has large windows.", a: ["True"], line: 4 },
+          { type: "tf", q: "There are four bedrooms upstairs.", a: ["False"], line: 8 },
+          { type: "tf", q: "The writer wants to have morning tea on the balcony.", a: ["True"], line: 10 },
+          { type: "tf", q: "The dog will sleep inside the main house.", a: ["False"], line: 13 },
+          { type: "open", q: "What is behind the house?", keys: ["mountain"], line: 3 },
+          { type: "open", q: "Why does the writer want a big table in the kitchen?", keys: ["cook","friend"], line: 7 },
+          { type: "open", q: "What can the writer see from the balcony?", keys: ["lake","sunrise"], line: 9 },
+          { type: "open", q: "What is in the garden?", keys: ["fruit","flower","tree","vegetable"], line: 11 },
+          { type: "open", q: "How is the writer getting ready to build the house?", keys: ["saving","save","money"], line: 18 }
+        ],
+        retell: "Retell the text in your own words. Describe the dream house floor by floor and its garden."
       },
       writing: {
         topic: 'My family',
@@ -449,37 +455,41 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: "What's in my bag?",
-        text: "This is my school bag. It is red and black. In my bag, there are two books and a notebook. My pencil case is purple. There are three pencils, a pen and a rubber in it. I have got a bottle of water. It is blue. There is a banana for lunch. My phone is in my bag too. It is white. I have got my keys. They are small and silver.\n\n" +
-          "I have got a small umbrella in my bag too. It is for rainy days. My bus card is in a small pocket. On Mondays, my sports shoes are in my bag, because I have got PE. They are white and blue. My glasses are in a brown box. My bag is very heavy every morning! In the afternoon, it is lighter, because I eat my banana and I drink my water.",
-        questions: [
-          { type: "tf", q: "The bag is red and black.", a: ["True"], line: 1 },
-          { type: "tf", q: "There are three books in the bag.", a: ["False"], line: 2 },
-          { type: "tf", q: "The pencil case is purple.", a: ["True"], line: 3 },
-          { type: "tf", q: "The bottle of water is green.", a: ["False"], line: 6 },
-          { type: "tf", q: "The phone is black.", a: ["False"], line: 9 },
-          { type: "tf", q: "The sports shoes are white and blue.", a: ["True"], line: 16 },
-          { type: "tf", q: "The bag is light in the morning.", a: ["False"], line: 18 },
-          { type: "choose", q: "What else is in the bag with the books?", opts: ["a notebook","a ruler","a hat"], a: ["a notebook"], line: 2 },
-          { type: "choose", q: "How many pencils are in the pencil case?", opts: ["two","three","four"], a: ["three"], line: 4 },
-          { type: "choose", q: "What food is in the bag?", opts: ["an apple","a banana","a sandwich"], a: ["a banana"], line: 7 },
-          { type: "choose", q: "The banana is for …", opts: ["breakfast","lunch","dinner"], a: ["lunch"], line: 7 },
-          { type: "choose", q: "What colour are the keys?", opts: ["gold","silver","black"], a: ["silver"], line: 11 },
-          { type: "choose", q: "When are the sports shoes in the bag?", opts: ["on Mondays","on Fridays","every day"], a: ["on Mondays"], line: 15 },
-          { type: "choose", q: "Where are the glasses?", opts: ["in a small pocket","in a brown box","in the pencil case"], a: ["in a brown box"], line: 17 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "Traditional Food Around the World",
+        text: "Every country has its own traditional food. These dishes tell us a lot about the people and their history.\n\n" +
+          "In Italy, people love pasta and pizza. Real Italian pizza is thin, and it is often cooked in a hot stone oven. Families in Italy usually eat lunch together, and a meal can last two hours.\n\n" +
+          "In Japan, rice is part of almost every meal. People also eat a lot of fish and vegetables. Sushi is the most famous Japanese dish. It is made with rice, raw fish and seaweed.\n\n" +
+          "Mexico is famous for tacos. A taco is a soft or crispy tortilla with meat, beans, cheese and spicy sauce. Many Mexicans eat tacos for breakfast, lunch and dinner!\n\n" +
+          "In India, many dishes are full of spices. Curry is very popular, and people often eat it with rice or flat bread. In the south of India, some people eat with their right hand.\n\n" +
+          "In Britain, a traditional breakfast has eggs, sausages, beans and toast. It is called a full English breakfast, and it is very filling.\n\n" +
+          "In Turkey, breakfast is a big meal with bread, cheese, olives, tomatoes, eggs and tea. People sit at the table for a long time and talk. Turkish people also love sweet desserts, and baklava, made with nuts and honey, is one of the most famous. Many visitors take a box of it home as a present.\n\n" +
+          "Trying traditional food is one of the best ways to learn about a new culture.",
         words: [
-          { w: 'school bag', emoji: '🎒', m: 'the bag you take to school', ex: 'This is my school bag.' },
-          { w: 'notebook', emoji: '📓', m: 'a small book with empty pages for writing', ex: 'There are two books and a notebook.' },
-          { w: 'purple', emoji: '🟣', m: 'a colour: red and blue together', ex: 'My pencil case is purple.' },
-          { w: 'pencil', emoji: '✏️', m: 'you write or draw with it', ex: 'There are three pencils in it.' },
-          { w: 'rubber', emoji: '🧽', m: 'a small thing that takes pencil off paper', ex: 'There is a rubber in my pencil case.' },
-          { w: 'bottle', emoji: '💧', m: 'you keep water or milk in it', ex: 'I have got a bottle of water.' },
-          { w: 'banana', emoji: '🍌', m: 'a long yellow fruit', ex: 'There is a banana for lunch.' },
-          { w: 'phone', emoji: '📱', m: 'you call people with it', ex: 'My phone is in my bag too.' },
-          { w: 'keys', emoji: '🔑', m: 'you open a door with them', ex: 'I have got my keys.' },
-          { w: 'silver', emoji: '🥈', m: 'a grey colour that shines', ex: 'My keys are small and silver.' }
-        ]
+          { w: "Traditional", uz: "An'anaviy", emoji: "🏺", ex: "Every country has its own traditional food." },
+          { w: "Dish", uz: "Taom", emoji: "🍽️", ex: "These dishes tell us a lot about the people and their history." },
+          { w: "Meal", uz: "Ovqat (taomlanish)", emoji: "🍲", ex: "Families in Italy usually eat lunch together, and a meal can last two hours." },
+          { w: "Last", uz: "Davom etmoq", emoji: "⏳", ex: "Families in Italy usually eat lunch together, and a meal can last two hours." },
+          { w: "Raw", uz: "Xom", emoji: "🐟", ex: "It is made with rice, raw fish and seaweed." },
+          { w: "Spicy", uz: "Achchiq", emoji: "🌶️", ex: "A taco is a soft or crispy tortilla with meat, beans, cheese and spicy sauce." },
+          { w: "Sauce", uz: "Sous", emoji: "🥫", ex: "A taco is a soft or crispy tortilla with meat, beans, cheese and spicy sauce." },
+          { w: "Spices", uz: "Ziravorlar", emoji: "🧂", ex: "A taco is a soft or crispy tortilla with meat, beans, cheese and spicy sauce." },
+          { w: "Filling", uz: "To'yimli", emoji: "🍳", ex: "It is called a full English breakfast, and it is very filling." },
+          { w: "Culture", uz: "Madaniyat", emoji: "🌍", ex: "Trying traditional food is one of the best ways to learn about a new culture." }
+        ],
+        questions: [
+          { type: "tf", q: "Real Italian pizza is usually thick.", a: ["False"], line: 3 },
+          { type: "tf", q: "In Japan, people eat rice with most meals.", a: ["True"], line: 5 },
+          { type: "tf", q: "Sushi is made with cooked meat.", a: ["False"], line: 8 },
+          { type: "tf", q: "Some Mexicans eat tacos in the morning.", a: ["True"], line: 11 },
+          { type: "tf", q: "A full English breakfast is a light meal.", a: ["False"], line: 16 },
+          { type: "gap", q: "Real Italian pizza is often cooked in a hot stone _____.", a: ["oven"], line: 3 },
+          { type: "gap", q: "In Japan, _____ is part of almost every meal.", a: ["rice"], line: 5 },
+          { type: "gap", q: "Sushi is made with rice, raw fish and _____.", a: ["seaweed"], line: 8 },
+          { type: "gap", q: "In India, people often eat curry with rice or flat _____.", a: ["bread"], line: 13 },
+          { type: "gap", q: "Baklava is made with nuts and _____.", a: ["honey"], line: 19 }
+        ],
+        retell: "Retell the text in your own words. Talk about the traditional food of at least three countries."
       },
       writing: {
         topic: 'My bag',
@@ -581,37 +591,41 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: "Bell's Shop: our price list",
-        text: "Welcome to Bell's Shop! We are at 36 King Street. We are open every day. Here is our price list. Bread is 85p. Milk is 60p. An apple is 30p, and a banana is 25p. A bottle of water is 50p. A small cake is 75p. Our cakes are very good! An ice cream is 90p. Children love it. A sandwich is £2. Birthday cards are 99p. Our phone number is 01632 960 714. Come and see us!\n\n" +
-          "We have got a lot of fruit and vegetables too. Carrots are 40p, and a big orange is 45p. A box of eggs is £1.80. Our cheese is from a farm near the town. Cheese is £2.50. A small bottle of orange juice is 80p. We sell newspapers and magazines too. A newspaper is £1. We have got pens, pencils and notebooks for school. A notebook is £1.20. On Saturdays, children get a free sweet with every ice cream. The shop opens at seven o'clock in the morning and closes at nine o'clock in the evening.",
-        questions: [
-          { type: "tf", q: "The shop is open every day.", a: ["True"], line: 2 },
-          { type: "tf", q: "Bread is 58p.", a: ["False"], line: 4 },
-          { type: "tf", q: "A banana is 30p.", a: ["False"], line: 6 },
-          { type: "tf", q: "A bottle of water is 50p.", a: ["True"], line: 7 },
-          { type: "tf", q: "A sandwich is £2.", a: ["True"], line: 12 },
-          { type: "tf", q: "A box of eggs is £1.80.", a: ["True"], line: 18 },
-          { type: "tf", q: "The shop closes at seven o'clock in the evening.", a: ["False"], line: 27 },
-          { type: "choose", q: "Where is the shop?", opts: ["36 King Street","63 King Street","36 Queen Street"], a: ["36 King Street"], line: 1 },
-          { type: "choose", q: "How much is a small cake?", opts: ["57p","75p","70p"], a: ["75p"], line: 8 },
-          { type: "choose", q: "How much is an ice cream?", opts: ["19p","90p","99p"], a: ["90p"], line: 10 },
-          { type: "choose", q: "What is 99p?", opts: ["a birthday card","a cake","a sandwich"], a: ["a birthday card"], line: 13 },
-          { type: "choose", q: "What is the shop's phone number?", opts: ["01632 960 714","01632 960 741","01632 690 714"], a: ["01632 960 714"], line: 14 },
-          { type: "choose", q: "Where is the cheese from?", opts: ["a big supermarket","another country","a farm near the town"], a: ["a farm near the town"], line: 19 },
-          { type: "choose", q: "What do children get on Saturdays?", opts: ["a free sweet","a free ice cream","a free notebook"], a: ["a free sweet"], line: 26 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "How People Spend Their Free Time",
+        text: "What do people do when they are not working or studying? Last month, our English class asked 50 people this question. Here are the results.\n\n" +
+          "The most popular free-time activity is watching videos and films. Thirty people said they watch something every evening, usually on their phones. Many of them also listen to music while they travel to work or school.\n\n" +
+          "Sports are popular too. Twelve people go to the gym or play football at least twice a week. Older people prefer walking in the park. They say it helps them relax after a busy day.\n\n" +
+          "Some people like quiet hobbies. Eight people read books, and five people enjoy cooking new recipes at the weekend. One woman told us she paints pictures of flowers in her free time.\n\n" +
+          "Young people spend a lot of time with friends. They meet in cafés, play computer games together or chat online for hours.\n\n" +
+          "We also asked people how much free time they have. Most adults said they have about two or three hours on weekdays and more at the weekend. Students said they often feel they don't have enough free time because of homework and exams.\n\n" +
+          "Finally, we asked people what they want to do when they have more free time. The most common answers were travelling, learning a new language and spending more time with family. One man said he wants to learn to play the piano, and a young girl told us she dreams of having a garden with her own vegetables.\n\n" +
+          "The survey shows one important thing: everyone needs free time. It helps people feel happy, healthy and full of energy.",
         words: [
-          { w: 'shop', emoji: '🏪', m: 'a place where you buy things', ex: "Welcome to Bell's Shop!" },
-          { w: 'price list', emoji: '📋', m: 'a list of things and how much they are', ex: 'Here is our price list.' },
-          { w: 'open', emoji: '🔓', m: 'you can go in and buy things', ex: 'We are open every day.' },
-          { w: 'bread', emoji: '🍞', m: 'a food made from flour; you make sandwiches with it', ex: 'Bread is 85p.' },
-          { w: 'milk', emoji: '🥛', m: 'a white drink from cows', ex: 'Milk is 60p.' },
-          { w: 'cake', emoji: '🍰', m: 'a sweet food for birthdays and parties', ex: 'A small cake is 75p.' },
-          { w: 'ice cream', emoji: '🍦', m: 'a cold, sweet food', ex: 'An ice cream is 90p.' },
-          { w: 'sandwich', emoji: '🥪', m: 'two pieces of bread with food between them', ex: 'A sandwich is £2.' },
-          { w: 'birthday card', emoji: '💌', m: 'a card you give a friend on his or her birthday', ex: 'Birthday cards are 99p.' },
-          { w: 'p (pence)', emoji: '🪙', m: 'small British money: 100p is £1', ex: 'Milk is 60p.' }
-        ]
+          { w: "Free time", uz: "Bo'sh vaqt", emoji: "🕒", ex: "One woman told us she paints pictures of flowers in her free time." },
+          { w: "Activity", uz: "Mashg'ulot", emoji: "🎯", ex: "The most popular free-time activity is watching videos and films." },
+          { w: "Popular", uz: "Ommabop", emoji: "⭐", ex: "The most popular free-time activity is watching videos and films." },
+          { w: "At least", uz: "Kamida", emoji: "🔢", ex: "Twelve people go to the gym or play football at least twice a week." },
+          { w: "Twice a week", uz: "Haftasiga ikki marta", emoji: "📅", ex: "Twelve people go to the gym or play football at least twice a week." },
+          { w: "Prefer", uz: "Afzal ko'rmoq", emoji: "👍", ex: "Older people prefer walking in the park." },
+          { w: "Relax", uz: "Dam olmoq", emoji: "🧘", ex: "They say it helps them relax after a busy day." },
+          { w: "Recipe", uz: "Retsept", emoji: "📖", ex: "Eight people read books, and five people enjoy cooking new recipes at the weekend." },
+          { w: "Chat online", uz: "Internetda suhbatlashmoq", emoji: "💬", ex: "They meet in cafés, play computer games together or chat online for hours." },
+          { w: "Survey", uz: "So'rovnoma", emoji: "📋", ex: "The survey shows one important thing: everyone needs free time." }
+        ],
+        questions: [
+          { type: "tf", q: "The class asked fifty people about their free time.", a: ["True"], line: 1 },
+          { type: "tf", q: "Most people watch videos on a TV.", a: ["False"], line: 4 },
+          { type: "tf", q: "Older people like walking in the park.", a: ["True"], line: 8 },
+          { type: "tf", q: "Fifteen people said they read books.", a: ["False"], line: 11 },
+          { type: "tf", q: "Young people never chat online.", a: ["False"], line: 14 },
+          { type: "open", q: "Why do students feel they don't have enough free time?", keys: ["homework","exam"], line: 17 },
+          { type: "open", q: "What is the most popular free-time activity?", keys: ["video","film"], line: 3 },
+          { type: "open", q: "Why do older people like walking?", keys: ["relax"], line: 9 },
+          { type: "open", q: "What does one woman paint?", keys: ["flower"], line: 12 },
+          { type: "open", q: "Where do young people meet their friends?", keys: ["café","cafe"], line: 14 }
+        ],
+        retell: "Retell the text in your own words. Say how people spend their free time and what the survey shows."
       },
       writing: {
         topic: 'Shopping list',
@@ -702,37 +716,40 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: "Leo's school week",
-        text: "My name is Leo and this is my school week. School starts at nine o'clock and finishes at three o'clock. On Monday, I have Maths and English. On Tuesday, I have Science and Art. Art is my favourite lesson! On Wednesday, I have Music. We sing songs. On Thursday, I have PE. We play football. On Friday, I have Maths again and a test. Lunch is at twelve o'clock every day. I don't go to school on Saturday and Sunday. On Saturday, I play with my friends.\n\n" +
-          "In the morning, I get up at seven o'clock. I have breakfast with my sister, Mia. Mia is eight, and she goes to my school too. We walk to school with our mum. My best friend at school is Ben. Ben sits next to me in every lesson. My English teacher is Miss Brown. She reads stories to us. After school, I do my homework at four o'clock. I watch TV for one hour. Then we have dinner at six o'clock. I go to bed at nine o'clock. On Sunday, I visit my grandma and grandad. They live in a small house near the sea.",
-        questions: [
-          { type: "tf", q: "School starts at nine o'clock.", a: ["True"], line: 1 },
-          { type: "tf", q: "Art is Leo's favourite lesson.", a: ["True"], line: 4 },
-          { type: "tf", q: "Leo has PE on Monday.", a: ["False"], line: 7 },
-          { type: "tf", q: "Lunch is at one o'clock.", a: ["False"], line: 10 },
-          { type: "tf", q: "Leo goes to school on Sunday.", a: ["False"], line: 11 },
-          { type: "tf", q: "Leo gets up at seven o'clock.", a: ["True"], line: 13 },
-          { type: "tf", q: "Leo goes to school by bus.", a: ["False"], line: 16 },
-          { type: "choose", q: "When does school finish?", opts: ["at two o'clock","at three o'clock","at four o'clock"], a: ["at three o'clock"], line: 1 },
-          { type: "choose", q: "What does Leo have on Tuesday?", opts: ["Maths and English","Science and Art","Music"], a: ["Science and Art"], line: 3 },
-          { type: "choose", q: "What do they do in Music?", opts: ["sing songs","play football","read books"], a: ["sing songs"], line: 6 },
-          { type: "choose", q: "When is the test?", opts: ["on Monday","on Thursday","on Friday"], a: ["on Friday"], line: 9 },
-          { type: "choose", q: "What does Leo do on Saturday?", opts: ["He goes to school.","He plays with his friends.","He has a test."], a: ["He plays with his friends."], line: 12 },
-          { type: "choose", q: "Who is Leo's best friend at school?", opts: ["Mia","Ben","Tom"], a: ["Ben"], line: 17 },
-          { type: "choose", q: "When does Leo do his homework?", opts: ["at six o'clock","at nine o'clock","at four o'clock"], a: ["at four o'clock"], line: 21 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "A True Friendship",
+        text: "When Tom was ten, his family moved to a new town. On his first day at the new school, he felt nervous and lonely. Nobody talked to him during the break.\n\n" +
+          "Then a boy with curly hair sat next to him. \"Hi, I'm Ben,\" he said. \"Do you want to play football with us?\" Tom smiled. From that day, they became best friends.\n\n" +
+          "Tom and Ben did everything together. They walked to school, did their homework and watched football matches on TV. Ben was always cheerful, and Tom was good at maths, so they helped each other.\n\n" +
+          "When they were fifteen, Tom broke his leg while he was playing football. He stayed at home for six weeks. Every day after school, Ben visited him. He brought Tom's homework and told him all the school news. Tom never felt bored or alone.\n\n" +
+          "There was one difficult time in their friendship. When they were seventeen, Ben started spending a lot of time with a new group of friends. He stopped calling Tom, and Tom felt hurt. For a few weeks, they didn't talk at all.\n\n" +
+          "One evening, Tom decided to visit Ben and tell him how he felt. Ben was surprised. \"I'm really sorry,\" he said. \"I didn't want to lose you. I was just busy with my new friends.\" They talked for hours that night, and after that, their friendship became even stronger. Tom learned that good friends sometimes make mistakes, but they also say sorry.\n\n" +
+          "Now Tom and Ben are twenty-five. They live in different cities, but they still call each other every week. Tom often says, \"A true friend is someone who stays with you on good days and bad days.\"",
         words: [
-          { w: 'week', emoji: '📆', m: 'seven days: Monday to Sunday', ex: 'This is my school week.' },
-          { w: 'start', emoji: '▶️', m: 'to begin', ex: "School starts at nine o'clock." },
-          { w: 'finish', emoji: '🏁', m: 'to stop at the end', ex: "School finishes at three o'clock." },
-          { w: 'Maths', emoji: '➗', m: 'the lesson with numbers', ex: 'On Monday, I have Maths and English.' },
-          { w: 'Science', emoji: '🔬', m: 'the lesson about plants, animals and the world', ex: 'On Tuesday, I have Science and Art.' },
-          { w: 'Art', emoji: '🎨', m: 'the lesson where you draw and paint', ex: 'Art is my favourite lesson!' },
-          { w: 'Music', emoji: '🎵', m: 'the lesson where you sing and play', ex: 'On Wednesday, I have Music.' },
-          { w: 'PE', emoji: '⚽', m: 'the sports lesson at school', ex: 'On Thursday, I have PE.' },
-          { w: 'test', emoji: '📝', m: 'questions the teacher gives to see what you know', ex: 'On Friday, I have a test.' },
-          { w: 'lunch', emoji: '🍽️', m: 'the food you eat in the middle of the day', ex: "Lunch is at twelve o'clock." }
-        ]
+          { w: "Move", uz: "Ko'chib o'tmoq", emoji: "🚚", ex: "When Tom was ten, his family moved to a new town." },
+          { w: "Nervous", uz: "Hayajonlangan", emoji: "😬", ex: "On his first day at the new school, he felt nervous and lonely." },
+          { w: "Lonely", uz: "Yolg'iz", emoji: "😔", ex: "On his first day at the new school, he felt nervous and lonely." },
+          { w: "Curly hair", uz: "Jingalak soch", emoji: "👦", ex: "Then a boy with curly hair sat next to him." },
+          { w: "Best friends", uz: "Eng yaqin do'stlar", emoji: "🤝", ex: "From that day, they became best friends." },
+          { w: "Cheerful", uz: "Quvnoq", emoji: "😄", ex: "Ben was always cheerful, and Tom was good at maths, so they helped each other." },
+          { w: "Help each other", uz: "Bir-biriga yordam bermoq", emoji: "🙌", ex: "Ben was always cheerful, and Tom was good at maths, so they helped each other." },
+          { w: "Break a leg", uz: "Oyog'ini sindirmoq", emoji: "🦵", ex: "When they were fifteen, Tom broke his leg while he was playing football." },
+          { w: "Feel bored", uz: "Zerikmoq", emoji: "🥱", ex: "Tom never felt bored or alone." },
+          { w: "Call each other", uz: "Bir-biriga qo'ng'iroq qilmoq", emoji: "📞", ex: "They live in different cities, but they still call each other every week." }
+        ],
+        questions: [
+          { type: "tf", q: "Tom's family moved when he was ten.", a: ["True"], line: 0 },
+          { type: "tf", q: "On his first day, many children talked to Tom.", a: ["False"], line: 2 },
+          { type: "tf", q: "Ben was the one who was good at maths.", a: ["False"], line: 9 },
+          { type: "tf", q: "Tom stayed at home for six weeks.", a: ["True"], line: 11 },
+          { type: "tf", q: "Now Tom and Ben live in the same city.", a: ["False"], line: 26 },
+          { type: "gap", q: "On his first day, nobody talked to Tom during the _____.", a: ["break"], line: 2 },
+          { type: "gap", q: "Ben was always _____.", a: ["cheerful"], line: 9 },
+          { type: "gap", q: "Tom was good at _____, so he could help Ben.", a: ["maths","math"], line: 9 },
+          { type: "gap", q: "When Ben stopped calling him, Tom felt _____.", a: ["hurt"], line: 17 },
+          { type: "gap", q: "Tom learned that good friends make mistakes, but they also say _____.", a: ["sorry"], line: 24 }
+        ],
+        retell: "Retell the story of Tom and Ben in your own words, from their first meeting to today."
       },
       writing: {
         topic: 'My week',
@@ -822,37 +839,41 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: 'The Green Café menu',
-        text: "Welcome to the Green Café! We are open every day from eight o'clock to six o'clock. For breakfast, we have eggs and toast for £3.50. Pancakes with fruit are £4. Children love our pancakes! For lunch, a cheese sandwich is £3. Chicken soup with bread is £4.50. Our soup is hot and very good on a cold day. A small pizza is £6. Tea and coffee are £1.50. Orange juice is £2, and a glass of milk is £1. For something sweet, try our chocolate cake for £2.50. Come and eat with us!\n\n" +
-          "The café is in a small street near the station. It is green and white inside, and there are flowers on every table. The café has got twenty tables. On sunny days, you can sit in the garden. The cook is Mr Green. He makes the bread every morning. His wife, Anna, makes the cakes. We have got a special menu for children. It has small pizzas and small sandwiches. A children's lunch is £4. On Fridays, we have fish and chips for £7. Our café is busy at lunchtime. Please come early! We have free water for everyone.",
-        questions: [
-          { type: "tf", q: "The café is open every day.", a: ["True"], line: 1 },
-          { type: "tf", q: "Eggs and toast are £4.", a: ["False"], line: 2 },
-          { type: "tf", q: "Children love the pancakes.", a: ["True"], line: 4 },
-          { type: "tf", q: "The soup is cold.", a: ["False"], line: 7 },
-          { type: "tf", q: "A glass of milk is £1.", a: ["True"], line: 10 },
-          { type: "tf", q: "The café has got twenty tables.", a: ["True"], line: 15 },
-          { type: "tf", q: "Anna makes the bread.", a: ["False"], line: 18 },
-          { type: "choose", q: "When does the café close?", opts: ["at five o'clock","at six o'clock","at eight o'clock"], a: ["at six o'clock"], line: 1 },
-          { type: "choose", q: "How much is a cheese sandwich?", opts: ["£3","£4","£6"], a: ["£3"], line: 5 },
-          { type: "choose", q: "What comes with the chicken soup?", opts: ["bread","toast","fruit"], a: ["bread"], line: 6 },
-          { type: "choose", q: "What is £6?", opts: ["a small pizza","a big pizza","a cheese sandwich"], a: ["a small pizza"], line: 8 },
-          { type: "choose", q: "What cake can you have?", opts: ["chocolate cake","lemon cake","apple cake"], a: ["chocolate cake"], line: 11 },
-          { type: "choose", q: "Where is the café?", opts: ["near the station","near the park","near the school"], a: ["near the station"], line: 13 },
-          { type: "choose", q: "What can you eat on Fridays?", opts: ["pizza","fish and chips","chicken soup"], a: ["fish and chips"], line: 23 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "A Day at School",
+        text: "Last Friday was a special day at Greenfield School: it was Science Day.\n\n" +
+          "Lucy arrived at school at eight o'clock, earlier than usual. The school hall was full of tables, posters and strange machines. Every class had a project. Lucy's class made a small model of a volcano.\n\n" +
+          "The first lesson was maths, but nobody could think about numbers. Everybody was excited. At ten o'clock, the bell rang, and the visitors came in: parents, teachers from other schools and a real scientist from the local university.\n\n" +
+          "Lucy and her classmates stood next to their volcano. When the scientist came to their table, Lucy explained how a volcano works. Then her friend Max poured vinegar into the model. Red foam came out of the top, and everyone laughed and clapped.\n\n" +
+          "At lunchtime, the students ate pizza in the playground. In the afternoon, the head teacher gave prizes. Lucy's class won second prize! Each student got a certificate and a science book.\n\n" +
+          "After the prizes, the scientist gave a short talk in the hall. She told the students about her work. She studies the weather and travels to cold places like Iceland and Greenland. She showed photos of a real volcano and explained that hot rock from inside the Earth comes out when a volcano erupts. The students asked a lot of questions. Lucy wanted to know if it is dangerous to work near a volcano. \"Yes, it can be,\" the scientist answered, \"so we always wear special clothes and follow strict rules.\"\n\n" +
+          "Before the students went home, the head teacher thanked everyone for their hard work. She also told them some exciting news: next year, the winning class is going to visit the university and see the scientist's laboratory.\n\n" +
+          "On the way home, Lucy said to her mum, \"That was the best school day of the year!\"",
         words: [
-          { w: 'menu', emoji: '📋', m: 'a list of the food and drinks in a café', ex: 'Here is our menu.' },
-          { w: 'breakfast', emoji: '🍳', m: 'the food you eat in the morning', ex: 'For breakfast, we have eggs and toast.' },
-          { w: 'eggs', emoji: '🥚', m: 'food from a chicken; you can cook them', ex: 'We have eggs and toast for £3.50.' },
-          { w: 'toast', emoji: '🍞', m: 'hot bread, brown on the outside', ex: 'We have eggs and toast for £3.50.' },
-          { w: 'pancakes', emoji: '🥞', m: 'thin, round, sweet food from a pan', ex: 'Pancakes with fruit are £4.' },
-          { w: 'cheese', emoji: '🧀', m: 'a yellow or white food made from milk', ex: 'A cheese sandwich is £3.' },
-          { w: 'soup', emoji: '🍲', m: 'hot food you eat with a spoon', ex: 'Chicken soup with bread is £4.50.' },
-          { w: 'coffee', emoji: '☕', m: 'a hot brown drink', ex: 'Tea and coffee are £1.50.' },
-          { w: 'glass', emoji: '🥛', m: 'you drink water or milk from it', ex: 'A glass of milk is £1.' },
-          { w: 'chocolate', emoji: '🍫', m: 'a sweet brown food', ex: 'Try our chocolate cake!' }
-        ]
+          { w: "Project", uz: "Loyiha", emoji: "📁", ex: "Every class had a project." },
+          { w: "Model", uz: "Maket", emoji: "🌋", ex: "Lucy's class made a small model of a volcano." },
+          { w: "Excited", uz: "Hayajonlangan", emoji: "🤩", ex: "Everybody was excited." },
+          { w: "The bell rang", uz: "Qo'ng'iroq chalindi", emoji: "🔔", ex: "At ten o'clock, the bell rang, and the visitors came in: parents, teachers from other schools and a real scientist from the local university." },
+          { w: "Visitors", uz: "Mehmonlar", emoji: "👥", ex: "At ten o'clock, the bell rang, and the visitors came in: parents, teachers from other schools and a real scientist from the local university." },
+          { w: "Explain", uz: "Tushuntirmoq", emoji: "🗣️", ex: "When the scientist came to their table, Lucy explained how a volcano works." },
+          { w: "Classmates", uz: "Sinfdoshlar", emoji: "🧑‍🎓", ex: "Every class had a project." },
+          { w: "Playground", uz: "O'yin maydonchasi", emoji: "🛝", ex: "At lunchtime, the students ate pizza in the playground." },
+          { w: "Head teacher", uz: "Maktab direktori", emoji: "👩‍🏫", ex: "In the afternoon, the head teacher gave prizes." },
+          { w: "Win a prize", uz: "Sovrin yutmoq", emoji: "🏆", ex: "Lucy's class won second prize!" }
+        ],
+        questions: [
+          { type: "tf", q: "Science Day was on a Monday.", a: ["False"], line: 0 },
+          { type: "tf", q: "Lucy and her classmates built a volcano model.", a: ["True"], line: 4 },
+          { type: "tf", q: "A scientist from the university came to the school.", a: ["True"], line: 7 },
+          { type: "tf", q: "Lucy poured the vinegar into the model.", a: ["False"], line: 10 },
+          { type: "tf", q: "Lucy's class won first prize.", a: ["False"], line: 14 },
+          { type: "open", q: "What does the scientist study?", keys: ["weather"], line: 18 },
+          { type: "open", q: "Who were the visitors?", keys: ["parent","teacher","scientist"], line: 7 },
+          { type: "open", q: "What came out of the top of the volcano model?", keys: ["foam"], line: 11 },
+          { type: "open", q: "What did each student in Lucy's class get?", keys: ["certificate","book"], line: 15 },
+          { type: "open", q: "Why does the scientist wear special clothes near volcanoes?", keys: ["dangerous","danger","safe"], line: 22 }
+        ],
+        retell: "Retell the story of Science Day in your own words. Talk about the morning, the volcano and the prizes."
       },
       writing: {
         topic: 'My food',
@@ -944,37 +965,41 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: 'Have you seen Bella?',
-        text: "Have you seen our dog? Her name is Bella. She is a small dog, and she is three years old. She is white with a black ear. She has a red collar with her name on it. Bella is very friendly. She loves children, and she likes to play with a ball. She doesn't like cats! We lost her on Sunday afternoon in Green Park. She is very small, so please look under cars and in gardens. Bella eats a lot, and her favourite food is chicken. If you find her, please bring her to 12 Hill Road. Thank you!\n\n" +
-          "Bella is a very good dog. She sleeps in a small bed in our kitchen. In the morning, she walks with my dad in the park. She can sit and give you her paw. Bella can't swim, so please look near the lake too. She is shy with men, but she likes women and children. Please don't run after her. Call her name, \"Bella!\", and show her some food. She will come to you. Our children are very sad. They want Bella to come home. You can call us at any time. My name is Kate, and our phone number is 07700 900 461. There is a small present for the person who finds her.",
-        questions: [
-          { type: "tf", q: "Bella is a big dog.", a: ["False"], line: 2 },
-          { type: "tf", q: "Bella is three years old.", a: ["True"], line: 2 },
-          { type: "tf", q: "She has a red collar.", a: ["True"], line: 4 },
-          { type: "tf", q: "Bella likes cats.", a: ["False"], line: 7 },
-          { type: "tf", q: "They lost Bella on Saturday.", a: ["False"], line: 8 },
-          { type: "tf", q: "Bella sleeps in the kitchen.", a: ["True"], line: 14 },
-          { type: "tf", q: "Bella can swim.", a: ["False"], line: 17 },
-          { type: "choose", q: "What colour is Bella?", opts: ["black with a white ear","white with a black ear","brown and white"], a: ["white with a black ear"], line: 3 },
-          { type: "choose", q: "What does Bella like to play with?", opts: ["a ball","a stick","a cat"], a: ["a ball"], line: 6 },
-          { type: "choose", q: "Where did they lose her?", opts: ["in Green Park","in the garden","at school"], a: ["in Green Park"], line: 8 },
-          { type: "choose", q: "What is Bella's favourite food?", opts: ["fish","chicken","cheese"], a: ["chicken"], line: 10 },
-          { type: "choose", q: "Where do they live?", opts: ["12 Hill Road","21 Hill Road","12 Park Road"], a: ["12 Hill Road"], line: 11 },
-          { type: "choose", q: "What is the owner's name?", opts: ["Bella","Anna","Kate"], a: ["Kate"], line: 25 },
-          { type: "choose", q: "What should you do if you see Bella?", opts: ["call her name and show her some food","run after her","take her to the lake"], a: ["call her name and show her some food"], line: 20 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "The Benefits of Having a Hobby",
+        text: "A hobby is something you do in your free time because you enjoy it. Some people collect stamps, some play the guitar, and others grow plants. But did you know that hobbies are also good for us?\n\n" +
+          "First, hobbies help us reduce stress. When you are busy with something you love, you forget about your problems for a while. For example, many people say that drawing or gardening makes them feel calm.\n\n" +
+          "Second, hobbies help us learn new skills. A person who plays chess learns to think carefully. Someone who cooks learns to plan and to be creative. These skills are useful at school and at work too.\n\n" +
+          "Third, hobbies help us make friends. When you join a club or a team, you meet people with the same interests. Emma, a 16-year-old student, joined a photography club last year. \"Now I have five new friends,\" she says, \"and we go out to take photos every Saturday.\"\n\n" +
+          "Some hobbies can even become jobs. Harry Brooks, a 30-year-old from Leeds, started baking cakes as a hobby when he was a teenager. At first, he baked only for his family's birthdays. Then his friends started asking him to make cakes for their parties. Five years ago, he opened his own small bakery, and now he has three workers.\n\n" +
+          "Of course, a hobby doesn't have to become a job. Doctors say it is important to do something just for fun. Many busy adults stop doing their hobbies because they have no time. But even thirty minutes a week can help.\n\n" +
+          "If you want to start a hobby, think about what you enjoyed as a child. Did you like drawing, building things or dancing? You can also ask your friends what they do in their free time and join them. Remember that you don't need to be good at your hobby. The important thing is to enjoy it.\n\n" +
+          "Finally, hobbies make life more interesting. So if you don't have a hobby yet, why not try something new this month?",
         words: [
-          { w: 'seen', emoji: '👀', m: 'from "see": Have you seen …? = Did you see …?', ex: 'Have you seen our dog?' },
-          { w: 'ear', emoji: '👂', m: 'you hear with it', ex: 'She is white with a black ear.' },
-          { w: 'collar', emoji: '🏷️', m: "a band round a dog's neck", ex: 'She has a red collar.' },
-          { w: 'friendly', emoji: '😊', m: 'nice and kind to people', ex: 'Bella is very friendly.' },
-          { w: 'children', emoji: '🧒', m: 'more than one child', ex: 'She loves children.' },
-          { w: 'ball', emoji: '🎾', m: 'a round thing for games', ex: 'She likes to play with a ball.' },
-          { w: 'lost', emoji: '😢', m: "from \"lose\": we can't find her", ex: 'We lost her on Sunday afternoon.' },
-          { w: 'park', emoji: '🌳', m: 'a big green place with trees in a town', ex: 'We lost her in Green Park.' },
-          { w: 'garden', emoji: '🌷', m: 'the place with grass and flowers next to a house', ex: 'Please look in gardens.' },
-          { w: 'bring', emoji: '🤲', m: 'to come with something or someone', ex: 'Please bring her to 12 Hill Road.' }
-        ]
+          { w: "Collect", uz: "Yig'moq (kolleksiya qilmoq)", emoji: "📮", ex: "Some people collect stamps, some play the guitar, and others grow plants." },
+          { w: "Reduce stress", uz: "Stressni kamaytirmoq", emoji: "😮‍💨", ex: "First, hobbies help us reduce stress." },
+          { w: "For a while", uz: "Bir muddat", emoji: "⏳", ex: "When you are busy with something you love, you forget about your problems for a while." },
+          { w: "Feel calm", uz: "Xotirjam bo'lmoq", emoji: "😌", ex: "For example, many people say that drawing or gardening makes them feel calm." },
+          { w: "Skills", uz: "Ko'nikmalar", emoji: "🛠️", ex: "Second, hobbies help us learn new skills." },
+          { w: "Creative", uz: "Ijodkor", emoji: "🎨", ex: "Someone who cooks learns to plan and to be creative." },
+          { w: "Useful", uz: "Foydali", emoji: "👍", ex: "These skills are useful at school and at work too." },
+          { w: "Join a club", uz: "Klubga a'zo bo'lmoq", emoji: "🧑‍🤝‍🧑", ex: "When you join a club or a team, you meet people with the same interests." },
+          { w: "Interests", uz: "Qiziqishlar", emoji: "💡", ex: "When you join a club or a team, you meet people with the same interests." },
+          { w: "Try something new", uz: "Yangi narsani sinab ko'rmoq", emoji: "✨", ex: "So if you don't have a hobby yet, why not try something new this month?" }
+        ],
+        questions: [
+          { type: "tf", q: "Hobbies can help people feel less stressed.", a: ["True"], line: 3 },
+          { type: "tf", q: "People who play chess learn to decide quickly without thinking.", a: ["False"], line: 7 },
+          { type: "tf", q: "The skills we learn from hobbies are only useful at home.", a: ["False"], line: 9 },
+          { type: "tf", q: "Emma is a member of a photography club.", a: ["True"], line: 12 },
+          { type: "tf", q: "Emma and her friends take photos every Sunday.", a: ["False"], line: 13 },
+          { type: "gap", q: "Hobbies help us reduce _____.", a: ["stress"], line: 3 },
+          { type: "gap", q: "A person who plays chess learns to think _____.", a: ["carefully"], line: 7 },
+          { type: "gap", q: "Emma joined a _____ club last year.", a: ["photography"], line: 12 },
+          { type: "gap", q: "Five years ago, Harry Brooks opened his own small _____.", a: ["bakery"], line: 17 },
+          { type: "gap", q: "Doctors say even thirty minutes a _____ can help.", a: ["week"], line: 21 }
+        ],
+        retell: "Retell the text in your own words. Explain the benefits of having a hobby."
       },
       writing: {
         topic: 'My pet',
@@ -1061,37 +1086,41 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: 'Welcome to my room',
-        text: "Hi, I'm Jack, and this is my room. It is not very big, but I love it. The walls are light blue. My bed is next to the window. There is a small table next to my bed with a lamp and a clock on it. My desk is in the corner, and my computer is on it. I do my homework there every evening. There are a lot of books on the shelf above the desk. My clothes are in a big brown cupboard. There is a green rug on the floor. My cat, Tiger, often sleeps on it. On the wall, there is a poster of my favourite football team.\n\n" +
-          "I like my room in the morning, because the sun comes in through the window. My curtains are white with small blue stars. Next to my cupboard, there is a big box of old toys. I don't play with them now, but I love them. My guitar is next to the desk. I play it every afternoon after school. My friends come to my room at the weekend, and we play computer games together. My mum says my room is often messy. It's true! On Saturday mornings, I clean my room. I put my books on the shelf and my clothes in the cupboard. Then my room looks great again.",
-        questions: [
-          { type: "tf", q: "Jack's room is very big.", a: ["False"], line: 1 },
-          { type: "tf", q: "The walls are light blue.", a: ["True"], line: 2 },
-          { type: "tf", q: "The bed is next to the door.", a: ["False"], line: 3 },
-          { type: "tf", q: "There is a clock on the small table.", a: ["True"], line: 4 },
-          { type: "tf", q: "Jack's clothes are in a white cupboard.", a: ["False"], line: 8 },
-          { type: "tf", q: "Jack's curtains are white with small blue stars.", a: ["True"], line: 13 },
-          { type: "tf", q: "Jack cleans his room on Sunday evenings.", a: ["False"], line: 21 },
-          { type: "choose", q: "Where is the desk?", opts: ["in the corner","next to the bed","under the window"], a: ["in the corner"], line: 5 },
-          { type: "choose", q: "When does Jack do his homework?", opts: ["in the morning","in the afternoon","in the evening"], a: ["in the evening"], line: 6 },
-          { type: "choose", q: "Where are the books?", opts: ["on the floor","on the shelf","in the cupboard"], a: ["on the shelf"], line: 7 },
-          { type: "choose", q: "Who sleeps on the rug?", opts: ["Jack","his dog","his cat"], a: ["his cat"], line: 10 },
-          { type: "choose", q: "What is the poster of?", opts: ["a football team","a singer","a film"], a: ["a football team"], line: 11 },
-          { type: "choose", q: "Where is Jack's guitar?", opts: ["under the bed","next to the desk","in the cupboard"], a: ["next to the desk"], line: 16 },
-          { type: "choose", q: "What is next to the cupboard?", opts: ["a lamp","a big plant","a box of old toys"], a: ["a box of old toys"], line: 14 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "A Shopping Day",
+        text: "Last Saturday, Anna and her mum went shopping because Anna needed new clothes for school.\n\n" +
+          "They took the bus to the biggest shopping centre in the city. It was very crowded, so they made a plan. First, they went to a clothes shop on the second floor. Anna found a pair of dark blue jeans and a white shirt. She tried them on in the changing room. The jeans were too long, so the shop assistant brought her a smaller size. This time, they fit perfectly.\n\n" +
+          "Next, they needed shoes. Anna liked a pair of black trainers, but they cost eighty pounds. \"That's too expensive,\" said her mum. Luckily, there was a sale in another shop, and they bought similar trainers for forty pounds.\n\n" +
+          "By two o'clock, they were tired and hungry. They had lunch in a small café on the top floor. Anna had a chicken sandwich and an orange juice.\n\n" +
+          "After lunch, Anna wanted to look at a bookshop. She loves reading, and she had some birthday money. She chose an adventure novel and a notebook with a green cover. At the cash desk, the shop assistant told her that students get a ten per cent discount, so she paid less than she expected.\n\n" +
+          "On the way to the exit, they passed a small stand where a woman was selling handmade jewellery. Anna's mum stopped to look at a pair of silver earrings. \"They're beautiful,\" Anna said. \"You should buy them.\" Her mum wasn't sure because she didn't really need them. In the end, Anna used the rest of her birthday money to buy them as a surprise present for her mum. Her mum was very happy and wore them immediately.\n\n" +
+          "They also went to a phone shop because Anna's screen was broken. The repair cost thirty pounds and took one hour, so they had a coffee while they waited.\n\n" +
+          "Before going home, they stopped at the supermarket and bought food for the week. Anna's mum paid by card. It was a long but happy day.",
         words: [
-          { w: 'wall', emoji: '🧱', m: 'the side of a room', ex: 'The walls are light blue.' },
-          { w: 'light blue', emoji: '🩵', m: 'a pale blue colour, like the sky', ex: 'The walls are light blue.' },
-          { w: 'clock', emoji: '⏰', m: 'it shows the time', ex: 'There is a lamp and a clock on the table.' },
-          { w: 'corner', emoji: '📐', m: 'where two walls meet', ex: 'My desk is in the corner.' },
-          { w: 'computer', emoji: '💻', m: 'you use it to write, play and go online', ex: 'My computer is on the desk.' },
-          { w: 'homework', emoji: '📝', m: 'school work you do at home', ex: 'I do my homework there every evening.' },
-          { w: 'shelf', emoji: '📚', m: 'a long flat board on the wall for books', ex: 'There are books on the shelf.' },
-          { w: 'rug', emoji: '🟩', m: 'a small carpet on the floor', ex: 'There is a green rug on the floor.' },
-          { w: 'floor', emoji: '⬇️', m: 'you walk on it in a room', ex: 'There is a rug on the floor.' },
-          { w: 'poster', emoji: '🖼️', m: 'a big picture on the wall', ex: 'There is a poster of my favourite team.' }
-        ]
+          { w: "Go shopping", uz: "Xarid qilishga bormoq", emoji: "🛍️", ex: "Last Saturday, Anna and her mum went shopping because Anna needed new clothes for school." },
+          { w: "Crowded", uz: "Gavjum", emoji: "👥", ex: "It was very crowded, so they made a plan." },
+          { w: "Try on", uz: "Kiyib ko'rmoq", emoji: "👖", ex: "She tried them on in the changing room." },
+          { w: "Changing room", uz: "Kiyinish xonasi", emoji: "🚪", ex: "She tried them on in the changing room." },
+          { w: "Shop assistant", uz: "Sotuvchi", emoji: "🧑‍💼", ex: "The jeans were too long, so the shop assistant brought her a smaller size." },
+          { w: "Size", uz: "O'lcham", emoji: "📏", ex: "The jeans were too long, so the shop assistant brought her a smaller size." },
+          { w: "Fit", uz: "Mos kelmoq", emoji: "✅", ex: "This time, they fit perfectly." },
+          { w: "Expensive", uz: "Qimmat", emoji: "💎", ex: "\"That's too expensive,\" said her mum." },
+          { w: "Sale", uz: "Chegirma", emoji: "🏷️", ex: "Luckily, there was a sale in another shop, and they bought similar trainers for forty pounds." },
+          { w: "Pay by card", uz: "Karta orqali to'lamoq", emoji: "💳", ex: "Anna's mum paid by card." }
+        ],
+        questions: [
+          { type: "tf", q: "Anna and her mum went shopping on Sunday.", a: ["False"], line: 0 },
+          { type: "tf", q: "They travelled to the shopping centre by bus.", a: ["True"], line: 1 },
+          { type: "tf", q: "The first jeans were too short for Anna.", a: ["False"], line: 6 },
+          { type: "tf", q: "They paid forty pounds for the trainers.", a: ["True"], line: 11 },
+          { type: "tf", q: "They had lunch at home.", a: ["False"], line: 13 },
+          { type: "open", q: "Why did Anna need new clothes?", keys: ["school"], line: 0 },
+          { type: "open", q: "What did Anna find in the clothes shop?", keys: ["jeans","shirt"], line: 4 },
+          { type: "open", q: "Why didn't they buy the first trainers?", keys: ["expensive","eighty","80"], line: 10 },
+          { type: "open", q: "What did Anna buy for her mum?", keys: ["earring"], line: 20 },
+          { type: "open", q: "Why did Anna pay less in the bookshop?", keys: ["discount","student"], line: 18 }
+        ],
+        retell: "Retell Anna's shopping day in your own words, from the bus to the supermarket."
       },
       writing: {
         topic: 'My room',
@@ -1181,37 +1210,42 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: 'Meet my friend Sophie',
-        text: "This is my best friend, Sophie. She is twelve years old, and she is in my class at school. She has long brown hair and big blue eyes. Sophie lives in a flat near the park with her mum, her dad and her little brother, Alfie. Alfie is five, and he is very funny. Sophie loves animals. She has two rabbits and a small grey cat. Her favourite subject at school is Science, but she doesn't like Maths. After school, we often go to the park together. We play tennis on Wednesdays, and on Saturdays we go swimming. Sophie's favourite food is pizza, and she drinks a lot of orange juice. Her birthday is in June. She is very kind.\n\n" +
-          "Sophie and I are friends from when we were six years old. We sit together in every lesson. Sophie is very good at drawing, and she wants to be an artist. She draws animals and flowers in her notebook. Sophie's dad is a teacher at another school, and her mum works in a bank. Every summer, Sophie goes to the sea with her family. She sends me postcards from there. Sophie has a bike, and it is purple. We ride our bikes in the park on Sunday mornings. Sometimes Sophie comes to my house for dinner. My mum makes pizza for her, because it is her favourite food. Sophie is a great friend.",
-        questions: [
-          { type: "tf", q: "Sophie is eleven years old.", a: ["False"], line: 1 },
-          { type: "tf", q: "Sophie has long brown hair.", a: ["True"], line: 2 },
-          { type: "tf", q: "Alfie is Sophie's brother.", a: ["True"], line: 3 },
-          { type: "tf", q: "Sophie likes Maths.", a: ["False"], line: 7 },
-          { type: "tf", q: "Sophie's birthday is in July.", a: ["False"], line: 11 },
-          { type: "tf", q: "Sophie wants to be an artist.", a: ["True"], line: 15 },
-          { type: "tf", q: "Sophie's bike is pink.", a: ["False"], line: 20 },
-          { type: "choose", q: "Where does Sophie live?", opts: ["in a house in the town","in a flat near the park","in a flat near the school"], a: ["in a flat near the park"], line: 3 },
-          { type: "choose", q: "What pets has Sophie got?", opts: ["two cats and a rabbit","two rabbits and a cat","two dogs"], a: ["two rabbits and a cat"], line: 6 },
-          { type: "choose", q: "What do they do on Saturdays?", opts: ["play tennis","go swimming","go to the park"], a: ["go swimming"], line: 9 },
-          { type: "choose", q: "What does Sophie drink a lot of?", opts: ["milk","orange juice","water"], a: ["orange juice"], line: 10 },
-          { type: "choose", q: "What is Sophie like?", opts: ["kind","funny","quiet"], a: ["kind"], line: 12 },
-          { type: "choose", q: "Where does Sophie's mum work?", opts: ["in a bank","in a school","in a shop"], a: ["in a bank"], line: 17 },
-          { type: "choose", q: "When do they ride their bikes in the park?", opts: ["on Saturday afternoons","on Sunday mornings","every evening"], a: ["on Sunday mornings"], line: 21 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "My Hometown",
+        text: "I was born in Brookfield, a small town by a river in the north of England, and I have lived here all my life.\n\n" +
+          "About twenty thousand people live in Brookfield. It is not famous, but it is a lovely place. The town centre has a market square, an old church and a lot of small shops and cafés. Every Thursday, farmers from nearby villages come to the market and sell fresh fruit, vegetables and cheese.\n\n" +
+          "My favourite place is the park next to the river. In summer, people have picnics there, and children swim in the river. In winter, it is very quiet, and I like walking there with my dog.\n\n" +
+          "Brookfield has two schools, a hospital and a small library. The library is my second favourite place. I often go there after school to read or study.\n\n" +
+          "Of course, my town is not perfect. There is no cinema, so we have to take the train to a bigger city to watch new films. And there isn't much to do in the evenings.\n\n" +
+          "Brookfield has a long history. The old church in the market square is more than five hundred years old, and some of the houses near the river are even older. In the past, the town was famous for making wool, and many people worked in small factories by the water. Today, one of these old factories is a museum, and you can see how people made wool two hundred years ago.\n\n" +
+          "The town is changing, though. A few years ago, a new supermarket opened on the edge of town, and some small shops in the centre closed. My grandparents say the town was busier when they were young. But there are good changes too. Last year, the town opened a new sports centre with a swimming pool, and now there are more activities for young people.\n\n" +
+          "Every August, Brookfield has a summer festival. There is live music in the market square, food stalls and a boat race on the river. People from nearby towns come to watch, and for one weekend the quiet little town is full of life.\n\n" +
+          "Still, I love my hometown. People are friendly, and everyone knows everyone.",
         words: [
-          { w: 'best friend', emoji: '🤝', m: 'your number one friend', ex: 'This is my best friend, Sophie.' },
-          { w: 'hair', emoji: '💇', m: 'it grows on your head', ex: 'She has long brown hair.' },
-          { w: 'flat', emoji: '🏢', m: 'a home on one floor of a big building', ex: 'Sophie lives in a flat near the park.' },
-          { w: 'little brother', emoji: '👦', m: 'a brother who is younger than you', ex: 'She has a little brother, Alfie.' },
-          { w: 'funny', emoji: '😂', m: 'he or she makes you laugh', ex: 'Alfie is very funny.' },
-          { w: 'rabbit', emoji: '🐰', m: 'a small animal with long ears', ex: 'She has two rabbits.' },
-          { w: 'subject', emoji: '📚', m: 'a lesson at school, like Maths or Art', ex: 'Her favourite subject is Science.' },
-          { w: 'together', emoji: '👫', m: 'with each other', ex: 'We often go to the park together.' },
-          { w: 'birthday', emoji: '🎂', m: 'the day you were born, every year', ex: 'Her birthday is in June.' },
-          { w: 'kind', emoji: '💛', m: 'nice and good to other people', ex: 'She is kind.' }
-        ]
+          { w: "Be born", uz: "Tug'ilmoq", emoji: "👶", ex: "I was born in Brookfield, a small town by a river in the north of England, and I have lived here all my life." },
+          { w: "Hometown", uz: "Tug'ilib o'sgan shahar", emoji: "🏘️", ex: "Still, I love my hometown." },
+          { w: "Famous", uz: "Mashhur", emoji: "⭐", ex: "It is not famous, but it is a lovely place." },
+          { w: "Town centre", uz: "Shahar markazi", emoji: "🏙️", ex: "The town centre has a market square, an old church and a lot of small shops and cafés." },
+          { w: "Nearby", uz: "Yaqin atrofdagi", emoji: "📍", ex: "Every Thursday, farmers from nearby villages come to the market and sell fresh fruit, vegetables and cheese." },
+          { w: "Fresh", uz: "Yangi (toza)", emoji: "🥬", ex: "Every Thursday, farmers from nearby villages come to the market and sell fresh fruit, vegetables and cheese." },
+          { w: "Have a picnic", uz: "Piknik qilmoq", emoji: "🧺", ex: "In summer, people have picnics there, and children swim in the river." },
+          { w: "Quiet", uz: "Tinch", emoji: "🤫", ex: "In winter, it is very quiet, and I like walking there with my dog." },
+          { w: "Take the train", uz: "Poyezdda bormoq", emoji: "🚆", ex: "There is no cinema, so we have to take the train to a bigger city to watch new films." },
+          { w: "Friendly", uz: "Xushmuomala", emoji: "😊", ex: "People are friendly, and everyone knows everyone." }
+        ],
+        questions: [
+          { type: "tf", q: "Brookfield is a big city.", a: ["False"], line: 0 },
+          { type: "tf", q: "Farmers sell food at the market on Thursdays.", a: ["True"], line: 4 },
+          { type: "tf", q: "Children swim in the river in winter.", a: ["False"], line: 7 },
+          { type: "tf", q: "The writer often studies in the library.", a: ["True"], line: 10 },
+          { type: "tf", q: "There is a cinema in the town centre.", a: ["False"], line: 12 },
+          { type: "gap", q: "Farmers from nearby _____ come to the market every Thursday.", a: ["villages"], line: 4 },
+          { type: "gap", q: "The writer's second favourite place in town is the _____.", a: ["library"], line: 9 },
+          { type: "gap", q: "Many years ago, people in Brookfield worked in small factories that made _____.", a: ["wool"], line: 16 },
+          { type: "gap", q: "Last year, a new sports centre with a swimming _____ opened.", a: ["pool"], line: 22 },
+          { type: "gap", q: "During the summer festival, there is a boat _____ on the river.", a: ["race"], line: 24 }
+        ],
+        retell: "Retell the text in your own words. Describe Brookfield: its places, its good points and its bad points."
       },
       writing: {
         topic: 'My best friend',
@@ -1308,49 +1342,47 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: "A pen-friend's profile",
-        text: "Hi, my name is Lucy Green and I'm fifteen years old. I live in Bristol, a big city in the west of England. I live in a small flat with my mum, my dad and my little brother, Sam. Sam is eight and he loves football.\n\n" +
-          "I go to Hillside School, and my favourite subject is art. I don't really like maths, because it's difficult for me. After school, I usually walk my dog, Biscuit, in the park near our flat. He's brown and white, and he's very friendly.\n\n" +
-          "At the weekend, I play the guitar and I sometimes go swimming with my friends. I'm learning Spanish too, and I want to visit Spain one day. My favourite food is pizza, but I can't cook it!\n\n" +
-          "I'm looking for a pen-friend from another country. I'd like to write emails in English every week and learn about your life. Please write to me soon!\n\n" +
-          "Here is a little more about me. My mum is a dentist, and my dad works in a big supermarket near our flat. They are very busy, but on Sunday evenings we always have dinner together and talk about our week. My grandparents live in Wales, and we visit them in the summer holidays. Their house is near the mountains, and I love walking there.\n\n" +
-          "I'm quite a quiet person, but I'm friendly when you know me. I love reading, especially stories about animals and adventures. I love pop music, and I can play some easy songs on my guitar. I also like taking photos of nature with my phone.\n\n" +
-          "My school day starts at half past eight and finishes at half past three. I take the bus to school because it's too far to walk. My best friend at school is called Mia. She's very funny, and we sit together in most lessons.\n\n" +
-          "In your first email, please tell me about your family, your school and your hobbies. What is your town like? What do people eat there? I can send you photos of Bristol and of Biscuit too!",
-        questions: [
-          { type: "tfng", q: "Lucy lives in a big city.", a: ["True"], line: 1 },
-          { type: "tfng", q: "Lucy lives with her grandparents.", a: ["False"], line: 2 },
-          { type: "tfng", q: "Sam plays in a football team.", a: ["Not given"], line: 3 },
-          { type: "tfng", q: "Lucy likes maths.", a: ["False"], line: 5 },
-          { type: "tfng", q: "Lucy's dog is friendly.", a: ["True"], line: 7 },
-          { type: "tfng", q: "Lucy's mum is a dentist.", a: ["True"], line: 15 },
-          { type: "tfng", q: "Lucy walks to school.", a: ["False"], line: 24 },
-          { type: "gap", q: "Lucy lives in a small _____ with her family.", a: ["flat"], line: 2 },
-          { type: "gap", q: "Lucy's favourite subject at school is _____.", a: ["art"], line: 4 },
-          { type: "gap", q: "After school, Lucy walks her dog in the _____.", a: ["park"], line: 6 },
-          { type: "gap", q: "Lucy wants a pen-friend from another _____.", a: ["country"], line: 11 },
-          { type: "gap", q: "Lucy would like to write _____ in English every week.", a: ["emails","email"], line: 12 },
-          { type: "gap", q: "Lucy's grandparents live in _____.", a: ["Wales"], line: 17 },
-          { type: "choose", q: "How old is Lucy?", opts: ["thirteen","fifteen","eighteen"], a: ["fifteen"], line: 0 },
-          { type: "choose", q: "Who is Biscuit?", opts: ["Lucy's brother","Lucy's dog","Lucy's friend"], a: ["Lucy's dog"], line: 6 },
-          { type: "choose", q: "What does Lucy do at the weekend?", opts: ["She plays the guitar.","She plays football.","She cooks pizza."], a: ["She plays the guitar."], line: 8 },
-          { type: "choose", q: "Which language is Lucy learning?", opts: ["French","Spanish","German"], a: ["Spanish"], line: 9 },
-          { type: "choose", q: "What is Lucy's favourite food?", opts: ["pasta","fish and chips","pizza"], a: ["pizza"], line: 10 },
-          { type: "choose", q: "When does Lucy's family always have dinner together?", opts: ["on Friday evenings","every evening","on Sunday evenings"], a: ["on Sunday evenings"], line: 16 },
-          { type: "choose", q: "What does Lucy like taking photos of?", opts: ["nature","her friends","food"], a: ["nature"], line: 22 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "My First Big Trip",
+        text: "Two years ago, I travelled abroad for the first time. My aunt invited me to visit her in Edinburgh, Scotland, for ten days during the summer holidays.\n\n" +
+          "The journey was an adventure. My flight left at six in the morning, so I woke up at three. I was nervous because I was travelling alone, but a friendly flight attendant helped me find my seat. When the plane landed, my aunt was waiting for me at the airport with a big smile.\n\n" +
+          "Edinburgh is an old and beautiful city. On my first day, we climbed the hill to Edinburgh Castle. From the top, we could see the whole city and the sea. The next day, we visited a museum and walked along the Royal Mile, the most famous street in the old town.\n\n" +
+          "The weather surprised me. It was July, but it was cold and windy, and it rained almost every afternoon. I had to buy a warm jacket!\n\n" +
+          "On the fourth day, my aunt took me on a day trip to the Highlands, the mountains in the north of Scotland. We left early in the morning by car. The landscape was amazing: green hills, dark lakes and small villages with stone houses. We stopped at Loch Ness, a long and deep lake. Many people believe a monster lives in it, and there are lots of shops selling toy monsters. We didn't see anything, of course, but I bought a toy monster for my little cousin.\n\n" +
+          "I also tried some local food. One evening, my aunt cooked haggis, a traditional Scottish dish made with meat, onions and oats. I was not sure at first, but it was actually tasty. I also loved the shortbread, a sweet butter biscuit that people often eat with tea.\n\n" +
+          "Every evening, I called my parents and told them about my day. They were happy because I sounded excited and not homesick. My mum said, \"We are proud of you. You are more independent than we thought.\"\n\n" +
+          "The hardest part of the trip was saying goodbye. On my last day, my aunt and I walked around the old town one more time, and I took a lot of photos. At the airport, I almost cried.\n\n" +
+          "The trip changed me. I became more confident, and I discovered that I love exploring new places. Next year, I am planning to visit my aunt again.",
         words: [
-          { w: 'pen-friend', emoji: '✉️', m: 'a friend in another place who you write to', ex: "I'm looking for a pen-friend from another country." },
-          { w: 'profile', emoji: '📄', m: 'a short text about a person', ex: "Read Lucy's profile and answer the questions." },
-          { w: 'flat', emoji: '🏠', m: 'a home on one floor of a bigger building', ex: 'I live in a small flat with my family.' },
-          { w: 'subject', emoji: '📚', m: 'something you study at school, like maths or art', ex: 'My favourite subject is art.' },
-          { w: 'favourite', emoji: '❤️', m: 'the one you like best', ex: 'My favourite food is pizza.' },
-          { w: 'difficult', emoji: '🧩', m: 'not easy', ex: "I don't really like maths, because it's difficult for me." },
-          { w: 'usually', emoji: '🔁', m: 'on most days; most of the time', ex: 'After school, I usually walk my dog.' },
-          { w: 'friendly', emoji: '😊', m: 'kind and nice to people', ex: "He's brown and white, and he's very friendly." },
-          { w: 'sometimes', emoji: '🔀', m: 'not always, but on some days', ex: 'I sometimes go swimming with my friends.' },
-          { w: 'country', emoji: '🌍', m: 'a nation, like England or Spain', ex: 'I want a pen-friend from another country.' }
-        ]
+          { w: "Travel abroad", uz: "Chet elga sayohat qilmoq", emoji: "✈️", ex: "Two years ago, I travelled abroad for the first time." },
+          { w: "For the first time", uz: "Birinchi marta", emoji: "1️⃣", ex: "Two years ago, I travelled abroad for the first time." },
+          { w: "Invite", uz: "Taklif qilmoq", emoji: "💌", ex: "My aunt invited me to visit her in Edinburgh, Scotland, for ten days during the summer holidays." },
+          { w: "Journey", uz: "Safar", emoji: "🧳", ex: "The journey was an adventure." },
+          { w: "Flight attendant", uz: "Styuardessa", emoji: "🧑‍✈️", ex: "I was nervous because I was travelling alone, but a friendly flight attendant helped me find my seat." },
+          { w: "Land", uz: "Qo'nmoq", emoji: "🛬", ex: "When the plane landed, my aunt was waiting for me at the airport with a big smile." },
+          { w: "Climb", uz: "Ko'tarilmoq", emoji: "🧗", ex: "On my first day, we climbed the hill to Edinburgh Castle." },
+          { w: "Windy", uz: "Shamolli", emoji: "🌬️", ex: "It was July, but it was cold and windy, and it rained almost every afternoon." },
+          { w: "Confident", uz: "O'ziga ishongan", emoji: "💪", ex: "I became more confident, and I discovered that I love exploring new places." },
+          { w: "Explore", uz: "Kashf qilmoq", emoji: "🧭", ex: "I became more confident, and I discovered that I love exploring new places." }
+        ],
+        questions: [
+          { type: "tfng", q: "The writer made the journey to Scotland without the family.", a: ["True"], line: 4 },
+          { type: "tfng", q: "The weather in Edinburgh was hot and sunny.", a: ["False"], line: 11 },
+          { type: "tfng", q: "The writer saw the Loch Ness monster.", a: ["False"], line: 18 },
+          { type: "tfng", q: "The writer's aunt works at the airport.", a: ["Not given"], line: 5 },
+          { type: "tfng", q: "The writer liked the haggis in the end.", a: ["True"], line: 21 },
+          { type: "gap", q: "The writer's flight left at six in the _____.", a: ["morning"], line: 3 },
+          { type: "gap", q: "From the top of the castle hill, they could see the whole city and the _____.", a: ["sea"], line: 8 },
+          { type: "gap", q: "In the Highlands, there are small villages with _____ houses.", a: ["stone"], line: 15 },
+          { type: "gap", q: "Haggis is made with meat, onions and _____.", a: ["oats"], line: 20 },
+          { type: "gap", q: "Shortbread is a sweet butter _____.", a: ["biscuit"], line: 22 },
+          { type: "open", q: "Why was the writer nervous at the start of the journey?", keys: ["alone"], line: 4 },
+          { type: "open", q: "Why did the writer have to buy a warm jacket?", keys: ["cold","wind","rain"], line: 11 },
+          { type: "open", q: "What did the writer buy for the little cousin?", keys: ["monster","toy"], line: 18 },
+          { type: "open", q: "How did the writer's parents feel about the trip?", keys: ["proud","happy"], line: 25 },
+          { type: "open", q: "How did the trip change the writer?", keys: ["confident","explor","independent"], line: 30 }
+        ],
+        retell: "Retell the story of the first big trip in your own words. Talk about the flight, the city and the weather."
       },
       writing: {
         topic: 'An email to a new classmate',
@@ -1450,49 +1482,47 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: "Emma's family",
-        text: "My name is Emma Baker and I'm sixteen. There are five people in my family: my mum, my dad, my two brothers and me. We also have a cat called Pepper.\n\n" +
-          "My mum, Sarah, is a teacher at a primary school. She's kind and very patient. My dad, Mark, works in a bank in the city centre. He gets up very early, but he always makes breakfast for us.\n\n" +
-          "My older brother, Daniel, is twenty and he studies music at university in Leeds. He only comes home in the holidays, so I miss him. My younger brother, Ben, is ten. He's funny, but he's sometimes very noisy!\n\n" +
-          "My grandparents live in a village near the sea. We visit them every month, and my grandma always makes a big chocolate cake. My best friend is Chloe, and she lives in the next street. We go to the same school and we sit next to each other in every lesson. On Fridays, we watch films together at her house and eat lots of popcorn.\n\n" +
-          "Our house is in a quiet street in Nottingham. It isn't very big, but it's warm and comfortable. My bedroom is at the top of the house, and I can see the park from my window. Ben and I often argue about the bathroom in the morning, because we both want it at the same time!\n\n" +
-          "Every Sunday, the whole family has lunch together. My dad usually cooks roast chicken with potatoes and vegetables, and my mum makes the dessert. After lunch, we often go for a walk in the park with Pepper. Well, Pepper doesn't walk with us — she's a cat, so she sleeps on the sofa!\n\n" +
-          "In the summer, we go on holiday together. Last year we went to Scotland, and we stayed in a small cottage near a lake. Daniel came with us, and we were very happy because the whole family was together again.\n\n" +
-          "I love my family, but sometimes I want some quiet time. Then I go to my room, close the door and read a good book. My parents say that next year I can have my own laptop for school, and I'm very excited about that.",
-        questions: [
-          { type: "tfng", q: "Emma has got two brothers.", a: ["True"], line: 1 },
-          { type: "tfng", q: "Emma's mum works in a bank.", a: ["False"], line: 3 },
-          { type: "tfng", q: "Daniel plays the piano.", a: ["Not given"], line: 7 },
-          { type: "tfng", q: "Emma's grandparents live in a big city.", a: ["False"], line: 11 },
-          { type: "tfng", q: "Emma and Chloe go to the same school.", a: ["True"], line: 14 },
-          { type: "tfng", q: "Emma's house is very big.", a: ["False"], line: 17 },
-          { type: "tfng", q: "Emma can see the park from her bedroom window.", a: ["True"], line: 18 },
-          { type: "gap", q: "Emma's family has got a cat called _____.", a: ["Pepper"], line: 2 },
-          { type: "gap", q: "Emma's dad works in a _____ in the city centre.", a: ["bank"], line: 5 },
-          { type: "gap", q: "Daniel studies music at _____ in Leeds.", a: ["university"], line: 7 },
-          { type: "gap", q: "Ben is _____ years old.", a: ["ten","10"], line: 9 },
-          { type: "gap", q: "Emma's grandma always makes a big chocolate _____.", a: ["cake"], line: 12 },
-          { type: "gap", q: "Last year, the family stayed in a small cottage near a _____.", a: ["lake"], line: 25 },
-          { type: "choose", q: "How old is Emma?", opts: ["fifteen","sixteen","seventeen"], a: ["sixteen"], line: 0 },
-          { type: "choose", q: "What is Emma's mum like?", opts: ["kind and patient","funny and noisy","quiet and shy"], a: ["kind and patient"], line: 4 },
-          { type: "choose", q: "What does Emma's dad do every morning?", opts: ["He makes breakfast.","He goes swimming.","He walks the cat."], a: ["He makes breakfast."], line: 6 },
-          { type: "choose", q: "How often does Emma visit her grandparents?", opts: ["every week","every month","every year"], a: ["every month"], line: 12 },
-          { type: "choose", q: "What do Emma and Chloe do on Fridays?", opts: ["They watch films.","They play tennis.","They cook dinner."], a: ["They watch films."], line: 15 },
-          { type: "choose", q: "Who makes the dessert on Sundays?", opts: ["Emma's dad","Emma's mum","Emma's grandma"], a: ["Emma's mum"], line: 21 },
-          { type: "choose", q: "What can Emma have next year?", opts: ["a new phone","a dog","her own laptop"], a: ["her own laptop"], line: 29 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "My Dreams for the Future",
+        text: "Everyone has dreams. Some dreams are small, and some are very big. Here are the dreams of three teenagers.\n\n" +
+          "Sara is sixteen and loves animals. She wants to become a vet. \"Right now, I'm studying biology and chemistry very hard,\" she says. \"After school, I'm going to apply to a university in London.\" Sara also volunteers at an animal shelter every Saturday. She feeds the dogs and cleans their cages.\n\n" +
+          "Oliver, seventeen, has a different dream. He wants to start his own business. Last year, he started selling handmade phone cases online, and he already has more than two hundred customers. \"In ten years, I hope to have a small company with ten workers,\" he explains.\n\n" +
+          "Mia is fifteen. Her dream is to travel around the world and write about it. She keeps a diary and writes something in it every day. She is also learning Spanish and French. \"I want to visit at least thirty countries,\" she says with a smile.\n\n" +
+          "Not every dream is easy. Sara's marks in chemistry were not very good last year, and she was worried. She asked her teacher for help, and now she stays after school twice a week for extra lessons. Her marks are much better this year.\n\n" +
+          "Oliver also had problems. At the beginning, nobody bought his phone cases, and he felt like giving up. Then his older sister helped him make short videos about his products and share them online. After that, orders started to come in. Last month, a local shop asked to sell his cases too. He spends most of his money on new materials, and he saves the rest.\n\n" +
+          "Mia's parents were not happy about her plan at first. They wanted her to become a doctor or a lawyer. But after she showed them her travel blog, which has more than a thousand readers, they changed their minds. Now her father helps her plan short trips during the school holidays, and last summer they visited Portugal together. She wrote about the food, the beaches and the people she met, and her readers loved it.\n\n" +
+          "All three teenagers agree that it is important to have a plan. \"A dream without a plan is just a wish,\" says Sara.\n\n" +
+          "Their dreams are different, but they have one thing in common: they are all working hard today to make their dreams come true tomorrow.",
         words: [
-          { w: 'primary school', emoji: '🏫', m: 'a school for children from about five to eleven years old', ex: 'My mum is a teacher at a primary school.' },
-          { w: 'patient', emoji: '🧘', m: 'calm; not angry when you have to wait or help someone', ex: "She's kind and very patient." },
-          { w: 'city centre', emoji: '🏙️', m: 'the main part of a city, with shops and offices', ex: 'My dad works in a bank in the city centre.' },
-          { w: 'early', emoji: '🌅', m: 'before the usual time; at the start of the day', ex: 'He gets up very early.' },
-          { w: 'older', emoji: '👴', m: 'born before someone else', ex: 'My older brother, Daniel, is twenty.' },
-          { w: 'university', emoji: '🎓', m: 'a place where people study after school', ex: 'He studies music at university in Leeds.' },
-          { w: 'miss', emoji: '😢', m: 'to feel sad because someone is not with you', ex: 'He only comes home in the holidays, so I miss him.' },
-          { w: 'noisy', emoji: '🔊', m: 'making a lot of sound', ex: "He's funny, but he's sometimes very noisy!" },
-          { w: 'village', emoji: '🏡', m: 'a very small town in the countryside', ex: 'My grandparents live in a village near the sea.' },
-          { w: 'next to', emoji: '👉', m: 'very near; at the side of', ex: 'We sit next to each other in every lesson.' }
-        ]
+          { w: "Become", uz: "Bo'lmoq (aylanmoq)", emoji: "🌱", ex: "She wants to become a vet." },
+          { w: "Vet", uz: "Veterinar", emoji: "🐾", ex: "She wants to become a vet." },
+          { w: "Apply to", uz: "Hujjat topshirmoq", emoji: "📝", ex: "\"After school, I'm going to apply to a university in London.\" Sara also volunteers at an animal shelter every Saturday." },
+          { w: "Volunteer", uz: "Ko'ngilli bo'lib ishlamoq", emoji: "🤲", ex: "\"After school, I'm going to apply to a university in London.\" Sara also volunteers at an animal shelter every Saturday." },
+          { w: "Animal shelter", uz: "Hayvonlar boshpanasi", emoji: "🏠", ex: "\"After school, I'm going to apply to a university in London.\" Sara also volunteers at an animal shelter every Saturday." },
+          { w: "Start a business", uz: "Biznes boshlamoq", emoji: "💼", ex: "He wants to start his own business." },
+          { w: "Customers", uz: "Mijozlar", emoji: "🧑‍🤝‍🧑", ex: "Last year, he started selling handmade phone cases online, and he already has more than two hundred customers." },
+          { w: "Keep a diary", uz: "Kundalik yuritmoq", emoji: "📔", ex: "She keeps a diary and writes something in it every day." },
+          { w: "Have in common", uz: "Umumiy jihati bor", emoji: "🔗", ex: "Their dreams are different, but they have one thing in common: they are all working hard today to make their dreams come true tomorrow." },
+          { w: "Come true", uz: "Amalga oshmoq", emoji: "🌟", ex: "Their dreams are different, but they have one thing in common: they are all working hard today to make their dreams come true tomorrow." }
+        ],
+        questions: [
+          { type: "tfng", q: "Sara would like to become a vet.", a: ["True"], line: 4 },
+          { type: "tfng", q: "Oliver's phone cases sold well from the very beginning.", a: ["False"], line: 22 },
+          { type: "tfng", q: "Mia's parents first wanted her to become a teacher.", a: ["False"], line: 28 },
+          { type: "tfng", q: "Oliver's sister is a photographer.", a: ["Not given"], line: 23 },
+          { type: "tfng", q: "More than a thousand people read Mia's blog.", a: ["True"], line: 29 },
+          { type: "gap", q: "Sara volunteers at an animal _____ every Saturday.", a: ["shelter"], line: 6 },
+          { type: "gap", q: "Sara stays after school twice a week for extra _____.", a: ["lessons"], line: 19 },
+          { type: "gap", q: "Oliver's sister helped him make short _____ about his products.", a: ["videos"], line: 23 },
+          { type: "gap", q: "Last summer, Mia and her father visited _____.", a: ["Portugal"], line: 30 },
+          { type: "gap", q: "Sara says that a dream without a plan is just a _____.", a: ["wish"], line: 33 },
+          { type: "open", q: "How did Sara make her chemistry marks better?", keys: ["lesson","teacher","after school"], line: 19 },
+          { type: "open", q: "What does Oliver spend most of his money on?", keys: ["material"], line: 26 },
+          { type: "open", q: "Why did Mia's parents change their minds?", keys: ["blog","reader"], line: 29 },
+          { type: "open", q: "How many customers does Oliver have online?", keys: ["two hundred","200"], line: 10 },
+          { type: "open", q: "What do all three teenagers agree about?", keys: ["plan"], line: 32 }
+        ],
+        retell: "Retell the text in your own words. Talk about each teenager's dream and what they are doing now."
       },
       writing: {
         topic: 'My family',
@@ -1589,46 +1619,49 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: 'Two homes',
-        text: "Tom Parker lives with his parents in a house in the countryside, near York. The house is old and it has got three bedrooms, a big kitchen and a living room with a fireplace. Tom's favourite room is the kitchen, because the family eats and talks there every evening. Behind the house, there is a large garden with apple trees. The nearest shop is three kilometres away, so Tom's mum drives to the supermarket once a week. Tom loves the quiet, but there isn't a bus to his school, so he cycles there every day.\n\n" +
-          "Grace Turner lives in a flat on the ninth floor of a tall building in Manchester. The flat is small and modern, with one bedroom, a bathroom and an open kitchen. There isn't a garden, but there is a balcony with lots of plants. From the balcony, Grace can see the whole city at night. Her flat is very close to shops, cafés and a cinema. The only problem is the noise from the street, so she sometimes sleeps with earplugs. Grace says she never wants to live in the countryside, because she loves the busy city life.\n\n" +
-          "Tom and Grace are cousins, and they visit each other a few times a year. When Grace comes to the countryside, she always finds it very quiet at first. In the evening, she can hear only the wind and the birds. Tom takes her on long bike rides along small roads between the fields, and they often stop at a farm to buy fresh eggs. Grace enjoys the fresh air, but after three or four days she always misses her flat.\n\n" +
-          "When Tom visits Grace, he is always surprised by how many people there are in Manchester. They go to the cinema, eat in different cafés and visit museums. Tom likes the city, especially the football stadium, but he finds it tiring. He says the traffic is very slow, and he doesn't like the crowds on the trams.\n\n" +
-          "Both homes have good and bad points. In the countryside, life is calm and there is a lot of space, but you need a car or a bike for everything. In the city, everything is close and there is always something to do, but it can be noisy and expensive. Tom and Grace often talk about this, and they never agree!",
-        questions: [
-          { type: "tfng", q: "Tom's house is new.", a: ["False"], line: 1 },
-          { type: "tfng", q: "Tom's family eats in the kitchen.", a: ["True"], line: 2 },
-          { type: "tfng", q: "Tom's school is in York.", a: ["Not given"], line: 5 },
-          { type: "tfng", q: "Grace's flat has got a garden.", a: ["False"], line: 8 },
-          { type: "tfng", q: "Grace's flat is near a cinema.", a: ["True"], line: 10 },
-          { type: "tfng", q: "Tom and Grace are brother and sister.", a: ["False"], line: 13 },
-          { type: "tfng", q: "After a few days in the countryside, Grace misses her flat.", a: ["True"], line: 17 },
-          { type: "gap", q: "Tom's house has got three _____.", a: ["bedrooms"], line: 1 },
-          { type: "gap", q: "There are apple trees in the _____ behind the house.", a: ["garden"], line: 3 },
-          { type: "gap", q: "Tom cycles to school because there isn't a _____.", a: ["bus"], line: 5 },
-          { type: "gap", q: "Grace has got lots of _____ on her balcony.", a: ["plants"], line: 8 },
-          { type: "gap", q: "Because of the noise, Grace sometimes sleeps with _____.", a: ["earplugs"], line: 11 },
-          { type: "gap", q: "Tom and Grace often stop at a farm to buy fresh _____.", a: ["eggs"], line: 16 },
-          { type: "choose", q: "Where does Tom live?", opts: ["in a city","in the countryside","by the sea"], a: ["in the countryside"], line: 0 },
-          { type: "choose", q: "How often does Tom's mum go to the supermarket?", opts: ["every day","once a week","once a month"], a: ["once a week"], line: 4 },
-          { type: "choose", q: "Which floor is Grace's flat on?", opts: ["the third floor","the fifth floor","the ninth floor"], a: ["the ninth floor"], line: 6 },
-          { type: "choose", q: "What can Grace see from her balcony at night?", opts: ["the sea","the whole city","the mountains"], a: ["the whole city"], line: 9 },
-          { type: "choose", q: "What does Grace think about the countryside?", opts: ["She never wants to live there.","She wants to live there one day.","She goes there every weekend."], a: ["She never wants to live there."], line: 12 },
-          { type: "choose", q: "What does Tom like most in Manchester?", opts: ["the football stadium","the trams","the museums"], a: ["the football stadium"], line: 20 },
-          { type: "choose", q: "What does Tom say about the traffic in the city?", opts: ["It is very fast.","It is very slow.","There isn't any."], a: ["It is very slow."], line: 21 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "Different Jobs Around Us",
+        text: "Every day, many people work to make our lives easier. We don't always notice them, but we need them.\n\n" +
+          "Early in the morning, before most people wake up, bakers are already working. They start at four o'clock and make fresh bread for shops and cafés. At the same time, bus drivers get ready to take people to work and school.\n\n" +
+          "Doctors and nurses work in hospitals day and night. Their job is very important, but it is also stressful. They often work long shifts, sometimes twelve hours without a proper rest.\n\n" +
+          "Teachers do more than teach lessons. They prepare materials, check homework and help students with their problems. Many teachers say the best part of their job is seeing their students improve.\n\n" +
+          "Some jobs are less visible. Cleaners keep our streets, offices and schools clean. Farmers grow the fruit and vegetables we buy in supermarkets. Delivery drivers bring parcels to our doors, even in rain and snow.\n\n" +
+          "To learn more about these jobs, our class interviewed three workers in our town.\n\n" +
+          "The first was Mr Hughes, a bus driver. He has driven the same route for fifteen years, and he knows many of his passengers by name. He starts at six in the morning and finishes at three in the afternoon. \"The worst part of the job is the traffic,\" he told us. \"But I love talking to people. Some old passengers tell me their life stories.\"\n\n" +
+          "The second was Grace, a young nurse at the children's hospital. She decided to become a nurse after her little brother spent a month in hospital. She works three night shifts a week. \"Night shifts are tiring, and it is hard to sleep during the day,\" she said. \"But when a sick child smiles at me in the morning, I forget about being tired.\"\n\n" +
+          "The third was Mr Wood, a farmer. He grows potatoes and wheat and keeps forty cows. He gets up at five o'clock every day, even on Sundays, because the animals need food and water. In summer, he often works fourteen hours a day. He told us that bad weather is his biggest problem. \"One storm can destroy a whole year of work,\" he explained.\n\n" +
+          "All three said the same thing: every job is important, and every worker deserves respect.\n\n" +
+          "Next time you buy bread, take a bus or get a parcel, remember the people behind these services. A simple \"thank you\" can make their day better.",
         words: [
-          { w: 'countryside', emoji: '🌳', m: 'land with fields and farms, away from towns', ex: 'Tom lives in a house in the countryside.' },
-          { w: 'fireplace', emoji: '🔥', m: 'a place in a wall where you can have a fire', ex: 'The living room has a fireplace.' },
-          { w: 'large', emoji: '🐘', m: 'big', ex: 'There is a large garden with apple trees.' },
-          { w: 'nearest', emoji: '📍', m: 'the one that is closest to you', ex: 'The nearest shop is three kilometres away.' },
-          { w: 'once a week', emoji: '📆', m: 'one time every week', ex: "Tom's mum drives to the supermarket once a week." },
-          { w: 'cycle', emoji: '🚲', m: 'to ride a bike', ex: 'He cycles to school every day.' },
-          { w: 'modern', emoji: '✨', m: 'new and in today\'s style', ex: 'The flat is small and modern.' },
-          { w: 'balcony', emoji: '🌇', m: 'a small place outside a flat, above the street, where you can stand or sit', ex: 'There is a balcony with lots of plants.' },
-          { w: 'close to', emoji: '🤏', m: 'near', ex: 'Her flat is very close to shops.' },
-          { w: 'noise', emoji: '📢', m: 'a loud sound that you don\'t like', ex: 'The only problem is the noise from the street.' }
-        ]
+          { w: "Notice", uz: "Payqamoq", emoji: "👀", ex: "We don't always notice them, but we need them." },
+          { w: "Bakers", uz: "Novvoylar", emoji: "🥖", ex: "Early in the morning, before most people wake up, bakers are already working." },
+          { w: "Get ready", uz: "Tayyorlanmoq", emoji: "🎒", ex: "At the same time, bus drivers get ready to take people to work and school." },
+          { w: "Stressful", uz: "Asabiy (stressli)", emoji: "😣", ex: "Their job is very important, but it is also stressful." },
+          { w: "Shifts", uz: "Smenalar", emoji: "🕐", ex: "They often work long shifts, sometimes twelve hours without a proper rest." },
+          { w: "Prepare", uz: "Tayyorlamoq", emoji: "📝", ex: "They prepare materials, check homework and help students with their problems." },
+          { w: "Improve", uz: "Yaxshilanmoq", emoji: "📈", ex: "Many teachers say the best part of their job is seeing their students improve." },
+          { w: "Delivery drivers", uz: "Yetkazib beruvchilar", emoji: "🚚", ex: "Delivery drivers bring parcels to our doors, even in rain and snow." },
+          { w: "Parcels", uz: "Posilkalar", emoji: "📦", ex: "Delivery drivers bring parcels to our doors, even in rain and snow." },
+          { w: "Services", uz: "Xizmatlar", emoji: "🛎️", ex: "Next time you buy bread, take a bus or get a parcel, remember the people behind these services." }
+        ],
+        questions: [
+          { type: "tfng", q: "Bakers start work before most people wake up.", a: ["True"], line: 2 },
+          { type: "tfng", q: "Mr Hughes has been a bus driver for five years.", a: ["False"], line: 17 },
+          { type: "tfng", q: "Grace usually works during the day.", a: ["False"], line: 23 },
+          { type: "tfng", q: "Mr Wood's farm is the biggest in the area.", a: ["Not given"], line: 26 },
+          { type: "tfng", q: "Mr Wood works on Sundays too.", a: ["True"], line: 27 },
+          { type: "gap", q: "People who work in hospitals often work long _____.", a: ["shifts"], line: 7 },
+          { type: "gap", q: "Delivery drivers bring _____ to our doors.", a: ["parcels"], line: 14 },
+          { type: "gap", q: "Mr Hughes knows many of his _____ by name.", a: ["passengers"], line: 17 },
+          { type: "gap", q: "Grace decided to become a nurse after her little _____ spent a month in hospital.", a: ["brother"], line: 22 },
+          { type: "gap", q: "Mr Wood keeps forty _____ on his farm.", a: ["cows"], line: 26 },
+          { type: "open", q: "What is the worst part of Mr Hughes's job?", keys: ["traffic"], line: 19 },
+          { type: "open", q: "Why is it hard for Grace to sleep?", keys: ["night","day"], line: 24 },
+          { type: "open", q: "What makes Grace forget about being tired?", keys: ["smile"], line: 25 },
+          { type: "open", q: "Why does Mr Wood get up early every day?", keys: ["animal","food","water"], line: 27 },
+          { type: "open", q: "What is Mr Wood's biggest problem?", keys: ["weather","storm"], line: 29 }
+        ],
+        retell: "Retell the text in your own words. Talk about at least four jobs and why they are important."
       },
       writing: {
         topic: 'My home',
@@ -1726,49 +1759,50 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: "A nurse's day",
-        text: "Hannah Clarke is a nurse at a children's hospital in Liverpool. She works long days, from half past seven in the morning until eight o'clock in the evening. She works four days a week, so she has three days off.\n\n" +
-          "On work days, Hannah gets up at six o'clock, when it is still dark in winter. She has a quick shower and a cup of tea, but she never eats breakfast at home. She takes the bus to the hospital, and the journey takes about forty minutes. She often reads a book on the bus, or she listens to music.\n\n" +
-          "At the hospital, Hannah checks the children and gives them their medicine. She also talks to the parents, because they are often worried. At lunchtime, she eats a sandwich with the other nurses in a small kitchen. The afternoons are usually the busiest part of the day, with lots of new patients.\n\n" +
-          "When she gets home, Hannah is very tired. She has dinner with her husband, Chris, and then she goes to bed at about ten o'clock. On her days off, she sleeps late, goes to a yoga class and visits her sister. Hannah says her job is hard, but she loves it, because she helps children every day.\n\n" +
-          "Hannah started working at the hospital eight years ago. Before that, she studied nursing at university for three years. She remembers her first week very well, because she was very nervous. An older nurse, Margaret, helped her a lot and taught her many important things. Today, Hannah helps the new nurses in the same way.\n\n" +
-          "The most difficult part of the job is when a child is very ill. Hannah tries to stay calm and smile, because the children need to feel safe. She often brings small toys and colouring books for them. Some children stay in the hospital for many weeks, so the nurses try to make the rooms bright and happy, with pictures on the walls.\n\n" +
-          "Hannah's favourite moment is when a child is well again and goes home. The families sometimes send her cards and letters to say thank you. She keeps them all in a big box at home, and she reads them when she has a bad day.\n\n" +
-          "Next year, Hannah wants to do a special course to become a senior nurse. It will be a lot of work, but she is excited. She says that every day at the hospital is different, and she is never bored.",
-        questions: [
-          { type: "tfng", q: "Hannah works at a hospital for children.", a: ["True"], line: 0 },
-          { type: "tfng", q: "Hannah works five days a week.", a: ["False"], line: 2 },
-          { type: "tfng", q: "Hannah drives to the hospital.", a: ["False"], line: 5 },
-          { type: "tfng", q: "Hannah is tired when she gets home.", a: ["True"], line: 11 },
-          { type: "tfng", q: "Hannah's husband is a doctor.", a: ["Not given"], line: 12 },
-          { type: "tfng", q: "Hannah has worked at the hospital for eight years.", a: ["True"], line: 15 },
-          { type: "tfng", q: "Hannah felt calm in her first week.", a: ["False"], line: 17 },
-          { type: "gap", q: "On work days, Hannah gets up at _____ o'clock.", a: ["six","6"], line: 3 },
-          { type: "gap", q: "Hannah never eats _____ at home.", a: ["breakfast"], line: 4 },
-          { type: "gap", q: "Hannah often reads a _____ on the bus.", a: ["book"], line: 6 },
-          { type: "gap", q: "At lunchtime, Hannah eats a _____ with the other nurses.", a: ["sandwich"], line: 9 },
-          { type: "gap", q: "On her days off, Hannah goes to a _____ class.", a: ["yoga"], line: 13 },
-          { type: "gap", q: "Hannah keeps the families' cards and letters in a big _____ at home.", a: ["box"], line: 26 },
-          { type: "choose", q: "When does Hannah finish work?", opts: ["at six o'clock in the evening","at eight o'clock in the evening","at ten o'clock in the evening"], a: ["at eight o'clock in the evening"], line: 1 },
-          { type: "choose", q: "How long is Hannah's journey to the hospital?", opts: ["about twenty minutes","about forty minutes","about an hour"], a: ["about forty minutes"], line: 5 },
-          { type: "choose", q: "Why does Hannah talk to the parents?", opts: ["They are often worried.","They want to be nurses.","They bring her lunch."], a: ["They are often worried."], line: 8 },
-          { type: "choose", q: "When is Hannah busiest at work?", opts: ["in the morning","at lunchtime","in the afternoon"], a: ["in the afternoon"], line: 10 },
-          { type: "choose", q: "Why does Hannah love her job?", opts: ["She helps children every day.","She has long holidays.","The work is easy."], a: ["She helps children every day."], line: 14 },
-          { type: "choose", q: "Who helped Hannah in her first week?", opts: ["a doctor","her husband","an older nurse"], a: ["an older nurse"], line: 18 },
-          { type: "choose", q: "What does Hannah want to do next year?", opts: ["do a special course","work in another hospital","stop working"], a: ["do a special course"], line: 27 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "What People Wear Around the World",
+        text: "Clothes are not only about fashion. In many countries, they also show history, culture and even the weather.\n\n" +
+          "In Japan, the kimono is a traditional long robe with wide sleeves. Today, most Japanese people wear modern clothes, but they put on a kimono for special events like weddings and festivals.\n\n" +
+          "In Scotland, some men wear a kilt, a knee-length skirt with a special pattern called tartan. Each family has its own tartan colours. Kilts are popular at weddings and sports events.\n\n" +
+          "People in hot, dry places often wear long, loose clothes. This might sound strange, but loose cotton clothes protect the skin from the sun and keep the body cool. In many desert countries, men also cover their heads with a light scarf.\n\n" +
+          "In very cold places like northern Canada, people wear thick coats, warm boots, hats and gloves. The Inuit people traditionally made warm clothes from animal skins.\n\n" +
+          "Colours also have different meanings in different cultures. In many Western countries, brides wear white dresses at their weddings. But in India and China, red is the traditional colour for brides because it means happiness and good luck. In some countries, people wear black when someone dies, while in others they wear white.\n\n" +
+          "In West Africa, people often wear clothes made from bright, colourful cloth with bold patterns. In Ghana, a special cloth called kente is made by hand from thin strips of material. In the past, only kings wore kente, but today people wear it at important celebrations. Each colour in kente has its own meaning: gold means wealth, and green means growth.\n\n" +
+          "In the Andes mountains of South America, many people wear wool ponchos and hats. The ponchos are warm, and they protect people from wind and rain. Women often weave them by hand, and each village has its own colours and designs. A poncho can take a woman several weeks to make.\n\n" +
+          "Some clothes are made for work. Firefighters wear special jackets that do not burn, and doctors wear clean uniforms to stop the spread of illness. In some schools, students wear uniforms too. People have different opinions about school uniforms: some say they make everyone equal, while others think students should be free to choose.\n\n" +
+          "Fashion also changes with time. One hundred years ago, women in Europe rarely wore trousers. Today, trousers are normal for everyone. Many young people now buy second-hand clothes because they are cheaper and better for the planet.\n\n" +
+          "In India, many women wear a sari, a long piece of cloth, often about six metres long, that they wrap around the body. Saris come in thousands of colours and designs, and some are decorated with gold thread. A girl often gets her first sari from her mother for an important family event.\n\n" +
+          "Today, jeans and T-shirts are popular almost everywhere. However, traditional clothes are still important because they connect people with their past.",
         words: [
-          { w: 'nurse', emoji: '👩‍⚕️', m: 'a person whose job is to look after people who are ill', ex: "Hannah is a nurse at a children's hospital." },
-          { w: 'days off', emoji: '🌴', m: 'days when you don\'t go to work', ex: 'She has three days off every week.' },
-          { w: 'quick', emoji: '⚡', m: 'fast; not taking a long time', ex: 'She has a quick shower.' },
-          { w: 'journey', emoji: '🛣️', m: 'the time you spend going from one place to another', ex: 'The journey takes about forty minutes.' },
-          { w: 'check', emoji: '🔍', m: 'to look at something or someone to see if everything is OK', ex: 'Hannah checks the children every morning.' },
-          { w: 'worried', emoji: '😟', m: 'unhappy because you think something bad can happen', ex: 'The parents are often worried.' },
-          { w: 'lunchtime', emoji: '🥪', m: 'the time in the middle of the day when people eat', ex: 'At lunchtime, she eats a sandwich.' },
-          { w: 'busiest', emoji: '🐝', m: 'with the most things to do', ex: 'The afternoons are the busiest part of the day.' },
-          { w: 'patient', emoji: '🤒', m: 'a person who is ill and sees a doctor or a nurse', ex: 'There are lots of new patients in the afternoon.' },
-          { w: 'sleep late', emoji: '😴', m: 'to get up later than usual in the morning', ex: 'On her days off, she sleeps late.' }
-        ]
+          { w: "Fashion", uz: "Moda", emoji: "👗", ex: "Clothes are not only about fashion." },
+          { w: "Robe", uz: "Uzun to'n (xalat)", emoji: "👘", ex: "In Japan, the kimono is a traditional long robe with wide sleeves." },
+          { w: "Put on", uz: "Kiymoq", emoji: "🧥", ex: "Today, most Japanese people wear modern clothes, but they put on a kimono for special events like weddings and festivals." },
+          { w: "Weddings", uz: "To'ylar", emoji: "💒", ex: "Today, most Japanese people wear modern clothes, but they put on a kimono for special events like weddings and festivals." },
+          { w: "Knee-length", uz: "Tizzagacha", emoji: "🦵", ex: "In Scotland, some men wear a kilt, a knee-length skirt with a special pattern called tartan." },
+          { w: "Pattern", uz: "Naqsh", emoji: "🔳", ex: "In Scotland, some men wear a kilt, a knee-length skirt with a special pattern called tartan." },
+          { w: "Loose", uz: "Keng (erkin)", emoji: "👕", ex: "People in hot, dry places often wear long, loose clothes." },
+          { w: "Protect", uz: "Himoya qilmoq", emoji: "🛡️", ex: "This might sound strange, but loose cotton clothes protect the skin from the sun and keep the body cool." },
+          { w: "Thick coats", uz: "Qalin paltolar", emoji: "🧥", ex: "In very cold places like northern Canada, people wear thick coats, warm boots, hats and gloves." },
+          { w: "Connect", uz: "Bog'lamoq", emoji: "🔗", ex: "However, traditional clothes are still important because they connect people with their past." }
+        ],
+        questions: [
+          { type: "tfng", q: "In India, brides traditionally wear red.", a: ["True"], line: 14 },
+          { type: "tfng", q: "In the past, everyone in Ghana wore kente.", a: ["False"], line: 18 },
+          { type: "tfng", q: "Ponchos protect people from wind and rain.", a: ["True"], line: 21 },
+          { type: "tfng", q: "Kente is more expensive than other kinds of cloth.", a: ["Not given"], line: 17 },
+          { type: "tfng", q: "A hundred years ago, women in Europe often wore trousers.", a: ["False"], line: 29 },
+          { type: "gap", q: "The special pattern on a kilt is called _____.", a: ["tartan"], line: 4 },
+          { type: "gap", q: "In India, a girl often gets her first sari from her _____.", a: ["mother"], line: 34 },
+          { type: "gap", q: "In kente, the colour green means _____.", a: ["growth"], line: 19 },
+          { type: "gap", q: "Women in the Andes often make ponchos by _____.", a: ["hand"], line: 22 },
+          { type: "gap", q: "Many young people buy second-hand clothes because they are cheaper and better for the _____.", a: ["planet"], line: 31 },
+          { type: "open", q: "Why is red the traditional colour for brides in India and China?", keys: ["happiness","luck"], line: 14 },
+          { type: "open", q: "What is kente made from?", keys: ["strip","material"], line: 17 },
+          { type: "open", q: "How long can it take to make a poncho?", keys: ["week"], line: 23 },
+          { type: "open", q: "Why do doctors wear clean uniforms?", keys: ["illness","spread"], line: 25 },
+          { type: "open", q: "Why are traditional clothes still important today?", keys: ["past","connect"], line: 36 }
+        ],
+        retell: "Retell the text in your own words. Talk about the clothes of at least three places."
       },
       writing: {
         topic: 'My weekday',
@@ -1869,48 +1903,49 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: 'A café menu & review',
-        text: "The Blue Door Café is a small family café on Market Street in Bath. It is open every day from eight in the morning until six in the evening.\n\n" +
-          "Breakfast is served until eleven o'clock. The full English breakfast costs £7.50, and pancakes with fresh fruit cost £5. For lunch, there is soup of the day with bread for £4.50, a chicken salad for £6 and fish and chips for £8.95. Children under ten can have a small plate of any dish for half price. Tea is £2 and a large hot chocolate is £3.20.\n\n" +
-          "Here is a review from a customer, Oliver Grant. My wife and I had lunch at the Blue Door Café last Saturday. It was very busy, so we waited fifteen minutes for a table. The waiter was friendly, and he brought us some bread while we waited. I had the fish and chips, and my wife had the soup. The fish was hot and fresh, but the chips were a bit cold. My wife loved her soup, and she asked the waiter for the recipe! The best thing was the dessert: a lemon cake made by the owner's grandmother. The prices are good, and the café is clean and bright. Next time, we want to come for breakfast and try the pancakes. I give the Blue Door Café four stars out of five.\n\n" +
-          "The Blue Door Café belongs to the Hill family. Peter Hill opened it twenty years ago with his wife, Mary, and today their daughter, Lucy, helps them in the kitchen. The name comes from the old blue door at the front, which is more than a hundred years old. Inside, there are twelve wooden tables, old photos of Bath on the walls and lots of plants.\n\n" +
-          "The café uses fresh food from local farms. The eggs come from a farm only five kilometres away, and the bread is made in the café every morning. In autumn and winter, there is a special menu with hot dishes like beef stew and apple pie. There are also dishes for people who don't eat meat, and the staff are happy to help if you have an allergy.\n\n" +
-          "Here is a second review, from a student called Amy Ross. I come to the Blue Door Café on Monday mornings before my classes, because it is quiet and the Wi-Fi is free. I usually order a cup of tea and a piece of toast with jam. The staff remember my name, and they always ask about my studies. It's a perfect place to read or study for an hour. My only problem is that it closes at six, so I can't come in the evening. I give it five stars!\n\n" +
-          "If you want to visit, it's a good idea to arrive before twelve o'clock, because the café is very busy at lunchtime, especially at the weekend.",
-        questions: [
-          { type: "tfng", q: "The café is open on Sundays.", a: ["True"], line: 1 },
-          { type: "tfng", q: "You can order breakfast at twelve o'clock.", a: ["False"], line: 2 },
-          { type: "tfng", q: "Children under ten pay less for a small plate.", a: ["True"], line: 5 },
-          { type: "tfng", q: "Oliver and his wife sat at a table by the window.", a: ["Not given"], line: 9 },
-          { type: "tfng", q: "Oliver's chips were hot.", a: ["False"], line: 12 },
-          { type: "tfng", q: "Peter Hill opened the café twenty years ago.", a: ["True"], line: 19 },
-          { type: "tfng", q: "The café buys its bread from a shop in Bath.", a: ["False"], line: 23 },
-          { type: "gap", q: "The café is on _____ Street.", a: ["Market"], line: 0 },
-          { type: "gap", q: "The pancakes come with fresh _____.", a: ["fruit"], line: 3 },
-          { type: "gap", q: "Oliver and his wife waited _____ minutes for a table.", a: ["fifteen","15"], line: 9 },
-          { type: "gap", q: "Oliver's wife asked for the _____ of the soup.", a: ["recipe"], line: 13 },
-          { type: "gap", q: "The lemon cake was made by the owner's _____.", a: ["grandmother"], line: 14 },
-          { type: "gap", q: "Inside the café, there are twelve wooden _____.", a: ["tables"], line: 21 },
-          { type: "choose", q: "How much is the chicken salad?", opts: ["£4.50","£6","£8.95"], a: ["£6"], line: 4 },
-          { type: "choose", q: "How much is a large hot chocolate?", opts: ["£2","£3.20","£5"], a: ["£3.20"], line: 6 },
-          { type: "choose", q: "What did Oliver eat?", opts: ["the soup","fish and chips","pancakes"], a: ["fish and chips"], line: 11 },
-          { type: "choose", q: "What was the best thing about the meal, for Oliver?", opts: ["the lemon cake","the bread","the hot chocolate"], a: ["the lemon cake"], line: 14 },
-          { type: "choose", q: "How many stars does Oliver give the café?", opts: ["three","four","five"], a: ["four"], line: 17 },
-          { type: "choose", q: "Why does Amy come to the café on Monday mornings?", opts: ["The food is cheaper then.","It is quiet and the Wi-Fi is free.","Her friends work there."], a: ["It is quiet and the Wi-Fi is free."], line: 27 },
-          { type: "choose", q: "How many stars does Amy give the café?", opts: ["four","three","five"], a: ["five"], line: 32 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "How Do People Travel?",
+        text: "Two hundred years ago, most people walked or rode horses. A journey between two cities could take several days. Today, we can travel across the world in less than a day.\n\n" +
+          "Cars are the most common way to travel in many countries. They are comfortable, and you can go wherever you want. However, cars cause traffic jams and air pollution, especially in big cities.\n\n" +
+          "That is why many cities are improving public transport. In London, millions of people use the Underground every day. In Tokyo, trains are so punctual that a delay of one minute is unusual.\n\n" +
+          "Bicycles are becoming popular again. In Amsterdam, there are more bikes than people! Cycling is cheap, healthy and good for the environment.\n\n" +
+          "For long distances, people usually fly. Planes are fast, but flying is expensive and produces a lot of pollution. Some travellers now choose high-speed trains instead. In Europe, some trains can travel at 300 kilometres per hour.\n\n" +
+          "In some places, people travel in more unusual ways. In Venice, Italy, there are no cars in the old city. People walk or travel by boat on the canals. Even ambulances use boats! The famous boats there are called gondolas, and tourists love riding in them. In the mountains of Switzerland, cable cars carry people and skiers up to the top, and some villages can only be reached by train or cable car.\n\n" +
+          "Technology is changing transport too. Electric cars are becoming more common because they do not produce pollution on the road. In Norway, more than eight out of ten new cars sold today are electric. Some cities are also testing buses without drivers, and companies are trying to use drones to deliver small parcels.\n\n" +
+          "Travel also has rules that are different around the world. In Britain, Japan and Australia, people drive on the left side of the road, but in most other countries, they drive on the right. In Singapore, cars are very expensive because the government wants people to use public transport. Drivers there also have to pay to drive into the city centre.\n\n" +
+          "For many people, the journey to work is the longest part of the day. In big cities like London or Tokyo, some people spend more than two hours a day travelling to and from work. To save time, more companies now let their workers work from home one or two days a week. This also means fewer cars on the roads and less pollution.\n\n" +
+          "Finally, walking is still the healthiest way to travel. Doctors recommend walking at least 7,000 steps a day, and many cities are building new paths for walkers and cyclists.\n\n" +
+          "Which way of travelling is the best? It depends on where you are going, how much money you have and how fast you need to get there.",
         words: [
-          { w: 'menu', emoji: '📜', m: 'a list of the food and drinks in a café or a restaurant', ex: 'Read the menu and choose your lunch.' },
-          { w: 'served', emoji: '🍽️', m: 'given to customers in a café or a restaurant', ex: "Breakfast is served until eleven o'clock." },
-          { w: 'fresh', emoji: '🥬', m: 'new and made or picked not long ago', ex: 'Pancakes come with fresh fruit.' },
-          { w: 'dish', emoji: '🍲', m: 'one kind of food on a menu', ex: 'Children can have a small plate of any dish.' },
-          { w: 'half price', emoji: '🏷️', m: 'for half of the usual money', ex: 'Children under ten can eat for half price.' },
-          { w: 'review', emoji: '✍️', m: 'a text where someone says what they think about a place, a film or a book', ex: 'Here is a review from a customer.' },
-          { w: 'waiter', emoji: '🤵', m: 'a person who brings food and drinks to the tables', ex: 'The waiter was friendly.' },
-          { w: 'a bit', emoji: '🤏', m: 'a little', ex: 'The chips were a bit cold.' },
-          { w: 'recipe', emoji: '📖', m: 'instructions that tell you how to cook something', ex: 'She asked the waiter for the recipe!' },
-          { w: 'dessert', emoji: '🍰', m: 'sweet food you eat at the end of a meal', ex: 'The best thing was the dessert.' }
-        ]
+          { w: "Common", uz: "Keng tarqalgan", emoji: "🚗", ex: "Cars are the most common way to travel in many countries." },
+          { w: "Wherever", uz: "Qayerga bo'lsa ham", emoji: "🗺️", ex: "They are comfortable, and you can go wherever you want." },
+          { w: "Traffic jams", uz: "Tirbandliklar", emoji: "🚦", ex: "However, cars cause traffic jams and air pollution, especially in big cities." },
+          { w: "Air pollution", uz: "Havo ifloslanishi", emoji: "🏭", ex: "However, cars cause traffic jams and air pollution, especially in big cities." },
+          { w: "Public transport", uz: "Jamoat transporti", emoji: "🚌", ex: "That is why many cities are improving public transport." },
+          { w: "Punctual", uz: "O'z vaqtida keladigan", emoji: "⏱️", ex: "In Tokyo, trains are so punctual that a delay of one minute is unusual." },
+          { w: "Delay", uz: "Kechikish", emoji: "⌛", ex: "In Tokyo, trains are so punctual that a delay of one minute is unusual." },
+          { w: "Environment", uz: "Atrof-muhit", emoji: "🌳", ex: "Cycling is cheap, healthy and good for the environment." },
+          { w: "Distances", uz: "Masofalar", emoji: "📏", ex: "For long distances, people usually fly." },
+          { w: "It depends on", uz: "...ga bog'liq", emoji: "⚖️", ex: "It depends on where you are going, how much money you have and how fast you need to get there." }
+        ],
+        questions: [
+          { type: "tfng", q: "There are no cars in the old city of Venice.", a: ["True"], line: 17 },
+          { type: "tfng", q: "Most new cars sold in Norway are electric.", a: ["True"], line: 24 },
+          { type: "tfng", q: "People in Japan drive on the right.", a: ["False"], line: 27 },
+          { type: "tfng", q: "Electric cars are cheaper than other cars.", a: ["Not given"], line: 23 },
+          { type: "tfng", q: "Two hundred years ago, a journey between two cities was always quick.", a: ["False"], line: 1 },
+          { type: "gap", q: "In Tokyo, trains are so _____ that a one-minute delay is unusual.", a: ["punctual"], line: 8 },
+          { type: "gap", q: "The famous boats in Venice are called _____.", a: ["gondolas"], line: 20 },
+          { type: "gap", q: "In Switzerland, cable _____ carry skiers up the mountains.", a: ["cars"], line: 21 },
+          { type: "gap", q: "Companies are trying to use _____ to deliver small parcels.", a: ["drones"], line: 25 },
+          { type: "gap", q: "Doctors recommend walking at least 7,000 _____ a day.", a: ["steps"], line: 35 },
+          { type: "open", q: "Why are electric cars becoming more common?", keys: ["pollution"], line: 23 },
+          { type: "open", q: "Why are cars very expensive in Singapore?", keys: ["public transport","government"], line: 28 },
+          { type: "open", q: "How long do some people in London or Tokyo spend travelling to and from work?", keys: ["two hours","2 hours","two","2"], line: 31 },
+          { type: "open", q: "Why do some companies let their workers work from home?", keys: ["time"], line: 32 },
+          { type: "open", q: "What does the best way of travelling depend on?", keys: ["money","where","fast"], line: 37 }
+        ],
+        retell: "Retell the text in your own words. Talk about the good and bad points of at least three ways to travel."
       },
       writing: {
         topic: 'My favourite meal',
@@ -2010,49 +2045,49 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: 'Shopping in London',
-        text: "London is one of the best cities in the world for shopping. Every year, millions of visitors come to the city to buy clothes, presents and souvenirs. You can find everything here, from cheap T-shirts to very expensive watches.\n\n" +
-          "Oxford Street is the busiest shopping street in Europe. It has more than three hundred shops, from big department stores to small shoe shops. Most shops there are open from ten in the morning until nine in the evening. On Sundays, they open at twelve and close at six. If you want something special, visit Harrods, a famous department store in Knightsbridge. It is very big and very expensive, but many tourists go there just to look at its beautiful food hall.\n\n" +
-          "For cheaper shopping, try one of London's street markets. Camden Market is popular with young people because it sells unusual clothes, old records and street food from many countries. Portobello Road Market in Notting Hill is famous for antiques, and it is busiest on Saturdays. Remember to bring some cash, because a few small stalls do not take cards.\n\n" +
-          "Here are some tips for your shopping day. Go early in the morning, when the shops are still quiet. Wear comfortable shoes, because you will walk a lot. In January, many shops have big sales, and some clothes are half price. Finally, always keep your bag closed on busy streets, and never leave it on the floor. Have a great time, and happy shopping in London!\n\n" +
-          "If you get tired of shopping, London has many other things to enjoy. Many of the city's big museums are free, and some of them have very good shops too. The museum shops sell books, toys and gifts, and the money helps the museums. They are great places to find a present for a friend or a member of your family.\n\n" +
-          "In December, the shopping streets are full of Christmas lights. Oxford Street and Regent Street have beautiful decorations, and thousands of people come in the evening just to look at them. There are also Christmas markets in some parks, where you can buy hot drinks, cakes and small gifts. The shops are very busy before Christmas, so be patient!\n\n" +
-          "Getting around London is easy. The Underground, called \"the Tube\", has stations near all the big shopping areas. The best way to pay is with a contactless bank card or an Oyster card. Buses are cheaper than the Tube, and from the top of a red double-decker bus you can see the city while you travel.\n\n" +
-          "Finally, think about your budget. London can be very expensive, and it's easy to spend too much money. Before you go, decide how much you want to spend, and try to keep to it. Some visitors write a list of the things they want to buy. It's also a good idea to compare prices in a few shops before you buy something expensive.",
-        questions: [
-          { type: "tfng", q: "Oxford Street has more than three hundred shops.", a: ["True"], line: 4 },
-          { type: "tfng", q: "Most shops on Oxford Street open at nine in the morning.", a: ["False"], line: 5 },
-          { type: "tfng", q: "Harrods is a cheap place to shop.", a: ["False"], line: 8 },
-          { type: "tfng", q: "Camden Market is open every day of the week.", a: ["Not given"], line: 10 },
-          { type: "tfng", q: "In January, you can buy some clothes for half the usual price.", a: ["True"], line: 16 },
-          { type: "tfng", q: "Many of London's big museums are free.", a: ["True"], line: 20 },
-          { type: "tfng", q: "Buses are more expensive than the Tube.", a: ["False"], line: 30 },
-          { type: "gap", q: "Oxford Street is the busiest shopping street in _____.", a: ["Europe"], line: 3 },
-          { type: "gap", q: "Many tourists go to Harrods to see its beautiful food _____.", a: ["hall"], line: 8 },
-          { type: "gap", q: "Portobello Road Market is famous for _____.", a: ["antiques"], line: 11 },
-          { type: "gap", q: "Bring some _____, because a few small stalls do not take cards.", a: ["cash"], line: 12 },
-          { type: "gap", q: "Wear comfortable _____, because you will walk a lot.", a: ["shoes"], line: 15 },
-          { type: "gap", q: "In December, the shopping streets are full of Christmas _____.", a: ["lights"], line: 23 },
-          { type: "choose", q: "When do the shops on Oxford Street close on Sundays?", opts: ["at six","at nine","at twelve"], a: ["at six"], line: 6 },
-          { type: "choose", q: "Where is Harrods?", opts: ["in Camden","in Knightsbridge","in Notting Hill"], a: ["in Knightsbridge"], line: 7 },
-          { type: "choose", q: "Why do young people like Camden Market?", opts: ["It is very quiet.","It has a famous food hall.","It sells unusual clothes."], a: ["It sells unusual clothes."], line: 10 },
-          { type: "choose", q: "When is Portobello Road Market busiest?", opts: ["on Saturdays","on Sundays","on Mondays"], a: ["on Saturdays"], line: 11 },
-          { type: "choose", q: "What is the best time to go shopping, the text says?", opts: ["late in the evening","at lunchtime","early in the morning"], a: ["early in the morning"], line: 14 },
-          { type: "choose", q: "What is \"the Tube\"?", opts: ["the Underground","a red bus","a big shop"], a: ["the Underground"], line: 28 },
-          { type: "choose", q: "What should you do before you go shopping, the text says?", opts: ["buy an Oyster card","decide how much you want to spend","visit a museum"], a: ["decide how much you want to spend"], line: 33 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "Amazing Animals",
+        text: "The animal world is full of surprises. Here are some facts that might amaze you.\n\n" +
+          "Elephants have excellent memories. They can remember places where they found water many years before. They also seem to show feelings: when a member of the group dies, other elephants often stand next to the body for hours.\n\n" +
+          "Octopuses are some of the smartest animals in the sea. They have eight arms and three hearts, and they can change the colour of their skin in less than a second. In aquariums, some octopuses have learned to open jars to get food.\n\n" +
+          "The cheetah is the fastest land animal. It can run at about 110 kilometres per hour, but only for a short time. After a fast run, it needs to rest for up to half an hour.\n\n" +
+          "Some birds travel incredible distances. The Arctic tern flies from the north of the planet to the south and back every year. During its life, it can fly about the same distance as three trips to the Moon and back.\n\n" +
+          "Dolphins are also very intelligent. They live in groups and communicate with each other using clicks and whistles. Each dolphin has its own special whistle, a bit like a name. Scientists have seen dolphins helping injured members of their group to swim to the surface to breathe. Some dolphins even use sea sponges to protect their noses when they look for food.\n\n" +
+          "Some animals are amazing builders. Beavers cut down trees with their strong teeth and build dams across rivers. Their dams can be hundreds of metres long. Behind the dam, the water becomes a quiet pond, where the beavers build their home. In Canada, scientists found a beaver dam that is so big you can see it from space.\n\n" +
+          "Other animals survive in very difficult places. Camels can travel for a week in the desert without drinking water. They store fat, not water, in their humps, and they can drink more than 100 litres of water in about ten minutes. They can also close their noses to keep out the sand. Polar bears, on the other hand, live in the freezing Arctic. Their thick fur and a layer of fat keep them warm, and they are excellent swimmers.\n\n" +
+          "Even small animals can do incredible things. An ant can carry objects that are fifty times heavier than its own body. Honeybees dance to tell other bees where to find flowers with food. A hummingbird's heart can beat more than 1,000 times a minute.\n\n" +
+          "Sadly, many amazing animals are in danger. Forests are being cut down, oceans are getting dirtier, and the climate is changing. Tigers, elephants and many kinds of sea turtles are now endangered. Zoos and national parks work hard to protect them, but we can help too: we can use less plastic, save water and learn more about the animals that share our planet.\n\n" +
+          "Scientists are still discovering new species every year. Who knows what amazing animals we will find next?",
         words: [
-          { w: 'souvenir', emoji: '🎁', m: 'a small thing you buy to remember a place you visited', ex: 'Visitors buy clothes, presents and souvenirs.' },
-          { w: 'expensive', emoji: '💎', m: 'costing a lot of money', ex: 'Harrods is very big and very expensive.' },
-          { w: 'department store', emoji: '🏬', m: 'a big shop that sells many different things on different floors', ex: 'Harrods is a famous department store.' },
-          { w: 'busy (busiest)', emoji: '👥', m: 'full of people', ex: 'Oxford Street is the busiest shopping street in Europe.' },
-          { w: 'market', emoji: '🧺', m: 'a place, often outside, where people sell things from tables', ex: 'Try one of London\'s street markets.' },
-          { w: 'unusual', emoji: '🦄', m: 'different from most things; not ordinary', ex: 'Camden Market sells unusual clothes.' },
-          { w: 'antiques', emoji: '🏺', m: 'old and beautiful things, for example furniture or clocks, that are worth a lot of money', ex: 'Portobello Road Market is famous for antiques.' },
-          { w: 'cash', emoji: '💵', m: 'money in coins and notes, not a card', ex: 'Remember to bring some cash.' },
-          { w: 'stall', emoji: '⛺', m: 'a small table or shop at a market', ex: 'A few small stalls do not take cards.' },
-          { w: 'sale', emoji: '🏷️', m: 'a time when a shop sells things for less money than usual', ex: 'In January, many shops have big sales.' }
-        ]
+          { w: "Surprises", uz: "Kutilmagan narsalar", emoji: "🎁", ex: "The animal world is full of surprises." },
+          { w: "Amaze", uz: "Hayratlantirmoq", emoji: "😲", ex: "Here are some facts that might amaze you." },
+          { w: "Memories", uz: "Xotira", emoji: "🧠", ex: "Elephants have excellent memories." },
+          { w: "Feelings", uz: "Hissiyotlar", emoji: "❤️", ex: "They also seem to show feelings: when a member of the group dies, other elephants often stand next to the body for hours." },
+          { w: "Smartest", uz: "Eng aqlli", emoji: "💡", ex: "Octopuses are some of the smartest animals in the sea." },
+          { w: "In less than a second", uz: "Bir soniyadan kamroq vaqtda", emoji: "⚡", ex: "They have eight arms and three hearts, and they can change the colour of their skin in less than a second." },
+          { w: "Fastest", uz: "Eng tez", emoji: "🐆", ex: "The cheetah is the fastest land animal." },
+          { w: "Rest", uz: "Dam olmoq", emoji: "😴", ex: "After a fast run, it needs to rest for up to half an hour." },
+          { w: "Incredible", uz: "Aql bovar qilmaydigan", emoji: "🤯", ex: "Some birds travel incredible distances." },
+          { w: "Species", uz: "Turlar", emoji: "🦎", ex: "Each dolphin has its own special whistle, a bit like a name." }
+        ],
+        questions: [
+          { type: "tfng", q: "Each dolphin has its own special whistle.", a: ["True"], line: 16 },
+          { type: "tfng", q: "Camels keep water in their humps.", a: ["False"], line: 26 },
+          { type: "tfng", q: "An ant can carry things much heavier than its own body.", a: ["True"], line: 31 },
+          { type: "tfng", q: "Octopuses live longer than dolphins.", a: ["Not given"], line: 5 },
+          { type: "tfng", q: "A cheetah can keep running fast for many hours.", a: ["False"], line: 9 },
+          { type: "gap", q: "An octopus has eight arms and three _____.", a: ["hearts"], line: 6 },
+          { type: "gap", q: "Beavers build _____ across rivers.", a: ["dams"], line: 20 },
+          { type: "gap", q: "A polar bear's thick fur and a layer of _____ keep it warm.", a: ["fat"], line: 29 },
+          { type: "gap", q: "Honeybees _____ to tell other bees where to find food.", a: ["dance"], line: 32 },
+          { type: "gap", q: "Tigers, elephants and many kinds of sea turtles are now _____.", a: ["endangered"], line: 36 },
+          { type: "open", q: "What do elephants often do when a member of their group dies?", keys: ["stand","body"], line: 4 },
+          { type: "open", q: "How do dolphins help injured members of their group?", keys: ["surface","breathe","swim"], line: 17 },
+          { type: "open", q: "What happens to the water behind a beaver dam?", keys: ["pond","quiet"], line: 22 },
+          { type: "open", q: "How do camels keep the sand out of their noses?", keys: ["close"], line: 27 },
+          { type: "open", q: "What can we do to help animals in danger?", keys: ["plastic","water","learn"], line: 37 }
+        ],
+        retell: "Retell the text in your own words. Tell at least one interesting fact about each animal."
       },
       writing: {
         topic: 'A shopping trip',
@@ -2158,50 +2193,49 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: 'A town guide to Larkhaven',
-        text: "Welcome to Larkhaven, a small town by the sea in the south-west of England. About twelve thousand people live here, and in summer many more come for their holidays. This guide tells you about the best places to visit.\n\n" +
-          "Start your day in the old town, near the harbour. The streets here are narrow, and many of the houses are more than three hundred years old. On Market Street, there is a busy market every Wednesday and Saturday. You can buy fresh fish, local cheese and flowers there. Next, walk up the hill to Larkhaven Castle. It is open every day from ten in the morning until four in the afternoon, and a ticket costs eight pounds. From the top of the tower, you can see the whole town and the sea.\n\n" +
-          "If it rains, visit the Sea Museum on Bridge Street. It tells the story of the town's fishermen, and children love its big model ships. The museum is free, but it is closed on Tuesdays. Next to the museum is the town library, which has a small café on the first floor.\n\n" +
-          "Larkhaven is easy to explore on foot, because the centre is quite small. There is also a bus that goes along the coast every thirty minutes. You can hire a bike at the train station for twelve pounds a day.\n\n" +
-          "In the evening, have dinner at one of the fish restaurants by the harbour. Then walk along the beach and watch the sunset. On Friday nights in summer, there is free music in the park. For maps and more information, visit the tourist office in the main square. Enjoy your visit to Larkhaven!\n\n" +
-          "Larkhaven has a long history. More than seven hundred years ago, it was a small fishing village with only a few houses. The castle was built to protect the harbour from ships from other countries. Later, the town became rich from fishing and trade, and many of the beautiful old houses in the town centre were built by fishermen and sailors. Today, only a few boats still go out to fish every morning, but you can watch them come back into the harbour at about eleven o'clock.\n\n" +
-          "If you like nature, the coast path is the perfect place for a long walk. It goes along the top of the cliffs, and on a clear day you can see seals and seabirds. The path can be wet and muddy after rain, so wear good boots. There are some steep parts, so it isn't a good walk for very young children.\n\n" +
-          "There are many places to stay in Larkhaven, from big hotels by the beach to small guesthouses in the old town. There is also a campsite just outside the town. In July and August, the town is very busy, so it's a good idea to book a room early.\n\n" +
-          "Every year in September, Larkhaven has a food festival. Local farmers, fishermen and cooks sell their food on the harbour, and there are cooking shows and music all weekend. Thousands of people come, and the hotels are often full, so plan your trip carefully if you want to visit then.",
-        questions: [
-          { type: "tfng", q: "Larkhaven is a town by the sea.", a: ["True"], line: 0 },
-          { type: "tfng", q: "The market in the old town is open every day.", a: ["False"], line: 5 },
-          { type: "tfng", q: "You have to pay to go into the Sea Museum.", a: ["False"], line: 12 },
-          { type: "tfng", q: "The café in the library sells cakes.", a: ["Not given"], line: 13 },
-          { type: "tfng", q: "There is a bus along the coast every half an hour.", a: ["True"], line: 15 },
-          { type: "tfng", q: "Larkhaven was once a small fishing village.", a: ["True"], line: 23 },
-          { type: "tfng", q: "The coast path is a good walk for very young children.", a: ["False"], line: 30 },
-          { type: "gap", q: "At the market, you can buy fresh fish, local _____ and flowers.", a: ["cheese"], line: 6 },
-          { type: "gap", q: "From the top of the castle _____, you can see the whole town and the sea.", a: ["tower"], line: 9 },
-          { type: "gap", q: "Children love the big model _____ in the Sea Museum.", a: ["ships"], line: 11 },
-          { type: "gap", q: "You can hire a _____ at the train station.", a: ["bike"], line: 16 },
-          { type: "gap", q: "On Friday nights in summer, there is free _____ in the park.", a: ["music"], line: 19 },
-          { type: "gap", q: "On a clear day, you can see seals and _____ from the coast path.", a: ["seabirds"], line: 28 },
-          { type: "choose", q: "How many people live in Larkhaven?", opts: ["about two thousand","about twelve thousand","about twenty thousand"], a: ["about twelve thousand"], line: 1 },
-          { type: "choose", q: "How old are many of the houses in the old town?", opts: ["about fifty years old","about a hundred years old","more than three hundred years old"], a: ["more than three hundred years old"], line: 4 },
-          { type: "choose", q: "How much is a ticket for the castle?", opts: ["four pounds","eight pounds","twelve pounds"], a: ["eight pounds"], line: 8 },
-          { type: "choose", q: "Why is Larkhaven easy to explore on foot?", opts: ["There are no cars.","The streets are very wide.","The centre is quite small."], a: ["The centre is quite small."], line: 14 },
-          { type: "choose", q: "Where is the tourist office?", opts: ["by the harbour","in the main square","at the train station"], a: ["in the main square"], line: 20 },
-          { type: "choose", q: "When do the fishing boats come back into the harbour?", opts: ["at about four o'clock","in the evening","at about eleven o'clock"], a: ["at about eleven o'clock"], line: 26 },
-          { type: "choose", q: "When is Larkhaven's food festival?", opts: ["in September","in July","in August"], a: ["in September"], line: 34 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "Simple Habits for a Healthy Life",
+        text: "You don't need an expensive gym or a special diet to be healthy. Small daily habits can make a big difference.\n\n" +
+          "The first habit is drinking enough water. Our bodies are about sixty per cent water, and we lose some every day. Doctors usually recommend six to eight glasses a day. If you feel tired or have a headache, you might simply be thirsty.\n\n" +
+          "The second habit is moving more. You don't have to run a marathon. Walking for thirty minutes a day, using the stairs instead of the lift or cycling to school is enough to keep your heart strong.\n\n" +
+          "Sleep is the third important habit. Teenagers need eight to ten hours of sleep. Using your phone late at night makes it harder to fall asleep, so try to put it away an hour before bed.\n\n" +
+          "Fourth, eat more fruit and vegetables and less sugar. Fast food is quick and tasty, but if you eat it every day, it can cause health problems.\n\n" +
+          "Breakfast is another important part of a healthy day. Many teenagers skip breakfast because they get up late. However, people who eat a good breakfast usually have more energy and concentrate better at school. A healthy breakfast doesn't have to take long: a bowl of porridge with fruit, eggs on toast or yoghurt with nuts only takes a few minutes to prepare.\n\n" +
+          "It is also important to spend less time sitting. Today, many people sit for eight or nine hours a day: at school or work, in cars and in front of screens. Some scientists say that sitting for too long is very bad for our health. If you study for a long time, stand up every hour, stretch your body and walk around for a few minutes.\n\n" +
+          "Sunlight is good for us too. When our skin gets sunlight, our body makes vitamin D, which keeps our bones strong. Fifteen minutes outside on a sunny day is usually enough. In winter, when the days are short, some people feel tired and sad because they don't get enough sunlight. But be careful in summer: too much sun can burn your skin, so use sun cream and wear a hat.\n\n" +
+          "Washing your hands is a simple habit that protects you from many illnesses. Doctors say we should wash our hands with soap for at least twenty seconds, especially before eating and after using public transport. It sounds easy, but studies show that many people wash their hands for only a few seconds.\n\n" +
+          "Changing your habits is not easy. Experts say it takes about two months to make a new habit. The secret is to start small. For example, instead of trying to run five kilometres on the first day, start with a ten-minute walk. Write down your progress, and don't give up if you miss a day.\n\n" +
+          "Finally, take care of your mind. Spend time with friends, go outside and take short breaks when you study. A healthy life is a happy life.",
         words: [
-          { w: 'harbour', emoji: '⚓', m: 'a place by the sea where boats can stay safely', ex: 'Start your day in the old town, near the harbour.' },
-          { w: 'narrow', emoji: '🤏', m: 'not wide; with only a little space from one side to the other', ex: 'The streets here are narrow.' },
-          { w: 'local', emoji: '🏡', m: 'from the place where you are, not from far away', ex: 'You can buy fresh fish, local cheese and flowers there.' },
-          { w: 'hill', emoji: '⛰️', m: 'a high piece of land, smaller than a mountain', ex: 'Walk up the hill to Larkhaven Castle.' },
-          { w: 'tower', emoji: '🗼', m: 'a tall, narrow building or part of a building', ex: 'From the top of the tower, you can see the whole town.' },
-          { w: 'model', emoji: '🚢', m: 'a small copy of something big', ex: 'Children love its big model ships.' },
-          { w: 'explore', emoji: '🧭', m: 'to go around a new place to see what is there', ex: 'Larkhaven is easy to explore on foot.' },
-          { w: 'on foot', emoji: '🚶', m: 'walking, not in a car or on a bus', ex: 'Larkhaven is easy to explore on foot.' },
-          { w: 'coast', emoji: '🏖️', m: 'the land next to the sea', ex: 'There is also a bus that goes along the coast.' },
-          { w: 'hire', emoji: '🚲', m: 'to pay money to use something for a short time', ex: 'You can hire a bike at the train station.' }
-        ]
+          { w: "Habits", uz: "Odatlar", emoji: "🔁", ex: "Small daily habits can make a big difference." },
+          { w: "Make a difference", uz: "Ta'sir ko'rsatmoq", emoji: "✨", ex: "Small daily habits can make a big difference." },
+          { w: "Recommend", uz: "Tavsiya qilmoq", emoji: "👩‍⚕️", ex: "Doctors usually recommend six to eight glasses a day." },
+          { w: "Thirsty", uz: "Chanqagan", emoji: "💧", ex: "If you feel tired or have a headache, you might simply be thirsty." },
+          { w: "Instead of", uz: "...ning o'rniga", emoji: "🔄", ex: "Walking for thirty minutes a day, using the stairs instead of the lift or cycling to school is enough to keep your heart strong." },
+          { w: "Fall asleep", uz: "Uxlab qolmoq", emoji: "😴", ex: "Using your phone late at night makes it harder to fall asleep, so try to put it away an hour before bed." },
+          { w: "Put away", uz: "Olib qo'ymoq", emoji: "📵", ex: "Using your phone late at night makes it harder to fall asleep, so try to put it away an hour before bed." },
+          { w: "Cause", uz: "Sabab bo'lmoq", emoji: "⚠️", ex: "Fast food is quick and tasty, but if you eat it every day, it can cause health problems." },
+          { w: "Take care of", uz: "G'amxo'rlik qilmoq", emoji: "💚", ex: "Finally, take care of your mind." },
+          { w: "Take a break", uz: "Tanaffus qilmoq", emoji: "☕", ex: "Spend time with friends, go outside and take short breaks when you study." }
+        ],
+        questions: [
+          { type: "tfng", q: "Teenagers need eight to ten hours of sleep.", a: ["True"], line: 10 },
+          { type: "tfng", q: "Sitting for many hours every day is good for your body.", a: ["False"], line: 20 },
+          { type: "tfng", q: "Our body makes vitamin D when our skin gets sunlight.", a: ["True"], line: 23 },
+          { type: "tfng", q: "Porridge is the healthiest breakfast.", a: ["Not given"], line: 17 },
+          { type: "tfng", q: "It takes about two weeks to make a new habit.", a: ["False"], line: 31 },
+          { type: "gap", q: "Our bodies are about sixty per cent _____.", a: ["water"], line: 3 },
+          { type: "gap", q: "People who eat a good breakfast usually concentrate better at _____.", a: ["school"], line: 16 },
+          { type: "gap", q: "If you study for a long time, stand up every _____.", a: ["hour"], line: 21 },
+          { type: "gap", q: "Vitamin D keeps our _____ strong.", a: ["bones"], line: 23 },
+          { type: "gap", q: "We should wash our hands with soap for at least twenty _____.", a: ["seconds"], line: 28 },
+          { type: "open", q: "Why do many teenagers skip breakfast?", keys: ["late"], line: 15 },
+          { type: "open", q: "Why is using your phone late at night a problem?", keys: ["asleep","sleep"], line: 11 },
+          { type: "open", q: "How can you protect your skin from too much sun?", keys: ["cream","hat"], line: 26 },
+          { type: "open", q: "Why do some people feel tired and sad in winter?", keys: ["sunlight","light"], line: 25 },
+          { type: "open", q: "What is the secret to making a new habit?", keys: ["small"], line: 32 }
+        ],
+        retell: "Retell the text in your own words. Explain the five healthy habits."
       },
       writing: {
         topic: 'My town',
@@ -2304,53 +2338,49 @@ var TA_SKILLS = {
         ]
       },
       reading: {
-        title: 'Hobby club adverts',
-        text: "Are you looking for something new to do in your free time? Here are five clubs in Millbrook that are looking for new members.\n\n" +
-          "The Millbrook Walking Club goes for a long walk in the hills every Sunday morning. We meet at nine o'clock outside the train station, and we usually walk about ten kilometres. Wear good shoes, and bring some water and a snack. The club is free, and everyone is welcome.\n\n" +
-          "Do you love board games? Come to Games Night at the Blue Door Café on Wednesdays, from seven until ten in the evening. We play old favourites like chess, and lots of new games too. It costs three pounds, and the price includes a hot drink.\n\n" +
-          "The Millbrook Book Club meets in the town library on the first Thursday of every month. Each month we read one book, and then we talk about it over tea and biscuits. This month's book is a funny story about a family who move to a farm. New members are always welcome, and you don't have to finish the book!\n\n" +
-          "Would you like to learn to cook? The Saturday Kitchen Club has cooking classes for beginners at Millbrook College. Every week, you learn to make a different dish, from simple soups to fresh pasta. Classes cost ten pounds, and you can take your food home with you. There are only eight places in each class, so book early.\n\n" +
-          "The Millbrook Choir is looking for new singers. You don't need to read music, and you don't need a beautiful voice. You just need to enjoy singing. We practise every Tuesday evening in the Market Hall, and every summer we sing at a concert in the park. To join, just come to one of our practices and say hello!\n\n" +
-          "We also asked some members why they love their clubs. Here is what they told us.\n\n" +
-          "Jack, 34, joined the Walking Club last spring. \"I work in an office all week, so I really need to be outside at the weekend,\" he says. \"The hills around Millbrook are beautiful, and I've made a lot of new friends. After the walk, we sometimes have lunch together in a small pub in the village.\"\n\n" +
-          "Sara, 19, goes to Games Night every week. \"I was very shy when I moved to Millbrook for university,\" she says. \"Board games are a great way to meet people, because you don't need to think about what to say. You just play and have fun! My favourite game is a card game about building cities.\"\n\n" +
-          "Margaret, 71, is the oldest member of the Book Club. \"I've read books all my life, but it's much better to talk about them with other people,\" she says. \"Sometimes we don't agree at all, and that's the best part. Our members are of all ages, from eighteen to eighty!\"\n\n" +
-          "Tom, 45, started the Kitchen Club classes in January. \"Before, I couldn't even cook an egg,\" he laughs. \"Now I make dinner for my family three times a week. My children love my pasta!\"\n\n" +
-          "If you would like more information about any of these clubs, visit the Millbrook community website or look at the notice board in the town library. There is something for everyone, so why not try a new hobby this month?",
-        questions: [
-          { type: "tfng", q: "The Walking Club meets on Sunday mornings.", a: ["True"], line: 2 },
-          { type: "tfng", q: "You have to pay to join the Walking Club.", a: ["False"], line: 5 },
-          { type: "tfng", q: "Games Night finishes at eleven o'clock.", a: ["False"], line: 7 },
-          { type: "tfng", q: "The Book Club meets in the town library.", a: ["True"], line: 10 },
-          { type: "tfng", q: "The teacher at the Kitchen Club is a famous chef.", a: ["Not given"], line: 15 },
-          { type: "tfng", q: "Jack works in an office.", a: ["True"], line: 27 },
-          { type: "tfng", q: "Margaret is the youngest member of the Book Club.", a: ["False"], line: 33 },
-          { type: "gap", q: "Walkers should wear good _____ and bring some water and a snack.", a: ["shoes"], line: 4 },
-          { type: "gap", q: "At Games Night, the price includes a hot _____.", a: ["drink"], line: 9 },
-          { type: "gap", q: "The Book Club talks about the book over tea and _____.", a: ["biscuits"], line: 11 },
-          { type: "gap", q: "This month's book is about a family who move to a _____.", a: ["farm"], line: 12 },
-          { type: "gap", q: "Every summer, the choir sings at a concert in the _____.", a: ["park"], line: 22 },
-          { type: "gap", q: "Sara's favourite game is a card game about building _____.", a: ["cities"], line: 33 },
-          { type: "choose", q: "How far does the Walking Club usually walk?", opts: ["about five kilometres","about ten kilometres","about twenty kilometres"], a: ["about ten kilometres"], line: 3 },
-          { type: "choose", q: "When is Games Night?", opts: ["on Mondays","on Wednesdays","on Fridays"], a: ["on Wednesdays"], line: 7 },
-          { type: "choose", q: "Where are the cooking classes?", opts: ["at the Blue Door Café","in the town library","at Millbrook College"], a: ["at Millbrook College"], line: 15 },
-          { type: "choose", q: "Why should you book the cooking classes early?", opts: ["They are very cheap.","There are only eight places in each class.","The teacher is leaving soon."], a: ["There are only eight places in each class."], line: 18 },
-          { type: "choose", q: "What do you need to join the choir?", opts: ["You need to read music.","You need a beautiful voice.","You need to enjoy singing."], a: ["You need to enjoy singing."], line: 21 },
-          { type: "choose", q: "Why did Sara start going to Games Night?", opts: ["She loves chess.","She was shy and wanted to meet people.","Her teacher told her to."], a: ["She was shy and wanted to meet people."], line: 31 },
-          { type: "choose", q: "How often does Tom cook dinner for his family now?", opts: ["every day","once a week","three times a week"], a: ["three times a week"], line: 38 }
-        ],
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "How Technology Helps Us",
+        text: "Think about your day. How many times do you use technology? For most of us, the answer is: all the time.\n\n" +
+          "Technology helps us communicate. Fifty years ago, a letter to another country took weeks. Today, we can send a message or make a video call to anyone in the world in seconds. This is especially important for families who live far apart.\n\n" +
+          "Technology also makes learning easier. Students can watch online lessons, use dictionaries on their phones and practise English with apps. If you don't understand something, you can find the answer on the internet in a few minutes.\n\n" +
+          "In medicine, technology saves lives. Doctors use modern machines to find illnesses early. Some operations are now done with the help of robots, which are very precise.\n\n" +
+          "Technology is useful at home too. Washing machines and dishwashers save us hours of housework every week, and maps on our phones help us find our way in a new city.\n\n" +
+          "Technology is also changing the way people work. During the pandemic in 2020, millions of people started working from home using video calls and online tools. Many companies discovered that their workers could do their jobs well without coming to the office every day. Today, a lot of people work from home two or three days a week. They save time and money because they don't travel, but some people say they feel lonely without their colleagues.\n\n" +
+          "Shopping has changed too. Twenty years ago, people usually went to shops to buy clothes, books or electronics. Now, many people order almost everything online, and it arrives at their door the next day. This is convenient, but many small shops have closed because they cannot compete with big online companies. Some supermarkets don't even need cashiers: customers scan their products themselves and pay with their phones.\n\n" +
+          "In smart homes, you can control the lights, the heating and even the washing machine with your phone or your voice. Some fridges can tell you when the milk is finished, and robot vacuum cleaners clean the floor while you are at school. These machines save energy and time, but they are expensive, and some people worry about their privacy because the devices collect information about their lives.\n\n" +
+          "Artificial intelligence, or AI, is one of the newest technologies. AI programs can translate languages, answer questions, write texts and even create pictures. Some students use AI to help them understand difficult topics. However, teachers worry that students might copy answers without thinking. Many schools now have rules about when students can use it. AI is a powerful tool, but it can make mistakes, so we should always check the information it gives us.\n\n" +
+          "Technology also helps people with disabilities. For example, phones can read text aloud for people who cannot see well, and special apps can turn speech into text for people who cannot hear. Electric wheelchairs and smart home systems allow many people to live more independently.\n\n" +
+          "But technology has some disadvantages. Spending too many hours in front of screens can be bad for our eyes and our sleep. The key is to use technology wisely.",
         words: [
-          { w: 'member', emoji: '🧑‍🤝‍🧑', m: 'a person who is part of a club or group', ex: 'Here are five clubs in Millbrook that are looking for new members.' },
-          { w: 'snack', emoji: '🍎', m: 'a small amount of food that you eat between meals', ex: 'Wear good shoes, and bring some water and a snack.' },
-          { w: 'board game', emoji: '🎲', m: 'a game that you play on a board, often with dice and small pieces', ex: 'Do you love board games?' },
-          { w: 'include', emoji: '✅', m: 'to have something as one part of the whole', ex: 'It costs three pounds, and the price includes a hot drink.' },
-          { w: 'biscuit', emoji: '🍪', m: 'a small, flat, dry cake, often sweet', ex: 'We talk about it over tea and biscuits.' },
-          { w: 'dish', emoji: '🍝', m: 'food that is cooked in a special way, as part of a meal', ex: 'Every week, you learn to make a different dish.' },
-          { w: 'book', emoji: '📅', m: 'to ask for a place, a seat or a ticket before the day', ex: 'There are only eight places in each class, so book early.' },
-          { w: 'choir', emoji: '🎤', m: 'a group of people who sing together', ex: 'The Millbrook Choir is looking for new singers.' },
-          { w: 'practise', emoji: '🔁', m: 'to do something again and again to get better at it', ex: 'We practise every Tuesday evening in the Market Hall.' },
-          { w: 'concert', emoji: '🎶', m: 'a show where people play music or sing for other people', ex: 'Every summer we sing at a concert in the park.' }
-        ]
+          { w: "Communicate", uz: "Muloqot qilmoq", emoji: "💬", ex: "Technology helps us communicate." },
+          { w: "Video call", uz: "Video qo'ng'iroq", emoji: "📹", ex: "Today, we can send a message or make a video call to anyone in the world in seconds." },
+          { w: "Far apart", uz: "Bir-biridan uzoqda", emoji: "↔️", ex: "This is especially important for families who live far apart." },
+          { w: "Apps", uz: "Ilovalar", emoji: "📱", ex: "Students can watch online lessons, use dictionaries on their phones and practise English with apps." },
+          { w: "Save lives", uz: "Hayotni saqlab qolmoq", emoji: "🚑", ex: "In medicine, technology saves lives." },
+          { w: "Illnesses", uz: "Kasalliklar", emoji: "🤒", ex: "Doctors use modern machines to find illnesses early." },
+          { w: "Precise", uz: "Aniq", emoji: "🎯", ex: "Some operations are now done with the help of robots, which are very precise." },
+          { w: "Housework", uz: "Uy ishlari", emoji: "🧺", ex: "Washing machines and dishwashers save us hours of housework every week, and maps on our phones help us find our way in a new city." },
+          { w: "Disadvantages", uz: "Kamchiliklar", emoji: "👎", ex: "But technology has some disadvantages." },
+          { w: "Wisely", uz: "Oqilona", emoji: "🦉", ex: "The key is to use technology wisely." }
+        ],
+        questions: [
+          { type: "tfng", q: "Fifty years ago, a letter to another country took weeks.", a: ["True"], line: 4 },
+          { type: "tfng", q: "Everyone who works from home is happy about it.", a: ["False"], line: 19 },
+          { type: "tfng", q: "AI programs never make mistakes.", a: ["False"], line: 33 },
+          { type: "tfng", q: "Robot vacuum cleaners are the most popular smart home devices.", a: ["Not given"], line: 26 },
+          { type: "tfng", q: "Phones can read text aloud for people who cannot see well.", a: ["True"], line: 35 },
+          { type: "gap", q: "Doctors use modern machines to find _____ early.", a: ["illnesses"], line: 11 },
+          { type: "gap", q: "In some supermarkets, customers scan their products and pay with their _____.", a: ["phones"], line: 24 },
+          { type: "gap", q: "AI programs can translate languages, answer questions and even create _____.", a: ["pictures"], line: 29 },
+          { type: "gap", q: "Special apps can turn speech into _____ for people who cannot hear.", a: ["text"], line: 35 },
+          { type: "gap", q: "Some people worry about their _____ because smart devices collect information.", a: ["privacy"], line: 27 },
+          { type: "open", q: "Why do people who work from home save time and money?", keys: ["travel"], line: 19 },
+          { type: "open", q: "Why have many small shops closed?", keys: ["compete","online"], line: 23 },
+          { type: "open", q: "Why do teachers worry about AI?", keys: ["copy"], line: 31 },
+          { type: "open", q: "Why should we always check the information AI gives us?", keys: ["mistake"], line: 33 },
+          { type: "open", q: "What is the key to using technology?", keys: ["wisely"], line: 39 }
+        ],
+        retell: "Retell the text in your own words. Talk about how technology helps us and its disadvantages."
       },
       writing: {
         topic: 'My free time',
@@ -2385,8 +2415,102 @@ var TA_SKILLS = {
         }
       }
     },
-    { id: 'e9', no: 19, stage: 'Elementary', theme: 'Travel', emoji: '🚆' },
-    { id: 'e10', no: 20, stage: 'Elementary', theme: 'Weather & holidays', emoji: '☀️' }
+    { id: 'e9', no: 19, stage: 'Elementary', theme: 'Travel', emoji: '🚆',
+      reading: {
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "The Story Behind a Famous Movie",
+        text: "In 1912, the Titanic was the biggest ship in the world. People said it could never sink. But on its first journey, from England to New York, it hit an iceberg in the Atlantic Ocean. More than 1,500 people died.\n\n" +
+          "The real story of the Titanic is full of sad facts. The ship had about 2,200 people on board, but there were lifeboats for only about half of them. Many passengers did not believe the ship was in danger, so some of the first lifeboats left the ship half empty. The water was so cold that most people could survive in it for only a few minutes. About 700 people were rescued by another ship, the Carpathia, which arrived a few hours later.\n\n" +
+          "Eighty-five years later, the director James Cameron made a film about this tragedy. He was interested in the ship for many years. Before filming, he travelled to the bottom of the ocean in a small submarine and saw the real Titanic. He went down twelve times!\n\n" +
+          "Making the film was not easy. The team built a huge copy of the ship in Mexico, almost as long as the real one. They also used a giant water tank to film the scenes when the ship sinks. The actors spent many hours in cold water.\n\n" +
+          "The actors also had to work hard. Leonardo DiCaprio played Jack, a poor young artist, and Kate Winslet played Rose, a rich young woman who is unhappy with her life. Many scenes were filmed in very cold water, and Kate Winslet later said that it was one of the hardest jobs of her life.\n\n" +
+          "Cameron wanted every detail to be correct. The team studied old photos and plans of the ship, and they made exact copies of the plates, chairs, carpets and lamps. People who saw the film said it felt like travelling back in time.\n\n" +
+          "Filming took much longer than planned. The team worked for more than six months, often at night, and the cost grew and grew. The studio was worried, and some newspapers wrote that the film would be a disaster. Cameron did not give up. He even agreed not to take his own salary to help pay for the film.\n\n" +
+          "The music was also very important. The composer James Horner wrote the music for the film, and the song \"My Heart Will Go On\", sung by Céline Dion, became a huge hit all over the world. At first, Cameron did not want a song at the end of the film, but when he heard it, he changed his mind.\n\n" +
+          "The film was very expensive, and many people thought it would fail. But when it came out in 1997, millions of people went to cinemas to see the love story of Jack and Rose. The film won eleven Oscars and became one of the most successful films in history.\n\n" +
+          "Today, the real Titanic is still at the bottom of the Atlantic Ocean, almost four kilometres under the water. Scientists say that tiny living things are slowly eating the metal, and in a few decades, there may be nothing left of the ship. But thanks to the film, its story will not be forgotten.\n\n" +
+          "Many visitors still go to the Titanic museum in Belfast, the city where the ship was built. It stands next to the place where workers built the Titanic more than a hundred years ago.",
+        words: [
+          { w: "Sink", uz: "Cho'kmoq", emoji: "🌊", ex: "People said it could never sink." },
+          { w: "Iceberg", uz: "Aysberg", emoji: "🧊", ex: "But on its first journey, from England to New York, it hit an iceberg in the Atlantic Ocean." },
+          { w: "Director", uz: "Rejissyor", emoji: "🎬", ex: "Eighty-five years later, the director James Cameron made a film about this tragedy." },
+          { w: "Tragedy", uz: "Fojia", emoji: "😢", ex: "Eighty-five years later, the director James Cameron made a film about this tragedy." },
+          { w: "Bottom", uz: "Tub (ost)", emoji: "⬇️", ex: "Before filming, he travelled to the bottom of the ocean in a small submarine and saw the real Titanic." },
+          { w: "Submarine", uz: "Suv osti kemasi", emoji: "🚢", ex: "Before filming, he travelled to the bottom of the ocean in a small submarine and saw the real Titanic." },
+          { w: "Filming", uz: "Suratga olish", emoji: "🎥", ex: "Eighty-five years later, the director James Cameron made a film about this tragedy." },
+          { w: "Huge", uz: "Ulkan", emoji: "🐘", ex: "The team built a huge copy of the ship in Mexico, almost as long as the real one." },
+          { w: "Fail", uz: "Muvaffaqiyatsizlikka uchramoq", emoji: "❌", ex: "The film was very expensive, and many people thought it would fail." },
+          { w: "Successful", uz: "Muvaffaqiyatli", emoji: "🏆", ex: "The film won eleven Oscars and became one of the most successful films in history." }
+        ],
+        questions: [
+          { type: "tfng", q: "The Titanic hit an iceberg on its first journey.", a: ["True"], line: 2 },
+          { type: "tfng", q: "James Cameron saw the real Titanic only once.", a: ["False"], line: 12 },
+          { type: "tfng", q: "At first, Cameron wanted a song at the end of the film.", a: ["False"], line: 30 },
+          { type: "tfng", q: "Leonardo DiCaprio could swim well before filming started.", a: ["Not given"], line: 18 },
+          { type: "tfng", q: "Cameron agreed not to take his own salary.", a: ["True"], line: 27 },
+          { type: "gap", q: "The Titanic hit an _____ in the Atlantic Ocean.", a: ["iceberg"], line: 2 },
+          { type: "gap", q: "The team built a huge copy of the ship in _____.", a: ["Mexico"], line: 14 },
+          { type: "gap", q: "The music for the film was written by James _____.", a: ["Horner"], line: 29 },
+          { type: "gap", q: "The real Titanic lies almost four _____ under the water.", a: ["kilometres","kilometers","km"], line: 34 },
+          { type: "gap", q: "Tiny living things are slowly eating the _____ of the ship.", a: ["metal"], line: 35 },
+          { type: "open", q: "Why did many people die when the Titanic sank?", keys: ["lifeboat","cold","half"], line: 5 },
+          { type: "open", q: "Why did the team study old photos and plans of the ship?", keys: ["detail","correct","cop"], line: 20 },
+          { type: "open", q: "Who sang \"My Heart Will Go On\"?", keys: ["céline","celine","dion"], line: 29 },
+          { type: "open", q: "Why were the studio and some newspapers worried?", keys: ["cost","expensive","longer","money"], line: 24 },
+          { type: "open", q: "What may happen to the real Titanic in a few decades?", keys: ["nothing","disappear"], line: 35 }
+        ],
+        retell: "Retell the text in your own words. Talk about the real ship, how the film was made and what happened when it came out."
+      }
+    },
+    { id: 'e10', no: 20, stage: 'Elementary', theme: 'Weather & holidays', emoji: '☀️',
+      reading: {
+        // the Reading Journey (teacher, 2026-11-09) — made by tools/build-readings.js from docs/reading-journey.json
+        title: "Four Seasons of the Year",
+        text: "Why do we have seasons? Many people think it is because the Earth is closer to the Sun in summer. In fact, the reason is different. The Earth is tilted, so during the year, different parts of the planet get more or less sunlight.\n\n" +
+          "In spring, the days get longer and warmer. Trees grow new leaves, flowers appear, and many birds return from warmer countries. Farmers start planting their crops.\n\n" +
+          "Summer is the hottest season. The sun rises early and sets late, so we have long evenings. Schools close for the holidays, and many families go to the beach or the mountains.\n\n" +
+          "In autumn, the weather becomes cooler, and leaves turn yellow, orange and red before they fall. Farmers harvest fruit and vegetables. Some animals, like squirrels, collect food for the winter.\n\n" +
+          "Winter is the coldest season. In many places, it snows, and lakes freeze. Some animals, like bears, sleep for most of the winter.\n\n" +
+          "Seasons are not the same everywhere. Near the equator, in countries like Indonesia or Kenya, it is warm all year, and there is no real winter. Instead, many of these places have two seasons: a dry season and a rainy season. During the rainy season, heavy rain falls almost every afternoon, and rivers can flood.\n\n" +
+          "In the far north and the far south of the planet, the seasons are extreme. In the north of Norway, the sun does not set for about two months in summer. People call this the midnight sun. In winter, the opposite happens, and the sun does not rise for several weeks. People there use bright lamps at home to feel more awake and cheerful.\n\n" +
+          "Animals and plants are ready for the seasons too. Many trees lose their leaves in autumn to save water during the cold months. Some birds fly thousands of kilometres to warmer countries before winter, and they find their way using the sun and the stars. Other animals, like the Arctic fox, change the colour of their fur: it is brown in summer and white in winter, so they can hide in the snow.\n\n" +
+          "Seasons affect our bodies and moods too. Many people feel more energetic in spring and summer, when the days are long and sunny. In winter, some people feel tired and sad because there is less light. Doctors call this the 'winter blues'. Spending time outside during the day and staying active can help.\n\n" +
+          "Seasons also shape our traditions. In Japan, people celebrate spring with hanami, when they have picnics under the cherry trees. In many countries, autumn is the time for harvest festivals, when people thank nature for the food. And in cold countries, winter is the season for skiing, ice skating and cosy evenings at home.\n\n" +
+          "Interestingly, when it is winter in the north of the planet, it is summer in the south. In Australia, people often celebrate the New Year on the beach!\n\n" +
+          "Our planet's climate is changing, and this is affecting the seasons. In many places, spring now starts earlier than it did fifty years ago, and summers are becoming hotter. Some winters have less snow, which is a problem for animals, plants and even for ski resorts. Scientists say we must protect the environment so that future generations can enjoy all four seasons.\n\n" +
+          "Which season is your favourite? Some people love the warm days of summer, while others prefer the colours of autumn or the snowy landscapes of winter. Every season has its own beauty, and each one brings something special.",
+        words: [
+          { w: "Seasons", uz: "Fasllar", emoji: "🍂", ex: "Why do we have seasons?" },
+          { w: "In fact", uz: "Aslida", emoji: "💡", ex: "In fact, the reason is different." },
+          { w: "Sunlight", uz: "Quyosh nuri", emoji: "☀️", ex: "The Earth is tilted, so during the year, different parts of the planet get more or less sunlight." },
+          { w: "Appear", uz: "Paydo bo'lmoq", emoji: "🌷", ex: "Trees grow new leaves, flowers appear, and many birds return from warmer countries." },
+          { w: "Return", uz: "Qaytmoq", emoji: "🐦", ex: "Trees grow new leaves, flowers appear, and many birds return from warmer countries." },
+          { w: "Crops", uz: "Ekinlar", emoji: "🌾", ex: "Farmers start planting their crops." },
+          { w: "Rise", uz: "Chiqmoq (quyosh)", emoji: "🌄", ex: "The sun rises early and sets late, so we have long evenings." },
+          { w: "Harvest", uz: "Hosil yig'moq", emoji: "🧺", ex: "Farmers harvest fruit and vegetables." },
+          { w: "Freeze", uz: "Muzlamoq", emoji: "❄️", ex: "In many places, it snows, and lakes freeze." },
+          { w: "Celebrate", uz: "Nishonlamoq", emoji: "🎉", ex: "In Japan, people celebrate spring with hanami, when they have picnics under the cherry trees." }
+        ],
+        questions: [
+          { type: "tfng", q: "We have seasons because the Earth is closer to the Sun in summer.", a: ["False"], line: 2 },
+          { type: "tfng", q: "Near the equator, many places have a dry season and a rainy season.", a: ["True"], line: 18 },
+          { type: "tfng", q: "In the north of Norway, the sun does not set for about two months in summer.", a: ["True"], line: 21 },
+          { type: "tfng", q: "Hanami is the most popular festival in Japan.", a: ["Not given"], line: 35 },
+          { type: "tfng", q: "Spring now starts later than it did fifty years ago.", a: ["False"], line: 41 },
+          { type: "gap", q: "Many trees lose their leaves in autumn to save _____.", a: ["water"], line: 26 },
+          { type: "gap", q: "People in the north of Norway use bright _____ at home in winter.", a: ["lamps"], line: 24 },
+          { type: "gap", q: "Doctors call the sad, tired feeling some people have in winter the 'winter _____'.", a: ["blues"], line: 32 },
+          { type: "gap", q: "In Japan, people have picnics under the _____ trees in spring.", a: ["cherry"], line: 35 },
+          { type: "gap", q: "The Arctic fox's fur is _____ in winter.", a: ["white"], line: 28 },
+          { type: "open", q: "Why do we really have seasons?", keys: ["tilt","sunlight"], line: 3 },
+          { type: "open", q: "What is the midnight sun?", keys: ["not set","doesn't set","does not set"], line: 21 },
+          { type: "open", q: "How do some birds find their way to warmer countries?", keys: ["sun","star"], line: 27 },
+          { type: "open", q: "Why does the Arctic fox change the colour of its fur?", keys: ["hide"], line: 28 },
+          { type: "open", q: "What do scientists say we must do?", keys: ["protect","environment"], line: 43 }
+        ],
+        retell: "Retell the text in your own words. Describe each season and explain why we have seasons."
+      }
+    }
   ]
 };
 

@@ -101,3 +101,25 @@ function skNameFits(typed, listed) {
   var a = words(typed), b = words(listed);
   return a.some(function (x) { return b.some(function (y) { return y === x || y.indexOf(x) === 0 || x.indexOf(y) === 0; }); });
 }
+
+/* Reading Journey's WH-questions (teacher, 2026-11-09): an answer is right when it has one of the question's main words.
+   Case, accents (café = cafe), punctuation and thousands commas (1,500 = 1500) don't matter. A one-word key matches a word
+   that starts with it ("dream" → "dreams", "explor" → "exploring"); keys of 1–2 letters or digits must be the whole word
+   ("2" is not "20"); a key of several words is looked for as a phrase ("enough time"). */
+function skOpenRight(answer, keys) {
+  var clean = function (v) {
+    var t = String(v == null ? '' : v).toLowerCase();
+    try { t = t.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); } catch (e) { /* old browser */ }
+    return t.replace(/[’‘`]/g, "'").replace(/(\d),(?=\d{3}\b)/g, '$1').replace(/[^a-z0-9' ]+/g, ' ').replace(/\s+/g, ' ').trim();
+  };
+  var given = clean(answer);
+  if (!given) return false;
+  var words = given.split(' ');
+  return (keys || []).some(function (k) {
+    var key = clean(k);
+    if (!key) return false;
+    if (key.indexOf(' ') !== -1) return (' ' + given + ' ').indexOf(' ' + key) !== -1;
+    if (key.length <= 2 || /^\d+$/.test(key)) return words.indexOf(key) !== -1;
+    return words.some(function (w) { return w.indexOf(key) === 0; });
+  });
+}

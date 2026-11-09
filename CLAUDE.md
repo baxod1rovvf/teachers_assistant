@@ -549,8 +549,7 @@ real students' names or results into the repository (it is public).
   writing ("An email to a new classmate", 50–70 words, 20 min) + speaking ("A person you met recently", 45 s); **`b1…b10` complete (2026-11-05) — so Steps 1–18 are complete, 19–20 (`e9`, `e10`) "Coming soon"**: very easy listenings
   (~2 min with the writing pauses, 10 one-word/number gaps — names, ages, numbers, colours, prices, days, o'clock times, phone
   numbers —, two spelled names each, `audio/skills/beg-<n>-listening.mp3`, entries 9–18 of `elementary-scripts.json`, so
-  `… audio/skills 9` remakes Step 1, `… 14` Step 6), readings of ~92/108/132/144/156/174/186/200/224/240 words (doubled 2026-11-09 by adding a second half after the old text, so every question's `line` stays right; Steps 11–18 doubled the same way, ~340–550 words) with 10 questions (5 `tf` + 5
-  `choose`), writing 20–50 words / 10–15 min, Part 2 30–45 s (b1 keeps About me (25–35 words, 12 min, 3 simple points) + Talk about yourself (30 s); b6 Days & times, b7 Food,
+  `… audio/skills 9` remakes Step 1, `… 14` Step 6), readings: see "Reading Journey" below (the old beginner readings are gone), writing 20–50 words / 10–15 min, Part 2 30–45 s (b1 keeps About me (25–35 words, 12 min, 3 simple points) + Talk about yourself (30 s); b6 Days & times, b7 Food,
   b8 Animals & pets, b9 My room, b10 My friend). A step with no part = "Coming soon". Use the ids, never the number, in links/keys/results. `TA_BETTER_WORDS` for the writing tips. **A dot is done** (`skDotState`) when at least half
   of the group's students (Students list, by ID) have a result for that step + skill (a group with no students: one result); Speaking
   (sends nothing) when the teacher copied its link for the group (`ta_skills_links["<groupId>|speaking|<stepId>"] = { sentAt }`, no My
@@ -603,9 +602,17 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   teacher's list…") and the typed name must fit that student (`skNameFits`: one word of 3+ letters, or its start — "Mohlaroy" fits
   "Yuldasheva Mohlaroy"; else "This ID belongs to another student…"); the result carries the listed name. No list (links copied
   before 2026-11-09 until Copy link is pressed again; a group with no students) or no internet → let in. `tests/course-fairness.spec.js`.
-- **Reading questions about the added half + Speaking Journey (teacher, 2026-11-09)**: every reading got questions about its
-  second half (Steps 1–10: +2 tf +2 choose = 14; Steps 11–18: +2 tfng +1 gap +2 choose = 20), each placed after the last of its
-  kind, `line` = its sentence in the second half. **Speaking** follows the teacher's "Speaking Journey" (20 topics: 1 Daily Routine,
+- **Reading Journey (teacher, 2026-11-09 — replaces all earlier readings)**: 20 readings, source `docs/reading-journey.json` (what the
+  teacher approved; `docs/reading-journey.md` is the readable copy with the answer key), put into `js/skills-data.js` by
+  `node tools/build-readings.js` (edit the JSON, run the tool — never edit the readings in skills-data.js by hand). Texts grow
+  from ~185 words (Step 1, the teacher's "A Day in My Life") to ~600 (Step 20); Steps 1–10: 5 `tf` + 5 `open` (odd steps) or
+  5 `tf` + 5 `gap` (even); Steps 11–20: 5 `tfng` (one Not given) + 5 `gap` + 5 `open` = 15. **`open`** = a WH-question with a text
+  box, right when the answer has one of its main words (`keys`; `skOpenRight` in skill-bands.js: case/accents/commas in numbers
+  don't matter, a key ≥ 3 letters matches the start of a word, short keys/digits the whole word, several words = a phrase).
+  Words: the teacher's 10 with `uz` + an emoji + `ex` (the text's sentence, found by the tool). After Submit: the words, Analyze,
+  then a **Retelling** reminder card (`retell` + "Try to use at least 5 vocabulary items from the text." — nothing typed or sent).
+  Steps 19–20 have only this Reading so far. `tests/reading-journey.spec.js`.
+- **Speaking Journey (teacher, 2026-11-09)**: **Speaking** follows the teacher's "Speaking Journey" (20 topics: 1 Daily Routine,
   2 Family, 3 Home & Living, 4 Food & Meals, 5 Free Time, 6 Friends, 7 School & Education, 8 Hobbies & Sports, 9 Shopping, 10 Your City,
   11 Holidays, 12 Future Plans, 13 Jobs & Careers, 14 Clothes & Fashion, 15 Transport, 16 Animals & Pets, 17 Health & Lifestyle,
   18 Technology, 19 Movies & Music, 20 Weather & Seasons): `speaking.topic` + `words[{w, uz, emoji, ex}]` — **`uz` = the teacher's

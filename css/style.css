@@ -3059,6 +3059,10 @@ button.sk-dot:hover { transform: scale(1.12); }
 .sk-words li { position: relative; padding-right: 52px; }
 .sk-wemoji { position: absolute; top: 10px; right: 12px; font-size: 1.6rem; line-height: 1; }
 
+/* Reading Journey (2026-11-09): WH-answer boxes are full width; the retelling reminder at the end */
+.sk-qbody .sk-gap.sk-open { display: block; width: 100%; max-width: 100%; min-width: 0; margin-top: 8px; }
+.sk-retell-goal { margin-top: 8px; color: #7B4DFF; }
+
 /* The students' course page (skill.html) keeps its cream / plum colours, without the confetti dots (teacher, 2026-11-05) */
 body.sk-body { --surface-page: #1B1535; background: var(--surface-page); }   /* plain, no confetti dots (teacher, 2026-11-05) */
 body.sk-body.light-theme { --surface-page: #FFF5E1; }

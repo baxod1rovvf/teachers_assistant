@@ -309,6 +309,9 @@ function questionHtml(q, n, kind) {
     body = `<div class="sk-qtext">${esc(q.q)}</div><div class="sk-opts" role="group" aria-label="Answer ${n}">` +
       opts.map((o, i) => `<button type="button" class="sk-opt" aria-pressed="false" data-val="${esc(o)}">${kind === 'choose' ? `<b>${'abc'[i]}</b> ` : ''}${esc(o)}</button>`).join('') +
       '</div>';
+  } else if (kind === 'open') {
+    // a WH-question: the student writes a short answer (Reading Journey, 2026-11-09)
+    body = `<div class="sk-qtext">${esc(q.q)}</div><input type="text" class="sk-gap sk-open" data-n="${n}" autocomplete="off" maxlength="200" aria-label="Answer ${n}" placeholder="Write your answer">`;
   } else {
     body = `<div class="sk-qtext">${gapHtml(q, n)}</div>`;
   }
@@ -318,7 +321,8 @@ const SECTION_TITLES = {
   tfng: 'True, False or Not given?',
   tf: 'True or False?',
   gap: 'Complete the sentences with a word from the text.',
-  choose: 'Choose a, b or c.'
+  choose: 'Choose a, b or c.',
+  open: 'Answer the questions.'
 };
 function questionsHtml(questions, isReading) {
   let html = '', kind = null, n = 0;
@@ -341,7 +345,10 @@ function readingTextHtml(text) {
   let html = '<p>', i = 0;
   bits.forEach((b, k) => {
     if (k % 2) { html += /\n\s*\n/.test(b) ? '</p><p>' : ' '; return; }
-    html += `<span class="sk-sent" data-line="${i++}">${esc(b)}</span>`;
+    // a sentence that ends in a quote mark and then a new paragraph ('… we thought."' + blank line) still breaks the paragraph:
+    // the sentence's two pieces keep the same line number
+    const line = i++;
+    html += b.split(/\n\s*\n/).map(part => `<span class="sk-sent" data-line="${line}">${esc(part)}</span>`).join('</p><p>');
   });
   return html + '</p>';
 }
@@ -386,7 +393,7 @@ function showExercise(level) {
 }
 
 function givenFor(li) {
-  if (li.dataset.kind === 'gap') return li.querySelector('.sk-gap').value;
+  if (li.dataset.kind === 'gap' || li.dataset.kind === 'open') return li.querySelector('.sk-gap').value;
   const on = li.querySelector('.sk-opt.on');
   return on ? on.dataset.val : '';
 }
@@ -396,13 +403,15 @@ function submit(level, content, info) {
   const answers = content.questions.map((q, i) => {
     const li = items[i];
     const given = givenFor(li).trim();
-    const right = skMark(given, q.a);
+    const right = q.type === 'open' ? skOpenRight(given, q.keys) : skMark(given, q.a);
     li.classList.add(right ? 'right' : 'wrong');
     li.querySelectorAll('input, .sk-opt').forEach(x => { x.disabled = true; });
-    if (li.dataset.kind !== 'gap') li.querySelectorAll('.sk-opt').forEach(b => { if (b.dataset.val === q.a[0]) b.classList.add('is-answer'); });
+    if (li.dataset.kind !== 'gap' && li.dataset.kind !== 'open') li.querySelectorAll('.sk-opt').forEach(b => { if (b.dataset.val === q.a[0]) b.classList.add('is-answer'); });
     const fix = li.querySelector('.sk-fix');
     fix.hidden = false;
-    fix.innerHTML = right ? '✅ Right!' : `❌ ${given ? 'Not quite.' : 'No answer.'} The answer: <b>${esc(q.a[0])}</b>`;
+    fix.innerHTML = right ? '✅ Right!' : q.type === 'open'
+      ? `❌ ${given ? 'Not quite.' : 'No answer.'} A good answer has: <b>${esc((q.keys || [])[0] || '')}</b> — look at the text again.`
+      : `❌ ${given ? 'Not quite.' : 'No answer.'} The answer: <b>${esc(q.a[0])}</b>`;
     return { q: q.q, given, right };
   });
   const correct = answers.filter(a => a.right).length;
@@ -426,10 +435,12 @@ function submit(level, content, info) {
   const words = content.words || [];
   const isReading = SK.skill === 'reading';
   $('#skAfter').innerHTML = `<section class="sk-card sk-words-card"><h2>💡 ${words.length} useful words</h2>
-      <ul class="sk-words">${words.map(w => `<li>${w.emoji ? `<span class="sk-wemoji" aria-hidden="true">${esc(w.emoji)}</span>` : ''}<b>${esc(w.w)}</b><span class="sk-m">${esc(w.m)}</span><i>${esc(w.ex)}</i></li>`).join('')}</ul>
+      <ul class="sk-words">${words.map(w => `<li>${w.emoji ? `<span class="sk-wemoji" aria-hidden="true">${esc(w.emoji)}</span>` : ''}<b>${esc(w.w)}</b>${w.uz ? `<span class="sk-m sk-uz" lang="uz" translate="no">${esc(w.uz)}</span>` : `<span class="sk-m">${esc(w.m)}</span>`}<i>${esc(w.ex)}</i></li>`).join('')}</ul>
       <div class="sk-actions"><button type="button" class="sk-btn sk-btn-main" id="skAnalyze">Analyze ></button></div>
     </section>
-    <div id="skAnalysis"></div>`;
+    <div id="skAnalysis"></div>
+    ${isReading && content.retell ? `<section class="sk-card sk-retell-card"><h2>🗣️ Retelling</h2>
+      <p>${esc(content.retell)}</p><p class="sk-retell-goal"><b>Try to use at least 5 vocabulary items from the text.</b></p></section>` : ''}`;
   $('#skAnalyze').addEventListener('click', () => analyze(content, isReading));
   sendNow();
 }

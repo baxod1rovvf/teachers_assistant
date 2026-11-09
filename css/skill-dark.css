@@ -99,6 +99,7 @@
 #skBody.sk-studio .sk-well { font-family: 'Plus Jakarta Sans', sans-serif !important; }
 @media (max-width: 560px) {
 }
+#skBody.sk-studio .sk-retell-goal { color: #818CF8 !important; }
 
 /* the page, the start card (the student theme's .ta-login-* look), inputs and the Start button */
 #skBody.sk-studio { background: #0E1017 !important; color: #F3F4F8 !important; color-scheme: dark; }
