@@ -1754,16 +1754,67 @@ function skWritingTextHtml(r) {
   });
   return html + esc(text.slice(pos));
 }
+/* The Writing Journey's AI feedback (2026-11-09): the one the page got at Submit (r.ai), else one the teacher asked for later
+   with "🤖 Check with AI" (ta_skills_ai, keyed like the marks; synced, in the backup). */
+const LS_SKILLS_AI = 'ta_skills_ai';
+function skAiStore() { try { return JSON.parse(localStorage.getItem(LS_SKILLS_AI) || '{}') || {}; } catch (e) { return {}; } }
+function skAiFor(r) { return (r && r.ai && r.ai.scores) ? r.ai : (r ? skAiStore()[skMarkKey(r)] || null : null); }
+function skAiFeedbackHtml(r, ai) {
+  const esc = v => escapeForHtml(String(v == null ? '' : v)), s = ai.scores || {};
+  const asked = r.asked && (r.asked.used || r.asked.missing) ? r.asked : null;
+  return '<div class="sk-wv-ai">' +
+    '<div class="sk-wv-parts">🤖 Grammar ' + s.grammar + '/3 · Vocabulary ' + s.vocabulary + '/2 · Structure ' + s.structure + '/2 · Task ' + s.task + '/2' +
+      (r.minWords && r.words < r.minWords ? ' · −0.5 (too short)' : '') + '</div>' +
+    (ai.mistakes && ai.mistakes.length ? '<ol class="sk-wv-mistakes">' + ai.mistakes.map(m => '<li><span class="sk-wv-bad">' + esc(m.wrong) + '</span> → <span class="sk-wv-fix">' + esc(m.right) + '</span>' + (m.why ? '<small>' + esc(m.why) + '</small>' : '') + '</li>').join('') + '</ol>' : '<p>No grammar mistakes found.</p>') +
+    (ai.better && ai.better.length ? '<p class="sk-wv-sub">💡 Better words</p><ul class="sk-wv-better">' + ai.better.map(b => '<li><b>' + esc(b.word) + '</b> → ' + esc(b.instead) + (b.why ? ' <small>— ' + esc(b.why) + '</small>' : '') + '</li>').join('') + '</ul>' : '') +
+    (asked ? '<p class="sk-wv-sub">📝 Asked words</p><p class="sk-wv-asked">' + (asked.used || []).map(w => '✅ ' + esc(w)).concat((asked.missing || []).map(w => '❌ ' + esc(w))).join(' · ') + '</p>' : '') +
+    (ai.tips && ai.tips.length ? '<p class="sk-wv-sub">🚀 Tips</p><ol class="sk-wv-tips">' + ai.tips.map(t => '<li>' + esc(t) + '</li>').join('') + '</ol>' : '') +
+  '</div>';
+}
+// "🤖 Check with AI" in a writing's window: for a writing whose AI check didn't run at Submit. The AI's score becomes the
+// teacher's mark (ta_skills_marks), its feedback is kept in ta_skills_ai.
+async function skCheckWritingWithAi(btn) {
+  if (!skWvOpen) return;
+  const r = skWvOpen.r;
+  const url = typeof taAiUrl === 'function' ? taAiUrl() : '';
+  if (!url) { showToast('The AI helper isn\'t connected yet.'); return; }
+  if (btn) { btn.disabled = true; btn.textContent = '🤖 Checking…'; }
+  const words = r.asked ? [].concat(r.asked.used || [], r.asked.missing || []) : [];
+  let data = null, ok = false;
+  try {
+    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ job: 'writing', text: String(r.text || ''), topic: String(r.title || ''), instruction: '', minWords: r.minWords || 0, maxWords: r.maxWords || 0, words }) });
+    data = await res.json().catch(() => null);
+    ok = res.ok && data && data.result && data.result.scores;
+  } catch (e) { ok = false; }
+  if (!ok) {
+    showToast('🤖 The AI check didn\'t run' + (data && data.error ? ' (' + data.error + ')' : '') + '. Try again in a minute.');
+    if (btn) { btn.disabled = false; btn.textContent = '🤖 Check with AI'; }
+    return;
+  }
+  const key = skMarkKey(r), store = skAiStore(), marks = skMarks();
+  store[key] = data.result;
+  marks[key] = skWritingAiBand(data.result.scores, typeof r.words === 'number' ? r.words : 0, r.minWords || 0);
+  try { localStorage.setItem(LS_SKILLS_AI, JSON.stringify(store)); localStorage.setItem(LS_SKILLS_MARKS, JSON.stringify(marks)); } catch (e) { showToast('⚠️ Couldn\'t save — the browser\'s storage is full.'); return; }
+  showToast('✅ Checked with AI: band ' + marks[key] + ' for ' + (r.name || 'the student') + '.', 'ok');
+  skWvOpen.modal.body.innerHTML = skWritingViewHtml(r);
+  if (window.taCourseResultsChanged) window.taCourseResultsChanged();
+}
+window.skCheckWritingWithAi = skCheckWritingWithAi;
 function skWritingViewHtml(r) {
-  const esc = v => escapeForHtml(String(v == null ? '' : v)), list = skWritingMistakes(r);
+  const ai = skAiFor(r);
+  const esc = v => escapeForHtml(String(v == null ? '' : v)), list = ai ? [] : skWritingMistakes(r);
   const mark = skTeacherMark(r), band = skWritingBandFor(r);
   const words = typeof r.words === 'number' ? r.words : String(r.text || '').trim().split(/\s+/).filter(Boolean).length;
   return '<div class="sk-wv">' +
     '<div class="sk-wv-who"><b translate="no">' + esc(r.name || 'Student') + '</b><span>' + esc(r.title || 'Writing') + '</span></div>' +
     '<div class="sk-wv-chips"><span class="dd-chip">📝 ' + words + ' words' + (r.minWords ? ' (' + r.minWords + '–' + (r.maxWords || r.minWords) + ' asked)' : '') + '</span>' +
       '<span class="dd-chip">⏱️ ' + esc(typeof taTimeText === 'function' ? taTimeText(r) : (r.timeDisplay || '—')) + '</span>' +
-      '<span class="dd-chip ' + (list.length ? 'mistakes' : 'ok') + '">' + (r.grammarChecked === false ? '⚠️ Grammar not checked' : list.length + (list.length === 1 ? ' mistake' : ' mistakes')) + '</span></div>' +
-    '<div class="sk-wv-text">' + (String(r.text || '').trim() ? skWritingTextHtml(r) : '<i>(nothing written)</i>') + '</div>' +
+      (ai ? '<span class="dd-chip ' + ((ai.mistakes || []).length ? 'mistakes' : 'ok') + '">🤖 ' + (ai.mistakes || []).length + ((ai.mistakes || []).length === 1 ? ' mistake' : ' mistakes') + '</span>'
+        : '<span class="dd-chip ' + (list.length ? 'mistakes' : 'ok') + '">' + (r.grammarChecked === false ? '⚠️ Grammar not checked' : list.length + (list.length === 1 ? ' mistake' : ' mistakes')) + '</span>') + '</div>' +
+    '<div class="sk-wv-text">' + (String(r.text || '').trim() ? (ai ? escapeForHtml(String(r.text)) : skWritingTextHtml(r)) : '<i>(nothing written)</i>') + '</div>' +
+    (ai ? skAiFeedbackHtml(r, ai) : '') +
+    (!ai && r.aiChecked === false && String(r.text || '').trim() ? '<p class="sk-wv-noai">🤖 The AI check didn\'t run when this was sent. <button type="button" class="mini-btn" onclick="skCheckWritingWithAi(this)">🤖 Check with AI</button></p>' : '') +
     (list.length ? '<ol class="sk-wv-mistakes">' + list.map(m => '<li><span class="sk-wv-bad">' + esc(m.bad || '') + '</span>' +
       (m.fix ? ' → <span class="sk-wv-fix">' + esc(m.fix) + '</span>' : '') + (m.message ? '<small>' + esc(m.message) + '</small>' : '') + '</li>').join('') + '</ol>' : '') +
     '<div class="sk-wv-band"><label for="skWvBand">Band</label>' +

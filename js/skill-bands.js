@@ -101,3 +101,78 @@ function skNameFits(typed, listed) {
   var a = words(typed), b = words(listed);
   return a.some(function (x) { return b.some(function (y) { return y === x || y.indexOf(x) === 0 || x.indexOf(y) === 0; }); });
 }
+
+/* Reading Journey's WH-questions (teacher, 2026-11-09): an answer is right when it has one of the question's main words.
+   Case, accents (café = cafe), punctuation and thousands commas (1,500 = 1500) don't matter. A one-word key matches a word
+   that starts with it ("dream" → "dreams", "explor" → "exploring"); keys of 1–2 letters or digits must be the whole word
+   ("2" is not "20"); a key of several words is looked for as a phrase ("enough time"). */
+function skOpenRight(answer, keys) {
+  var clean = function (v) {
+    var t = String(v == null ? '' : v).toLowerCase();
+    try { t = t.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); } catch (e) { /* old browser */ }
+    return t.replace(/[’‘`]/g, "'").replace(/(\d),(?=\d{3}\b)/g, '$1').replace(/[^a-z0-9' ]+/g, ' ').replace(/\s+/g, ' ').trim();
+  };
+  var given = clean(answer);
+  if (!given) return false;
+  var words = given.split(' ');
+  return (keys || []).some(function (k) {
+    var key = clean(k);
+    if (!key) return false;
+    if (key.indexOf(' ') !== -1) return (' ' + given + ' ').indexOf(' ' + key) !== -1;
+    if (key.length <= 2 || /^\d+$/.test(key)) return words.indexOf(key) !== -1;
+    return words.some(function (w) { return w.indexOf(key) === 0; });
+  });
+}
+
+/* ---------- Writing Journey (teacher, 2026-11-09) ----------
+   skAskedWords(text, words): which asked words the student used — other forms count (use → used/uses/using, try → tried,
+   meet → met, spend → spent, child → children), and a phrase may have up to 3 words inside it ("get along really well
+   with" counts for "get along with"). Returns { used: [w], missing: [w] } in the task's order. */
+var SK_IRREGULAR = { be: ['am', 'is', 'are', 'was', 'were', 'been', 'being'], was: ['was', 'were'], born: ['born'], meet: ['met'], spend: ['spent'],
+  take: ['took', 'taken'], buy: ['bought'], go: ['went', 'gone', 'goes'], have: ['has', 'had', 'having'], make: ['made'], get: ['got', 'gotten'],
+  become: ['became'], wear: ['wore', 'worn'], feed: ['fed'], keep: ['kept'], do: ['did', 'does', 'done'], pay: ['paid'], choose: ['chose', 'chosen'],
+  child: ['children'], come: ['came'], see: ['saw', 'seen'], eat: ['ate', 'eaten'], drink: ['drank'], swim: ['swam'], begin: ['began'], know: ['knew'],
+  think: ['thought'], bring: ['brought'], teach: ['taught'], feel: ['felt'], leave: ['left'], find: ['found'], tell: ['told'], say: ['said'],
+  sleep: ['slept'], win: ['won'], lose: ['lost'], run: ['ran'], write: ['wrote', 'written'], read: ['read'], put: ['put'], cost: ['cost'],
+  hang: ['hung'], share: ['shared'], i: ['i'], me: ['me', 'my'], would: ['would', "i'd"], am: ['am', "i'm"] };
+function skWordForms(w) {
+  var f = [w, w + 's', w + 'es', w + 'ed', w + 'd', w + 'ing', w + "'s", w + 'er', w + 'est', w + 'ly'];
+  if (/[^aeiou]y$/.test(w)) { var b = w.slice(0, -1); f.push(b + 'ies', b + 'ied', b + 'ier', b + 'iest', b + 'ily'); }
+  if (/e$/.test(w)) f.push(w.slice(0, -1) + 'ing', w.slice(0, -1) + 'ed');
+  if (/[^aeiou][aeiou][bdgklmnprt]$/.test(w)) { var d = w + w.slice(-1); f.push(d + 'ed', d + 'ing', d + 'er'); }
+  if (/f$/.test(w)) f.push(w.slice(0, -1) + 'ves');
+  return f.concat(SK_IRREGULAR[w] || []);
+}
+function skAskedWords(text, words) {
+  var clean = function (v) { return String(v == null ? '' : v).toLowerCase().replace(/[’‘`]/g, "'").replace(/[^a-z0-9' -]+/g, ' ').replace(/\s+/g, ' ').trim(); };
+  var toks = clean(text).replace(/-/g, ' ').split(' ').filter(Boolean);
+  var used = [], missing = [];
+  (words || []).forEach(function (item) {
+    var w = typeof item === 'string' ? item : item.w;
+    var parts = clean(w).replace(/-/g, ' ').split(' ').filter(Boolean);
+    var forms = parts.map(skWordForms);
+    var found = false;
+    for (var i = 0; i < toks.length && !found; i++) {
+      if (forms[0].indexOf(toks[i]) === -1) continue;
+      var at = i, ok = true;
+      for (var k = 1; k < parts.length; k++) {
+        var hit = -1;
+        for (var j = at + 1; j <= Math.min(toks.length - 1, at + 4); j++) if (forms[k].indexOf(toks[j]) !== -1) { hit = j; break; }
+        if (hit < 0) { ok = false; break; }
+        at = hit;
+      }
+      if (ok) found = true;
+    }
+    (found ? used : missing).push(w);
+  });
+  return { used: used, missing: missing };
+}
+/* The final score of an AI-checked writing (the teacher's 9-point system): grammar 0–3 + vocabulary 0–2 + structure 0–2 +
+   task 0–2, then −0.5 when the writing is shorter than the minimum (never for writing more); nearest half band, 1–9. */
+function skWritingAiBand(scores, words, minWords) {
+  var part = function (v, max) { v = Number(v); return isFinite(v) ? Math.max(0, Math.min(max, v)) : 0; };
+  var s = scores || {};
+  var total = part(s.grammar, 3) + part(s.vocabulary, 2) + part(s.structure, 2) + part(s.task, 2);
+  if (minWords > 0 && words < minWords) total -= 0.5;
+  return Math.max(1, Math.min(9, Math.round(total * 2) / 2));
+}

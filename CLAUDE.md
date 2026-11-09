@@ -549,8 +549,7 @@ real students' names or results into the repository (it is public).
   writing ("An email to a new classmate", 50–70 words, 20 min) + speaking ("A person you met recently", 45 s); **`b1…b10` complete (2026-11-05) — so Steps 1–18 are complete, 19–20 (`e9`, `e10`) "Coming soon"**: very easy listenings
   (~2 min with the writing pauses, 10 one-word/number gaps — names, ages, numbers, colours, prices, days, o'clock times, phone
   numbers —, two spelled names each, `audio/skills/beg-<n>-listening.mp3`, entries 9–18 of `elementary-scripts.json`, so
-  `… audio/skills 9` remakes Step 1, `… 14` Step 6), readings of ~92/108/132/144/156/174/186/200/224/240 words (doubled 2026-11-09 by adding a second half after the old text, so every question's `line` stays right; Steps 11–18 doubled the same way, ~340–550 words) with 10 questions (5 `tf` + 5
-  `choose`), writing 20–50 words / 10–15 min, Part 2 30–45 s (b1 keeps About me (25–35 words, 12 min, 3 simple points) + Talk about yourself (30 s); b6 Days & times, b7 Food,
+  `… audio/skills 9` remakes Step 1, `… 14` Step 6), readings: see "Reading Journey" below (the old beginner readings are gone), writing 20–50 words / 10–15 min, Part 2 30–45 s (b1 keeps About me (25–35 words, 12 min, 3 simple points) + Talk about yourself (30 s); b6 Days & times, b7 Food,
   b8 Animals & pets, b9 My room, b10 My friend). A step with no part = "Coming soon". Use the ids, never the number, in links/keys/results. `TA_BETTER_WORDS` for the writing tips. **A dot is done** (`skDotState`) when at least half
   of the group's students (Students list, by ID) have a result for that step + skill (a group with no students: one result); Speaking
   (sends nothing) when the teacher copied its link for the group (`ta_skills_links["<groupId>|speaking|<stepId>"] = { sentAt }`, no My
@@ -603,6 +602,35 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   teacher's list…") and the typed name must fit that student (`skNameFits`: one word of 3+ letters, or its start — "Mohlaroy" fits
   "Yuldasheva Mohlaroy"; else "This ID belongs to another student…"); the result carries the listed name. No list (links copied
   before 2026-11-09 until Copy link is pressed again; a group with no students) or no internet → let in. `tests/course-fairness.spec.js`.
+- **Reading Journey (teacher, 2026-11-09 — replaces all earlier readings)**: 20 readings, source `docs/reading-journey.json` (what the
+  teacher approved; `docs/reading-journey.md` is the readable copy with the answer key), put into `js/skills-data.js` by
+  `node tools/build-readings.js` (edit the JSON, run the tool — never edit the readings in skills-data.js by hand). Texts grow
+  from ~185 words (Step 1, the teacher's "A Day in My Life") to ~600 (Step 20); Steps 1–10: 5 `tf` + 5 `open` (odd steps) or
+  5 `tf` + 5 `gap` (even); Steps 11–20: 5 `tfng` (one Not given) + 5 `gap` + 5 `open` = 15. **`open`** = a WH-question with a text
+  box, right when the answer has one of its main words (`keys`; `skOpenRight` in skill-bands.js: case/accents/commas in numbers
+  don't matter, a key ≥ 3 letters matches the start of a word, short keys/digits the whole word, several words = a phrase).
+  Words: the teacher's 10 with `uz` + an emoji + `ex` (the text's sentence, found by the tool). After Submit: the words, Analyze,
+  then a **Retelling** reminder card (`retell` + "Try to use at least 5 vocabulary items from the text." — nothing typed or sent).
+  Steps 19–20 have only this Reading so far. `tests/reading-journey.spec.js`.
+- **Writing Journey (teacher, 2026-11-09 — replaces all earlier writings)**: 20 tasks, source `docs/writing-journey.json`
+  (`docs/writing-journey.md` readable; spec `docs/superpowers/specs/2026-11-09-writing-journey-design.md`), put into
+  `js/skills-data.js` by `node tools/build-writings.js` (never edit them by hand): `writing { topic, instruction, words[{w, uz}] (8–10
+  asked words — the student must use all; ticked live, `skAskedWords` in skill-bands.js accepts other forms), minWords, maxWords, minutes }`
+  (1 My Daily Routine 80–100/15 … 20 My Favourite Season 120–150/25). Steps 19–20 now have Reading + Writing. **AI check after Submit**:
+  the text goes to the helper (`tools/ai-worker.js`, job `writing`, 40/min per IP) → JSON `scores {grammar 0–3, vocabulary 0–2, structure
+  0–2, task 0–2}`, `mistakes[{wrong,right,why}]`, `better[{word,instead,why}]`, `tips[3]`; Loom's band = `skWritingAiBand` (sum, −0.5 only
+  when under the minimum, 1–9, nearest 0.5). Feedback order: score /9 · word count · grammar · better words · asked words · 3 tips.
+  Result gets `aiChecked`, `ai`, `asked`. **AI busy/offline** → the old check (LanguageTool + `skWritingBand`), `aiChecked: false`; the
+  teacher's writing window then has "🤖 Check with AI" (`skCheckWritingWithAi` in common.js) → the AI's band becomes the teacher's mark
+  (`ta_skills_marks`) and its feedback is kept in `ta_skills_ai` (synced, in the backup). **After changing the worker, the teacher must
+  paste it into Cloudflare again** (`/status` shows its version). `tests/writing-journey.spec.js`.
+- **Speaking Journey (teacher, 2026-11-09)**: **Speaking** follows the teacher's "Speaking Journey" (20 topics: 1 Daily Routine,
+  2 Family, 3 Home & Living, 4 Food & Meals, 5 Free Time, 6 Friends, 7 School & Education, 8 Hobbies & Sports, 9 Shopping, 10 Your City,
+  11 Holidays, 12 Future Plans, 13 Jobs & Careers, 14 Clothes & Fashion, 15 Transport, 16 Animals & Pets, 17 Health & Lifestyle,
+  18 Technology, 19 Movies & Music, 20 Weather & Seasons): `speaking.topic` + `words[{w, uz, emoji, ex}]` — **`uz` = the teacher's
+  Uzbek meaning, shown under the word (`.sk-uz`); the teacher asked for it, the only Uzbek in the course** — + 5 questions + a Part 2
+  card on the topic (seconds unchanged). **Steps 1–10 done; 11–20 wait for the teacher's next 10 word lists** (then also give
+  Steps 19–20 a Speaking part). `tests/course-fairness.spec.js`.
 - **Bands** (`js/skill-bands.js`): Listening/Reading = round(correct/total × 40) → IELTS table (19/20 → 8.5, 16/20 → 7.5, 9/20 → 5.5);
   Writing estimate = 3 + 3×length (words/min below the minimum, else 1; +0.5 when over the maximum) + 3×max(0, 1 − mistakes per 100 words/10), nearest 0.5, 1–9 (grammar check didn't run → last
   part 1.5; **blank writing = band 1**); Overall = average of the present skills, rounded like IELTS; CEFR from Overall.
@@ -615,7 +643,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   **To fill a step**: give its entry in `TA_SKILLS.steps` (keep `id`, `no`, `stage`) `theme, emoji, listening {src, title, intro, questions[{q, a[]}], words, transcript[{who, text, answers}]},
   reading {title, text, questions (tfng/tf/gap/choose, `line` = sentence index)}, writing {topic, points, minutes, minWords, maxWords},
   speaking {words, questions[{q, use}], part2}` like e1; add its entry to `elementary-scripts.json`; run the audio command; keep
-  `transcript` in step with the script; English names only, no Uzbek. `tests/skills.spec.js`.
+  `transcript` in step with the script; English names only, no Uzbek (except the Speaking words' `uz` meanings the teacher gave). `tests/skills.spec.js`.
 - **🎧 Making course listening audio — do it exactly like this (teacher approved levels 1–5 on 2026-11-04).** When the teacher asks
   for a new level's recording (or to remake one), follow these steps; don't invent a new way. Setup in the scratchpad (not the repo):
   `python3 -m venv venv && ./venv/bin/pip install kokoro-onnx soundfile sherpa-onnx onnx`; download from GitHub releases (Hugging Face

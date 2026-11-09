@@ -309,6 +309,9 @@ function questionHtml(q, n, kind) {
     body = `<div class="sk-qtext">${esc(q.q)}</div><div class="sk-opts" role="group" aria-label="Answer ${n}">` +
       opts.map((o, i) => `<button type="button" class="sk-opt" aria-pressed="false" data-val="${esc(o)}">${kind === 'choose' ? `<b>${'abc'[i]}</b> ` : ''}${esc(o)}</button>`).join('') +
       '</div>';
+  } else if (kind === 'open') {
+    // a WH-question: the student writes a short answer (Reading Journey, 2026-11-09)
+    body = `<div class="sk-qtext">${esc(q.q)}</div><input type="text" class="sk-gap sk-open" data-n="${n}" autocomplete="off" maxlength="200" aria-label="Answer ${n}" placeholder="Write your answer">`;
   } else {
     body = `<div class="sk-qtext">${gapHtml(q, n)}</div>`;
   }
@@ -318,7 +321,8 @@ const SECTION_TITLES = {
   tfng: 'True, False or Not given?',
   tf: 'True or False?',
   gap: 'Complete the sentences with a word from the text.',
-  choose: 'Choose a, b or c.'
+  choose: 'Choose a, b or c.',
+  open: 'Answer the questions.'
 };
 function questionsHtml(questions, isReading) {
   let html = '', kind = null, n = 0;
@@ -341,7 +345,10 @@ function readingTextHtml(text) {
   let html = '<p>', i = 0;
   bits.forEach((b, k) => {
     if (k % 2) { html += /\n\s*\n/.test(b) ? '</p><p>' : ' '; return; }
-    html += `<span class="sk-sent" data-line="${i++}">${esc(b)}</span>`;
+    // a sentence that ends in a quote mark and then a new paragraph ('… we thought."' + blank line) still breaks the paragraph:
+    // the sentence's two pieces keep the same line number
+    const line = i++;
+    html += b.split(/\n\s*\n/).map(part => `<span class="sk-sent" data-line="${line}">${esc(part)}</span>`).join('</p><p>');
   });
   return html + '</p>';
 }
@@ -386,7 +393,7 @@ function showExercise(level) {
 }
 
 function givenFor(li) {
-  if (li.dataset.kind === 'gap') return li.querySelector('.sk-gap').value;
+  if (li.dataset.kind === 'gap' || li.dataset.kind === 'open') return li.querySelector('.sk-gap').value;
   const on = li.querySelector('.sk-opt.on');
   return on ? on.dataset.val : '';
 }
@@ -396,13 +403,15 @@ function submit(level, content, info) {
   const answers = content.questions.map((q, i) => {
     const li = items[i];
     const given = givenFor(li).trim();
-    const right = skMark(given, q.a);
+    const right = q.type === 'open' ? skOpenRight(given, q.keys) : skMark(given, q.a);
     li.classList.add(right ? 'right' : 'wrong');
     li.querySelectorAll('input, .sk-opt').forEach(x => { x.disabled = true; });
-    if (li.dataset.kind !== 'gap') li.querySelectorAll('.sk-opt').forEach(b => { if (b.dataset.val === q.a[0]) b.classList.add('is-answer'); });
+    if (li.dataset.kind !== 'gap' && li.dataset.kind !== 'open') li.querySelectorAll('.sk-opt').forEach(b => { if (b.dataset.val === q.a[0]) b.classList.add('is-answer'); });
     const fix = li.querySelector('.sk-fix');
     fix.hidden = false;
-    fix.innerHTML = right ? '✅ Right!' : `❌ ${given ? 'Not quite.' : 'No answer.'} The answer: <b>${esc(q.a[0])}</b>`;
+    fix.innerHTML = right ? '✅ Right!' : q.type === 'open'
+      ? `❌ ${given ? 'Not quite.' : 'No answer.'} A good answer has: <b>${esc((q.keys || [])[0] || '')}</b> — look at the text again.`
+      : `❌ ${given ? 'Not quite.' : 'No answer.'} The answer: <b>${esc(q.a[0])}</b>`;
     return { q: q.q, given, right };
   });
   const correct = answers.filter(a => a.right).length;
@@ -426,10 +435,12 @@ function submit(level, content, info) {
   const words = content.words || [];
   const isReading = SK.skill === 'reading';
   $('#skAfter').innerHTML = `<section class="sk-card sk-words-card"><h2>💡 ${words.length} useful words</h2>
-      <ul class="sk-words">${words.map(w => `<li>${w.emoji ? `<span class="sk-wemoji" aria-hidden="true">${esc(w.emoji)}</span>` : ''}<b>${esc(w.w)}</b><span class="sk-m">${esc(w.m)}</span><i>${esc(w.ex)}</i></li>`).join('')}</ul>
+      <ul class="sk-words">${words.map(w => `<li>${w.emoji ? `<span class="sk-wemoji" aria-hidden="true">${esc(w.emoji)}</span>` : ''}<b>${esc(w.w)}</b>${w.uz ? `<span class="sk-m sk-uz" lang="uz" translate="no">${esc(w.uz)}</span>` : `<span class="sk-m">${esc(w.m)}</span>`}<i>${esc(w.ex)}</i></li>`).join('')}</ul>
       <div class="sk-actions"><button type="button" class="sk-btn sk-btn-main" id="skAnalyze">Analyze ></button></div>
     </section>
-    <div id="skAnalysis"></div>`;
+    <div id="skAnalysis"></div>
+    ${isReading && content.retell ? `<section class="sk-card sk-retell-card"><h2>🗣️ Retelling</h2>
+      <p>${esc(content.retell)}</p><p class="sk-retell-goal"><b>Try to use at least 5 vocabulary items from the text.</b></p></section>` : ''}`;
   $('#skAnalyze').addEventListener('click', () => analyze(content, isReading));
   sendNow();
 }
@@ -616,9 +627,11 @@ function showWriting(level) {
   const totalMs = W.minutes * secondsPerMinute * 1000;
   root().innerHTML = headerHtml(level) + `
     <section class="sk-card sk-task-card"><h2 class="sk-topic">✍️ ${esc(W.topic)}</h2>
+      ${W.instruction ? `<p class="sk-intro sk-instruction">${esc(W.instruction)}</p>` : ''}
       ${W.task ? `<p class="sk-intro">${esc(W.task)}</p>` : ''}
-      <p class="sk-points-t">Write about:</p>
-      <ul class="sk-points">${W.points.map(p => `<li>${esc(p)}</li>`).join('')}</ul>
+      ${W.points && W.points.length ? `<p class="sk-points-t">Write about:</p><ul class="sk-points">${W.points.map(p => `<li>${esc(p)}</li>`).join('')}</ul>` : ''}
+      ${W.words && W.words.length ? `<p class="sk-points-t">Use all of these words <span class="sk-asked-count" id="skAskedCount">0 / ${W.words.length}</span></p>
+      <ul class="sk-asked" id="skAsked">${W.words.map(w => `<li class="sk-ask" data-w="${esc(w.w)}"><b>${esc(w.w)}</b>${w.uz ? `<small class="sk-uz" lang="uz" translate="no">${esc(w.uz)}</small>` : ''}</li>`).join('')}</ul>` : ''}
       <p class="sk-intro sk-target">Write ${W.minWords}–${W.maxWords} words. You have ${W.minutes} minutes.</p>
     </section>
     <section class="sk-card sk-write-card">
@@ -641,6 +654,13 @@ function showWriting(level) {
     count.textContent = `${n} / ${W.minWords}–${W.maxWords} words`;
     count.classList.toggle('ok', n >= W.minWords);   // more than asked is fine — it even adds a little (2026-11-09)
     count.classList.toggle('over', false);
+    // the asked words tick as the student uses them (other forms count: use → used)
+    if (W.words && W.words.length) {
+      const got = skAskedWords(box.value, W.words);
+      root().querySelectorAll('.sk-ask').forEach(li => li.classList.toggle('used', got.used.indexOf(li.dataset.w) !== -1));
+      const c = $('#skAskedCount');
+      if (c) { c.textContent = got.used.length + ' / ' + W.words.length; c.classList.toggle('ok', !got.missing.length); }
+    }
   };
   box.addEventListener('input', () => { updateCount(); if (!done) saveDraft(box.value); });
   updateCount();
@@ -706,8 +726,11 @@ async function submitWriting(level, W, timeUp) {
       <div class="sk-send" id="skSend" role="status"><span class="sk-send-note">🔍 Checking your writing…</span></div>
     </div>`;
   const better = skBetterWords(text);
-  const check = await skCheckGrammar(text);
-  const band = skWritingBand(words, W.minWords, check.matches.length, check.ok, W.maxWords);
+  const asked = W.words && W.words.length ? skAskedWords(text, W.words) : null;
+  // the AI check (the Writing Journey, 2026-11-09) and the free grammar check at the same time; the AI decides the band when
+  // it answers, else the old estimate does
+  const [check, ai] = await Promise.all([skCheckGrammar(text), W.words ? skAiCheckWriting(text, W) : Promise.resolve(null)]);
+  const band = ai && ai.result ? skWritingAiBand(ai.result.scores, words, W.minWords) : skWritingBand(words, W.minWords, check.matches.length, check.ok, W.maxWords);
   lastPayload = {
     v: 1, code: SK.code, type: info.type, title: `Step ${level.no} · ${level.theme} — ${info.name}`, step: level.id, stepNo: level.no, skill: 'writing',
     name: SK.name, studentId: SK.studentId, text, words, minWords: W.minWords, maxWords: W.maxWords,
@@ -717,17 +740,74 @@ async function submitWriting(level, W, timeUp) {
     mistakeList: check.matches.map(m => ({ bad: text.slice(m.offset, m.offset + m.length), fix: m.replacements[0] || '', message: m.message, at: m.offset, rule: m.rule })),
     grammarChecked: check.ok, band, timeSeconds: secs, timeDisplay: fmtClock(secs), date: new Date().toISOString()
   };
+  if (W.words) {
+    lastPayload.aiChecked = !!(ai && ai.result);
+    if (ai && ai.result) lastPayload.ai = ai.result;
+    if (asked) lastPayload.asked = asked;
+  }
   // builtAt = the Submit time (= date): Loom hides results "built" before a "Delete all results" (isExpiredResult in common.js);
   // a page opened before a reset and sent after it is a new result, in Results and the Course's results table alike.
   lastPayload.builtAt = lastPayload.date;
   lastPayload.__id = skResultId(lastPayload);
   markDone(lastPayload);   // finished: this device won't open it again (one try per exercise)
-  $('#skActions .sk-result').insertAdjacentHTML('afterbegin', `<div class="sk-score sk-band"><span class="sk-score-n">${band}</span>
-    <span class="sk-score-t">Estimated band · ${words} words</span></div>`);
-  $('#skAfter').innerHTML = `<div class="sk-stack"><section class="sk-card sk-check-card"><h2>🔍 Your writing, checked</h2><div id="skGrammar">${grammarHtml(text, check)}</div></section>
-    ${betterHtml(better)}</div>`;
+  if (W.words) {
+    // the teacher's feedback order: score /9 · words · grammar · better words · asked words · three tips
+    $('#skActions .sk-result').insertAdjacentHTML('afterbegin', aiScoreHtml(band, ai && ai.result, words, W));
+    $('#skAfter').innerHTML = aiFeedbackHtml(text, words, W, ai, check, better, asked);
+  } else {
+    $('#skActions .sk-result').insertAdjacentHTML('afterbegin', `<div class="sk-score sk-band"><span class="sk-score-n">${band}</span>
+      <span class="sk-score-t">Estimated band · ${words} words</span></div>`);
+    $('#skAfter').innerHTML = `<div class="sk-stack"><section class="sk-card sk-check-card"><h2>🔍 Your writing, checked</h2><div id="skGrammar">${grammarHtml(text, check)}</div></section>
+      ${betterHtml(better)}</div>`;
+  }
   wireCheckAgain(text);
   sendNow();
+}
+
+/* ---------- the Writing Journey's AI check (2026-11-09) ----------
+   The teacher's Cloudflare helper (tools/ai-worker.js, job "writing") asks Gemini for the four part scores, the grammar
+   mistakes, better words and three tips. → { result } or { error } (busy, limit reached, no internet: never throws). */
+const SK_AI_URL = 'https://loom-ai.toxiraxii010.workers.dev';
+function skAiUrl() { try { return localStorage.getItem('ta_ai_url') || SK_AI_URL; } catch (e) { return SK_AI_URL; } }
+async function skAiCheckWriting(text, W) {
+  if (!String(text || '').trim()) return { error: 'nothing written' };
+  try {
+    const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const timer = setTimeout(() => { if (ctrl) ctrl.abort(); }, window.__skAiTimeoutMs || 60000);
+    const res = await fetch(skAiUrl(), { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctrl ? ctrl.signal : undefined,
+      body: JSON.stringify({ job: 'writing', text: String(text).slice(0, 6000), topic: W.topic, instruction: W.instruction || '', minWords: W.minWords,
+        maxWords: W.maxWords, words: (W.words || []).map(w => w.w) }) });
+    clearTimeout(timer);
+    let data = null;
+    try { data = await res.json(); } catch (e) { data = null; }
+    if (res.ok && data && data.result && data.result.scores) return { result: data.result };
+    return { error: (data && data.error) || 'the AI did not answer' };
+  } catch (e) { return { error: 'the AI could not be reached' }; }
+}
+window.skAiCheckWriting = skAiCheckWriting;
+function aiScoreHtml(band, result, words, W) {
+  const s = result && result.scores;
+  return `<div class="sk-score sk-band"><span class="sk-score-n">${band} <small>/ 9</small></span>
+    <span class="sk-score-t">${s ? `Grammar ${s.grammar}/3 · Vocabulary ${s.vocabulary}/2 · Structure ${s.structure}/2 · Task ${s.task}/2${words < W.minWords ? ' · −0.5 (too short)' : ''}` : 'Estimated band (the AI check didn\'t run)'}</span></div>`;
+}
+function aiFeedbackHtml(text, words, W, ai, check, better, asked) {
+  const r = ai && ai.result;
+  const short = words < W.minWords;
+  const lengthCard = `<section class="sk-card sk-ai-len"><h2>📏 Word count</h2>
+    <p class="sk-intro"><b>${words}</b> words · required <b>${W.minWords}–${W.maxWords}</b>. ${short ? '⚠️ Too short: −0.5 from your score.' : '✅ Long enough.'}</p></section>`;
+  const grammar = r
+    ? `<section class="sk-card sk-check-card"><h2>🔍 Grammar</h2>${r.mistakes.length ? `<ol class="sk-mistakes sk-ai-mistakes">${r.mistakes.map((m, i) => `<li class="sk-mistake"><span class="sk-num">${i + 1}</span><div class="sk-qbody">
+        <div class="sk-mfix"><s class="sk-bad">${esc(m.wrong)}</s></div><div class="sk-mfix">→ <b class="sk-good">${esc(m.right)}</b></div>
+        <div class="sk-mmsg">${esc(m.why)}</div></div></li>`).join('')}</ol>` : '<p class="sk-intro">🎉 No grammar mistakes found. Great job!</p>'}</section>`
+    : `<section class="sk-card sk-check-card"><h2>🔍 Grammar</h2><p class="sk-ai-note" role="status">🤖 The AI check couldn't run this time (${esc(ai && ai.error || 'busy')}). Here is the simple grammar check — your teacher can check your writing with AI later.</p><div id="skGrammar">${grammarHtml(text, check)}</div></section>`;
+  const betterCard = r
+    ? `<section class="sk-card sk-better-card"><h2>💡 Better words</h2>${r.better.length ? `<ul class="sk-better">${r.better.map(b => `<li><b>${esc(b.word)}</b> → ${esc(b.instead)}${b.why ? ` <span class="sk-small">— ${esc(b.why)}</span>` : ''}</li>`).join('')}</ul>` : '<p class="sk-intro">Your words are already strong. Keep using them!</p>'}<p class="sk-intro sk-small">These are ideas, not mistakes.</p></section>`
+    : betterHtml(better);
+  const askedCard = asked ? `<section class="sk-card sk-asked-card"><h2>📝 Asked words</h2>
+    <ul class="sk-asked sk-asked-result">${(W.words || []).map(w => { const ok = asked.used.indexOf(w.w) !== -1; return `<li class="sk-ask ${ok ? 'used' : 'missing'}">${ok ? '✅' : '❌'} <b>${esc(w.w)}</b></li>`; }).join('')}</ul>
+    <p class="sk-intro">${asked.used.length} of ${(W.words || []).length} used${asked.missing.length ? ' — try to use all of them next time.' : '. Well done!'}</p></section>` : '';
+  const tips = r && r.tips.length ? `<section class="sk-card sk-tips-card"><h2>🚀 Next time</h2><ol class="sk-tips">${r.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ol></section>` : '';
+  return `<div class="sk-stack">${lengthCard}${grammar}${betterCard}${askedCard}${tips}</div>`;
 }
 
 // "Check again" re-runs only the grammar check. The teacher already has this Submit's result: nothing is sent again.
@@ -763,10 +843,10 @@ function showSpeaking(level) {
   const shell = (n, inner) => { clearInterval(speakTimer); root().innerHTML = headerHtml(level) + stepsHtml(n) + inner; window.scrollTo(0, 0); };
 
   const stepWords = () => {
-    shell(1, `<section class="sk-card"><h2>🗣️ Words to help you speak</h2>
+    shell(1, `<section class="sk-card"><h2>🗣️ ${S.topic ? esc(S.topic) + ' — words' : 'Words to help you speak'}</h2>
       <p class="sk-intro">Read the words. Say each example out loud.</p>
       <ul class="sk-wordgrid">${S.words.map((w, i) => `<li class="sk-word"><span class="sk-word-emoji" aria-hidden="true">${esc(w.emoji)}</span>
-        <div class="sk-word-body"><b>${esc(w.w)}</b><span>${esc(w.ex)}</span></div>
+        <div class="sk-word-body"><b>${esc(w.w)}</b>${w.uz ? `<small class="sk-uz" lang="uz" translate="no">${esc(w.uz)}</small>` : ''}<span>${esc(w.ex)}</span></div>
         ${canSpeak ? `<button type="button" class="sk-say" data-i="${i}" title="Listen" aria-label="Listen to ${esc(w.w)}">🔊</button>` : ''}</li>`).join('')}</ul>
       <div class="sk-actions"><button type="button" class="sk-btn sk-btn-main" id="skNext">Next →</button></div></section>`);
     root().querySelectorAll('.sk-say').forEach(b => b.addEventListener('click', () => { const w = S.words[+b.dataset.i]; skSay(w.w + '. ' + w.ex); }));

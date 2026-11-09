@@ -3059,6 +3059,22 @@ button.sk-dot:hover { transform: scale(1.12); }
 .sk-words li { position: relative; padding-right: 52px; }
 .sk-wemoji { position: absolute; top: 10px; right: 12px; font-size: 1.6rem; line-height: 1; }
 
+/* Reading Journey (2026-11-09): WH-answer boxes are full width; the retelling reminder at the end */
+.sk-qbody .sk-gap.sk-open { display: block; width: 100%; max-width: 100%; min-width: 0; margin-top: 8px; }
+.sk-retell-goal { margin-top: 8px; color: #7B4DFF; }
+
+/* Writing Journey (2026-11-09): the asked words (tick when used), the AI feedback */
+.sk-asked { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 12px; padding: 0; }
+.sk-ask { display: inline-flex; flex-direction: column; padding: 6px 12px; border-radius: 12px; background: #FFF7E8; border: 2px solid #C9BFA9; line-height: 1.25; }
+.sk-ask.used { background: #DDF8EE; border-color: #12A979; }
+.sk-ask.missing { background: #FFE3E3; border-color: #E5484D; }
+.sk-asked-result .sk-ask { flex-direction: row; gap: 6px; align-items: center; }
+.sk-asked-count { margin-left: 6px; padding: 1px 8px; border-radius: 999px; background: #FFF1B8; color: #7A5B00; font-size: .85rem; }
+.sk-asked-count.ok { background: #DDF8EE; color: #0B7A57; }
+.sk-instruction { font-size: 1.05rem; }
+.sk-tips { margin: 6px 0 0 20px; line-height: 1.6; }
+.sk-score-n small { font-size: 1rem; }
+
 /* The students' course page (skill.html) keeps its cream / plum colours, without the confetti dots (teacher, 2026-11-05) */
 body.sk-body { --surface-page: #1B1535; background: var(--surface-page); }   /* plain, no confetti dots (teacher, 2026-11-05) */
 body.sk-body.light-theme { --surface-page: #FFF5E1; }
@@ -3290,3 +3306,12 @@ body.loom-studio .ai-robot-anim { position: absolute; left: 50%; top: 50%; trans
 .ai-robot-bubble { cursor: auto; user-select: text; -webkit-user-select: text; }
 .ai-robot-bubble :is(.ai-msg, .ai-msg *) { cursor: text; user-select: text; -webkit-user-select: text; }
 .ai-robot-bubble :is(button, .ai-chip, .ai-send) { cursor: pointer; }
+
+/* Speaking words: the Uzbek meaning under the word (teacher, 2026-11-09) */
+.sk-uz { display: block; font-weight: 600; font-size: .9rem; color: #7B4DFF; margin: 1px 0 2px; }
+/* a writing's window: the AI feedback (Writing Journey, 2026-11-09) */
+.sk-wv-ai { margin-top: 10px; }
+.sk-wv-parts { font-weight: 700; margin-bottom: 6px; }
+.sk-wv-sub { font-weight: 700; margin: 10px 0 4px; }
+.sk-wv-better, .sk-wv-tips { margin: 0 0 0 18px; line-height: 1.55; }
+.sk-wv-noai { margin-top: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
