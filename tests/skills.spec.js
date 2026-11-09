@@ -81,7 +81,7 @@ test.describe('content', () => {
     // the teacher (2026-11-04): "finish when level 5 is ready; levels 6–10 are for future" — levels 6, 7 and 8 added 2026-11-05
     const full = levels.filter(l => l.n <= 8);
     full.forEach(l => ['listening', 'reading', 'writing', 'speaking'].forEach(k => expect(l[k], l.id + ' ' + k).toBeTruthy()));
-    levels.filter(l => l.n > 8).forEach(l => expect(Object.keys(l).sort(), l.id).toEqual(['emoji', 'id', 'n', 'no', 'reading', 'stage', 'theme']));   // Steps 19–20: only the Reading Journey so far
+    levels.filter(l => l.n > 8).forEach(l => expect(Object.keys(l).sort(), l.id).toEqual(['emoji', 'id', 'n', 'no', 'reading', 'stage', 'theme', 'writing']));   // Steps 19–20: the Reading and Writing Journeys so far
     // every listening/reading is its own (no copy of another level)
     expect(new Set(full.concat(beginners).map(l => l.listening.src)).size).toBe(18);
     for (const lv of beginners.concat(full)) {
@@ -116,7 +116,7 @@ test.describe('content', () => {
     for (const lv of beginners.concat(full)) {
       const W = lv.writing;
       expect(W.topic).toBeTruthy();
-      expect(W.points.length).toBe(3);
+      expect(W.words.length).toBeGreaterThanOrEqual(8);   // the asked words (Writing Journey, 2026-11-09)
       expect(W.minWords).toBeLessThan(W.maxWords);
       expect(W.minutes).toBeGreaterThan(0);
 
@@ -137,15 +137,13 @@ test.describe('content', () => {
     await page.goto('/skill.html?s=listening&st=e1&preview=1');
     const [b1, l1] = await page.evaluate(() => [TA_SKILLS.steps[0], TA_SKILLS.steps.find(s => s.id === 'e1')]);
     expect(b1).toMatchObject({ id: 'b1', no: 1, stage: 'Beginner', theme: 'Hello!' });
-    expect(b1.writing).toMatchObject({ topic: 'About me', minWords: 50, maxWords: 70, minutes: 12 });   // doubled 2026-11-09 (teacher: Step 1 ≈ 60 words)
-    expect(b1.writing.points).toEqual(['your name and age', 'where you live', 'your family or your friends']);
+    expect(b1.writing).toMatchObject({ topic: 'My Daily Routine', minWords: 80, maxWords: 100, minutes: 15 });   // the Writing Journey (2026-11-09)
     expect(b1.speaking).toMatchObject({ topic: 'Daily Routine', part2: { topic: 'Talk about your daily routine', seconds: 30 } });   // the teacher's Speaking Journey (2026-11-09)
     expect(b1.speaking.words.map(w => [w.w, w.uz])).toContainEqual(['Wake up', "Uyg'onmoq"]);
     expect(l1).toMatchObject({ id: 'e1', no: 11, stage: 'Elementary', theme: 'Meeting people', emoji: '👋' });
     expect(l1.listening.src).toMatch(/^audio\/skills\/elem-1-listening\.mp3(\?v=\d+)?$/);
     expect(l1.reading.title).toBe('My First Big Trip');   // the Reading Journey (2026-11-09)
-    expect(l1.writing).toMatchObject(Object.assign({ topic: 'An email to a new classmate' }, skPlanWords(11, 20)));
-    expect(l1.writing.task).toBeTruthy();
+    expect(l1.writing).toMatchObject({ topic: 'My Last Holiday', minWords: 100, maxWords: 120, minutes: 20 });   // the Writing Journey (2026-11-09)
     expect(l1.speaking.part2).toMatchObject({ topic: 'A person you met recently', seconds: 45 });
     l1.speaking.questions.forEach(q => expect(q.use.length).toBeGreaterThan(0));
     expect(JSON.stringify(l1.speaking)).not.toBe(JSON.stringify(b1.speaking));
@@ -171,7 +169,7 @@ test.describe('content', () => {
     const ones = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
     B.forEach((st, i) => {
       const p = plan[i];
-      expect(st.writing, st.id).toMatchObject(Object.assign({ topic: p.topic }, skPlanWords(st.no, p.minutes)));
+      // the writing: tests/writing-journey.spec.js (the Writing Journey, 2026-11-09)
       expect(st.speaking.part2.topic).toMatch(p.talk);
       expect(st.speaking.part2.seconds).toBe(p.sec);
       st.speaking.questions.forEach(q => expect(q.use.length).toBeGreaterThan(0));
@@ -204,8 +202,7 @@ test.describe('content', () => {
       const lv = L[p.no - 1];
       expect(lv.listening.title).toMatch(p.listen);
       expect(lv.listening.intro).toMatch(/NO MORE THAN TWO WORDS AND\/OR A NUMBER/);
-      expect(lv.writing).toMatchObject(Object.assign({ topic: p.topic }, skPlanWords(lv.no, p.minutes)));
-      expect(lv.writing.task).toBeTruthy();
+      // the writing: tests/writing-journey.spec.js
       expect(lv.speaking.part2.topic).toMatch(p.talk);
       expect(lv.speaking.part2.seconds).toBe(p.sec);
       lv.speaking.questions.forEach(q => expect(q.use.length).toBeGreaterThan(0));
@@ -540,24 +537,24 @@ test.describe('writing', () => {
     const errors = [];
     page.on('pageerror', e => errors.push(e.message));
     await start(page, '/skill.html?s=writing&st=b1&c=WRT789');
-    await expect(page.locator('.sk-topic')).toContainText('About me');
-    await expect(page.locator('.sk-points li')).toHaveCount(3);
-    await expect(page.locator('.sk-timer')).toContainText('12:00');
+    await expect(page.locator('.sk-topic')).toContainText('My Daily Routine');
+    await expect(page.locator('.sk-ask')).toHaveCount(8);   // the asked words (Writing Journey, 2026-11-09)
+    await expect(page.locator('.sk-timer')).toContainText('15:00');
     const box = page.locator('#skWriteBox');
-    // Step 1 asks 50–70 words since 2026-11-09
-    await expect(page.locator('.sk-count')).toContainText('0 / 50–70 words');
+    // Step 1 asks 80–100 words (the Writing Journey, 2026-11-09)
+    await expect(page.locator('.sk-count')).toContainText('0 / 80–100 words');
     await expect(page.locator('.sk-count')).not.toHaveClass(/ok/);
     await box.fill(TEXT + ' <b>');
-    await expect(page.locator('.sk-count')).toContainText('46 / 50–70 words');
+    await expect(page.locator('.sk-count')).toContainText('46 / 80–100 words');
     await box.fill(TEXT);
-    await expect(page.locator('.sk-count')).toContainText('45 / 50–70 words');
+    await expect(page.locator('.sk-count')).toContainText('45 / 80–100 words');
     await expect(page.locator('.sk-count')).not.toHaveClass(/ok/);   // under the least
     await box.fill(TEXT + ' ' + TEXT);
-    await expect(page.locator('.sk-count')).toContainText('90 / 50–70 words');
-    await expect(page.locator('.sk-count')).toHaveClass(/ok/);   // more than asked is fine (2026-11-09)
-    await box.fill((TEXT + ' ' + TEXT).split(' ').slice(0, 60).join(' '));
-    await expect(page.locator('.sk-count')).toContainText('60 / 50–70 words');
+    await expect(page.locator('.sk-count')).toContainText('90 / 80–100 words');
     await expect(page.locator('.sk-count')).toHaveClass(/ok/);
+    await box.fill(TEXT + ' ' + TEXT + ' ' + TEXT);
+    await expect(page.locator('.sk-count')).toContainText('135 / 80–100 words');
+    await expect(page.locator('.sk-count')).toHaveClass(/ok/);   // more than asked is fine
     await box.fill(TEXT + ' <b> & more');
     await page.getByRole('button', { name: /Submit my writing/ }).click();
     await expect(page.locator('.sk-mistake')).toHaveCount(2);
@@ -587,9 +584,9 @@ test.describe('writing', () => {
 
     const recs = await sentRecords(page);
     expect(recs).toHaveLength(1);
-    const band = await page.evaluate(() => skWritingBand(47, 50, 2, true, 70));
+    const band = await page.evaluate(() => skWritingBand(47, 80, 2, true, 100));   // the AI can't be reached in the tests: the old estimate
     expect(recs[0]).toMatchObject({ v: 1, code: 'WRT789', type: 'Writing course', title: 'Step 1 · Hello! — Writing', step: 'b1', stepNo: 1,
-      skill: 'writing', name: 'Test Student', studentId: '10001', text: TEXT + ' <b> & more', words: 47, minWords: 50, maxWords: 70,
+      skill: 'writing', name: 'Test Student', studentId: '10001', text: TEXT + ' <b> & more', words: 47, minWords: 80, maxWords: 100, aiChecked: false,
       mistakes: 2, grammarChecked: true, band });
     expect(recs[0].score).toBeUndefined();
     expect(recs[0].mistakeList.map(({ bad, fix, message }) => ({ bad, fix, message }))).toEqual([
@@ -611,7 +608,7 @@ test.describe('writing', () => {
     await page.getByRole('button', { name: /Submit my writing/ }).click();
     await expect(page.locator('.sk-send')).toContainText('Saved ✅');
     const recs = await sentRecords(page);
-    expect(recs[0]).toMatchObject({ words: 45, mistakes: 1, grammarChecked: true, band: await page.evaluate(() => skWritingBand(45, 50, 1, true, 70)) });   // Step 1 asks 50–70 words since 2026-11-09
+    expect(recs[0]).toMatchObject({ words: 45, mistakes: 1, grammarChecked: true, band: await page.evaluate(() => skWritingBand(45, 80, 1, true, 100)) });   // Step 1 asks 80–100 words (Writing Journey)
   });
 
   test('writing: grammar checker down', async ({ page, context }) => {
@@ -626,7 +623,7 @@ test.describe('writing', () => {
     await expect(page.locator('.sk-send')).toContainText('Saved ✅');
     let recs = await sentRecords(page);
     expect(recs).toHaveLength(1);
-    expect(recs[0]).toMatchObject({ words: 45, mistakes: 0, mistakeList: [], grammarChecked: false, band: await page.evaluate(() => skWritingBand(45, 50, 0, false, 70)) });
+    expect(recs[0]).toMatchObject({ words: 45, mistakes: 0, mistakeList: [], grammarChecked: false, band: await page.evaluate(() => skWritingBand(45, 80, 0, false, 100)) });
     // Check again: the checker works now → the mistakes show, but no second result is sent
     await context.unroute('**/api.languagetool.org/**');
     await mockGrammar(context, { calls });
@@ -644,8 +641,8 @@ test.describe('writing', () => {
     await mockGrammar(context);
     await page.addInitScript(() => { window.__skFast = 1; });
     await start(page, '/skill.html?s=writing&st=b1&c=WRT789');
-    await expect(page.locator('.sk-timer')).toContainText('12:00');
-    await expect(page.locator('.sk-send')).toContainText('Saved ✅', { timeout: 25000 });
+    await expect(page.locator('.sk-timer')).toContainText('15:00');
+    await expect(page.locator('.sk-send')).toContainText('Saved ✅', { timeout: 30000 });
     await expect(page.locator('body')).toContainText("Time's up");
     await expect(page.locator('#skWriteBox')).toHaveJSProperty('readOnly', true);
     await page.waitForTimeout(1500);
@@ -698,7 +695,7 @@ test.describe('writing', () => {
     await mockGrammar(context);
     await start(page, '/skill.html?s=writing&st=b1&c=WRT789');
     await expect(page.locator('#skWriteBox')).toHaveValue('');
-    await expect(page.locator('#skTimer')).toContainText('12:00');
+    await expect(page.locator('#skTimer')).toContainText(/15:00|14:5\d/);   // a fresh clock (15 minutes since the Writing Journey)
     await page.goto('/skill.html?s=writing&st=b1&preview=1');
     await page.locator('#skWriteBox').fill(TEXT);
     expect(await page.evaluate(() => Object.keys(localStorage).filter(k => k.startsWith('ta_skill_draft') && !k.includes('WRT789')))).toEqual([]);
@@ -796,7 +793,7 @@ test.describe('course page', () => {
     return errors;
   };
 
-  test('a group\'s Journey: 20 steps in order, a plain dot per part (none inside), all open (19–20: Reading only); Try opens a preview', async ({ page, context }) => {
+  test('a group\'s Journey: 20 steps in order, a plain dot per part (none inside), all open (19–20: Reading and Writing only); Try opens a preview', async ({ page, context }) => {
     test.setTimeout(300000);   // opens 40 preview tabs; some take ~2 s each in headless Chromium
     const errors = await open(page, context);
     await expect(page.locator('.sk-tab[data-tab="journey"]')).toHaveAttribute('aria-selected', 'true');
@@ -807,7 +804,7 @@ test.describe('course page', () => {
       /Step 11\s*Meeting people/, /Step 12/, /Step 13/, /Step 14/, /Step 15\s*Food & cafés/, /Step 16\s*Shopping/, /Step 17\s*My town/, /Step 18\s*Free time/, /Step 19/, /Step 20/]);
     // Steps 1–18: all four parts; Steps 19–20: only the Reading Journey so far (2026-11-09) — open, with one dot
     for (let i = 0; i < 20; i++) {
-      const parts = i < 18 ? ['listening', 'reading', 'writing', 'speaking'] : ['reading'];
+      const parts = i < 18 ? ['listening', 'reading', 'writing', 'speaking'] : ['reading', 'writing'];
       await expect(rows.nth(i).locator('.sk-dot')).toHaveCount(parts.length);
       expect(await rows.nth(i).locator('.sk-dot').evaluateAll(d => d.map(x => x.dataset.skill))).toEqual(parts);
       await expect(rows.nth(i).locator('button.sk-node')).toHaveCount(1);
@@ -831,7 +828,7 @@ test.describe('course page', () => {
     await expect(page.locator('.sk-level-head')).toContainText('Step 11 · Meeting people');
     await expect(page.locator('.sk-level-head')).toContainText('Elementary');
     const parts = page.locator('.sk-part');
-    await expect(parts).toHaveText([/Listening/, /Reading/, /Writing\s*An email to a new classmate/, /Speaking\s*A person you met recently/]);
+    await expect(parts).toHaveText([/Listening/, /Reading/, /Writing\s*My Last Holiday/, /Speaking\s*A person you met recently/]);
     await expect(page.locator('.sk-results-empty')).toContainText('No results yet');
     await expect(page.getByRole('button', { name: /View Results|Results table/ })).toHaveCount(0);
     const [popup] = await Promise.all([page.waitForEvent('popup'), parts.nth(0).getByRole('button', { name: '▶️ Try' }).click()]);
@@ -854,7 +851,7 @@ test.describe('course page', () => {
       await page.getByRole('button', { name: /^← Target · Journey$/ }).click();
     }
     await nodes.nth(0).click();
-    await expect(page.locator('.sk-part[data-skill="writing"]')).toContainText('About me');
+    await expect(page.locator('.sk-part[data-skill="writing"]')).toContainText('My Daily Routine');
     expect(await page.evaluate(() => localStorage.getItem('ta_skills_open'))).toBeNull();
     expect(errors).toEqual([]);
   });

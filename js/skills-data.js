@@ -110,10 +110,20 @@ var TA_SKILLS = {
         retell: "Retell Daniel's day in your own words, from the morning to the evening."
       },
       writing: {
-        topic: 'About me',
-        task: 'Write an email to a new pen-friend about yourself.',
-        points: ['your name and age', 'where you live', 'your family or your friends'],
-        minWords: 50, maxWords: 70, minutes: 12
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "My Daily Routine",
+        instruction: "Describe a normal day in your life, from the moment you wake up until you go to bed. Say what you do in the morning, in the afternoon and in the evening.",
+        words: [
+          { w: "wake up", uz: "uyg'onmoq" },
+          { w: "get dressed", uz: "kiyinmoq" },
+          { w: "have breakfast", uz: "nonushta qilmoq" },
+          { w: "usually", uz: "odatda" },
+          { w: "after school", uz: "maktabdan keyin" },
+          { w: "do homework", uz: "uy vazifasini bajarmoq" },
+          { w: "in the evening", uz: "kechqurun" },
+          { w: "go to bed", uz: "uxlashga yotmoq" }
+        ],
+        minWords: 80, maxWords: 100, minutes: 15
       },
       speaking: {
         // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
@@ -237,10 +247,21 @@ var TA_SKILLS = {
         retell: "Retell the text in your own words. Talk about each person in the family and what they do on Sundays."
       },
       writing: {
-        topic: 'My numbers',
-        task: 'Write about the numbers in your life.',
-        points: ['how old you are', 'your house or flat number and your classroom number', 'how many people there are in your family'],
-        minWords: 60, maxWords: 80, minutes: 10
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "My Family",
+        instruction: "Write about the people in your family. Describe what they are like, what they do, and what you do together.",
+        words: [
+          { w: "parents", uz: "ota-ona" },
+          { w: "older", uz: "katta (yoshi katta)" },
+          { w: "younger", uz: "kichik (yoshi kichik)" },
+          { w: "kind", uz: "mehribon" },
+          { w: "get along with", uz: "yaxshi chiqishmoq" },
+          { w: "spend time together", uz: "birga vaqt o'tkazmoq" },
+          { w: "help", uz: "yordam bermoq" },
+          { w: "close family", uz: "ahil oila" },
+          { w: "at the weekend", uz: "dam olish kunlari" }
+        ],
+        minWords: 80, maxWords: 100, minutes: 15
       },
       speaking: {
         // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
@@ -364,10 +385,21 @@ var TA_SKILLS = {
         retell: "Retell the text in your own words. Describe the dream house floor by floor and its garden."
       },
       writing: {
-        topic: 'My family',
-        task: 'Write about your family.',
-        points: ['how many people there are in your family', 'their names and how old they are', 'one thing about each person (tall, funny, kind…)'],
-        minWords: 65, maxWords: 85, minutes: 15
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "My Dream House",
+        instruction: "Describe the house you would like to live in one day: where it is, what rooms it has, and why you like it.",
+        words: [
+          { w: "dream house", uz: "orzudagi uy" },
+          { w: "spacious", uz: "keng" },
+          { w: "comfortable", uz: "qulay" },
+          { w: "living room", uz: "mehmonxona" },
+          { w: "bedroom", uz: "yotoqxona" },
+          { w: "garden", uz: "bog'" },
+          { w: "view", uz: "manzara" },
+          { w: "near", uz: "yaqinida" },
+          { w: "I would like", uz: "... istardim" }
+        ],
+        minWords: 80, maxWords: 100, minutes: 15
       },
       speaking: {
         // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
@@ -492,10 +524,21 @@ var TA_SKILLS = {
         retell: "Retell the text in your own words. Talk about the traditional food of at least three countries."
       },
       writing: {
-        topic: 'My bag',
-        task: 'Write about your bag and the things in it.',
-        points: ['what colour your bag is', 'what is in your bag (books, pens…) and how many', 'your favourite thing in your bag and its colour'],
-        minWords: 75, maxWords: 95, minutes: 15
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "My Favourite Food",
+        instruction: "Write about your favourite food. Say what it is, what is in it, who makes it, and when you eat it.",
+        words: [
+          { w: "favourite dish", uz: "sevimli taom" },
+          { w: "delicious", uz: "mazali" },
+          { w: "ingredients", uz: "masalliqlar" },
+          { w: "cook", uz: "pishirmoq" },
+          { w: "taste", uz: "ta'm" },
+          { w: "sweet", uz: "shirin" },
+          { w: "healthy", uz: "foydali, sog'lom" },
+          { w: "homemade", uz: "uyda tayyorlangan" },
+          { w: "on special days", uz: "maxsus kunlarda" }
+        ],
+        minWords: 80, maxWords: 100, minutes: 15
       },
       speaking: {
         // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
@@ -628,10 +671,21 @@ var TA_SKILLS = {
         retell: "Retell the text in your own words. Say how people spend their free time and what the survey shows."
       },
       writing: {
-        topic: 'Shopping list',
-        task: 'You are going to the shop for your family. Write your shopping list in sentences.',
-        points: ['what you need from the shop (five or six things)', 'how many of each thing — for example: two apples, one bottle of milk', 'how much each thing is — for example: The bread is 85p.'],
-        minWords: 85, maxWords: 105, minutes: 15
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "My Free Time",
+        instruction: "Write about what you do in your free time, who you do it with, and why you enjoy it.",
+        words: [
+          { w: "free time", uz: "bo'sh vaqt" },
+          { w: "enjoy", uz: "zavqlanmoq" },
+          { w: "hang out with", uz: "... bilan vaqt o'tkazmoq" },
+          { w: "go for a walk", uz: "sayrga chiqmoq" },
+          { w: "at least", uz: "kamida" },
+          { w: "once a week", uz: "haftada bir marta" },
+          { w: "relax", uz: "dam olmoq" },
+          { w: "prefer", uz: "afzal ko'rmoq" },
+          { w: "because", uz: "chunki" }
+        ],
+        minWords: 90, maxWords: 110, minutes: 15
       },
       speaking: {
         // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
@@ -752,9 +806,20 @@ var TA_SKILLS = {
         retell: "Retell the story of Tom and Ben in your own words, from their first meeting to today."
       },
       writing: {
-        topic: 'My week',
-        task: 'Write about your week.',
-        points: ['what you do on two or three days of the week — for example: On Monday, I have English.', 'what time you start and finish school (or work)', 'your favourite day and why'],
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "My Best Friend",
+        instruction: "Write about your best friend: how you met, what he or she is like, and what you do together.",
+        words: [
+          { w: "best friend", uz: "eng yaqin do'st" },
+          { w: "meet", uz: "tanishmoq, uchrashmoq" },
+          { w: "funny", uz: "kulgili" },
+          { w: "honest", uz: "rostgo'y" },
+          { w: "trust", uz: "ishonmoq" },
+          { w: "share", uz: "bo'lishmoq" },
+          { w: "have fun", uz: "maza qilmoq" },
+          { w: "support", uz: "qo'llab-quvvatlamoq" },
+          { w: "since", uz: "... dan beri" }
+        ],
         minWords: 90, maxWords: 110, minutes: 15
       },
       speaking: {
@@ -876,10 +941,21 @@ var TA_SKILLS = {
         retell: "Retell the story of Science Day in your own words. Talk about the morning, the volcano and the prizes."
       },
       writing: {
-        topic: 'My food',
-        task: "Write about the food you like and the food you don't like.",
-        points: ['what you have for breakfast', 'your favourite food and drink', "a food you don't like"],
-        minWords: 100, maxWords: 120, minutes: 20
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "My School",
+        instruction: "Describe your school: the building, your lessons, your classmates, and what you like or don't like about it.",
+        words: [
+          { w: "subject", uz: "fan" },
+          { w: "classmate", uz: "sinfdosh" },
+          { w: "break", uz: "tanaffus" },
+          { w: "timetable", uz: "dars jadvali" },
+          { w: "difficult", uz: "qiyin" },
+          { w: "easy", uz: "oson" },
+          { w: "uniform", uz: "maktab formasi" },
+          { w: "improve", uz: "yaxshilamoq" },
+          { w: "learn", uz: "o'rganmoq" }
+        ],
+        minWords: 90, maxWords: 110, minutes: 15
       },
       speaking: {
         // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
@@ -1002,10 +1078,21 @@ var TA_SKILLS = {
         retell: "Retell the text in your own words. Explain the benefits of having a hobby."
       },
       writing: {
-        topic: 'My pet',
-        task: 'Write about your pet, or a pet you would like to have.',
-        points: ['what animal it is and its name', 'how old it is and what colour it is', 'what it likes to eat or do'],
-        minWords: 110, maxWords: 130, minutes: 20
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "My Favourite Hobby",
+        instruction: "Write about your favourite hobby: when you started it, how often you do it, and why it is important to you.",
+        words: [
+          { w: "hobby", uz: "sevimli mashg'ulot" },
+          { w: "start", uz: "boshlamoq" },
+          { w: "practise", uz: "mashq qilmoq" },
+          { w: "skill", uz: "ko'nikma" },
+          { w: "creative", uz: "ijodkor" },
+          { w: "relaxing", uz: "tinchlantiruvchi" },
+          { w: "improve", uz: "yaxshilamoq" },
+          { w: "join", uz: "qo'shilmoq, a'zo bo'lmoq" },
+          { w: "spend time", uz: "vaqt o'tkazmoq" }
+        ],
+        minWords: 90, maxWords: 110, minutes: 15
       },
       speaking: {
         // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
@@ -1123,10 +1210,22 @@ var TA_SKILLS = {
         retell: "Retell Anna's shopping day in your own words, from the bus to the supermarket."
       },
       writing: {
-        topic: 'My room',
-        task: 'Write about your room.',
-        points: ['what is in your room: a bed, a desk, a cupboard…', 'where things are — for example: My lamp is on the desk.', 'what you like about your room'],
-        minWords: 115, maxWords: 135, minutes: 20
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "A Shopping Experience",
+        instruction: "Write about a time you went shopping. Say where you went, who you were with, what you bought, and how you felt. Use the past simple.",
+        words: [
+          { w: "go shopping", uz: "xarid qilishga bormoq" },
+          { w: "shopping centre", uz: "savdo markazi" },
+          { w: "try on", uz: "kiyib ko'rmoq" },
+          { w: "size", uz: "o'lcham" },
+          { w: "price", uz: "narx" },
+          { w: "expensive", uz: "qimmat" },
+          { w: "cheap", uz: "arzon" },
+          { w: "on sale", uz: "chegirmada" },
+          { w: "pay", uz: "to'lamoq" },
+          { w: "decide", uz: "qaror qilmoq" }
+        ],
+        minWords: 100, maxWords: 120, minutes: 20
       },
       speaking: {
         // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
@@ -1248,10 +1347,21 @@ var TA_SKILLS = {
         retell: "Retell the text in your own words. Describe Brookfield: its places, its good points and its bad points."
       },
       writing: {
-        topic: 'My best friend',
-        task: 'Write about your best friend.',
-        points: ['his or her name and age, and what he or she looks like', 'what he or she likes', 'what you do together'],
-        minWords: 125, maxWords: 145, minutes: 20
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "My Hometown",
+        instruction: "Describe your hometown for a visitor: where it is, what it is like, and which places you recommend.",
+        words: [
+          { w: "hometown", uz: "tug'ilib o'sgan shahar" },
+          { w: "was born", uz: "tug'ilgan" },
+          { w: "famous for", uz: "... bilan mashhur" },
+          { w: "crowded", uz: "gavjum" },
+          { w: "quiet", uz: "tinch" },
+          { w: "city centre", uz: "shahar markazi" },
+          { w: "nearby", uz: "yaqin atrofda" },
+          { w: "visitors", uz: "mehmonlar, sayyohlar" },
+          { w: "recommend", uz: "tavsiya qilmoq" }
+        ],
+        minWords: 100, maxWords: 120, minutes: 20
       },
       speaking: {
         // the teacher's Speaking Journey (2026-11-09): topic + words with their meaning in the students' language (uz)
@@ -1385,10 +1495,21 @@ var TA_SKILLS = {
         retell: "Retell the story of the first big trip in your own words. Talk about the flight, the city and the weather."
       },
       writing: {
-        topic: 'An email to a new classmate',
-        task: 'A new student has joined your class. Write an email to welcome him or her.',
-        points: ['who you are and what you like about your class', 'your teacher and the other students', 'something you can do together after school'],
-        minWords: 130, maxWords: 150, minutes: 25
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "My Last Holiday",
+        instruction: "Write about your last holiday: where you went, what you did, and what you remember most. Use the past simple.",
+        words: [
+          { w: "holiday", uz: "ta'til" },
+          { w: "travel", uz: "sayohat qilmoq" },
+          { w: "stay", uz: "qolmoq, turmoq" },
+          { w: "sightseeing", uz: "diqqatga sazovor joylarni ko'rish" },
+          { w: "amazing", uz: "ajoyib" },
+          { w: "weather", uz: "ob-havo" },
+          { w: "take photos", uz: "rasmga olmoq" },
+          { w: "the best part", uz: "eng yaxshi qismi" },
+          { w: "unforgettable", uz: "unutilmas" }
+        ],
+        minWords: 100, maxWords: 120, minutes: 20
       },
       speaking: {
         words: [
@@ -1525,10 +1646,21 @@ var TA_SKILLS = {
         retell: "Retell the text in your own words. Talk about each teenager's dream and what they are doing now."
       },
       writing: {
-        topic: 'My family',
-        task: 'Write an email to a pen-friend about your family.',
-        points: ['who is in your family', 'what each person is like and what they do', 'what you do together at the weekend'],
-        minWords: 140, maxWords: 160, minutes: 25
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "My Future Plans",
+        instruction: "Write about your plans for the next five or ten years, and what you are doing now to make them happen.",
+        words: [
+          { w: "in the future", uz: "kelajakda" },
+          { w: "going to", uz: "... moqchi (reja)" },
+          { w: "hope", uz: "umid qilmoq" },
+          { w: "become", uz: "bo'lmoq" },
+          { w: "university", uz: "universitet" },
+          { w: "save money", uz: "pul yig'moq" },
+          { w: "dream", uz: "orzu" },
+          { w: "achieve", uz: "erishmoq" },
+          { w: "work hard", uz: "qattiq mehnat qilmoq" }
+        ],
+        minWords: 100, maxWords: 120, minutes: 20
       },
       speaking: {
         words: [
@@ -1664,10 +1796,21 @@ var TA_SKILLS = {
         retell: "Retell the text in your own words. Talk about at least four jobs and why they are important."
       },
       writing: {
-        topic: 'My home',
-        task: 'Write an email to a friend about your home.',
-        points: ['where your home is and what kind of home it is', 'the rooms in your home', 'your favourite room and why you like it'],
-        minWords: 150, maxWords: 170, minutes: 25
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "My Dream Job",
+        instruction: "Describe the job you would like to have: what the work is like, what skills it needs, and why you want to do it.",
+        words: [
+          { w: "dream job", uz: "orzudagi kasb" },
+          { w: "earn", uz: "pul topmoq" },
+          { w: "salary", uz: "maosh" },
+          { w: "skills", uz: "ko'nikmalar" },
+          { w: "experience", uz: "tajriba" },
+          { w: "responsible", uz: "mas'uliyatli" },
+          { w: "team", uz: "jamoa" },
+          { w: "help people", uz: "odamlarga yordam bermoq" },
+          { w: "challenging", uz: "sinovli, qiyin" }
+        ],
+        minWords: 110, maxWords: 130, minutes: 20
       },
       speaking: {
         words: [
@@ -1805,10 +1948,21 @@ var TA_SKILLS = {
         retell: "Retell the text in your own words. Talk about the clothes of at least three places."
       },
       writing: {
-        topic: 'My weekday',
-        task: 'Write a short text about a normal weekday in your life.',
-        points: ['what time you get up and what you do in the morning', 'what you do in the afternoon', 'what you do in the evening and when you go to bed'],
-        minWords: 155, maxWords: 175, minutes: 25
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "My Favourite Clothes",
+        instruction: "Write about the clothes you like to wear every day and on special occasions, and explain why you like them.",
+        words: [
+          { w: "comfortable", uz: "qulay" },
+          { w: "casual", uz: "kundalik, oddiy" },
+          { w: "fashionable", uz: "zamonaviy" },
+          { w: "outfit", uz: "kiyim to'plami" },
+          { w: "match", uz: "mos kelmoq" },
+          { w: "wear", uz: "kiymoq" },
+          { w: "style", uz: "uslub" },
+          { w: "second-hand", uz: "ishlatilgan" },
+          { w: "on special occasions", uz: "maxsus holatlarda" }
+        ],
+        minWords: 110, maxWords: 130, minutes: 20
       },
       speaking: {
         words: [
@@ -1948,10 +2102,22 @@ var TA_SKILLS = {
         retell: "Retell the text in your own words. Talk about the good and bad points of at least three ways to travel."
       },
       writing: {
-        topic: 'My favourite meal',
-        task: 'Write a short text about your favourite meal.',
-        points: ['what the meal is and what is in it', 'who makes it and when you eat it', 'why you like it'],
-        minWords: 165, maxWords: 185, minutes: 30
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "How I Travel",
+        instruction: "Write about how you travel to school or work and around your city. Compare different ways of travelling and say which one you prefer.",
+        words: [
+          { w: "public transport", uz: "jamoat transporti" },
+          { w: "on foot", uz: "piyoda" },
+          { w: "by bus", uz: "avtobusda" },
+          { w: "traffic jam", uz: "tirbandlik" },
+          { w: "journey", uz: "yo'l, safar" },
+          { w: "it takes", uz: "... vaqt oladi" },
+          { w: "save time", uz: "vaqtni tejamoq" },
+          { w: "environment", uz: "atrof-muhit" },
+          { w: "prefer", uz: "afzal ko'rmoq" },
+          { w: "than", uz: "... dan ko'ra" }
+        ],
+        minWords: 110, maxWords: 130, minutes: 20
       },
       speaking: {
         words: [
@@ -2090,10 +2256,21 @@ var TA_SKILLS = {
         retell: "Retell the text in your own words. Tell at least one interesting fact about each animal."
       },
       writing: {
-        topic: 'A shopping trip',
-        task: 'Write a short text about a shopping trip you remember.',
-        points: ['where you went and who you went with', 'what you bought and how much it cost', 'how you felt about the trip'],
-        minWords: 175, maxWords: 195, minutes: 30
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "My Favourite Animal",
+        instruction: "Write about your favourite animal: what it looks like, where it lives, what it eats, and why you like it.",
+        words: [
+          { w: "wild", uz: "yovvoyi" },
+          { w: "pet", uz: "uy hayvoni" },
+          { w: "intelligent", uz: "aqlli" },
+          { w: "habitat", uz: "yashash muhiti" },
+          { w: "feed on", uz: "... bilan oziqlanmoq" },
+          { w: "protect", uz: "himoya qilmoq" },
+          { w: "endangered", uz: "yo'qolib ketish xavfi ostida" },
+          { w: "loyal", uz: "sodiq" },
+          { w: "fascinating", uz: "hayratlanarli" }
+        ],
+        minWords: 120, maxWords: 140, minutes: 20
       },
       speaking: {
         words: [
@@ -2238,10 +2415,22 @@ var TA_SKILLS = {
         retell: "Retell the text in your own words. Explain the five healthy habits."
       },
       writing: {
-        topic: 'My town',
-        task: 'Write a short text about the town or city where you live.',
-        points: ['where your town is and how big it is', 'two places you like there and why', 'what visitors can do in your town'],
-        minWords: 180, maxWords: 200, minutes: 30
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "How I Stay Healthy",
+        instruction: "Write about what you do to stay healthy, and what you would like to change in your habits.",
+        words: [
+          { w: "healthy", uz: "sog'lom" },
+          { w: "habits", uz: "odatlar" },
+          { w: "exercise", uz: "jismoniy mashq qilmoq" },
+          { w: "balanced diet", uz: "muvozanatli ovqatlanish" },
+          { w: "avoid", uz: "... dan saqlanmoq" },
+          { w: "get enough sleep", uz: "yetarlicha uxlamoq" },
+          { w: "stress", uz: "stress, asabiylik" },
+          { w: "fresh air", uz: "toza havo" },
+          { w: "regularly", uz: "muntazam ravishda" },
+          { w: "instead of", uz: "... o'rniga" }
+        ],
+        minWords: 120, maxWords: 140, minutes: 25
       },
       speaking: {
         words: [
@@ -2383,10 +2572,22 @@ var TA_SKILLS = {
         retell: "Retell the text in your own words. Talk about how technology helps us and its disadvantages."
       },
       writing: {
-        topic: 'My free time',
-        task: 'Write a short text about what you do in your free time.',
-        points: ['what you like doing in your free time', 'when and where you do it, and who with', 'a new hobby you would like to try and why'],
-        minWords: 190, maxWords: 210, minutes: 30
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "Technology in My Life",
+        instruction: "Write about how you use technology every day, how it helps you, and what problems it can cause.",
+        words: [
+          { w: "smartphone", uz: "smartfon" },
+          { w: "apps", uz: "ilovalar" },
+          { w: "online", uz: "onlayn" },
+          { w: "keep in touch", uz: "aloqada bo'lmoq" },
+          { w: "useful", uz: "foydali" },
+          { w: "waste time", uz: "vaqtni behuda o'tkazmoq" },
+          { w: "screen time", uz: "ekran oldida o'tkazilgan vaqt" },
+          { w: "without", uz: "... siz" },
+          { w: "search for", uz: "qidirmoq" },
+          { w: "communicate", uz: "muloqot qilmoq" }
+        ],
+        minWords: 120, maxWords: 140, minutes: 25
       },
       speaking: {
         words: [
@@ -2460,6 +2661,24 @@ var TA_SKILLS = {
           { type: "open", q: "What may happen to the real Titanic in a few decades?", keys: ["nothing","disappear"], line: 35 }
         ],
         retell: "Retell the text in your own words. Talk about the real ship, how the film was made and what happened when it came out."
+      },
+      writing: {
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "My Favourite Movie",
+        instruction: "Write about your favourite film: what it is about, who the main characters are, and why you recommend it. Don't tell the ending!",
+        words: [
+          { w: "director", uz: "rejissyor" },
+          { w: "main character", uz: "bosh qahramon" },
+          { w: "plot", uz: "syujet" },
+          { w: "take place", uz: "sodir bo'lmoq" },
+          { w: "exciting", uz: "hayajonli" },
+          { w: "scene", uz: "sahna" },
+          { w: "actor", uz: "aktyor" },
+          { w: "touching", uz: "ta'sirli" },
+          { w: "ending", uz: "yakun, oxiri" },
+          { w: "recommend", uz: "tavsiya qilmoq" }
+        ],
+        minWords: 120, maxWords: 140, minutes: 25
       }
     },
     { id: 'e10', no: 20, stage: 'Elementary', theme: 'Weather & holidays', emoji: '☀️',
@@ -2509,6 +2728,24 @@ var TA_SKILLS = {
           { type: "open", q: "What do scientists say we must do?", keys: ["protect","environment"], line: 43 }
         ],
         retell: "Retell the text in your own words. Describe each season and explain why we have seasons."
+      },
+      writing: {
+        // the Writing Journey (teacher, 2026-11-09) — made by tools/build-writings.js from docs/writing-journey.json
+        topic: "My Favourite Season",
+        instruction: "Write about your favourite season: what the weather is like, what you do at that time of year, and why you love it.",
+        words: [
+          { w: "season", uz: "fasl" },
+          { w: "weather", uz: "ob-havo" },
+          { w: "temperature", uz: "harorat" },
+          { w: "outdoors", uz: "ochiq havoda" },
+          { w: "celebrate", uz: "nishonlamoq" },
+          { w: "remind me of", uz: "... ni eslatadi" },
+          { w: "cosy", uz: "shinam" },
+          { w: "colourful", uz: "rang-barang" },
+          { w: "the best time", uz: "eng yaxshi vaqt" },
+          { w: "spend", uz: "o'tkazmoq" }
+        ],
+        minWords: 120, maxWords: 150, minutes: 25
       }
     }
   ]

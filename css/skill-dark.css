@@ -100,6 +100,11 @@
 @media (max-width: 560px) {
 }
 #skBody.sk-studio .sk-retell-goal { color: #818CF8 !important; }
+#skBody.sk-studio .sk-ask { background: #1C202B !important; border: 2px solid rgba(255,255,255,0.25) !important; }
+#skBody.sk-studio .sk-ask.used { background: rgba(16,185,129,0.15) !important; border-color: #34D399 !important; }
+#skBody.sk-studio .sk-ask.missing { background: rgba(244,63,94,0.15) !important; border-color: #FB7185 !important; }
+#skBody.sk-studio .sk-asked-count { background: #242937 !important; color: #FBBF24 !important; }
+#skBody.sk-studio .sk-asked-count.ok { background: rgba(16,185,129,0.15) !important; color: #34D399 !important; }
 
 /* the page, the start card (the student theme's .ta-login-* look), inputs and the Start button */
 #skBody.sk-studio { background: #0E1017 !important; color: #F3F4F8 !important; color-scheme: dark; }

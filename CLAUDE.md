@@ -612,6 +612,18 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   Words: the teacher's 10 with `uz` + an emoji + `ex` (the text's sentence, found by the tool). After Submit: the words, Analyze,
   then a **Retelling** reminder card (`retell` + "Try to use at least 5 vocabulary items from the text." — nothing typed or sent).
   Steps 19–20 have only this Reading so far. `tests/reading-journey.spec.js`.
+- **Writing Journey (teacher, 2026-11-09 — replaces all earlier writings)**: 20 tasks, source `docs/writing-journey.json`
+  (`docs/writing-journey.md` readable; spec `docs/superpowers/specs/2026-11-09-writing-journey-design.md`), put into
+  `js/skills-data.js` by `node tools/build-writings.js` (never edit them by hand): `writing { topic, instruction, words[{w, uz}] (8–10
+  asked words — the student must use all; ticked live, `skAskedWords` in skill-bands.js accepts other forms), minWords, maxWords, minutes }`
+  (1 My Daily Routine 80–100/15 … 20 My Favourite Season 120–150/25). Steps 19–20 now have Reading + Writing. **AI check after Submit**:
+  the text goes to the helper (`tools/ai-worker.js`, job `writing`, 40/min per IP) → JSON `scores {grammar 0–3, vocabulary 0–2, structure
+  0–2, task 0–2}`, `mistakes[{wrong,right,why}]`, `better[{word,instead,why}]`, `tips[3]`; Loom's band = `skWritingAiBand` (sum, −0.5 only
+  when under the minimum, 1–9, nearest 0.5). Feedback order: score /9 · word count · grammar · better words · asked words · 3 tips.
+  Result gets `aiChecked`, `ai`, `asked`. **AI busy/offline** → the old check (LanguageTool + `skWritingBand`), `aiChecked: false`; the
+  teacher's writing window then has "🤖 Check with AI" (`skCheckWritingWithAi` in common.js) → the AI's band becomes the teacher's mark
+  (`ta_skills_marks`) and its feedback is kept in `ta_skills_ai` (synced, in the backup). **After changing the worker, the teacher must
+  paste it into Cloudflare again** (`/status` shows its version). `tests/writing-journey.spec.js`.
 - **Speaking Journey (teacher, 2026-11-09)**: **Speaking** follows the teacher's "Speaking Journey" (20 topics: 1 Daily Routine,
   2 Family, 3 Home & Living, 4 Food & Meals, 5 Free Time, 6 Friends, 7 School & Education, 8 Hobbies & Sports, 9 Shopping, 10 Your City,
   11 Holidays, 12 Future Plans, 13 Jobs & Careers, 14 Clothes & Fashion, 15 Transport, 16 Animals & Pets, 17 Health & Lifestyle,

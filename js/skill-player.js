@@ -627,9 +627,11 @@ function showWriting(level) {
   const totalMs = W.minutes * secondsPerMinute * 1000;
   root().innerHTML = headerHtml(level) + `
     <section class="sk-card sk-task-card"><h2 class="sk-topic">✍️ ${esc(W.topic)}</h2>
+      ${W.instruction ? `<p class="sk-intro sk-instruction">${esc(W.instruction)}</p>` : ''}
       ${W.task ? `<p class="sk-intro">${esc(W.task)}</p>` : ''}
-      <p class="sk-points-t">Write about:</p>
-      <ul class="sk-points">${W.points.map(p => `<li>${esc(p)}</li>`).join('')}</ul>
+      ${W.points && W.points.length ? `<p class="sk-points-t">Write about:</p><ul class="sk-points">${W.points.map(p => `<li>${esc(p)}</li>`).join('')}</ul>` : ''}
+      ${W.words && W.words.length ? `<p class="sk-points-t">Use all of these words <span class="sk-asked-count" id="skAskedCount">0 / ${W.words.length}</span></p>
+      <ul class="sk-asked" id="skAsked">${W.words.map(w => `<li class="sk-ask" data-w="${esc(w.w)}"><b>${esc(w.w)}</b>${w.uz ? `<small class="sk-uz" lang="uz" translate="no">${esc(w.uz)}</small>` : ''}</li>`).join('')}</ul>` : ''}
       <p class="sk-intro sk-target">Write ${W.minWords}–${W.maxWords} words. You have ${W.minutes} minutes.</p>
     </section>
     <section class="sk-card sk-write-card">
@@ -652,6 +654,13 @@ function showWriting(level) {
     count.textContent = `${n} / ${W.minWords}–${W.maxWords} words`;
     count.classList.toggle('ok', n >= W.minWords);   // more than asked is fine — it even adds a little (2026-11-09)
     count.classList.toggle('over', false);
+    // the asked words tick as the student uses them (other forms count: use → used)
+    if (W.words && W.words.length) {
+      const got = skAskedWords(box.value, W.words);
+      root().querySelectorAll('.sk-ask').forEach(li => li.classList.toggle('used', got.used.indexOf(li.dataset.w) !== -1));
+      const c = $('#skAskedCount');
+      if (c) { c.textContent = got.used.length + ' / ' + W.words.length; c.classList.toggle('ok', !got.missing.length); }
+    }
   };
   box.addEventListener('input', () => { updateCount(); if (!done) saveDraft(box.value); });
   updateCount();
@@ -717,8 +726,11 @@ async function submitWriting(level, W, timeUp) {
       <div class="sk-send" id="skSend" role="status"><span class="sk-send-note">🔍 Checking your writing…</span></div>
     </div>`;
   const better = skBetterWords(text);
-  const check = await skCheckGrammar(text);
-  const band = skWritingBand(words, W.minWords, check.matches.length, check.ok, W.maxWords);
+  const asked = W.words && W.words.length ? skAskedWords(text, W.words) : null;
+  // the AI check (the Writing Journey, 2026-11-09) and the free grammar check at the same time; the AI decides the band when
+  // it answers, else the old estimate does
+  const [check, ai] = await Promise.all([skCheckGrammar(text), W.words ? skAiCheckWriting(text, W) : Promise.resolve(null)]);
+  const band = ai && ai.result ? skWritingAiBand(ai.result.scores, words, W.minWords) : skWritingBand(words, W.minWords, check.matches.length, check.ok, W.maxWords);
   lastPayload = {
     v: 1, code: SK.code, type: info.type, title: `Step ${level.no} · ${level.theme} — ${info.name}`, step: level.id, stepNo: level.no, skill: 'writing',
     name: SK.name, studentId: SK.studentId, text, words, minWords: W.minWords, maxWords: W.maxWords,
@@ -728,17 +740,74 @@ async function submitWriting(level, W, timeUp) {
     mistakeList: check.matches.map(m => ({ bad: text.slice(m.offset, m.offset + m.length), fix: m.replacements[0] || '', message: m.message, at: m.offset, rule: m.rule })),
     grammarChecked: check.ok, band, timeSeconds: secs, timeDisplay: fmtClock(secs), date: new Date().toISOString()
   };
+  if (W.words) {
+    lastPayload.aiChecked = !!(ai && ai.result);
+    if (ai && ai.result) lastPayload.ai = ai.result;
+    if (asked) lastPayload.asked = asked;
+  }
   // builtAt = the Submit time (= date): Loom hides results "built" before a "Delete all results" (isExpiredResult in common.js);
   // a page opened before a reset and sent after it is a new result, in Results and the Course's results table alike.
   lastPayload.builtAt = lastPayload.date;
   lastPayload.__id = skResultId(lastPayload);
   markDone(lastPayload);   // finished: this device won't open it again (one try per exercise)
-  $('#skActions .sk-result').insertAdjacentHTML('afterbegin', `<div class="sk-score sk-band"><span class="sk-score-n">${band}</span>
-    <span class="sk-score-t">Estimated band · ${words} words</span></div>`);
-  $('#skAfter').innerHTML = `<div class="sk-stack"><section class="sk-card sk-check-card"><h2>🔍 Your writing, checked</h2><div id="skGrammar">${grammarHtml(text, check)}</div></section>
-    ${betterHtml(better)}</div>`;
+  if (W.words) {
+    // the teacher's feedback order: score /9 · words · grammar · better words · asked words · three tips
+    $('#skActions .sk-result').insertAdjacentHTML('afterbegin', aiScoreHtml(band, ai && ai.result, words, W));
+    $('#skAfter').innerHTML = aiFeedbackHtml(text, words, W, ai, check, better, asked);
+  } else {
+    $('#skActions .sk-result').insertAdjacentHTML('afterbegin', `<div class="sk-score sk-band"><span class="sk-score-n">${band}</span>
+      <span class="sk-score-t">Estimated band · ${words} words</span></div>`);
+    $('#skAfter').innerHTML = `<div class="sk-stack"><section class="sk-card sk-check-card"><h2>🔍 Your writing, checked</h2><div id="skGrammar">${grammarHtml(text, check)}</div></section>
+      ${betterHtml(better)}</div>`;
+  }
   wireCheckAgain(text);
   sendNow();
+}
+
+/* ---------- the Writing Journey's AI check (2026-11-09) ----------
+   The teacher's Cloudflare helper (tools/ai-worker.js, job "writing") asks Gemini for the four part scores, the grammar
+   mistakes, better words and three tips. → { result } or { error } (busy, limit reached, no internet: never throws). */
+const SK_AI_URL = 'https://loom-ai.toxiraxii010.workers.dev';
+function skAiUrl() { try { return localStorage.getItem('ta_ai_url') || SK_AI_URL; } catch (e) { return SK_AI_URL; } }
+async function skAiCheckWriting(text, W) {
+  if (!String(text || '').trim()) return { error: 'nothing written' };
+  try {
+    const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const timer = setTimeout(() => { if (ctrl) ctrl.abort(); }, window.__skAiTimeoutMs || 60000);
+    const res = await fetch(skAiUrl(), { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctrl ? ctrl.signal : undefined,
+      body: JSON.stringify({ job: 'writing', text: String(text).slice(0, 6000), topic: W.topic, instruction: W.instruction || '', minWords: W.minWords,
+        maxWords: W.maxWords, words: (W.words || []).map(w => w.w) }) });
+    clearTimeout(timer);
+    let data = null;
+    try { data = await res.json(); } catch (e) { data = null; }
+    if (res.ok && data && data.result && data.result.scores) return { result: data.result };
+    return { error: (data && data.error) || 'the AI did not answer' };
+  } catch (e) { return { error: 'the AI could not be reached' }; }
+}
+window.skAiCheckWriting = skAiCheckWriting;
+function aiScoreHtml(band, result, words, W) {
+  const s = result && result.scores;
+  return `<div class="sk-score sk-band"><span class="sk-score-n">${band} <small>/ 9</small></span>
+    <span class="sk-score-t">${s ? `Grammar ${s.grammar}/3 · Vocabulary ${s.vocabulary}/2 · Structure ${s.structure}/2 · Task ${s.task}/2${words < W.minWords ? ' · −0.5 (too short)' : ''}` : 'Estimated band (the AI check didn\'t run)'}</span></div>`;
+}
+function aiFeedbackHtml(text, words, W, ai, check, better, asked) {
+  const r = ai && ai.result;
+  const short = words < W.minWords;
+  const lengthCard = `<section class="sk-card sk-ai-len"><h2>📏 Word count</h2>
+    <p class="sk-intro"><b>${words}</b> words · required <b>${W.minWords}–${W.maxWords}</b>. ${short ? '⚠️ Too short: −0.5 from your score.' : '✅ Long enough.'}</p></section>`;
+  const grammar = r
+    ? `<section class="sk-card sk-check-card"><h2>🔍 Grammar</h2>${r.mistakes.length ? `<ol class="sk-mistakes sk-ai-mistakes">${r.mistakes.map((m, i) => `<li class="sk-mistake"><span class="sk-num">${i + 1}</span><div class="sk-qbody">
+        <div class="sk-mfix"><s class="sk-bad">${esc(m.wrong)}</s></div><div class="sk-mfix">→ <b class="sk-good">${esc(m.right)}</b></div>
+        <div class="sk-mmsg">${esc(m.why)}</div></div></li>`).join('')}</ol>` : '<p class="sk-intro">🎉 No grammar mistakes found. Great job!</p>'}</section>`
+    : `<section class="sk-card sk-check-card"><h2>🔍 Grammar</h2><p class="sk-ai-note" role="status">🤖 The AI check couldn't run this time (${esc(ai && ai.error || 'busy')}). Here is the simple grammar check — your teacher can check your writing with AI later.</p><div id="skGrammar">${grammarHtml(text, check)}</div></section>`;
+  const betterCard = r
+    ? `<section class="sk-card sk-better-card"><h2>💡 Better words</h2>${r.better.length ? `<ul class="sk-better">${r.better.map(b => `<li><b>${esc(b.word)}</b> → ${esc(b.instead)}${b.why ? ` <span class="sk-small">— ${esc(b.why)}</span>` : ''}</li>`).join('')}</ul>` : '<p class="sk-intro">Your words are already strong. Keep using them!</p>'}<p class="sk-intro sk-small">These are ideas, not mistakes.</p></section>`
+    : betterHtml(better);
+  const askedCard = asked ? `<section class="sk-card sk-asked-card"><h2>📝 Asked words</h2>
+    <ul class="sk-asked sk-asked-result">${(W.words || []).map(w => { const ok = asked.used.indexOf(w.w) !== -1; return `<li class="sk-ask ${ok ? 'used' : 'missing'}">${ok ? '✅' : '❌'} <b>${esc(w.w)}</b></li>`; }).join('')}</ul>
+    <p class="sk-intro">${asked.used.length} of ${(W.words || []).length} used${asked.missing.length ? ' — try to use all of them next time.' : '. Well done!'}</p></section>` : '';
+  const tips = r && r.tips.length ? `<section class="sk-card sk-tips-card"><h2>🚀 Next time</h2><ol class="sk-tips">${r.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ol></section>` : '';
+  return `<div class="sk-stack">${lengthCard}${grammar}${betterCard}${askedCard}${tips}</div>`;
 }
 
 // "Check again" re-runs only the grammar check. The teacher already has this Submit's result: nothing is sent again.
