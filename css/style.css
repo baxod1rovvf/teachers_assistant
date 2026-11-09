@@ -3286,3 +3286,7 @@ body.loom-studio button.sk-node:hover .sk-node-emoji { animation: none; }
    (2026-11-08: it sat in the corner, outside the circle, so a click went to the page) */
 body.loom-studio .ai-robot-anim { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) !important; pointer-events: auto; filter: none; }
 @media (max-width: 860px) { body.loom-studio .ai-robot-anim { width: 56px !important; height: 56px !important; font-size: 1.5rem; } }
+/* the chat's text can be selected and copied (2026-11-09: it took the draggable robot's "grab" hand and no-select) */
+.ai-robot-bubble { cursor: auto; user-select: text; -webkit-user-select: text; }
+.ai-robot-bubble :is(.ai-msg, .ai-msg *) { cursor: text; user-select: text; -webkit-user-select: text; }
+.ai-robot-bubble :is(button, .ai-chip, .ai-send) { cursor: pointer; }
