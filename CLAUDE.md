@@ -549,7 +549,7 @@ real students' names or results into the repository (it is public).
   writing ("An email to a new classmate", 50–70 words, 20 min) + speaking ("A person you met recently", 45 s); **`b1…b10` complete (2026-11-05) — so Steps 1–18 are complete, 19–20 (`e9`, `e10`) "Coming soon"**: very easy listenings
   (~2 min with the writing pauses, 10 one-word/number gaps — names, ages, numbers, colours, prices, days, o'clock times, phone
   numbers —, two spelled names each, `audio/skills/beg-<n>-listening.mp3`, entries 9–18 of `elementary-scripts.json`, so
-  `… audio/skills 9` remakes Step 1, `… 14` Step 6), readings of ~40/50/60/70/80/90/95/100/110/120 words with 10 questions (5 `tf` + 5
+  `… audio/skills 9` remakes Step 1, `… 14` Step 6), readings of ~92/108/132/144/156/174/186/200/224/240 words (doubled 2026-11-09 by adding a second half after the old text, so every question's `line` stays right; Steps 11–18 doubled the same way, ~340–550 words) with 10 questions (5 `tf` + 5
   `choose`), writing 20–50 words / 10–15 min, Part 2 30–45 s (b1 keeps About me (25–35 words, 12 min, 3 simple points) + Talk about yourself (30 s); b6 Days & times, b7 Food,
   b8 Animals & pets, b9 My room, b10 My friend). A step with no part = "Coming soon". Use the ids, never the number, in links/keys/results. `TA_BETTER_WORDS` for the writing tips. **A dot is done** (`skDotState`) when at least half
   of the group's students (Students list, by ID) have a result for that step + skill (a group with no students: one result); Speaking
@@ -585,8 +585,26 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   time, mistakes, a band box). **The teacher's mark wins everywhere**: `ta_skills_marks` keyed "<code>|<studentId>". Both keys are synced and
   in the backup. **Results table** per step + group, on the step page (`skTableRows`, `skTableHtml`, PNG by `skDrawTablePng`): ranked by Overall (equal places
   share a number, medals), 🎧 📖 ✍️ bands with raw scores, best try per skill, a missing skill "—", footer average.
+- **Fairer writing check + one try + forgiving IDs (teacher, 2026-11-09)**: only real mistakes count (`skCountsAsMistake` in
+  skill-bands.js — not extra spaces, American/British spelling, or spelling "mistakes" in capitalised words = names; old results
+  are filtered the same way when shown, `skWritingMistakes`); each mistake is saved with its position `at` (+ `rule`), and Loom
+  finds older ones as whole words (`skFindMistake` — before, "i" was marked inside "pencils"); `skWritingBand(…, maxWords)` lowers
+  the band for too many words too. Old writings keep the band they were sent with (the teacher can Save band). Writing words:
+  ~60 at Step 1 → ~200 at Step 18 (±10; minutes ≥ ~7 words a minute). **One try per course exercise**: on Start, `skAlreadyDone`
+  checks this device (`ta_skill_done`, set at Submit by `markDone`) and the database (code + studentId, code + name in [typed,
+  Capitalised, lower]) → `showAlreadyDone` ("You have already done this …", the result); a failed check lets the student in;
+  preview never blocked. Create-page exercise files are unchanged. **IDs**: `taIdKey` (common.js) — case, spaces/dots/dashes,
+  a leading "ID"/"№"/"#", leading zeros, full-width digits and Cyrillic look-alikes don't matter; used by `taRosterIndex` /
+  `rosterStudentForId` / `rosterStudentForResult` (a swapped name/ID box matches too); it lives in skill-bands.js (the student page uses it).
+  **Only the group's students can start (teacher, 2026-11-09)**: every Copy link (not Speaking) also writes `class-<code>` =
+  `{ code: 'TAUSER', type: 'TA_SYNC:CLASS', title: code, data: JSON [{h, n}] }` (`taPublishClassList` in firebase.js, delete then
+  create; h = `skClassHash(code, id)` = first 24 hex of sha256("<code>|<taIdKey(id)>"), so IDs can't be read from the database;
+  names are). On Start, `skCheckStudent` (skill-player.js): the typed ID's hash must be on the list ("This ID is not on your
+  teacher's list…") and the typed name must fit that student (`skNameFits`: one word of 3+ letters, or its start — "Mohlaroy" fits
+  "Yuldasheva Mohlaroy"; else "This ID belongs to another student…"); the result carries the listed name. No list (links copied
+  before 2026-11-09 until Copy link is pressed again; a group with no students) or no internet → let in. `tests/course-fairness.spec.js`.
 - **Bands** (`js/skill-bands.js`): Listening/Reading = round(correct/total × 40) → IELTS table (19/20 → 8.5, 16/20 → 7.5, 9/20 → 5.5);
-  Writing estimate = 3 + 3×min(1, words/min) + 3×max(0, 1 − mistakes per 100 words/10), nearest 0.5, 1–9 (grammar check didn't run → last
+  Writing estimate = 3 + 3×length (words/min below the range, 1 inside, 1 − over/max above) + 3×max(0, 1 − mistakes per 100 words/10), nearest 0.5, 1–9 (grammar check didn't run → last
   part 1.5; **blank writing = band 1**); Overall = average of the present skills, rounded like IELTS; CEFR from Overall.
 - **LanguageTool** (`https://api.languagetool.org/v2/check`, `en-GB`, free, no key): about 20 checks a minute per connection. A busy or
   offline check shows "press Check again", the text is still sent, the band then uses only the length.

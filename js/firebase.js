@@ -101,6 +101,29 @@ window.taUnpublishPlay = async function (uid, parts) {
     await deleteDoc(doc(db, 'results', i ? 'play-' + uid + '-' + i : 'play-' + uid)).catch(() => {});
   }
 };
+// The course's class list for one link (teacher, 2026-11-09: "student can only enter exercise with ID"): record
+// `class-<code>` = the group's students as [{ h: skClassHash(code, id), n: name }] — the IDs scrambled, so the list can be
+// read by the student page (skill.html) to check a typed ID, but the IDs can't be read from the database. Written again
+// on every Copy link (a new student, a new ID); the rules allow create + delete, not change, so the old one goes first.
+// Like the exercise links it has the sync shape (code 'TAUSER', type 'TA_SYNC:CLASS') and no submittedAt, so it never
+// shows up among results. Resolves true when saved.
+window.taPublishClassList = async function (code, students) {
+  if (!db || !code || !Array.isArray(students) || typeof skClassHash !== 'function') return false;
+  try {
+    const list = [];
+    for (const st of students) {
+      const h = await skClassHash(code, st.id);
+      if (h) list.push({ h: h, n: String(st.name || '').slice(0, 80) });
+    }
+    if (students.length && !list.length) return false;   // this browser can't scramble the IDs
+    const ref = doc(db, 'results', 'class-' + code);
+    await deleteDoc(ref).catch(() => {});
+    if (!list.length) return true;   // a group with no students yet: no list, so the link stays open to anyone
+    await setDoc(ref, { v: 1, code: 'TAUSER', builtAt: '', type: 'TA_SYNC:CLASS', title: code, name: '', data: JSON.stringify(list),
+      score: list.length, warnings: 0, timeSeconds: 0, timeDisplay: '00:00', date: new Date().toISOString() });
+    return true;
+  } catch (e) { taReportDbError(e); console.error('Putting the class list online failed:', e); return false; }
+};
 // Deletes every exercise link older than 7 days (any teacher's), and tells how
 // much the ones still online take. Only the records' names, dates and sizes are
 // read (not the exercises), so this stays light.

@@ -77,8 +77,8 @@ var TA_SKILLS = {
       },
       reading: {
         title: "Amy's name card",
-        text: "Hello! My name is Amy Hill. I am fifteen years old. I am a student. I am from Manchester. " +
-          "I live with my mum and my dad. My cat's name is Lily. I like music and books. My best friend is Jess. She is fifteen too.",
+        text: "Hello! My name is Amy Hill. I am fifteen years old. I am a student. I am from Manchester. I live with my mum and my dad. My cat's name is Lily. I like music and books. My best friend is Jess. She is fifteen too.\n\n" +
+          "My school is big and new. My favourite teacher is Mrs Taylor. She is very nice. I go to school by bus. My mum is a doctor, and my dad is a cook. At the weekend, I play the guitar with Jess. Lily sleeps on my bed every night.",
         questions: [
           { type: 'tf', q: 'Amy is fifteen.', a: ['True'], line: 2 },
           { type: 'tf', q: 'Amy is a teacher.', a: ['False'], line: 3 },
@@ -108,7 +108,7 @@ var TA_SKILLS = {
         topic: 'About me',
         task: 'Write an email to a new pen-friend about yourself.',
         points: ['your name and age', 'where you live', 'your family or your friends'],
-        minWords: 25, maxWords: 35, minutes: 12
+        minWords: 50, maxWords: 70, minutes: 12
       },
       speaking: {
         words: [
@@ -200,9 +200,8 @@ var TA_SKILLS = {
       },
       reading: {
         title: 'Our class list',
-        text: "This is our class list. We are Class 5B. There are eighteen students in our class. Our teacher is Mr Lee. " +
-          "Our classroom is Room 12. Sam is eleven years old. Ella is twelve. Max is eleven too. " +
-          "Ella has got two brothers. Sam has got one sister. There are six lessons every day.",
+        text: "This is our class list. We are Class 5B. There are eighteen students in our class. Our teacher is Mr Lee. Our classroom is Room 12. Sam is eleven years old. Ella is twelve. Max is eleven too. Ella has got two brothers. Sam has got one sister. There are six lessons every day.\n\n" +
+          "Our classroom is big and sunny. It has got ten tables and a big whiteboard. Mr Lee is from London. He is a good teacher, and he is very funny. Our first lesson is at nine o'clock. Lunch is at half past twelve. There are four girls and two boys in my group. Ella sits next to me. Max sits behind us. Sam likes Maths, and Ella likes English. Max likes PE best. We go home at three o'clock.",
         questions: [
           { type: 'tf', q: 'There are eighteen students in the class.', a: ['True'], line: 2 },
           { type: 'tf', q: 'The classroom is Room 20.', a: ['False'], line: 4 },
@@ -232,7 +231,7 @@ var TA_SKILLS = {
         topic: 'My numbers',
         task: 'Write about the numbers in your life.',
         points: ['how old you are', 'your house or flat number and your classroom number', 'how many people there are in your family'],
-        minWords: 20, maxWords: 30, minutes: 10
+        minWords: 60, maxWords: 80, minutes: 10
       },
       speaking: {
         words: [
@@ -321,9 +320,8 @@ var TA_SKILLS = {
       },
       reading: {
         title: 'My family photo',
-        text: "Look at my family photo. My name is Holly and I am thirteen. The tall man is my dad, Tom. " +
-          "The woman next to him is my mum, Sarah. My big brother is Leo. He is seventeen. My little sister is Rosie. She is five. " +
-          "The old man is my grandad, Bill. He has got a white beard. Our cat, Toby, is on my grandad's knee.",
+        text: "Look at my family photo. My name is Holly and I am thirteen. The tall man is my dad, Tom. The woman next to him is my mum, Sarah. My big brother is Leo. He is seventeen. My little sister is Rosie. She is five. The old man is my grandad, Bill. He has got a white beard. Our cat, Toby, is on my grandad's knee.\n\n" +
+          "This photo is from my grandad's birthday party. It was in the garden of our house. My dad is a bus driver, and my mum is a nurse. Leo plays the guitar, and he is very good. Rosie loves dolls and pink dresses. My grandad is seventy-five, but he is very happy and active. He lives with us in our house. My grandma is not in the photo, because she is the photographer! We have got a big cake on the table. It is a chocolate cake. Everyone in the photo is smiling.",
         questions: [
           { type: 'tf', q: 'Holly is thirteen.', a: ['True'], line: 1 },
           { type: 'tf', q: "Holly's dad is short.", a: ['False'], line: 2 },
@@ -353,7 +351,7 @@ var TA_SKILLS = {
         topic: 'My family',
         task: 'Write about your family.',
         points: ['how many people there are in your family', 'their names and how old they are', 'one thing about each person (tall, funny, kind…)'],
-        minWords: 25, maxWords: 35, minutes: 10
+        minWords: 65, maxWords: 85, minutes: 15
       },
       speaking: {
         words: [
@@ -442,9 +440,8 @@ var TA_SKILLS = {
       },
       reading: {
         title: "What's in my bag?",
-        text: "This is my school bag. It is red and black. In my bag, there are two books and a notebook. My pencil case is purple. " +
-          "There are three pencils, a pen and a rubber in it. I have got a bottle of water. It is blue. There is a banana for lunch. " +
-          "My phone is in my bag too. It is white. I have got my keys. They are small and silver.",
+        text: "This is my school bag. It is red and black. In my bag, there are two books and a notebook. My pencil case is purple. There are three pencils, a pen and a rubber in it. I have got a bottle of water. It is blue. There is a banana for lunch. My phone is in my bag too. It is white. I have got my keys. They are small and silver.\n\n" +
+          "I have got a small umbrella in my bag too. It is for rainy days. My bus card is in a small pocket. On Mondays, my sports shoes are in my bag, because I have got PE. They are white and blue. My glasses are in a brown box. My bag is very heavy every morning! In the afternoon, it is lighter, because I eat my banana and I drink my water.",
         questions: [
           { type: 'tf', q: 'The bag is red and black.', a: ['True'], line: 1 },
           { type: 'tf', q: 'There are three books in the bag.', a: ['False'], line: 2 },
@@ -474,7 +471,7 @@ var TA_SKILLS = {
         topic: 'My bag',
         task: 'Write about your bag and the things in it.',
         points: ['what colour your bag is', 'what is in your bag (books, pens…) and how many', 'your favourite thing in your bag and its colour'],
-        minWords: 25, maxWords: 35, minutes: 10
+        minWords: 75, maxWords: 95, minutes: 15
       },
       speaking: {
         words: [
@@ -571,10 +568,8 @@ var TA_SKILLS = {
       },
       reading: {
         title: "Bell's Shop: our price list",
-        text: "Welcome to Bell's Shop! We are at 36 King Street. We are open every day. Here is our price list. " +
-          "Bread is 85p. Milk is 60p. An apple is 30p, and a banana is 25p. A bottle of water is 50p. A small cake is 75p. " +
-          "Our cakes are very good! An ice cream is 90p. Children love it. A sandwich is £2. Birthday cards are 99p. " +
-          "Our phone number is 01632 960 714. Come and see us!",
+        text: "Welcome to Bell's Shop! We are at 36 King Street. We are open every day. Here is our price list. Bread is 85p. Milk is 60p. An apple is 30p, and a banana is 25p. A bottle of water is 50p. A small cake is 75p. Our cakes are very good! An ice cream is 90p. Children love it. A sandwich is £2. Birthday cards are 99p. Our phone number is 01632 960 714. Come and see us!\n\n" +
+          "We have got a lot of fruit and vegetables too. Carrots are 40p, and a big orange is 45p. A box of eggs is £1.80. Our cheese is from a farm near the town. Cheese is £2.50. A small bottle of orange juice is 80p. We sell newspapers and magazines too. A newspaper is £1. We have got pens, pencils and notebooks for school. A notebook is £1.20. On Saturdays, children get a free sweet with every ice cream. The shop opens at seven o'clock in the morning and closes at nine o'clock in the evening.",
         questions: [
           { type: 'tf', q: 'The shop is open every day.', a: ['True'], line: 2 },
           { type: 'tf', q: 'Bread is 58p.', a: ['False'], line: 4 },
@@ -604,7 +599,7 @@ var TA_SKILLS = {
         topic: 'Shopping list',
         task: 'You are going to the shop for your family. Write your shopping list in sentences.',
         points: ['what you need from the shop (five or six things)', 'how many of each thing — for example: two apples, one bottle of milk', 'how much each thing is — for example: The bread is 85p.'],
-        minWords: 30, maxWords: 40, minutes: 12
+        minWords: 85, maxWords: 105, minutes: 15
       },
       speaking: {
         words: [
@@ -690,10 +685,8 @@ var TA_SKILLS = {
       },
       reading: {
         title: "Leo's school week",
-        text: "My name is Leo and this is my school week. School starts at nine o'clock and finishes at three o'clock. On Monday, I have Maths and English. On Tuesday, I have Science and Art. " +
-          'Art is my favourite lesson! On Wednesday, I have Music. We sing songs. On Thursday, I have PE. ' +
-          "We play football. On Friday, I have Maths again and a test. Lunch is at twelve o'clock every day. I don't go to school on Saturday and Sunday. " +
-          'On Saturday, I play with my friends.',
+        text: "My name is Leo and this is my school week. School starts at nine o'clock and finishes at three o'clock. On Monday, I have Maths and English. On Tuesday, I have Science and Art. Art is my favourite lesson! On Wednesday, I have Music. We sing songs. On Thursday, I have PE. We play football. On Friday, I have Maths again and a test. Lunch is at twelve o'clock every day. I don't go to school on Saturday and Sunday. On Saturday, I play with my friends.\n\n" +
+          "In the morning, I get up at seven o'clock. I have breakfast with my sister, Mia. Mia is eight, and she goes to my school too. We walk to school with our mum. My best friend at school is Ben. Ben sits next to me in every lesson. My English teacher is Miss Brown. She reads stories to us. After school, I do my homework at four o'clock. I watch TV for one hour. Then we have dinner at six o'clock. I go to bed at nine o'clock. On Sunday, I visit my grandma and grandad. They live in a small house near the sea.",
         questions: [
           { type: 'tf', q: "School starts at nine o'clock.", a: ['True'], line: 1 },
           { type: 'tf', q: "Art is Leo's favourite lesson.", a: ['True'], line: 4 },
@@ -723,7 +716,7 @@ var TA_SKILLS = {
         topic: 'My week',
         task: 'Write about your week.',
         points: ['what you do on two or three days of the week — for example: On Monday, I have English.', 'what time you start and finish school (or work)', 'your favourite day and why'],
-        minWords: 30, maxWords: 40, minutes: 12
+        minWords: 90, maxWords: 110, minutes: 15
       },
       speaking: {
         words: [
@@ -808,10 +801,8 @@ var TA_SKILLS = {
       },
       reading: {
         title: 'The Green Café menu',
-        text: "Welcome to the Green Café! We are open every day from eight o'clock to six o'clock. For breakfast, we have eggs and toast for £3.50. Pancakes with fruit are £4. " +
-          'Children love our pancakes! For lunch, a cheese sandwich is £3. Chicken soup with bread is £4.50. Our soup is hot and very good on a cold day. ' +
-          'A small pizza is £6. Tea and coffee are £1.50. Orange juice is £2, and a glass of milk is £1. For something sweet, try our chocolate cake for £2.50. ' +
-          'Come and eat with us!',
+        text: "Welcome to the Green Café! We are open every day from eight o'clock to six o'clock. For breakfast, we have eggs and toast for £3.50. Pancakes with fruit are £4. Children love our pancakes! For lunch, a cheese sandwich is £3. Chicken soup with bread is £4.50. Our soup is hot and very good on a cold day. A small pizza is £6. Tea and coffee are £1.50. Orange juice is £2, and a glass of milk is £1. For something sweet, try our chocolate cake for £2.50. Come and eat with us!\n\n" +
+          "The café is in a small street near the station. It is green and white inside, and there are flowers on every table. The café has got twenty tables. On sunny days, you can sit in the garden. The cook is Mr Green. He makes the bread every morning. His wife, Anna, makes the cakes. We have got a special menu for children. It has small pizzas and small sandwiches. A children's lunch is £4. On Fridays, we have fish and chips for £7. Our café is busy at lunchtime. Please come early! We have free water for everyone.",
         questions: [
           { type: 'tf', q: 'The café is open every day.', a: ['True'], line: 1 },
           { type: 'tf', q: 'Eggs and toast are £4.', a: ['False'], line: 2 },
@@ -841,7 +832,7 @@ var TA_SKILLS = {
         topic: 'My food',
         task: "Write about the food you like and the food you don't like.",
         points: ['what you have for breakfast', 'your favourite food and drink', "a food you don't like"],
-        minWords: 30, maxWords: 40, minutes: 12
+        minWords: 100, maxWords: 120, minutes: 20
       },
       speaking: {
         words: [
@@ -928,10 +919,8 @@ var TA_SKILLS = {
       },
       reading: {
         title: 'Have you seen Bella?',
-        text: 'Have you seen our dog? Her name is Bella. She is a small dog, and she is three years old. She is white with a black ear. ' +
-          "She has a red collar with her name on it. Bella is very friendly. She loves children, and she likes to play with a ball. She doesn't like cats! " +
-          'We lost her on Sunday afternoon in Green Park. She is very small, so please look under cars and in gardens. Bella eats a lot, and her favourite food is chicken. If you find her, please bring her to 12 Hill Road. ' +
-          'Thank you!',
+        text: "Have you seen our dog? Her name is Bella. She is a small dog, and she is three years old. She is white with a black ear. She has a red collar with her name on it. Bella is very friendly. She loves children, and she likes to play with a ball. She doesn't like cats! We lost her on Sunday afternoon in Green Park. She is very small, so please look under cars and in gardens. Bella eats a lot, and her favourite food is chicken. If you find her, please bring her to 12 Hill Road. Thank you!\n\n" +
+          "Bella is a very good dog. She sleeps in a small bed in our kitchen. In the morning, she walks with my dad in the park. She can sit and give you her paw. Bella can't swim, so please look near the lake too. She is shy with men, but she likes women and children. Please don't run after her. Call her name, \"Bella!\", and show her some food. She will come to you. Our children are very sad. They want Bella to come home. You can call us at any time. My name is Kate, and our phone number is 07700 900 461. There is a small present for the person who finds her.",
         questions: [
           { type: 'tf', q: 'Bella is a big dog.', a: ['False'], line: 2 },
           { type: 'tf', q: 'Bella is three years old.', a: ['True'], line: 2 },
@@ -961,7 +950,7 @@ var TA_SKILLS = {
         topic: 'My pet',
         task: 'Write about your pet, or a pet you would like to have.',
         points: ['what animal it is and its name', 'how old it is and what colour it is', 'what it likes to eat or do'],
-        minWords: 35, maxWords: 45, minutes: 15
+        minWords: 110, maxWords: 130, minutes: 20
       },
       speaking: {
         words: [
@@ -1043,9 +1032,8 @@ var TA_SKILLS = {
       },
       reading: {
         title: 'Welcome to my room',
-        text: "Hi, I'm Jack, and this is my room. It is not very big, but I love it. The walls are light blue. My bed is next to the window. " +
-          'There is a small table next to my bed with a lamp and a clock on it. My desk is in the corner, and my computer is on it. I do my homework there every evening. There are a lot of books on the shelf above the desk. ' +
-          'My clothes are in a big brown cupboard. There is a green rug on the floor. My cat, Tiger, often sleeps on it. On the wall, there is a poster of my favourite football team.',
+        text: "Hi, I'm Jack, and this is my room. It is not very big, but I love it. The walls are light blue. My bed is next to the window. There is a small table next to my bed with a lamp and a clock on it. My desk is in the corner, and my computer is on it. I do my homework there every evening. There are a lot of books on the shelf above the desk. My clothes are in a big brown cupboard. There is a green rug on the floor. My cat, Tiger, often sleeps on it. On the wall, there is a poster of my favourite football team.\n\n" +
+          "I like my room in the morning, because the sun comes in through the window. My curtains are white with small blue stars. Next to my cupboard, there is a big box of old toys. I don't play with them now, but I love them. My guitar is next to the desk. I play it every afternoon after school. My friends come to my room at the weekend, and we play computer games together. My mum says my room is often messy. It's true! On Saturday mornings, I clean my room. I put my books on the shelf and my clothes in the cupboard. Then my room looks great again.",
         questions: [
           { type: 'tf', q: "Jack's room is very big.", a: ['False'], line: 1 },
           { type: 'tf', q: 'The walls are light blue.', a: ['True'], line: 2 },
@@ -1075,7 +1063,7 @@ var TA_SKILLS = {
         topic: 'My room',
         task: 'Write about your room.',
         points: ['what is in your room: a bed, a desk, a cupboard…', 'where things are — for example: My lamp is on the desk.', 'what you like about your room'],
-        minWords: 35, maxWords: 45, minutes: 15
+        minWords: 115, maxWords: 135, minutes: 20
       },
       speaking: {
         words: [
@@ -1160,10 +1148,8 @@ var TA_SKILLS = {
       },
       reading: {
         title: 'Meet my friend Sophie',
-        text: 'This is my best friend, Sophie. She is twelve years old, and she is in my class at school. She has long brown hair and big blue eyes. Sophie lives in a flat near the park with her mum, her dad and her little brother, Alfie. ' +
-          "Alfie is five, and he is very funny. Sophie loves animals. She has two rabbits and a small grey cat. Her favourite subject at school is Science, but she doesn't like Maths. " +
-          "After school, we often go to the park together. We play tennis on Wednesdays, and on Saturdays we go swimming. Sophie's favourite food is pizza, and she drinks a lot of orange juice. Her birthday is in June. " +
-          'She is very kind.',
+        text: "This is my best friend, Sophie. She is twelve years old, and she is in my class at school. She has long brown hair and big blue eyes. Sophie lives in a flat near the park with her mum, her dad and her little brother, Alfie. Alfie is five, and he is very funny. Sophie loves animals. She has two rabbits and a small grey cat. Her favourite subject at school is Science, but she doesn't like Maths. After school, we often go to the park together. We play tennis on Wednesdays, and on Saturdays we go swimming. Sophie's favourite food is pizza, and she drinks a lot of orange juice. Her birthday is in June. She is very kind.\n\n" +
+          "Sophie and I are friends from when we were six years old. We sit together in every lesson. Sophie is very good at drawing, and she wants to be an artist. She draws animals and flowers in her notebook. Sophie's dad is a teacher at another school, and her mum works in a bank. Every summer, Sophie goes to the sea with her family. She sends me postcards from there. Sophie has a bike, and it is purple. We ride our bikes in the park on Sunday mornings. Sometimes Sophie comes to my house for dinner. My mum makes pizza for her, because it is her favourite food. Sophie is a great friend.",
         questions: [
           { type: 'tf', q: 'Sophie is eleven years old.', a: ['False'], line: 1 },
           { type: 'tf', q: 'Sophie has long brown hair.', a: ['True'], line: 2 },
@@ -1193,7 +1179,7 @@ var TA_SKILLS = {
         topic: 'My best friend',
         task: 'Write about your best friend.',
         points: ['his or her name and age, and what he or she looks like', 'what he or she likes', 'what you do together'],
-        minWords: 40, maxWords: 50, minutes: 15
+        minWords: 125, maxWords: 145, minutes: 20
       },
       speaking: {
         words: [
@@ -1285,14 +1271,14 @@ var TA_SKILLS = {
       },
       reading: {
         title: "A pen-friend's profile",
-        text: "Hi, my name is Lucy Green and I'm fifteen years old. I live in Bristol, a big city in the west of England. " +
-          "I live in a small flat with my mum, my dad and my little brother, Sam. Sam is eight and he loves football.\n\n" +
-          "I go to Hillside School, and my favourite subject is art. I don't really like maths, because it's difficult for me. " +
-          "After school, I usually walk my dog, Biscuit, in the park near our flat. He's brown and white, and he's very friendly.\n\n" +
-          "At the weekend, I play the guitar and I sometimes go swimming with my friends. I'm learning Spanish too, and I want to visit Spain one day. " +
-          "My favourite food is pizza, but I can't cook it!\n\n" +
-          "I'm looking for a pen-friend from another country. I'd like to write emails in English every week and learn about your life. " +
-          "Please write to me soon!",
+        text: "Hi, my name is Lucy Green and I'm fifteen years old. I live in Bristol, a big city in the west of England. I live in a small flat with my mum, my dad and my little brother, Sam. Sam is eight and he loves football.\n\n" +
+          "I go to Hillside School, and my favourite subject is art. I don't really like maths, because it's difficult for me. After school, I usually walk my dog, Biscuit, in the park near our flat. He's brown and white, and he's very friendly.\n\n" +
+          "At the weekend, I play the guitar and I sometimes go swimming with my friends. I'm learning Spanish too, and I want to visit Spain one day. My favourite food is pizza, but I can't cook it!\n\n" +
+          "I'm looking for a pen-friend from another country. I'd like to write emails in English every week and learn about your life. Please write to me soon!\n\n" +
+          "Here is a little more about me. My mum is a dentist, and my dad works in a big supermarket near our flat. They are very busy, but on Sunday evenings we always have dinner together and talk about our week. My grandparents live in Wales, and we visit them in the summer holidays. Their house is near the mountains, and I love walking there.\n\n" +
+          "I'm quite a quiet person, but I'm friendly when you know me. I love reading, especially stories about animals and adventures. I love pop music, and I can play some easy songs on my guitar. I also like taking photos of nature with my phone.\n\n" +
+          "My school day starts at half past eight and finishes at half past three. I take the bus to school because it's too far to walk. My best friend at school is called Mia. She's very funny, and we sit together in most lessons.\n\n" +
+          "In your first email, please tell me about your family, your school and your hobbies. What is your town like? What do people eat there? I can send you photos of Bristol and of Biscuit too!",
         questions: [
           { type: 'tfng', q: 'Lucy lives in a big city.', a: ['True'], line: 1 },
           { type: 'tfng', q: 'Lucy lives with her grandparents.', a: ['False'], line: 2 },
@@ -1327,7 +1313,7 @@ var TA_SKILLS = {
         topic: 'An email to a new classmate',
         task: 'A new student has joined your class. Write an email to welcome him or her.',
         points: ['who you are and what you like about your class', 'your teacher and the other students', 'something you can do together after school'],
-        minWords: 50, maxWords: 70, minutes: 20
+        minWords: 130, maxWords: 150, minutes: 25
       },
       speaking: {
         words: [
@@ -1422,15 +1408,14 @@ var TA_SKILLS = {
       },
       reading: {
         title: "Emma's family",
-        text: "My name is Emma Baker and I'm sixteen. There are five people in my family: my mum, my dad, my two brothers and me. " +
-          "We also have a cat called Pepper.\n\n" +
-          "My mum, Sarah, is a teacher at a primary school. She's kind and very patient. " +
-          "My dad, Mark, works in a bank in the city centre. He gets up very early, but he always makes breakfast for us.\n\n" +
-          "My older brother, Daniel, is twenty and he studies music at university in Leeds. He only comes home in the holidays, so I miss him. " +
-          "My younger brother, Ben, is ten. He's funny, but he's sometimes very noisy!\n\n" +
-          "My grandparents live in a village near the sea. We visit them every month, and my grandma always makes a big chocolate cake. " +
-          "My best friend is Chloe, and she lives in the next street. We go to the same school and we sit next to each other in every lesson. " +
-          "On Fridays, we watch films together at her house and eat lots of popcorn.",
+        text: "My name is Emma Baker and I'm sixteen. There are five people in my family: my mum, my dad, my two brothers and me. We also have a cat called Pepper.\n\n" +
+          "My mum, Sarah, is a teacher at a primary school. She's kind and very patient. My dad, Mark, works in a bank in the city centre. He gets up very early, but he always makes breakfast for us.\n\n" +
+          "My older brother, Daniel, is twenty and he studies music at university in Leeds. He only comes home in the holidays, so I miss him. My younger brother, Ben, is ten. He's funny, but he's sometimes very noisy!\n\n" +
+          "My grandparents live in a village near the sea. We visit them every month, and my grandma always makes a big chocolate cake. My best friend is Chloe, and she lives in the next street. We go to the same school and we sit next to each other in every lesson. On Fridays, we watch films together at her house and eat lots of popcorn.\n\n" +
+          "Our house is in a quiet street in Nottingham. It isn't very big, but it's warm and comfortable. My bedroom is at the top of the house, and I can see the park from my window. Ben and I often argue about the bathroom in the morning, because we both want it at the same time!\n\n" +
+          "Every Sunday, the whole family has lunch together. My dad usually cooks roast chicken with potatoes and vegetables, and my mum makes the dessert. After lunch, we often go for a walk in the park with Pepper. Well, Pepper doesn't walk with us — she's a cat, so she sleeps on the sofa!\n\n" +
+          "In the summer, we go on holiday together. Last year we went to Scotland, and we stayed in a small cottage near a lake. Daniel came with us, and we were very happy because the whole family was together again.\n\n" +
+          "I love my family, but sometimes I want some quiet time. Then I go to my room, close the door and read a good book. My parents say that next year I can have my own laptop for school, and I'm very excited about that.",
         questions: [
           { type: 'tfng', q: 'Emma has got two brothers.', a: ['True'], line: 1 },
           { type: 'tfng', q: "Emma's mum works in a bank.", a: ['False'], line: 3 },
@@ -1465,7 +1450,7 @@ var TA_SKILLS = {
         topic: 'My family',
         task: 'Write an email to a pen-friend about your family.',
         points: ['who is in your family', 'what each person is like and what they do', 'what you do together at the weekend'],
-        minWords: 40, maxWords: 60, minutes: 15
+        minWords: 140, maxWords: 160, minutes: 25
       },
       speaking: {
         words: [
@@ -1557,19 +1542,11 @@ var TA_SKILLS = {
       },
       reading: {
         title: 'Two homes',
-        text: "Tom Parker lives with his parents in a house in the countryside, near York. " +
-          "The house is old and it has got three bedrooms, a big kitchen and a living room with a fireplace. " +
-          "Tom's favourite room is the kitchen, because the family eats and talks there every evening. " +
-          "Behind the house, there is a large garden with apple trees. " +
-          "The nearest shop is three kilometres away, so Tom's mum drives to the supermarket once a week. " +
-          "Tom loves the quiet, but there isn't a bus to his school, so he cycles there every day.\n\n" +
-          "Grace Turner lives in a flat on the ninth floor of a tall building in Manchester. " +
-          "The flat is small and modern, with one bedroom, a bathroom and an open kitchen. " +
-          "There isn't a garden, but there is a balcony with lots of plants. " +
-          "From the balcony, Grace can see the whole city at night. " +
-          "Her flat is very close to shops, cafés and a cinema. " +
-          "The only problem is the noise from the street, so she sometimes sleeps with earplugs. " +
-          "Grace says she never wants to live in the countryside, because she loves the busy city life.",
+        text: "Tom Parker lives with his parents in a house in the countryside, near York. The house is old and it has got three bedrooms, a big kitchen and a living room with a fireplace. Tom's favourite room is the kitchen, because the family eats and talks there every evening. Behind the house, there is a large garden with apple trees. The nearest shop is three kilometres away, so Tom's mum drives to the supermarket once a week. Tom loves the quiet, but there isn't a bus to his school, so he cycles there every day.\n\n" +
+          "Grace Turner lives in a flat on the ninth floor of a tall building in Manchester. The flat is small and modern, with one bedroom, a bathroom and an open kitchen. There isn't a garden, but there is a balcony with lots of plants. From the balcony, Grace can see the whole city at night. Her flat is very close to shops, cafés and a cinema. The only problem is the noise from the street, so she sometimes sleeps with earplugs. Grace says she never wants to live in the countryside, because she loves the busy city life.\n\n" +
+          "Tom and Grace are cousins, and they visit each other a few times a year. When Grace comes to the countryside, she always finds it very quiet at first. In the evening, she can hear only the wind and the birds. Tom takes her on long bike rides along small roads between the fields, and they often stop at a farm to buy fresh eggs. Grace enjoys the fresh air, but after three or four days she always misses her flat.\n\n" +
+          "When Tom visits Grace, he is always surprised by how many people there are in Manchester. They go to the cinema, eat in different cafés and visit museums. Tom likes the city, especially the football stadium, but he finds it tiring. He says the traffic is very slow, and he doesn't like the crowds on the trams.\n\n" +
+          "Both homes have good and bad points. In the countryside, life is calm and there is a lot of space, but you need a car or a bike for everything. In the city, everything is close and there is always something to do, but it can be noisy and expensive. Tom and Grace often talk about this, and they never agree!",
         questions: [
           { type: 'tfng', q: "Tom's house is new.", a: ['False'], line: 1 },
           { type: 'tfng', q: "Tom's family eats in the kitchen.", a: ['True'], line: 2 },
@@ -1604,7 +1581,7 @@ var TA_SKILLS = {
         topic: 'My home',
         task: 'Write an email to a friend about your home.',
         points: ['where your home is and what kind of home it is', 'the rooms in your home', 'your favourite room and why you like it'],
-        minWords: 40, maxWords: 60, minutes: 15
+        minWords: 150, maxWords: 170, minutes: 25
       },
       speaking: {
         words: [
@@ -1697,21 +1674,14 @@ var TA_SKILLS = {
       },
       reading: {
         title: "A nurse's day",
-        text: "Hannah Clarke is a nurse at a children's hospital in Liverpool. " +
-          "She works long days, from half past seven in the morning until eight o'clock in the evening. " +
-          "She works four days a week, so she has three days off.\n\n" +
-          "On work days, Hannah gets up at six o'clock, when it is still dark in winter. " +
-          "She has a quick shower and a cup of tea, but she never eats breakfast at home. " +
-          "She takes the bus to the hospital, and the journey takes about forty minutes. " +
-          "She often reads a book on the bus, or she listens to music.\n\n" +
-          "At the hospital, Hannah checks the children and gives them their medicine. " +
-          "She also talks to the parents, because they are often worried. " +
-          "At lunchtime, she eats a sandwich with the other nurses in a small kitchen. " +
-          "The afternoons are usually the busiest part of the day, with lots of new patients.\n\n" +
-          "When she gets home, Hannah is very tired. " +
-          "She has dinner with her husband, Chris, and then she goes to bed at about ten o'clock. " +
-          "On her days off, she sleeps late, goes to a yoga class and visits her sister. " +
-          "Hannah says her job is hard, but she loves it, because she helps children every day.",
+        text: "Hannah Clarke is a nurse at a children's hospital in Liverpool. She works long days, from half past seven in the morning until eight o'clock in the evening. She works four days a week, so she has three days off.\n\n" +
+          "On work days, Hannah gets up at six o'clock, when it is still dark in winter. She has a quick shower and a cup of tea, but she never eats breakfast at home. She takes the bus to the hospital, and the journey takes about forty minutes. She often reads a book on the bus, or she listens to music.\n\n" +
+          "At the hospital, Hannah checks the children and gives them their medicine. She also talks to the parents, because they are often worried. At lunchtime, she eats a sandwich with the other nurses in a small kitchen. The afternoons are usually the busiest part of the day, with lots of new patients.\n\n" +
+          "When she gets home, Hannah is very tired. She has dinner with her husband, Chris, and then she goes to bed at about ten o'clock. On her days off, she sleeps late, goes to a yoga class and visits her sister. Hannah says her job is hard, but she loves it, because she helps children every day.\n\n" +
+          "Hannah started working at the hospital eight years ago. Before that, she studied nursing at university for three years. She remembers her first week very well, because she was very nervous. An older nurse, Margaret, helped her a lot and taught her many important things. Today, Hannah helps the new nurses in the same way.\n\n" +
+          "The most difficult part of the job is when a child is very ill. Hannah tries to stay calm and smile, because the children need to feel safe. She often brings small toys and colouring books for them. Some children stay in the hospital for many weeks, so the nurses try to make the rooms bright and happy, with pictures on the walls.\n\n" +
+          "Hannah's favourite moment is when a child is well again and goes home. The families sometimes send her cards and letters to say thank you. She keeps them all in a big box at home, and she reads them when she has a bad day.\n\n" +
+          "Next year, Hannah wants to do a special course to become a senior nurse. It will be a lot of work, but she is excited. She says that every day at the hospital is different, and she is never bored.",
         questions: [
           { type: 'tfng', q: 'Hannah works at a hospital for children.', a: ['True'], line: 0 },
           { type: 'tfng', q: 'Hannah works five days a week.', a: ['False'], line: 2 },
@@ -1746,7 +1716,7 @@ var TA_SKILLS = {
         topic: 'My weekday',
         task: 'Write a short text about a normal weekday in your life.',
         points: ['what time you get up and what you do in the morning', 'what you do in the afternoon', 'what you do in the evening and when you go to bed'],
-        minWords: 50, maxWords: 70, minutes: 20
+        minWords: 155, maxWords: 175, minutes: 25
       },
       speaking: {
         words: [
@@ -1842,24 +1812,13 @@ var TA_SKILLS = {
       },
       reading: {
         title: 'A café menu & review',
-        text: "The Blue Door Café is a small family café on Market Street in Bath. " +
-          "It is open every day from eight in the morning until six in the evening.\n\n" +
-          "Breakfast is served until eleven o'clock. " +
-          "The full English breakfast costs £7.50, and pancakes with fresh fruit cost £5. " +
-          "For lunch, there is soup of the day with bread for £4.50, a chicken salad for £6 and fish and chips for £8.95. " +
-          "Children under ten can have a small plate of any dish for half price. " +
-          "Tea is £2 and a large hot chocolate is £3.20.\n\n" +
-          "Here is a review from a customer, Oliver Grant. " +
-          "My wife and I had lunch at the Blue Door Café last Saturday. " +
-          "It was very busy, so we waited fifteen minutes for a table. " +
-          "The waiter was friendly, and he brought us some bread while we waited. " +
-          "I had the fish and chips, and my wife had the soup. " +
-          "The fish was hot and fresh, but the chips were a bit cold. " +
-          "My wife loved her soup, and she asked the waiter for the recipe! " +
-          "The best thing was the dessert: a lemon cake made by the owner's grandmother. " +
-          "The prices are good, and the café is clean and bright. " +
-          "Next time, we want to come for breakfast and try the pancakes. " +
-          "I give the Blue Door Café four stars out of five.",
+        text: "The Blue Door Café is a small family café on Market Street in Bath. It is open every day from eight in the morning until six in the evening.\n\n" +
+          "Breakfast is served until eleven o'clock. The full English breakfast costs £7.50, and pancakes with fresh fruit cost £5. For lunch, there is soup of the day with bread for £4.50, a chicken salad for £6 and fish and chips for £8.95. Children under ten can have a small plate of any dish for half price. Tea is £2 and a large hot chocolate is £3.20.\n\n" +
+          "Here is a review from a customer, Oliver Grant. My wife and I had lunch at the Blue Door Café last Saturday. It was very busy, so we waited fifteen minutes for a table. The waiter was friendly, and he brought us some bread while we waited. I had the fish and chips, and my wife had the soup. The fish was hot and fresh, but the chips were a bit cold. My wife loved her soup, and she asked the waiter for the recipe! The best thing was the dessert: a lemon cake made by the owner's grandmother. The prices are good, and the café is clean and bright. Next time, we want to come for breakfast and try the pancakes. I give the Blue Door Café four stars out of five.\n\n" +
+          "The Blue Door Café belongs to the Hill family. Peter Hill opened it twenty years ago with his wife, Mary, and today their daughter, Lucy, helps them in the kitchen. The name comes from the old blue door at the front, which is more than a hundred years old. Inside, there are twelve wooden tables, old photos of Bath on the walls and lots of plants.\n\n" +
+          "The café uses fresh food from local farms. The eggs come from a farm only five kilometres away, and the bread is made in the café every morning. In autumn and winter, there is a special menu with hot dishes like beef stew and apple pie. There are also dishes for people who don't eat meat, and the staff are happy to help if you have an allergy.\n\n" +
+          "Here is a second review, from a student called Amy Ross. I come to the Blue Door Café on Monday mornings before my classes, because it is quiet and the Wi-Fi is free. I usually order a cup of tea and a piece of toast with jam. The staff remember my name, and they always ask about my studies. It's a perfect place to read or study for an hour. My only problem is that it closes at six, so I can't come in the evening. I give it five stars!\n\n" +
+          "If you want to visit, it's a good idea to arrive before twelve o'clock, because the café is very busy at lunchtime, especially at the weekend.",
         questions: [
           { type: 'tfng', q: 'The café is open on Sundays.', a: ['True'], line: 1 },
           { type: 'tfng', q: "You can order breakfast at twelve o'clock.", a: ['False'], line: 2 },
@@ -1894,7 +1853,7 @@ var TA_SKILLS = {
         topic: 'My favourite meal',
         task: 'Write a short text about your favourite meal.',
         points: ['what the meal is and what is in it', 'who makes it and when you eat it', 'why you like it'],
-        minWords: 50, maxWords: 70, minutes: 20
+        minWords: 165, maxWords: 185, minutes: 30
       },
       speaking: {
         words: [
@@ -1989,25 +1948,14 @@ var TA_SKILLS = {
       },
       reading: {
         title: 'Shopping in London',
-        text: "London is one of the best cities in the world for shopping. " +
-          "Every year, millions of visitors come to the city to buy clothes, presents and souvenirs. " +
-          "You can find everything here, from cheap T-shirts to very expensive watches.\n\n" +
-          "Oxford Street is the busiest shopping street in Europe. " +
-          "It has more than three hundred shops, from big department stores to small shoe shops. " +
-          "Most shops there are open from ten in the morning until nine in the evening. " +
-          "On Sundays, they open at twelve and close at six. " +
-          "If you want something special, visit Harrods, a famous department store in Knightsbridge. " +
-          "It is very big and very expensive, but many tourists go there just to look at its beautiful food hall.\n\n" +
-          "For cheaper shopping, try one of London's street markets. " +
-          "Camden Market is popular with young people because it sells unusual clothes, old records and street food from many countries. " +
-          "Portobello Road Market in Notting Hill is famous for antiques, and it is busiest on Saturdays. " +
-          "Remember to bring some cash, because a few small stalls do not take cards.\n\n" +
-          "Here are some tips for your shopping day. " +
-          "Go early in the morning, when the shops are still quiet. " +
-          "Wear comfortable shoes, because you will walk a lot. " +
-          "In January, many shops have big sales, and some clothes are half price. " +
-          "Finally, always keep your bag closed on busy streets, and never leave it on the floor. " +
-          "Have a great time, and happy shopping in London!",
+        text: "London is one of the best cities in the world for shopping. Every year, millions of visitors come to the city to buy clothes, presents and souvenirs. You can find everything here, from cheap T-shirts to very expensive watches.\n\n" +
+          "Oxford Street is the busiest shopping street in Europe. It has more than three hundred shops, from big department stores to small shoe shops. Most shops there are open from ten in the morning until nine in the evening. On Sundays, they open at twelve and close at six. If you want something special, visit Harrods, a famous department store in Knightsbridge. It is very big and very expensive, but many tourists go there just to look at its beautiful food hall.\n\n" +
+          "For cheaper shopping, try one of London's street markets. Camden Market is popular with young people because it sells unusual clothes, old records and street food from many countries. Portobello Road Market in Notting Hill is famous for antiques, and it is busiest on Saturdays. Remember to bring some cash, because a few small stalls do not take cards.\n\n" +
+          "Here are some tips for your shopping day. Go early in the morning, when the shops are still quiet. Wear comfortable shoes, because you will walk a lot. In January, many shops have big sales, and some clothes are half price. Finally, always keep your bag closed on busy streets, and never leave it on the floor. Have a great time, and happy shopping in London!\n\n" +
+          "If you get tired of shopping, London has many other things to enjoy. Many of the city's big museums are free, and some of them have very good shops too. The museum shops sell books, toys and gifts, and the money helps the museums. They are great places to find a present for a friend or a member of your family.\n\n" +
+          "In December, the shopping streets are full of Christmas lights. Oxford Street and Regent Street have beautiful decorations, and thousands of people come in the evening just to look at them. There are also Christmas markets in some parks, where you can buy hot drinks, cakes and small gifts. The shops are very busy before Christmas, so be patient!\n\n" +
+          "Getting around London is easy. The Underground, called \"the Tube\", has stations near all the big shopping areas. The best way to pay is with a contactless bank card or an Oyster card. Buses are cheaper than the Tube, and from the top of a red double-decker bus you can see the city while you travel.\n\n" +
+          "Finally, think about your budget. London can be very expensive, and it's easy to spend too much money. Before you go, decide how much you want to spend, and try to keep to it. Some visitors write a list of the things they want to buy. It's also a good idea to compare prices in a few shops before you buy something expensive.",
         questions: [
           { type: 'tfng', q: 'Oxford Street has more than three hundred shops.', a: ['True'], line: 4 },
           { type: 'tfng', q: 'Most shops on Oxford Street open at nine in the morning.', a: ['False'], line: 5 },
@@ -2042,7 +1990,7 @@ var TA_SKILLS = {
         topic: 'A shopping trip',
         task: 'Write a short text about a shopping trip you remember.',
         points: ['where you went and who you went with', 'what you bought and how much it cost', 'how you felt about the trip'],
-        minWords: 50, maxWords: 70, minutes: 20
+        minWords: 175, maxWords: 195, minutes: 30
       },
       speaking: {
         words: [
@@ -2143,28 +2091,15 @@ var TA_SKILLS = {
       },
       reading: {
         title: 'A town guide to Larkhaven',
-        text: "Welcome to Larkhaven, a small town by the sea in the south-west of England. " +
-          "About twelve thousand people live here, and in summer many more come for their holidays. " +
-          "This guide tells you about the best places to visit.\n\n" +
-          "Start your day in the old town, near the harbour. " +
-          "The streets here are narrow, and many of the houses are more than three hundred years old. " +
-          "On Market Street, there is a busy market every Wednesday and Saturday. " +
-          "You can buy fresh fish, local cheese and flowers there. " +
-          "Next, walk up the hill to Larkhaven Castle. " +
-          "It is open every day from ten in the morning until four in the afternoon, and a ticket costs eight pounds. " +
-          "From the top of the tower, you can see the whole town and the sea.\n\n" +
-          "If it rains, visit the Sea Museum on Bridge Street. " +
-          "It tells the story of the town's fishermen, and children love its big model ships. " +
-          "The museum is free, but it is closed on Tuesdays. " +
-          "Next to the museum is the town library, which has a small café on the first floor.\n\n" +
-          "Larkhaven is easy to explore on foot, because the centre is quite small. " +
-          "There is also a bus that goes along the coast every thirty minutes. " +
-          "You can hire a bike at the train station for twelve pounds a day.\n\n" +
-          "In the evening, have dinner at one of the fish restaurants by the harbour. " +
-          "Then walk along the beach and watch the sunset. " +
-          "On Friday nights in summer, there is free music in the park. " +
-          "For maps and more information, visit the tourist office in the main square. " +
-          "Enjoy your visit to Larkhaven!",
+        text: "Welcome to Larkhaven, a small town by the sea in the south-west of England. About twelve thousand people live here, and in summer many more come for their holidays. This guide tells you about the best places to visit.\n\n" +
+          "Start your day in the old town, near the harbour. The streets here are narrow, and many of the houses are more than three hundred years old. On Market Street, there is a busy market every Wednesday and Saturday. You can buy fresh fish, local cheese and flowers there. Next, walk up the hill to Larkhaven Castle. It is open every day from ten in the morning until four in the afternoon, and a ticket costs eight pounds. From the top of the tower, you can see the whole town and the sea.\n\n" +
+          "If it rains, visit the Sea Museum on Bridge Street. It tells the story of the town's fishermen, and children love its big model ships. The museum is free, but it is closed on Tuesdays. Next to the museum is the town library, which has a small café on the first floor.\n\n" +
+          "Larkhaven is easy to explore on foot, because the centre is quite small. There is also a bus that goes along the coast every thirty minutes. You can hire a bike at the train station for twelve pounds a day.\n\n" +
+          "In the evening, have dinner at one of the fish restaurants by the harbour. Then walk along the beach and watch the sunset. On Friday nights in summer, there is free music in the park. For maps and more information, visit the tourist office in the main square. Enjoy your visit to Larkhaven!\n\n" +
+          "Larkhaven has a long history. More than seven hundred years ago, it was a small fishing village with only a few houses. The castle was built to protect the harbour from ships from other countries. Later, the town became rich from fishing and trade, and many of the beautiful old houses in the town centre were built by fishermen and sailors. Today, only a few boats still go out to fish every morning, but you can watch them come back into the harbour at about eleven o'clock.\n\n" +
+          "If you like nature, the coast path is the perfect place for a long walk. It goes along the top of the cliffs, and on a clear day you can see seals and seabirds. The path can be wet and muddy after rain, so wear good boots. There are some steep parts, so it isn't a good walk for very young children.\n\n" +
+          "There are many places to stay in Larkhaven, from big hotels by the beach to small guesthouses in the old town. There is also a campsite just outside the town. In July and August, the town is very busy, so it's a good idea to book a room early.\n\n" +
+          "Every year in September, Larkhaven has a food festival. Local farmers, fishermen and cooks sell their food on the harbour, and there are cooking shows and music all weekend. Thousands of people come, and the hotels are often full, so plan your trip carefully if you want to visit then.",
         questions: [
           { type: 'tfng', q: 'Larkhaven is a town by the sea.', a: ['True'], line: 0 },
           { type: 'tfng', q: 'The market in the old town is open every day.', a: ['False'], line: 5 },
@@ -2199,7 +2134,7 @@ var TA_SKILLS = {
         topic: 'My town',
         task: 'Write a short text about the town or city where you live.',
         points: ['where your town is and how big it is', 'two places you like there and why', 'what visitors can do in your town'],
-        minWords: 60, maxWords: 80, minutes: 20
+        minWords: 180, maxWords: 200, minutes: 30
       },
       speaking: {
         words: [
@@ -2297,30 +2232,18 @@ var TA_SKILLS = {
       },
       reading: {
         title: 'Hobby club adverts',
-        text: "Are you looking for something new to do in your free time? " +
-          "Here are five clubs in Millbrook that are looking for new members.\n\n" +
-          "The Millbrook Walking Club goes for a long walk in the hills every Sunday morning. " +
-          "We meet at nine o'clock outside the train station, and we usually walk about ten kilometres. " +
-          "Wear good shoes, and bring some water and a snack. " +
-          "The club is free, and everyone is welcome.\n\n" +
-          "Do you love board games? " +
-          "Come to Games Night at the Blue Door Café on Wednesdays, from seven until ten in the evening. " +
-          "We play old favourites like chess, and lots of new games too. " +
-          "It costs three pounds, and the price includes a hot drink.\n\n" +
-          "The Millbrook Book Club meets in the town library on the first Thursday of every month. " +
-          "Each month we read one book, and then we talk about it over tea and biscuits. " +
-          "This month's book is a funny story about a family who move to a farm. " +
-          "New members are always welcome, and you don't have to finish the book!\n\n" +
-          "Would you like to learn to cook? " +
-          "The Saturday Kitchen Club has cooking classes for beginners at Millbrook College. " +
-          "Every week, you learn to make a different dish, from simple soups to fresh pasta. " +
-          "Classes cost ten pounds, and you can take your food home with you. " +
-          "There are only eight places in each class, so book early.\n\n" +
-          "The Millbrook Choir is looking for new singers. " +
-          "You don't need to read music, and you don't need a beautiful voice. " +
-          "You just need to enjoy singing. " +
-          "We practise every Tuesday evening in the Market Hall, and every summer we sing at a concert in the park. " +
-          "To join, just come to one of our practices and say hello!",
+        text: "Are you looking for something new to do in your free time? Here are five clubs in Millbrook that are looking for new members.\n\n" +
+          "The Millbrook Walking Club goes for a long walk in the hills every Sunday morning. We meet at nine o'clock outside the train station, and we usually walk about ten kilometres. Wear good shoes, and bring some water and a snack. The club is free, and everyone is welcome.\n\n" +
+          "Do you love board games? Come to Games Night at the Blue Door Café on Wednesdays, from seven until ten in the evening. We play old favourites like chess, and lots of new games too. It costs three pounds, and the price includes a hot drink.\n\n" +
+          "The Millbrook Book Club meets in the town library on the first Thursday of every month. Each month we read one book, and then we talk about it over tea and biscuits. This month's book is a funny story about a family who move to a farm. New members are always welcome, and you don't have to finish the book!\n\n" +
+          "Would you like to learn to cook? The Saturday Kitchen Club has cooking classes for beginners at Millbrook College. Every week, you learn to make a different dish, from simple soups to fresh pasta. Classes cost ten pounds, and you can take your food home with you. There are only eight places in each class, so book early.\n\n" +
+          "The Millbrook Choir is looking for new singers. You don't need to read music, and you don't need a beautiful voice. You just need to enjoy singing. We practise every Tuesday evening in the Market Hall, and every summer we sing at a concert in the park. To join, just come to one of our practices and say hello!\n\n" +
+          "We also asked some members why they love their clubs. Here is what they told us.\n\n" +
+          "Jack, 34, joined the Walking Club last spring. \"I work in an office all week, so I really need to be outside at the weekend,\" he says. \"The hills around Millbrook are beautiful, and I've made a lot of new friends. After the walk, we sometimes have lunch together in a small pub in the village.\"\n\n" +
+          "Sara, 19, goes to Games Night every week. \"I was very shy when I moved to Millbrook for university,\" she says. \"Board games are a great way to meet people, because you don't need to think about what to say. You just play and have fun! My favourite game is a card game about building cities.\"\n\n" +
+          "Margaret, 71, is the oldest member of the Book Club. \"I've read books all my life, but it's much better to talk about them with other people,\" she says. \"Sometimes we don't agree at all, and that's the best part. Our members are of all ages, from eighteen to eighty!\"\n\n" +
+          "Tom, 45, started the Kitchen Club classes in January. \"Before, I couldn't even cook an egg,\" he laughs. \"Now I make dinner for my family three times a week. My children love my pasta!\"\n\n" +
+          "If you would like more information about any of these clubs, visit the Millbrook community website or look at the notice board in the town library. There is something for everyone, so why not try a new hobby this month?",
         questions: [
           { type: 'tfng', q: 'The Walking Club meets on Sunday mornings.', a: ['True'], line: 2 },
           { type: 'tfng', q: 'You have to pay to join the Walking Club.', a: ['False'], line: 5 },
@@ -2355,7 +2278,7 @@ var TA_SKILLS = {
         topic: 'My free time',
         task: 'Write a short text about what you do in your free time.',
         points: ['what you like doing in your free time', 'when and where you do it, and who with', 'a new hobby you would like to try and why'],
-        minWords: 60, maxWords: 80, minutes: 25
+        minWords: 190, maxWords: 210, minutes: 30
       },
       speaking: {
         words: [

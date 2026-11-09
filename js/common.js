@@ -841,18 +841,21 @@ function removePointsStudent(id) {
    your Students list. Returns that roster student, or null for anyone who
    just typed a name. Works for older results too (before exercises
    recorded the ID), by matching the resolved name. */
+/* taIdKey (how an ID is compared) lives in js/skill-bands.js — the student page uses it too. */
 function taRosterIndex() {
   const byId = {}, byName = {};
   getPointsRoster().forEach(s => {
     byId[String(s.id).trim().toLowerCase()] = s;
-    byName[String(s.name).trim().toLowerCase()] = s;
+    const k = taIdKey(s.id);
+    if (k && !byId[k]) byId[k] = s;
+    byName[String(s.name).trim().toLowerCase().replace(/\s+/g, ' ')] = s;
   });
   return { byId: byId, byName: byName };
 }
 function rosterStudentForId(id, idx) {
   if (id === undefined || id === null || id === '') return null;
   idx = idx || taRosterIndex();
-  return idx.byId[String(id).trim().toLowerCase()] || null;
+  return idx.byId[String(id).trim().toLowerCase()] || idx.byId[taIdKey(id)] || null;
 }
 /* Results: the students of an exercise's group (chosen when it was made, or
    in My Exercises) who haven't done it. An exercise made without a group has
@@ -885,11 +888,12 @@ function rosterStudentForResult(r, idx) {
   idx = idx || taRosterIndex();
   const byId = rosterStudentForId(r.studentId, idx);
   if (byId) return byId;
-  const nameKey = String(r.name || '').trim().toLowerCase();
+  const nameKey = String(r.name || '').trim().toLowerCase().replace(/\s+/g, ' ');
   if (!nameKey) return null;
   // Typed an ID that wasn't in the exercise's built-in list but is on the
-  // Students list now — the typed ID became the recorded name.
-  if (idx.byId[nameKey]) return idx.byId[nameKey];
+  // Students list now — the typed ID became the recorded name (or the name and ID boxes were swapped).
+  const asId = rosterStudentForId(r.name, idx);
+  if (asId) return asId;
   // Exercise says the student typed a plain name: not one of yours.
   if (r.isRosterMatch === false) return null;
   // ID matched when the exercise ran (or an older result with no flag):
@@ -1708,27 +1712,50 @@ function skWritingBandFor(r) {
   if (!r) return null;
   const m = skTeacherMark(r);
   if (m !== null) return m;
+  // the band the page sent (writings sent before 2026-11-09 keep theirs — the teacher can change it with Save band)
   return skClampWritingBand(r.band);
 }
 window.skWritingBandFor = skWritingBandFor;
-/* The text with each mistake underlined: the list has no positions, so each one is looked for after the one before. */
+/* The mistakes that count (skCountsAsMistake, js/skill-bands.js): not extra spaces, American spelling or names — also for
+   results sent before that rule (2026-11-09). */
+function skWritingMistakes(r) {
+  const list = (Array.isArray(r && r.mistakeList) ? r.mistakeList : []).filter(m => m && typeof m === 'object');
+  return typeof skCountsAsMistake === 'function' ? list.filter(skCountsAsMistake) : list;
+}
+window.skWritingMistakes = skWritingMistakes;
 /* text for inside a "…" or '…' attribute (escapeForHtml leaves quotes alone) */
 function taAttr(v) { return escapeForHtml(String(v == null ? '' : v)).replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
+/* Where a mistake is in the text: its saved position (`at`, since 2026-11-09); for older results, the next place after `from`
+   where it stands as a whole word ("i" is not the i inside "pencils"), or as it is for punctuation. -1 = not found. */
+function skFindMistake(text, m, from) {
+  const bad = String((m && m.bad) || '');
+  if (!bad) return -1;
+  if (typeof m.at === 'number' && m.at >= from && text.slice(m.at, m.at + bad.length) === bad) return m.at;
+  if (/^[\p{L}\p{N}'’ -]+$/u.test(bad)) {
+    const re = new RegExp('(^|[^\\p{L}\\p{N}])(' + bad.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')(?![\\p{L}\\p{N}])', 'gu');
+    re.lastIndex = Math.max(0, from - 1);
+    let hit;
+    while ((hit = re.exec(text))) { const at = hit.index + hit[1].length; if (at >= from) return at; if (hit[0].length === 0) re.lastIndex++; }
+    return -1;
+  }
+  return text.indexOf(bad, from);
+}
 function skWritingTextHtml(r) {
   const text = String(r.text || ''), esc = v => escapeForHtml(String(v == null ? '' : v));
+  const found = skWritingMistakes(r).map(m => ({ m, bad: String(m.bad || '') })).filter(x => x.bad);
+  // positions first (all of them), then marked in order without overlaps
+  let from = 0;
+  found.forEach(x => { x.at = skFindMistake(text, x.m, typeof x.m.at === 'number' ? 0 : from); if (x.at >= 0 && typeof x.m.at !== 'number') from = x.at + x.bad.length; });
   let html = '', pos = 0;
-  (Array.isArray(r.mistakeList) ? r.mistakeList : []).forEach(m => {
-    const bad = String((m && m.bad) || '');
-    if (!bad) return;
-    const at = text.indexOf(bad, pos);
-    if (at < 0) return;
-    html += esc(text.slice(pos, at)) + '<mark title="' + taAttr(m.fix ? '→ ' + m.fix : (m.message || '')) + '">' + esc(bad) + '</mark>';
-    pos = at + bad.length;
+  found.filter(x => x.at >= 0).sort((a, b) => a.at - b.at).forEach(x => {
+    if (x.at < pos) return;
+    html += esc(text.slice(pos, x.at)) + '<mark title="' + taAttr(x.m.fix ? '→ ' + x.m.fix : (x.m.message || '')) + '">' + esc(x.bad) + '</mark>';
+    pos = x.at + x.bad.length;
   });
   return html + esc(text.slice(pos));
 }
 function skWritingViewHtml(r) {
-  const esc = v => escapeForHtml(String(v == null ? '' : v)), list = (Array.isArray(r.mistakeList) ? r.mistakeList : []).filter(m => m && typeof m === 'object');
+  const esc = v => escapeForHtml(String(v == null ? '' : v)), list = skWritingMistakes(r);
   const mark = skTeacherMark(r), band = skWritingBandFor(r);
   const words = typeof r.words === 'number' ? r.words : String(r.text || '').trim().split(/\s+/).filter(Boolean).length;
   return '<div class="sk-wv">' +

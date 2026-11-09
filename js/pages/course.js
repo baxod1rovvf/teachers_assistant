@@ -408,6 +408,17 @@ function skMarkSpeakingSent(step, g) {
   links[key] = Object.assign({}, v && typeof v === 'object' ? v : {}, { sentAt: new Date().toISOString() });
   skWriteLinks(links);
 }
+/* The group's list goes online for this link's code, IDs scrambled (taPublishClassList in firebase.js), so the student page
+   lets in only the group's students. On every Copy link — a student added later is let in after the next copy. */
+function skPutClassOnline(url, g) {
+  let code = '';
+  try { code = new URL(url, location.href).searchParams.get('c') || ''; } catch (e) { code = ''; }
+  const students = skGroupRoster(g);
+  if (!code || typeof window.taPublishClassList !== 'function') return;
+  window.taPublishClassList(code, students).then(ok => {
+    if (!ok) showToast('⚠️ The class list couldn\'t go online — students can still start without an ID check. Press Copy link again later.');
+  });
+}
 function skCopyLink(skill, step) {
   const g = skGroup();
   if (!g) { showToast('Add a group on the Students page first.'); return; }
@@ -415,6 +426,7 @@ function skCopyLink(skill, step) {
   const url = skLinkFor(skill, step, g);
   if (!url) return;
   if (skill === 'speaking') skMarkSpeakingSent(step, g);
+  else skPutClassOnline(url, g);   // only the group's students can start it (2026-11-09)
   const msg = '🔗 Link copied — send it to ' + g.name + '. It always works.';
   // taModal sets the title as text: the group's name goes in as typed
   const show = () => taModal('🔗 The link for ' + g.name, '<input type="text" class="ta-input" readonly value="' + escapeForHtml(url) + '" aria-label="The link">');
