@@ -60,7 +60,7 @@ test.describe('content', () => {
   };
   const sentences = text => text.trim().split(/(?<=[.!?])\s+/);
 
-  test('20 steps in order (b1…b10 Beginner, e1…e10 Elementary); Steps 1–10 and 11–18 have full, checked content; 19–20 are still to come', async ({ page, context, request }) => {
+  test('20 steps in order (b1…b10 Beginner, e1…e10 Elementary); all 20 have the four parts, with checked content', async ({ page, context, request }) => {
     await prepare(context);
     await page.goto('/skill.html?s=listening&st=e1&preview=1');
     const S = await page.evaluate(() => ({ skills: TA_SKILLS, better: TA_BETTER_WORDS }));
@@ -81,38 +81,8 @@ test.describe('content', () => {
     // the teacher (2026-11-04): "finish when level 5 is ready; levels 6–10 are for future" — levels 6, 7 and 8 added 2026-11-05
     const full = levels.filter(l => l.n <= 8);
     full.forEach(l => ['listening', 'reading', 'writing', 'speaking'].forEach(k => expect(l[k], l.id + ' ' + k).toBeTruthy()));
-    levels.filter(l => l.n > 8).forEach(l => expect(Object.keys(l).sort(), l.id).toEqual(['emoji', 'id', 'n', 'no', 'reading', 'speaking', 'stage', 'theme', 'writing']));   // Steps 19–20: Reading, Writing and Speaking so far (no Listening yet)
-    // every listening/reading is its own (no copy of another level)
-    expect(new Set(full.concat(beginners).map(l => l.listening.src)).size).toBe(18);
-    for (const lv of beginners.concat(full)) {
-      const beg = lv.stage === 'Beginner';
-      if (beg) {
-        expect(lv.listening.src).toMatch(new RegExp('^audio/skills/beg-' + lv.no + '-listening\\.mp3(\\?v=\\d+)?$'));
-        expect(lv.listening.intro, lv.id).toMatch(/ONE WORD or A NUMBER/);
-        // one word or a number (the answer shown as right)
-        lv.listening.questions.forEach(q => expect(q.a[0], lv.id).toMatch(/^([A-Za-z]+|[\d ]+)$/));
-      } else expect(lv.listening.src).toMatch(new RegExp('^audio/skills/elem-' + lv.n + '-listening\\.mp3(\\?v=\\d+)?$'));
-      const L = lv.listening;
-      expect(L.questions.length).toBe(10);
-      expect(L.words.length).toBe(10);
-      expect(L.words.every(w => typeof w.emoji === 'string' && w.emoji.length > 0), 'every listening word has a picture').toBe(true);
-      L.words.forEach(w => { expect(w.w && w.m && w.ex).toBeTruthy(); });
-      L.transcript.forEach(t => expect(['Woman', 'Man']).toContain(t.who));
-      L.questions.forEach((q, i) => {
-        expect(q.a.length).toBeGreaterThan(0);
-        const said = norm(L.transcript.filter(t => (t.answers || []).includes(i + 1)).map(t => t.text).join(' '));
-        expect(said, `listening question ${i + 1} (${q.a[0]})`).toContain(norm(q.a[0]));
-      });
-      // the answers come in question order
-      const firstLine = L.questions.map((q, i) => L.transcript.findIndex(t => (t.answers || []).includes(i + 1)));
-      expect(firstLine).toEqual([...firstLine].sort((a, b) => a - b));
-      const res = await request.get('/' + L.src);
-      expect(res.status()).toBe(200);
-      expect((await res.body()).length, L.src).toBeGreaterThan(beg ? 50000 : 100000);
-
-      // the readings: tests/reading-journey.spec.js (the Reading Journey, 2026-11-09)
-
-    }
+    levels.forEach(l => ['listening', 'reading', 'writing', 'speaking'].forEach(k => expect(l[k], l.id + ' ' + k).toBeTruthy()));   // Steps 19–20 too (Listening Journey, 2026-11-10)
+    // the listenings: tests/listening-journey.spec.js (the Listening Journey, 2026-11-10)
     for (const lv of beginners.concat(full)) {
       const W = lv.writing;
       expect(W.topic).toBeTruthy();
@@ -141,7 +111,7 @@ test.describe('content', () => {
     expect(b1.speaking).toMatchObject({ topic: 'Daily Routine', part2: { topic: 'Talk about your daily routine', seconds: 30 } });   // the teacher's Speaking Journey (2026-11-09)
     expect(b1.speaking.words.map(w => [w.w, w.uz])).toContainEqual(['Wake up', "Uyg'onmoq"]);
     expect(l1).toMatchObject({ id: 'e1', no: 11, stage: 'Elementary', theme: 'Meeting people', emoji: '👋' });
-    expect(l1.listening.src).toMatch(/^audio\/skills\/elem-1-listening\.mp3(\?v=\d+)?$/);
+    expect(l1.listening.src).toMatch(/^audio\/skills\/listen-step-11\.mp3(\?v=\d+)?$/);   // the Listening Journey (2026-11-10)
     expect(l1.reading.title).toBe('My First Big Trip');   // the Reading Journey (2026-11-09)
     expect(l1.writing).toMatchObject({ topic: 'My Last Holiday', minWords: 100, maxWords: 120, minutes: 20 });   // the Writing Journey (2026-11-09)
     expect(l1.speaking.part2).toMatchObject({ topic: 'Talk about a memorable holiday', seconds: 45 });   // the Speaking Journey (2026-11-09)
@@ -149,7 +119,7 @@ test.describe('content', () => {
     expect(JSON.stringify(l1.speaking)).not.toBe(JSON.stringify(b1.speaking));
   });
 
-  test('Steps 1–10 (beginner) are as the plan says (themes, writing words/minutes, Part 2 seconds; two spelled names; short)', async ({ page, context }) => {
+  test('Steps 1–10 (beginner) are as the plan says (Part 2 topics and seconds)', async ({ page, context }) => {
     await prepare(context);
     await page.goto('/skill.html?s=listening&st=b1&preview=1');
     const B = await page.evaluate(() => TA_SKILLS.steps.slice(0, 10));
@@ -166,21 +136,12 @@ test.describe('content', () => {
       { topic: 'My best friend', min: 40, max: 50, minutes: 15, talk: /your city/, sec: 45 },
     ];
     expect(B.length).toBe(plan.length);
-    const ones = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
     B.forEach((st, i) => {
       const p = plan[i];
       // the writing: tests/writing-journey.spec.js (the Writing Journey, 2026-11-09)
       expect(st.speaking.part2.topic).toMatch(p.talk);
       expect(st.speaking.part2.seconds).toBe(p.sec);
       st.speaking.questions.forEach(q => expect(q.use.length).toBeGreaterThan(0));
-      const T = st.listening.transcript;
-      expect(T[0].text, st.id).toMatch(new RegExp('^Step ' + ones[i] + '\\. '));
-      // two spelled names, each one the answer to a question
-      const spelled = T.filter(t => /^That's ([A-Z]|double [A-Z])(, ([A-Z]|double [A-Z]))*\.$/.test(t.text));
-      expect(spelled.length, st.id).toBe(2);
-      spelled.forEach(t => expect(t.answers.length).toBe(1));
-      // short, simple turns
-      T.slice(1).forEach(t => expect(t.text.split(/\s+/).length, t.text).toBeLessThanOrEqual(20));
     });
   });
 
@@ -200,8 +161,6 @@ test.describe('content', () => {
     const words = t => t.split(/\s+/).filter(Boolean).length;
     for (const p of plan) {
       const lv = L[p.no - 1];
-      expect(lv.listening.title).toMatch(p.listen);
-      expect(lv.listening.intro).toMatch(/NO MORE THAN TWO WORDS AND\/OR A NUMBER/);
       // the writing: tests/writing-journey.spec.js
       expect(lv.speaking.part2.topic).toMatch(p.talk);
       expect(lv.speaking.part2.seconds).toBe(p.sec);
@@ -212,9 +171,11 @@ test.describe('content', () => {
   test('the skills course has no Uzbek names or Uzbek words — only English', async () => {
     const fs = require('fs'), path = require('path');
     const uzbek = /Uzbek|Tashkent|Samarkand|Bukhara|Kamila|Jasur|Bobur|Nodira|Karimov|Aziz|Lola\b|Malika|Rustam|Laylo|Jamol|Bekzod|Sardor|Nilufar|Madina|Timur|Dilnoza|Karim\b|\bAli\b|harf|raqam|unli tovush|telefon|ikki marta/;
-    ['js/skills-data.js', 'audio/skills/elementary-scripts.json'].forEach(f => {
-      // the Speaking words' Uzbek meanings (uz) are the teacher's own choice (2026-11-09) — everything else stays English
-      const t = fs.readFileSync(path.join(__dirname, '..', f), 'utf8').replace(/uz: "(?:[^"\\]|\\.)*"/g, '').replace(/Uzbek meaning/g, '');
+    ['js/skills-data.js'].forEach(f => {
+      // the Speaking words' Uzbek meanings (uz) are the teacher's own choice (2026-11-09), and so is the teacher's own Listening
+      // Journey (2026-11-10: plov in Step 4, Layla Karim, Yusuf) — everything else stays English
+      const t = fs.readFileSync(path.join(__dirname, '..', f), 'utf8').replace(/uz: "(?:[^"\\]|\\.)*"/g, '').replace(/Uzbek meaning/g, '')
+        .replace(/listening: \{\n\s*\/\/ LISTENING JOURNEY[\s\S]*?LISTENING JOURNEY END/g, '');
       expect(t.match(uzbek), f).toBeNull();
     });
   });
@@ -230,48 +191,64 @@ async function start(page, url) {
   await page.getByRole('button', { name: /Start/ }).click();
 }
 
+// answers every question right (or as `given` says: a text, or 'wrong' for a wrong choice / a wrong text), 1-based numbers
+async function answerAll(page, Q, given = {}) {
+  const rows = page.locator('.sk-q');
+  for (let i = 0; i < Q.questions.length; i++) {
+    const q = Q.questions[i], row = rows.nth(i), g = given[i + 1];
+    const kind = q.type || 'gap';
+    if (kind === 'gap' || kind === 'open') {
+      await row.locator('input').fill(g === 'wrong' ? 'zzz' : g != null ? g : kind === 'open' ? 'It is ' + q.keys[0] : q.a[q.a.length - 1]);
+    } else {
+      const opts = kind === 'tfng' ? ['True', 'False', 'Not given'] : kind === 'tf' ? ['True', 'False'] : q.opts;
+      const pick = g === 'wrong' ? opts.find(o => o !== q.a[0]) : q.a[0];
+      await row.locator('.sk-opt[data-val="' + pick.replace(/"/g, '\\"') + '"]').click();
+    }
+  }
+}
+
 test.describe('student page', () => {
 
-  test('listening: Submit marks each box, shows 10 words, Analyze highlights the answer lines, one result is sent', async ({ page, context }) => {
+  test('listening: Step 11 — a/b/c, spellings, gaps and short answers are marked, Analyze shows who said each answer, one result is sent', async ({ page, context }) => {
     await prepare(context);
     const errors = [];
     page.on('pageerror', e => errors.push(e.message));
     await start(page, '/skill.html?s=listening&lv=1&c=ABC123');
-    await expect(page.locator('audio')).toHaveAttribute('src', /audio\/skills\/elem-1-listening\.mp3/);
-    const given = ['THOMPSON.', 'steven', '214', '07700 900123', '  brighton ', 'three', '7:30', 'Kingston', 'shop', '12'];
-    const boxes = page.locator('.sk-q input');
-    await expect(boxes).toHaveCount(10);
-    for (let i = 0; i < 10; i++) await boxes.nth(i).fill(given[i]);
+    await expect(page.locator('audio')).toHaveAttribute('src', /audio\/skills\/listen-step-11\.mp3/);
+    const L = await page.evaluate(() => TA_SKILLS.steps.find(s => s.id === 'e1').listening);
+    expect(L.questions).toHaveLength(16);
+    await expect(page.locator('.sk-sub')).toHaveText(['Choose the correct answer.', 'Spelling and numbers.', 'True or False?', 'Answer the questions.']);
+    // the student: Q1 wrong, the town spelled out letter by letter (right), the last one wrong — 14 of 16
+    await answerAll(page, L, { 1: 'wrong', 5: 'S-I-L-V-E-R L-A-K-E', 15: 'We saw goats and sheep.', 16: 'in August' });
     await page.getByRole('button', { name: /Submit/ }).click();
-    await expect(page.locator('.sk-q.right')).toHaveCount(7);
-    await expect(page.locator('.sk-q.wrong')).toHaveCount(3);
-    await expect(page.locator('.sk-q.wrong').nth(0)).toContainText('Kingsley');
-    await expect(page.locator('.sk-q.wrong').nth(1)).toContainText('supermarket');
-    await expect(page.locator('.sk-q.wrong').nth(2)).toContainText('11');
-    await expect(page.locator('.sk-score')).toContainText('7 / 10');
-    await expect(page.locator('.sk-words li')).toHaveCount(10);
+    await expect(page.locator('.sk-q.right')).toHaveCount(14);
+    await expect(page.locator('.sk-q.wrong')).toHaveCount(2);
+    await expect(page.locator('.sk-q.wrong').nth(0)).toContainText('By train');
+    await expect(page.locator('.sk-score')).toContainText('14 / 16');
+    await expect(page.locator('.sk-words li')).toHaveCount(0);   // no word list: the Listening Journey has none
     await expect(page.locator('.sk-send')).toContainText('Saved ✅');
 
     await page.getByRole('button', { name: 'Analyze >' }).click();
-    const want = await page.evaluate(() => TA_SKILLS.steps.find(s => s.id === 'e1').listening.transcript.filter(t => t.answers.length).length);
+    const want = L.transcript.filter(t => t.answers.length).length;
     await expect(page.locator('.sk-line.hl')).toHaveCount(want);
-    const hl = page.locator('.sk-line.hl');
-    for (let i = 0; i < want; i++) await expect(hl.nth(i).locator('.sk-qno')).not.toHaveCount(0);
-    await expect(page.locator('.sk-line.hl', { hasText: 'Kingsley Street' }).locator('.sk-qno')).toHaveText(['Q8']);
+    expect(await page.locator('.sk-line.hl .sk-qno').count()).toBe(16);
+    await expect(page.locator('.sk-line.hl', { hasText: 'Nora is N-O-R-A' }).locator('.sk-qno')).toContainText(['Q3', 'Q6']);
+    await expect(page.locator('.sk-line').first().locator('.sk-who')).toContainText('👩 Amelia');
 
     const recs = await sentRecords(page);
     expect(recs).toHaveLength(1);
     expect(recs[0]).toMatchObject({ v: 1, code: 'ABC123', type: 'Listening course', title: 'Step 11 · Meeting people — Listening', step: 'e1', stepNo: 11,
-      skill: 'listening', name: 'Test Student', studentId: '10001', correct: 7, total: 10, score: 70, band: 6.5 });
-    expect(recs[0].answers).toHaveLength(10);
-    expect(recs[0].answers[0]).toEqual({ q: 'Surname: _____', given: 'THOMPSON.', right: true });
-    expect(recs[0].answers[7].right).toBe(false);
+      skill: 'listening', name: 'Test Student', studentId: '10001', correct: 14, total: 16, score: 88 });
+    expect(recs[0].band).toBe(await page.evaluate(() => skBand(14, 16)));
+    expect(recs[0].answers).toHaveLength(16);
+    expect(recs[0].answers[4]).toEqual({ q: "The town's name: _____", given: 'S-I-L-V-E-R L-A-K-E', right: true });
+    expect(recs[0].answers[0].right).toBe(false);
     expect(recs[0].submittedAt).toBeTruthy();
     expect(recs[0].timeDisplay).toMatch(/^\d\d:\d\d$/);
     // builtAt = the Submit time (a page opened before "Delete all results" and sent after it still counts)
     expect(recs[0].builtAt).toBe(recs[0].date);
     // the answers stay on the screen; a second press sends nothing more
-    await expect(boxes.nth(0)).toHaveValue('THOMPSON.');
+    await expect(page.locator('.sk-q').nth(4).locator('input')).toHaveValue('S-I-L-V-E-R L-A-K-E');
     await expect(page.getByRole('button', { name: /Submit/ })).toHaveCount(0);
     expect(errors).toEqual([]);
   });
@@ -323,27 +300,25 @@ test.describe('student page', () => {
     await page.goto('/skill.html?s=listening&st=e1&preview=1');
     await expect(page.locator('.sk-preview')).toContainText('Preview');
     await expect(page.locator('#studentNameInput')).toHaveCount(0);
-    await page.locator('.sk-q input').first().fill('Thompson');
+    await page.locator('.sk-q').first().getByRole('button', { name: 'By train' }).click();
     await page.getByRole('button', { name: /Submit/ }).click();
     await expect(page.locator('.sk-q.right')).toHaveCount(1);
-    await expect(page.locator('.sk-score')).toContainText('1 / 10');
+    await expect(page.locator('.sk-score')).toContainText('1 / 16');
     await page.waitForTimeout(800);
     expect(await page.evaluate(() => window.__writes ? window.__writes.length : 0)).toBe(0);
   });
 
   test('Steps 1–10 (beginner): every listening and reading can be done — all right answers give full marks', async ({ page, context }) => {
-    test.setTimeout(90000);
+    test.setTimeout(120000);
     await prepare(context);
     for (const id of ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10']) {
       await page.goto('/skill.html?s=listening&st=' + id + '&preview=1');
       const n = id.slice(1);
-      await expect(page.locator('audio')).toHaveAttribute('src', new RegExp('audio/skills/beg-' + n + '-listening\\.mp3'));
+      await expect(page.locator('audio')).toHaveAttribute('src', new RegExp('audio/skills/listen-step-' + n + '\\.mp3'));
       const L = await page.evaluate(id => TA_SKILLS.steps.find(s => s.id === id).listening, id);
-      const boxes = page.locator('.sk-q input');
-      await expect(boxes).toHaveCount(10);
-      for (let i = 0; i < 10; i++) await boxes.nth(i).fill(L.questions[i].a[L.questions[i].a.length - 1]);
+      await answerAll(page, L);
       await page.getByRole('button', { name: /Submit/ }).click();
-      await expect(page.locator('.sk-score')).toContainText('10 / 10');
+      await expect(page.locator('.sk-score'), id).toContainText(L.questions.length + ' / ' + L.questions.length);
 
       await page.goto('/skill.html?s=reading&st=' + id + '&preview=1');
       const R = await page.evaluate(id => TA_SKILLS.steps.find(s => s.id === id).reading, id);
@@ -366,23 +341,23 @@ test.describe('student page', () => {
   test('sending fails → Send again', async ({ page, context }) => {
     await prepare(context);
     await start(page, '/skill.html?s=listening&st=e1&c=ABC123');
-    await page.locator('.sk-q input').first().fill('Thompson');
+    await page.locator('.sk-q').first().getByRole('button', { name: 'By train' }).click();
     await page.evaluate(() => { window.__failWrites = 3; });   // the 3 automatic tries fail
     await page.getByRole('button', { name: /Submit/ }).click();
     await expect(page.locator('.sk-send')).toContainText('Not sent yet — press Send again', { timeout: 10000 });
-    await expect(page.locator('.sk-q input').first()).toHaveValue('Thompson');
+    await expect(page.locator('.sk-q').first().locator('.sk-opt.on')).toContainText('By train');
     expect(await page.evaluate(() => window.__writes.length)).toBe(0);
     await page.getByRole('button', { name: /Send again/ }).click();
     await expect(page.locator('.sk-send')).toContainText('Saved ✅');
     const recs = await sentRecords(page);
     expect(recs).toHaveLength(1);
-    expect(recs[0]).toMatchObject({ code: 'ABC123', correct: 1, total: 10 });
+    expect(recs[0]).toMatchObject({ code: 'ABC123', correct: 1, total: 16 });
   });
 
   test('offline: the write waits, the student sees Send again, and only one record is ever saved', async ({ page, context }) => {
     await prepare(context, { rules: true });   // like the real rules: a record can't be changed once it's there
     await start(page, '/skill.html?s=listening&st=e1&c=ABC123');
-    await page.locator('.sk-q input').first().fill('Thompson');
+    await page.locator('.sk-q').first().getByRole('button', { name: 'By train' }).click();
     await page.evaluate(() => { window.__skSendTimeoutMs = 300; window.__holdWrites = true; });
     await page.getByRole('button', { name: /Submit/ }).click();
     await expect(page.locator('.sk-send')).toContainText('Sending');
@@ -394,7 +369,7 @@ test.describe('student page', () => {
     const docs = await page.evaluate(() => window.__fakeDocs.filter(d => d.code === 'ABC123' && d.type === 'Listening course'));
     expect(docs).toHaveLength(1);
     expect(docs[0].__id).toMatch(/^sk_ABC123_10001_\d+$/);
-    expect(docs[0]).toMatchObject({ correct: 1, total: 10, name: 'Test Student' });
+    expect(docs[0]).toMatchObject({ correct: 1, total: 16, name: 'Test Student' });
   });
 
   test('a link without its 6-character code never reaches the start card', async ({ page, context }) => {
@@ -415,10 +390,7 @@ test.describe('student page', () => {
       await page.goto(url);
       await expect(page.locator('body')).toContainText("This step doesn't exist");
     }
-    // a step that has no listening yet says so
-    await page.goto('/skill.html?s=listening&st=e9&c=ABC123');
-    await expect(page.locator('body')).toContainText('Coming soon');
-    await expect(page.locator('.sk-head')).toContainText('Step 19 · Travel');
+    // (a step without a part says "Coming soon" — since the Listening Journey, 2026-11-10, every step has all four)
   });
 
   test('an old link (lv=3) opens Step 13, the same as st=e3: "Step 13" on the chip, the start card and the tab', async ({ page, context }) => {
@@ -793,7 +765,7 @@ test.describe('course page', () => {
     return errors;
   };
 
-  test('a group\'s Journey: 20 steps in order, a plain dot per part (none inside), all open (19–20: no Listening yet); Try opens a preview', async ({ page, context }) => {
+  test('a group\'s Journey: 20 steps in order, a plain dot per part (none inside), all open with four parts; Try opens a preview', async ({ page, context }) => {
     test.setTimeout(300000);   // opens 40 preview tabs; some take ~2 s each in headless Chromium
     const errors = await open(page, context);
     await expect(page.locator('.sk-tab[data-tab="journey"]')).toHaveAttribute('aria-selected', 'true');
@@ -802,9 +774,9 @@ test.describe('course page', () => {
     const nodes = page.locator('.sk-node');
     await expect(nodes).toHaveText([/Step 1\s*Hello!/, /Step 2/, /Step 3/, /Step 4/, /Step 5/, /Step 6/, /Step 7/, /Step 8/, /Step 9/, /Step 10\s*My friend/,
       /Step 11\s*Meeting people/, /Step 12/, /Step 13/, /Step 14/, /Step 15\s*Food & cafés/, /Step 16\s*Shopping/, /Step 17\s*My town/, /Step 18\s*Free time/, /Step 19/, /Step 20/]);
-    // Steps 1–18: all four parts; Steps 19–20: Reading, Writing and Speaking so far (no Listening yet)
+    // every step: all four parts (Steps 19–20 since the Listening Journey, 2026-11-10)
     for (let i = 0; i < 20; i++) {
-      const parts = i < 18 ? ['listening', 'reading', 'writing', 'speaking'] : ['reading', 'writing', 'speaking'];
+      const parts = ['listening', 'reading', 'writing', 'speaking'];
       await expect(rows.nth(i).locator('.sk-dot')).toHaveCount(parts.length);
       expect(await rows.nth(i).locator('.sk-dot').evaluateAll(d => d.map(x => x.dataset.skill))).toEqual(parts);
       await expect(rows.nth(i).locator('button.sk-node')).toHaveCount(1);

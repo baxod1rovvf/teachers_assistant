@@ -611,7 +611,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   don't matter, a key ≥ 3 letters matches the start of a word, short keys/digits the whole word, several words = a phrase).
   Words: the teacher's 10 with `uz` + an emoji + `ex` (the text's sentence, found by the tool). After Submit: the words, Analyze,
   then a **Retelling** reminder card (`retell` + "Try to use at least 5 vocabulary items from the text." — nothing typed or sent).
-  Steps 19–20 have only this Reading so far. `tests/reading-journey.spec.js`.
+  `tests/reading-journey.spec.js`.
 - **Writing Journey (teacher, 2026-11-09 — replaces all earlier writings)**: 20 tasks, source `docs/writing-journey.json`
   (`docs/writing-journey.md` readable; spec `docs/superpowers/specs/2026-11-09-writing-journey-design.md`), put into
   `js/skills-data.js` by `node tools/build-writings.js` (never edit them by hand): `writing { topic, instruction, words[{w, uz}] (8–10
@@ -624,6 +624,20 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   teacher's writing window then has "🤖 Check with AI" (`skCheckWritingWithAi` in common.js) → the AI's band becomes the teacher's mark
   (`ta_skills_marks`) and its feedback is kept in `ta_skills_ai` (synced, in the backup). **After changing the worker, the teacher must
   paste it into Cloudflare again** (`/status` shows its version). `tests/writing-journey.spec.js`.
+- **Listening Journey (teacher, 2026-11-10 — replaces all earlier listenings and their recordings)**: 20 recordings
+  `audio/skills/listen-step-<N>.mp3` (2–5 min; Kokoro, made the way below from `audio/skills/listening-journey-scripts.json` — one
+  voice per speaker: af_heart, af_bella, af_nicole, am_michael, am_puck, am_fenrir; spelled names slow, "Olivia. That's O, L, …";
+  phone numbers digit by digit, twice). The teacher's files: `docs/listening-journey-steps-1-7.md`, `…-8-20.md` (scripts, questions,
+  answer key for 8–20; the 1–7 key was worked out from the scripts). `docs/listening-journey-transcripts.json` (by
+  `tools/listening-transcripts.py`) + `docs/listening-journey-questions.json` (questions, answers, and a few words of the script that
+  hold each answer) → `node tools/build-listenings.js` writes each step's `listening` (never edit it in skills-data.js). Questions
+  have types like Reading — `choose` (a–d; matching too), `tf`, `gap` (a spelled name counts letter by letter: `skMark`), `open`
+  (keys) — and `sec` = the teacher's heading for the group; counts 10 → 20 (the teacher's plan). No word list after Submit (the
+  teacher gave none), Analyze shows the paragraphs with the speaker's name (`who`, `man`). 4 of the teacher's questions had no
+  answer in the script and were changed (Step 8 Q4, Q9; Step 10 Q14; Step 14 Q12); Step 11 Q15 asks for one farm animal, Step 18
+  Q19 is about Jack only. The scripts keep a few non-English names/words the teacher wrote (plov, Uzbekistan, Layla Karim, Yusuf):
+  the "only English" test skips the listenings. The old listenings (beg-/elem- mp3s, `elementary-scripts.json`) were removed;
+  where notes below mention them, read `listening-journey-scripts.json` / `listen-step-<N>.mp3`. `tests/listening-journey.spec.js`.
 - **Speaking Journey (teacher, 2026-11-09)**: **Speaking** follows the teacher's "Speaking Journey" (20 topics: 1 Daily Routine,
   2 Family, 3 Home & Living, 4 Food & Meals, 5 Free Time, 6 Friends, 7 School & Education, 8 Hobbies & Sports, 9 Shopping, 10 Your City,
   11 Holidays, 12 Future Plans, 13 Jobs & Careers, 14 Clothes & Fashion, 15 Transport, 16 Animals & Pets, 17 Health & Lifestyle,
@@ -631,14 +645,14 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   Uzbek meaning, shown under the word (`.sk-uz`); the teacher asked for it, the only Uzbek in the course** — + 5 questions + a Part 2
   card on the topic (seconds unchanged). **All 20 done** (Steps 11–20 on 2026-11-09: source `docs/speaking-journey-11-20.json`,
   put in by `node tools/build-speaking.js` — keeps each Part 2's seconds, Steps 19–20 got a Speaking part, 90 s; example sentences
-  use no Uzbek names). Steps 19–20 still have no Listening. `tests/course-fairness.spec.js`.
+  use no Uzbek names). Since the Listening Journey (2026-11-10) all 20 steps have all four parts. `tests/course-fairness.spec.js`.
 - **Bands** (`js/skill-bands.js`): Listening/Reading = round(correct/total × 40) → IELTS table (19/20 → 8.5, 16/20 → 7.5, 9/20 → 5.5);
   Writing estimate = 3 + 3×length (words/min below the minimum, else 1; +0.5 when over the maximum) + 3×max(0, 1 − mistakes per 100 words/10), nearest 0.5, 1–9 (grammar check didn't run → last
   part 1.5; **blank writing = band 1**); Overall = average of the present skills, rounded like IELTS; CEFR from Overall.
 - **LanguageTool** (`https://api.languagetool.org/v2/check`, `en-GB`, free, no key): about 20 checks a minute per connection. A busy or
   offline check shows "press Check again", the text is still sent, the band then uses only the length.
 - **Recordings**: Kokoro voices `af_heart` (woman, also the narrator) and `am_michael` (man), American accent (teacher, 2026-11-04: the British one dropped its r's — "four" sounded like "faw"); spelled names slow and complete (`spell_slow`, teacher 2026-11-04): "That's." said on its own (before a letter it was clipped), ~0.9 s pause, then each letter as the end of its own sentence "The letter T." cut out with the model's timings (the model file gets a `duration` output — `kokoro-timed.onnx`, needs `pip install onnx`; letters inside a list were said in 0.25 s and sounded cut off, "That's S" sounded like F), ~1.3 s per letter; phone numbers digit by digit, longer pause per group (`slow_phone`); 0.25 s between speakers; `tools/make-course-audio.py … audio/skills 1` remakes only level 1; styled on the teacher's sample exam recording (2026-11-04): speed 0.95, the other speaker reads back numbers/phone numbers ("…?" "Yes, that's right."), a 3.5 s pause to write after each answer (3rd item of a script line); `tools/make-course-audio.py <model folder>
-  audio/skills/elementary-scripts.json audio/skills` makes `audio/skills/elem-<n>-listening.mp3` (needs ffmpeg; `ASR_DIR` = a sherpa-onnx
+  audio/skills/listening-journey-scripts.json audio/skills` makes `audio/skills/elem-<n>-listening.mp3` (needs ffmpeg; `ASR_DIR` = a sherpa-onnx
   Whisper base.en folder checks every line and remakes it until heard right). Spelled names are said "That's T, H, O…" slowly; write full
   sentences (one-word lines garble); phone numbers in Ofcom drama ranges. The checker's false alarms: whose/who's, number words with a capital.
   **To fill a step**: give its entry in `TA_SKILLS.steps` (keep `id`, `no`, `stage`) `theme, emoji, listening {src, title, intro, questions[{q, a[]}], words, transcript[{who, text, answers}]},
@@ -650,9 +664,9 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   `python3 -m venv venv && ./venv/bin/pip install kokoro-onnx soundfile sherpa-onnx onnx`; download from GitHub releases (Hugging Face
   is blocked here) `kokoro-v1.0.int8.onnx` (save as `kokoro.onnx`) + `voices-v1.0.bin` (as `voices.bin`) from
   `thewh1teagle/kokoro-onnx` release `model-files-v1.0`, and `sherpa-onnx-whisper-base.en.tar.bz2` from `k2-fsa/sherpa-onnx` release
-  `asr-models` (unpack). Write the script lines in `audio/skills/elementary-scripts.json` (`[voice, text]` or `[voice, text, 3.5]` =
+  `asr-models` (unpack). Write the script lines in `audio/skills/listening-journey-scripts.json` (`[voice, text]` or `[voice, text, 3.5]` =
   pause to write after an answer) and the same lines in the level's `transcript` in `js/skills-data.js`. Run
-  `ASR_DIR=<whisper folder> ./venv/bin/python tools/make-course-audio.py <kokoro folder> audio/skills/elementary-scripts.json audio/skills <level>`
+  `ASR_DIR=<whisper folder> ./venv/bin/python tools/make-course-audio.py <kokoro folder> audio/skills/listening-journey-scripts.json audio/skills <level>`
   (the tool adds the timings model `kokoro-timed.onnx` itself). Every spelling must print ✓; "⚠️ line" about digits/"Dr."/"O" for
   "oh" are false alarms. Then bump `?v=` on that level's `src`, `npm run stamp`, run the tests, **send the teacher the mp3
   (SendUserFile) to listen before merging**. What the teacher asked for, all built into the tool — keep it:
