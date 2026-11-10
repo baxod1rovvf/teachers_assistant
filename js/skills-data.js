@@ -17,7 +17,7 @@
 var TA_SKILLS = {
   steps: [
     {
-      id: 'b1', no: 1, stage: 'Beginner', theme: 'Hello!', emoji: '👋',
+      id: 'b1', no: 1, stage: 'Beginner', theme: 'Daily Routine', emoji: '⏰',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-1.mp3?v=1",
@@ -125,7 +125,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'b2', no: 2, stage: 'Beginner', theme: 'Numbers 1–20', emoji: '🔢',
+      id: 'b2', no: 2, stage: 'Beginner', theme: 'Family', emoji: '👨‍👩‍👧',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-2.mp3?v=1",
@@ -245,7 +245,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'b3', no: 3, stage: 'Beginner', theme: 'My family', emoji: '👨‍👩‍👧',
+      id: 'b3', no: 3, stage: 'Beginner', theme: 'Home & Living', emoji: '🏠',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-3.mp3?v=1",
@@ -368,7 +368,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'b4', no: 4, stage: 'Beginner', theme: 'Colours & things', emoji: '🎨',
+      id: 'b4', no: 4, stage: 'Beginner', theme: 'Food & Meals', emoji: '🍽️',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-4.mp3?v=1",
@@ -479,7 +479,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'b5', no: 5, stage: 'Beginner', theme: 'Numbers 20–100', emoji: '💯',
+      id: 'b5', no: 5, stage: 'Beginner', theme: 'Free Time', emoji: '🎮',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-5.mp3?v=1",
@@ -609,7 +609,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'b6', no: 6, stage: 'Beginner', theme: 'Days & times', emoji: '📅',
+      id: 'b6', no: 6, stage: 'Beginner', theme: 'Friends', emoji: '🤝',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-6.mp3?v=1",
@@ -741,7 +741,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'b7', no: 7, stage: 'Beginner', theme: 'Food', emoji: '🍎',
+      id: 'b7', no: 7, stage: 'Beginner', theme: 'School & Education', emoji: '🏫',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-7.mp3?v=1",
@@ -854,7 +854,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'b8', no: 8, stage: 'Beginner', theme: 'Animals & pets', emoji: '🐶',
+      id: 'b8', no: 8, stage: 'Beginner', theme: 'Hobbies & Sports', emoji: '⚽',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-8.mp3?v=1",
@@ -971,7 +971,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'b9', no: 9, stage: 'Beginner', theme: 'My room', emoji: '🛏️',
+      id: 'b9', no: 9, stage: 'Beginner', theme: 'Shopping', emoji: '🛍️',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-9.mp3?v=1",
@@ -1094,7 +1094,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'b10', no: 10, stage: 'Beginner', theme: 'My friend', emoji: '🧑‍🤝‍🧑',
+      id: 'b10', no: 10, stage: 'Beginner', theme: 'Your City', emoji: '🏙️',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-10.mp3?v=1",
@@ -1209,7 +1209,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'e1', no: 11, stage: 'Elementary', theme: 'Meeting people', emoji: '👋',
+      id: 'e1', no: 11, stage: 'Elementary', theme: 'Holidays', emoji: '🏖️',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-11.mp3?v=1",
@@ -1330,7 +1330,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'e2', no: 12, stage: 'Elementary', theme: 'Family & friends', emoji: '👨‍👩‍👧',
+      id: 'e2', no: 12, stage: 'Elementary', theme: 'Future Plans', emoji: '🚀',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-12.mp3?v=1",
@@ -1455,7 +1455,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'e3', no: 13, stage: 'Elementary', theme: 'My home', emoji: '🏠',
+      id: 'e3', no: 13, stage: 'Elementary', theme: 'Jobs & Careers', emoji: '💼',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-13.mp3?v=1",
@@ -1583,7 +1583,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'e4', no: 14, stage: 'Elementary', theme: 'My day', emoji: '⏰',
+      id: 'e4', no: 14, stage: 'Elementary', theme: 'Clothes & Fashion', emoji: '👕',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-14.mp3?v=1",
@@ -1720,7 +1720,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'e5', no: 15, stage: 'Elementary', theme: 'Food & cafés', emoji: '🍕',
+      id: 'e5', no: 15, stage: 'Elementary', theme: 'Transport', emoji: '🚆',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-15.mp3?v=1",
@@ -1855,7 +1855,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'e6', no: 16, stage: 'Elementary', theme: 'Shopping', emoji: '🛍️',
+      id: 'e6', no: 16, stage: 'Elementary', theme: 'Animals & Pets', emoji: '🐾',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-16.mp3?v=1",
@@ -1991,7 +1991,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'e7', no: 17, stage: 'Elementary', theme: 'My town', emoji: '🏙️',
+      id: 'e7', no: 17, stage: 'Elementary', theme: 'Health & Lifestyle', emoji: '💪',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-17.mp3?v=1",
@@ -2122,7 +2122,7 @@ var TA_SKILLS = {
       }
     },
     {
-      id: 'e8', no: 18, stage: 'Elementary', theme: 'Free time', emoji: '🎨',
+      id: 'e8', no: 18, stage: 'Elementary', theme: 'Technology', emoji: '📱',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-18.mp3?v=1",
@@ -2264,7 +2264,7 @@ var TA_SKILLS = {
         part2: { topic: "Talk about a piece of technology you use every day", hints: ["what it is and when you got it","what you use it for","why it is useful for you"], seconds: 90 }
       }
     },
-    { id: 'e9', no: 19, stage: 'Elementary', theme: 'Travel', emoji: '🚆',
+    { id: 'e9', no: 19, stage: 'Elementary', theme: 'Movies & Music', emoji: '🎬',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-19.mp3?v=1",
@@ -2405,7 +2405,7 @@ var TA_SKILLS = {
         part2: { topic: "Talk about your favourite movie", hints: ["what the movie is called and what kind of movie it is","who your favourite character is","why you like it (don't tell the ending!)"], seconds: 90 }
       }
     },
-    { id: 'e10', no: 20, stage: 'Elementary', theme: 'Weather & holidays', emoji: '☀️',
+    { id: 'e10', no: 20, stage: 'Elementary', theme: 'Weather & Seasons', emoji: '☀️',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
         src: "audio/skills/listen-step-20.mp3?v=1",
