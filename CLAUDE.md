@@ -638,6 +638,9 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   Q19 is about Jack only. The scripts keep a few non-English names/words the teacher wrote (plov, Uzbekistan, Layla Karim, Yusuf):
   the "only English" test skips the listenings. The old listenings (beg-/elem- mp3s, `elementary-scripts.json`) were removed;
   where notes below mention them, read `listening-journey-scripts.json` / `listen-step-<N>.mp3`. `tests/listening-journey.spec.js`.
+- **Step names (teacher, 2026-11-10: "rename them")**: each step's `theme` + `emoji` = its Speaking Journey topic (1 Daily Routine ⏰ …
+  20 Weather & Seasons ☀️), so the map matches the four parts; older names in the notes above ("Hello!", "Meeting people"…) are gone.
+  Results sent before keep the old name in their `title`.
 - **Speaking Journey (teacher, 2026-11-09)**: **Speaking** follows the teacher's "Speaking Journey" (20 topics: 1 Daily Routine,
   2 Family, 3 Home & Living, 4 Food & Meals, 5 Free Time, 6 Friends, 7 School & Education, 8 Hobbies & Sports, 9 Shopping, 10 Your City,
   11 Holidays, 12 Future Plans, 13 Jobs & Careers, 14 Clothes & Fashion, 15 Transport, 16 Animals & Pets, 17 Health & Lifestyle,
