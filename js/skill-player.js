@@ -55,7 +55,8 @@ const $ = sel => document.querySelector(sel);
 
 /* ---------- marking ---------- */
 function skNorm(s) {
-  return String(s == null ? '' : s).toLowerCase().replace(/[’‘`]/g, "'").replace(/\s+/g, ' ').trim().replace(/\.+$/, '').trim();
+  return String(s == null ? '' : s).toLowerCase().replace(/[’‘`]/g, "'").replace(/[−–]/g, '-').replace(/[$£]/g, '')
+    .replace(/\s+/g, ' ').trim().replace(/\.+$/, '').trim();
 }
 // true when `answer` matches one of the accepted answers: case, extra spaces and a final full stop don't matter.
 // When the student wrote only digits (spaces, dashes and one leading "+" allowed) and an accepted answer is digits
@@ -69,7 +70,10 @@ function skMark(answer, accepted) {
     const want = skNorm(a);
     const wantDigits = want.replace(/[\s-]/g, '');
     if (givenDigits !== null && /^\d+$/.test(wantDigits)) return givenDigits === wantDigits;
-    return given === want;
+    if (given === want) return true;
+    // a name spelled out letter by letter counts too: "G-R-E-E-N", "g r e e n", "S-I-L-V-E-R L-A-K-E" (Listening Journey)
+    const letters = x => x.replace(/[\s.-]/g, '');
+    return /^[a-z]+$/.test(letters(want)) && /^[a-z](?:[\s.-]+[a-z])+$/.test(given.replace(/\s{2,}/g, ' ')) && letters(given) === letters(want);
   });
 }
 window.skMark = skMark;
@@ -307,7 +311,7 @@ function questionHtml(q, n, kind) {
   if (kind === 'tfng' || kind === 'tf' || kind === 'choose') {
     const opts = kind === 'tfng' ? ['True', 'False', 'Not given'] : kind === 'tf' ? ['True', 'False'] : q.opts;
     body = `<div class="sk-qtext">${esc(q.q)}</div><div class="sk-opts" role="group" aria-label="Answer ${n}">` +
-      opts.map((o, i) => `<button type="button" class="sk-opt" aria-pressed="false" data-val="${esc(o)}">${kind === 'choose' ? `<b>${'abc'[i]}</b> ` : ''}${esc(o)}</button>`).join('') +
+      opts.map((o, i) => `<button type="button" class="sk-opt" aria-pressed="false" data-val="${esc(o)}">${kind === 'choose' ? `<b>${'abcdef'[i]}</b> ` : ''}${esc(o)}</button>`).join('') +
       '</div>';
   } else if (kind === 'open') {
     // a WH-question: the student writes a short answer (Reading Journey, 2026-11-09)
@@ -325,15 +329,17 @@ const SECTION_TITLES = {
   open: 'Answer the questions.'
 };
 function questionsHtml(questions, isReading) {
-  let html = '', kind = null, n = 0;
+  let html = '', group = null, n = 0;
+  const typed = isReading || questions.some(q => q.type);   // the old listenings: gaps only, no headings
   questions.forEach(q => {
     n++;
-    const k = isReading ? q.type : 'gap';
-    if (isReading && k !== kind) {
-      if (kind) html += '</ol>';
-      html += `<h3 class="sk-sub">${SECTION_TITLES[k] || ''}</h3><ol class="sk-qs">`;
-      kind = k;
-    } else if (!isReading && n === 1) html += '<ol class="sk-qs">';
+    const k = typed ? (q.type || 'gap') : 'gap';
+    const g = q.sec || k;
+    if (typed && g !== group) {
+      if (group) html += '</ol>';
+      html += `<h3 class="sk-sub">${esc(q.sec || SECTION_TITLES[k] || '')}</h3><ol class="sk-qs">`;
+      group = g;
+    } else if (!typed && n === 1) html += '<ol class="sk-qs">';
     html += questionHtml(q, n, k);
   });
   return html + '</ol>';
@@ -410,7 +416,7 @@ function submit(level, content, info) {
     const fix = li.querySelector('.sk-fix');
     fix.hidden = false;
     fix.innerHTML = right ? '✅ Right!' : q.type === 'open'
-      ? `❌ ${given ? 'Not quite.' : 'No answer.'} A good answer has: <b>${esc((q.keys || [])[0] || '')}</b> — look at the text again.`
+      ? `❌ ${given ? 'Not quite.' : 'No answer.'} A good answer has: <b>${esc((q.keys || [])[0] || '')}</b> — ${SK.skill === 'reading' ? 'look at the text again' : 'press Analyze to see where it is'}.`
       : `❌ ${given ? 'Not quite.' : 'No answer.'} The answer: <b>${esc(q.a[0])}</b>`;
     return { q: q.q, given, right };
   });
@@ -434,10 +440,13 @@ function submit(level, content, info) {
     </div>`;
   const words = content.words || [];
   const isReading = SK.skill === 'reading';
-  $('#skAfter').innerHTML = `<section class="sk-card sk-words-card"><h2>💡 ${words.length} useful words</h2>
+  $('#skAfter').innerHTML = (words.length ? `<section class="sk-card sk-words-card"><h2>💡 ${words.length} useful words</h2>
       <ul class="sk-words">${words.map(w => `<li>${w.emoji ? `<span class="sk-wemoji" aria-hidden="true">${esc(w.emoji)}</span>` : ''}<b>${esc(w.w)}</b>${w.uz ? `<span class="sk-m sk-uz" lang="uz" translate="no">${esc(w.uz)}</span>` : `<span class="sk-m">${esc(w.m)}</span>`}<i>${esc(w.ex)}</i></li>`).join('')}</ul>
       <div class="sk-actions"><button type="button" class="sk-btn sk-btn-main" id="skAnalyze">Analyze ></button></div>
-    </section>
+    </section>` : `<section class="sk-card sk-words-card"><h2>🔍 Check your answers</h2>
+      <p class="sk-intro">See what the speakers said and where each answer is.</p>
+      <div class="sk-actions"><button type="button" class="sk-btn sk-btn-main" id="skAnalyze">Analyze ></button></div>
+    </section>`) + `
     <div id="skAnalysis"></div>
     ${isReading && content.retell ? `<section class="sk-card sk-retell-card"><h2>🗣️ Retelling</h2>
       <p>${esc(content.retell)}</p><p class="sk-retell-goal"><b>Try to use at least 5 vocabulary items from the text.</b></p></section>` : ''}`;
@@ -488,7 +497,8 @@ function analyze(content, isReading) {
     <p class="sk-intro">The highlighted lines hold the answers. The tag shows the question number.</p>
     <ol class="sk-transcript">${content.transcript.map(t => {
       const nums = t.answers || [];
-      return `<li class="sk-line${nums.length ? ' hl' : ''}"><span class="sk-who sk-who-${t.who === 'Man' ? 'm' : 'w'}">${t.who === 'Man' ? '👨' : '👩'} ${esc(t.who)}</span>
+      const man = t.man != null ? t.man : t.who === 'Man';
+      return `<li class="sk-line${nums.length ? ' hl' : ''}"><span class="sk-who sk-who-${man ? 'm' : 'w'}">${man ? '👨' : '👩'} ${esc(t.who)}</span>
         <span class="sk-said">${nums.map(n => `<span class="sk-qno">Q${n}</span>`).join('')}${esc(t.text)}</span></li>`;
     }).join('')}</ol></section>`;
   $('#skAnalysis').scrollIntoView({ behavior: 'smooth', block: 'start' });
