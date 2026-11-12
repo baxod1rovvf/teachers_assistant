@@ -18,7 +18,8 @@ delete the free check.
   - `resultId` = the result's database id (`sk_<code>_<student>_<time>`, `skResultId`); only `^sk_[A-Za-z0-9_-]{1,140}$`.
 - Jobs (POST, only from the teacher's site, as now):
   - `queue` `{ id, text, topic, instruction, minWords, maxWords, words }` → saved as `q:<id>` unless `f:<id>` exists;
-    text ≤ 6 000 characters; refused when more than 600 are waiting. Answer `{ queued: true }` / `{ done: true }`.
+    text ≤ 6 000 characters; one visitor (IP) may queue at most 30 a minute (no total cap: counting the waiting list
+    costs a KV list, and the free plan allows ~1 000 lists a day — the timer already uses 288). Answer `{ queued: true }` / `{ done: true }`.
   - `feedback` `{ ids: [≤ 60] }` → `{ <id>: { state: 'done', result } | { state: 'waiting', tries, lastError } | { state: 'unknown' } }`.
   - `check` `{ id, … same as queue }` → checks it **now** (the teacher's "🤖 Check now"), saves `f:<id>`, removes `q:<id>`,
     answers `{ result }` or `{ error }` (the writing then stays waiting).
