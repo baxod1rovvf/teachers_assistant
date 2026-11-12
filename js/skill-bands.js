@@ -176,3 +176,53 @@ function skWritingAiBand(scores, words, minWords) {
   if (minWords > 0 && words < minWords) total -= 0.5;
   return Math.max(1, Math.min(9, Math.round(total * 2) / 2));
 }
+
+/* ---------- Loom's own grammar rules (teacher, 2026-11-12: "I playing volleybal" passed the check) ----------
+   The free check (LanguageTool) misses some typical learner mistakes. These few rules are sure ones, added to its list:
+   - I / he / she / we / they + an -ing word with no am/is/are ("I playing" → "I am playing")
+   - I / you / we / they + a he/she form ("I goes" → "I go")
+   - he / she / it + the plain verb ("he go" → "he goes"), not after does / can / will / to …
+   → [{ offset, length, message, rule, kind, replacements }] like the free check's matches. */
+const SK_ING_NOT_VERB = /^(thing|nothing|something|anything|everything|morning|evening|ceiling|king|ring|sing|bring|spring|string|swing|wing|sting|during|building|wedding|pudding|darling|sibling|ping|cling|fling|sling|wring)$/i;
+const SK_BE = { i: 'am', he: 'is', she: 'is', we: 'are', they: 'are' };
+const SK_VERBS = 'go do have play like want watch live work love eat drink read write make take get come see know think help study try give find use need start walk run swim sleep wake listen speak visit cook wash clean buy tell say ride stay enjoy spend leave finish begin teach learn feel look'.split(' ');
+function skHeForm(v) {
+  if (v === 'have') return 'has';
+  if (/(?:o|s|sh|ch|x|z)$/.test(v)) return v + 'es';
+  if (/[^aeiou]y$/.test(v)) return v.slice(0, -1) + 'ies';
+  return v + 's';
+}
+const SK_HE_FORMS = {};
+SK_VERBS.forEach(v => { SK_HE_FORMS[skHeForm(v)] = v; });
+const SK_NOT_BEFORE_PLAIN = /(?:\b(?:does|did|do|will|would|can|could|should|must|may|might|to|let|make|makes|made|help|helps|helped|saw|see|sees|watch|watches|watched|hear|heard|hears|let's|doesn't|didn't|don't|won't|can't|couldn't|shouldn't|wouldn't|mustn't|and|or|if)\s+)$/i;
+function skBasicGrammar(text) {
+  const t = String(text || ''), out = [];
+  const add = (offset, length, message, rule, fix) => out.push({ offset, length, message, rule: 'LOOM_' + rule, kind: 'grammar', replacements: [fix] });
+  let m;
+  const ing = /\b(I|he|she|we|they)\s+([A-Za-z]{2,}ing)\b/gi;
+  while ((m = ing.exec(t))) {
+    if (SK_ING_NOT_VERB.test(m[2])) continue;
+    const be = SK_BE[m[1].toLowerCase()];
+    add(m.index, m[0].length, 'Add "' + be + '" before the -ing word, or use the simple form: "' + m[1] + ' ' + be + ' ' + m[2] + '".', 'BE_ING', m[1] + ' ' + be + ' ' + m[2]);
+  }
+  const he = new RegExp('\\b(I|you|we|they)\\s+(' + Object.keys(SK_HE_FORMS).join('|') + ')\\b', 'gi');
+  while ((m = he.exec(t))) {
+    const plain = SK_HE_FORMS[m[2].toLowerCase()];
+    add(m.index, m[0].length, 'With "' + m[1] + '", use "' + plain + '" (no -s).', 'PLAIN_VERB', m[1] + ' ' + plain);
+  }
+  const plain = new RegExp('\\b(he|she|it)\\s+(' + SK_VERBS.join('|') + ')\\b', 'gi');
+  while ((m = plain.exec(t))) {
+    if (SK_NOT_BEFORE_PLAIN.test(t.slice(Math.max(0, m.index - 20), m.index))) continue;
+    const v = m[2].toLowerCase();
+    add(m.index, m[0].length, 'With "' + m[1] + '", add -s to the verb: "' + m[1] + ' ' + skHeForm(v) + '".', 'HE_VERB', m[1] + ' ' + skHeForm(v));
+  }
+  return out.sort((a, b) => a.offset - b.offset);
+}
+if (typeof window !== 'undefined') window.skBasicGrammar = skBasicGrammar;
+/* LanguageTool's matches + Loom's own, without two on the same words */
+function skMergeMatches(lt, own) {
+  const all = (lt || []).slice();
+  (own || []).forEach(o => { if (!all.some(m => m.offset < o.offset + o.length && o.offset < m.offset + m.length)) all.push(o); });
+  return all.sort((a, b) => a.offset - b.offset);
+}
+if (typeof window !== 'undefined') window.skMergeMatches = skMergeMatches;

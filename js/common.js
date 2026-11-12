@@ -1719,8 +1719,30 @@ window.skWritingBandFor = skWritingBandFor;
 /* The mistakes that count (skCountsAsMistake, js/skill-bands.js): not extra spaces, American spelling or names — also for
    results sent before that rule (2026-11-09). */
 function skWritingMistakes(r) {
-  const list = (Array.isArray(r && r.mistakeList) ? r.mistakeList : []).filter(m => m && typeof m === 'object');
-  return typeof skCountsAsMistake === 'function' ? list.filter(skCountsAsMistake) : list;
+  let list = (Array.isArray(r && r.mistakeList) ? r.mistakeList : []).filter(m => m && typeof m === 'object');
+  if (typeof skCountsAsMistake === 'function') list = list.filter(skCountsAsMistake);
+  // Loom's own rules (2026-11-12) also on writings sent before them: "I playing", "he go", "I goes"
+  const text = String((r && r.text) || '');
+  if (typeof skBasicGrammar === 'function' && text) {
+    // where the mistakes already listed are (older ones have no saved position: found as whole words, skFindMistake)
+    const taken = list.map(m => { const at = typeof m.at === 'number' ? m.at : skFindMistake(text, m, 0); return [at, at + String(m.bad || '').length]; })
+      .filter(([a]) => a >= 0);
+    skBasicGrammar(text).forEach(o => {
+      if (taken.some(([a, b]) => a < o.offset + o.length && o.offset < b)) return;
+      if (list.some(m => m.rule === o.rule && m.at === o.offset)) return;
+      list.push({ bad: text.slice(o.offset, o.offset + o.length), fix: o.replacements[0], message: o.message, at: o.offset, rule: o.rule });
+    });
+    list.sort((a, b) => (typeof a.at === 'number' ? a.at : 1e9) - (typeof b.at === 'number' ? b.at : 1e9));
+  }
+  return list;
+}
+/* A spacing mistake ("student.I" → add a space) shown with the word before it, so it doesn't read "I → I" */
+function skMistakeShown(text, m) {
+  const bad = String(m.bad || ''), fix = String(m.fix || '');
+  if (!fix || fix.trim() !== bad.trim() || typeof m.at !== 'number') return { bad, fix };
+  let s = m.at;
+  while (s > 0 && !/\s/.test(text[s - 1]) && m.at - s < 20) s--;
+  return { bad: text.slice(s, m.at + bad.length), fix: text.slice(s, m.at) + fix };
 }
 window.skWritingMistakes = skWritingMistakes;
 /* text for inside a "…" or '…' attribute (escapeForHtml leaves quotes alone) */
@@ -1814,9 +1836,9 @@ function skWritingViewHtml(r) {
         : '<span class="dd-chip ' + (list.length ? 'mistakes' : 'ok') + '">' + (r.grammarChecked === false ? '⚠️ Grammar not checked' : list.length + (list.length === 1 ? ' mistake' : ' mistakes')) + '</span>') + '</div>' +
     '<div class="sk-wv-text">' + (String(r.text || '').trim() ? (ai ? escapeForHtml(String(r.text)) : skWritingTextHtml(r)) : '<i>(nothing written)</i>') + '</div>' +
     (ai ? skAiFeedbackHtml(r, ai) : '') +
-    (!ai && r.aiChecked === false && String(r.text || '').trim() ? '<p class="sk-wv-noai">🤖 The AI check didn\'t run when this was sent. <button type="button" class="mini-btn" onclick="skCheckWritingWithAi(this)">🤖 Check with AI</button></p>' : '') +
-    (list.length ? '<ol class="sk-wv-mistakes">' + list.map(m => '<li><span class="sk-wv-bad">' + esc(m.bad || '') + '</span>' +
-      (m.fix ? ' → <span class="sk-wv-fix">' + esc(m.fix) + '</span>' : '') + (m.message ? '<small>' + esc(m.message) + '</small>' : '') + '</li>').join('') + '</ol>' : '') +
+    (!ai && r.aiChecked === false && String(r.text || '').trim() ? '<p class="sk-wv-noai">🤖 The AI check didn\'t run when this was sent' + (r.aiError ? ' (' + esc(r.aiError) + ')' : '') + '. <button type="button" class="mini-btn" onclick="skCheckWritingWithAi(this)">🤖 Check with AI</button></p>' : '') +
+    (list.length ? '<ol class="sk-wv-mistakes">' + list.map(m => { const v = skMistakeShown(String(r.text || ''), m); return '<li><span class="sk-wv-bad">' + esc(v.bad) + '</span>' +
+      (v.fix ? ' → <span class="sk-wv-fix">' + esc(v.fix) + '</span>' : '') + (m.message ? '<small>' + esc(m.message) + '</small>' : '') + '</li>'; }).join('') + '</ol>' : '') +
     '<div class="sk-wv-band"><label for="skWvBand">Band</label>' +
       '<input type="number" id="skWvBand" class="ta-input" min="1" max="9" step="0.5" value="' + (band !== null ? band : '') + '">' +
       '<span class="sk-wv-how">' + (mark !== null ? '(your mark)' : '(estimated)') + '</span>' +
@@ -2337,7 +2359,7 @@ function taNoticeStack() {
    Opening the site lists the students (from the Students list) who finished
    an exercise in the last 7 days that the teacher hasn't marked as checked
    yet. "Checked" (per student, or all at once) stops the warning for those;
-   closing it with ✕ only hides it until the next visit. New completions
+   closing it with ✕ only hides it until the next visit. Skills course results are left out (2026-11-12). New completions
    coming in while the site is open bring it back. The checked ones are kept
    per account and synced (ta_checked_completions). */
 const LS_CHECKED_COMPLETIONS = 'ta_checked_completions';
@@ -2419,6 +2441,8 @@ function getUncheckedCompletions() {
   const byStudent = {};
   (window.__allResults || []).forEach(r => {
     if (!r || !r.code || !r.date || !(new Date(r.date).getTime() >= since)) return;
+    // the Skills course's results ("Listening course" …) aren't in this note (teacher, 2026-11-12: "delete this function")
+    if (/ course$/.test(String(r.type || ''))) return;
     const student = rosterStudentForResult(r, rosterIdx);
     if (!student) return;
     const key = taCompletionKey(r);

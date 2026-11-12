@@ -638,6 +638,18 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   Q19 is about Jack only. The scripts keep a few non-English names/words the teacher wrote (plov, Uzbekistan, Layla Karim, Yusuf):
   the "only English" test skips the listenings. The old listenings (beg-/elem- mp3s, `elementary-scripts.json`) were removed;
   where notes below mention them, read `listening-journey-scripts.json` / `listen-step-<N>.mp3`. `tests/listening-journey.spec.js`.
+- **Course fixes (teacher, 2026-11-12)**: (1) the "✅ N students finished exercises" note (`getUncheckedCompletions`) leaves out
+  results of type "… course". (2) **One after another**: Copy link also writes `prev` = JSON `{ skill, stepNo, codes }` on the link's
+  `class-<code>` record (`skPrevPart` in course.js: the group's parts in order from its start step, Listening → Reading → Writing;
+  the nearest earlier one whose link was copied; the next part already sent is put online again so it learns this one). On Start
+  (after the class list and "already done" checks), `skPrevDone` (skill-player.js) reads that part's results and looks for this
+  student (by `taIdKey`, else the listed name); none → `#skStartErr` "⚠️ Oldingi Listening mashq tugatilmagan. Avval Step 5 ·
+  Listening mashqini tugating." (Uzbek, the teacher's words); no internet → let in. Links copied before 2026-11-12 have no `prev`
+  until Copy link is pressed again. (3) Writing: Loom's own grammar rules `skBasicGrammar` (skill-bands.js) — "I/he/she/we/they +
+  -ing" without am/is/are, "I/you/we/they + goes/has…", "he/she/it + go/play…" (not after does/can/will/to…) — added to the free
+  check's list at Submit (`skMergeMatches`) and to older writings when shown (`skWritingMistakes`); a missing-space mistake is shown
+  with its word ("Yusuf.I → Yusuf. I", `skMistakeShown`); `aiError` = why the AI check didn't run, shown in the teacher's window.
+  `tests/course-order.spec.js`.
 - **Step names (teacher, 2026-11-10: "rename them")**: each step's `theme` + `emoji` = its Speaking Journey topic (1 Daily Routine ⏰ …
   20 Weather & Seasons ☀️), so the map matches the four parts; older names in the notes above ("Hello!", "Meeting people"…) are gone.
   Results sent before keep the old name in their `title`.

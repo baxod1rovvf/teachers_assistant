@@ -408,16 +408,49 @@ function skMarkSpeakingSent(step, g) {
   links[key] = Object.assign({}, v && typeof v === 'object' ? v : {}, { sentAt: new Date().toISOString() });
   skWriteLinks(links);
 }
+/* One after another (teacher, 2026-11-12: a student who opens an exercise before finishing the one before it is warned "Oldingi
+   Listening mashq tugatilmagan"): the group's parts in order — from the group's start, step by step, Listening → Reading → Writing
+   (Speaking sends nothing). The part before one = the nearest earlier part whose link was copied for this group. */
+const SK_ORDER = ['listening', 'reading', 'writing'];
+function skPartsInOrder(g) {
+  const start = skStartNo(g), seq = [];
+  skSteps().forEach(st => { if (st.no >= start) SK_ORDER.forEach(k => { if (st[k]) seq.push({ skill: k, step: st }); }); });
+  return seq;
+}
+function skPrevPart(skill, stepId, g, links) {
+  const seq = skPartsInOrder(g), st = skStep(stepId);
+  const i = st ? seq.findIndex(x => x.skill === skill && x.step.id === st.id) : -1;
+  for (let j = i - 1; j >= 0; j--) {
+    const codes = skCodesFor(seq[j].skill, seq[j].step.id, g, links);
+    if (codes.length) return { skill: seq[j].skill, stepNo: seq[j].step.no, codes: codes };
+  }
+  return null;
+}
+function skNextPart(skill, stepId, g, links) {
+  const seq = skPartsInOrder(g), st = skStep(stepId);
+  const i = st ? seq.findIndex(x => x.skill === skill && x.step.id === st.id) : -1;
+  if (i < 0) return null;
+  for (let j = i + 1; j < seq.length; j++) {
+    const e = skLinkEntry(seq[j].skill, seq[j].step.id, g, links);
+    if (e && e.code) return { skill: seq[j].skill, step: seq[j].step.id, code: e.code };
+  }
+  return null;
+}
 /* The group's list goes online for this link's code, IDs scrambled (taPublishClassList in firebase.js), so the student page
-   lets in only the group's students. On every Copy link — a student added later is let in after the next copy. */
-function skPutClassOnline(url, g) {
+   lets in only the group's students — with the part before it (`prev`), so a student who hasn't done that one is stopped.
+   On every Copy link — a student added later is let in after the next copy. The part after it (already sent) is put online
+   again too, so it knows this one comes before it. */
+function skPutClassOnline(url, g, skill, step) {
   let code = '';
   try { code = new URL(url, location.href).searchParams.get('c') || ''; } catch (e) { code = ''; }
   const students = skGroupRoster(g);
   if (!code || typeof window.taPublishClassList !== 'function') return;
-  window.taPublishClassList(code, students).then(ok => {
+  const links = taSkillsLinks();
+  window.taPublishClassList(code, students, skPrevPart(skill, step, g, links)).then(ok => {
     if (!ok) showToast('⚠️ The class list couldn\'t go online — students can still start without an ID check. Press Copy link again later.');
   });
+  const next = skNextPart(skill, step, g, links);
+  if (next) window.taPublishClassList(next.code, students, skPrevPart(next.skill, next.step, g, links));
 }
 function skCopyLink(skill, step) {
   const g = skGroup();
@@ -426,7 +459,7 @@ function skCopyLink(skill, step) {
   const url = skLinkFor(skill, step, g);
   if (!url) return;
   if (skill === 'speaking') skMarkSpeakingSent(step, g);
-  else skPutClassOnline(url, g);   // only the group's students can start it (2026-11-09)
+  else skPutClassOnline(url, g, skill, (skStep(step) || {}).id || step);   // only the group's students, and in order (2026-11-09, 11-12)
   const msg = '🔗 Link copied — send it to ' + g.name + '. It always works.';
   // taModal sets the title as text: the group's name goes in as typed
   const show = () => taModal('🔗 The link for ' + g.name, '<input type="text" class="ta-input" readonly value="' + escapeForHtml(url) + '" aria-label="The link">');
