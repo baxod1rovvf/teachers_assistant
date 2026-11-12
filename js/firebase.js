@@ -107,7 +107,9 @@ window.taUnpublishPlay = async function (uid, parts) {
 // on every Copy link (a new student, a new ID); the rules allow create + delete, not change, so the old one goes first.
 // Like the exercise links it has the sync shape (code 'TAUSER', type 'TA_SYNC:CLASS') and no submittedAt, so it never
 // shows up among results. Resolves true when saved.
-window.taPublishClassList = async function (code, students) {
+// `prev` (2026-11-12): the part the group does before this one — { skill, stepNo, codes } — kept as JSON in `prev`; the student
+// page lets a student start only after a result for one of those codes (skPrevDone in skill-player.js).
+window.taPublishClassList = async function (code, students, prev) {
   if (!db || !code || !Array.isArray(students) || typeof skClassHash !== 'function') return false;
   try {
     const list = [];
@@ -119,8 +121,10 @@ window.taPublishClassList = async function (code, students) {
     const ref = doc(db, 'results', 'class-' + code);
     await deleteDoc(ref).catch(() => {});
     if (!list.length) return true;   // a group with no students yet: no list, so the link stays open to anyone
-    await setDoc(ref, { v: 1, code: 'TAUSER', builtAt: '', type: 'TA_SYNC:CLASS', title: code, name: '', data: JSON.stringify(list),
-      score: list.length, warnings: 0, timeSeconds: 0, timeDisplay: '00:00', date: new Date().toISOString() });
+    const rec = { v: 1, code: 'TAUSER', builtAt: '', type: 'TA_SYNC:CLASS', title: code, name: '', data: JSON.stringify(list),
+      score: list.length, warnings: 0, timeSeconds: 0, timeDisplay: '00:00', date: new Date().toISOString() };
+    if (prev && Array.isArray(prev.codes) && prev.codes.length) rec.prev = JSON.stringify({ skill: prev.skill, stepNo: prev.stepNo, codes: prev.codes.slice(0, 10) });
+    await setDoc(ref, rec);
     return true;
   } catch (e) { taReportDbError(e); console.error('Putting the class list online failed:', e); return false; }
 };

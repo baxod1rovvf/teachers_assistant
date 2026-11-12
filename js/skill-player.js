@@ -189,10 +189,31 @@ async function skCheckStudent(name, id) {
     const st = list.find(s => s && s.h === h);
     if (!st) return { refuse: 'This ID is not on your teacher\'s list. Check your ID and try again.', field: 'id' };
     if (!skNameFits(name, st.n)) return { refuse: 'This ID belongs to another student. Write your own name and ID.', field: 'name' };
-    return { name: st.n };
+    let prev = null;
+    try { prev = snap.data().prev ? JSON.parse(snap.data().prev) : null; } catch (e) { prev = null; }
+    return { name: st.n, prev: prev && Array.isArray(prev.codes) && prev.codes.length ? prev : null };
   } catch (e) { console.warn('Skills course: could not check the class list', e); return {}; }
 }
 window.skCheckStudent = skCheckStudent;
+/* One after another (teacher, 2026-11-12): the part the group does before this one (the class list's `prev`) must be done —
+   a result of one of its codes from this student (by ID, else the listed name). true = done, false = not done, null = couldn't
+   check (no internet …) → let in. */
+async function skPrevDone(prev, name, id) {
+  if (!prev || !Array.isArray(prev.codes) || !prev.codes.length) return true;
+  try {
+    const { fs, db } = await within(loadFirestore(), 8000);
+    const snap = await within(fs.getDocsFromServer(fs.query(fs.collection(db, 'results'), fs.where('code', 'in', prev.codes.slice(0, 10)))), 8000);
+    const want = taIdKey(id), nm = String(name || '').trim().toLowerCase();
+    return (snap.docs || []).map(d => d.data()).some(r => r && (/ course$/.test(r.type || '')) &&
+      ((r.studentId && taIdKey(r.studentId) === want) || String(r.name || '').trim().toLowerCase() === nm));
+  } catch (e) { console.warn('Skills course: could not check the part before', e); return null; }
+}
+window.skPrevDone = skPrevDone;
+const SK_SKILL_UZ = { listening: 'Listening', reading: 'Reading', writing: 'Writing' };
+function skPrevWarning(prev) {
+  const k = SK_SKILL_UZ[prev.skill] || 'oldingi';
+  return '⚠️ Oldingi ' + k + ' mashq tugatilmagan. Avval Step ' + prev.stepNo + ' · ' + k + ' mashqini tugating.';
+}
 function showAlreadyDone(level, done) {
   const info = SKILL_INFO[SK.skill];
   root().innerHTML = `${headerHtml(level)}<section class="sk-card sk-center sk-done-card">
@@ -295,6 +316,11 @@ function showStart(level, content) {
     try { localStorage.setItem(NAME_KEY, JSON.stringify({ name, id })); } catch (err) { /* private window */ }
     const done = await skAlreadyDone(SK.name, id);   // one try per exercise (2026-11-09)
     if (done) { showAlreadyDone(level, done); return; }
+    if (who.prev && (await skPrevDone(who.prev, SK.name, id)) === false) {   // the part before isn't done (2026-11-12)
+      btn.textContent = label; btn.disabled = false;
+      $('#skStartErr').textContent = skPrevWarning(who.prev);
+      return;
+    }
     btn.textContent = label; btn.disabled = false;
     if (SK.skill === 'writing') showWriting(level); else showExercise(level);
   });
@@ -515,7 +541,9 @@ window.skCountWords = skCountWords;
 // The free LanguageTool check (en-GB). Never throws: an error, a refusal (e.g. 429 busy), no internet or no answer
 // within ~15 s → { ok: false, matches: [] }.
 async function skCheckGrammar(text) {
-  const failed = { ok: false, matches: [] };
+  // Loom's own rules for typical learner mistakes the free check misses ("I playing", "he go" — skBasicGrammar, 2026-11-12)
+  const own = typeof skBasicGrammar === 'function' ? skBasicGrammar(text) : [];
+  const failed = { ok: false, matches: own };
   if (!String(text || '').trim()) return failed;
   const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
   const timer = setTimeout(() => { if (ctrl) ctrl.abort(); }, window.__skCheckTimeoutMs || 15000);
@@ -542,7 +570,7 @@ async function skCheckGrammar(text) {
       // only real mistakes: not extra spaces, American spelling or names (skCountsAsMistake in skill-bands.js, 2026-11-09)
       .filter(m => typeof skCountsAsMistake !== 'function' || skCountsAsMistake({ bad: String(text).slice(m.offset, m.offset + m.length), message: m.message, rule: m.rule, kind: m.kind }))
       .sort((a, b) => a.offset - b.offset);
-    return { ok: true, matches };
+    return { ok: true, matches: skMergeMatches(matches, own) };
   } catch (e) {
     console.warn('Skills course: the grammar check could not run', e);
     return failed;
@@ -708,8 +736,14 @@ function grammarHtml(text, check) {
   return `<p class="sk-intro">${ms.length ? `We found ${ms.length} thing${ms.length === 1 ? '' : 's'} to fix. They are underlined in your text.` : '🎉 No grammar mistakes found. Great job!'}</p>
     <div class="sk-checked" lang="en">${checkedTextHtml(text, ms)}</div>
     ${ms.length ? `<ol class="sk-mistakes">${ms.map((m, i) => {
-      const bad = text.slice(m.offset, m.offset + m.length);
-      const fix = m.replacements[0];
+      let bad = text.slice(m.offset, m.offset + m.length);
+      let fix = m.replacements[0];
+      if (fix && fix.trim() === bad.trim()) {   // a missing space: show the word before it ("student.I → student. I", not "I → I")
+        let st = m.offset;
+        while (st > 0 && !/\s/.test(text[st - 1]) && m.offset - st < 20) st--;
+        fix = text.slice(st, m.offset) + fix;
+        bad = text.slice(st, m.offset + m.length);
+      }
       return `<li class="sk-mistake"><span class="sk-num">${i + 1}</span><div class="sk-qbody">
         <div class="sk-mfix"><s class="sk-bad">${esc(bad || '(missing)')}</s>${fix ? ` → <b class="sk-good">${esc(fix)}</b>` : ''}</div>
         <div class="sk-mmsg">${esc(m.message)}</div></div></li>`;
@@ -753,6 +787,7 @@ async function submitWriting(level, W, timeUp) {
   if (W.words) {
     lastPayload.aiChecked = !!(ai && ai.result);
     if (ai && ai.result) lastPayload.ai = ai.result;
+    else if (ai && ai.error) lastPayload.aiError = String(ai.error).slice(0, 200);   // why it didn't run (the teacher sees it)
     if (asked) lastPayload.asked = asked;
   }
   // builtAt = the Submit time (= date): Loom hides results "built" before a "Delete all results" (isExpiredResult in common.js);
