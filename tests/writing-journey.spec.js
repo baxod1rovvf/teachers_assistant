@@ -152,26 +152,3 @@ test('"already done" for a writing shows the words, no band', async ({ page, con
   await expect(page.locator('.sk-done-score')).not.toContainText('band');
 });
 
-test('teacher: a writing the AI didn\'t check gets "🤖 Check with AI" — its score becomes the teacher\'s mark', async ({ page, context }) => {
-  const now = Date.now();
-  const item = { uid: 'skwriting', code: 'WRT555', typeLabel: 'Writing course', groupId: 'g1', skill: 'writing', title: 'Step 1 — writing', date: new Date().toISOString() };
-  await prepare(context, {
-    docs: [{ __id: 'w9', v: 1, code: 'WRT555', type: 'Writing course', skill: 'writing', step: 'b1', title: 'Step 1 · Hello! — Writing', name: 'Alice Test', studentId: '10001',
-      text: TEXT, words: 47, minWords: 80, maxWords: 100, mistakes: 0, mistakeList: [], grammarChecked: false, aiChecked: false, band: 5,
-      asked: { used: ['wake up'], missing: ['go to bed'] }, timeSeconds: 600, timeDisplay: '10:00', date: new Date(now - 60000).toISOString(), submittedAt: new Date(now - 60000).toISOString() }],
-    storage: { ta_recent_exercises: JSON.stringify([item]), ta_skills_links: JSON.stringify({ 'g1|writing|b1': { code: 'WRT555' } }) }
-  });
-  await fakeAi(context);
-  await page.goto('/results.html');
-  await page.waitForFunction(() => (window.__allResults || []).length >= 1, null, { timeout: 10000 });
-  await hideNotices(page);
-  await page.evaluate(() => showExerciseResults('skwriting'));
-  await page.locator('.results-table tbody tr', { hasText: 'Alice Test' }).getByRole('button', { name: '👁 View' }).click();
-  const modal = page.locator('.sk-wv');
-  await expect(modal.locator('.sk-wv-noai')).toContainText("The AI check didn't run");
-  await modal.getByRole('button', { name: '🤖 Check with AI' }).click();
-  await expect(modal.locator('.sk-wv-parts')).toContainText('Grammar 2.5/3');
-  await expect(modal.locator('#skWvBand')).toHaveValue('7.5');
-  await expect(modal).toContainText('(your mark)');
-  expect(await page.evaluate(() => [JSON.parse(localStorage.getItem('ta_skills_marks'))['WRT555|10001'], !!JSON.parse(localStorage.getItem('ta_skills_ai'))['WRT555|10001']])).toEqual([7.5, true]);
-});

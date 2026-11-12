@@ -408,6 +408,7 @@ function rsDerivePlain() {
   if (window.renderDashboard) window.renderDashboard();
   if (window.renderTopActiveStudents) window.renderTopActiveStudents();
   if (window.taCompletionsChanged) window.taCompletionsChanged();
+  if (window.taWritingAiSyncSoon) window.taWritingAiSyncSoon();   // course writings with no AI feedback yet (common.js)
   if (window.taCourseResultsChanged) window.taCourseResultsChanged();   // the Course page: its tiles' 🏆 Results table buttons and an open results table
 }
 window.startPlainCompletionsSync = function () {

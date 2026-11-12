@@ -533,12 +533,17 @@ function skTableRows(step, groupId, resultsMap, links) {
       const st = rosterStudentForResult(r, idx);
       if (!st || st.group !== g.id) return;
       const band = skResultBand(skill, r);
-      if (typeof band !== 'number') return;
+      const waits = skill === 'writing' && typeof band !== 'number' && skWritingPending(r);   // waiting for the AI: ⏳
+      if (typeof band !== 'number' && !waits) return;
       const key = String(st.id).trim().toLowerCase();
       const row = students[key] || (students[key] = { name: st.name, studentId: st.id, listening: null, reading: null, writing: null });
       const cur = row[skill];
-      if (!cur || band > cur.band || (band === cur.band && String(r.date || '') > cur.date)) {
-        row[skill] = { band: band, raw: skResultRaw(skill, r), date: String(r.date || '') };
+      // a checked writing beats a waiting one; among the same kind the best band (the latest when equal)
+      const better = !cur || (cur.pending && !waits) || (!cur.pending && !waits && (band > cur.band || (band === cur.band && String(r.date || '') > cur.date)))
+        || (cur.pending && waits && String(r.date || '') > cur.date);
+      if (better) {
+        row[skill] = { band: waits ? null : band, pending: waits || undefined, raw: skResultRaw(skill, r), date: String(r.date || '') };
+        if (!waits) delete row[skill].pending;
         if (skill === 'writing') Object.defineProperty(row[skill], 'res', { value: r });   // for skViewWriting (not copied out)
       }
     });
@@ -546,7 +551,7 @@ function skTableRows(step, groupId, resultsMap, links) {
   const rows = Object.keys(students).map(k => {
     const row = students[k];
     SK_TABLE_SKILLS.forEach(s => { if (row[s]) delete row[s].date; });
-    row.overall = skOverall(SK_TABLE_SKILLS.map(s => row[s] ? row[s].band : null));
+    row.overall = skOverall(SK_TABLE_SKILLS.map(s => row[s] && typeof row[s].band === 'number' ? row[s].band : null));
     row.cefr = row.overall === null ? '' : skCefr(row.overall);
     return row;
   });
@@ -564,12 +569,14 @@ function skPlaceText(p) { return SK_MEDALS[p - 1] || String(p); }
 function skTableHtml(rows, meta, opts) {
   opts = opts || {};
   const esc = escapeForHtml;
-  const cell = (v, cls) => v
+  const cell = (v, cls) => v && v.pending
+    ? '<div class="' + cls + ' pending" title="Waiting for the AI check"><b>⏳</b><small>' + esc(v.raw) + '</small></div>'
+    : v
     ? '<div class="' + cls + ' ' + skBandColour(v.band) + '"><b>' + v.band + '</b><small>' + esc(v.raw) + '</small></div>'
     : '<div class="' + cls + ' none">—</div>';
   // a writing band opens the student's text (the step page keeps the results in skWritingRes)
   const wcell = (r, i) => r.writing && r.writing.res && opts.writingLinks
-    ? '<button type="button" class="sk-rt-cell sk-rt-wbtn ' + skBandColour(r.writing.band) + '" onclick="skViewWriting(' + i + ')" title="Open ' + esc(r.name) + '\'s writing"><b>' + r.writing.band + '</b><small>' + esc(r.writing.raw) + '</small></button>'
+    ? '<button type="button" class="sk-rt-cell sk-rt-wbtn ' + (r.writing.pending ? 'pending' : skBandColour(r.writing.band)) + '" onclick="skViewWriting(' + i + ')" title="Open ' + esc(r.name) + '\'s writing"><b>' + (r.writing.pending ? '⏳' : r.writing.band) + '</b><small>' + esc(r.writing.raw) + '</small></button>'
     : cell(r.writing, 'sk-rt-cell');
   const avg = skOverall(rows.map(r => r.overall));
   return '<div class="sk-rt">' +
@@ -672,6 +679,7 @@ async function skDrawTablePng(rows, meta) {
   const drawCell = (v, X, w, sub, strong) => {
     const cy = y + 7, h = ROW_H - 18;
     if (!v) { rr(X, cy, w, h, 14); x.fillStyle = '#F4EEE2'; x.fill(); text('—', X + w / 2, cy + h / 2, '700 22px ' + HEAD_F, '#A99CC4', 'center'); return; }
+    if (v.pending) { rr(X, cy, w, h, 14); x.fillStyle = '#F4EEE2'; x.fill(); text('⏳', X + w / 2, cy + h / 2 - 9, '700 24px ' + HEAD_F, '#A99CC4', 'center'); text(sub, X + w / 2, cy + h / 2 + 16, '700 13px ' + BODY_F, '#A99CC4', 'center'); return; }
     const c = SK_PNG[skBandColour(v.band)];
     if (strong) { rr(X, cy + 3, w, h, 14); x.fillStyle = SK_PNG.line; x.fill(); }
     rr(X, cy, w, h, 14); x.fillStyle = c[0]; x.fill(); x.lineWidth = 2; x.strokeStyle = strong ? SK_PNG.line : c[2]; x.stroke();

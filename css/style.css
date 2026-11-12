@@ -2822,6 +2822,7 @@ button.sk-dot:hover { transform: scale(1.12); }
 .sk-rt .good { background: #D6F7EA; color: #0B6B4B; border-color: #2ED3A0; }
 .sk-rt .mid { background: #FFF1C2; color: #7A5600; border-color: #FFD23F; }
 .sk-rt .low { background: #FFE0E0; color: #A31F1F; border-color: #FF6B6B; }
+.sk-rt .pending { background: #F4EEE2; color: #7C6F95; border-color: #D9CFE8; }
 .sk-rt .none { background: #F4EEE2; color: #7C6F95; font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.3rem; }
 .sk-rt-overall { box-shadow: 0 3px 0 var(--rt-line); border-color: var(--rt-line) !important; }
 .sk-rt-wbtn { font: inherit; cursor: pointer; width: 100%; transition: transform .15s var(--bounce); }
@@ -3315,4 +3316,4 @@ body.loom-studio .ai-robot-anim { position: absolute; left: 50%; top: 50%; trans
 .sk-wv-parts { font-weight: 700; margin-bottom: 6px; }
 .sk-wv-sub { font-weight: 700; margin: 10px 0 4px; }
 .sk-wv-better, .sk-wv-tips { margin: 0 0 0 18px; line-height: 1.55; }
-.sk-wv-noai { margin-top: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.sk-wv-wait, .sk-wv-noai { margin-top: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }

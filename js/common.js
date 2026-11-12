@@ -1707,14 +1707,25 @@ function skClampWritingBand(v) { return typeof v === 'number' && isFinite(v) ? M
 function skTeacherMark(r) {
   return r ? skClampWritingBand(skMarks()[skMarkKey(r)]) : null;
 }
-/* The band a writing counts with: the teacher's mark if set, else the page's estimate — both kept to 1–9. */
+/* The band a writing counts with (2026-11-12): the teacher's mark, else the AI's (from its saved feedback — worked out here from the
+   scores), else the band an older writing was sent with — all kept to 1–9; null while it waits for the AI (⏳). */
 function skWritingBandFor(r) {
   if (!r) return null;
   const m = skTeacherMark(r);
   if (m !== null) return m;
+  const ai = skAiFor(r);
+  if (ai && ai.scores && typeof skWritingAiBand === 'function') {
+    const words = typeof r.words === 'number' ? r.words : String(r.text || '').trim().split(/\s+/).filter(Boolean).length;
+    return skClampWritingBand(skWritingAiBand(ai.scores, words, r.minWords || 0));
+  }
   // the band the page sent (writings sent before 2026-11-09 keep theirs — the teacher can change it with Save band)
   return skClampWritingBand(r.band);
 }
+/* A writing with text, no mark, no AI feedback and no old band: it waits for the AI's check (⏳). */
+function skWritingPending(r) {
+  return !!r && r.type === 'Writing course' && !!String(r.text || '').trim() && skTeacherMark(r) === null && !skAiFor(r) && skClampWritingBand(r.band) === null;
+}
+window.skWritingPending = skWritingPending;
 window.skWritingBandFor = skWritingBandFor;
 /* The mistakes that count (skCountsAsMistake, js/skill-bands.js): not extra spaces, American spelling or names — also for
    results sent before that rule (2026-11-09). */
@@ -1767,7 +1778,14 @@ function skWritingTextHtml(r) {
    with "🤖 Check with AI" (ta_skills_ai, keyed like the marks; synced, in the backup). */
 const LS_SKILLS_AI = 'ta_skills_ai';
 function skAiStore() { try { return JSON.parse(localStorage.getItem(LS_SKILLS_AI) || '{}') || {}; } catch (e) { return {}; } }
-function skAiFor(r) { return (r && r.ai && r.ai.scores) ? r.ai : (r ? skAiStore()[skMarkKey(r)] || null : null); }
+/* the feedback of a writing: its own (old results), else kept by the result's database id, else under the old "<code>|<id>" key */
+function skAiFor(r) {
+  if (!r) return null;
+  if (r.ai && r.ai.scores) return r.ai;
+  const st = skAiStore();
+  const a = (r.__id && st[r.__id]) || st[skMarkKey(r)];
+  return a && a.scores ? a : null;
+}
 function skAiFeedbackHtml(r, ai) {
   const esc = v => escapeForHtml(String(v == null ? '' : v)), s = ai.scores || {};
   const asked = r.asked && (r.asked.used || r.asked.missing) ? r.asked : null;
@@ -1780,36 +1798,106 @@ function skAiFeedbackHtml(r, ai) {
     (ai.tips && ai.tips.length ? '<p class="sk-wv-sub">🚀 Tips</p><ol class="sk-wv-tips">' + ai.tips.map(t => '<li>' + esc(t) + '</li>').join('') + '</ol>' : '') +
   '</div>';
 }
-// "🤖 Check with AI" in a writing's window: for a writing whose AI check didn't run at Submit. The AI's score becomes the
-// teacher's mark (ta_skills_marks), its feedback is kept in ta_skills_ai.
-async function skCheckWritingWithAi(btn) {
+/* What the helper said about waiting writings: { <id>: { tries, lastError } } (memory only — the window shows it) */
+window.__taWritingWaiting = window.__taWritingWaiting || {};
+/* "🤖 Check now" in a writing's window: asks the helper to check it right away (job check). The feedback is kept under the
+   result's id; no mark is written — the AI's band is used as it is (skWritingBandFor). */
+async function skCheckWritingNow(btn) {
   if (!skWvOpen) return;
   const r = skWvOpen.r;
   const url = typeof taAiUrl === 'function' ? taAiUrl() : '';
   if (!url) { showToast('The AI helper isn\'t connected yet.'); return; }
+  if (!r.__id) { showToast('This writing can\'t be checked from here.'); return; }
   if (btn) { btn.disabled = true; btn.textContent = '🤖 Checking…'; }
-  const words = r.asked ? [].concat(r.asked.used || [], r.asked.missing || []) : [];
   let data = null, ok = false;
   try {
-    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ job: 'writing', text: String(r.text || ''), topic: String(r.title || ''), instruction: '', minWords: r.minWords || 0, maxWords: r.maxWords || 0, words }) });
+    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.assign({ job: 'check' }, skWritingJobBody(r))) });
     data = await res.json().catch(() => null);
     ok = res.ok && data && data.result && data.result.scores;
   } catch (e) { ok = false; }
   if (!ok) {
     showToast('🤖 The AI check didn\'t run' + (data && data.error ? ' (' + data.error + ')' : '') + '. Try again in a minute.');
-    if (btn) { btn.disabled = false; btn.textContent = '🤖 Check with AI'; }
+    if (btn) { btn.disabled = false; btn.textContent = '🤖 Check now'; }
     return;
   }
-  const key = skMarkKey(r), store = skAiStore(), marks = skMarks();
-  store[key] = data.result;
-  marks[key] = skWritingAiBand(data.result.scores, typeof r.words === 'number' ? r.words : 0, r.minWords || 0);
-  try { localStorage.setItem(LS_SKILLS_AI, JSON.stringify(store)); localStorage.setItem(LS_SKILLS_MARKS, JSON.stringify(marks)); } catch (e) { showToast('⚠️ Couldn\'t save — the browser\'s storage is full.'); return; }
-  showToast('✅ Checked with AI: band ' + marks[key] + ' for ' + (r.name || 'the student') + '.', 'ok');
-  skWvOpen.modal.body.innerHTML = skWritingViewHtml(r);
+  const store = skAiStore();
+  store[r.__id] = data.result;
+  try { localStorage.setItem(LS_SKILLS_AI, JSON.stringify(store)); } catch (e) { showToast('⚠️ Couldn\'t save — the browser\'s storage is full.'); return; }
+  delete window.__taWritingWaiting[r.__id];
+  showToast('✅ Checked with AI: band ' + skWritingBandFor(r) + ' for ' + (r.name || 'the student') + '.', 'ok');
+  if (skWvOpen) skWvOpen.modal.body.innerHTML = skWritingViewHtml(r);
   if (window.taCourseResultsChanged) window.taCourseResultsChanged();
 }
-window.skCheckWritingWithAi = skCheckWritingWithAi;
+window.skCheckWritingNow = skCheckWritingNow;
+
+/* The helper's job body for a writing: its text, topic and instruction (from the course data when it is loaded, else the title),
+   limits and asked words. */
+function skWritingJobBody(r) {
+  const st = typeof TA_SKILLS !== 'undefined' && TA_SKILLS && Array.isArray(TA_SKILLS.steps) ? TA_SKILLS.steps.find(x => x.id === r.step) : null;
+  const w = st && st.writing ? st.writing : null;
+  const words = r.asked && (r.asked.used || r.asked.missing) ? [].concat(r.asked.used || [], r.asked.missing || [])
+    : (w && Array.isArray(w.words) ? w.words.map(x => x.w) : []);
+  return { id: String(r.__id || ''), text: String(r.text || ''), topic: String((w && w.topic) || r.title || ''), instruction: String((w && w.instruction) || ''),
+    minWords: r.minWords || 0, maxWords: r.maxWords || 0, words: words };
+}
+
+/* The safety net (2026-11-12): no writing stays unchecked. Every course writing Loom holds that has no AI feedback is asked
+   about at the helper (job feedback, 60 at a time): done → kept in ta_skills_ai; waiting → remembered for the window; unknown → put
+   on the helper's waiting list (job queue). Each writing is asked at most once per 10 minutes (memory only). */
+window.__taWritingAsked = window.__taWritingAsked || {};
+let taWritingSyncBusy = null, taWritingSyncTimer = null;
+async function taWritingAiSync() {
+  const out = { done: 0, queued: 0 };
+  if (taWritingSyncBusy) return taWritingSyncBusy;
+  taWritingSyncBusy = (async () => {
+    try {
+      const url = typeof taAiUrl === 'function' ? taAiUrl() : '';
+      if (!url) return out;
+      const now = Date.now(), asked = window.__taWritingAsked;
+      const todo = (window.__allResults || []).filter(r => r && r.type === 'Writing course' && r.__id && String(r.text || '').trim() && !skAiFor(r) && !(asked[r.__id] > now - 600000));
+      if (!todo.length) return out;
+      const post = async body => {
+        const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        return res.ok ? await res.json().catch(() => null) : null;
+      };
+      let changed = false;
+      for (let i = 0; i < todo.length; i += 60) {
+        const batch = todo.slice(i, i + 60);
+        batch.forEach(r => { asked[r.__id] = Date.now(); });
+        let data = null;
+        try { data = await post({ job: 'feedback', ids: batch.map(r => r.__id) }); } catch (e) { data = null; }
+        const states = data && data.states && typeof data.states === 'object' ? data.states : null;
+        if (!states) continue;
+        const store = skAiStore();
+        for (const r of batch) {
+          const st = states[r.__id];
+          if (!st) continue;
+          if (st.state === 'done' && st.result && st.result.scores) { store[r.__id] = st.result; delete window.__taWritingWaiting[r.__id]; out.done++; changed = true; }
+          else if (st.state === 'waiting') window.__taWritingWaiting[r.__id] = { tries: st.tries || 0, lastError: st.lastError || '' };
+          else if (st.state === 'unknown') {
+            try { const q = await post(Object.assign({ job: 'queue' }, skWritingJobBody(r))); if (q && (q.queued || q.done)) out.queued++; } catch (e) { /* asked again later */ }
+          }
+        }
+        if (changed) { try { localStorage.setItem(LS_SKILLS_AI, JSON.stringify(store)); } catch (e) { /* storage full */ } }
+      }
+      if (changed || out.queued) { if (window.taCourseResultsChanged) window.taCourseResultsChanged(); }
+    } catch (e) { /* never into the results pipeline */ }
+    return out;
+  })();
+  try { return await taWritingSyncBusy; } finally { taWritingSyncBusy = null; }
+}
+function taWritingAiSyncSoon() {
+  clearTimeout(taWritingSyncTimer);
+  taWritingSyncTimer = setTimeout(() => { taWritingAiSync().catch(() => {}); }, 5000);
+}
+window.taWritingAiSync = taWritingAiSync;
+window.taWritingAiSyncSoon = taWritingAiSyncSoon;
+/* a writing with no AI feedback yet: waiting on the helper's list, with what it said, and "🤖 Check now" */
+function skWritingWaitHtml(r) {
+  const w = (window.__taWritingWaiting || {})[r.__id];
+  const why = w ? ' — tried ' + (w.tries || 0) + (w.tries === 1 ? ' time' : ' times') + (w.lastError ? ', last problem: ' + escapeForHtml(String(w.lastError)) : '') : '';
+  return '<p class="sk-wv-wait">⏳ Waiting for the AI check' + why + '. It is checked by itself — or <button type="button" class="mini-btn" onclick="skCheckWritingNow(this)">🤖 Check now</button></p>';
+}
 function skWritingViewHtml(r) {
   const ai = skAiFor(r);
   const esc = v => escapeForHtml(String(v == null ? '' : v)), list = ai ? [] : skWritingMistakes(r);
@@ -1823,12 +1911,12 @@ function skWritingViewHtml(r) {
         : '<span class="dd-chip ' + (list.length ? 'mistakes' : 'ok') + '">' + (r.grammarChecked === false ? '⚠️ Grammar not checked' : list.length + (list.length === 1 ? ' mistake' : ' mistakes')) + '</span>') + '</div>' +
     '<div class="sk-wv-text">' + (String(r.text || '').trim() ? (ai ? escapeForHtml(String(r.text)) : skWritingTextHtml(r)) : '<i>(nothing written)</i>') + '</div>' +
     (ai ? skAiFeedbackHtml(r, ai) : '') +
-    (!ai && r.aiChecked === false && String(r.text || '').trim() ? '<p class="sk-wv-noai">🤖 The AI check didn\'t run when this was sent' + (r.aiError ? ' (' + esc(r.aiError) + ')' : '') + '. <button type="button" class="mini-btn" onclick="skCheckWritingWithAi(this)">🤖 Check with AI</button></p>' : '') +
+    (!ai && String(r.text || '').trim() ? skWritingWaitHtml(r) : '') +
     (list.length ? '<ol class="sk-wv-mistakes">' + list.map(m => { const v = skMistakeShown(String(r.text || ''), m); return '<li><span class="sk-wv-bad">' + esc(v.bad) + '</span>' +
       (v.fix ? ' → <span class="sk-wv-fix">' + esc(v.fix) + '</span>' : '') + (m.message ? '<small>' + esc(m.message) + '</small>' : '') + '</li>'; }).join('') + '</ol>' : '') +
     '<div class="sk-wv-band"><label for="skWvBand">Band</label>' +
       '<input type="number" id="skWvBand" class="ta-input" min="1" max="9" step="0.5" value="' + (band !== null ? band : '') + '">' +
-      '<span class="sk-wv-how">' + (mark !== null ? '(your mark)' : '(estimated)') + '</span>' +
+      '<span class="sk-wv-how">' + (mark !== null ? '(your mark)' : ai ? '(from the AI check)' : '(estimated)') + '</span>' +
       '<button type="button" class="mini-btn solid" onclick="skSaveWritingMark()">Save band</button>' +
       (mark !== null ? '<button type="button" class="mini-btn" onclick="skSaveWritingMark(true)">↩️ Use the estimate</button>' : '') + '</div>' +
   '</div>';

@@ -650,6 +650,13 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   check's list at Submit (`skMergeMatches`) and to older writings when shown (`skWritingMistakes`); a missing-space mistake is shown
   with its word ("Yusuf.I → Yusuf. I", `skMistakeShown`); `aiError` = why the AI check didn't run, shown in the teacher's window.
   `tests/course-order.spec.js`.
+- **Writing AI feedback kept per writing + safety net (2026-11-12)**: a writing's AI feedback is `ta_skills_ai[<result __id>]` (older: the
+  result's own `ai`, or the old "<code>|<id>" key — `skAiFor`); its band is worked out from the scores (`skWritingBandFor`: teacher's mark → AI →
+  an old writing's own `band` → none). A writing with text and none of these is **waiting** (`skWritingPending`): the results table shows ⏳
+  (`skTableRows` keeps `{ band: null, pending: true }`; no ⏳ in averages). `taWritingAiSync` (common.js; `taWritingAiSyncSoon` is called from
+  firebase.js when results change, 5 s debounce) asks the helper `feedback` for every course writing without feedback (60 at a time, each at
+  most once per 10 min, in memory) — done → kept, unknown → `queue` (never for empty text), waiting → tries/reason for the writing's window
+  (`.sk-wv-wait`, "🤖 Check now" = `skCheckWritingNow`, job `check`, writes **no** mark). `tests/writing-queue.spec.js`.
 - **Step names (teacher, 2026-11-10: "rename them")**: each step's `theme` + `emoji` = its Speaking Journey topic (1 Daily Routine ⏰ …
   20 Weather & Seasons ☀️), so the map matches the four parts; older names in the notes above ("Hello!", "Meeting people"…) are gone.
   Results sent before keep the old name in their `title`.

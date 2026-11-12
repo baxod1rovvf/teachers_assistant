@@ -50,7 +50,7 @@ test('the "students finished exercises" note leaves the course exercises out', a
   expect(groups).toEqual([['Bobur Test', ['SPL111']]]);
 });
 
-test('teacher: a missing space shows its word, and why the AI didn\'t run', async ({ page, context }) => {
+test('teacher: a missing space shows its word, and why it waits for the AI', async ({ page, context }) => {
   const now = Date.now();
   const text = 'Hello my name is Yusuf.I am a student. In my free time I playing volleybal with my friends.';
   const item = { uid: 'skwriting', code: 'WRT901', typeLabel: 'Writing course', groupId: 'g1', skill: 'writing', title: 'Step 5 — writing', date: new Date().toISOString() };
@@ -68,7 +68,7 @@ test('teacher: a missing space shows its word, and why the AI didn\'t run', asyn
   await page.evaluate(() => showExerciseResults('skwriting'));
   await page.locator('.results-table tbody tr', { hasText: 'Alice Test' }).getByRole('button', { name: '👁 View' }).click();
   const modal = page.locator('.sk-wv');
-  await expect(modal.locator('.sk-wv-noai')).toContainText("The AI check didn't run when this was sent (the AI could not be reached)");
+  await expect(modal.locator('.sk-wv-wait')).toContainText('Waiting for the AI check');   // since 2026-11-12 every unchecked writing waits for the helper
   const items = modal.locator('.sk-wv-mistakes li');
   await expect(items).toHaveCount(2);
   await expect(items.nth(0)).toContainText('Yusuf.I → Yusuf. I');
