@@ -22,7 +22,7 @@ const ALLOWED_ORIGINS = ['https://baxod1rovvf.github.io'];
 const VERSION = '2026-11-12q';
 const DEFAULT_MODEL = 'gemini-flash-lite-latest';   // Google's fastest model on the free plan (answers in a few seconds)
 const PER_MODEL_SECONDS = 18, TOTAL_SECONDS = 40;   // Loom waits 60 s, so the helper always answers before that
-const PER_MINUTE = { chat: 8, writing: 40, queue: 30, feedback: 60, check: 20 };          // per visitor (IP) per minute, kept in this worker's memory
+const PER_MINUTE = { chat: 8, writing: 40, queue: 30, feedback: 60, check: 10 };          // per visitor (IP) per minute, kept in this worker's memory
 const seen = new Map();
 
 function cors(origin) {

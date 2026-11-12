@@ -136,3 +136,26 @@ test('aiBand: -0.5 only when too short, kept to 1-9', async () => {
   expect(w.aiBand({ grammar: 3, vocabulary: 2, structure: 2, task: 2 }, 70, 80)).toBe(8.5);
   expect(w.aiBand({ grammar: 0, vocabulary: 0, structure: 0, task: 0 }, 10, 80)).toBe(1);
 });
+
+test('limits per visitor: the 11th check in a minute from one IP answers 429, another IP still gets through; queue 30, feedback 60', async () => {
+  const w = await load(), kv = fakeKv(), env = { LOOM_KV: kv, GEMINI_API_KEY: 'k' };
+  stubGemini();
+  const call = async (ip, body) => { const res = await w.default.fetch(new Request('https://x.workers.dev/', { method: 'POST',
+    headers: { Origin: 'https://baxod1rovvf.github.io', 'CF-Connecting-IP': ip }, body: JSON.stringify(body) }), env); return res.status; };
+  const stamp = Date.now();
+  for (let i = 1; i <= 10; i++) expect(await call('lim-c-' + stamp, Object.assign({ job: 'check' }, writingOf('sk_LIM_' + i)))).toBe(200);
+  expect(await call('lim-c-' + stamp, Object.assign({ job: 'check' }, writingOf('sk_LIM_11')))).toBe(429);
+  expect(await call('lim-c2-' + stamp, Object.assign({ job: 'check' }, writingOf('sk_LIM_12')))).toBe(200);
+  for (let i = 1; i <= 30; i++) expect(await call('lim-q-' + stamp, Object.assign({ job: 'queue' }, writingOf('sk_LIMQ_' + i)))).toBe(200);
+  expect(await call('lim-q-' + stamp, Object.assign({ job: 'queue' }, writingOf('sk_LIMQ_31')))).toBe(429);
+  for (let i = 1; i <= 60; i++) expect(await call('lim-f-' + stamp, { job: 'feedback', ids: [] })).toBe(200);
+  expect(await call('lim-f-' + stamp, { job: 'feedback', ids: [] })).toBe(429);
+});
+
+test('/status shows version, kv, waiting count and the jobs', async () => {
+  const w = await load(), kv = fakeKv();
+  kv.m.set('q:sk_A_1', { value: '{}', metadata: { at: 'x' } });
+  kv.m.set('f:sk_B_1', { value: '{}', metadata: null });
+  const res = await w.default.fetch(new Request('https://x.workers.dev/status'), { LOOM_KV: kv, GEMINI_API_KEY: 'k' });
+  expect(await res.json()).toEqual({ running: true, version: '2026-11-12q', keySaved: true, kv: true, waiting: 1, jobs: ['chat', 'writing', 'queue', 'feedback', 'check'] });
+});
