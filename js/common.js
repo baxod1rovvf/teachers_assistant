@@ -1721,19 +1721,6 @@ window.skWritingBandFor = skWritingBandFor;
 function skWritingMistakes(r) {
   let list = (Array.isArray(r && r.mistakeList) ? r.mistakeList : []).filter(m => m && typeof m === 'object');
   if (typeof skCountsAsMistake === 'function') list = list.filter(skCountsAsMistake);
-  // Loom's own rules (2026-11-12) also on writings sent before them: "I playing", "he go", "I goes"
-  const text = String((r && r.text) || '');
-  if (typeof skBasicGrammar === 'function' && text) {
-    // where the mistakes already listed are (older ones have no saved position: found as whole words, skFindMistake)
-    const taken = list.map(m => { const at = typeof m.at === 'number' ? m.at : skFindMistake(text, m, 0); return [at, at + String(m.bad || '').length]; })
-      .filter(([a]) => a >= 0);
-    skBasicGrammar(text).forEach(o => {
-      if (taken.some(([a, b]) => a < o.offset + o.length && o.offset < b)) return;
-      if (list.some(m => m.rule === o.rule && m.at === o.offset)) return;
-      list.push({ bad: text.slice(o.offset, o.offset + o.length), fix: o.replacements[0], message: o.message, at: o.offset, rule: o.rule });
-    });
-    list.sort((a, b) => (typeof a.at === 'number' ? a.at : 1e9) - (typeof b.at === 'number' ? b.at : 1e9));
-  }
   return list;
 }
 /* A spacing mistake ("student.I" → add a space) shown with the word before it, so it doesn't read "I → I" */

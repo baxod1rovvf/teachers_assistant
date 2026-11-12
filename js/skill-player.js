@@ -136,7 +136,7 @@ const doneKeys = (code, name, id) => [code + '|id:' + String(id || '').trim().to
   .filter(k => !/:$/.test(k));
 function doneSummary(r) {
   if (!r) return '';
-  if (r.skill === 'writing' || /^Writing/.test(r.type || '')) return (typeof r.words === 'number' ? r.words + ' words' : '') + (typeof r.band === 'number' ? (r.words ? ' · ' : '') + 'band ' + r.band : '');
+  if (r.skill === 'writing' || /^Writing/.test(r.type || '')) return (typeof r.words === 'number' ? r.words + ' words' : '');
   return typeof r.correct === 'number' && typeof r.total === 'number' ? r.correct + ' / ' + r.total : '';
 }
 function markDone(payload) {
@@ -531,97 +531,11 @@ function analyze(content, isReading) {
 }
 
 /* ---------- writing ---------- */
-const LT_URL = 'https://api.languagetool.org/v2/check';
 // Words = pieces between spaces that hold a letter or a digit ("&" or "-" on its own isn't a word).
 function skCountWords(text) {
   return String(text || '').split(/\s+/).filter(w => /[\p{L}\p{N}]/u.test(w)).length;
 }
 window.skCountWords = skCountWords;
-
-// The free LanguageTool check (en-GB). Never throws: an error, a refusal (e.g. 429 busy), no internet or no answer
-// within ~15 s → { ok: false, matches: [] }.
-async function skCheckGrammar(text) {
-  // Loom's own rules for typical learner mistakes the free check misses ("I playing", "he go" — skBasicGrammar, 2026-11-12)
-  const own = typeof skBasicGrammar === 'function' ? skBasicGrammar(text) : [];
-  const failed = { ok: false, matches: own };
-  if (!String(text || '').trim()) return failed;
-  const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
-  const timer = setTimeout(() => { if (ctrl) ctrl.abort(); }, window.__skCheckTimeoutMs || 15000);
-  try {
-    const res = await Promise.race([
-      fetch(LT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ text: String(text), language: 'en-GB' }).toString(),
-        signal: ctrl ? ctrl.signal : undefined
-      }),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), (window.__skCheckTimeoutMs || 15000) + 500))
-    ]);
-    if (!res.ok) return failed;
-    const data = await res.json();
-    if (!data || !Array.isArray(data.matches)) return failed;
-    const len = String(text).length;
-    const matches = data.matches.map(m => ({
-      offset: Number(m.offset), length: Number(m.length) || 0, message: String(m.message || ''),
-      rule: String((m.rule && m.rule.id) || ''), kind: String((m.rule && m.rule.issueType) || ''),
-      replacements: (Array.isArray(m.replacements) ? m.replacements : []).slice(0, 5).map(r => String(r && r.value != null ? r.value : '')).filter(Boolean)
-    })).filter(m => Number.isInteger(m.offset) && m.offset >= 0 && m.offset <= len && m.length >= 0)
-      .map(m => Object.assign(m, { length: Math.min(m.length, len - m.offset) }))
-      // only real mistakes: not extra spaces, American spelling or names (skCountsAsMistake in skill-bands.js, 2026-11-09)
-      .filter(m => typeof skCountsAsMistake !== 'function' || skCountsAsMistake({ bad: String(text).slice(m.offset, m.offset + m.length), message: m.message, rule: m.rule, kind: m.kind }))
-      .sort((a, b) => a.offset - b.offset);
-    return { ok: true, matches: skMergeMatches(matches, own) };
-  } catch (e) {
-    console.warn('Skills course: the grammar check could not run', e);
-    return failed;
-  } finally { clearTimeout(timer); }
-}
-window.skCheckGrammar = skCheckGrammar;
-
-// Uses where the plain word is the right one ("fourteen years old" isn't "years ancient", "good morning" isn't "great morning").
-// `before` is tested on the text before the word, `after` on the text after it.
-const SK_BETTER_SKIP = {
-  old: { before: /\byears?\s+$/i },
-  like: { before: /\b(?:look|looks|looked|looking|be|is|are|was|were|am|feel|feels|sound|sounds|seems?)\s+$/i },
-  good: { after: /^\s+(?:morning|afternoon|evening|night|luck)\b/i }
-};
-// The TA_BETTER_WORDS entries found in the text (whole word or phrase, any case), in the order they first appear.
-// A longer phrase wins over the words inside it: "very big" lists very big → huge, not also big → large.
-function skBetterWords(text) {
-  const list = window.TA_BETTER_WORDS || {};
-  const t = String(text || '');
-  const keys = Object.keys(list).sort((a, b) => b.length - a.length);
-  const covered = [];   // [start, end) of the phrases already listed
-  const found = [];
-  keys.forEach(key => {
-    const words = key.trim().split(/\s+/).map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-    const re = new RegExp("(^|[^\\p{L}\\p{N}'’])(" + words.join('\\s+') + ")(?=$|[^\\p{L}\\p{N}'’])", 'giu');
-    let m, first = -1;
-    while ((m = re.exec(t))) {
-      const s0 = m.index + m[1].length, e0 = s0 + m[2].length;
-      const rule = SK_BETTER_SKIP[key];
-      const skip = rule && ((rule.before && rule.before.test(t.slice(0, s0))) || (rule.after && rule.after.test(t.slice(e0))));
-      if (!skip && !covered.some(([a, b]) => s0 < b && e0 > a)) { covered.push([s0, e0]); if (first < 0) first = s0; }
-      if (m[0].length === 0) re.lastIndex++;
-    }
-    if (first >= 0) found.push({ word: key, better: list[key].slice(), at: first });
-  });
-  return found.sort((a, b) => a.at - b.at).map(({ word, better }) => ({ word, better }));
-}
-window.skBetterWords = skBetterWords;
-
-// The student's text with each mistake underlined: every piece of text is escaped; overlapping matches are skipped.
-function checkedTextHtml(text, matches) {
-  let html = '', pos = 0;
-  matches.forEach((m, i) => {
-    if (m.offset < pos) return;
-    html += esc(text.slice(pos, m.offset));
-    const bad = text.slice(m.offset, m.offset + m.length);
-    html += `<mark class="sk-err${bad ? '' : ' sk-err-gap'}" data-n="${i + 1}" title="${esc(m.message)}">${bad ? esc(bad) : '‸'}</mark>`;
-    pos = m.offset + m.length;
-  });
-  return html + esc(text.slice(pos));
-}
 
 const fmtClock = secs => { const s = Math.max(0, Math.ceil(secs)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); };
 
@@ -725,37 +639,27 @@ function showWriting(level) {
   window.scrollTo(0, 0);
 }
 
-function grammarHtml(text, check) {
-  if (!text.trim()) return '<p class="sk-intro">You didn\'t write anything this time, so there was nothing to check.</p>';
-  if (!check.ok) {
-    return `<p class="sk-check-note" role="status">The grammar check couldn't run this time — press Check again.</p>
-      <div class="sk-checked" lang="en">${esc(text)}</div>
-      <div class="sk-actions"><button type="button" class="sk-btn sk-btn-small" id="skCheckAgain">🔁 Check again</button></div>`;
-  }
-  const ms = check.matches;
-  return `<p class="sk-intro">${ms.length ? `We found ${ms.length} thing${ms.length === 1 ? '' : 's'} to fix. They are underlined in your text.` : '🎉 No grammar mistakes found. Great job!'}</p>
-    <div class="sk-checked" lang="en">${checkedTextHtml(text, ms)}</div>
-    ${ms.length ? `<ol class="sk-mistakes">${ms.map((m, i) => {
-      let bad = text.slice(m.offset, m.offset + m.length);
-      let fix = m.replacements[0];
-      if (fix && fix.trim() === bad.trim()) {   // a missing space: show the word before it ("student.I → student. I", not "I → I")
-        let st = m.offset;
-        while (st > 0 && !/\s/.test(text[st - 1]) && m.offset - st < 20) st--;
-        fix = text.slice(st, m.offset) + fix;
-        bad = text.slice(st, m.offset + m.length);
-      }
-      return `<li class="sk-mistake"><span class="sk-num">${i + 1}</span><div class="sk-qbody">
-        <div class="sk-mfix"><s class="sk-bad">${esc(bad || '(missing)')}</s>${fix ? ` → <b class="sk-good">${esc(fix)}</b>` : ''}</div>
-        <div class="sk-mmsg">${esc(m.message)}</div></div></li>`;
-    }).join('')}</ol>` : ''}`;
+/* ---------- Submit: the writing goes to the AI's waiting list (teacher, 2026-11-12) ----------
+   The student sees only "sent". The AI checks it later (the helper's timer, tools/ai-worker.js job "queue"); the teacher
+   shares the results. No band, no grammar check, no feedback here. */
+const SK_AI_URL = 'https://loom-ai.toxiraxii010.workers.dev';
+function skAiUrl() { try { return localStorage.getItem('ta_ai_url') || SK_AI_URL; } catch (e) { return SK_AI_URL; } }
+// → true when the helper took it ({ queued } or { done }); false on any error (the writing is saved anyway)
+async function skQueueWriting(payload, W) {
+  if (SK.preview) return false;   // the teacher's Try sends nothing
+  try {
+    const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const timer = setTimeout(() => { if (ctrl) ctrl.abort(); }, window.__skAiTimeoutMs || 15000);
+    const res = await fetch(skAiUrl(), { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctrl ? ctrl.signal : undefined,
+      body: JSON.stringify({ job: 'queue', id: payload.__id, text: String(payload.text || '').slice(0, 6000), topic: W.topic, instruction: W.instruction || '',
+        minWords: W.minWords, maxWords: W.maxWords, words: (W.words || []).map(w => w.w) }) });
+    clearTimeout(timer);
+    let data = null;
+    try { data = await res.json(); } catch (e) { data = null; }
+    return !!(res.ok && data && (data.queued || data.done));
+  } catch (e) { return false; }
 }
-
-function betterHtml(list) {
-  return `<section class="sk-card sk-better-card"><h2>💡 Better words</h2>
-    ${list.length ? `<p class="sk-intro">Next time, try one of these instead:</p>
-    <ul class="sk-better">${list.map(b => `<li><b>${esc(b.word)}</b> → ${b.better.map(esc).join(', ')}</li>`).join('')}</ul>`
-    : '<p class="sk-intro">Your words are already strong. Keep using them!</p>'}</section>`;
-}
+window.skQueueWriting = skQueueWriting;
 
 async function submitWriting(level, W, timeUp) {
   const info = SKILL_INFO.writing;
@@ -767,106 +671,24 @@ async function submitWriting(level, W, timeUp) {
   const secs = Math.max(0, Math.round((Date.now() - startedAt) / 1000));
   $('#skActions').innerHTML = `<div class="sk-result">
       ${timeUp ? '<div class="sk-timeup">⏰ Time\'s up! Your writing goes to your teacher now.</div>' : ''}
-      <div class="sk-send" id="skSend" role="status"><span class="sk-send-note">🔍 Checking your writing…</span></div>
+      <div class="sk-send" id="skSend" role="status"><span class="sk-send-note">📤 Sending your writing…</span></div>
     </div>`;
-  const better = skBetterWords(text);
   const asked = W.words && W.words.length ? skAskedWords(text, W.words) : null;
-  // the AI check (the Writing Journey, 2026-11-09) and the free grammar check at the same time; the AI decides the band when
-  // it answers, else the old estimate does
-  const [check, ai] = await Promise.all([skCheckGrammar(text), W.words ? skAiCheckWriting(text, W) : Promise.resolve(null)]);
-  const band = ai && ai.result ? skWritingAiBand(ai.result.scores, words, W.minWords) : skWritingBand(words, W.minWords, check.matches.length, check.ok, W.maxWords);
   lastPayload = {
     v: 1, code: SK.code, type: info.type, title: `Step ${level.no} · ${level.theme} — ${info.name}`, step: level.id, stepNo: level.no, skill: 'writing',
     name: SK.name, studentId: SK.studentId, text, words, minWords: W.minWords, maxWords: W.maxWords,
-    mistakes: check.matches.length,
-    // `at` = where the mistake is in the text, so Loom underlines the right place (before 2026-11-09 it searched for it and
-    // marked the "i" inside "pencils"); `rule` = the check's rule id
-    mistakeList: check.matches.map(m => ({ bad: text.slice(m.offset, m.offset + m.length), fix: m.replacements[0] || '', message: m.message, at: m.offset, rule: m.rule })),
-    grammarChecked: check.ok, band, timeSeconds: secs, timeDisplay: fmtClock(secs), date: new Date().toISOString()
+    timeSeconds: secs, timeDisplay: fmtClock(secs), date: new Date().toISOString()
   };
-  if (W.words) {
-    lastPayload.aiChecked = !!(ai && ai.result);
-    if (ai && ai.result) lastPayload.ai = ai.result;
-    else if (ai && ai.error) lastPayload.aiError = String(ai.error).slice(0, 200);   // why it didn't run (the teacher sees it)
-    if (asked) lastPayload.asked = asked;
-  }
+  if (asked) lastPayload.asked = asked;
   // builtAt = the Submit time (= date): Loom hides results "built" before a "Delete all results" (isExpiredResult in common.js);
   // a page opened before a reset and sent after it is a new result, in Results and the Course's results table alike.
   lastPayload.builtAt = lastPayload.date;
   lastPayload.__id = skResultId(lastPayload);
+  lastPayload.aiQueued = await skQueueWriting(lastPayload, W);
   markDone(lastPayload);   // finished: this device won't open it again (one try per exercise)
-  if (W.words) {
-    // the teacher's feedback order: score /9 · words · grammar · better words · asked words · three tips
-    $('#skActions .sk-result').insertAdjacentHTML('afterbegin', aiScoreHtml(band, ai && ai.result, words, W));
-    $('#skAfter').innerHTML = aiFeedbackHtml(text, words, W, ai, check, better, asked);
-  } else {
-    $('#skActions .sk-result').insertAdjacentHTML('afterbegin', `<div class="sk-score sk-band"><span class="sk-score-n">${band}</span>
-      <span class="sk-score-t">Estimated band · ${words} words</span></div>`);
-    $('#skAfter').innerHTML = `<div class="sk-stack"><section class="sk-card sk-check-card"><h2>🔍 Your writing, checked</h2><div id="skGrammar">${grammarHtml(text, check)}</div></section>
-      ${betterHtml(better)}</div>`;
-  }
-  wireCheckAgain(text);
+  $('#skActions .sk-result').insertAdjacentHTML('afterbegin', '<div class="sk-sent-card" role="status">✅ Your writing was sent. Your teacher will share your results.</div>');
+  $('#skAfter').innerHTML = '';
   sendNow();
-}
-
-/* ---------- the Writing Journey's AI check (2026-11-09) ----------
-   The teacher's Cloudflare helper (tools/ai-worker.js, job "writing") asks Gemini for the four part scores, the grammar
-   mistakes, better words and three tips. → { result } or { error } (busy, limit reached, no internet: never throws). */
-const SK_AI_URL = 'https://loom-ai.toxiraxii010.workers.dev';
-function skAiUrl() { try { return localStorage.getItem('ta_ai_url') || SK_AI_URL; } catch (e) { return SK_AI_URL; } }
-async function skAiCheckWriting(text, W) {
-  if (!String(text || '').trim()) return { error: 'nothing written' };
-  try {
-    const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
-    const timer = setTimeout(() => { if (ctrl) ctrl.abort(); }, window.__skAiTimeoutMs || 60000);
-    const res = await fetch(skAiUrl(), { method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctrl ? ctrl.signal : undefined,
-      body: JSON.stringify({ job: 'writing', text: String(text).slice(0, 6000), topic: W.topic, instruction: W.instruction || '', minWords: W.minWords,
-        maxWords: W.maxWords, words: (W.words || []).map(w => w.w) }) });
-    clearTimeout(timer);
-    let data = null;
-    try { data = await res.json(); } catch (e) { data = null; }
-    if (res.ok && data && data.result && data.result.scores) return { result: data.result };
-    return { error: (data && data.error) || 'the AI did not answer' };
-  } catch (e) { return { error: 'the AI could not be reached' }; }
-}
-window.skAiCheckWriting = skAiCheckWriting;
-function aiScoreHtml(band, result, words, W) {
-  const s = result && result.scores;
-  return `<div class="sk-score sk-band"><span class="sk-score-n">${band} <small>/ 9</small></span>
-    <span class="sk-score-t">${s ? `Grammar ${s.grammar}/3 · Vocabulary ${s.vocabulary}/2 · Structure ${s.structure}/2 · Task ${s.task}/2${words < W.minWords ? ' · −0.5 (too short)' : ''}` : 'Estimated band (the AI check didn\'t run)'}</span></div>`;
-}
-function aiFeedbackHtml(text, words, W, ai, check, better, asked) {
-  const r = ai && ai.result;
-  const short = words < W.minWords;
-  const lengthCard = `<section class="sk-card sk-ai-len"><h2>📏 Word count</h2>
-    <p class="sk-intro"><b>${words}</b> words · required <b>${W.minWords}–${W.maxWords}</b>. ${short ? '⚠️ Too short: −0.5 from your score.' : '✅ Long enough.'}</p></section>`;
-  const grammar = r
-    ? `<section class="sk-card sk-check-card"><h2>🔍 Grammar</h2>${r.mistakes.length ? `<ol class="sk-mistakes sk-ai-mistakes">${r.mistakes.map((m, i) => `<li class="sk-mistake"><span class="sk-num">${i + 1}</span><div class="sk-qbody">
-        <div class="sk-mfix"><s class="sk-bad">${esc(m.wrong)}</s></div><div class="sk-mfix">→ <b class="sk-good">${esc(m.right)}</b></div>
-        <div class="sk-mmsg">${esc(m.why)}</div></div></li>`).join('')}</ol>` : '<p class="sk-intro">🎉 No grammar mistakes found. Great job!</p>'}</section>`
-    : `<section class="sk-card sk-check-card"><h2>🔍 Grammar</h2><p class="sk-ai-note" role="status">🤖 The AI check couldn't run this time (${esc(ai && ai.error || 'busy')}). Here is the simple grammar check — your teacher can check your writing with AI later.</p><div id="skGrammar">${grammarHtml(text, check)}</div></section>`;
-  const betterCard = r
-    ? `<section class="sk-card sk-better-card"><h2>💡 Better words</h2>${r.better.length ? `<ul class="sk-better">${r.better.map(b => `<li><b>${esc(b.word)}</b> → ${esc(b.instead)}${b.why ? ` <span class="sk-small">— ${esc(b.why)}</span>` : ''}</li>`).join('')}</ul>` : '<p class="sk-intro">Your words are already strong. Keep using them!</p>'}<p class="sk-intro sk-small">These are ideas, not mistakes.</p></section>`
-    : betterHtml(better);
-  const askedCard = asked ? `<section class="sk-card sk-asked-card"><h2>📝 Asked words</h2>
-    <ul class="sk-asked sk-asked-result">${(W.words || []).map(w => { const ok = asked.used.indexOf(w.w) !== -1; return `<li class="sk-ask ${ok ? 'used' : 'missing'}">${ok ? '✅' : '❌'} <b>${esc(w.w)}</b></li>`; }).join('')}</ul>
-    <p class="sk-intro">${asked.used.length} of ${(W.words || []).length} used${asked.missing.length ? ' — try to use all of them next time.' : '. Well done!'}</p></section>` : '';
-  const tips = r && r.tips.length ? `<section class="sk-card sk-tips-card"><h2>🚀 Next time</h2><ol class="sk-tips">${r.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ol></section>` : '';
-  return `<div class="sk-stack">${lengthCard}${grammar}${betterCard}${askedCard}${tips}</div>`;
-}
-
-// "Check again" re-runs only the grammar check. The teacher already has this Submit's result: nothing is sent again.
-function wireCheckAgain(text) {
-  const btn = $('#skCheckAgain');
-  if (!btn) return;
-  btn.addEventListener('click', async () => {
-    btn.disabled = true;
-    btn.textContent = '🔍 Checking…';
-    const check = await skCheckGrammar(text);
-    $('#skGrammar').innerHTML = grammarHtml(text, check);
-    if (check.ok) $('#skGrammar').insertAdjacentHTML('beforeend', '<p class="sk-intro sk-small">Your teacher already has your writing from when you pressed Submit.</p>');
-    wireCheckAgain(text);
-  });
 }
 
 /* ---------- speaking (practice only: nothing recorded, sent or scored) ---------- */

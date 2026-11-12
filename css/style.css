@@ -2992,6 +2992,7 @@ button.sk-dot:hover { transform: scale(1.12); }
 .sk-body .sk-write:focus { border-color: #7B4DFF; box-shadow: 0 0 0 5px rgba(123,77,255,.25); outline: none; }
 .sk-body .sk-write.locked { background: #F4F0E8; color: #5A4E72; resize: none; }
 .sk-timeup { font-weight: 700; color: #A61E35; text-align: center; }
+.sk-sent-card { padding: 16px 20px; border-radius: 20px; background: #E3F8EE; border: 2.5px solid #2B2140; color: #0B5A41; font-weight: 700; font-size: 1.1rem; text-align: center; line-height: 1.4; }
 .sk-band .sk-score-t { font-size: .95rem; }
 .sk-checked { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.9; font-size: 1.06rem; padding: 14px 16px; border-radius: 18px;
   background: #FFFDF7; border: 2.5px dashed #C9BFA9; margin-bottom: 14px; }
