@@ -107,12 +107,13 @@ test('student: Submit sends the writing to the AI\'s waiting list and shows only
     words: ['wake up', 'get dressed', 'have breakfast', 'usually', 'after school', 'do homework', 'in the evening', 'go to bed'] });
   expect(bodies[0].text).toBe(TEXT);
   expect(rec.band).toBeUndefined();
-  expect(rec).toMatchObject({ aiQueued: true, words: 46, asked: { missing: [] } });
+  expect(rec.aiQueued).toBeUndefined();
+  expect(rec).toMatchObject({ words: 46, asked: { missing: [] } });
   expect(lt).toBe(0);
   expect(errors).toEqual([]);
 });
 
-test('student: the helper down → the writing is still sent (aiQueued false)', async ({ page, context }) => {
+test('student: the helper down → the writing is still saved and shown as sent', async ({ page, context }) => {
   await prepare(context);
   await fakeQueue(context, { fail: true });
   await startWriting(page, 'WRT322');
@@ -121,8 +122,22 @@ test('student: the helper down → the writing is still sent (aiQueued false)', 
   await expect(page.locator('.sk-send')).toContainText('Saved ✅');
   await expect(page.locator('.sk-sent-card')).toHaveText(SENT);
   const rec = await writingRecord(page);
-  expect(rec.aiQueued).toBe(false);
+  expect(rec.aiQueued).toBeUndefined();
   expect(rec.band).toBeUndefined();
+});
+
+test('student: the "sent" card waits for the save — failing saves show Send again and no card, then it appears', async ({ page, context }) => {
+  await prepare(context);
+  await fakeQueue(context);
+  await startWriting(page, 'WRT325');
+  await page.locator('#skWriteBox').fill(TEXT);
+  await page.evaluate(() => { window.__failWrites = 3; });
+  await page.getByRole('button', { name: /Submit my writing/ }).click();
+  await expect(page.locator('.sk-send')).toContainText('Not sent yet — press Send again', { timeout: 15000 });
+  await expect(page.locator('.sk-sent-card')).toHaveCount(0);
+  await page.getByRole('button', { name: /Send again/ }).click();
+  await expect(page.locator('.sk-send')).toContainText('Saved ✅');
+  await expect(page.locator('.sk-sent-card')).toHaveText(SENT);
 });
 
 test('"already done" for a writing shows the words, no band', async ({ page, context }) => {

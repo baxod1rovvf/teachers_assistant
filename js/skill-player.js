@@ -500,6 +500,11 @@ async function sendNow() {
   const state = await skSendResult(lastPayload);
   if (state === 'ok' && lastPayload.skill === 'writing') clearDraft();   // the teacher has it: a reload starts afresh
   setSend(state);
+  // a writing's "sent" card shows only once the save is confirmed (also after "Send again")
+  if (state === 'ok' && lastPayload.skill === 'writing' && !$('.sk-sent-card')) {
+    const res = $('#skActions .sk-result');
+    if (res) res.insertAdjacentHTML('afterbegin', '<div class="sk-sent-card" role="status">✅ Your writing was sent. Your teacher will share your results.</div>');
+  }
 }
 
 function analyze(content, isReading) {
@@ -684,10 +689,10 @@ async function submitWriting(level, W, timeUp) {
   // a page opened before a reset and sent after it is a new result, in Results and the Course's results table alike.
   lastPayload.builtAt = lastPayload.date;
   lastPayload.__id = skResultId(lastPayload);
-  lastPayload.aiQueued = await skQueueWriting(lastPayload, W);
   markDone(lastPayload);   // finished: this device won't open it again (one try per exercise)
-  $('#skActions .sk-result').insertAdjacentHTML('afterbegin', '<div class="sk-sent-card" role="status">✅ Your writing was sent. Your teacher will share your results.</div>');
   $('#skAfter').innerHTML = '';
+  // save first; the waiting-list request goes alongside it and is never waited for (a failure is fine: Loom re-queues later)
+  skQueueWriting(lastPayload, W);
   sendNow();
 }
 

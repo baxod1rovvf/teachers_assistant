@@ -572,7 +572,7 @@ test.describe('writing', () => {
     await expect(page.locator('#studentNameInput')).toHaveCount(0);
     await page.locator('#skWriteBox').fill(TEXT);
     await page.getByRole('button', { name: /Submit my writing/ }).click();
-    await expect(page.locator('.sk-sent-card')).toBeVisible();
+    await expect(page.locator('.sk-sent-card')).toHaveCount(0);
     await expect(page.locator('.sk-send')).toContainText('Preview');
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
     expect(await page.evaluate(() => window.__writes ? window.__writes.length : 0)).toBe(0);
