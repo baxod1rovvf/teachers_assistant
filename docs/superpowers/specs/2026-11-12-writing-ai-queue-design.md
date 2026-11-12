@@ -30,8 +30,8 @@ delete the free check.
 - `/status` also shows: `kv: true/false`, waiting count, version.
 
 ## 2. The student page (`skill.html`, `js/skill-player.js`)
-- Submit: the writing is saved as now (`Writing course` result, without `band`, with `aiQueued: true/false`), and the page
-  sends `queue` to the helper (a failure is fine — the safety net below adds it).
+- Submit: the writing is saved as now (`Writing course` result, without `band`), and at the same time the page sends
+  `queue` to the helper — the save never waits for the helper (a failure is fine — the safety net below adds it).
 - What the student sees: **"✅ Your writing was sent. Your teacher will share your results."** — no band, no mistakes,
   no word list. "Already done" for a writing shows no band.
 - **Deleted:** the free check (LanguageTool, `skCheckGrammar`, "Check again"), Loom's own rules (`skBasicGrammar`,
