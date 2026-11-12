@@ -89,3 +89,17 @@ test('the writing window: waiting → "⏳ Waiting for the AI check" with tries 
   await expect(wcell(page, 'Bobur Test')).toContainText('8');
   expect(errors).toEqual([]);
 });
+
+test('a waiting writing is asked about again by itself (a poll): once the helper has checked it, ⏳ turns into the band', async ({ page, context }) => {
+  await context.addInitScript(() => { window.__taWritingPollMs = 1500; });
+  const bodies = [], state = { feedback: { sk_WRT555_10002_2: { state: 'waiting', tries: 1, lastError: '' } } };
+  const errors = await openStep(page, context, [writing('sk_WRT555_10002_2', '10002', 'Bobur Test')], state, bodies);
+  await expect(wcell(page, 'Bobur Test')).toContainText('⏳');
+  state.feedback.sk_WRT555_10002_2 = { state: 'done', result: RESULT };   // no new result arrives — only the poll can notice
+  await expect(wcell(page, 'Bobur Test')).toContainText('8', { timeout: 15000 });
+  await expect(wcell(page, 'Bobur Test')).not.toContainText('⏳');
+  const n = bodies.filter(b => b.job === 'feedback').length;
+  await page.waitForTimeout(3500);
+  expect(bodies.filter(b => b.job === 'feedback').length).toBe(n);   // nothing waits any more → the poll stopped
+  expect(errors).toEqual([]);
+});

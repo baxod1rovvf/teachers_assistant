@@ -1854,7 +1854,7 @@ async function taWritingAiSync() {
       const url = typeof taAiUrl === 'function' ? taAiUrl() : '';
       if (!url) return out;
       const now = Date.now(), asked = window.__taWritingAsked;
-      const todo = (window.__allResults || []).filter(r => r && r.type === 'Writing course' && r.__id && String(r.text || '').trim() && !skAiFor(r) && !(asked[r.__id] > now - 600000));
+      const todo = (window.__allResults || []).filter(r => r && r.type === 'Writing course' && r.__id && String(r.text || '').trim() && !skAiFor(r) && !(asked[r.__id] > now - (window.__taWritingPollMs || 600000)));
       if (!todo.length) return out;
       const post = async body => {
         const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
@@ -1888,7 +1888,23 @@ async function taWritingAiSync() {
 }
 function taWritingAiSyncSoon() {
   clearTimeout(taWritingSyncTimer);
-  taWritingSyncTimer = setTimeout(() => { taWritingAiSync().catch(() => {}); }, 5000);
+  taWritingSyncTimer = setTimeout(() => { taWritingAiSync().catch(() => {}).then(taWritingPollArm); }, 5000);
+}
+/* While any course writing still waits (text, no feedback, no mark), ask again every 10 minutes (window.__taWritingPollMs in tests);
+   the timer stops when none waits, and never runs over a run in progress. */
+let taWritingPollTimer = null;
+function taWritingAnyWaiting() {
+  return (window.__allResults || []).some(r => r && r.type === 'Writing course' && r.__id && String(r.text || '').trim() && !skAiFor(r) && skTeacherMark(r) === null);
+}
+function taWritingPollArm() {
+  clearTimeout(taWritingPollTimer);
+  taWritingPollTimer = null;
+  if (!taWritingAnyWaiting()) return;
+  taWritingPollTimer = setTimeout(() => {
+    taWritingPollTimer = null;
+    if (taWritingSyncBusy) { taWritingPollArm(); return; }
+    taWritingAiSync().catch(() => {}).then(taWritingPollArm);
+  }, window.__taWritingPollMs || 600000);
 }
 window.taWritingAiSync = taWritingAiSync;
 window.taWritingAiSyncSoon = taWritingAiSyncSoon;
