@@ -149,6 +149,8 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
 16. **Student ID typos / shared IDs**: results then don't match the Students list and are
     left out of Statistics, Top 5 and "Didn't do it".
 17. **Reminders and notifications only work while the app is open** (no server to push them).
+22. **Listening voices for Steps 9–20 come from OmniVoice, whose model weights are licensed for non-commercial use only (CC-BY-NC).**
+    If the course is sold or used commercially, check the licence — the recordings can be remade with Kokoro (Apache-2.0) instead.
 21. **Writings are checked by the AI helper (since 2026-11-12; the LanguageTool check is gone).** If the helper is down, Google's free
     daily limit is used up, or the Cloudflare setup (KV `loom-writings` + Cron) isn't done, writings **wait** (never lost) and
     results tables / results links show ⏳ until it works again. Also: **anyone with a results link can read the writings on it**
@@ -711,6 +713,25 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   result counts as done (a writing waiting for the AI too), matched like the dots — each with the parts still to do, most missing first
   (`skMissingRows`); nothing sent / no students → no list; everyone done → "🎉 Everyone has finished". "📋 Copy list" (`skCopyMissing`) copies
   "Step 5 · Free Time — Apex / Not finished yet: / 1. Name — Reading, Writing" (the teacher's choice). `tests/course-missing.spec.js`.
+- **Listening Steps 8–20 rewritten (teacher, 2026-11-13: "listening is a little weird" — up to 15 spelled words, 5 named people,
+  questions jumping back and forth, six temperatures in a row)**: the teacher's rules — **1–2 spelled words** (the first is Question 1,
+  a second Question 5 or later; one word each, never a two-word name), **1 spelled number** (a phone number said digit by digit, read
+  back once), every other answer easy, **questions in recording order** (3–4 blocks, each one type, each the next part of the
+  recording), **no look-alikes** (at most one price / clock time / temperature / date; no fact asked twice), **≤ 2 named people**
+  (others by role: "my uncle", "the reporter in Tokyo"), same events, same question counts. Source: `docs/listening-journey-steps-8-20-v2.md`
+  (a step there replaces the old file's — `tools/listening-transcripts.py` reads it last); questions JSON entries have `inOrder: true`
+  (the build tool refuses out-of-order questions), `names`, `audioV` (the mp3's `?v=`); keep the questions file's one-question-per-line
+  layout with `python3 tools/format-listening-questions.py`. `tests/listening-rules.spec.js` checks every rule for Steps 8–20.
+  Spec/plan: `docs/superpowers/specs/2026-11-13-listening-journey-8-20-rewrite-design.md`, `docs/superpowers/plans/…-rewrite.md`.
+  **Voices**: Step 8 Kokoro (as before); **Steps 9–20 VoiceStudio's OmniVoice** (teacher's choice, "Energetic Male") —
+  `tools/make-omnivoice-audio.py` for scripts entries with `"engine": "omnivoice"` (the Kokoro tool skips them): each voice designed once
+  from `voices` (Energetic Male = `"male, young adult, high pitch"` seed 4 — other seeds of that setting sounded higher than a woman;
+  women `"female, young adult, moderate pitch"` seed 1 / `"female, middle-aged, moderate pitch"`; a second man `"male, middle-aged, low
+  pitch"`), every line cloned from it and checked by Whisper; **the first spelled word slow, letter by letter (~1.3 s apart), the second
+  in one go** (the teacher's choice after hearing Step 9); clips kept in `OMNIVOICE_CACHE`, so a rerun only remakes what changed
+  (~45 s per clip on this CPU, ~40 min per step). Setup: venv with torch/transformers≥5.10/pydub/audioop-lts/sherpa-onnx + a clone of
+  github.com/debpalash/voicestudio; the model `k2-fsa/OmniVoice` downloads from Hugging Face (the environment allows huggingface.co,
+  us.aws.cdn.hf.co and the xethub/cdn-lfs hosts). **Licence: OmniVoice's weights are CC-BY-NC (non-commercial)** — the teacher was told.
 - **Step names (teacher, 2026-11-10: "rename them")**: each step's `theme` + `emoji` = its Speaking Journey topic (1 Daily Routine ⏰ …
   20 Weather & Seasons ☀️), so the map matches the four parts; older names in the notes above ("Hello!", "Meeting people"…) are gone.
   Results sent before keep the old name in their `title`.
