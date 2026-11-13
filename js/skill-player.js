@@ -128,25 +128,13 @@ async function skSendResult(payload) {
 window.skSendResult = skSendResult;
 
 /* ---------- one try per exercise (teacher, 2026-11-09: "once they finish and get a score, they can't open this exercise again") ----------
-   Finished = Submit pressed. This device remembers it at once (ta_skill_done, the page's own key: "<code>|id:<id>" and
-   "<code>|name:<name>"), and on Start the database is asked whether this code already has a result with the same ID or the
-   same name (2 small reads). If the check can't run (no internet), the student is let in — never blocked by an error. */
-const DONE_KEY = 'ta_skill_done';
-const doneKeys = (code, name, id) => [code + '|id:' + String(id || '').trim().toLowerCase(), code + '|name:' + String(name || '').trim().toLowerCase().replace(/\s+/g, ' ')]
-  .filter(k => !/:$/.test(k));
+   On Start the database is asked whether this code already has a result with the same ID or the same name (2 small reads).
+   "Already done" only when it has (teacher, 2026-11-13) — the phone's own "done" note (ta_skill_done) is gone: it said "already
+   done" for answers that had never arrived. The database can't be asked (no internet) → "check the internet and press Start again". */
 function doneSummary(r) {
   if (!r) return '';
   if (r.skill === 'writing' || /^Writing/.test(r.type || '')) return (typeof r.words === 'number' ? r.words + ' words' : '');
   return typeof r.correct === 'number' && typeof r.total === 'number' ? r.correct + ' / ' + r.total : '';
-}
-function markDone(payload) {
-  if (SK.preview || !payload) return;
-  try {
-    const all = JSON.parse(localStorage.getItem(DONE_KEY) || '{}') || {};
-    const info = { at: payload.date, summary: doneSummary(payload) };
-    doneKeys(payload.code, payload.name, payload.studentId).forEach(k => { all[k] = info; });
-    localStorage.setItem(DONE_KEY, JSON.stringify(all));
-  } catch (e) { /* private window */ }
 }
 /* Answers that haven't reached the teacher yet (2026-11-13: students had a score to screenshot, but the save had failed or the
    page was closed while sending — Loom had nothing, and the next part said "Oldingi … tugatilmagan"). Every Submit keeps its
@@ -179,9 +167,9 @@ async function skSendKept() {
 window.skSendKept = skSendKept;
 let keptSending = null;   // started when the page opens; Start waits for it (a little) before the checks
 
-/* Finished = the teacher has the answers. Kept answers from this phone are sent first; then the database is asked. A "done"
-   note on this phone alone no longer blocks when the database answers that it has nothing (those answers never arrived —
-   2026-11-13); it is used only when the database can't be asked (no internet). */
+/* Finished = the teacher has the answers (teacher, 2026-11-13: "already done" only when they reached the database). Kept answers
+   from this phone are sent first. → { at, summary } done · { at, summary, unsent } kept but still not sent · { offline } the
+   database can't be asked · null free to do it. */
 async function skAlreadyDone(name, id) {
   if (SK.preview) return null;
   const kept = keptFor(SK.code, name, id);
@@ -190,11 +178,6 @@ async function skAlreadyDone(name, id) {
     if (state === 'ok') forgetUnsent(kept.__id);
     return { at: kept.date, summary: doneSummary(kept), unsent: state === 'ok' ? undefined : kept };
   }
-  let local = null;
-  try {
-    const all = JSON.parse(localStorage.getItem(DONE_KEY) || '{}') || {};
-    local = doneKeys(SK.code, name, id).map(k => all[k]).find(Boolean) || null;
-  } catch (e) { /* ignore */ }
   try {
     const { fs, db } = await within(loadFirestore(), 8000);
     const col = fs.collection(db, 'results');
@@ -207,9 +190,8 @@ async function skAlreadyDone(name, id) {
       const doc = (snap.docs || []).map(d => d.data()).find(r => r && (r.skill === SK.skill || /course$/.test(r.type || '')));
       if (doc) return { at: doc.date, summary: doneSummary(doc) };
     }
-    return null;   // the database has nothing from this student: free to do it (a note on this phone alone doesn't count)
-  } catch (e) { console.warn('Skills course: could not check for an earlier try', e); }
-  return local;   // couldn't ask the database: trust this phone
+    return null;   // nothing from this student: free to do it
+  } catch (e) { console.warn('Skills course: could not check for an earlier try', e); return { offline: true }; }
 }
 window.skAlreadyDone = skAlreadyDone;
 
@@ -257,15 +239,24 @@ function skPrevWarning(prev) {
 }
 function showAlreadyDone(level, done) {
   const info = SKILL_INFO[SK.skill];
+  const score = done.summary ? `<p class="sk-done-score">Your result: <b>${esc(done.summary)}</b></p>` : '';
+  if (!done.unsent) {
+    root().innerHTML = `${headerHtml(level)}<section class="sk-card sk-center sk-done-card">
+      <div class="sk-big-emoji" aria-hidden="true">✅</div>
+      <h2>You have already done this ${esc(info.name.toLowerCase())}</h2>
+      ${score}
+      <p>Each exercise can be done only once. Your teacher already has your answers.</p>
+    </section>`;
+    return;
+  }
+  // answers kept on this phone that haven't reached the teacher: never "already done" until they have (2026-11-13)
   root().innerHTML = `${headerHtml(level)}<section class="sk-card sk-center sk-done-card">
-    <div class="sk-big-emoji" aria-hidden="true">✅</div>
-    <h2>You have already done this ${esc(info.name.toLowerCase())}</h2>
-    ${done.summary ? `<p class="sk-done-score">Your result: <b>${esc(done.summary)}</b></p>` : ''}
-    ${done.unsent ? `<p>Your answers are saved on this phone, but they haven't reached your teacher yet. Check the internet and press Send.</p>
-      <div class="sk-send bad" id="skSend" role="status"><button type="button" class="sk-btn sk-btn-small" id="skSendKept">📤 Send my answers</button></div>`
-      : '<p>Each exercise can be done only once. Your teacher already has your answers.</p>'}
+    <div class="sk-big-emoji" aria-hidden="true">📤</div>
+    <h2>Your answers haven't reached your teacher yet</h2>
+    ${score}
+    <p>They are saved on this phone. Check the internet and press Send.</p>
+    <div class="sk-send" id="skSend" role="status"><button type="button" class="sk-btn sk-btn-main" id="skSendKept">📤 Send my answers</button></div>
   </section>`;
-  if (!done.unsent) return;
   const sendKept = async () => {
     const box = $('#skSend');
     box.innerHTML = '<span class="sk-send-note">📤 Sending your answers to your teacher…</span>';
@@ -369,6 +360,11 @@ function showStart(level, content) {
     // answers this phone still holds (a save that failed) go first, so the part before counts (2026-11-13)
     if (keptSending) await within(keptSending, 15000).catch(() => {});
     const done = await skAlreadyDone(SK.name, id);   // one try per exercise (2026-11-09)
+    if (done && done.offline) {   // couldn't ask the database: never "already done" from a guess (2026-11-13)
+      btn.textContent = label; btn.disabled = false;
+      $('#skStartErr').textContent = '📶 We couldn\'t check your answers — check the internet and press Start again.';
+      return;
+    }
     if (done) { showAlreadyDone(level, done); return; }
     if (who.prev && (await skPrevDone(who.prev, SK.name, id)) === false) {   // the part before isn't done (2026-11-12)
       btn.textContent = label; btn.disabled = false;
@@ -511,7 +507,6 @@ function submit(level, content, info) {
   };
   lastPayload.builtAt = lastPayload.date;   // see submitWriting
   lastPayload.__id = skResultId(lastPayload);   // the same record on every try and on "Send again"
-  markDone(lastPayload);   // finished: this device won't open it again (one try per exercise)
   keepUnsent(lastPayload);   // kept on this phone until the save is confirmed (2026-11-13)
   const pct = correct / total;
   const cheer = pct >= 0.8 ? '🌟 Excellent work!' : pct >= 0.6 ? '👏 Well done!' : pct >= 0.4 ? '💪 Good try — keep going!' : '🌱 Keep practising — you can do it!';
@@ -749,7 +744,6 @@ async function submitWriting(level, W, timeUp) {
   // a page opened before a reset and sent after it is a new result, in Results and the Course's results table alike.
   lastPayload.builtAt = lastPayload.date;
   lastPayload.__id = skResultId(lastPayload);
-  markDone(lastPayload);   // finished: this device won't open it again (one try per exercise)
   keepUnsent(lastPayload);   // kept on this phone until the save is confirmed (2026-11-13)
   $('#skAfter').innerHTML = '';
   queueW = W;   // sendNow puts it on the waiting list once it is saved
