@@ -1717,32 +1717,32 @@
    ],
    [
     "am_michael",
-    "Olivia, could you spell your name?",
+    "Olivia, could you spell your surname for our listeners?",
     0.4
    ],
    [
     "af_heart",
-    "Olivia.",
+    "Of course.",
     0.3
    ],
    [
     "af_heart",
-    "O. L. I. V. I. A.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Green.",
+    "Green.",
     0.3
    ],
    [
     "af_heart",
     "G. R. E. E. N.",
-    0.4
+    0.6
    ],
    [
     "am_michael",
-    "What do you enjoy doing?",
+    "Thank you.",
+    0.3
+   ],
+   [
+    "am_michael",
+    "So, what do you enjoy doing in your free time?",
     0.4
    ],
    [
@@ -1752,37 +1752,42 @@
    ],
    [
     "af_heart",
-    "I started two years ago when my uncle gave me his old camera.",
+    "I started two years ago, when my uncle gave me his old camera.",
     0.3
    ],
    [
     "af_heart",
-    "I like taking pictures of nature, buildings and everyday life.",
+    "I like taking pictures of nature, especially birds and flowers.",
+    0.4
+   ],
+   [
+    "am_michael",
+    "Where do you take your photos?",
+    0.4
+   ],
+   [
+    "af_heart",
+    "Usually in Maple Park, near my house.",
     0.3
    ],
    [
     "af_heart",
-    "I often visit Greenfield Park.",
+    "Maple.",
     0.3
    ],
    [
     "af_heart",
-    "Greenfield.",
+    "M. A. P. L. E.",
+    0.6
+   ],
+   [
+    "af_heart",
+    "It has a lake and lots of tall trees.",
     0.3
    ],
    [
     "af_heart",
-    "G. R. E. E. N. F. I. E. L. D.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "It has a lake, a flower garden and many trees.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "I usually go there on Saturday mornings because it's quiet.",
+    "I go there on Saturday mornings, because it's quiet and there aren't many people.",
     0.4
    ],
    [
@@ -1792,117 +1797,67 @@
    ],
    [
     "af_heart",
-    "Yes, I enjoy baking with my grandmother.",
+    "Yes, I love baking with my grandmother.",
     0.3
    ],
    [
     "af_heart",
-    "We make biscuits and simple cakes.",
+    "We usually make biscuits.",
     0.3
    ],
    [
     "af_heart",
-    "Last month, I made a chocolate cake for my friend Lily.",
+    "She has an old notebook full of family recipes, and we try a new one every week.",
     0.3
    ],
    [
     "af_heart",
-    "Lily.",
+    "Last month, I made a chocolate cake for my best friend's birthday.",
     0.3
    ],
    [
     "af_heart",
-    "L. I. L. Y.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "I use recipes from a website called Easy Kitchen.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Easy.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "E. A. S. Y.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Kitchen.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "K. I. T. C. H. E. N.",
+    "It was a big surprise!",
     0.4
    ],
    [
     "am_michael",
-    "How much time do you spend on your hobbies?",
+    "How do you find time for all this?",
     0.4
    ],
    [
     "af_heart",
-    "I take photographs for about two hours at weekends.",
+    "During the week, I do my homework first.",
     0.3
    ],
    [
     "af_heart",
-    "Baking can take three hours.",
+    "Then I have some free time in the evening.",
     0.3
    ],
    [
     "af_heart",
-    "During the week, I do my homework first, then I have some free time.",
+    "At weekends, I have more time for my hobbies.",
     0.4
    ],
    [
     "am_michael",
-    "Do you have a goal?",
+    "Do you have a goal for this year?",
     0.4
    ],
    [
     "af_heart",
-    "I'd like to enter a photography competition called Young Eyes.",
+    "Yes! I'd like to enter a photography competition.",
     0.3
    ],
    [
     "af_heart",
-    "Young.",
+    "It's for teenagers aged thirteen to seventeen, and you can send up to five photos.",
     0.3
    ],
    [
     "af_heart",
-    "Y. O. U. N. G.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Eyes.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "E. Y. E. S.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "The last day to send photographs is the fifteenth of May.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "We can send five pictures.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "The results will be announced on the second of June.",
+    "The last day to send them is the fifteenth of May.",
     0.3
    ],
    [
@@ -1912,7 +1867,37 @@
    ],
    [
     "am_michael",
-    "Thank you, Olivia!",
+    "That sounds great.",
+    0.3
+   ],
+   [
+    "am_michael",
+    "How can our listeners find out more?",
+    0.4
+   ],
+   [
+    "af_heart",
+    "They can call the competition office.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "The number is oh seven nine four, six two one, eight three zero.",
+    0.4
+   ],
+   [
+    "am_michael",
+    "Oh seven nine four, six two one, eight three zero?",
+    0.3
+   ],
+   [
+    "af_heart",
+    "Yes, that's right.",
+    0.4
+   ],
+   [
+    "am_michael",
+    "Thank you, Olivia, and good luck!",
     0.4
    ]
   ]

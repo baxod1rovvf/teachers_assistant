@@ -115,26 +115,26 @@
    ["Where are the students going on their school trip?", ["history museum", "museum"], "going to the history museum"],
    ["How long will the bus journey take?", ["40", "forty"], "about forty minutes"],
    ["How much does the museum ticket cost?", ["4", "four"], "ticket costs four dollars"]]}]},
-{"no": 8, "speaker": "", "intro": "Listen to a radio interview with Olivia about her hobbies.",
+{"no": 8, "speaker": "Olivia", "inOrder": true, "names": ["Olivia"], "audioV": 2, "intro": "Listen to a radio interview with Olivia about her hobbies.",
  "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["Olivia's surname: _____", ["Green"], "That's G-R-E-E-N"],
+   ["Olivia started taking photos _____ years ago.", ["two", "2"], "started two years ago"],
+   ["Her first camera was a present from her _____.", ["uncle"], "my uncle gave me"],
+   ["She likes taking pictures of birds and _____.", ["flowers"], "birds and flowers"],
+   ["The park where she takes photos: _____ Park", ["Maple"], "M-A-P-L-E"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["What is Olivia's favourite hobby?", ["Baking", "Photography", "Cycling"], "Photography", "Photography is my favourite hobby"],
-   ["Who gave her the camera?", ["Her uncle", "Her grandmother", "Her friend"], "Her uncle", "my uncle gave me"],
-   ["When does she visit Greenfield Park?", ["Saturday morning", "Friday evening", "Sunday night"], "Saturday morning", "on Saturday mornings"],
-   ["What does Olivia make with her grandmother?", ["Bread and soup", "Biscuits and simple cakes", "Pizza"], "Biscuits and simple cakes", "We make biscuits"]]},
-  {"h": "Spelling and numbers.", "t": "gap", "qs": [
-   ["Olivia's surname: _____", ["Green"], "Green is G-R-E-E-N"],
-   ["The park's name: _____ Park", ["Greenfield"], "Greenfield is G-R-E-E-N-F-I-E-L-D"],
-   ["Hours Olivia usually spends taking photographs at weekends: _____", ["2", "two", "2 hours", "two hours"], "about two hours at weekends"],
-   ["The last day for sending photographs: the _____ of May", ["15th", "15", "fifteenth"], "fifteenth of May"]]},
+   ["When does Olivia usually go to the park?", ["Saturday morning", "Sunday afternoon", "Friday evening"], "Saturday morning", "on Saturday mornings"],
+   ["Why does she go then?", ["Her friends are there", "It's quiet", "The light is better"], "It's quiet", "because it's quiet"],
+   ["What does Olivia usually bake with her grandmother?", ["Bread", "Biscuits", "Pizza"], "Biscuits", "usually make biscuits"],
+   ["Where do they find their recipes?", ["On a website", "In an old notebook", "In a magazine"], "In an old notebook", "old notebook full of family recipes"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["Olivia likes taking pictures of nature.", "True", "pictures of nature"],
-   ["Olivia sometimes bakes with her grandmother.", "True", "baking with my grandmother"],
-   ["People can send up to five pictures.", "True", "We can send five pictures"]]},
-  {"h": "Answer the questions.", "t": "open", "qs": [
-   ["What is the name of the recipe website?", ["Easy Kitchen"], "website called Easy Kitchen"],
-   ["What is Olivia's friend's name?", ["Lily"], "my friend Lily"],
-   ["When will the competition results be announced?", ["2 June", "2nd June", "second of June", "June 2", "june 2nd", "second June"], "second of June"]]}]},
+   ["Olivia made a chocolate cake for her best friend's birthday.", "True", "chocolate cake for my best friend"],
+   ["On weekdays, Olivia does her homework before her hobbies.", "True", "I do my homework first"],
+   ["The competition is only for adults.", "False", "for teenagers aged thirteen"]]},
+  {"h": "Complete the notes. Write a date or a number.", "t": "gap", "qs": [
+   ["The last day to send photos: the _____ of May", ["15th", "15", "fifteenth"], "the fifteenth of May"],
+   ["The competition office's phone number: _____", ["0794 621 830"], "The number is oh seven nine four"]]}]},
 {"no": 9, "speaker": "", "intro": "Listen to a customer talking to an assistant at a shopping centre.",
  "sections": [
   {"h": "Complete the information.", "t": "gap", "qs": [

@@ -666,22 +666,32 @@
    {
     "who": "Presenter",
     "man": true,
-    "text": "Welcome to Teen Life. Today we're talking about hobbies. Our guest is Olivia Green. Olivia, could you spell your name?"
+    "text": "Welcome to Teen Life. Today we're talking about hobbies. Our guest is Olivia Green. Olivia, could you spell your surname for our listeners?"
    },
    {
     "who": "Olivia",
     "man": false,
-    "text": "Olivia is O-L-I-V-I-A, and Green is G-R-E-E-N."
+    "text": "Of course. Green. That's G-R-E-E-N."
    },
    {
     "who": "Presenter",
     "man": true,
-    "text": "What do you enjoy doing?"
+    "text": "Thank you. So, what do you enjoy doing in your free time?"
    },
    {
     "who": "Olivia",
     "man": false,
-    "text": "Photography is my favourite hobby. I started two years ago when my uncle gave me his old camera. I like taking pictures of nature, buildings and everyday life. I often visit Greenfield Park. Greenfield is G-R-E-E-N-F-I-E-L-D. It has a lake, a flower garden and many trees. I usually go there on Saturday mornings because it's quiet."
+    "text": "Photography is my favourite hobby. I started two years ago, when my uncle gave me his old camera. I like taking pictures of nature, especially birds and flowers."
+   },
+   {
+    "who": "Presenter",
+    "man": true,
+    "text": "Where do you take your photos?"
+   },
+   {
+    "who": "Olivia",
+    "man": false,
+    "text": "Usually in Maple Park, near my house. Maple. That's M-A-P-L-E. It has a lake and lots of tall trees. I go there on Saturday mornings, because it's quiet and there aren't many people."
    },
    {
     "who": "Presenter",
@@ -691,32 +701,52 @@
    {
     "who": "Olivia",
     "man": false,
-    "text": "Yes, I enjoy baking with my grandmother. We make biscuits and simple cakes. Last month, I made a chocolate cake for my friend Lily. Lily is L-I-L-Y. I use recipes from a website called Easy Kitchen. Easy is E-A-S-Y, and Kitchen is K-I-T-C-H-E-N."
+    "text": "Yes, I love baking with my grandmother. We usually make biscuits. She has an old notebook full of family recipes, and we try a new one every week. Last month, I made a chocolate cake for my best friend's birthday. It was a big surprise!"
    },
    {
     "who": "Presenter",
     "man": true,
-    "text": "How much time do you spend on your hobbies?"
+    "text": "How do you find time for all this?"
    },
    {
     "who": "Olivia",
     "man": false,
-    "text": "I take photographs for about two hours at weekends. Baking can take three hours. During the week, I do my homework first, then I have some free time."
+    "text": "During the week, I do my homework first. Then I have some free time in the evening. At weekends, I have more time for my hobbies."
    },
    {
     "who": "Presenter",
     "man": true,
-    "text": "Do you have a goal?"
+    "text": "Do you have a goal for this year?"
    },
    {
     "who": "Olivia",
     "man": false,
-    "text": "I'd like to enter a photography competition called Young Eyes. Young is Y-O-U-N-G, and Eyes is E-Y-E-S. The last day to send photographs is the fifteenth of May. We can send five pictures. The results will be announced on the second of June. I don't expect to win, but I want to learn from the experience."
+    "text": "Yes! I'd like to enter a photography competition. It's for teenagers aged thirteen to seventeen, and you can send up to five photos. The last day to send them is the fifteenth of May. I don't expect to win, but I want to learn from the experience."
    },
    {
     "who": "Presenter",
     "man": true,
-    "text": "Thank you, Olivia!"
+    "text": "That sounds great. How can our listeners find out more?"
+   },
+   {
+    "who": "Olivia",
+    "man": false,
+    "text": "They can call the competition office. The number is oh seven nine four, six two one, eight three zero."
+   },
+   {
+    "who": "Presenter",
+    "man": true,
+    "text": "Oh seven nine four, six two one, eight three zero?"
+   },
+   {
+    "who": "Olivia",
+    "man": false,
+    "text": "Yes, that's right."
+   },
+   {
+    "who": "Presenter",
+    "man": true,
+    "text": "Thank you, Olivia, and good luck!"
    }
   ]
  },

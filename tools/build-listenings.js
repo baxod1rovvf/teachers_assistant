@@ -1,6 +1,7 @@
 // Puts the Listening Journey (the teacher's 20 listenings, 2026-11-10) into js/skills-data.js: each step's `listening: { … }`
 // is replaced (Steps 19–20 get one, before their reading).
 //   docs/listening-journey-steps-1-7.md, …-8-20.md   the teacher's files (scripts + questions + answer key)
+//   docs/listening-journey-steps-8-20-v2.md          Steps 8–20 rewritten to the teacher's rules (2026-11-13); replaces those steps
 //   docs/listening-journey-transcripts.json          the scripts as paragraphs (made by tools/listening-transcripts.py)
 //   docs/listening-journey-questions.json            the questions + answers (edit this), each with a few words of the
 //                                                    script that hold its answer ("Analyze >" highlights that paragraph)
@@ -42,6 +43,7 @@ for (const S of QS) {
   if (!T) throw new Error('no transcript for step ' + S.no);
   const transcript = T.transcript.map(p => ({ who: p.who === 'Speaker' && S.speaker ? S.speaker : p.who, man: p.man, text: p.text, answers: [] }));
   const questions = [];
+  let prevAt = { where: -1, pos: -1 };   // a rewritten step (inOrder, 2026-11-13) asks in the order of the recording
   S.sections.forEach(sec => sec.qs.forEach(row => {
     const n = questions.length + 1;
     let item;
@@ -63,6 +65,11 @@ for (const S of QS) {
     }
     const where = transcript.findIndex(p => low(p.text).includes(low(item.at)));
     if (where < 0) throw new Error(`step ${S.no} Q${n}: "${item.at}" isn't in the script`);
+    if (S.inOrder) {
+      const pos = low(transcript[where].text).indexOf(low(item.at));
+      if (where < prevAt.where || (where === prevAt.where && pos < prevAt.pos)) throw new Error(`step ${S.no} Q${n}: out of order`);
+      prevAt = { where, pos };
+    }
     transcript[where].answers.push(n);
     delete item.at;
     item.sec = sec.h;
@@ -72,7 +79,7 @@ for (const S of QS) {
   const id = S.no <= 10 ? 'b' + S.no : 'e' + (S.no - 10), I = '        ';
   const lit = 'listening: {\n' +
     I + '// LISTENING JOURNEY — the teacher\'s (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json\n' +
-    I + 'src: ' + q('audio/skills/listen-step-' + S.no + '.mp3?v=1') + ',\n' +
+    I + 'src: ' + q('audio/skills/listen-step-' + S.no + '.mp3?v=' + (S.audioV || 1)) + ',\n' +
     I + 'title: ' + q(T.title) + ',\n' +
     I + 'intro: ' + q(S.intro + ' Then answer the ' + questions.length + ' questions.') + ',\n' +
     I + 'questions: [\n' + questions.map(x => I + '  ' + q(x)).join(',\n') + '\n' + I + '],\n' +
