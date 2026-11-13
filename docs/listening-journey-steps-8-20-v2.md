@@ -934,3 +934,111 @@ for listening!
 
 1 Moore · 2 simple · 3 routine · 4 ten · 5 B · 6 C · 7 B · 8 False · 9 True · 10 True · 11 Brookfield · 12 office ·
 13 tired · 14 walk · 15 stairs · 16 meal · 17 0152 836 479 · 18 goals · 19 choices
+
+------------------------------------------------------------------------
+
+# Step 18 --- How Technology Changes Our Lives
+
+**Target:** 4 minutes \| **Format:** Student radio programme \|
+**Questions:** 19
+
+## Audio transcript
+
+**Host:** Welcome to School Voices! Today's topic is technology, and my
+guests are two students, Emily and Jack. Emily, can you spell your
+surname for our listeners?
+
+**Emily:** Sure. It's Parker. That's P-A-R-K-E-R.
+
+**Host:** Emily, how do you use your phone?
+
+**Emily:** I use it every day to message my friends, check my school
+timetable and listen to music. I also use a language app for about
+fifteen minutes a day. But when I'm studying, I put my phone away,
+because I sometimes watch too many short videos.
+
+**Host:** Jack, what about you?
+
+**Jack:** I use my laptop more than my phone, because I do my school
+projects on it. I also take free online lessons about typing and
+presentations.
+
+**Host:** What should students remember about online safety?
+
+**Emily:** Use strong passwords, and don't share private information
+with strangers.
+
+**Jack:** And check information before you share it. Not everything
+online is true.
+
+**Host:** Will technology change schools?
+
+**Emily:** Probably. We'll use more digital books, and teachers will
+share more materials online.
+
+**Jack:** Technology will help teachers, but it won't replace them.
+
+**Host:** Emily, what's your favourite device?
+
+**Emily:** My tablet. It's called Nova. Nova. That's N-O-V-A. I use it
+to read and draw.
+
+**Host:** And Jack?
+
+**Jack:** My wireless headphones. I bought them at a small shop on Market
+Road. They cost forty dollars.
+
+**Host:** If our listeners have questions about technology, they can
+call the school radio. The number is oh one seven three, two nine five,
+eight four one.
+
+**Jack:** Oh one seven three, two nine five, eight four one?
+
+**Host:** That's right! One final piece of advice?
+
+**Emily:** Make sure technology helps you reach your goals.
+
+**Jack:** And spend time away from screens too.
+
+**Host:** Thank you both! Next week, we're talking about sport.
+
+## Questions
+
+### 1--4. Complete the notes. Write ONE word or A NUMBER.
+
+1.  Emily's surname: \_\_\_\_\_ (spelled)
+2.  Emily uses her phone to check her school \_\_\_\_\_.
+3.  She uses a language app for about \_\_\_\_\_ minutes a day.
+4.  When she studies, she puts her \_\_\_\_\_ away.
+
+### 5--7. Choose the correct answer.
+
+5.  Why does Jack use his laptop more than his phone? A) For games B)
+    For films C) For school projects
+6.  What are Jack's online lessons about? A) Typing and presentations B)
+    Music C) Drawing
+7.  What does Emily say about passwords? A) Share them with friends B)
+    Use strong passwords C) Change them every day
+
+### 8--10. True or False?
+
+8.  Jack says everything online is true.
+9.  Emily thinks students will use more digital books.
+10. Jack thinks technology will replace teachers.
+
+### 11--19. Complete the notes. Write ONE word or A NUMBER.
+
+11. The name of Emily's tablet: \_\_\_\_\_ (spelled)
+12. Emily uses her tablet to read and \_\_\_\_\_.
+13. Jack's favourite device: wireless \_\_\_\_\_
+14. He bought them at a shop on \_\_\_\_\_ Road.
+15. They cost \$\_\_\_\_\_.
+16. The school radio's phone number: \_\_\_\_\_ (spelled number)
+17. Make sure technology helps you reach your \_\_\_\_\_.
+18. Spend time away from \_\_\_\_\_ too.
+19. Next week's topic: \_\_\_\_\_
+
+## Answers
+
+1 Parker · 2 timetable · 3 fifteen · 4 phone · 5 C · 6 A · 7 B · 8 False · 9 True · 10 False · 11 Nova · 12 draw ·
+13 headphones · 14 Market · 15 40 · 16 0173 295 841 · 17 goals · 18 screens · 19 sport

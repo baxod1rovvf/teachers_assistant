@@ -3532,335 +3532,192 @@
  {
   "src": "audio/skills/listen-step-18.mp3",
   "title": "How Technology Changes Our Lives",
+  "engine": "omnivoice",
+  "voices": {
+   "af_ov_adviser": "female, middle-aged, moderate pitch",
+   "af_ov_young": {
+    "instruct": "female, young adult, moderate pitch",
+    "seed": 1
+   },
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   }
+  },
   "lines": [
    [
-    "am_michael",
-    "Welcome to School Voices.",
+    "af_ov_adviser",
+    "Welcome to School Voices!",
     0.3
    ],
    [
-    "am_michael",
-    "Today's topic is technology.",
+    "af_ov_adviser",
+    "Today's topic is technology, and my guests are two students, Emily and Jack.",
     0.3
    ],
    [
-    "am_michael",
-    "Our guests are Emily Parker and Jack Brown.",
+    "af_ov_adviser",
+    "Emily, can you spell your surname for our listeners?",
     0.4
    ],
    [
-    "af_heart",
-    "Emily.",
+    "af_ov_young",
+    "Sure. It's Parker.",
     0.3
    ],
    [
-    "af_heart",
-    "E. M. I. L. Y.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Parker.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "af_ov_young",
     "P. A. R. K. E. R.",
+    0.6
+   ],
+   [
+    "af_ov_adviser",
+    "Emily, how do you use your phone?",
     0.4
    ],
    [
-    "am_puck",
-    "Jack.",
+    "af_ov_young",
+    "I use it every day to message my friends, check my school timetable and listen to music.",
     0.3
    ],
    [
-    "am_puck",
-    "J. A. C. K.",
+    "af_ov_young",
+    "I also use a language app for about fifteen minutes a day.",
     0.3
    ],
    [
-    "am_puck",
-    "And Brown.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "B. R. O. W. N.",
+    "af_ov_young",
+    "But when I'm studying, I put my phone away, because I sometimes watch too many short videos.",
     0.4
    ],
    [
-    "am_michael",
-    "Emily, how often do you use your phone?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Every day.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "I use it to message friends, check my school timetable, listen to music and find information.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "I also use a language-learning app for about fifteen minutes a day.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Smartphones make life easier because I can contact my family and find directions.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "However, I sometimes watch too many short videos, so I put my phone away when studying.",
-    0.4
-   ],
-   [
-    "am_michael",
+    "af_ov_adviser",
     "Jack, what about you?",
     0.4
    ],
    [
-    "am_puck",
-    "I use my laptop more than my phone because I do school projects on it.",
+    "am_ov_energetic",
+    "I use my laptop more than my phone, because I do my school projects on it.",
     0.3
    ],
    [
-    "am_puck",
-    "I also learn computer skills through free online lessons.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "I often use a website called Learn Online.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "Learn.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "L. E. A. R. N.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "And Online.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "O. N. L. I. N. E.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "It has short lessons about typing, presentations and spreadsheets.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "Some lessons are ten minutes long.",
+    "am_ov_energetic",
+    "I also take free online lessons about typing and presentations.",
     0.4
    ],
    [
-    "am_michael",
-    "Do you use technology for entertainment?",
-    0.4
-   ],
-   [
-    "am_puck",
-    "Yes.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "I watch films, play games and listen to podcasts.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "But I try to finish homework first.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "Otherwise, I can lose track of time.",
-    0.4
-   ],
-   [
-    "am_michael",
+    "af_ov_adviser",
     "What should students remember about online safety?",
     0.4
    ],
    [
-    "af_heart",
-    "Use strong passwords and avoid sharing private information with strangers.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Think carefully before posting photographs or personal details.",
+    "af_ov_young",
+    "Use strong passwords, and don't share private information with strangers.",
     0.4
    ],
    [
-    "am_puck",
-    "Also, check information before believing or sharing it.",
+    "am_ov_energetic",
+    "And check information before you share it.",
     0.3
    ],
    [
-    "am_puck",
-    "Not everything online is correct.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "If I read an unusual story, I look for another reliable source.",
+    "am_ov_energetic",
+    "Not everything online is true.",
     0.4
    ],
    [
-    "am_michael",
-    "Will technology change schools in the future?",
+    "af_ov_adviser",
+    "Will technology change schools?",
     0.4
    ],
    [
-    "af_heart",
-    "Probably.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Students may use more digital books and interactive lessons.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Teachers can share materials online, which makes studying at home easier.",
+    "af_ov_young",
+    "Probably. We'll use more digital books, and teachers will share more materials online.",
     0.4
    ],
    [
-    "am_puck",
+    "am_ov_energetic",
     "Technology will help teachers, but it won't replace them.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "Students still need people to explain difficult ideas and answer questions.",
     0.4
    ],
    [
-    "am_michael",
-    "Emily, do you have a favourite device?",
+    "af_ov_adviser",
+    "Emily, what's your favourite device?",
     0.4
    ],
    [
-    "af_heart",
-    "My favourite is my tablet, Nova.",
+    "af_ov_young",
+    "My tablet. It's called Nova.",
     0.3
    ],
    [
-    "af_heart",
+    "af_ov_young",
     "Nova.",
     0.3
    ],
    [
-    "af_heart",
+    "af_ov_young",
     "N. O. V. A.",
-    0.3
+    0.6
    ],
    [
-    "af_heart",
+    "af_ov_young",
     "I use it to read and draw.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "I bought it last year for one hundred and eighty dollars.",
     0.4
    ],
    [
-    "am_michael",
-    "Jack?",
+    "af_ov_adviser",
+    "And Jack?",
     0.4
    ],
    [
-    "am_puck",
-    "I like my wireless headphones.",
+    "am_ov_energetic",
+    "My wireless headphones.",
     0.3
    ],
    [
-    "am_puck",
-    "I bought them at Tech Corner.",
+    "am_ov_energetic",
+    "I bought them at a small shop on Market Road.",
     0.3
    ],
    [
-    "am_puck",
-    "Tech.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "T. E. C. H.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "And Corner.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "C. O. R. N. E. R.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "The shop is at 42 Market Road.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "Market.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "M. A. R. K. E. T.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "And Road.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "R. O. A. D.",
+    "am_ov_energetic",
+    "They cost forty dollars.",
     0.4
    ],
    [
-    "am_michael",
-    "Give us one final piece of advice.",
+    "af_ov_adviser",
+    "If our listeners have questions about technology, they can call the school radio.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "The number is oh one seven three, two nine five, eight four one.",
     0.4
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
+    "Oh one seven three, two nine five, eight four one?",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "That's right! One final piece of advice?",
+    0.4
+   ],
+   [
+    "af_ov_young",
     "Make sure technology helps you reach your goals.",
     0.4
    ],
    [
-    "am_puck",
-    "Learn to use digital tools, but spend time away from screens too.",
+    "am_ov_energetic",
+    "And spend time away from screens too.",
     0.4
    ],
    [
-    "am_michael",
-    "Thank you both!",
+    "af_ov_adviser",
+    "Thank you both! Next week, we're talking about sport.",
     0.4
    ]
   ]

@@ -339,31 +339,31 @@
    ["The podcast's phone number: _____", ["0152 836 479"], "The number is oh one five two"],
    ["Choose one or two realistic _____.", ["goals"], "realistic goals"],
    ["A healthy lifestyle is built through small _____.", ["choices"], "small choices"]]}]},
-{"no": 18, "speaker": "", "intro": "Listen to a school radio programme about technology.",
+{"no": 18, "speaker": "", "inOrder": true, "names": ["Emily", "Jack"], "audioV": 2, "intro": "Listen to two students, Emily and Jack, talking about technology on a school radio programme.",
  "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["Emily's surname: _____", ["Parker"], "That's P-A-R-K-E-R"],
+   ["Emily uses her phone to check her school _____.", ["timetable"], "school timetable"],
+   ["She uses a language app for about _____ minutes a day.", ["fifteen", "15"], "fifteen minutes a day"],
+   ["When she studies, she puts her _____ away.", ["phone"], "put my phone away"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["What is the programme called?", ["School Voices", "Student Life", "Digital World"], "School Voices", "Welcome to School Voices"],
-   ["How long does Emily use her language app each day?", ["5 minutes", "15 minutes", "30 minutes"], "15 minutes", "about fifteen minutes a day"],
-   ["What does Jack mainly use his laptop for?", ["Shopping", "School projects", "Sports"], "School projects", "I do school projects on it"],
-   ["What is the website called?", ["Learn Online", "Study World", "Online School"], "Learn Online", "website called Learn Online"],
-   ["What is Emily's favourite device?", ["Her laptop", "Her tablet", "Her camera"], "Her tablet", "My favourite is my tablet"]]},
-  {"h": "Spelling.", "t": "gap", "qs": [
-   ["Emily's surname: _____", ["Parker"], "Parker is P-A-R-K-E-R"],
-   ["Jack's surname: _____", ["Brown"], "Brown is B-R-O-W-N"],
-   ["The website's name: _____", ["Learn Online"], "Learn is L-E-A-R-N"],
-   ["The tablet's name: _____", ["Nova"], "Nova is N-O-V-A"],
-   ["The shop's name: _____", ["Tech Corner"], "Tech is T-E-C-H"]]},
-  {"h": "Numbers and details.", "t": "gap", "qs": [
-   ["Emily paid $_____ for her tablet.", ["180", "one hundred and eighty", "180.00"], "one hundred and eighty dollars"],
-   ["The shop's street number: _____", ["42", "forty-two"], "42 Market Road"],
-   ["The street name: _____ Road", ["Market"], "Market is M-A-R-K-E-T"],
-   ["Some lessons on Learn Online are _____ minutes long.", ["10", "ten"], "ten minutes long"]]},
+   ["Why does Jack use his laptop more than his phone?", ["For games", "For films", "For school projects"], "For school projects", "school projects on it"],
+   ["What are Jack's online lessons about?", ["Typing and presentations", "Music", "Drawing"], "Typing and presentations", "typing and presentations"],
+   ["What does Emily say about passwords?", ["Share them with friends", "Use strong passwords", "Change them every day"], "Use strong passwords", "Use strong passwords"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["Emily puts her phone away when she studies.", "True", "put my phone away when studying"],
-   ["Jack believes everything on the internet is correct.", "False", "Not everything online is correct"],
-   ["Emily thinks teachers may share more materials online.", "True", "share materials online"],
-   ["Jack thinks technology will completely replace teachers.", "False", "it won't replace them"],
-   ["Jack recommends spending some time away from screens.", "True", "spend time away from screens"]]}]},
+   ["Jack says everything online is true.", "False", "Not everything online is true"],
+   ["Emily thinks students will use more digital books.", "True", "more digital books"],
+   ["Jack thinks technology will replace teachers.", "False", "won't replace them"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The name of Emily's tablet: _____", ["Nova"], "N-O-V-A"],
+   ["Emily uses her tablet to read and _____.", ["draw"], "read and draw"],
+   ["Jack's favourite device: wireless _____", ["headphones"], "wireless headphones"],
+   ["He bought them at a shop on _____ Road.", ["Market"], "Market Road"],
+   ["They cost $_____.", ["40", "forty", "40.00"], "cost forty dollars"],
+   ["The school radio's phone number: _____", ["0173 295 841"], "The number is oh one seven three"],
+   ["Make sure technology helps you reach your _____.", ["goals"], "reach your goals"],
+   ["Spend time away from _____ too.", ["screens"], "away from screens"],
+   ["Next week's topic: _____", ["sport", "sports"], "talking about sport"]]}]},
 {"no": 19, "speaker": "", "intro": "Listen to an interview with Sophie, who works on a film.",
  "sections": [
   {"h": "Choose the correct answer.", "t": "choose", "qs": [

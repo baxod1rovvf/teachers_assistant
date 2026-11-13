@@ -1521,107 +1521,102 @@
  {
   "no": 18,
   "title": "How Technology Changes Our Lives",
-  "format": "Student discussion programme",
+  "format": "Student radio programme",
   "transcript": [
    {
     "who": "Host",
-    "man": true,
-    "text": "Welcome to School Voices. Today's topic is technology. Our guests are Emily Parker and Jack Brown."
+    "man": false,
+    "text": "Welcome to School Voices! Today's topic is technology, and my guests are two students, Emily and Jack. Emily, can you spell your surname for our listeners?"
    },
    {
     "who": "Emily",
     "man": false,
-    "text": "Emily is E-M-I-L-Y, and Parker is P-A-R-K-E-R."
-   },
-   {
-    "who": "Jack",
-    "man": false,
-    "text": "Jack is J-A-C-K, and Brown is B-R-O-W-N."
+    "text": "Sure. It's Parker. That's P-A-R-K-E-R."
    },
    {
     "who": "Host",
-    "man": true,
-    "text": "Emily, how often do you use your phone?"
+    "man": false,
+    "text": "Emily, how do you use your phone?"
    },
    {
     "who": "Emily",
     "man": false,
-    "text": "Every day. I use it to message friends, check my school timetable, listen to music and find information. I also use a language-learning app for about fifteen minutes a day. Smartphones make life easier because I can contact my family and find directions. However, I sometimes watch too many short videos, so I put my phone away when studying."
+    "text": "I use it every day to message my friends, check my school timetable and listen to music. I also use a language app for about fifteen minutes a day. But when I'm studying, I put my phone away, because I sometimes watch too many short videos."
    },
    {
     "who": "Host",
-    "man": true,
+    "man": false,
     "text": "Jack, what about you?"
    },
    {
     "who": "Jack",
     "man": true,
-    "text": "I use my laptop more than my phone because I do school projects on it. I also learn computer skills through free online lessons. I often use a website called Learn Online. Learn is L-E-A-R-N, and Online is O-N-L-I-N-E. It has short lessons about typing, presentations and spreadsheets. Some lessons are ten minutes long."
+    "text": "I use my laptop more than my phone, because I do my school projects on it. I also take free online lessons about typing and presentations."
    },
    {
     "who": "Host",
-    "man": true,
-    "text": "Do you use technology for entertainment?"
-   },
-   {
-    "who": "Jack",
-    "man": true,
-    "text": "Yes. I watch films, play games and listen to podcasts. But I try to finish homework first. Otherwise, I can lose track of time."
-   },
-   {
-    "who": "Host",
-    "man": true,
+    "man": false,
     "text": "What should students remember about online safety?"
    },
    {
     "who": "Emily",
     "man": false,
-    "text": "Use strong passwords and avoid sharing private information with strangers. Think carefully before posting photographs or personal details."
+    "text": "Use strong passwords, and don't share private information with strangers."
    },
    {
     "who": "Jack",
     "man": true,
-    "text": "Also, check information before believing or sharing it. Not everything online is correct. If I read an unusual story, I look for another reliable source."
+    "text": "And check information before you share it. Not everything online is true."
    },
    {
     "who": "Host",
-    "man": true,
-    "text": "Will technology change schools in the future?"
+    "man": false,
+    "text": "Will technology change schools?"
    },
    {
     "who": "Emily",
     "man": false,
-    "text": "Probably. Students may use more digital books and interactive lessons. Teachers can share materials online, which makes studying at home easier."
+    "text": "Probably. We'll use more digital books, and teachers will share more materials online."
    },
    {
     "who": "Jack",
     "man": true,
-    "text": "Technology will help teachers, but it won't replace them. Students still need people to explain difficult ideas and answer questions."
+    "text": "Technology will help teachers, but it won't replace them."
    },
    {
     "who": "Host",
-    "man": true,
-    "text": "Emily, do you have a favourite device?"
+    "man": false,
+    "text": "Emily, what's your favourite device?"
    },
    {
     "who": "Emily",
     "man": false,
-    "text": "My favourite is my tablet, Nova. Nova is N-O-V-A. I use it to read and draw. I bought it last year for one hundred and eighty dollars."
+    "text": "My tablet. It's called Nova. Nova. That's N-O-V-A. I use it to read and draw."
    },
    {
     "who": "Host",
-    "man": true,
-    "text": "Jack?"
+    "man": false,
+    "text": "And Jack?"
    },
    {
     "who": "Jack",
     "man": true,
-    "text": "I like my wireless headphones. I bought them at Tech Corner. Tech is T-E-C-H, and Corner is C-O-R-N-E-R. The shop is at 42 Market Road. Market is M-A-R-K-E-T, and Road is R-O-A-D."
+    "text": "My wireless headphones. I bought them at a small shop on Market Road. They cost forty dollars."
    },
    {
     "who": "Host",
+    "man": false,
+    "text": "If our listeners have questions about technology, they can call the school radio. The number is oh one seven three, two nine five, eight four one."
+   },
+   {
+    "who": "Jack",
     "man": true,
-    "text": "Give us one final piece of advice."
+    "text": "Oh one seven three, two nine five, eight four one?"
+   },
+   {
+    "who": "Host",
+    "man": false,
+    "text": "That's right! One final piece of advice?"
    },
    {
     "who": "Emily",
@@ -1631,12 +1626,12 @@
    {
     "who": "Jack",
     "man": true,
-    "text": "Learn to use digital tools, but spend time away from screens too."
+    "text": "And spend time away from screens too."
    },
    {
     "who": "Host",
-    "man": true,
-    "text": "Thank you both!"
+    "man": false,
+    "text": "Thank you both! Next week, we're talking about sport."
    }
   ]
  },
