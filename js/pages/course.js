@@ -349,7 +349,8 @@ function skStepPageHtml(lv, g) {
   const meta = skTableMeta(lv.id, g);
   const results = '<section class="sk-results" aria-label="Results">' +
     '<div class="sk-results-head"><h3>🏆 Results' + (g ? ' — <span translate="no">' + escapeForHtml(g.name) + '</span>' : '') + '</h3>' +
-    (rows.length ? '<button type="button" class="mini-btn solid" onclick="skDownloadTable()">⬇️ Download picture</button>' : '') + '</div>' +
+    (rows.length ? '<button type="button" class="mini-btn solid" onclick="skDownloadTable()">⬇️ Download picture</button>' +
+      '<button type="button" class="mini-btn solid" onclick="skShareResults()">🔗 Share results link</button>' : '') + '</div>' +
     (rows.length ? skTableHtml(rows, meta, { writingLinks: true }) + '<p class="sk-hint sk-results-note">Ranked by Overall. Press a ✍️ Writing band to read the text or change the band.</p>'
       : '<div class="sk-results-empty"><span class="sk-results-empty-emoji">🌱</span><div><b>No results yet</b><span>' +
         (g ? 'When students in <span translate="no">' + escapeForHtml(g.name) + '</span> finish this step\'s Listening, Reading or Writing, their bands show here, ranked.'
@@ -606,6 +607,54 @@ function skViewWriting(i) {
   const modal = taModal('✍️ Writing', skWritingViewHtml(r), { wide: true, onClose: () => { skWvOpen = null; } });
   skWvOpen = { r: r, modal: modal };
 }
+/* ================= RESULTS AS A LINK (teacher, 2026-11-12) =================
+   "🔗 Share results link": the step's table for this group goes online (taPublishShare, record share-<token>) and its link
+   results-link.html?r=<token> is copied. The token is made once per group + step (ta_skills_shares) so the link never changes;
+   every press puts the newest table online. Places, Overall and CEFR are worked out on the page (skOverall/skCefr), and every
+   writing carries its id, text and asked words so tapping its band shows the AI feedback there (js/results-link.js). */
+function skShareData(step, g) {
+  const lv = skStep(step), ctx = skPathCtx(g, [lv]);
+  const rows = skTableRows(lv.id, g.id, ctx.map, ctx.links);
+  const part = v => v && typeof v.band === 'number' ? { band: v.band, raw: v.raw } : null;
+  return { group: g.name, step: lv.id, stepNo: lv.no, theme: lv.theme, sharedAt: new Date().toISOString(),
+    rows: rows.map(r => {
+      const res = r.writing && r.writing.res, mark = res ? skTeacherMark(res) : null, band = res ? skWritingBandFor(res) : null;
+      return { name: r.name, listening: part(r.listening), reading: part(r.reading),
+        writing: res ? { id: res.__id || '', raw: r.writing.raw, text: String(res.text || ''), words: typeof res.words === 'number' ? res.words : 0,
+          minWords: res.minWords || 0, maxWords: res.maxWords || 0, asked: res.asked && (res.asked.used || res.asked.missing) ? { used: res.asked.used || [], missing: res.asked.missing || [] } : null,
+          mark: mark, band: band } : null };
+    }) };
+}
+function skShareToken(g, step) {
+  let all = {};
+  try { all = JSON.parse(localStorage.getItem('ta_skills_shares') || '{}') || {}; } catch (e) { all = {}; }
+  const key = g.id + '|' + step;
+  if (!/^[0-9a-f]{16}$/.test(all[key] || '')) {
+    const b = new Uint8Array(8);
+    crypto.getRandomValues(b);
+    all[key] = Array.from(b, x => x.toString(16).padStart(2, '0')).join('');
+    try { localStorage.setItem('ta_skills_shares', JSON.stringify(all)); } catch (e) { /* ignore */ }
+  }
+  return all[key];
+}
+async function skShareResults() {
+  const g = skGroup();
+  if (!skView.step || !g) return;
+  const lv = skStep(skView.step);
+  if (!lv) return;
+  if (typeof window.taPublishShare !== 'function') { showToast('⚠️ The database isn\'t ready yet. Try again in a moment.'); return; }
+  const token = skShareToken(g, lv.id);
+  const base = window.skAppUrl || (/^https:/.test(TA_APP_URL) ? TA_APP_URL : '');
+  const url = base + 'results-link.html?r=' + token;
+  const ok = await window.taPublishShare(token, skShareData(lv.id, g));
+  if (!ok) { showToast('⚠️ The results couldn\'t go online. Check the internet and press Share results link again.'); return; }
+  const msg = '🔗 Link copied — send it to ' + g.name + '. It shows the table as it is now and updates itself while writings are checked.';
+  const show = () => taModal('🔗 The results link', '<input type="text" class="ta-input" readonly value="' + escapeForHtml(url) + '" aria-label="The link">');
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(() => showToast(msg, 'ok'), show);
+  else show();
+}
+window.skShareResults = skShareResults;
+window.skShareData = skShareData;
 function skSlug(s) { return String(s || '').toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'group'; }
 async function skDownloadTable() {
   const g = skGroup();

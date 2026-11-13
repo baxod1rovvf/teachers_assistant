@@ -128,6 +128,20 @@ window.taPublishClassList = async function (code, students, prev) {
     return true;
   } catch (e) { taReportDbError(e); console.error('Putting the class list online failed:', e); return false; }
 };
+// A step's results as a link (teacher, 2026-11-12): record `share-<token>` = the step's table for one group (names, bands, the
+// writings with their text) — results-link.html?r=<token> reads it, so students see the table and tap a writing band for its AI
+// feedback. Sync shape (code 'TAUSER', type 'TA_SYNC:SHARE'); the rules allow create + delete, not change, so the old one goes
+// first on every press. Resolves true when saved.
+window.taPublishShare = async function (token, data) {
+  if (!db || !/^[0-9a-f]{16}$/.test(String(token || '')) || !data) return false;
+  try {
+    const ref = doc(db, 'results', 'share-' + token);
+    await deleteDoc(ref).catch(() => {});
+    await setDoc(ref, { v: 1, code: 'TAUSER', builtAt: '', type: 'TA_SYNC:SHARE', title: token, name: '', data: JSON.stringify(data),
+      score: (data.rows || []).length, warnings: 0, timeSeconds: 0, timeDisplay: '00:00', date: new Date().toISOString() });
+    return true;
+  } catch (e) { taReportDbError(e); console.error('Putting the results link online failed:', e); return false; }
+};
 // Deletes every exercise link older than 7 days (any teacher's), and tells how
 // much the ones still online take. Only the records' names, dates and sizes are
 // read (not the exercises), so this stays light.
