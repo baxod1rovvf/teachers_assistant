@@ -74,3 +74,41 @@ test('one try still holds: with the answers in the database, the link says "alre
   await expect(page.locator('body')).toContainText('You have already done this listening');
   await expect(page.locator('body')).toContainText('8 / 12');
 });
+
+// The teacher's rule (2026-11-13): "already done" only when the answers reached the database
+test('"already done" only when the answers reached the teacher: answers still on the phone get "haven\'t reached your teacher yet" + Send', async ({ page, context }) => {
+  test.setTimeout(90000);
+  await prepare(context);
+  const errors = watchErrors(page);
+  await failedListening(page);
+  await page.addInitScript(() => { window.__failWrites = 1000; });   // still no internet when the link is opened again
+  await start(page, '/skill.html?s=listening&st=b5&c=LSN777');
+  const card = page.locator('.sk-done-card');
+  await expect(card).toContainText('Your answers haven\'t reached your teacher yet', { timeout: 30000 });
+  await expect(card).toContainText('/ 12');
+  await expect(card).not.toContainText('You have already done this');
+  await expect(card).not.toContainText('already has your answers');
+  expect(await listening(page)).toHaveLength(0);
+  await page.evaluate(() => { window.__failWrites = 0; });   // back online
+  await card.getByRole('button', { name: '📤 Send my answers' }).click();
+  await expect(card).toContainText('You have already done this listening', { timeout: 15000 });
+  expect(await listening(page)).toHaveLength(1);
+  expect(errors).toEqual([]);
+});
+
+test('no internet at Start: the phone\'s own note never says "already done" — "check the internet and press Start again"', async ({ page, context }) => {
+  await prepare(context, { storage: { ta_skill_done: JSON.stringify({ 'LSN777|id:10001': { at: '2026-11-12T10:00:00.000Z', summary: '8 / 12' } }) } });
+  const errors = watchErrors(page);
+  await page.goto('/skill.html?s=listening&st=b5&c=LSN777');
+  await page.evaluate(() => { window.__failReads = 100; });   // the database can't be asked
+  await page.locator('#studentNameInput').fill('Alice');
+  await page.locator('#skIdInput').fill('10001');
+  await page.getByRole('button', { name: /Start/ }).click();
+  await expect(page.locator('#skStartErr')).toHaveText('📶 We couldn\'t check your answers — check the internet and press Start again.');
+  await expect(page.locator('body')).not.toContainText('You have already done this');
+  await expect(page.locator('#skSubmit')).toHaveCount(0);
+  await page.evaluate(() => { window.__failReads = 0; });   // back online: nothing from her in the database → she can do it
+  await page.getByRole('button', { name: /Start/ }).click();
+  await expect(page.locator('#skSubmit')).toBeVisible();
+  expect(errors).toEqual([]);
+});

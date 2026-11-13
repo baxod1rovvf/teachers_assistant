@@ -595,8 +595,8 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   finds older ones as whole words (`skFindMistake` — before, "i" was marked inside "pencils"); `skWritingBand(…, maxWords)` (removed 2026-11-12 — bands now come from the AI, see below): more words
   than asked add half a band (teacher: never lower it for writing more). Old writings keep the band they were sent with (the teacher can Save band). Writing words:
   ~60 at Step 1 → ~200 at Step 18 (±10; minutes ≥ ~7 words a minute). **One try per course exercise**: on Start, `skAlreadyDone`
-  checks this device (`ta_skill_done`, set at Submit by `markDone`) and the database (code + studentId, code + name in [typed,
-  Capitalised, lower]) → `showAlreadyDone` ("You have already done this …", the result); a failed check lets the student in;
+  checks the database (code + studentId, code + name in [typed, Capitalised, lower]) → `showAlreadyDone` ("You have already done
+  this …", the result) — since 2026-11-13 only the database decides (see "Answers that didn't arrive"); a failed check → "check the internet";
   preview never blocked. Create-page exercise files are unchanged. **IDs**: `taIdKey` (common.js) — case, spaces/dots/dashes,
   a leading "ID"/"№"/"#", leading zeros, full-width digits and Cyrillic look-alikes don't matter; used by `taRosterIndex` /
   `rosterStudentForId` / `rosterStudentForResult` (a swapped name/ID box matches too); it lives in skill-bands.js (the student page uses it).
@@ -702,8 +702,10 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   said "Oldingi … tugatilmagan" — stuck. Now every Submit keeps its answers on the phone (`ta_skill_unsent`, `{ <record id>: payload }`,
   the page's own key, 30 days) until the save is confirmed (`keepUnsent`/`forgetUnsent`); any course link sends them again when it
   opens (`skSendKept`, Start waits ≤ 15 s for it before the checks); the same link with kept answers sends them and shows "already
-  done" (or "📤 Send my answers" if still offline). `skAlreadyDone` trusts the database: the phone's "done" note only counts when the
-  database can't be asked — so students whose answers never arrived can do it again. `tests/course-unsent.spec.js`.
+  done", or, still not sent, "📤 Your answers haven't reached your teacher yet" + "📤 Send my answers". **"Already done" only when the
+  answers are in the database** (teacher, same day): the phone's "done" note (`ta_skill_done`, `markDone`) is gone; the database can't be
+  asked → "📶 We couldn't check your answers — check the internet and press Start again" (teacher's choice — never let in on a guess).
+  `tests/course-unsent.spec.js`.
 - **Not finished (teacher, 2026-11-13)**: under a step's results table (`skMissingHtml` in course.js) "🚫 Not finished — <group> (N)": the
   group's students who haven't done every part of the step **whose link was sent** (Listening/Reading/Writing; Speaking sends nothing) — any
   result counts as done (a writing waiting for the AI too), matched like the dots — each with the parts still to do, most missing first
