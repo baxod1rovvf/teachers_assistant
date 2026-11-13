@@ -371,8 +371,61 @@ function skStepPageHtml(lv, g) {
   return '<button type="button" class="back-to-picker-btn" onclick="skOpenStep(\'\')">← ' + (g ? '<span translate="no">' + escapeForHtml(g.name) + '</span> · ' : '') + 'Journey</button>' +
     '<div class="sk-level-head"><span class="sk-node-emoji">' + lv.emoji + '</span><div><h3>Step ' + lv.no + ' · ' + escapeForHtml(lv.theme) + '</h3>' +
     '<div class="sk-hint">' + escapeForHtml(lv.stage || '') + ' · ' + SK_SKILLS.filter(s => lv[s.key]).map(s => s.label).join(', ') + '</div></div></div>' +
-    '<div class="sk-parts">' + cards + '</div>' + results;   // the exercises first, their results below (teacher, 2026-11-05)
+    '<div class="sk-parts">' + cards + '</div>' + results + skMissingHtml(lv, g, ctx);   // the exercises first, their results below (teacher, 2026-11-05)
 }
+/* Not finished (teacher, 2026-11-13): under the results, the group's students who haven't done every part of this step whose
+   link was sent (Listening, Reading, Writing — Speaking sends nothing), each with what's missing, most missing first. A part
+   counts as done with any result (a writing waiting for the AI too), matched like the dots (skDotState). */
+function skMissingRows(lv, g, ctx) {
+  if (!g || !lv) return { parts: [], rows: [] };
+  const parts = SK_TABLE_SKILLS.filter(k => lv[k] && skCodesFor(k, lv.id, g, ctx.links).length);
+  const done = {};
+  parts.forEach(k => {
+    const set = done[k] = new Set();
+    skSlotResults(ctx.map, skCodesFor(k, lv.id, g, ctx.links)).forEach(r => {
+      const st = rosterStudentForResult(r, ctx.idx);
+      if (st && st.group === g.id) set.add(String(st.id).trim().toLowerCase());
+    });
+  });
+  const rows = ctx.roster.map(s => ({ name: s.name, id: s.id, missing: parts.filter(k => !done[k].has(String(s.id).trim().toLowerCase())) }))
+    .filter(r => r.missing.length)
+    .sort((a, b) => (b.missing.length - a.missing.length) || a.name.localeCompare(b.name));
+  return { parts: parts, rows: rows };
+}
+function skSkillLabel(k) { const s = SK_SKILLS.find(x => x.key === k); return s ? s.label : k; }
+function skMissingHtml(lv, g, ctx) {
+  const m = skMissingRows(lv, g, ctx);
+  if (!m.parts.length || !ctx.roster.length) return '';
+  const gName = '<span translate="no">' + escapeForHtml(g.name) + '</span>';
+  const sent = m.parts.map(skSkillLabel).join(', ');
+  const chip = k => { const s = SK_SKILLS.find(x => x.key === k); return '<span class="sk-missing-part" style="--skc:' + s.color + '">' + s.emoji + ' ' + s.label + '</span>'; };
+  return '<section class="sk-missing" aria-label="Not finished">' +
+    '<div class="sk-results-head"><h3>🚫 Not finished — ' + gName + ' (' + m.rows.length + ')</h3>' +
+    (m.rows.length ? '<button type="button" class="mini-btn solid" onclick="skCopyMissing()">📋 Copy list</button>' : '') + '</div>' +
+    (m.rows.length
+      ? '<ol class="sk-missing-list">' + m.rows.map(r => '<li><b translate="no">' + escapeForHtml(r.name) + '</b><span class="sk-missing-parts">' + r.missing.map(chip).join('') + '</span></li>').join('') + '</ol>' +
+        '<p class="sk-hint sk-results-note">Students in ' + gName + ' who haven\'t done every part you sent (' + sent + '). Copy list gives a message ready to paste into the group\'s chat.</p>'
+      : '<div class="sk-results-empty"><span class="sk-results-empty-emoji">🎉</span><div><b>Everyone has finished</b><span>Every student in ' + gName + ' has done ' + sent + '.</span></div></div>') +
+    '</section>';
+}
+/* 📋 Copy list: "Step 5 · Free Time — Apex / Not finished yet: / 1. Name — Reading, Writing" (the teacher's choice) */
+function skMissingText(lv, g, rows) {
+  return ['Step ' + lv.no + ' · ' + lv.theme + ' — ' + g.name, 'Not finished yet:']
+    .concat(rows.map((r, i) => (i + 1) + '. ' + r.name + ' — ' + r.missing.map(skSkillLabel).join(', '))).join('\n');
+}
+function skCopyMissing() {
+  const g = skGroup(), lv = skStep(skView.step);
+  if (!g || !lv) return;
+  const m = skMissingRows(lv, g, skPathCtx(g, [lv]));
+  if (!m.rows.length) { showToast('🎉 Everyone has finished — nothing to copy.'); return; }
+  const text = skMissingText(lv, g, m.rows);
+  const msg = '📋 Copied — ' + m.rows.length + (m.rows.length === 1 ? ' student' : ' students') + '. Paste it into ' + g.name + '\'s chat.';
+  // taModal sets the title as text; the message goes in a box the teacher can copy from by hand
+  const show = () => taModal('📋 Not finished — ' + g.name, '<textarea class="ta-input" readonly rows="' + Math.min(14, m.rows.length + 3) + '" aria-label="The list">' + escapeForHtml(text) + '</textarea>');
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(() => showToast(msg, 'ok'), show);
+  else show();
+}
+window.skCopyMissing = skCopyMissing;
 function skTileSub(c) { return c.title || c.topic || (c.part2 && (c.part2.topic || c.part2.title)) || ''; }
 
 /* ---- moving around (the group is remembered on this device: ta_course_group) ---- */

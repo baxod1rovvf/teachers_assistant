@@ -695,6 +695,11 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   `*/5 * * * *`; paste `tools/ai-worker.js` and Deploy; `/status` must show version `2026-11-13b` and `kv: true` (also `running`, `keySaved`, `waiting`, `jobs`).
   Limits per IP per minute: queue 30, feedback 60, check 10, chat 8, writing 40. **KV free plan: about 1 000 writes and 1 000 lists a day** (the timer
   uses 288 lists); busy days can run out → writings just wait. `tests/ai-queue.spec.js`, `tests/results-link.spec.js`.
+- **Not finished (teacher, 2026-11-13)**: under a step's results table (`skMissingHtml` in course.js) "🚫 Not finished — <group> (N)": the
+  group's students who haven't done every part of the step **whose link was sent** (Listening/Reading/Writing; Speaking sends nothing) — any
+  result counts as done (a writing waiting for the AI too), matched like the dots — each with the parts still to do, most missing first
+  (`skMissingRows`); nothing sent / no students → no list; everyone done → "🎉 Everyone has finished". "📋 Copy list" (`skCopyMissing`) copies
+  "Step 5 · Free Time — Apex / Not finished yet: / 1. Name — Reading, Writing" (the teacher's choice). `tests/course-missing.spec.js`.
 - **Step names (teacher, 2026-11-10: "rename them")**: each step's `theme` + `emoji` = its Speaking Journey topic (1 Daily Routine ⏰ …
   20 Weather & Seasons ☀️), so the map matches the four parts; older names in the notes above ("Hello!", "Meeting people"…) are gone.
   Results sent before keep the old name in their `title`.

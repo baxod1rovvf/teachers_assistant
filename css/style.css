@@ -2756,6 +2756,15 @@ button.sk-dot:hover { transform: scale(1.12); }
 .sk-results-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
 .sk-results-head h3 { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.25rem; margin: 0; }
 .sk-results-note { margin: 10px 0 0; }
+/* Not finished (2026-11-13): under a step's results — each student with the parts still to do */
+.sk-missing { margin-top: 28px; }
+.sk-missing-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.sk-missing-list li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 14px; padding: 10px 14px;
+  border-radius: 14px; border: 1px solid var(--border); background: var(--surface); }
+.sk-missing-list b { font-weight: 700; overflow-wrap: anywhere; }
+.sk-missing-parts { display: flex; flex-wrap: wrap; gap: 6px; }
+.sk-missing-part { font-size: .85rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+  border: 1px solid color-mix(in srgb, var(--skc) 60%, transparent); background: color-mix(in srgb, var(--skc) 18%, transparent); }
 .sk-results-empty { display: flex; align-items: center; gap: 14px; padding: 18px 20px; border-radius: 20px; border: 2.5px dashed var(--border);
   background: var(--surface); }
 .sk-results-empty-emoji { font-size: 2rem; line-height: 1; }
