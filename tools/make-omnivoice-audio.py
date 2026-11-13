@@ -82,6 +82,18 @@ def gen(text, prompt=None, instruct=None, seed=0, speed=None):
     if speed: kw['speed'] = speed
     return model.generate(**kw)[0].squeeze(0).float().numpy()
 
+def pitch(a):
+    """median voice pitch in Hz (a man ~85–180, a woman ~165–255): VoiceStudio's "high pitch" can make a man sound like a
+    boy, so each designed voice's pitch is printed — pin a seed that sounds right (Step 9's Energetic Male: seed 4, ~167 Hz)"""
+    out = []
+    for i in range(0, len(a) - 2048, 1024):
+        x = a[i:i + 2048] - a[i:i + 2048].mean()
+        if np.sqrt((x ** 2).mean()) < 0.02: continue
+        c = np.correlate(x, x, 'full')[2047:]
+        lo, hi = int(SR / 400), int(SR / 70); k = lo + int(np.argmax(c[lo:hi]))
+        if c[k] > 0.3 * c[0]: out.append(SR / k)
+    return round(float(np.median(out))) if out else 0
+
 def voice_prompt(vid, v):
     """design the voice once (checked by ear), then a clone prompt that every line uses"""
     instruct, seed = (v, None) if isinstance(v, str) else (v['instruct'], v.get('seed'))
@@ -89,7 +101,7 @@ def voice_prompt(vid, v):
         ref = gen(REF_TEXT, instruct=instruct, seed=s)
         h = heard(ref)
         if line_ok(REF_TEXT, h):
-            print(f'   voice {vid} ({instruct}): seed {s} ✓', flush=True)
+            print(f'   voice {vid} ({instruct}): seed {s} ✓, pitch {pitch(ref)} Hz', flush=True)
             sf.write(f'{out_dir}/tmp-voice-{vid}.wav', ref, SR)
             return model.create_voice_clone_prompt(ref_audio=(torch.from_numpy(ref).unsqueeze(0), SR), ref_text=REF_TEXT)
         print(f'   voice {vid} seed {s}: heard {h!r}', flush=True)

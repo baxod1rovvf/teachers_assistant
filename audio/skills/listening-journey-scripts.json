@@ -1907,7 +1907,10 @@
   "title": "At the Shopping Centre",
   "engine": "omnivoice",
   "voices": {
-   "am_ov_energetic": "male, young adult, high pitch",
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   },
    "af_ov_customer": "female, young adult, moderate pitch"
   },
   "lines": [
