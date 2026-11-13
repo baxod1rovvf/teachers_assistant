@@ -290,30 +290,30 @@
    ["Board the train through the front and _____ doors.", ["middle"], "front and middle doors"],
    ["Don't leave your _____ alone.", ["bags"], "leave your bags alone"],
    ["Jack will buy a bottle of _____ first.", ["water"], "bottle of water"]]}]},
-{"no": 16, "speaker": "", "intro": "Listen to an interview with Noah, a young volunteer who helps animals.",
+{"no": 16, "speaker": "", "inOrder": true, "names": ["Noah"], "audioV": 2, "intro": "Listen to an interview with Noah, a young volunteer at an animal centre.",
  "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["Noah's surname: _____", ["Reed"], "That's R-E-E-D"],
+   ["Noah's family found a small _____ near their home.", ["dog"], "found a small dog"],
+   ["The animal didn't have a _____.", ["collar"], "didn't have a collar"],
+   ["They gave it some _____.", ["water"], "gave him some water"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["What animal did Noah's family find?", ["A cat", "A dog", "A rabbit"], "A dog", "found a small dog"],
-   ["What is his cat's name?", ["Bella", "Rocky", "Daisy"], "Bella", "a cat called Bella"],
-   ["Where does Noah volunteer?", ["Happy Tails Centre", "Green Animal Hospital", "Oak School"], "Happy Tails Centre", "At Happy Tails Centre"],
-   ["When was Rocky adopted?", ["March", "April", "May"], "April", "A family visited in April"]]},
-  {"h": "Spelling.", "t": "gap", "qs": [
-   ["Noah's surname: _____", ["Reed"], "Reed is R-E-E-D"],
-   ["The cat's name: _____", ["Bella"], "Bella is B-E-L-L-A"],
-   ["The animal centre: _____ Centre", ["Happy Tails"], "Happy is H-A-P-P-Y"],
-   ["The street name: _____ Street", ["Oak"], "Oak is O-A-K"],
-   ["The dog's name: _____", ["Rocky"], "Rocky is R-O-C-K-Y"]]},
-  {"h": "Numbers and details.", "t": "gap", "qs": [
-   ["Bella is _____ years old.", ["3", "three"], "three years old"],
-   ["Noah feeds Bella _____ a day.", ["twice", "2 times", "two times"], "twice a day"],
-   ["Last week there were _____ dogs and eleven cats.", ["24", "twenty-four", "twenty four"], "twenty-four dogs"],
-   ["The centre's phone number (in digits): _____", ["020 774 519"], "zero two zero"]]},
+   ["What colour is Noah's cat?", ["Black and white", "White and grey", "Brown"], "White and grey", "white and grey fur"],
+   ["What doesn't the cat like?", ["Other cats", "Water", "Loud noises"], "Loud noises", "doesn't like loud noises"],
+   ["What does the centre do?", ["It sells pets", "It looks after dogs and cats that need new homes", "It trains police dogs"], "It looks after dogs and cats that need new homes", "looks after dogs and cats"],
+   ["What does Noah do with the dogs?", ["Takes them for walks", "Washes them", "Teaches them tricks"], "Takes them for walks", "take the dogs for walks"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The dog Noah remembers: _____", ["Rocky"], "R-O-C-K-Y"],
+   ["When Rocky arrived, he stayed in a _____.", ["corner"], "stayed in a corner"],
+   ["After a few weeks, he started _____ with the other dogs.", ["playing"], "started playing"],
+   ["Rocky was adopted in _____.", ["April"], "In April"],
+   ["A month later, the family sent a _____.", ["photo", "photograph", "picture"], "sent us a photo"],
+   ["People can give food and _____.", ["blankets"], "food and blankets"],
+   ["The centre's phone number: _____", ["0207 745 193"], "The number is oh two oh seven"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["Bella has black and brown fur.", "False", "white and grey fur"],
-   ["Noah changes Bella's water every day.", "True", "change her water every day"],
-   ["Rocky was confident when he arrived.", "False", "At first, he was nervous"],
-   ["Rocky's new family had a large garden.", "True", "a large garden"],
-   ["Visitors should contact the centre before visiting.", "True", "contact the centre before visiting"]]}]},
+   ["Children under twelve can volunteer alone.", "False", "from the age of twelve, with a parent"],
+   ["Noah thinks small acts of kindness don't help much.", "False", "small acts of kindness"],
+   ["Next week's programme is about horses.", "True", "talking about horses"]]}]},
 {"no": 17, "speaker": "Rachel", "intro": "Listen to a podcast about healthy habits.",
  "sections": [
   {"h": "Choose the correct answer.", "t": "choose", "qs": [

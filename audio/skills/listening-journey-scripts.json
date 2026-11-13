@@ -3135,290 +3135,198 @@
  {
   "src": "audio/skills/listen-step-16.mp3",
   "title": "An Interesting Animal Story",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   },
+   "af_ov_adviser": "female, middle-aged, moderate pitch"
+  },
   "lines": [
    [
-    "af_heart",
-    "Welcome to Animal Friends.",
+    "af_ov_adviser",
+    "Welcome to Animal Friends!",
     0.3
    ],
    [
-    "af_heart",
-    "Today our guest is a young volunteer called Noah Reed.",
+    "af_ov_adviser",
+    "Today our guest is a young volunteer, Noah Reed.",
     0.3
    ],
    [
-    "af_heart",
-    "Noah.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "N. O. A. H.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Reed.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "R. E. E. D.",
+    "af_ov_adviser",
+    "Noah, how do you spell your surname?",
     0.4
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
+    "Reed.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "R. E. E. D.",
+    0.6
+   ],
+   [
+    "af_ov_adviser",
     "How did you become interested in helping animals?",
     0.4
    ],
    [
-    "am_puck",
-    "My family once found a small dog near our home.",
+    "am_ov_energetic",
+    "When I was ten, my family found a small dog near our home.",
     0.3
    ],
    [
-    "am_puck",
-    "He looked tired and didn't have a collar.",
+    "am_ov_energetic",
+    "He looked tired, and he didn't have a collar.",
     0.3
    ],
    [
-    "am_puck",
-    "We gave him water and contacted an animal centre.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "The centre helped us find his owner.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "After that, I became interested in animal care.",
+    "am_ov_energetic",
+    "We gave him some water and called an animal centre, and they found his owner.",
     0.4
    ],
    [
-    "af_heart",
-    "Do you have a pet?",
+    "af_ov_adviser",
+    "Do you have a pet now?",
     0.4
    ],
    [
-    "am_puck",
-    "Yes, I have a cat called Bella.",
+    "am_ov_energetic",
+    "Yes, a cat.",
     0.3
    ],
    [
-    "am_puck",
-    "Bella.",
+    "am_ov_energetic",
+    "She's three years old, and she has white and grey fur.",
     0.3
    ],
    [
-    "am_puck",
-    "B. E. L. L. A.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "She's three years old and has white and grey fur.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "She's friendly, but she doesn't like loud noises.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "I feed her twice a day and change her water every day.",
+    "am_ov_energetic",
+    "She's very friendly, but she doesn't like loud noises.",
     0.4
    ],
    [
-    "af_heart",
+    "af_ov_adviser",
     "Where do you volunteer?",
     0.4
    ],
    [
-    "am_puck",
-    "At Happy Tails Centre.",
+    "am_ov_energetic",
+    "At an animal centre that looks after dogs and cats that need new homes.",
     0.3
    ],
    [
-    "am_puck",
-    "Happy.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "H. A. P. P. Y.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "And Tails.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "T. A. I. L. S.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "It's on Oak Street.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "Oak.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "O. A. K.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "The centre looks after dogs and cats that need temporary homes.",
+    "am_ov_energetic",
+    "I clean the animals' areas, prepare their food and take the dogs for walks.",
     0.4
    ],
    [
-    "af_heart",
-    "What do you do there?",
+    "af_ov_adviser",
+    "Is there an animal you remember well?",
     0.4
    ],
    [
-    "am_puck",
-    "I clean the animals' areas, prepare food and take dogs for walks.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "I also speak to visitors about responsible pet ownership.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Is there an animal you remember especially well?",
-    0.4
-   ],
-   [
-    "am_puck",
+    "am_ov_energetic",
     "Yes, a dog called Rocky.",
     0.3
    ],
    [
-    "am_puck",
+    "am_ov_energetic",
     "Rocky.",
     0.3
    ],
    [
-    "am_puck",
+    "am_ov_energetic",
     "R. O. C. K. Y.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "When he arrived, he was very nervous and stayed in a corner.",
     0.3
    ],
    [
-    "am_puck",
-    "He arrived in March.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "At first, he was nervous and stayed in a corner.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "Volunteers gave him time and treated him gently.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "After a few weeks, he became more confident and started playing with other dogs.",
+    "am_ov_energetic",
+    "We gave him time and treated him gently, and after a few weeks he started playing with the other dogs.",
     0.4
    ],
    [
-    "af_heart",
+    "af_ov_adviser",
     "Did Rocky find a home?",
     0.4
    ],
    [
-    "am_puck",
-    "Yes.",
+    "am_ov_energetic",
+    "Yes! In April, a family with two children and a large garden adopted him.",
     0.3
    ],
    [
-    "am_puck",
-    "A family visited in April.",
+    "am_ov_energetic",
+    "A month later, they sent us a photo.",
     0.3
    ],
    [
-    "am_puck",
-    "They had two children and a large garden.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "They adopted Rocky and sent us a photograph a month later.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "He looked very happy.",
+    "am_ov_energetic",
+    "He looked so happy.",
     0.4
    ],
    [
-    "af_heart",
-    "How many animals does the centre usually have?",
-    0.4
-   ],
-   [
-    "am_puck",
-    "Around thirty, but the number changes.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "Last week, there were twenty-four dogs and eleven cats.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "The centre needs volunteers, food, blankets and cleaning supplies.",
-    0.4
-   ],
-   [
-    "af_heart",
+    "af_ov_adviser",
     "How can people help?",
     0.4
    ],
    [
-    "am_puck",
-    "They can volunteer or donate useful items.",
+    "am_ov_energetic",
+    "They can volunteer, or give food and blankets.",
     0.3
    ],
    [
-    "am_puck",
-    "They should contact the centre before visiting.",
+    "am_ov_energetic",
+    "But please call before you visit.",
     0.3
    ],
    [
-    "am_puck",
-    "The phone number is zero two zero, seven seven four, five one nine.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "That's zero two zero, seven seven four, five one nine.",
+    "am_ov_energetic",
+    "The number is oh two oh seven, seven four five, one nine three.",
     0.4
    ],
    [
-    "af_heart",
-    "Thank you, Noah.",
+    "af_ov_adviser",
+    "Oh two oh seven, seven four five, one nine three?",
     0.3
    ],
    [
-    "af_heart",
-    "Small acts of kindness can make a difference.",
+    "am_ov_energetic",
+    "That's right.",
+    0.4
+   ],
+   [
+    "af_ov_adviser",
+    "Can children volunteer too?",
+    0.4
+   ],
+   [
+    "am_ov_energetic",
+    "Yes, from the age of twelve, with a parent.",
+    0.4
+   ],
+   [
+    "af_ov_adviser",
+    "Thank you, Noah!",
+    0.4
+   ],
+   [
+    "am_ov_energetic",
+    "Thank you. And remember, small acts of kindness can make a big difference.",
+    0.4
+   ],
+   [
+    "af_ov_adviser",
+    "Next week on Animal Friends, we're talking about horses.",
     0.4
    ]
   ]

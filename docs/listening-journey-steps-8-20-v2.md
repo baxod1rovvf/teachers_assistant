@@ -734,3 +734,106 @@ the front and middle doors, and don't leave your bags alone.
 
 1 Miller · 2 online · 3 C · 4 four · 5 9:20 · 6 Rowan · 7 café · 8 B · 9 C · 10 A · 11 True · 12 False · 13 False ·
 14 0144 926 358 · 15 newspapers · 16 middle · 17 bags · 18 water
+
+------------------------------------------------------------------------
+
+# Step 16 --- An Interesting Animal Story
+
+**Target:** 3 minutes \| **Format:** Interview \| **Questions:** 18
+
+## Audio transcript
+
+**Presenter:** Welcome to Animal Friends! Today our guest is a young
+volunteer, Noah Reed. Noah, how do you spell your surname?
+
+**Noah:** Reed. That's R-E-E-D.
+
+**Presenter:** How did you become interested in helping animals?
+
+**Noah:** When I was ten, my family found a small dog near our home. He
+looked tired, and he didn't have a collar. We gave him some water and
+called an animal centre, and they found his owner.
+
+**Presenter:** Do you have a pet now?
+
+**Noah:** Yes, a cat. She's three years old, and she has white and grey
+fur. She's very friendly, but she doesn't like loud noises.
+
+**Presenter:** Where do you volunteer?
+
+**Noah:** At an animal centre that looks after dogs and cats that need
+new homes. I clean the animals' areas, prepare their food and take the
+dogs for walks.
+
+**Presenter:** Is there an animal you remember well?
+
+**Noah:** Yes, a dog called Rocky. Rocky. That's R-O-C-K-Y. When he
+arrived, he was very nervous and stayed in a corner. We gave him time
+and treated him gently, and after a few weeks he started playing with
+the other dogs.
+
+**Presenter:** Did Rocky find a home?
+
+**Noah:** Yes! In April, a family with two children and a large garden
+adopted him. A month later, they sent us a photo. He looked so happy.
+
+**Presenter:** How can people help?
+
+**Noah:** They can volunteer, or give food and blankets. But please call
+before you visit. The number is oh two oh seven, seven four five, one
+nine three.
+
+**Presenter:** Oh two oh seven, seven four five, one nine three?
+
+**Noah:** That's right.
+
+**Presenter:** Can children volunteer too?
+
+**Noah:** Yes, from the age of twelve, with a parent.
+
+**Presenter:** Thank you, Noah!
+
+**Noah:** Thank you. And remember, small acts of kindness can make a big
+difference.
+
+**Presenter:** Next week on Animal Friends, we're talking about horses.
+
+## Questions
+
+### 1--4. Complete the notes. Write ONE word or A NUMBER.
+
+1.  Noah's surname: \_\_\_\_\_ (spelled)
+2.  Noah's family found a small \_\_\_\_\_ near their home.
+3.  The animal didn't have a \_\_\_\_\_.
+4.  They gave it some \_\_\_\_\_.
+
+### 5--8. Choose the correct answer.
+
+5.  What colour is Noah's cat? A) Black and white B) White and grey C)
+    Brown
+6.  What doesn't the cat like? A) Other cats B) Water C) Loud noises
+7.  What does the centre do? A) It sells pets B) It looks after dogs and
+    cats that need new homes C) It trains police dogs
+8.  What does Noah do with the dogs? A) Takes them for walks B) Washes
+    them C) Teaches them tricks
+
+### 9--15. Complete the notes. Write ONE word or A NUMBER.
+
+9.  The dog Noah remembers: \_\_\_\_\_ (spelled)
+10. When Rocky arrived, he stayed in a \_\_\_\_\_.
+11. After a few weeks, he started \_\_\_\_\_ with the other dogs.
+12. Rocky was adopted in \_\_\_\_\_.
+13. A month later, the family sent a \_\_\_\_\_.
+14. People can give food and \_\_\_\_\_.
+15. The centre's phone number: \_\_\_\_\_ (spelled number)
+
+### 16--18. True or False?
+
+16. Children under twelve can volunteer alone.
+17. Noah thinks small acts of kindness don't help much.
+18. Next week's programme is about horses.
+
+## Answers
+
+1 Reed · 2 dog · 3 collar · 4 water · 5 B · 6 C · 7 B · 8 A · 9 Rocky · 10 corner · 11 playing · 12 April · 13 photo ·
+14 blankets · 15 0207 745 193 · 16 False · 17 False · 18 True

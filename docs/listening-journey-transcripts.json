@@ -1347,7 +1347,12 @@
    {
     "who": "Presenter",
     "man": false,
-    "text": "Welcome to Animal Friends. Today our guest is a young volunteer called Noah Reed. Noah is N-O-A-H, and Reed is R-E-E-D."
+    "text": "Welcome to Animal Friends! Today our guest is a young volunteer, Noah Reed. Noah, how do you spell your surname?"
+   },
+   {
+    "who": "Noah",
+    "man": true,
+    "text": "Reed. That's R-E-E-D."
    },
    {
     "who": "Presenter",
@@ -1357,17 +1362,17 @@
    {
     "who": "Noah",
     "man": true,
-    "text": "My family once found a small dog near our home. He looked tired and didn't have a collar. We gave him water and contacted an animal centre. The centre helped us find his owner. After that, I became interested in animal care."
+    "text": "When I was ten, my family found a small dog near our home. He looked tired, and he didn't have a collar. We gave him some water and called an animal centre, and they found his owner."
    },
    {
     "who": "Presenter",
     "man": false,
-    "text": "Do you have a pet?"
+    "text": "Do you have a pet now?"
    },
    {
     "who": "Noah",
     "man": true,
-    "text": "Yes, I have a cat called Bella. Bella is B-E-L-L-A. She's three years old and has white and grey fur. She's friendly, but she doesn't like loud noises. I feed her twice a day and change her water every day."
+    "text": "Yes, a cat. She's three years old, and she has white and grey fur. She's very friendly, but she doesn't like loud noises."
    },
    {
     "who": "Presenter",
@@ -1377,27 +1382,17 @@
    {
     "who": "Noah",
     "man": true,
-    "text": "At Happy Tails Centre. Happy is H-A-P-P-Y, and Tails is T-A-I-L-S. It's on Oak Street. Oak is O-A-K. The centre looks after dogs and cats that need temporary homes."
+    "text": "At an animal centre that looks after dogs and cats that need new homes. I clean the animals' areas, prepare their food and take the dogs for walks."
    },
    {
     "who": "Presenter",
     "man": false,
-    "text": "What do you do there?"
+    "text": "Is there an animal you remember well?"
    },
    {
     "who": "Noah",
     "man": true,
-    "text": "I clean the animals' areas, prepare food and take dogs for walks. I also speak to visitors about responsible pet ownership."
-   },
-   {
-    "who": "Presenter",
-    "man": false,
-    "text": "Is there an animal you remember especially well?"
-   },
-   {
-    "who": "Noah",
-    "man": true,
-    "text": "Yes, a dog called Rocky. Rocky is R-O-C-K-Y. He arrived in March. At first, he was nervous and stayed in a corner. Volunteers gave him time and treated him gently. After a few weeks, he became more confident and started playing with other dogs."
+    "text": "Yes, a dog called Rocky. Rocky. That's R-O-C-K-Y. When he arrived, he was very nervous and stayed in a corner. We gave him time and treated him gently, and after a few weeks he started playing with the other dogs."
    },
    {
     "who": "Presenter",
@@ -1407,17 +1402,7 @@
    {
     "who": "Noah",
     "man": true,
-    "text": "Yes. A family visited in April. They had two children and a large garden. They adopted Rocky and sent us a photograph a month later. He looked very happy."
-   },
-   {
-    "who": "Presenter",
-    "man": false,
-    "text": "How many animals does the centre usually have?"
-   },
-   {
-    "who": "Noah",
-    "man": true,
-    "text": "Around thirty, but the number changes. Last week, there were twenty-four dogs and eleven cats. The centre needs volunteers, food, blankets and cleaning supplies."
+    "text": "Yes! In April, a family with two children and a large garden adopted him. A month later, they sent us a photo. He looked so happy."
    },
    {
     "who": "Presenter",
@@ -1427,12 +1412,42 @@
    {
     "who": "Noah",
     "man": true,
-    "text": "They can volunteer or donate useful items. They should contact the centre before visiting. The phone number is 020 774 519. That's zero two zero, seven seven four, five one nine."
+    "text": "They can volunteer, or give food and blankets. But please call before you visit. The number is oh two oh seven, seven four five, one nine three."
    },
    {
     "who": "Presenter",
     "man": false,
-    "text": "Thank you, Noah. Small acts of kindness can make a difference."
+    "text": "Oh two oh seven, seven four five, one nine three?"
+   },
+   {
+    "who": "Noah",
+    "man": true,
+    "text": "That's right."
+   },
+   {
+    "who": "Presenter",
+    "man": false,
+    "text": "Can children volunteer too?"
+   },
+   {
+    "who": "Noah",
+    "man": true,
+    "text": "Yes, from the age of twelve, with a parent."
+   },
+   {
+    "who": "Presenter",
+    "man": false,
+    "text": "Thank you, Noah!"
+   },
+   {
+    "who": "Noah",
+    "man": true,
+    "text": "Thank you. And remember, small acts of kindness can make a big difference."
+   },
+   {
+    "who": "Presenter",
+    "man": false,
+    "text": "Next week on Animal Friends, we're talking about horses."
    }
   ]
  },
