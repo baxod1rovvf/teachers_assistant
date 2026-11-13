@@ -1,3 +1,6 @@
 node_modules/
 test-results/
 playwright-report/
+
+# temporary files of the recording tools (tools/make-course-audio.py, tools/make-omnivoice-audio.py)
+audio/skills/tmp*.wav
