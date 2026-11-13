@@ -99,3 +99,107 @@ nine four, six two one, eight three zero.
 
 1 Green · 2 two · 3 uncle · 4 flowers · 5 Maple · 6 A · 7 B · 8 B · 9 B · 10 True · 11 True · 12 False · 13 15th ·
 14 0794 621 830
+
+------------------------------------------------------------------------
+
+# Step 9 --- At the Shopping Centre
+
+**Target:** 3 minutes \| **Format:** Customer service conversation \|
+**Questions:** 14
+
+## Audio transcript
+
+**Assistant:** Good afternoon, and welcome to the shopping centre! How
+can I help you today?
+
+**Customer:** Hi. I'm meeting my cousin here, but I can't find her.
+
+**Assistant:** No problem! What's her name? I can call her over the
+speakers.
+
+**Customer:** Hannah Brooks.
+
+**Assistant:** Brooks? How do you spell that?
+
+**Customer:** Brooks. That's B-R-O-O-K-S.
+
+**Assistant:** Great, thanks! Did she say where to meet?
+
+**Customer:** She said near the bookshop.
+
+**Assistant:** The bookshop is on the second floor, next to the cinema.
+You can take the lift right behind you.
+
+**Customer:** Thank you. I also need a present for my little brother.
+He's ten, and he loves building things.
+
+**Assistant:** Then you should try Toybox. That's T-O-Y-B-O-X. It's a
+toy shop near the main entrance. They have a great wooden building set
+for just eighteen dollars and fifty cents.
+
+**Customer:** Perfect. Is there somewhere to eat?
+
+**Assistant:** Yes! The food court is near the car park entrance.
+There's a little café there that sells really good sandwiches.
+
+**Customer:** And what time does the centre close today?
+
+**Assistant:** Today is Saturday, so we close at nine p.m. On Sundays,
+we close earlier.
+
+**Customer:** Is there an ATM?
+
+**Assistant:** Yes, right next to the customer service desk.
+
+**Customer:** OK. And what if I still can't find my cousin?
+
+**Assistant:** Just call us at the information desk. The number is oh
+two oh seven, four nine one, three five six.
+
+**Customer:** Oh two oh seven, four nine one, three five six?
+
+**Assistant:** That's right!
+
+**Customer:** One more thing. Can I get the present wrapped?
+
+**Assistant:** Of course! Gift wrapping is free at the customer service
+desk.
+
+**Customer:** Wonderful. Thank you so much!
+
+**Assistant:** You're welcome. Have a great day!
+
+## Questions
+
+### 1--6. Complete the notes. Write ONE word or A NUMBER.
+
+1.  The cousin's surname: \_\_\_\_\_ (spelled)
+2.  The bookshop is on the \_\_\_\_\_ floor.
+3.  The bookshop is next to the \_\_\_\_\_.
+4.  The customer's brother is \_\_\_\_\_ years old.
+5.  The name of the toy shop: \_\_\_\_\_ (spelled)
+6.  The wooden building set costs \$\_\_\_\_\_.
+
+### 7--9. Choose the correct answer.
+
+7.  Where is the food court? A) Near the main entrance B) Near the car
+    park entrance C) Next to the bookshop
+8.  What does the café sell? A) Pizza B) Sandwiches C) Ice cream
+9.  What time does the centre close today? A) 7 p.m. B) 8 p.m. C) 9 p.m.
+
+### 10--12. True or False?
+
+10. The centre closes later on Sundays.
+11. There is an ATM next to the customer service desk.
+12. The customer can call the information desk if she can't find her
+    cousin.
+
+### 13--14. Complete the notes. Write ONE word or A NUMBER.
+
+13. The information desk's phone number: \_\_\_\_\_ (spelled number)
+14. Gift wrapping at the customer service desk is \_\_\_\_\_.
+
+## Answers
+
+1 Brooks · 2 second · 3 cinema · 4 ten · 5 Toybox · 6 18.50 · 7 B · 8 B · 9 C · 10 False · 11 True · 12 True ·
+13 0207 491 356 · 14 free

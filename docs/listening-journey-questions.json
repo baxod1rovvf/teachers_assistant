@@ -135,27 +135,26 @@
   {"h": "Complete the notes. Write a date or a number.", "t": "gap", "qs": [
    ["The last day to send photos: the _____ of May", ["15th", "15", "fifteenth"], "the fifteenth of May"],
    ["The competition office's phone number: _____", ["0794 621 830"], "The number is oh seven nine four"]]}]},
-{"no": 9, "speaker": "", "intro": "Listen to a customer talking to an assistant at a shopping centre.",
+{"no": 9, "speaker": "", "inOrder": true, "names": ["Hannah"], "audioV": 2, "intro": "Listen to a customer talking to an assistant at a shopping centre.",
  "sections": [
-  {"h": "Complete the information.", "t": "gap", "qs": [
-   ["The cousin's first name: _____", ["Layla"], "Layla is L-A-Y-L-A"],
-   ["The cousin's surname: _____", ["Karim"], "Karim is K-A-R-I-M"],
-   ["The bookshop is on the _____ floor.", ["second", "2nd", "2"], "bookshop is on the second floor"],
-   ["The bookshop is opposite the _____ shop.", ["electronics"], "opposite the electronics shop"]]},
-  {"h": "Spelling and numbers.", "t": "gap", "qs": [
-   ["The street name: _____ Street", ["King"], "King is K-I-N-G"],
-   ["The wooden building set costs $_____.", ["18.50", "18,50", "18.5"], "eighteen dollars and fifty"],
-   ["On Saturday the centre closes at _____ in the evening.", ["9", "nine", "9:00", "9.00", "9 pm", "9 p.m.", "9:00 pm", "9:00 p.m."], "closes at nine in the evening"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The cousin's surname: _____", ["Brooks"], "That's B-R-O-O-K-S"],
+   ["The bookshop is on the _____ floor.", ["second", "2nd", "2"], "on the second floor"],
+   ["The bookshop is next to the _____.", ["cinema"], "next to the cinema"],
+   ["The customer's brother is _____ years old.", ["ten", "10"], "He's ten"],
+   ["The name of the toy shop: _____", ["Toybox"], "T-O-Y-B-O-X"],
+   ["The wooden building set costs $_____.", ["18.50", "18,50", "18.5"], "eighteen dollars and fifty cents"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["Where is the toy shop?", ["Ground floor", "First floor", "Third floor"], "First floor", "Play House on the first floor"],
-   ["How old is the customer's brother?", ["8", "10", "12"], "10", "ten-year-old brother"],
-   ["Where is the food court?", ["First floor", "Second floor", "Third floor"], "Third floor", "food court is on the third floor"]]},
+   ["Where is the food court?", ["Near the main entrance", "Near the car park entrance", "Next to the bookshop"], "Near the car park entrance", "food court is near the car park"],
+   ["What does the café sell?", ["Pizza", "Sandwiches", "Ice cream"], "Sandwiches", "really good sandwiches"],
+   ["What time does the centre close today?", ["7 p.m.", "8 p.m.", "9 p.m."], "9 p.m.", "we close at nine"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["The café is called Green Cup.", "False", "called Blue Cup"],
-   ["The ATM is next to the customer service desk.", "True", "next to the customer service desk"]]},
-  {"h": "Write the answers.", "t": "gap", "qs": [
-   ["The vegetable sandwich costs $_____.", ["4.20", "4,20", "4.2"], "four dollars and twenty cents"],
-   ["On Sundays the centre closes at _____ in the evening.", ["7", "seven", "7:00", "7.00", "7 pm", "7 p.m.", "7:00 pm", "7:00 p.m."], "On Sundays, it closes at seven"]]}]},
+   ["The centre closes later on Sundays.", "False", "On Sundays, we close earlier"],
+   ["There is an ATM next to the customer service desk.", "True", "right next to the customer service desk"],
+   ["The customer can call the information desk if she can't find her cousin.", "True", "Just call us at the information desk"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The information desk's phone number: _____", ["0207 491 356"], "The number is oh two oh seven"],
+   ["Gift wrapping at the customer service desk is _____.", ["free"], "Gift wrapping is free"]]}]},
 {"no": 10, "speaker": "Peter", "intro": "Listen to a guide at the start of a city tour.",
  "sections": [
   {"h": "Choose the correct answer.", "t": "choose", "qs": [

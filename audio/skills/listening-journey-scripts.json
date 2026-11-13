@@ -1905,225 +1905,190 @@
  {
   "src": "audio/skills/listen-step-9.mp3",
   "title": "At the Shopping Centre",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": "male, young adult, high pitch",
+   "af_ov_customer": "female, young adult, moderate pitch"
+  },
   "lines": [
    [
-    "af_heart",
-    "Good afternoon.",
+    "am_ov_energetic",
+    "Good afternoon, and welcome to the shopping centre!",
     0.3
    ],
    [
-    "af_heart",
-    "Welcome to Westgate Shopping Centre.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "How can I help?",
+    "am_ov_energetic",
+    "How can I help you today?",
     0.4
    ],
    [
-    "am_michael",
-    "I'm meeting my cousin, but I can't remember where she asked me to wait.",
+    "af_ov_customer",
+    "Hi. I'm meeting my cousin here, but I can't find her.",
     0.4
    ],
    [
-    "af_heart",
-    "Do you know her name?",
+    "am_ov_energetic",
+    "No problem! What's her name?",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I can call her over the speakers.",
     0.4
    ],
    [
-    "am_michael",
-    "Yes.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "Layla Karim.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "Layla.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "L. A. Y. L. A.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "And Karim.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "K. A. R. I. M.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "She said to meet near the bookshop.",
+    "af_ov_customer",
+    "Hannah Brooks.",
     0.4
    ],
    [
-    "af_heart",
-    "The bookshop is on the second floor, opposite the electronics shop.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Use the escalator near the main entrance on King Street.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "King.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "K. I. N. G.",
+    "am_ov_energetic",
+    "Brooks? How do you spell that?",
     0.4
    ],
    [
-    "am_michael",
-    "Thank you.",
+    "af_ov_customer",
+    "Brooks.",
     0.3
    ],
    [
-    "am_michael",
-    "I also need a birthday present for my ten-year-old brother.",
-    0.3
+    "af_ov_customer",
+    "B. R. O. O. K. S.",
+    0.6
    ],
    [
-    "am_michael",
-    "He likes building things and playing games.",
+    "am_ov_energetic",
+    "Great, thanks! Did she say where to meet?",
     0.4
    ],
    [
-    "af_heart",
-    "There's a toy shop called Play House on the first floor.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Play.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "P. L. A. Y.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And House.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "H. O. U. S. E.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Small games start at six dollars.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Larger building sets can cost forty-five dollars.",
+    "af_ov_customer",
+    "She said near the bookshop.",
     0.4
    ],
    [
-    "am_michael",
-    "I'd prefer something under twenty dollars.",
+    "am_ov_energetic",
+    "The bookshop is on the second floor, next to the cinema.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You can take the lift right behind you.",
     0.4
    ],
    [
-    "af_heart",
-    "This wooden building set costs eighteen dollars and fifty cents.",
+    "af_ov_customer",
+    "Thank you. I also need a present for my little brother.",
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "He's ten, and he loves building things.",
     0.4
    ],
    [
-    "am_michael",
-    "Great.",
+    "am_ov_energetic",
+    "Then you should try Toybox.",
     0.3
    ],
    [
-    "am_michael",
-    "Is there somewhere to eat?",
+    "am_ov_energetic",
+    "T. O. Y. B. O. X.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "It's a toy shop near the main entrance.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "They have a great wooden building set for just eighteen dollars and fifty cents.",
     0.4
    ],
    [
-    "af_heart",
-    "The food court is on the third floor.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "There's a café called Blue Cup.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Blue.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "B. L. U. E.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Cup.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "C. U. P.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "It sells vegetable sandwiches for four dollars and twenty cents.",
+    "af_ov_customer",
+    "Perfect. Is there somewhere to eat?",
     0.4
    ],
    [
-    "am_michael",
-    "What time does the centre close?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "From Monday to Saturday, it closes at nine in the evening.",
+    "am_ov_energetic",
+    "Yes! The food court is near the car park entrance.",
     0.3
    ],
    [
-    "af_heart",
-    "On Sundays, it closes at seven.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Today is Saturday.",
+    "am_ov_energetic",
+    "There's a little café there that sells really good sandwiches.",
     0.4
    ],
    [
-    "am_michael",
+    "af_ov_customer",
+    "And what time does the centre close today?",
+    0.4
+   ],
+   [
+    "am_ov_energetic",
+    "Today is Saturday, so we close at nine p.m.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "On Sundays, we close earlier.",
+    0.4
+   ],
+   [
+    "af_ov_customer",
     "Is there an ATM?",
     0.4
    ],
    [
-    "af_heart",
-    "Yes, next to the customer service desk on the ground floor.",
+    "am_ov_energetic",
+    "Yes, right next to the customer service desk.",
     0.4
    ],
    [
-    "am_michael",
-    "Thank you!",
+    "af_ov_customer",
+    "OK. And what if I still can't find my cousin?",
+    0.4
+   ],
+   [
+    "am_ov_energetic",
+    "Just call us at the information desk.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The number is oh two oh seven, four nine one, three five six.",
+    0.4
+   ],
+   [
+    "af_ov_customer",
+    "Oh two oh seven, four nine one, three five six?",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "That's right!",
+    0.4
+   ],
+   [
+    "af_ov_customer",
+    "One more thing. Can I get the present wrapped?",
+    0.4
+   ],
+   [
+    "am_ov_energetic",
+    "Of course! Gift wrapping is free at the customer service desk.",
+    0.4
+   ],
+   [
+    "af_ov_customer",
+    "Wonderful. Thank you so much!",
+    0.4
+   ],
+   [
+    "am_ov_energetic",
+    "You're welcome. Have a great day!",
     0.4
    ]
   ]

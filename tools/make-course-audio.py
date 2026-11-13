@@ -151,6 +151,8 @@ def best_line(text, voice, speed):
 
 for n, item in enumerate(spec, 1):
     if ONLY and str(n) not in ONLY: continue
+    if item.get('engine', 'kokoro') != 'kokoro':   # made by another tool (Step 9: tools/make-omnivoice-audio.py, 2026-11-13)
+        print(item['src'], '— skipped:', item['engine'], '(see tools/make-omnivoice-audio.py)'); continue
     parts, sr = [], 24000
     for i, line in enumerate(item['lines']):
         voice, text = line[0], line[1]

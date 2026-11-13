@@ -757,83 +757,128 @@
   "transcript": [
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Good afternoon. Welcome to Westgate Shopping Centre. How can I help?"
+    "man": true,
+    "text": "Good afternoon, and welcome to the shopping centre! How can I help you today?"
    },
    {
     "who": "Customer",
-    "man": true,
-    "text": "I'm meeting my cousin, but I can't remember where she asked me to wait."
+    "man": false,
+    "text": "Hi. I'm meeting my cousin here, but I can't find her."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Do you know her name?"
+    "man": true,
+    "text": "No problem! What's her name? I can call her over the speakers."
    },
    {
     "who": "Customer",
-    "man": true,
-    "text": "Yes. Layla Karim. Layla is L-A-Y-L-A, and Karim is K-A-R-I-M. She said to meet near the bookshop."
+    "man": false,
+    "text": "Hannah Brooks."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "The bookshop is on the second floor, opposite the electronics shop. Use the escalator near the main entrance on King Street. King is K-I-N-G."
+    "man": true,
+    "text": "Brooks? How do you spell that?"
    },
    {
     "who": "Customer",
-    "man": true,
-    "text": "Thank you. I also need a birthday present for my ten-year-old brother. He likes building things and playing games."
+    "man": false,
+    "text": "Brooks. That's B-R-O-O-K-S."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "There's a toy shop called Play House on the first floor. Play is P-L-A-Y, and House is H-O-U-S-E. Small games start at six dollars. Larger building sets can cost forty-five dollars."
+    "man": true,
+    "text": "Great, thanks! Did she say where to meet?"
    },
    {
     "who": "Customer",
-    "man": true,
-    "text": "I'd prefer something under twenty dollars."
+    "man": false,
+    "text": "She said near the bookshop."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "This wooden building set costs eighteen dollars and fifty cents."
+    "man": true,
+    "text": "The bookshop is on the second floor, next to the cinema. You can take the lift right behind you."
    },
    {
     "who": "Customer",
-    "man": true,
-    "text": "Great. Is there somewhere to eat?"
+    "man": false,
+    "text": "Thank you. I also need a present for my little brother. He's ten, and he loves building things."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "The food court is on the third floor. There's a café called Blue Cup. Blue is B-L-U-E, and Cup is C-U-P. It sells vegetable sandwiches for four dollars and twenty cents."
+    "man": true,
+    "text": "Then you should try Toybox. That's T-O-Y-B-O-X. It's a toy shop near the main entrance. They have a great wooden building set for just eighteen dollars and fifty cents."
    },
    {
     "who": "Customer",
-    "man": true,
-    "text": "What time does the centre close?"
+    "man": false,
+    "text": "Perfect. Is there somewhere to eat?"
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "From Monday to Saturday, it closes at nine in the evening. On Sundays, it closes at seven. Today is Saturday."
+    "man": true,
+    "text": "Yes! The food court is near the car park entrance. There's a little café there that sells really good sandwiches."
    },
    {
     "who": "Customer",
+    "man": false,
+    "text": "And what time does the centre close today?"
+   },
+   {
+    "who": "Assistant",
     "man": true,
+    "text": "Today is Saturday, so we close at nine p.m. On Sundays, we close earlier."
+   },
+   {
+    "who": "Customer",
+    "man": false,
     "text": "Is there an ATM?"
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Yes, next to the customer service desk on the ground floor."
+    "man": true,
+    "text": "Yes, right next to the customer service desk."
    },
    {
     "who": "Customer",
+    "man": false,
+    "text": "OK. And what if I still can't find my cousin?"
+   },
+   {
+    "who": "Assistant",
     "man": true,
-    "text": "Thank you!"
+    "text": "Just call us at the information desk. The number is oh two oh seven, four nine one, three five six."
+   },
+   {
+    "who": "Customer",
+    "man": false,
+    "text": "Oh two oh seven, four nine one, three five six?"
+   },
+   {
+    "who": "Assistant",
+    "man": true,
+    "text": "That's right!"
+   },
+   {
+    "who": "Customer",
+    "man": false,
+    "text": "One more thing. Can I get the present wrapped?"
+   },
+   {
+    "who": "Assistant",
+    "man": true,
+    "text": "Of course! Gift wrapping is free at the customer service desk."
+   },
+   {
+    "who": "Customer",
+    "man": false,
+    "text": "Wonderful. Thank you so much!"
+   },
+   {
+    "who": "Assistant",
+    "man": true,
+    "text": "You're welcome. Have a great day!"
    }
   ]
  },
