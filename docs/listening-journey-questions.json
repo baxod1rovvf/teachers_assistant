@@ -266,30 +266,30 @@
    ["The shop is open every day until _____ o'clock.", ["eight", "8"], "until eight o'clock"],
    ["The label says: \"Happy birthday! From your _____.\"", ["sister"], "From your sister"],
    ["To find the exit, go past the _____ and turn left.", ["mirrors"], "go past the mirrors"]]}]},
-{"no": 15, "speaker": "", "intro": "Listen to an announcement at a train station and two passengers talking.",
+{"no": 15, "speaker": "", "inOrder": true, "names": ["Jack"], "audioV": 2, "intro": "Listen to Jack talking to an assistant at a train station.",
  "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["Jack's surname: _____", ["Miller"], "That's M-I-L-L-E-R"],
+   ["Jack bought his ticket _____ yesterday.", ["online"], "bought it online"],
+   ["His seat is in coach _____.", ["C"], "in coach C"],
+   ["The train leaves from Platform _____.", ["four", "4"], "Platform four"],
+   ["The train leaves at _____.", ["9:20", "9.20", "nine twenty", "twenty past nine"], "leaves at nine twenty"],
+   ["His friend lives on _____ Street.", ["Rowan"], "R-O-W-A-N"],
+   ["The bus stops outside the station _____.", ["café", "cafe"], "outside the station café"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["Which platform does the Lakeside train leave from?", ["2", "3", "4"], "4", "Lakeside will depart from Platform 4"],
-   ["What time does the Hilltown train leave?", ["9:20", "9:45", "10:30"], "9:45", "Platform 2 at nine forty-five"],
-   ["How long is the journey to Lakeside?", ["1 hour 20 minutes", "2 hours 10 minutes", "2 hours 30 minutes"], "2 hours 10 minutes", "two hours and ten minutes"],
-   ["What time does the return train leave?", ["6:15", "6:30", "7:15"], "6:15", "leaves Lakeside at six fifteen"]]},
-  {"h": "Spelling and numbers.", "t": "gap", "qs": [
-   ["The friend's first name: _____", ["Anna"], "Anna is A-N-N-A"],
-   ["The friend's surname: _____", ["Miller"], "Miller is M-I-L-L-E-R"],
-   ["The street name: _____ Street", ["Garden"], "Garden is G-A-R-D-E-N"],
-   ["The house number: _____", ["18", "eighteen"], "18 Garden Street"],
-   ["The dog's name: _____", ["Charlie"], "Charlie is C-H-A-R-L-I-E"]]},
-  {"h": "Complete the notes.", "t": "gap", "qs": [
-   ["The ticket costs $_____.", ["26.50", "26,50", "26.5"], "twenty-six dollars and fifty cents"],
-   ["The passenger comes back on _____ evening.", ["Sunday"], "back on Sunday evening"],
-   ["The shop is next to Platform _____.", ["3", "three"], "next to Platform 3"],
-   ["The shop closes at _____ p.m.", ["8", "eight", "8:00", "8.00"], "closes at eight in the evening"]]},
+   ["What is the Wi-Fi on the train like?", ["Very fast", "The signal can be weak", "There is no Wi-Fi"], "The signal can be weak", "signal can be weak"],
+   ["What can Jack buy in the café on the train?", ["Hot meals", "Books", "Sandwiches and drinks"], "Sandwiches and drinks", "buy sandwiches and drinks"],
+   ["Where are the power sockets?", ["Under some seats", "In every coach", "Next to the doors"], "Under some seats", "Only under some seats"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["The train to Westport is leaving earlier than planned.", "False", "Westport is delayed"],
-   ["The passenger bought the ticket online.", "True", "online yesterday"],
-   ["Anna lives near the lake.", "True", "She lives near the lake"],
-   ["The passenger plans to visit a nature park.", "True", "a nature park"],
-   ["Every seat has a power socket.", "False", "sockets under some seats"]]}]},
+   ["Jack's friend wants to show him a nature park.", "True", "show me a nature park"],
+   ["Jack's friend has a cat.", "False", "she has a dog"],
+   ["Jack is coming back on Saturday.", "False", "coming back on Sunday"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The station office's phone number: _____", ["0144 926 358"], "The number is oh one four four"],
+   ["The small shop sells snacks and _____.", ["newspapers"], "snacks and newspapers"],
+   ["Board the train through the front and _____ doors.", ["middle"], "front and middle doors"],
+   ["Don't leave your _____ alone.", ["bags"], "leave your bags alone"],
+   ["Jack will buy a bottle of _____ first.", ["water"], "bottle of water"]]}]},
 {"no": 16, "speaker": "", "intro": "Listen to an interview with Noah, a young volunteer who helps animals.",
  "sections": [
   {"h": "Choose the correct answer.", "t": "choose", "qs": [

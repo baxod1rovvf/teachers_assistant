@@ -2963,230 +2963,171 @@
  {
   "src": "audio/skills/listen-step-15.mp3",
   "title": "A Journey by Train",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   },
+   "af_ov_young": {
+    "instruct": "female, young adult, moderate pitch",
+    "seed": 1
+   }
+  },
   "lines": [
    [
-    "af_bella",
-    "Good morning, passengers.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "The train to Lakeside will depart from Platform 4 at nine twenty.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "The train to Hilltown leaves from Platform 2 at nine forty-five.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "The train to Westport is delayed and is now expected to leave at ten thirty.",
+    "af_ov_young",
+    "Good morning! How can I help?",
     0.4
    ],
    [
-    "af_bella",
-    "The journey to Lakeside takes approximately two hours and ten minutes.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "There is a café on the train where passengers can buy sandwiches, drinks and snacks.",
+    "am_ov_energetic",
+    "Hi. I booked a seat on the train to Lakeside, but I can't find my ticket on my phone.",
     0.4
    ],
    [
-    "af_heart",
-    "Excuse me.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Could you tell me where Platform 4 is?",
+    "af_ov_young",
+    "No problem. What's your surname?",
     0.4
    ],
    [
-    "am_michael",
-    "Walk straight ahead, then turn left after the information desk.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Thank you.",
+    "am_ov_energetic",
+    "Miller.",
     0.3
    ],
    [
-    "af_heart",
-    "I'm travelling to Lakeside to visit my friend, Anna Miller.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Anna.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "A. N. N. A.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Miller.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "M. I. L. L. E. R.",
+    0.6
+   ],
+   [
+    "af_ov_young",
+    "Here it is. You bought it online yesterday.",
     0.3
    ],
    [
-    "af_heart",
-    "She lives near the lake.",
+    "af_ov_young",
+    "Your seat is in coach C.",
     0.4
    ],
    [
-    "am_michael",
-    "Do you know her address?",
+    "am_ov_energetic",
+    "Great. Which platform does the train leave from?",
     0.4
    ],
    [
-    "af_heart",
-    "Yes, it's 18 Garden Street.",
+    "af_ov_young",
+    "Platform four.",
     0.3
    ],
    [
-    "af_heart",
-    "Garden.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "G. A. R. D. E. N.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Street.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "S. T. R. E. E. T.",
+    "af_ov_young",
+    "It leaves at nine twenty, and the journey takes about two hours.",
     0.4
    ],
    [
-    "am_michael",
-    "Have you bought your ticket?",
+    "am_ov_energetic",
+    "Thanks. I'm visiting a friend in Lakeside.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Is there a bus from the station to Rowan Street?",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Rowan.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "R. O. W. A. N.",
+    0.6
+   ],
+   [
+    "af_ov_young",
+    "Yes. The bus stops right outside the station café.",
     0.4
    ],
    [
-    "af_heart",
-    "Yes, online yesterday.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "It cost twenty-six dollars and fifty cents.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "It's a return ticket.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "I'm coming back on Sunday evening.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "My return train leaves Lakeside at six fifteen.",
+    "am_ov_energetic",
+    "Perfect. Is there Wi-Fi on the train?",
     0.4
    ],
    [
-    "am_michael",
-    "What will you do there?",
+    "af_ov_young",
+    "Yes, but the signal can be weak.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "There's also a café on the train where you can buy sandwiches and drinks.",
     0.4
    ],
    [
-    "af_heart",
-    "Anna wants to show me the town centre and a nature park.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "She also has a dog called Charlie.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Charlie.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "C. H. A. R. L. I. E.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "He loves walking near the water.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "Does the train have Wi-Fi?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "I think so, but I heard the signal can be weak.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "Are there power sockets?",
     0.4
    ],
    [
-    "am_michael",
-    "There are sockets under some seats.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "There's also a small shop next to Platform 3.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "It opens at seven in the morning and closes at eight in the evening.",
+    "af_ov_young",
+    "Only under some seats.",
     0.4
    ],
    [
-    "af_bella",
-    "The nine twenty train to Lakeside is now ready for boarding at Platform 4.",
+    "am_ov_energetic",
+    "OK. My friend wants to show me a nature park, and she has a dog that loves walking by the water.",
     0.3
    ],
    [
-    "af_bella",
-    "Please board through the front and middle doors.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "Do not leave bags unattended.",
+    "am_ov_energetic",
+    "I'm coming back on Sunday evening.",
     0.4
    ],
    [
-    "af_heart",
-    "That's my train.",
+    "af_ov_young",
+    "That sounds lovely.",
     0.3
    ],
    [
-    "af_heart",
-    "Thanks for your help!",
+    "af_ov_young",
+    "If you need help at Lakeside, call the station office.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "The number is oh one four four, nine two six, three five eight.",
+    0.4
+   ],
+   [
+    "am_ov_energetic",
+    "Oh one four four, nine two six, three five eight?",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "That's right.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "There's also a small shop next to Platform three.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "It sells snacks and newspapers.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Please board the train through the front and middle doors, and don't leave your bags alone.",
+    0.4
+   ],
+   [
+    "am_ov_energetic",
+    "Thanks for your help! I'll buy a bottle of water first.",
     0.4
    ]
   ]

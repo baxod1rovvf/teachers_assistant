@@ -1245,87 +1245,97 @@
  {
   "no": 15,
   "title": "A Journey by Train",
-  "format": "Station announcement and",
+  "format": "Conversation at a station",
   "transcript": [
    {
-    "who": "Announcement",
+    "who": "Assistant",
     "man": false,
-    "text": "Good morning, passengers. The train to Lakeside will depart from Platform 4 at nine twenty. The train to Hilltown leaves from Platform 2 at nine forty-five. The train to Westport is delayed and is now expected to leave at ten thirty."
+    "text": "Good morning! How can I help?"
    },
    {
-    "who": "Announcement",
-    "man": false,
-    "text": "The journey to Lakeside takes approximately two hours and ten minutes. There is a café on the train where passengers can buy sandwiches, drinks and snacks."
-   },
-   {
-    "who": "Passenger 1",
-    "man": false,
-    "text": "Excuse me. Could you tell me where Platform 4 is?"
-   },
-   {
-    "who": "Passenger 2",
+    "who": "Jack",
     "man": true,
-    "text": "Walk straight ahead, then turn left after the information desk."
+    "text": "Hi. I booked a seat on the train to Lakeside, but I can't find my ticket on my phone."
    },
    {
-    "who": "Passenger 1",
+    "who": "Assistant",
     "man": false,
-    "text": "Thank you. I'm travelling to Lakeside to visit my friend, Anna Miller. Anna is A-N-N-A, and Miller is M-I-L-L-E-R. She lives near the lake."
+    "text": "No problem. What's your surname?"
    },
    {
-    "who": "Passenger 2",
+    "who": "Jack",
     "man": true,
-    "text": "Do you know her address?"
+    "text": "Miller. That's M-I-L-L-E-R."
    },
    {
-    "who": "Passenger 1",
+    "who": "Assistant",
     "man": false,
-    "text": "Yes, it's 18 Garden Street. Garden is G-A-R-D-E-N, and Street is S-T-R-E-E-T."
+    "text": "Here it is. You bought it online yesterday. Your seat is in coach C."
    },
    {
-    "who": "Passenger 2",
+    "who": "Jack",
     "man": true,
-    "text": "Have you bought your ticket?"
+    "text": "Great. Which platform does the train leave from?"
    },
    {
-    "who": "Passenger 1",
+    "who": "Assistant",
     "man": false,
-    "text": "Yes, online yesterday. It cost twenty-six dollars and fifty cents. It's a return ticket. I'm coming back on Sunday evening. My return train leaves Lakeside at six fifteen."
+    "text": "Platform four. It leaves at nine twenty, and the journey takes about two hours."
    },
    {
-    "who": "Passenger 2",
+    "who": "Jack",
     "man": true,
-    "text": "What will you do there?"
+    "text": "Thanks. I'm visiting a friend in Lakeside. Is there a bus from the station to Rowan Street? Rowan. That's R-O-W-A-N."
    },
    {
-    "who": "Passenger 1",
+    "who": "Assistant",
     "man": false,
-    "text": "Anna wants to show me the town centre and a nature park. She also has a dog called Charlie. Charlie is C-H-A-R-L-I-E. He loves walking near the water."
+    "text": "Yes. The bus stops right outside the station café."
    },
    {
-    "who": "Passenger 2",
+    "who": "Jack",
     "man": true,
-    "text": "Does the train have Wi-Fi?"
+    "text": "Perfect. Is there Wi-Fi on the train?"
    },
    {
-    "who": "Passenger 1",
+    "who": "Assistant",
     "man": false,
-    "text": "I think so, but I heard the signal can be weak. Are there power sockets?"
+    "text": "Yes, but the signal can be weak. There's also a café on the train where you can buy sandwiches and drinks."
    },
    {
-    "who": "Passenger 2",
+    "who": "Jack",
     "man": true,
-    "text": "There are sockets under some seats. There's also a small shop next to Platform 3. It opens at seven in the morning and closes at eight in the evening."
+    "text": "Are there power sockets?"
    },
    {
-    "who": "Announcement",
+    "who": "Assistant",
     "man": false,
-    "text": "The nine twenty train to Lakeside is now ready for boarding at Platform 4. Please board through the front and middle doors. Do not leave bags unattended."
+    "text": "Only under some seats."
    },
    {
-    "who": "Passenger 1",
+    "who": "Jack",
+    "man": true,
+    "text": "OK. My friend wants to show me a nature park, and she has a dog that loves walking by the water. I'm coming back on Sunday evening."
+   },
+   {
+    "who": "Assistant",
     "man": false,
-    "text": "That's my train. Thanks for your help!"
+    "text": "That sounds lovely. If you need help at Lakeside, call the station office. The number is oh one four four, nine two six, three five eight."
+   },
+   {
+    "who": "Jack",
+    "man": true,
+    "text": "Oh one four four, nine two six, three five eight?"
+   },
+   {
+    "who": "Assistant",
+    "man": false,
+    "text": "That's right. There's also a small shop next to Platform three. It sells snacks and newspapers. Please board the train through the front and middle doors, and don't leave your bags alone."
+   },
+   {
+    "who": "Jack",
+    "man": true,
+    "text": "Thanks for your help! I'll buy a bottle of water first."
    }
   ]
  },

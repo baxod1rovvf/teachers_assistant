@@ -639,3 +639,98 @@ day!
 
 1 Oliver · 2 birthday · 3 casual · 4 colours · 5 Kestrel · 6 B · 7 A · 8 A · 9 False · 10 False · 11 True · 12 card ·
 13 bag · 14 0198 254 736 · 15 eight · 16 sister · 17 mirrors
+
+------------------------------------------------------------------------
+
+# Step 15 --- A Journey by Train
+
+**Target:** 3 minutes \| **Format:** Conversation at a station \|
+**Questions:** 18
+
+## Audio transcript
+
+**Assistant:** Good morning! How can I help?
+
+**Jack:** Hi. I booked a seat on the train to Lakeside, but I can't find
+my ticket on my phone.
+
+**Assistant:** No problem. What's your surname?
+
+**Jack:** Miller. That's M-I-L-L-E-R.
+
+**Assistant:** Here it is. You bought it online yesterday. Your seat is
+in coach C.
+
+**Jack:** Great. Which platform does the train leave from?
+
+**Assistant:** Platform four. It leaves at nine twenty, and the journey
+takes about two hours.
+
+**Jack:** Thanks. I'm visiting a friend in Lakeside. Is there a bus from
+the station to Rowan Street? Rowan. That's R-O-W-A-N.
+
+**Assistant:** Yes. The bus stops right outside the station café.
+
+**Jack:** Perfect. Is there Wi-Fi on the train?
+
+**Assistant:** Yes, but the signal can be weak. There's also a café on
+the train where you can buy sandwiches and drinks.
+
+**Jack:** Are there power sockets?
+
+**Assistant:** Only under some seats.
+
+**Jack:** OK. My friend wants to show me a nature park, and she has a
+dog that loves walking by the water. I'm coming back on Sunday evening.
+
+**Assistant:** That sounds lovely. If you need help at Lakeside, call
+the station office. The number is oh one four four, nine two six, three
+five eight.
+
+**Jack:** Oh one four four, nine two six, three five eight?
+
+**Assistant:** That's right. There's also a small shop next to Platform
+three. It sells snacks and newspapers. Please board the train through
+the front and middle doors, and don't leave your bags alone.
+
+**Jack:** Thanks for your help! I'll buy a bottle of water first.
+
+## Questions
+
+### 1--7. Complete the notes. Write ONE word or A NUMBER.
+
+1.  Jack's surname: \_\_\_\_\_ (spelled)
+2.  Jack bought his ticket \_\_\_\_\_ yesterday.
+3.  His seat is in coach \_\_\_\_\_.
+4.  The train leaves from Platform \_\_\_\_\_.
+5.  The train leaves at \_\_\_\_\_.
+6.  His friend lives on \_\_\_\_\_ Street. (spelled)
+7.  The bus stops outside the station \_\_\_\_\_.
+
+### 8--10. Choose the correct answer.
+
+8.  What is the Wi-Fi on the train like? A) Very fast B) The signal can
+    be weak C) There is no Wi-Fi
+9.  What can Jack buy in the café on the train? A) Hot meals B) Books C)
+    Sandwiches and drinks
+10. Where are the power sockets? A) Under some seats B) In every coach
+    C) Next to the doors
+
+### 11--13. True or False?
+
+11. Jack's friend wants to show him a nature park.
+12. Jack's friend has a cat.
+13. Jack is coming back on Saturday.
+
+### 14--18. Complete the notes. Write ONE word or A NUMBER.
+
+14. The station office's phone number: \_\_\_\_\_ (spelled number)
+15. The small shop sells snacks and \_\_\_\_\_.
+16. Board the train through the front and \_\_\_\_\_ doors.
+17. Don't leave your \_\_\_\_\_ alone.
+18. Jack will buy a bottle of \_\_\_\_\_ first.
+
+## Answers
+
+1 Miller · 2 online · 3 C · 4 four · 5 9:20 · 6 Rowan · 7 café · 8 B · 9 C · 10 A · 11 True · 12 False · 13 False ·
+14 0144 926 358 · 15 newspapers · 16 middle · 17 bags · 18 water
