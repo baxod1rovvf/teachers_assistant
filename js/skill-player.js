@@ -5,8 +5,8 @@
 // "Analyze >" (the transcript / text with the answers highlighted). One result goes to Firestore `results`
 // in the student-record shape exercises use (so the database lock lets it through), 3 tries, then "Send again".
 // Preview (&preview=1, the teacher's ▶️ Try): no start card, nothing imported from Firebase, nothing written.
-// Writing: a topic with 3 points, a timer (submits by itself at 0), a live word counter; Submit → the free LanguageTool
-// grammar check (mistakes underlined, each with its fix) + "better words" from TA_BETTER_WORDS, then one result is sent.
+// Writing: a topic with 3 points, a timer (submits by itself at 0), a live word counter; Submit → one result is saved
+// (no band, no check here) and, once saved, put on the AI helper's waiting list; the student sees only "sent" (2026-11-12).
 // Speaking: practice only — words, then the questions one by one, then a Part 2 talk with a timer. No start card, no
 // microphone, nothing recorded, sent or scored (it is the student's own wish to speak).
 
@@ -500,6 +500,9 @@ async function sendNow() {
   const state = await skSendResult(lastPayload);
   if (state === 'ok' && lastPayload.skill === 'writing') clearDraft();   // the teacher has it: a reload starts afresh
   setSend(state);
+  // once the writing is saved, it goes on the AI helper's waiting list (the helper reads the saved record, so not before);
+  // never waited for — a failure is fine, Loom puts it on the list later (taWritingAiSync)
+  if (state === 'ok' && lastPayload.skill === 'writing' && queueW && queuedId !== lastPayload.__id) { queuedId = lastPayload.__id; skQueueWriting(lastPayload, queueW); }
   // a writing's "sent" card shows only once the save is confirmed (also after "Send again")
   if (state === 'ok' && lastPayload.skill === 'writing' && !$('.sk-sent-card')) {
     const res = $('#skActions .sk-result');
@@ -648,6 +651,7 @@ function showWriting(level) {
    The student sees only "sent". The AI checks it later (the helper's timer, tools/ai-worker.js job "queue"); the teacher
    shares the results. No band, no grammar check, no feedback here. */
 const SK_AI_URL = 'https://loom-ai.toxiraxii010.workers.dev';
+let queueW = null, queuedId = '';   // the writing task being sent, and the result id already put on the waiting list
 function skAiUrl() { try { return localStorage.getItem('ta_ai_url') || SK_AI_URL; } catch (e) { return SK_AI_URL; } }
 // → true when the helper took it ({ queued } or { done }); false on any error (the writing is saved anyway)
 async function skQueueWriting(payload, W) {
@@ -691,8 +695,7 @@ async function submitWriting(level, W, timeUp) {
   lastPayload.__id = skResultId(lastPayload);
   markDone(lastPayload);   // finished: this device won't open it again (one try per exercise)
   $('#skAfter').innerHTML = '';
-  // save first; the waiting-list request goes alongside it and is never waited for (a failure is fine: Loom re-queues later)
-  skQueueWriting(lastPayload, W);
+  queueW = W;   // sendNow puts it on the waiting list once it is saved
   sendNow();
 }
 

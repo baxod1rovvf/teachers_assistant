@@ -103,6 +103,7 @@ test('student: Submit sends the writing to the AI\'s waiting list and shows only
   await expect(page.locator('.sk-ai-mistakes')).toHaveCount(0);
   await expect(page.locator('#skGrammar')).toHaveCount(0);
   const rec = await writingRecord(page);
+  await expect.poll(() => bodies.length).toBe(1);   // sent once the save is confirmed (the helper reads the saved record)
   expect(bodies[0]).toMatchObject({ job: 'queue', id: rec.__id, topic: 'My Daily Routine', minWords: 80, maxWords: 100,
     words: ['wake up', 'get dressed', 'have breakfast', 'usually', 'after school', 'do homework', 'in the evening', 'go to bed'] });
   expect(bodies[0].text).toBe(TEXT);
@@ -127,17 +128,20 @@ test('student: the helper down → the writing is still saved and shown as sent'
 });
 
 test('student: the "sent" card waits for the save — failing saves show Send again and no card, then it appears', async ({ page, context }) => {
+  const bodies = [];
   await prepare(context);
-  await fakeQueue(context);
+  await fakeQueue(context, { bodies });
   await startWriting(page, 'WRT325');
   await page.locator('#skWriteBox').fill(TEXT);
   await page.evaluate(() => { window.__failWrites = 3; });
   await page.getByRole('button', { name: /Submit my writing/ }).click();
   await expect(page.locator('.sk-send')).toContainText('Not sent yet — press Send again', { timeout: 15000 });
   await expect(page.locator('.sk-sent-card')).toHaveCount(0);
+  expect(bodies.filter(b => b.job === 'queue')).toHaveLength(0);   // not saved → not on the waiting list yet
   await page.getByRole('button', { name: /Send again/ }).click();
   await expect(page.locator('.sk-send')).toContainText('Saved ✅');
   await expect(page.locator('.sk-sent-card')).toHaveText(SENT);
+  await expect.poll(() => bodies.filter(b => b.job === 'queue').length).toBe(1);
 });
 
 test('"already done" for a writing shows the words, no band', async ({ page, context }) => {
