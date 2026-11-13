@@ -1642,108 +1642,123 @@
   "transcript": [
    {
     "who": "Presenter",
-    "man": true,
-    "text": "Welcome to Film Makers. Today we're speaking to a production assistant called Sophie Turner. Sophie is S-O-P-H-I-E, and Turner is T-U-R-N-E-R."
-   },
-   {
-    "who": "Presenter",
-    "man": true,
-    "text": "What does a production assistant do?"
-   },
-   {
-    "who": "Sophie",
     "man": false,
-    "text": "I help the film team organise daily work. I prepare schedules, check equipment, help actors find the correct places and communicate with different departments. It's busy because many people work together."
+    "text": "Welcome to Film Makers! Today I'm talking to a production assistant, Sam Turner. Sam, could you spell your surname?"
+   },
+   {
+    "who": "Sam",
+    "man": true,
+    "text": "Sure. Turner. That's T-U-R-N-E-R."
    },
    {
     "who": "Presenter",
+    "man": false,
+    "text": "So, what does a production assistant do?"
+   },
+   {
+    "who": "Sam",
     "man": true,
+    "text": "I help the film team organise the daily work. I prepare schedules, check the equipment and help the actors find the right places. It's busy, because so many people work together."
+   },
+   {
+    "who": "Presenter",
+    "man": false,
     "text": "What film are you working on?"
    },
    {
-    "who": "Sophie",
-    "man": false,
-    "text": "A family adventure film called The Secret Garden. The Secret is T-H-E, then S-E-C-R-E-T. Garden is G-A-R-D-E-N. It's about two children who discover an unusual garden near their grandmother's house."
+    "who": "Sam",
+    "man": true,
+    "text": "A family adventure film called The Hidden Garden. It's about two children who find a strange garden near their grandmother's house."
    },
    {
     "who": "Presenter",
-    "man": true,
+    "man": false,
     "text": "Where are you filming?"
    },
    {
-    "who": "Sophie",
-    "man": false,
-    "text": "Most scenes are filmed in Willow Creek. Willow is W-I-L-L-O-W, and Creek is C-R-E-E-K. It's about forty kilometres from the nearest large city. We also film indoor scenes at Studio North. Studio is S-T-U-D-I-O, and North is N-O-R-T-H."
+    "who": "Sam",
+    "man": true,
+    "text": "Most scenes are filmed in a small village in the hills, about an hour from the city. We film the indoor scenes in a studio."
    },
    {
     "who": "Presenter",
-    "man": true,
+    "man": false,
     "text": "How long does filming take?"
    },
    {
-    "who": "Sophie",
-    "man": false,
-    "text": "About twelve weeks. After that, editors work on the film for several months. They choose the best scenes, add music, improve the sound and prepare the final version."
+    "who": "Sam",
+    "man": true,
+    "text": "About twelve weeks. After that, the editors work on the film for several months. They choose the best scenes and add music."
    },
    {
     "who": "Presenter",
-    "man": true,
-    "text": "How many people are in the team?"
+    "man": false,
+    "text": "How big is the team?"
    },
    {
-    "who": "Sophie",
-    "man": false,
-    "text": "About forty-five people, including the director, camera operators, actors, costume designers and sound assistants."
+    "who": "Sam",
+    "man": true,
+    "text": "About forty-five people: the director, camera operators, actors, costume designers and sound assistants."
    },
    {
     "who": "Presenter",
-    "man": true,
-    "text": "Tell us about the main actors."
-   },
-   {
-    "who": "Sophie",
     "man": false,
-    "text": "The main character is played by Oliver James. Oliver is O-L-I-V-E-R, and James is J-A-M-E-S. He plays a boy called Leo. Leo is L-E-O. His sister is played by Hannah Price. Hannah is H-A-N-N-A-H, and Price is P-R-I-C-E."
-   },
-   {
-    "who": "Presenter",
-    "man": true,
     "text": "Is there an animal in the film?"
    },
    {
-    "who": "Sophie",
-    "man": false,
-    "text": "Yes, a small dog called Biscuit. Biscuit is B-I-S-C-U-I-T. He's friendly, but sometimes he doesn't follow instructions. We take a short break and try again."
+    "who": "Sam",
+    "man": true,
+    "text": "Yes, a small dog called Biscuit. Biscuit. That's B-I-S-C-U-I-T. He's very friendly, but sometimes he doesn't follow instructions, so we take a short break and try again."
    },
    {
     "who": "Presenter",
-    "man": true,
-    "text": "When will the film be released?"
+    "man": false,
+    "text": "When can we see the film?"
    },
    {
-    "who": "Sophie",
-    "man": false,
-    "text": "The cinema release is planned for the eighteenth of December. The first trailer will come out on the fifth of October. The film will last about one hour and forty minutes."
+    "who": "Sam",
+    "man": true,
+    "text": "It comes to cinemas on the eighteenth of December."
    },
    {
     "who": "Presenter",
-    "man": true,
-    "text": "What is the most difficult part of your job?"
+    "man": false,
+    "text": "What's the hardest part of your job?"
    },
    {
-    "who": "Sophie",
-    "man": false,
-    "text": "Keeping everything organised when the weather changes. If it rains during an outdoor scene, we may change the schedule and record an indoor scene instead."
+    "who": "Sam",
+    "man": true,
+    "text": "The weather! If it rains during an outdoor scene, we change the plan and film an indoor scene instead."
    },
    {
     "who": "Presenter",
-    "man": true,
-    "text": "What advice would you give someone interested in films?"
+    "man": false,
+    "text": "How can young people learn more about film jobs?"
    },
    {
-    "who": "Sophie",
+    "who": "Sam",
+    "man": true,
+    "text": "Our studio runs free workshops for teenagers. You can call the studio on oh one two six, five eight three, nine four seven."
+   },
+   {
+    "who": "Presenter",
     "man": false,
-    "text": "Be organised, communicate clearly and be ready to learn. There are many jobs behind the camera, not only acting and directing."
+    "text": "Oh one two six, five eight three, nine four seven?"
+   },
+   {
+    "who": "Sam",
+    "man": true,
+    "text": "Yes, that's right."
+   },
+   {
+    "who": "Presenter",
+    "man": false,
+    "text": "Any advice for someone who wants to work in films?"
+   },
+   {
+    "who": "Sam",
+    "man": true,
+    "text": "Be organised, communicate clearly and always be ready to learn. There are many jobs behind the camera, not only acting."
    }
   ]
  },

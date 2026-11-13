@@ -1042,3 +1042,115 @@ eight four one.
 
 1 Parker · 2 timetable · 3 fifteen · 4 phone · 5 C · 6 A · 7 B · 8 False · 9 True · 10 False · 11 Nova · 12 draw ·
 13 headphones · 14 Market · 15 40 · 16 0173 295 841 · 17 goals · 18 screens · 19 sport
+
+------------------------------------------------------------------------
+
+# Step 19 --- Behind the Scenes of a Movie
+
+**Target:** 4 minutes \| **Format:** Film industry interview \|
+**Questions:** 20
+
+## Audio transcript
+
+**Presenter:** Welcome to Film Makers! Today I'm talking to a production
+assistant, Sam Turner. Sam, could you spell your surname?
+
+**Sam:** Sure. Turner. That's T-U-R-N-E-R.
+
+**Presenter:** So, what does a production assistant do?
+
+**Sam:** I help the film team organise the daily work. I prepare
+schedules, check the equipment and help the actors find the right
+places. It's busy, because so many people work together.
+
+**Presenter:** What film are you working on?
+
+**Sam:** A family adventure film called The Hidden Garden. It's about two
+children who find a strange garden near their grandmother's house.
+
+**Presenter:** Where are you filming?
+
+**Sam:** Most scenes are filmed in a small village in the hills, about
+an hour from the city. We film the indoor scenes in a studio.
+
+**Presenter:** How long does filming take?
+
+**Sam:** About twelve weeks. After that, the editors work on the film for
+several months. They choose the best scenes and add music.
+
+**Presenter:** How big is the team?
+
+**Sam:** About forty-five people: the director, camera operators,
+actors, costume designers and sound assistants.
+
+**Presenter:** Is there an animal in the film?
+
+**Sam:** Yes, a small dog called Biscuit. Biscuit. That's
+B-I-S-C-U-I-T. He's very friendly, but sometimes he doesn't follow
+instructions, so we take a short break and try again.
+
+**Presenter:** When can we see the film?
+
+**Sam:** It comes to cinemas on the eighteenth of December.
+
+**Presenter:** What's the hardest part of your job?
+
+**Sam:** The weather! If it rains during an outdoor scene, we change the
+plan and film an indoor scene instead.
+
+**Presenter:** How can young people learn more about film jobs?
+
+**Sam:** Our studio runs free workshops for teenagers. You can call the
+studio on oh one two six, five eight three, nine four seven.
+
+**Presenter:** Oh one two six, five eight three, nine four seven?
+
+**Sam:** Yes, that's right.
+
+**Presenter:** Any advice for someone who wants to work in films?
+
+**Sam:** Be organised, communicate clearly and always be ready to learn.
+There are many jobs behind the camera, not only acting.
+
+## Questions
+
+### 1--4. Complete the notes. Write ONE word or A NUMBER.
+
+1.  Sam's surname: \_\_\_\_\_ (spelled)
+2.  Sam prepares \_\_\_\_\_.
+3.  He checks the \_\_\_\_\_.
+4.  He helps the actors find the right \_\_\_\_\_.
+
+### 5--8. Choose the correct answer.
+
+5.  What is the film about? A) A football team B) Two children who find
+    a garden C) A school trip
+6.  Where are most scenes filmed? A) In a big city B) By the sea C) In a
+    small village
+7.  How long does filming take? A) About two weeks B) About twelve weeks
+    C) About twenty weeks
+8.  What do the editors do? A) Write the story B) Make the costumes C)
+    Choose the best scenes and add music
+
+### 9--11. True or False?
+
+9.  The film team has about forty-five people.
+10. The team includes costume designers.
+11. There is a cat in the film.
+
+### 12--20. Complete the notes. Write ONE word or A NUMBER.
+
+12. The dog's name: \_\_\_\_\_ (spelled)
+13. When the dog doesn't follow instructions, they take a short \_\_\_\_\_.
+14. The film comes to cinemas on the \_\_\_\_\_ of December.
+15. If it rains, they film an \_\_\_\_\_ scene instead.
+16. The studio runs free \_\_\_\_\_ for teenagers.
+17. The studio's phone number: \_\_\_\_\_ (spelled number)
+18. Be organised and communicate \_\_\_\_\_.
+19. Always be ready to \_\_\_\_\_.
+20. There are many jobs behind the \_\_\_\_\_.
+
+## Answers
+
+1 Turner · 2 schedules · 3 equipment · 4 places · 5 B · 6 C · 7 B · 8 C · 9 True · 10 True · 11 False · 12 Biscuit ·
+13 break · 14 18th · 15 indoor · 16 workshops · 17 0126 583 947 · 18 clearly · 19 learn · 20 camera

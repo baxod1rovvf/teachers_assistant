@@ -3725,335 +3725,203 @@
  {
   "src": "audio/skills/listen-step-19.mp3",
   "title": "Behind the Scenes of a Movie",
+  "engine": "omnivoice",
+  "voices": {
+   "af_ov_adviser": "female, middle-aged, moderate pitch",
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   }
+  },
   "lines": [
    [
-    "am_michael",
-    "Welcome to Film Makers.",
+    "af_ov_adviser",
+    "Welcome to Film Makers!",
     0.3
    ],
    [
-    "am_michael",
-    "Today we're speaking to a production assistant called Sophie Turner.",
+    "af_ov_adviser",
+    "Today I'm talking to a production assistant, Sam Turner.",
     0.3
    ],
    [
-    "am_michael",
-    "Sophie.",
+    "af_ov_adviser",
+    "Sam, could you spell your surname?",
+    0.4
+   ],
+   [
+    "am_ov_energetic",
+    "Sure. Turner.",
     0.3
    ],
    [
-    "am_michael",
-    "S. O. P. H. I. E.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "And Turner.",
-    0.3
-   ],
-   [
-    "am_michael",
+    "am_ov_energetic",
     "T. U. R. N. E. R.",
+    0.6
+   ],
+   [
+    "af_ov_adviser",
+    "So, what does a production assistant do?",
     0.4
    ],
    [
-    "am_michael",
-    "What does a production assistant do?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "I help the film team organise daily work.",
+    "am_ov_energetic",
+    "I help the film team organise the daily work.",
     0.3
    ],
    [
-    "af_heart",
-    "I prepare schedules, check equipment, help actors find the correct places and communicate with different departments.",
+    "am_ov_energetic",
+    "I prepare schedules, check the equipment and help the actors find the right places.",
     0.3
    ],
    [
-    "af_heart",
-    "It's busy because many people work together.",
+    "am_ov_energetic",
+    "It's busy, because so many people work together.",
     0.4
    ],
    [
-    "am_michael",
+    "af_ov_adviser",
     "What film are you working on?",
     0.4
    ],
    [
-    "af_heart",
-    "A family adventure film called The Secret Garden.",
+    "am_ov_energetic",
+    "A family adventure film called The Hidden Garden.",
     0.3
    ],
    [
-    "af_heart",
-    "The Secret.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "T. H. E.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "S. E. C. R. E. T.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Garden.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "G. A. R. D. E. N.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "It's about two children who discover an unusual garden near their grandmother's house.",
+    "am_ov_energetic",
+    "It's about two children who find a strange garden near their grandmother's house.",
     0.4
    ],
    [
-    "am_michael",
+    "af_ov_adviser",
     "Where are you filming?",
     0.4
    ],
    [
-    "af_heart",
-    "Most scenes are filmed in Willow Creek.",
+    "am_ov_energetic",
+    "Most scenes are filmed in a small village in the hills, about an hour from the city.",
     0.3
    ],
    [
-    "af_heart",
-    "Willow.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "W. I. L. L. O. W.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Creek.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "C. R. E. E. K.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "It's about forty kilometres from the nearest large city.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "We also film indoor scenes at Studio North.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Studio.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "S. T. U. D. I. O.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And North.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "N. O. R. T. H.",
+    "am_ov_energetic",
+    "We film the indoor scenes in a studio.",
     0.4
    ],
    [
-    "am_michael",
+    "af_ov_adviser",
     "How long does filming take?",
     0.4
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "About twelve weeks.",
     0.3
    ],
    [
-    "af_heart",
-    "After that, editors work on the film for several months.",
+    "am_ov_energetic",
+    "After that, the editors work on the film for several months.",
     0.3
    ],
    [
-    "af_heart",
-    "They choose the best scenes, add music, improve the sound and prepare the final version.",
+    "am_ov_energetic",
+    "They choose the best scenes and add music.",
     0.4
    ],
    [
-    "am_michael",
-    "How many people are in the team?",
+    "af_ov_adviser",
+    "How big is the team?",
     0.4
    ],
    [
-    "af_heart",
-    "About forty-five people, including the director, camera operators, actors, costume designers and sound assistants.",
+    "am_ov_energetic",
+    "About forty-five people: the director, camera operators, actors, costume designers and sound assistants.",
     0.4
    ],
    [
-    "am_michael",
-    "Tell us about the main actors.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "The main character is played by Oliver James.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Oliver.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "O. L. I. V. E. R.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And James.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "J. A. M. E. S.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "He plays a boy called Leo.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Leo.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "L. E. O.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "His sister is played by Hannah Price.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Hannah.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "H. A. N. N. A. H.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Price.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "P. R. I. C. E.",
-    0.4
-   ],
-   [
-    "am_michael",
+    "af_ov_adviser",
     "Is there an animal in the film?",
     0.4
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "Yes, a small dog called Biscuit.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "Biscuit.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "B. I. S. C. U. I. T.",
-    0.3
+    0.6
    ],
    [
-    "af_heart",
-    "He's friendly, but sometimes he doesn't follow instructions.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "We take a short break and try again.",
+    "am_ov_energetic",
+    "He's very friendly, but sometimes he doesn't follow instructions, so we take a short break and try again.",
     0.4
    ],
    [
-    "am_michael",
-    "When will the film be released?",
+    "af_ov_adviser",
+    "When can we see the film?",
     0.4
    ],
    [
-    "af_heart",
-    "The cinema release is planned for the eighteenth of December.",
+    "am_ov_energetic",
+    "It comes to cinemas on the eighteenth of December.",
+    0.4
+   ],
+   [
+    "af_ov_adviser",
+    "What's the hardest part of your job?",
+    0.4
+   ],
+   [
+    "am_ov_energetic",
+    "The weather! If it rains during an outdoor scene, we change the plan and film an indoor scene instead.",
+    0.4
+   ],
+   [
+    "af_ov_adviser",
+    "How can young people learn more about film jobs?",
+    0.4
+   ],
+   [
+    "am_ov_energetic",
+    "Our studio runs free workshops for teenagers.",
     0.3
    ],
    [
-    "af_heart",
-    "The first trailer will come out on the fifth of October.",
+    "am_ov_energetic",
+    "You can call the studio on oh one two six, five eight three, nine four seven.",
+    0.4
+   ],
+   [
+    "af_ov_adviser",
+    "Oh one two six, five eight three, nine four seven?",
     0.3
    ],
    [
-    "af_heart",
-    "The film will last about one hour and forty minutes.",
+    "am_ov_energetic",
+    "Yes, that's right.",
     0.4
    ],
    [
-    "am_michael",
-    "What is the most difficult part of your job?",
+    "af_ov_adviser",
+    "Any advice for someone who wants to work in films?",
     0.4
    ],
    [
-    "af_heart",
-    "Keeping everything organised when the weather changes.",
+    "am_ov_energetic",
+    "Be organised, communicate clearly and always be ready to learn.",
     0.3
    ],
    [
-    "af_heart",
-    "If it rains during an outdoor scene, we may change the schedule and record an indoor scene instead.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "What advice would you give someone interested in films?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Be organised, communicate clearly and be ready to learn.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "There are many jobs behind the camera, not only acting and directing.",
+    "am_ov_energetic",
+    "There are many jobs behind the camera, not only acting.",
     0.4
    ]
   ]
