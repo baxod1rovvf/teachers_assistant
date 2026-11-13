@@ -50,18 +50,7 @@ test('the "students finished exercises" note leaves the course exercises out', a
   expect(groups).toEqual([['Bobur Test', ['SPL111']]]);
 });
 
-test('writing: Loom\'s own rules catch "I playing", "he go", "I goes" — and leave right sentences alone', async ({ page, context }) => {
-  await prepare(context);
-  await page.goto('/skill.html?s=writing&st=b5&preview=1');
-  const found = await page.evaluate(() => {
-    const t = 'In my free time I playing volleybal with my friends. He go to school. Does he go home? I saw you playing. ' +
-      'I goes there. They watching TV. She can swim. I sing well. The morning is nice. My brother like it.';
-    return skBasicGrammar(t).map(m => [t.slice(m.offset, m.offset + m.length), m.replacements[0]]);
-  });
-  expect(found).toEqual([['I playing', 'I am playing'], ['He go', 'He goes'], ['I goes', 'I go'], ['They watching', 'They are watching']]);
-});
-
-test('teacher: a writing sent before the new rules shows "I playing" too, a missing space shows its word, and why the AI didn\'t run', async ({ page, context }) => {
+test('teacher: a missing space shows its word, and why it waits for the AI', async ({ page, context }) => {
   const now = Date.now();
   const text = 'Hello my name is Yusuf.I am a student. In my free time I playing volleybal with my friends.';
   const item = { uid: 'skwriting', code: 'WRT901', typeLabel: 'Writing course', groupId: 'g1', skill: 'writing', title: 'Step 5 — writing', date: new Date().toISOString() };
@@ -79,11 +68,10 @@ test('teacher: a writing sent before the new rules shows "I playing" too, a miss
   await page.evaluate(() => showExerciseResults('skwriting'));
   await page.locator('.results-table tbody tr', { hasText: 'Alice Test' }).getByRole('button', { name: '👁 View' }).click();
   const modal = page.locator('.sk-wv');
-  await expect(modal.locator('.sk-wv-noai')).toContainText("The AI check didn't run when this was sent (the AI could not be reached)");
+  await expect(modal.locator('.sk-wv-wait')).toContainText('Waiting for the AI check');   // since 2026-11-12 every unchecked writing waits for the helper
   const items = modal.locator('.sk-wv-mistakes li');
-  await expect(items).toHaveCount(3);
+  await expect(items).toHaveCount(2);
   await expect(items.nth(0)).toContainText('Yusuf.I → Yusuf. I');
-  await expect(items.nth(1)).toContainText('I playing → I am playing');
-  await expect(items.nth(2)).toContainText('volleybal → volleyball');
-  await expect(modal.locator('.sk-wv-text mark')).toHaveCount(3);
+  await expect(items.nth(1)).toContainText('volleybal → volleyball');
+  await expect(modal.locator('.sk-wv-text mark')).toHaveCount(2);
 });

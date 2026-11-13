@@ -52,15 +52,30 @@ test('asked words are found in other forms too, and the 9-point score takes off 
   expect([r.full, r.short, r.long, r.silly]).toEqual([9, 8.5, 8, 3]);
 });
 
-test('student: the asked words tick as they are used; after Submit the AI feedback comes in the teacher\'s order', async ({ page, context }) => {
-  const calls = [];
-  await prepare(context);
-  await fakeAi(context, { calls });
-  const errors = watchErrors(page);
-  await page.goto('/skill.html?s=writing&st=b1&c=WRT321');
+const SENT = '✅ Your writing was sent. Your teacher will share your results.';
+async function fakeQueue(context, { fail = false, bodies } = {}) {
+  await context.addInitScript(() => { try { localStorage.setItem('ta_ai_url', 'https://loom-ai.test/'); } catch (e) { /* ignore */ } });
+  await context.route('https://loom-ai.test/**', async route => {
+    if (bodies) bodies.push(JSON.parse(route.request().postData() || '{}'));
+    const h = { 'Access-Control-Allow-Origin': '*' };
+    if (route.request().method() === 'OPTIONS') return route.fulfill({ status: 204, headers: { ...h, 'Access-Control-Allow-Headers': '*' } });
+    if (fail) return route.fulfill({ status: 502, contentType: 'application/json', headers: h, body: JSON.stringify({ error: 'busy' }) });
+    return route.fulfill({ status: 200, contentType: 'application/json', headers: h, body: JSON.stringify({ queued: true }) });
+  });
+}
+const startWriting = async (page, code) => {
+  await page.goto('/skill.html?s=writing&st=b1&c=' + code);
   await page.locator('#studentNameInput').fill('Test Student');
   await page.locator('#skIdInput').fill('10001');
   await page.getByRole('button', { name: /Start/ }).click();
+};
+const writingRecord = page => page.evaluate(() => window.__writes.map(w => window.__fakeDocs.find(d => d.__id === w.id)).find(d => d && d.type === 'Writing course'));
+
+test('student: the asked words tick as they are used', async ({ page, context }) => {
+  await prepare(context);
+  await fakeQueue(context);
+  const errors = watchErrors(page);
+  await startWriting(page, 'WRT321');
   await expect(page.locator('.sk-instruction')).toContainText('Describe a normal day in your life');
   await expect(page.locator('.sk-ask')).toHaveCount(8);
   await expect(page.locator('.sk-ask').first().locator('.sk-uz')).toHaveText("uyg'onmoq");
@@ -69,66 +84,75 @@ test('student: the asked words tick as they are used; after Submit the AI feedba
   await expect(page.locator('#skAskedCount')).toHaveText('8 / 8');
   await page.locator('#skWriteBox').fill('I wake up early.');
   await expect(page.locator('.sk-ask.used')).toHaveCount(1);
-  await page.locator('#skWriteBox').fill(TEXT);
-  await page.getByRole('button', { name: /Submit my writing/ }).click();
-  // 1 score /9 with its parts — the text is 46 words, under 80: −0.5
-  await expect(page.locator('.sk-band')).toContainText('7.5');
-  await expect(page.locator('.sk-band')).toContainText('/ 9');
-  await expect(page.locator('.sk-band')).toContainText('Grammar 2.5/3 · Vocabulary 2/2 · Structure 1.5/2 · Task 2/2 · −0.5 (too short)');
-  // 2 words · 3 grammar · 4 better words · 5 asked words · 6 tips — in this order
-  const cards = page.locator('#skAfter .sk-card h2');
-  await expect(cards).toHaveText(['📏 Word count', '🔍 Grammar', '💡 Better words', '📝 Asked words', '🚀 Next time']);
-  await expect(page.locator('.sk-ai-len')).toContainText('46 words · required 80–100');
-  await expect(page.locator('.sk-ai-mistakes li')).toHaveCount(1);
-  await expect(page.locator('.sk-ai-mistakes li')).toContainText('I go to school at eight.');
-  await expect(page.locator('.sk-better li')).toContainText('excellent');
-  await expect(page.locator('.sk-asked-result .sk-ask.used')).toHaveCount(8);
-  await expect(page.locator('.sk-tips li')).toHaveCount(3);
-  await expect(page.locator('.sk-send')).toContainText('Saved ✅');
-  // what the helper got, and what the teacher gets
-  expect(calls[0]).toMatchObject({ job: 'writing', topic: 'My Daily Routine', minWords: 80, maxWords: 100, words: ['wake up', 'get dressed', 'have breakfast', 'usually', 'after school', 'do homework', 'in the evening', 'go to bed'] });
-  const rec = await page.evaluate(() => window.__writes.map(w => window.__fakeDocs.find(d => d.__id === w.id)).find(d => d && d.type === 'Writing course'));
-  expect(rec).toMatchObject({ aiChecked: true, band: 7.5, words: 46, ai: { scores: AI.scores }, asked: { missing: [] } });
   expect(errors).toEqual([]);
 });
 
-test('student: when the AI is busy, the writing is still checked the simple way and sent, marked "AI didn\'t run"', async ({ page, context }) => {
+test('student: Submit sends the writing to the AI\'s waiting list and shows only "sent"', async ({ page, context }) => {
+  const bodies = [];
+  let lt = 0;
   await prepare(context);
-  await fakeAi(context, { fail: true });
-  await page.goto('/skill.html?s=writing&st=b1&c=WRT322');
-  await page.locator('#studentNameInput').fill('Test Student');
-  await page.locator('#skIdInput').fill('10001');
-  await page.getByRole('button', { name: /Start/ }).click();
+  await fakeQueue(context, { bodies });
+  await context.route('**/api.languagetool.org/**', route => { lt++; route.fulfill({ status: 200, contentType: 'application/json', body: '{"matches":[]}' }); });
+  const errors = watchErrors(page);
+  await startWriting(page, 'WRT323');
   await page.locator('#skWriteBox').fill(TEXT);
   await page.getByRole('button', { name: /Submit my writing/ }).click();
-  await expect(page.locator('.sk-ai-note')).toContainText("today's free limit is used up");
-  await expect(page.locator('.sk-asked-card')).toBeVisible();
+  await expect(page.locator('.sk-sent-card')).toHaveText(SENT);
   await expect(page.locator('.sk-send')).toContainText('Saved ✅');
-  const rec = await page.evaluate(() => window.__writes.map(w => window.__fakeDocs.find(d => d.__id === w.id)).find(d => d && d.type === 'Writing course'));
-  expect(rec.aiChecked).toBe(false);
-  expect(rec.ai).toBeUndefined();
+  await expect(page.locator('.sk-band')).toHaveCount(0);
+  await expect(page.locator('.sk-ai-mistakes')).toHaveCount(0);
+  await expect(page.locator('#skGrammar')).toHaveCount(0);
+  const rec = await writingRecord(page);
+  await expect.poll(() => bodies.length).toBe(1);   // sent once the save is confirmed (the helper reads the saved record)
+  expect(bodies[0]).toMatchObject({ job: 'queue', id: rec.__id, topic: 'My Daily Routine', minWords: 80, maxWords: 100,
+    words: ['wake up', 'get dressed', 'have breakfast', 'usually', 'after school', 'do homework', 'in the evening', 'go to bed'] });
+  expect(bodies[0].text).toBe(TEXT);
+  expect(rec.band).toBeUndefined();
+  expect(rec.aiQueued).toBeUndefined();
+  expect(rec).toMatchObject({ words: 46, asked: { missing: [] } });
+  expect(lt).toBe(0);
+  expect(errors).toEqual([]);
 });
 
-test('teacher: a writing the AI didn\'t check gets "🤖 Check with AI" — its score becomes the teacher\'s mark', async ({ page, context }) => {
-  const now = Date.now();
-  const item = { uid: 'skwriting', code: 'WRT555', typeLabel: 'Writing course', groupId: 'g1', skill: 'writing', title: 'Step 1 — writing', date: new Date().toISOString() };
-  await prepare(context, {
-    docs: [{ __id: 'w9', v: 1, code: 'WRT555', type: 'Writing course', skill: 'writing', step: 'b1', title: 'Step 1 · Hello! — Writing', name: 'Alice Test', studentId: '10001',
-      text: TEXT, words: 47, minWords: 80, maxWords: 100, mistakes: 0, mistakeList: [], grammarChecked: false, aiChecked: false, band: 5,
-      asked: { used: ['wake up'], missing: ['go to bed'] }, timeSeconds: 600, timeDisplay: '10:00', date: new Date(now - 60000).toISOString(), submittedAt: new Date(now - 60000).toISOString() }],
-    storage: { ta_recent_exercises: JSON.stringify([item]), ta_skills_links: JSON.stringify({ 'g1|writing|b1': { code: 'WRT555' } }) }
-  });
-  await fakeAi(context);
-  await page.goto('/results.html');
-  await page.waitForFunction(() => (window.__allResults || []).length >= 1, null, { timeout: 10000 });
-  await hideNotices(page);
-  await page.evaluate(() => showExerciseResults('skwriting'));
-  await page.locator('.results-table tbody tr', { hasText: 'Alice Test' }).getByRole('button', { name: '👁 View' }).click();
-  const modal = page.locator('.sk-wv');
-  await expect(modal.locator('.sk-wv-noai')).toContainText("The AI check didn't run");
-  await modal.getByRole('button', { name: '🤖 Check with AI' }).click();
-  await expect(modal.locator('.sk-wv-parts')).toContainText('Grammar 2.5/3');
-  await expect(modal.locator('#skWvBand')).toHaveValue('7.5');
-  await expect(modal).toContainText('(your mark)');
-  expect(await page.evaluate(() => [JSON.parse(localStorage.getItem('ta_skills_marks'))['WRT555|10001'], !!JSON.parse(localStorage.getItem('ta_skills_ai'))['WRT555|10001']])).toEqual([7.5, true]);
+test('student: the helper down → the writing is still saved and shown as sent', async ({ page, context }) => {
+  await prepare(context);
+  await fakeQueue(context, { fail: true });
+  await startWriting(page, 'WRT322');
+  await page.locator('#skWriteBox').fill(TEXT);
+  await page.getByRole('button', { name: /Submit my writing/ }).click();
+  await expect(page.locator('.sk-send')).toContainText('Saved ✅');
+  await expect(page.locator('.sk-sent-card')).toHaveText(SENT);
+  const rec = await writingRecord(page);
+  expect(rec.aiQueued).toBeUndefined();
+  expect(rec.band).toBeUndefined();
 });
+
+test('student: the "sent" card waits for the save — failing saves show Send again and no card, then it appears', async ({ page, context }) => {
+  const bodies = [];
+  await prepare(context);
+  await fakeQueue(context, { bodies });
+  await startWriting(page, 'WRT325');
+  await page.locator('#skWriteBox').fill(TEXT);
+  await page.evaluate(() => { window.__failWrites = 3; });
+  await page.getByRole('button', { name: /Submit my writing/ }).click();
+  await expect(page.locator('.sk-send')).toContainText('Not sent yet — press Send again', { timeout: 15000 });
+  await expect(page.locator('.sk-sent-card')).toHaveCount(0);
+  expect(bodies.filter(b => b.job === 'queue')).toHaveLength(0);   // not saved → not on the waiting list yet
+  await page.getByRole('button', { name: /Send again/ }).click();
+  await expect(page.locator('.sk-send')).toContainText('Saved ✅');
+  await expect(page.locator('.sk-sent-card')).toHaveText(SENT);
+  await expect.poll(() => bodies.filter(b => b.job === 'queue').length).toBe(1);
+});
+
+test('"already done" for a writing shows the words, no band', async ({ page, context }) => {
+  await prepare(context);
+  await fakeQueue(context);
+  await startWriting(page, 'WRT324');
+  await page.locator('#skWriteBox').fill(TEXT);
+  await page.getByRole('button', { name: /Submit my writing/ }).click();
+  await expect(page.locator('.sk-send')).toContainText('Saved ✅');
+  await startWriting(page, 'WRT324');
+  await expect(page.locator('.sk-done-score')).toContainText('46 words');
+  await expect(page.locator('.sk-done-score')).not.toContainText('band');
+});
+

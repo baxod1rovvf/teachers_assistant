@@ -349,7 +349,8 @@ function skStepPageHtml(lv, g) {
   const meta = skTableMeta(lv.id, g);
   const results = '<section class="sk-results" aria-label="Results">' +
     '<div class="sk-results-head"><h3>🏆 Results' + (g ? ' — <span translate="no">' + escapeForHtml(g.name) + '</span>' : '') + '</h3>' +
-    (rows.length ? '<button type="button" class="mini-btn solid" onclick="skDownloadTable()">⬇️ Download picture</button>' : '') + '</div>' +
+    (rows.length ? '<button type="button" class="mini-btn solid" onclick="skDownloadTable()">⬇️ Download picture</button>' +
+      '<button type="button" class="mini-btn solid" onclick="skShareResults()">🔗 Share results link</button>' : '') + '</div>' +
     (rows.length ? skTableHtml(rows, meta, { writingLinks: true }) + '<p class="sk-hint sk-results-note">Ranked by Overall. Press a ✍️ Writing band to read the text or change the band.</p>'
       : '<div class="sk-results-empty"><span class="sk-results-empty-emoji">🌱</span><div><b>No results yet</b><span>' +
         (g ? 'When students in <span translate="no">' + escapeForHtml(g.name) + '</span> finish this step\'s Listening, Reading or Writing, their bands show here, ranked.'
@@ -533,12 +534,17 @@ function skTableRows(step, groupId, resultsMap, links) {
       const st = rosterStudentForResult(r, idx);
       if (!st || st.group !== g.id) return;
       const band = skResultBand(skill, r);
-      if (typeof band !== 'number') return;
+      const waits = skill === 'writing' && typeof band !== 'number' && skWritingPending(r);   // waiting for the AI: ⏳
+      if (typeof band !== 'number' && !waits) return;
       const key = String(st.id).trim().toLowerCase();
       const row = students[key] || (students[key] = { name: st.name, studentId: st.id, listening: null, reading: null, writing: null });
       const cur = row[skill];
-      if (!cur || band > cur.band || (band === cur.band && String(r.date || '') > cur.date)) {
-        row[skill] = { band: band, raw: skResultRaw(skill, r), date: String(r.date || '') };
+      // a checked writing beats a waiting one; among the same kind the best band (the latest when equal)
+      const better = !cur || (cur.pending && !waits) || (!cur.pending && !waits && (band > cur.band || (band === cur.band && String(r.date || '') > cur.date)))
+        || (cur.pending && waits && String(r.date || '') > cur.date);
+      if (better) {
+        row[skill] = { band: waits ? null : band, pending: waits || undefined, raw: skResultRaw(skill, r), date: String(r.date || '') };
+        if (!waits) delete row[skill].pending;
         if (skill === 'writing') Object.defineProperty(row[skill], 'res', { value: r });   // for skViewWriting (not copied out)
       }
     });
@@ -546,7 +552,7 @@ function skTableRows(step, groupId, resultsMap, links) {
   const rows = Object.keys(students).map(k => {
     const row = students[k];
     SK_TABLE_SKILLS.forEach(s => { if (row[s]) delete row[s].date; });
-    row.overall = skOverall(SK_TABLE_SKILLS.map(s => row[s] ? row[s].band : null));
+    row.overall = skOverall(SK_TABLE_SKILLS.map(s => row[s] && typeof row[s].band === 'number' ? row[s].band : null));
     row.cefr = row.overall === null ? '' : skCefr(row.overall);
     return row;
   });
@@ -564,12 +570,14 @@ function skPlaceText(p) { return SK_MEDALS[p - 1] || String(p); }
 function skTableHtml(rows, meta, opts) {
   opts = opts || {};
   const esc = escapeForHtml;
-  const cell = (v, cls) => v
+  const cell = (v, cls) => v && v.pending
+    ? '<div class="' + cls + ' pending" title="Waiting for the AI check"><b>⏳</b><small>' + esc(v.raw) + '</small></div>'
+    : v
     ? '<div class="' + cls + ' ' + skBandColour(v.band) + '"><b>' + v.band + '</b><small>' + esc(v.raw) + '</small></div>'
     : '<div class="' + cls + ' none">—</div>';
   // a writing band opens the student's text (the step page keeps the results in skWritingRes)
   const wcell = (r, i) => r.writing && r.writing.res && opts.writingLinks
-    ? '<button type="button" class="sk-rt-cell sk-rt-wbtn ' + skBandColour(r.writing.band) + '" onclick="skViewWriting(' + i + ')" title="Open ' + esc(r.name) + '\'s writing"><b>' + r.writing.band + '</b><small>' + esc(r.writing.raw) + '</small></button>'
+    ? '<button type="button" class="sk-rt-cell sk-rt-wbtn ' + (r.writing.pending ? 'pending' : skBandColour(r.writing.band)) + '" onclick="skViewWriting(' + i + ')" title="Open ' + esc(r.name) + '\'s writing"><b>' + (r.writing.pending ? '⏳' : r.writing.band) + '</b><small>' + esc(r.writing.raw) + '</small></button>'
     : cell(r.writing, 'sk-rt-cell');
   const avg = skOverall(rows.map(r => r.overall));
   return '<div class="sk-rt">' +
@@ -599,6 +607,55 @@ function skViewWriting(i) {
   const modal = taModal('✍️ Writing', skWritingViewHtml(r), { wide: true, onClose: () => { skWvOpen = null; } });
   skWvOpen = { r: r, modal: modal };
 }
+/* ================= RESULTS AS A LINK (teacher, 2026-11-12) =================
+   "🔗 Share results link": the step's table for this group goes online (taPublishShare, record share-<token>) and its link
+   results-link.html?r=<token> is copied. The token is made once per group + step (ta_skills_shares) so the link never changes;
+   every press puts the newest table online. Places, Overall and CEFR are worked out on the page (skOverall/skCefr), and every
+   writing carries its id, text, asked words and the AI feedback Loom has for it (`ai`, or null) so tapping its band shows the
+   feedback there (js/results-link.js) — the helper's own copy, when it has one, comes first. */
+function skShareData(step, g) {
+  const lv = skStep(step), ctx = skPathCtx(g, [lv]);
+  const rows = skTableRows(lv.id, g.id, ctx.map, ctx.links);
+  const part = v => v && typeof v.band === 'number' ? { band: v.band, raw: v.raw } : null;
+  return { group: g.name, step: lv.id, stepNo: lv.no, theme: lv.theme, sharedAt: new Date().toISOString(),
+    rows: rows.map(r => {
+      const res = r.writing && r.writing.res, mark = res ? skTeacherMark(res) : null, band = res ? skWritingBandFor(res) : null;
+      return { name: r.name, listening: part(r.listening), reading: part(r.reading),
+        writing: res ? { id: res.__id || '', raw: r.writing.raw, text: String(res.text || ''), words: typeof res.words === 'number' ? res.words : 0,
+          minWords: res.minWords || 0, maxWords: res.maxWords || 0, asked: res.asked && (res.asked.used || res.asked.missing) ? { used: res.asked.used || [], missing: res.asked.missing || [] } : null,
+          mark: mark, band: band, ai: skAiFor(res) || null } : null };   // ai: the feedback Loom keeps (an old writing's may be unknown to the helper)
+    }) };
+}
+function skShareToken(g, step) {
+  let all = {};
+  try { all = JSON.parse(localStorage.getItem('ta_skills_shares') || '{}') || {}; } catch (e) { all = {}; }
+  const key = g.id + '|' + step;
+  if (!/^[0-9a-f]{16}$/.test(all[key] || '')) {
+    const b = new Uint8Array(8);
+    crypto.getRandomValues(b);
+    all[key] = Array.from(b, x => x.toString(16).padStart(2, '0')).join('');
+    try { localStorage.setItem('ta_skills_shares', JSON.stringify(all)); } catch (e) { /* ignore */ }
+  }
+  return all[key];
+}
+async function skShareResults() {
+  const g = skGroup();
+  if (!skView.step || !g) return;
+  const lv = skStep(skView.step);
+  if (!lv) return;
+  if (typeof window.taPublishShare !== 'function') { showToast('⚠️ The database isn\'t ready yet. Try again in a moment.'); return; }
+  const token = skShareToken(g, lv.id);
+  const base = window.skAppUrl || (/^https:/.test(TA_APP_URL) ? TA_APP_URL : '');
+  const url = base + 'results-link.html?r=' + token;
+  const ok = await window.taPublishShare(token, skShareData(lv.id, g));
+  if (!ok) { showToast('⚠️ The results couldn\'t go online. Check the internet and press Share results link again.'); return; }
+  const msg = '🔗 Link copied — send it to ' + g.name + '. It shows the table as it is now and updates itself while writings are checked.';
+  const show = () => taModal('🔗 The results link', '<input type="text" class="ta-input" readonly value="' + escapeForHtml(url) + '" aria-label="The link">');
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(() => showToast(msg, 'ok'), show);
+  else show();
+}
+window.skShareResults = skShareResults;
+window.skShareData = skShareData;
 function skSlug(s) { return String(s || '').toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'group'; }
 async function skDownloadTable() {
   const g = skGroup();
@@ -672,6 +729,7 @@ async function skDrawTablePng(rows, meta) {
   const drawCell = (v, X, w, sub, strong) => {
     const cy = y + 7, h = ROW_H - 18;
     if (!v) { rr(X, cy, w, h, 14); x.fillStyle = '#F4EEE2'; x.fill(); text('—', X + w / 2, cy + h / 2, '700 22px ' + HEAD_F, '#A99CC4', 'center'); return; }
+    if (v.pending) { rr(X, cy, w, h, 14); x.fillStyle = '#F4EEE2'; x.fill(); text('⏳', X + w / 2, cy + h / 2 - 9, '700 24px ' + HEAD_F, '#A99CC4', 'center'); text(sub, X + w / 2, cy + h / 2 + 16, '700 13px ' + BODY_F, '#A99CC4', 'center'); return; }
     const c = SK_PNG[skBandColour(v.band)];
     if (strong) { rr(X, cy + 3, w, h, 14); x.fillStyle = SK_PNG.line; x.fill(); }
     rr(X, cy, w, h, 14); x.fillStyle = c[0]; x.fill(); x.lineWidth = 2; x.strokeStyle = strong ? SK_PNG.line : c[2]; x.stroke();

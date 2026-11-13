@@ -17,7 +17,7 @@
   var SYNC_KEYS = ['ta_student_groups', 'ta_points_roster', 'ta_weekly_schedule', 'ta_recent_exercises',
     'ta_exercise_html_cache', 'ta_results', 'ta_code_resets', 'ta_active_code', 'ta_points_code',
     'ta_teacher_name', 'ta_avatar', 'ta_lessons_archived', 'ta_sentence_ratings', 'ta_checked_completions', 'ta_punished', 'ta_lessons_ready',
-    'ta_skills_links', 'ta_skills_marks', 'ta_skills_ai'];
+    'ta_skills_links', 'ta_skills_marks', 'ta_skills_ai', 'ta_skills_shares'];
   var SYNC_SET = {};
   SYNC_KEYS.forEach(function (k) { SYNC_SET[k] = true; });
   var SEP = '␟';
@@ -44,7 +44,11 @@
   function saveMeta() { freshMeta(); raw.set(META_KEY, JSON.stringify(meta)); }
   function saveSeen() { raw.set(SEEN_KEY, JSON.stringify(seen)); }
   function getLocal(k) { return raw.get(ns + k); }
-  function setLocal(k, v) { if (v === null || v === undefined) raw.remove(ns + k); else raw.set(ns + k, v); }
+  // writes past the page's own hooks, so the page is told (a store it keeps parsed, e.g. ta_skills_ai, is read again)
+  function setLocal(k, v) {
+    if (v === null || v === undefined) raw.remove(ns + k); else raw.set(ns + k, v);
+    try { if (typeof window.taStoreChanged === 'function') window.taStoreChanged(k); } catch (e) { /* ignore */ }
+  }
 
   /* ---------- status line (in the top bar's profile menu) ---------- */
   var status = { text: '', cls: '' };
