@@ -7,8 +7,9 @@
 # description (VoiceStudio's "Energetic" personality is "young adult, high pitch"; + "male" = Energetic Male), the reference
 # clip is checked by ear, then every line clones that clip, so the voice stays the same from line to line. A voice id starting
 # with "am_" is a man (the transcript tool reads that). Each line is checked by Whisper (ASR_DIR) and made again with another
-# seed until heard right; a spelled word ("B. R. O. O. K. S.") is said "That's B, R, O, O, K, S." slowly, the letters spaced
-# ~1.3 s apart like the Kokoro recordings; a phone number is said digit by digit, slower.
+# seed until heard right; a spelled word ("B. R. O. O. K. S.") is "That's." then every letter made on its own ("B.", checked by
+# ear) ~1.3 s apart like the Kokoro recordings (said in one go, OmniVoice ran six letters into 1.5 s); a phone number is said
+# digit by digit, slower.
 #
 # Setup (outside the project): python3 -m venv ov && ./ov/bin/pip install torch torchaudio "transformers>=5.10" accelerate
 #   pydub numpy soundfile huggingface_hub hf_xet sherpa-onnx ; git clone https://github.com/debpalash/voicestudio
@@ -75,12 +76,22 @@ def heard(audio):
     st = ASR.create_stream(); st.accept_waveform(16000, x); ASR.decode_stream(st)
     return st.result.text
 
-def gen(text, prompt=None, instruct=None, seed=0, speed=None):
+# Every clip is kept (OMNIVOICE_CACHE, default: a folder next to the voicestudio checkout), so a rerun after a small change only
+# makes the lines that changed — a whole recording takes this CPU ~30 minutes.
+import hashlib
+CACHE = os.environ.get('OMNIVOICE_CACHE', os.path.join(os.path.dirname(os.path.abspath(os.environ['OMNIVOICE_SRC'])), 'omnivoice-cache'))
+os.makedirs(CACHE, exist_ok=True)
+def gen(text, prompt=None, instruct=None, seed=0, speed=None, voice=''):
+    key = hashlib.sha1(json.dumps([voice, text, instruct, seed, speed, REF_TEXT]).encode()).hexdigest()
+    f = os.path.join(CACHE, key + '.npy')
+    if os.path.exists(f): return np.load(f)
     kw = dict(text=text, language='English', seed=seed)
     if prompt is not None: kw['voice_clone_prompt'] = prompt
     if instruct: kw['instruct'] = instruct
     if speed: kw['speed'] = speed
-    return model.generate(**kw)[0].squeeze(0).float().numpy()
+    a = model.generate(**kw)[0].squeeze(0).float().numpy()
+    np.save(f, a)
+    return a
 
 def pitch(a):
     """median voice pitch in Hz (a man ~85–180, a woman ~165–255): VoiceStudio's "high pitch" can make a man sound like a
@@ -98,48 +109,60 @@ def voice_prompt(vid, v):
     """design the voice once (checked by ear), then a clone prompt that every line uses"""
     instruct, seed = (v, None) if isinstance(v, str) else (v['instruct'], v.get('seed'))
     for s in ([seed] if seed is not None else range(1, 9)):
-        ref = gen(REF_TEXT, instruct=instruct, seed=s)
+        ref = gen(REF_TEXT, instruct=instruct, seed=s, voice='design')
         h = heard(ref)
         if line_ok(REF_TEXT, h):
             print(f'   voice {vid} ({instruct}): seed {s} ✓, pitch {pitch(ref)} Hz', flush=True)
             sf.write(f'{out_dir}/tmp-voice-{vid}.wav', ref, SR)
-            return model.create_voice_clone_prompt(ref_audio=(torch.from_numpy(ref).unsqueeze(0), SR), ref_text=REF_TEXT)
+            p = model.create_voice_clone_prompt(ref_audio=(torch.from_numpy(ref).unsqueeze(0), SR), ref_text=REF_TEXT)
+            return (p, f'{instruct}|{s}')
         print(f'   voice {vid} seed {s}: heard {h!r}', flush=True)
     raise SystemExit(f'voice {vid}: no clear reference — try other seeds')
 
-def respace(audio, n_letters):
-    """'That's' + each letter on its own, ~1.3 s from one letter to the next (like the Kokoro recordings)"""
-    seg = AudioSegment((np.clip(audio, -1, 1) * 32767).astype(np.int16).tobytes(), frame_rate=SR, sample_width=2, channels=1)
-    parts = detect_nonsilent(seg, min_silence_len=90, silence_thresh=seg.dBFS - 18)
-    if len(parts) != n_letters + 1: return None
-    out = []
-    for k, (a, b) in enumerate(parts):
-        chunk = audio[int(a * SR / 1000):int(b * SR / 1000)]
-        out.append(chunk)
-        if k < len(parts) - 1: out.append(np.zeros(int(SR * (0.9 if k == 0 else max(0.4, 1.3 - len(chunk) / SR))), np.float32))
-    return np.concatenate(out)
+# How a recogniser writes a letter said on its own ("O" → "oh", "Y" → "why", "X" → "ex"…)
+NAMES = {'A': 'a ay eh', 'B': 'b bee be', 'C': 'c see sea', 'D': 'd dee', 'E': 'e ee', 'F': 'f ef', 'G': 'g gee', 'H': 'h aitch',
+         'I': 'i eye aye', 'J': 'j jay', 'K': 'k kay', 'L': 'l el', 'M': 'm em', 'N': 'n en', 'O': 'o oh', 'P': 'p pee pea',
+         'Q': 'q queue cue', 'R': 'r are ar our', 'S': 's ess es', 'T': 't tee tea', 'U': 'u you', 'V': 'v vee', 'W': 'w',
+         'X': 'x ex', 'Y': 'y why', 'Z': 'z zee zed'}
+def trim(a):
+    """the sound without the silence around it"""
+    seg = AudioSegment((np.clip(a, -1, 1) * 32767).astype(np.int16).tobytes(), frame_rate=SR, sample_width=2, channels=1)
+    parts = detect_nonsilent(seg, min_silence_len=60, silence_thresh=seg.dBFS - 20)
+    if not parts: return a
+    return a[max(0, int((parts[0][0] - 20) * SR / 1000)):int((parts[-1][1] + 40) * SR / 1000)]
+
+def one_letter(L, prompt):
+    """one letter said on its own ("B."), checked by ear; "double O" is said as one clip"""
+    p, voice = prompt
+    double = L.startswith('double ')
+    text = ('Double ' + L[-1] if double else L) + '.'
+    first = None
+    for s in range(1, 9):
+        a = trim(gen(text, p, seed=s, voice=voice))
+        if first is None: first = a
+        toks = re.findall(r"[a-z]+", heard(a).lower())
+        if double: toks = [t for t in toks if t != 'double']
+        if toks and toks[0] in NAMES[L[-1]].split() and len(a) < 1.6 * SR: return a
+    print('   ⚠️ letter', L, 'not heard clearly — check by ear', flush=True)
+    return first
 
 def spelled(letters, prompt):
-    want = ''.join(l[-1] * 2 if l.startswith('double') else l for l in letters)
-    text = "That's " + ', '.join(letters) + '.'
-    first = None
-    for s in range(1, 13):
-        a = gen(text, prompt, seed=s, speed=0.7)
-        if first is None: first = a
-        h = heard(a)
-        if letters_of(h) == want:
-            spaced = respace(a, len(letters))
-            print('   ✓ spelling', want, '←', repr(h), '(spaced)' if spaced is not None else '', flush=True)
-            return spaced if spaced is not None else a
-    print('   ⚠️ spelling', want, 'not heard exactly — check by ear', flush=True)
-    return first
+    """like the Kokoro recordings (teacher, 2026-11-04): "That's." on its own, a calm pause, then every letter in full on its
+    own, ~1.3 s from one letter to the next — never run together"""
+    out = [trim(line("That's.", prompt)), np.zeros(int(SR * 0.9), np.float32)]
+    for k, L in enumerate(letters):
+        clip = one_letter(L, prompt)
+        out.append(clip)
+        if k < len(letters) - 1: out.append(np.zeros(int(SR * max(0.45, 1.3 - len(clip) / SR)), np.float32))
+    print('   ✓ spelling', ''.join(L[-1] * (2 if L.startswith('double') else 1) for L in letters), 'letter by letter', flush=True)
+    return np.concatenate(out)
 
 def line(text, prompt):
     phone = bool(PHONE.search(text))
     said = slow_phone(text) if phone else text
     first = None
     for s in range(1, 7):
-        a = gen(said, prompt, seed=s, speed=0.8 if phone else None)
+        a = gen(said, prompt[0], seed=s, speed=0.8 if phone else None, voice=prompt[1])
         if first is None: first = a
         h = heard(a)
         if line_ok(text, h): return a
