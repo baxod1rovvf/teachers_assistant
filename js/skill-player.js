@@ -148,12 +148,52 @@ function markDone(payload) {
     localStorage.setItem(DONE_KEY, JSON.stringify(all));
   } catch (e) { /* private window */ }
 }
+/* Answers that haven't reached the teacher yet (2026-11-13: students had a score to screenshot, but the save had failed or the
+   page was closed while sending — Loom had nothing, and the next part said "Oldingi … tugatilmagan"). Every Submit keeps its
+   answers on this phone (ta_skill_unsent, the page's own key: { <record id>: payload }) until the save is confirmed; whenever a
+   course link is opened they are sent again (skSendKept), so the teacher gets them and the next part opens. Kept 30 days. */
+const KEPT_KEY = 'ta_skill_unsent', KEPT_DAYS = 30;
+function keptAll() { try { return JSON.parse(localStorage.getItem(KEPT_KEY) || '{}') || {}; } catch (e) { return {}; } }
+function keptWrite(all) { try { if (Object.keys(all).length) localStorage.setItem(KEPT_KEY, JSON.stringify(all)); else localStorage.removeItem(KEPT_KEY); } catch (e) { /* private window */ } }
+function keepUnsent(p) {
+  if (SK.preview || !p || !p.__id) return;
+  const all = keptAll();
+  all[p.__id] = p;
+  keptWrite(all);
+}
+function forgetUnsent(id) { const all = keptAll(); if (all[id]) { delete all[id]; keptWrite(all); } }
+function keptFor(code, name, id) {
+  const k = taIdKey(id), nm = String(name || '').trim().toLowerCase();
+  return Object.values(keptAll()).find(p => p && p.code === code &&
+    ((p.studentId && taIdKey(p.studentId) === k) || String(p.name || '').trim().toLowerCase() === nm)) || null;
+}
+async function skSendKept() {
+  if (SK.preview) return;
+  const all = keptAll(), old = Date.now() - KEPT_DAYS * 864e5;
+  for (const id of Object.keys(all)) {
+    const p = all[id];
+    if (!p || !(Date.parse(p.date) > old)) { forgetUnsent(id); continue; }
+    if ((await skSendResult(p)) === 'ok') forgetUnsent(id);
+  }
+}
+window.skSendKept = skSendKept;
+let keptSending = null;   // started when the page opens; Start waits for it (a little) before the checks
+
+/* Finished = the teacher has the answers. Kept answers from this phone are sent first; then the database is asked. A "done"
+   note on this phone alone no longer blocks when the database answers that it has nothing (those answers never arrived —
+   2026-11-13); it is used only when the database can't be asked (no internet). */
 async function skAlreadyDone(name, id) {
   if (SK.preview) return null;
+  const kept = keptFor(SK.code, name, id);
+  if (kept) {
+    const state = await skSendResult(kept);
+    if (state === 'ok') forgetUnsent(kept.__id);
+    return { at: kept.date, summary: doneSummary(kept), unsent: state === 'ok' ? undefined : kept };
+  }
+  let local = null;
   try {
     const all = JSON.parse(localStorage.getItem(DONE_KEY) || '{}') || {};
-    const hit = doneKeys(SK.code, name, id).map(k => all[k]).find(Boolean);
-    if (hit) return hit;
+    local = doneKeys(SK.code, name, id).map(k => all[k]).find(Boolean) || null;
   } catch (e) { /* ignore */ }
   try {
     const { fs, db } = await within(loadFirestore(), 8000);
@@ -167,8 +207,9 @@ async function skAlreadyDone(name, id) {
       const doc = (snap.docs || []).map(d => d.data()).find(r => r && (r.skill === SK.skill || /course$/.test(r.type || '')));
       if (doc) return { at: doc.date, summary: doneSummary(doc) };
     }
+    return null;   // the database has nothing from this student: free to do it (a note on this phone alone doesn't count)
   } catch (e) { console.warn('Skills course: could not check for an earlier try', e); }
-  return null;
+  return local;   // couldn't ask the database: trust this phone
 }
 window.skAlreadyDone = skAlreadyDone;
 
@@ -220,8 +261,19 @@ function showAlreadyDone(level, done) {
     <div class="sk-big-emoji" aria-hidden="true">✅</div>
     <h2>You have already done this ${esc(info.name.toLowerCase())}</h2>
     ${done.summary ? `<p class="sk-done-score">Your result: <b>${esc(done.summary)}</b></p>` : ''}
-    <p>Each exercise can be done only once. Your teacher already has your answers.</p>
+    ${done.unsent ? `<p>Your answers are saved on this phone, but they haven't reached your teacher yet. Check the internet and press Send.</p>
+      <div class="sk-send bad" id="skSend" role="status"><button type="button" class="sk-btn sk-btn-small" id="skSendKept">📤 Send my answers</button></div>`
+      : '<p>Each exercise can be done only once. Your teacher already has your answers.</p>'}
   </section>`;
+  if (!done.unsent) return;
+  const sendKept = async () => {
+    const box = $('#skSend');
+    box.innerHTML = '<span class="sk-send-note">📤 Sending your answers to your teacher…</span>';
+    if ((await skSendResult(done.unsent)) === 'ok') { forgetUnsent(done.unsent.__id); showAlreadyDone(level, { at: done.at, summary: done.summary }); return; }
+    box.innerHTML = '<span class="sk-send-bad">Not sent yet — check the internet</span> <button type="button" class="sk-btn sk-btn-small" id="skSendKept">📤 Send my answers</button>';
+    $('#skSendKept').addEventListener('click', sendKept);
+  };
+  $('#skSendKept').addEventListener('click', sendKept);
 }
 
 /* ---------- the page ---------- */
@@ -314,6 +366,8 @@ function showStart(level, content) {
     }
     SK.name = who.name || name; SK.studentId = id;
     try { localStorage.setItem(NAME_KEY, JSON.stringify({ name, id })); } catch (err) { /* private window */ }
+    // answers this phone still holds (a save that failed) go first, so the part before counts (2026-11-13)
+    if (keptSending) await within(keptSending, 15000).catch(() => {});
     const done = await skAlreadyDone(SK.name, id);   // one try per exercise (2026-11-09)
     if (done) { showAlreadyDone(level, done); return; }
     if (who.prev && (await skPrevDone(who.prev, SK.name, id)) === false) {   // the part before isn't done (2026-11-12)
@@ -458,6 +512,7 @@ function submit(level, content, info) {
   lastPayload.builtAt = lastPayload.date;   // see submitWriting
   lastPayload.__id = skResultId(lastPayload);   // the same record on every try and on "Send again"
   markDone(lastPayload);   // finished: this device won't open it again (one try per exercise)
+  keepUnsent(lastPayload);   // kept on this phone until the save is confirmed (2026-11-13)
   const pct = correct / total;
   const cheer = pct >= 0.8 ? '🌟 Excellent work!' : pct >= 0.6 ? '👏 Well done!' : pct >= 0.4 ? '💪 Good try — keep going!' : '🌱 Keep practising — you can do it!';
   $('#skActions').innerHTML = `<div class="sk-result">
@@ -498,6 +553,7 @@ async function sendNow() {
   if (SK.preview) { setSend('preview'); return; }
   setSend('sending');
   const state = await skSendResult(lastPayload);
+  if (state === 'ok') forgetUnsent(lastPayload.__id);   // the teacher has it
   if (state === 'ok' && lastPayload.skill === 'writing') clearDraft();   // the teacher has it: a reload starts afresh
   setSend(state);
   // once the writing is saved, it goes on the AI helper's waiting list (the helper reads the saved record, so not before);
@@ -694,6 +750,7 @@ async function submitWriting(level, W, timeUp) {
   lastPayload.builtAt = lastPayload.date;
   lastPayload.__id = skResultId(lastPayload);
   markDone(lastPayload);   // finished: this device won't open it again (one try per exercise)
+  keepUnsent(lastPayload);   // kept on this phone until the save is confirmed (2026-11-13)
   $('#skAfter').innerHTML = '';
   queueW = W;   // sendNow puts it on the waiting list once it is saved
   sendNow();
@@ -791,6 +848,8 @@ function boot() {
   if (!level || !info) { showMissing(); return; }
   document.title = `${info.name} · Step ${level.no} — Loom`;
   if (!SK.preview && SK.skill !== 'speaking' && SK.code.length !== 6) { showNoCode(); return; }
+  // any course link: answers this phone still holds (a save that failed) are sent again (2026-11-13)
+  if (!SK.preview && Object.keys(keptAll()).length) keptSending = skSendKept();
   if (SK.skill === 'speaking') {
     if (level.speaking) showSpeaking(level);
     else showComingSoon(level, `Step ${level.no} (${level.theme}) is still being made. Ask your teacher which step to do now.`);
