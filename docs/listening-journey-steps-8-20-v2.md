@@ -542,3 +542,100 @@ and a positive attitude are useful in every job.
 
 1 Foster · 2 station · 3 check · 4 seven · 5 Sunrise · 6 B · 7 A · 8 C · 9 True · 10 False · 11 False · 12 careful ·
 13 licence · 14 0203 768 145 · 15 weekday · 16 things · 17 attitude
+
+------------------------------------------------------------------------
+
+# Step 14 --- Shopping for Clothes
+
+**Target:** 3 minutes \| **Format:** Shop conversation \| **Questions:**
+17
+
+## Audio transcript
+
+**Assistant:** Hello, and welcome! Can I help you?
+
+**Customer:** Yes, please. I'm looking for a present for my brother. I'll
+need a gift label with his name later. It's Oliver. That's O-L-I-V-E-R.
+It's his birthday next week.
+
+**Assistant:** Lovely! Does he like casual or formal clothes?
+
+**Customer:** Casual. He likes simple jackets without bright colours.
+
+**Assistant:** This dark blue jacket is very popular. It's from a
+company called Kestrel. Kestrel. That's K-E-S-T-R-E-L.
+
+**Customer:** It's nice, but it's a bit expensive. Do you have something
+cheaper?
+
+**Assistant:** This grey jacket costs thirty-five dollars. It's lighter,
+and it has two pockets outside and one small pocket inside.
+
+**Customer:** Perfect. He always carries his phone and keys. I'll take
+it. Can I also buy a T-shirt?
+
+**Assistant:** Sure. We have white ones and green ones.
+
+**Customer:** I'll take the green one. What if he doesn't like the
+clothes?
+
+**Assistant:** You can return or exchange them within thirty days, but
+you need the receipt.
+
+**Customer:** OK. Can I pay by card?
+
+**Assistant:** Yes, of course. Would you like a gift bag?
+
+**Customer:** Yes, please.
+
+**Assistant:** And if you ever want to check if we have your size, you
+can call us. Our number is oh one nine eight, two five four, seven three
+six.
+
+**Customer:** Oh one nine eight, two five four, seven three six?
+
+**Assistant:** That's right. We're open every day until eight o'clock.
+
+**Customer:** Great. Please write "Happy birthday! From your sister" on
+the label. And where's the exit?
+
+**Assistant:** Just go past the mirrors and turn left. Have a lovely
+day!
+
+## Questions
+
+### 1--5. Complete the notes. Write ONE word or A NUMBER.
+
+1.  The brother's name: \_\_\_\_\_ (spelled)
+2.  It's the brother's \_\_\_\_\_ next week.
+3.  The brother likes \_\_\_\_\_ clothes.
+4.  He doesn't like bright \_\_\_\_\_.
+5.  The company that makes the dark blue jacket: \_\_\_\_\_ (spelled)
+
+### 6--8. Choose the correct answer.
+
+6.  How much does the grey jacket cost? A) \$25 B) \$35 C) \$45
+7.  How many pockets does the grey jacket have inside? A) One B) Two C)
+    None
+8.  Why does the customer like the pockets? A) Her brother carries his
+    phone and keys B) They are very big C) They have zips
+
+### 9--11. True or False?
+
+9.  The customer buys a white T-shirt.
+10. You can return clothes within ten days.
+11. You need the receipt to return clothes.
+
+### 12--17. Complete the notes. Write ONE word or A NUMBER.
+
+12. The customer pays by \_\_\_\_\_.
+13. She wants a gift \_\_\_\_\_.
+14. The shop's phone number: \_\_\_\_\_ (spelled number)
+15. The shop is open every day until \_\_\_\_\_ o'clock.
+16. The label says: "Happy birthday! From your \_\_\_\_\_."
+17. To find the exit, go past the \_\_\_\_\_ and turn left.
+
+## Answers
+
+1 Oliver · 2 birthday · 3 casual · 4 colours · 5 Kestrel · 6 B · 7 A · 8 A · 9 False · 10 False · 11 True · 12 card ·
+13 bag · 14 0198 254 736 · 15 eight · 16 sister · 17 mirrors

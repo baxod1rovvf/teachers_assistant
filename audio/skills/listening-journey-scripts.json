@@ -2786,229 +2786,175 @@
  {
   "src": "audio/skills/listen-step-14.mp3",
   "title": "Shopping for Clothes",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   },
+   "af_ov_young": {
+    "instruct": "female, young adult, moderate pitch",
+    "seed": 1
+   }
+  },
   "lines": [
    [
-    "af_bella",
-    "Hello!",
-    0.3
-   ],
-   [
-    "af_bella",
-    "Welcome to Style Street.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "Can I help you?",
+    "am_ov_energetic",
+    "Hello, and welcome! Can I help you?",
     0.4
    ],
    [
-    "af_heart",
-    "I'm looking for a jacket for my brother.",
+    "af_ov_young",
+    "Yes, please. I'm looking for a present for my brother.",
     0.3
    ],
    [
-    "af_heart",
-    "His name is Yusuf.",
+    "af_ov_young",
+    "I'll need a gift label with his name later.",
     0.3
    ],
    [
-    "af_heart",
-    "Yusuf.",
+    "af_ov_young",
+    "It's Oliver.",
     0.3
    ],
    [
-    "af_heart",
-    "Y. U. S. U. F.",
-    0.3
+    "af_ov_young",
+    "O. L. I. V. E. R.",
+    0.6
    ],
    [
-    "af_heart",
-    "His birthday is next week.",
+    "af_ov_young",
+    "It's his birthday next week.",
     0.4
    ],
    [
-    "af_bella",
-    "Does he prefer casual or formal clothes?",
+    "am_ov_energetic",
+    "Lovely! Does he like casual or formal clothes?",
     0.4
    ],
    [
-    "af_heart",
-    "Casual clothes.",
+    "af_ov_young",
+    "Casual. He likes simple jackets without bright colours.",
+    0.4
+   ],
+   [
+    "am_ov_energetic",
+    "This dark blue jacket is very popular.",
     0.3
    ],
    [
-    "af_heart",
-    "He likes simple jackets without bright colours.",
-    0.4
-   ],
-   [
-    "af_bella",
-    "This dark blue jacket costs forty-eight dollars.",
+    "am_ov_energetic",
+    "It's from a company called Kestrel.",
     0.3
    ],
    [
-    "af_bella",
-    "We have medium and large sizes.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Could I see the medium one?",
-    0.4
-   ],
-   [
-    "af_bella",
-    "Certainly.",
+    "am_ov_energetic",
+    "Kestrel.",
     0.3
    ],
    [
-    "af_bella",
-    "The changing rooms are at the back, next to the mirrors.",
+    "am_ov_energetic",
+    "K. E. S. T. R. E. L.",
+    0.6
+   ],
+   [
+    "af_ov_young",
+    "It's nice, but it's a bit expensive. Do you have something cheaper?",
     0.4
    ],
    [
-    "af_heart",
-    "It looks good, but it's a little expensive.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Do you have something cheaper?",
-    0.4
-   ],
-   [
-    "af_bella",
+    "am_ov_energetic",
     "This grey jacket costs thirty-five dollars.",
     0.3
    ],
    [
-    "af_bella",
-    "It's lighter and good for spring or autumn.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "It has two outside pockets and one small pocket inside.",
+    "am_ov_energetic",
+    "It's lighter, and it has two pockets outside and one small pocket inside.",
     0.4
    ],
    [
-    "af_heart",
-    "That's useful.",
+    "af_ov_young",
+    "Perfect. He always carries his phone and keys.",
     0.3
    ],
    [
-    "af_heart",
-    "My brother carries his phone and keys.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "I'll take it.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Can I also buy a T-shirt?",
+    "af_ov_young",
+    "I'll take it. Can I also buy a T-shirt?",
     0.4
    ],
    [
-    "af_bella",
-    "Of course.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "We have white and green T-shirts.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "The white one costs twelve dollars, and the green one costs fourteen dollars.",
+    "am_ov_energetic",
+    "Sure. We have white ones and green ones.",
     0.4
    ],
    [
-    "af_heart",
+    "af_ov_young",
     "I'll take the green one.",
     0.3
    ],
    [
-    "af_heart",
-    "What is your return policy?",
+    "af_ov_young",
+    "What if he doesn't like the clothes?",
     0.4
    ],
    [
-    "af_bella",
-    "You can return or exchange clothes within thirty days if you have the receipt and the items are unworn.",
+    "am_ov_energetic",
+    "You can return or exchange them within thirty days, but you need the receipt.",
     0.4
    ],
    [
-    "af_heart",
-    "Can I pay by card?",
+    "af_ov_young",
+    "OK. Can I pay by card?",
     0.4
    ],
    [
-    "af_bella",
-    "Yes.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "Your total is forty-nine dollars.",
+    "am_ov_energetic",
+    "Yes, of course. Would you like a gift bag?",
     0.4
    ],
    [
-    "af_heart",
-    "Here is my card.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Could you put everything in a gift bag?",
+    "af_ov_young",
+    "Yes, please.",
     0.4
    ],
    [
-    "af_bella",
-    "Certainly.",
+    "am_ov_energetic",
+    "And if you ever want to check if we have your size, you can call us.",
     0.3
    ],
    [
-    "af_bella",
-    "Would you like a name on the gift label?",
+    "am_ov_energetic",
+    "Our number is oh one nine eight, two five four, seven three six.",
     0.4
    ],
    [
-    "af_heart",
-    "Yes, please write Yusuf.",
+    "af_ov_young",
+    "Oh one nine eight, two five four, seven three six?",
     0.3
    ],
    [
-    "af_heart",
-    "Y. U. S. U. F.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And write, \"Happy birthday!",
-    0.3
-   ],
-   [
-    "af_heart",
-    "From your sister.\".",
+    "am_ov_energetic",
+    "That's right. We're open every day until eight o'clock.",
     0.4
    ],
    [
-    "af_bella",
-    "No problem.",
+    "af_ov_young",
+    "Great. Please write Happy birthday! From your sister on the label.",
     0.3
    ],
    [
-    "af_bella",
-    "Here you are.",
+    "af_ov_young",
+    "And where's the exit?",
+    0.4
+   ],
+   [
+    "am_ov_energetic",
+    "Just go past the mirrors and turn left.",
     0.3
    ],
    [
-    "af_bella",
+    "am_ov_energetic",
     "Have a lovely day!",
     0.4
    ]

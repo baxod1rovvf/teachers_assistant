@@ -243,29 +243,29 @@
    ["The office is open every _____.", ["weekday"], "open every weekday"],
    ["Lucy's advice: try different _____.", ["things"], "Try different things"],
    ["A positive _____ is useful in every job.", ["attitude"], "positive attitude"]]}]},
-{"no": 14, "speaker": "", "intro": "Listen to a customer buying a birthday present in a clothes shop.",
+{"no": 14, "speaker": "", "inOrder": true, "names": ["Oliver"], "audioV": 2, "intro": "Listen to a customer buying a present in a clothes shop.",
  "sections": [
-  {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["Who is the customer buying clothes for?", ["Her father", "Her brother", "Her friend"], "Her brother", "a jacket for my brother"],
-   ["Which jacket does she choose?", ["The dark blue one", "The black one", "The grey one"], "The grey one", "I'll take it"],
-   ["How many pockets does the grey jacket have?", ["Two", "Three", "Four"], "Three", "two outside pockets and one small pocket inside"],
-   ["What colour is the T-shirt she buys?", ["White", "Green", "Blue"], "Green", "I'll take the green one"]]},
-  {"h": "Spelling and numbers.", "t": "gap", "qs": [
-   ["The brother's name: _____", ["Yusuf"], "Yusuf is Y-U-S-U-F"],
-   ["The grey jacket costs $_____.", ["35", "thirty-five", "35.00"], "costs thirty-five dollars"],
-   ["The green T-shirt costs $_____.", ["14", "fourteen", "14.00"], "green one costs fourteen dollars"],
-   ["Clothes can be returned within _____ days.", ["30", "thirty"], "within thirty days"]]},
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
-   ["The dark blue jacket costs _____ dollars.", ["48", "forty-eight", "forty eight"], "forty-eight dollars"],
-   ["The white T-shirt costs _____ dollars.", ["12", "twelve"], "white one costs twelve dollars"],
-   ["The total bill is _____ dollars.", ["49", "forty-nine", "forty nine"], "total is forty-nine dollars"],
-   ["The customer pays by _____.", ["card"], "Can I pay by card?"]]},
+   ["The brother's name: _____", ["Oliver"], "That's O-L-I-V-E-R"],
+   ["It's the brother's _____ next week.", ["birthday"], "his birthday next week"],
+   ["The brother likes _____ clothes.", ["casual"], "Casual. He likes"],
+   ["He doesn't like bright _____.", ["colours", "colors"], "without bright colours"],
+   ["The company that makes the dark blue jacket: _____", ["Kestrel"], "K-E-S-T-R-E-L"]]},
+  {"h": "Choose the correct answer.", "t": "choose", "qs": [
+   ["How much does the grey jacket cost?", ["$25", "$35", "$45"], "$35", "costs thirty-five dollars"],
+   ["How many pockets does the grey jacket have inside?", ["One", "Two", "None"], "One", "one small pocket inside"],
+   ["Why does the customer like the pockets?", ["Her brother carries his phone and keys", "They are very big", "They have zips"], "Her brother carries his phone and keys", "carries his phone and keys"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["Yusuf prefers formal clothes.", "False", "Casual clothes"],
-   ["The grey jacket has one inside pocket.", "True", "one small pocket inside"],
-   ["The customer buys the white T-shirt.", "False", "I'll take the green one"],
-   ["A receipt is needed to return an item.", "True", "if you have the receipt"],
-   ["The customer asks for a gift bag.", "True", "in a gift bag"]]}]},
+   ["The customer buys a white T-shirt.", "False", "I'll take the green one"],
+   ["You can return clothes within ten days.", "False", "within thirty days"],
+   ["You need the receipt to return clothes.", "True", "you need the receipt"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The customer pays by _____.", ["card"], "pay by card"],
+   ["She wants a gift _____.", ["bag"], "Would you like a gift bag"],
+   ["The shop's phone number: _____", ["0198 254 736"], "Our number is oh one nine eight"],
+   ["The shop is open every day until _____ o'clock.", ["eight", "8"], "until eight o'clock"],
+   ["The label says: \"Happy birthday! From your _____.\"", ["sister"], "From your sister"],
+   ["To find the exit, go past the _____ and turn left.", ["mirrors"], "go past the mirrors"]]}]},
 {"no": 15, "speaker": "", "intro": "Listen to an announcement at a train station and two passengers talking.",
  "sections": [
   {"h": "Choose the correct answer.", "t": "choose", "qs": [

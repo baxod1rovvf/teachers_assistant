@@ -1147,98 +1147,98 @@
   "transcript": [
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Hello! Welcome to Style Street. Can I help you?"
+    "man": true,
+    "text": "Hello, and welcome! Can I help you?"
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "I'm looking for a jacket for my brother. His name is Yusuf. Yusuf is Y-U-S-U-F. His birthday is next week."
+    "text": "Yes, please. I'm looking for a present for my brother. I'll need a gift label with his name later. It's Oliver. That's O-L-I-V-E-R. It's his birthday next week."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Does he prefer casual or formal clothes?"
+    "man": true,
+    "text": "Lovely! Does he like casual or formal clothes?"
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "Casual clothes. He likes simple jackets without bright colours."
+    "text": "Casual. He likes simple jackets without bright colours."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "This dark blue jacket costs forty-eight dollars. We have medium and large sizes."
+    "man": true,
+    "text": "This dark blue jacket is very popular. It's from a company called Kestrel. Kestrel. That's K-E-S-T-R-E-L."
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "Could I see the medium one?"
+    "text": "It's nice, but it's a bit expensive. Do you have something cheaper?"
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Certainly. The changing rooms are at the back, next to the mirrors."
+    "man": true,
+    "text": "This grey jacket costs thirty-five dollars. It's lighter, and it has two pockets outside and one small pocket inside."
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "It looks good, but it's a little expensive. Do you have something cheaper?"
+    "text": "Perfect. He always carries his phone and keys. I'll take it. Can I also buy a T-shirt?"
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "This grey jacket costs thirty-five dollars. It's lighter and good for spring or autumn. It has two outside pockets and one small pocket inside."
+    "man": true,
+    "text": "Sure. We have white ones and green ones."
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "That's useful. My brother carries his phone and keys. I'll take it. Can I also buy a T-shirt?"
+    "text": "I'll take the green one. What if he doesn't like the clothes?"
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Of course. We have white and green T-shirts. The white one costs twelve dollars, and the green one costs fourteen dollars."
+    "man": true,
+    "text": "You can return or exchange them within thirty days, but you need the receipt."
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "I'll take the green one. What is your return policy?"
+    "text": "OK. Can I pay by card?"
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "You can return or exchange clothes within thirty days if you have the receipt and the items are unworn."
+    "man": true,
+    "text": "Yes, of course. Would you like a gift bag?"
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "Can I pay by card?"
+    "text": "Yes, please."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Yes. Your total is forty-nine dollars."
+    "man": true,
+    "text": "And if you ever want to check if we have your size, you can call us. Our number is oh one nine eight, two five four, seven three six."
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "Here is my card. Could you put everything in a gift bag?"
+    "text": "Oh one nine eight, two five four, seven three six?"
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Certainly. Would you like a name on the gift label?"
+    "man": true,
+    "text": "That's right. We're open every day until eight o'clock."
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "Yes, please write Yusuf. That's Y-U-S-U-F. And write, \"Happy birthday! From your sister.\""
+    "text": "Great. Please write \"Happy birthday! From your sister\" on the label. And where's the exit?"
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "No problem. Here you are. Have a lovely day!"
+    "man": true,
+    "text": "Just go past the mirrors and turn left. Have a lovely day!"
    }
   ]
  },
