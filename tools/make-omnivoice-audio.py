@@ -7,9 +7,9 @@
 # description (VoiceStudio's "Energetic" personality is "young adult, high pitch"; + "male" = Energetic Male), the reference
 # clip is checked by ear, then every line clones that clip, so the voice stays the same from line to line. A voice id starting
 # with "am_" is a man (the transcript tool reads that). Each line is checked by Whisper (ASR_DIR) and made again with another
-# seed until heard right; a spelled word ("B. R. O. O. K. S.") is "That's." then every letter made on its own ("B.", checked by
-# ear) ~1.3 s apart like the Kokoro recordings (said in one go, OmniVoice ran six letters into 1.5 s); a phone number is said
-# digit by digit, slower.
+# seed until heard right. The FIRST spelled word ("B. R. O. O. K. S.") is "That's." then every letter made on its own ("B.",
+# checked by ear) ~1.3 s apart like the Kokoro recordings; the SECOND is said in one go, fast ("That's T, O, Y, B, O, X." —
+# the teacher's choice after hearing both, 2026-11-13). A phone number is said digit by digit, slower.
 #
 # Setup (outside the project): python3 -m venv ov && ./ov/bin/pip install torch torchaudio "transformers>=5.10" accelerate
 #   pydub numpy soundfile huggingface_hub hf_xet sherpa-onnx ; git clone https://github.com/debpalash/voicestudio
@@ -147,8 +147,24 @@ def one_letter(L, prompt):
     print('   ⚠️ letter', L, 'not heard clearly — check by ear', flush=True)
     return first
 
+def spelled_fast(letters, prompt):
+    """the second spelled word in a recording (teacher, 2026-11-13, after hearing Step 9: "Brooks should be spelled in fixed
+    mode, then Toybox in fast mode"): the whole spelling in one go, "That's T, O, Y, B, O, X." — checked by ear"""
+    p, voice = prompt
+    want = ''.join(l[-1] * 2 if l.startswith('double') else l for l in letters)
+    text = "That's " + ', '.join(letters) + '.'
+    first = None
+    for s in range(1, 13):
+        a = gen(text, p, seed=s, speed=0.7, voice=voice)
+        if first is None: first = a
+        if letters_of(heard(a)) == want:
+            print('   ✓ spelling', want, 'in one go (fast)', flush=True)
+            return a
+    print('   ⚠️ spelling', want, 'not heard exactly — check by ear', flush=True)
+    return first
+
 def spelled(letters, prompt):
-    """like the Kokoro recordings (teacher, 2026-11-04): "That's." on its own, a calm pause, then every letter in full on its
+    """the first spelled word, like the Kokoro recordings (teacher, 2026-11-04): "That's." on its own, a calm pause, then every letter in full on its
     own, ~1.3 s from one letter to the next — never run together"""
     out = [trim(line("That's.", prompt)), np.zeros(int(SR * 0.9), np.float32)]
     for k, L in enumerate(letters):
@@ -174,12 +190,14 @@ for n, item in enumerate(spec, 1):
     if ONLY and str(n) not in ONLY: continue
     if item.get('engine') != 'omnivoice': continue
     prompts = {vid: voice_prompt(vid, v) for vid, v in item['voices'].items()}
-    parts = []
+    parts, n_spelled = [], 0
     for i, ln in enumerate(item['lines']):
         vid, text = ln[0], ln[1]
         pause = ln[2] if len(ln) > 2 else 0
         if SPELLING.match(text):
-            parts.append(spelled(re.findall(r'(?:double )?[A-Z]', text), prompts[vid]))
+            # the first spelled word slowly, letter by letter; the second in one go (the teacher's choice, Step 9)
+            parts.append((spelled if n_spelled == 0 else spelled_fast)(re.findall(r'(?:double )?[A-Z]', text), prompts[vid]))
+            n_spelled += 1
             parts.append(np.zeros(int(SR * max(1.2, pause)), np.float32))
             continue
         parts.append(line(text, prompts[vid]))
