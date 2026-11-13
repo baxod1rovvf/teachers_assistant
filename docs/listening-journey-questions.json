@@ -314,31 +314,31 @@
    ["Children under twelve can volunteer alone.", "False", "from the age of twelve, with a parent"],
    ["Noah thinks small acts of kindness don't help much.", "False", "small acts of kindness"],
    ["Next week's programme is about horses.", "True", "talking about horses"]]}]},
-{"no": 17, "speaker": "Rachel", "intro": "Listen to a podcast about healthy habits.",
+{"no": 17, "speaker": "Ryan", "inOrder": true, "names": ["Ryan"], "audioV": 2, "intro": "Listen to Ryan's podcast about healthy habits.",
  "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The presenter's surname: _____", ["Moore"], "That's M-O-O-R-E"],
+   ["Many useful healthy habits are _____.", ["simple"], "many useful habits are simple"],
+   ["A regular sleeping _____ helps you feel organised.", ["routine"], "regular sleeping routine"],
+   ["If you wake up at seven, go to bed at about half past _____.", ["ten", "10"], "half past ten"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["What is the podcast called?", ["Healthy World", "Everyday Choices", "Better Living"], "Everyday Choices", "welcome to Everyday Choices"],
-   ["What bedtime does she suggest for someone who wakes up at seven?", ["8:30", "10:30 or 11:00", "Midnight"], "10:30 or 11:00", "ten thirty or eleven"],
-   ["How much water does the presenter's bottle hold?", ["500 ml", "650 ml", "750 ml"], "750 ml", "seven hundred and fifty millilitres"],
-   ["How does Thomas travel to work?", ["By bus", "On foot", "By car"], "On foot", "He walks to work"],
-   ["How long is the study break she talks about?", ["5 minutes", "10 minutes", "25 minutes"], "5 minutes", "five-minute break"]]},
-  {"h": "Spelling and numbers.", "t": "gap", "qs": [
-   ["The presenter's first name: _____", ["Rachel"], "Rachel is R-A-C-H-E-L"],
-   ["The presenter's surname: _____", ["Moore"], "Moore is M-O-O-R-E"],
-   ["The neighbour's first name: _____", ["Thomas"], "Thomas is T-H-O-M-A-S"],
-   ["The listener's town: _____", ["Brookfield"], "Brookfield is B-R-O-O-K-F-I-E-L-D"],
-   ["Thomas's office is _____ minutes from his home.", ["25", "twenty-five", "twenty five"], "twenty-five minutes from his home"]]},
-  {"h": "Complete the sentences. Write ONE word or A NUMBER.", "t": "gap", "qs": [
-   ["Keep a water _____ nearby.", ["bottle"], "keep a bottle nearby"],
-   ["Playing _____ is one way to move more.", ["outside"], "playing outside"],
-   ["Daniel works from nine until _____.", ["5", "five", "5:00", "5 pm", "5 p.m."], "from nine until five"],
-   ["Daniel could walk for _____ minutes after lunch.", ["10", "ten"], "walk for ten minutes"],
-   ["The podcast is called _____ Choices.", ["Everyday"], "Thank you for listening to Everyday Choices"]]},
+   ["What does Ryan suggest for drinking water?", ["Drink only at lunch", "Keep a bottle near you", "Buy expensive water"], "Keep a bottle near you", "keep a bottle near you"],
+   ["What does Ryan suggest for dinner?", ["Pizza", "Eggs and bread", "Soup"], "Soup", "soup for dinner"],
+   ["How does Ryan's neighbour get to work?", ["By bike", "On foot", "By bus"], "On foot", "walks to work every day"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["The presenter says everyone needs expensive equipment to be healthy.", "False", "many useful habits are simple"],
-   ["The presenter recommends eating a variety of foods.", "True", "eating a variety of foods"],
-   ["Thomas drives to work every day.", "False", "He walks to work every day"],
-   ["The presenter suggests changing every habit in one day.", "False", "don't need to change everything in one day"]]}]},
+   ["You must join a sports club to move more.", "False", "don't have to join a sports club"],
+   ["Ryan says you should stretch during study breaks.", "True", "stretch gently"],
+   ["Ryan says spending time with friends can help you relax.", "True", "spending time with friends"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The listener's town: _____", ["Brookfield"], "B-R-O-O-K-F-I-E-L-D"],
+   ["The listener works in an _____.", ["office"], "works in an office"],
+   ["He often feels _____ in the evening.", ["tired"], "feels tired"],
+   ["He could go for a short _____ after lunch.", ["walk"], "short walk after lunch"],
+   ["He could take the _____ instead of the lift.", ["stairs"], "take the stairs"],
+   ["He could cook a simple _____ at home.", ["meal"], "simple meal"],
+   ["The podcast's phone number: _____", ["0152 836 479"], "The number is oh one five two"],
+   ["Choose one or two realistic _____.", ["goals"], "realistic goals"],
+   ["A healthy lifestyle is built through small _____.", ["choices"], "small choices"]]}]},
 {"no": 18, "speaker": "", "intro": "Listen to a school radio programme about technology.",
  "sections": [
   {"h": "Choose the correct answer.", "t": "choose", "qs": [

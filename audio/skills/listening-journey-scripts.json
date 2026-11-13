@@ -3334,251 +3334,198 @@
  {
   "src": "audio/skills/listen-step-17.mp3",
   "title": "Healthy Habits and Daily Life",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   }
+  },
   "lines": [
    [
-    "af_heart",
-    "Hello, and welcome to Everyday Choices, a podcast about simple habits that can make daily life better.",
+    "am_ov_energetic",
+    "Hello, and welcome to Everyday Choices, a podcast about simple habits that make daily life better.",
     0.3
    ],
    [
-    "af_heart",
-    "I'm your presenter, Rachel Moore.",
+    "am_ov_energetic",
+    "I'm your presenter, Ryan Moore.",
     0.3
    ],
    [
-    "af_heart",
-    "Rachel.",
+    "am_ov_energetic",
+    "Moore.",
     0.3
    ],
    [
-    "af_heart",
-    "R. A. C. H. E. L.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Moore.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "M. O. O. R. E.",
-    0.9
+    0.6
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "Today we're talking about healthy habits.",
     0.3
    ],
    [
-    "af_heart",
-    "Some people think a healthy lifestyle requires expensive food, special equipment or lots of free time.",
-    0.3
+    "am_ov_energetic",
+    "Some people think a healthy life needs expensive food or special equipment, but many useful habits are simple.",
+    0.6
    ],
    [
-    "af_heart",
-    "However, many useful habits are simple.",
-    0.9
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "Let's begin with sleep.",
     0.3
    ],
    [
-    "af_heart",
-    "Having a regular sleeping routine can help you feel more organised.",
+    "am_ov_energetic",
+    "A regular sleeping routine helps you feel organised.",
     0.3
    ],
    [
-    "af_heart",
-    "If you wake up at seven, you might choose to go to bed at around ten thirty or eleven.",
-    0.3
+    "am_ov_energetic",
+    "If you wake up at seven, try to go to bed at about half past ten.",
+    0.6
    ],
    [
-    "af_heart",
-    "People need different amounts of sleep, but enough rest is important.",
-    0.9
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "The second habit is drinking water.",
     0.3
    ],
    [
-    "af_heart",
-    "Some people forget to drink during busy days.",
+    "am_ov_energetic",
+    "Some people forget to drink on busy days, so keep a bottle near you.",
     0.3
    ],
    [
-    "af_heart",
-    "One useful idea is to keep a bottle nearby.",
-    0.3
+    "am_ov_energetic",
+    "I fill mine every morning.",
+    0.6
    ],
    [
-    "af_heart",
-    "My bottle holds seven hundred and fifty millilitres.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "I fill it in the morning and take it to work.",
-    0.9
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "Another habit is eating a variety of foods.",
     0.3
    ],
    [
-    "af_heart",
-    "Fruit, vegetables, grains and other foods can all be part of balanced meals.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "You don't need to eat the same thing every day.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "You could have eggs and bread for breakfast, rice with vegetables for lunch, and soup for dinner.",
-    0.9
+    0.6
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "Movement is important too.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
+    "My neighbour walks to work every day.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
     "You don't have to join a sports club.",
     0.3
    ],
    [
-    "af_heart",
-    "Walking, cycling, dancing and playing outside are all ways to move more.",
+    "am_ov_energetic",
+    "Walking, cycling, dancing and playing outside are all good.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "It's also useful to take short breaks when you study.",
     0.3
    ],
    [
-    "af_heart",
-    "My neighbour, Thomas Hill, is a good example.",
+    "am_ov_energetic",
+    "Stand up, stretch gently or walk around.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Rest is important as well.",
     0.3
    ],
    [
-    "af_heart",
-    "Thomas.",
+    "am_ov_energetic",
+    "Reading, listening to music and spending time with friends can help you relax.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Now, here's a message from a listener in Brookfield.",
     0.3
    ],
    [
-    "af_heart",
-    "T. H. O. M. A. S.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Hill.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "H. I. L. L.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "He walks to work every day.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "His office is twenty-five minutes from his home.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "It's also useful to take short breaks when studying.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "If you sit for a long time, stand up, stretch gently or walk around.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Some people study for twenty-five minutes and then take a five-minute break.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "Rest and enjoyable activities matter as well.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Reading, listening to music and spending time with friends can help people relax.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "Now, here's a message from Daniel in Brookfield.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "Brookfield.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "B. R. O. O. K. F. I. E. L. D.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "He works in an office, and he often feels tired in the evening.",
     0.3
    ],
    [
-    "af_heart",
-    "Daniel works from nine until five and often feels tired in the evening.",
+    "am_ov_energetic",
+    "He wants to be more active.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "My suggestion is to start small.",
     0.3
    ],
    [
-    "af_heart",
-    "He wants to become more active.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "My suggestion is to start with a small change.",
+    "am_ov_energetic",
+    "He could go for a short walk after lunch, or take the stairs instead of the lift.",
     0.3
    ],
    [
-    "af_heart",
-    "Daniel could walk for ten minutes after lunch or take the stairs instead of the lift.",
+    "am_ov_energetic",
+    "He could also cook a simple meal at home.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "If you'd like to send us a question, call the podcast line.",
     0.3
    ],
    [
-    "af_heart",
-    "He could also prepare a simple meal at home.",
-    0.9
+    "am_ov_energetic",
+    "The number is oh one five two, eight three six, four seven nine.",
+    0.5
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
+    "That's oh one five two, eight three six, four seven nine.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
     "Remember, you don't need to change everything in one day.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "Choose one or two realistic goals and practise them regularly.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "A healthy lifestyle is built through small choices repeated over time.",
     0.3
    ],
    [
-    "af_heart",
-    "Thank you for listening to Everyday Choices.",
-    0.9
+    "am_ov_energetic",
+    "Thank you for listening!",
+    0.4
    ]
   ]
  },

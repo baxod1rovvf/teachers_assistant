@@ -837,3 +837,100 @@ difference.
 
 1 Reed · 2 dog · 3 collar · 4 water · 5 B · 6 C · 7 B · 8 A · 9 Rocky · 10 corner · 11 playing · 12 April · 13 photo ·
 14 blankets · 15 0207 745 193 · 16 False · 17 False · 18 True
+
+------------------------------------------------------------------------
+
+# Step 17 --- Healthy Habits and Daily Life
+
+**Target:** 3 minutes \| **Format:** Lifestyle podcast \| **Questions:**
+19
+
+## Audio transcript
+
+**Ryan:** Hello, and welcome to Everyday Choices, a podcast about simple
+habits that make daily life better. I'm your presenter, Ryan Moore.
+Moore. That's M-O-O-R-E.
+
+**Ryan:** Today we're talking about healthy habits. Some people think a
+healthy life needs expensive food or special equipment, but many useful
+habits are simple.
+
+**Ryan:** Let's begin with sleep. A regular sleeping routine helps you
+feel organised. If you wake up at seven, try to go to bed at about half
+past ten.
+
+**Ryan:** The second habit is drinking water. Some people forget to
+drink on busy days, so keep a bottle near you. I fill mine every
+morning.
+
+**Ryan:** Another habit is eating a variety of foods. You could have eggs
+and bread for breakfast, rice with vegetables for lunch, and soup for
+dinner.
+
+**Ryan:** Movement is important too. My neighbour walks to work every
+day. You don't have to join a sports club. Walking, cycling, dancing and
+playing outside are all good.
+
+**Ryan:** It's also useful to take short breaks when you study. Stand
+up, stretch gently or walk around.
+
+**Ryan:** Rest is important as well. Reading, listening to music and
+spending time with friends can help you relax.
+
+**Ryan:** Now, here's a message from a listener in Brookfield.
+Brookfield. That's B-R-O-O-K-F-I-E-L-D. He works in an office, and he
+often feels tired in the evening. He wants to be more active.
+
+**Ryan:** My suggestion is to start small. He could go for a short walk
+after lunch, or take the stairs instead of the lift. He could also cook
+a simple meal at home.
+
+**Ryan:** If you'd like to send us a question, call the podcast line. The
+number is oh one five two, eight three six, four seven nine. That's oh
+one five two, eight three six, four seven nine.
+
+**Ryan:** Remember, you don't need to change everything in one day.
+Choose one or two realistic goals and practise them regularly. A healthy
+lifestyle is built through small choices repeated over time. Thank you
+for listening!
+
+## Questions
+
+### 1--4. Complete the notes. Write ONE word or A NUMBER.
+
+1.  The presenter's surname: \_\_\_\_\_ (spelled)
+2.  Many useful healthy habits are \_\_\_\_\_.
+3.  A regular sleeping \_\_\_\_\_ helps you feel organised.
+4.  If you wake up at seven, go to bed at about half past \_\_\_\_\_.
+
+### 5--7. Choose the correct answer.
+
+5.  What does Ryan suggest for drinking water? A) Drink only at lunch
+    B) Keep a bottle near you C) Buy expensive water
+6.  What does Ryan suggest for dinner? A) Pizza B) Eggs and bread C)
+    Soup
+7.  How does Ryan's neighbour get to work? A) By bike B) On foot C) By
+    bus
+
+### 8--10. True or False?
+
+8.  You must join a sports club to move more.
+9.  Ryan says you should stretch during study breaks.
+10. Ryan says spending time with friends can help you relax.
+
+### 11--19. Complete the notes. Write ONE word or A NUMBER.
+
+11. The listener's town: \_\_\_\_\_ (spelled)
+12. The listener works in an \_\_\_\_\_.
+13. He often feels \_\_\_\_\_ in the evening.
+14. He could go for a short \_\_\_\_\_ after lunch.
+15. He could take the \_\_\_\_\_ instead of the lift.
+16. He could cook a simple \_\_\_\_\_ at home.
+17. The podcast's phone number: \_\_\_\_\_ (spelled number)
+18. Choose one or two realistic \_\_\_\_\_.
+19. A healthy lifestyle is built through small \_\_\_\_\_.
+
+## Answers
+
+1 Moore · 2 simple · 3 routine · 4 ten · 5 B · 6 C · 7 B · 8 False · 9 True · 10 True · 11 Brookfield · 12 office ·
+13 tired · 14 walk · 15 stairs · 16 meal · 17 0152 836 479 · 18 goals · 19 choices
