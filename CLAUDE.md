@@ -149,8 +149,10 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
 16. **Student ID typos / shared IDs**: results then don't match the Students list and are
     left out of Statistics, Top 5 and "Didn't do it".
 17. **Reminders and notifications only work while the app is open** (no server to push them).
-21. **Writing's grammar check (LanguageTool, free) allows about 20 checks a minute per connection** — a whole class on one Wi-Fi may see
-    "press Check again" (the text is still sent; the band then uses only the length).
+21. **Writings are checked by the AI helper (since 2026-11-12; the LanguageTool check is gone).** If the helper is down, Google's free
+    daily limit is used up, or the Cloudflare setup (KV `loom-writings` + Cron) isn't done, writings **wait** (never lost) and
+    results tables / results links show ⏳ until it works again. Also: **anyone with a results link can read the writings on it**
+    (the teacher's choice).
 
 ## Automatic tests — run them before every merge
 
@@ -562,7 +564,7 @@ real students' names or results into the repository (it is public).
   (`taSkillLink(skill, stepId, code)` in common.js; an old link's `lv=N` with no `st` opens `e<N>` — `taSkillStepId` turns a number into `e<N>`; speaking has no code, never expires, loads from GitHub Pages not Firebase). Start card (name + ID, any ID
   accepted), the code is checked. Listening: audio + 10 gaps, Submit → ✅/❌, score, 10 useful words, **Analyze >** = transcript with the
   answer lines marked. Reading: text + any number of questions (elementary: 15 — 5 T/F/NG, 5 gaps, 5 a/b/c; types `tfng`, `tf` = True/False for beginner steps, `gap`, `choose`), same flow. Writing: topic + 3 points, timer (submits by
-  itself), word counter, Submit → LanguageTool + better words; the text + the clock's start are kept as the student types
+  itself), word counter, Submit → the writing is saved and put on the AI helper's waiting list (until 2026-11-12: LanguageTool + better words at Submit); the text + the clock's start are kept as the student types
 (`ta_skill_draft|<code>|<stepId>`, `{text, startedAt, id}`, the page's own key; not in preview; opened from an old `lv=N` link, a draft under the old key `…|<N>` is moved to it) so a reload — phones reload background
 tabs — brings them back with the clock going on (time already up → sent at once); cleared once sent. **Speaking is practice only**: topic words, simple questions, a Part 2 card
   with timers — no microphone, nothing sent, no ID screen. One result per Submit: record id from `skResultId`, `setDoc` with timeouts,
@@ -587,7 +589,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
 - **Fairer writing check + one try + forgiving IDs (teacher, 2026-11-09)**: only real mistakes count (`skCountsAsMistake` in
   skill-bands.js — not extra spaces, American/British spelling, or spelling "mistakes" in capitalised words = names; old results
   are filtered the same way when shown, `skWritingMistakes`); each mistake is saved with its position `at` (+ `rule`), and Loom
-  finds older ones as whole words (`skFindMistake` — before, "i" was marked inside "pencils"); `skWritingBand(…, maxWords)`: more words
+  finds older ones as whole words (`skFindMistake` — before, "i" was marked inside "pencils"); `skWritingBand(…, maxWords)` (removed 2026-11-12 — bands now come from the AI, see below): more words
   than asked add half a band (teacher: never lower it for writing more). Old writings keep the band they were sent with (the teacher can Save band). Writing words:
   ~60 at Step 1 → ~200 at Step 18 (±10; minutes ≥ ~7 words a minute). **One try per course exercise**: on Start, `skAlreadyDone`
   checks this device (`ta_skill_done`, set at Submit by `markDone`) and the database (code + studentId, code + name in [typed,
@@ -645,7 +647,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   (after the class list and "already done" checks), `skPrevDone` (skill-player.js) reads that part's results and looks for this
   student (by `taIdKey`, else the listed name); none → `#skStartErr` "⚠️ Oldingi Listening mashq tugatilmagan. Avval Step 5 ·
   Listening mashqini tugating." (Uzbek, the teacher's words); no internet → let in. Links copied before 2026-11-12 have no `prev`
-  until Copy link is pressed again. (3) Writing: Loom's own grammar rules `skBasicGrammar` (skill-bands.js) — "I/he/she/we/they +
+  until Copy link is pressed again. (3) **Replaced 2026-11-12 (the free check, `skBasicGrammar` and `skMergeMatches` are deleted; `aiError` is now shown from the queue):** Writing: Loom's own grammar rules `skBasicGrammar` (skill-bands.js) — "I/he/she/we/they +
   -ing" without am/is/are, "I/you/we/they + goes/has…", "he/she/it + go/play…" (not after does/can/will/to…) — added to the free
   check's list at Submit (`skMergeMatches`) and to older writings when shown (`skWritingMistakes`); a missing-space mistake is shown
   with its word ("Yusuf.I → Yusuf. I", `skMistakeShown`); `aiError` = why the AI check didn't run, shown in the teacher's window.
@@ -657,6 +659,17 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   firebase.js when results change, 5 s debounce) asks the helper `feedback` for every course writing without feedback (60 at a time, each at
   most once per 10 min, in memory) — done → kept, unknown → `queue` (never for empty text), waiting → tries/reason for the writing's window
   (`.sk-wv-wait`, "🤖 Check now" = `skCheckWritingNow`, job `check`, writes **no** mark). `tests/writing-queue.spec.js`.
+- **Writings checked later + results link (teacher, 2026-11-12)**: Submit never waits for a check. The student page saves the writing
+  (no band) and sends it to the helper's waiting list (job `queue`, KV `q:<id>`); the helper's timer (Cron every 5 minutes → `runQueue`,
+  5 writings a run; a Google 429 stops the run; a failure keeps the writing with tries + reason) writes the feedback (KV `f:<id>`). Loom asks
+  `feedback` (`taWritingAiSync`, also every 10 minutes while anything waits) and keeps it in `ta_skills_ai`; a missing one is queued again (safety net).
+  **Results link**: "🔗 Share results link" on a step's page makes a token in `ta_skills_shares` (synced, in the backup) and the record
+  `share-<token>` (`TA_SYNC:SHARE`, delete + create) → `results-link.html?r=<token>` (`js/results-link.js`): live bands from `feedback`, ⏳ while waiting
+  (polls every `__rlPollMs || 60000` ms), tap a writing band → its AI feedback. **Anyone with the link can read the writings on it** (teacher's choice).
+  **Cloudflare, done once by the teacher**: create a KV namespace `loom-writings` and bind it to the worker as `LOOM_KV`; add a Cron Trigger
+  `*/5 * * * *`; paste `tools/ai-worker.js` and Deploy; `/status` must show version `2026-11-12q` and `kv: true` (also `running`, `keySaved`, `waiting`, `jobs`).
+  Limits per IP per minute: queue 30, feedback 60, check 10, chat 8, writing 40. **KV free plan: about 1 000 writes and 1 000 lists a day** (the timer
+  uses 288 lists); busy days can run out → writings just wait. `tests/ai-queue.spec.js`, `tests/results-link.spec.js`.
 - **Step names (teacher, 2026-11-10: "rename them")**: each step's `theme` + `emoji` = its Speaking Journey topic (1 Daily Routine ⏰ …
   20 Weather & Seasons ☀️), so the map matches the four parts; older names in the notes above ("Hello!", "Meeting people"…) are gone.
   Results sent before keep the old name in their `title`.
@@ -668,11 +681,10 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   card on the topic (seconds unchanged). **All 20 done** (Steps 11–20 on 2026-11-09: source `docs/speaking-journey-11-20.json`,
   put in by `node tools/build-speaking.js` — keeps each Part 2's seconds, Steps 19–20 got a Speaking part, 90 s; example sentences
   use no Uzbek names). Since the Listening Journey (2026-11-10) all 20 steps have all four parts. `tests/course-fairness.spec.js`.
-- **Bands** (`js/skill-bands.js`): Listening/Reading = round(correct/total × 40) → IELTS table (19/20 → 8.5, 16/20 → 7.5, 9/20 → 5.5);
+- **Bands** (`js/skill-bands.js`; Writing band: see the AI bullets — the estimate below was used until 2026-11-12): Listening/Reading = round(correct/total × 40) → IELTS table (19/20 → 8.5, 16/20 → 7.5, 9/20 → 5.5);
   Writing estimate = 3 + 3×length (words/min below the minimum, else 1; +0.5 when over the maximum) + 3×max(0, 1 − mistakes per 100 words/10), nearest 0.5, 1–9 (grammar check didn't run → last
   part 1.5; **blank writing = band 1**); Overall = average of the present skills, rounded like IELTS; CEFR from Overall.
-- **LanguageTool** (`https://api.languagetool.org/v2/check`, `en-GB`, free, no key): about 20 checks a minute per connection. A busy or
-  offline check shows "press Check again", the text is still sent, the band then uses only the length.
+- **LanguageTool** — removed 2026-11-12 (it allowed ~20 checks a minute per connection); the AI helper checks writings later.
 - **Recordings**: Kokoro voices `af_heart` (woman, also the narrator) and `am_michael` (man), American accent (teacher, 2026-11-04: the British one dropped its r's — "four" sounded like "faw"); spelled names slow and complete (`spell_slow`, teacher 2026-11-04): "That's." said on its own (before a letter it was clipped), ~0.9 s pause, then each letter as the end of its own sentence "The letter T." cut out with the model's timings (the model file gets a `duration` output — `kokoro-timed.onnx`, needs `pip install onnx`; letters inside a list were said in 0.25 s and sounded cut off, "That's S" sounded like F), ~1.3 s per letter; phone numbers digit by digit, longer pause per group (`slow_phone`); 0.25 s between speakers; `tools/make-course-audio.py … audio/skills 1` remakes only level 1; styled on the teacher's sample exam recording (2026-11-04): speed 0.95, the other speaker reads back numbers/phone numbers ("…?" "Yes, that's right."), a 3.5 s pause to write after each answer (3rd item of a script line); `tools/make-course-audio.py <model folder>
   audio/skills/listening-journey-scripts.json audio/skills` makes `audio/skills/elem-<n>-listening.mp3` (needs ffmpeg; `ASR_DIR` = a sherpa-onnx
   Whisper base.en folder checks every line and remakes it until heard right). Spelled names are said "That's T, H, O…" slowly; write full
