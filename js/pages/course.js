@@ -611,7 +611,8 @@ function skViewWriting(i) {
    "🔗 Share results link": the step's table for this group goes online (taPublishShare, record share-<token>) and its link
    results-link.html?r=<token> is copied. The token is made once per group + step (ta_skills_shares) so the link never changes;
    every press puts the newest table online. Places, Overall and CEFR are worked out on the page (skOverall/skCefr), and every
-   writing carries its id, text and asked words so tapping its band shows the AI feedback there (js/results-link.js). */
+   writing carries its id, text, asked words and the AI feedback Loom has for it (`ai`, or null) so tapping its band shows the
+   feedback there (js/results-link.js) — the helper's own copy, when it has one, comes first. */
 function skShareData(step, g) {
   const lv = skStep(step), ctx = skPathCtx(g, [lv]);
   const rows = skTableRows(lv.id, g.id, ctx.map, ctx.links);
@@ -622,7 +623,7 @@ function skShareData(step, g) {
       return { name: r.name, listening: part(r.listening), reading: part(r.reading),
         writing: res ? { id: res.__id || '', raw: r.writing.raw, text: String(res.text || ''), words: typeof res.words === 'number' ? res.words : 0,
           minWords: res.minWords || 0, maxWords: res.maxWords || 0, asked: res.asked && (res.asked.used || res.asked.missing) ? { used: res.asked.used || [], missing: res.asked.missing || [] } : null,
-          mark: mark, band: band } : null };
+          mark: mark, band: band, ai: skAiFor(res) || null } : null };   // ai: the feedback Loom keeps (an old writing's may be unknown to the helper)
     }) };
 }
 function skShareToken(g, step) {

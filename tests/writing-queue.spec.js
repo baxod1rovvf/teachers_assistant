@@ -103,3 +103,45 @@ test('a waiting writing is asked about again by itself (a poll): once the helper
   expect(bodies.filter(b => b.job === 'feedback').length).toBe(n);   // nothing waits any more → the poll stopped
   expect(errors).toEqual([]);
 });
+
+test('the Course draws quickly with 300 kept feedbacks and 300 writings (the feedback store is read once, not per writing)', async ({ page, context }) => {
+  const N = 300, docs = [], store = {}, roster = [];
+  const big = Object.assign({}, RESULT, { mistakes: Array.from({ length: 12 }, (_, i) => ({ wrong: 'I goes to the school every day number ' + i + '.', right: 'I go to school every day number ' + i + '.', why: 'I + go, and no "the" before school here.' })) });
+  for (let i = 0; i < N; i++) {
+    const id = 'sk_WRT555_' + (20000 + i) + '_1';
+    docs.push(writing(id, String(20000 + i), 'Student ' + i));
+    store[id] = big;
+    roster.push({ id: String(20000 + i), name: 'Student ' + i, group: 'g1' });
+  }
+  const errors = await openStep(page, context, docs, { feedback: {} }, [], { ta_skills_ai: JSON.stringify(store), ta_points_roster: JSON.stringify(roster) });
+  await expect(page.locator('.sk-rt-row')).toHaveCount(N);
+  const ms = await page.evaluate(() => { const t0 = performance.now(); renderCourse(); renderCourse(); return (performance.now() - t0) / 2; });
+  expect(ms).toBeLessThan(150);   // 2026-11-13: ~300 ms when the store was parsed for every writing, ~15 ms read once
+  // still right: a feedback written meanwhile (another tab / sync) is seen once the store is dropped
+  await page.evaluate(() => { const s = JSON.parse(localStorage.getItem('ta_skills_ai')); delete s.sk_WRT555_20000_1; localStorage.setItem('ta_skills_ai', JSON.stringify(s)); window.taStoreChanged('ta_skills_ai'); renderCourse(); });
+  await expect(page.locator('.sk-rt-row', { has: page.locator('.sk-rt-name', { hasText: /^Student 0$/ }) }).locator('.sk-rt-cell').nth(2)).toContainText('⏳');
+  expect(errors).toEqual([]);
+});
+
+test('a blank writing (no text, no mark) counts as band 1, not ⏳ or missing', async ({ page, context }) => {
+  const errors = await openStep(page, context, [writing('sk_WRT555_10002_2', '10002', 'Bobur Test', { text: '', words: 0 })], { feedback: {} }, []);
+  await expect(wcell(page, 'Bobur Test')).toContainText('1');
+  await expect(wcell(page, 'Bobur Test')).not.toContainText('⏳');
+  expect(await page.evaluate(() => skWritingBandFor(window.__allResults.find(r => r.__id === 'sk_WRT555_10002_2')))).toBe(1);
+  expect(errors).toEqual([]);
+});
+
+test('the teacher\'s mark wins over a checked AI band', async ({ page, context }) => {
+  const bodies = [], state = { feedback: {} };
+  const errors = await openStep(page, context, [writing('sk_WRT555_10002_2', '10002', 'Bobur Test')], state, bodies,
+    { ta_skills_marks: JSON.stringify({ 'WRT555|10002': 4 }), ta_skills_ai: JSON.stringify({ sk_WRT555_10002_2: RESULT }) });   // the AI says 8
+  await expect(wcell(page, 'Bobur Test')).toContainText('4');
+  await expect(wcell(page, 'Bobur Test')).not.toContainText('8');
+  await wcell(page, 'Bobur Test').click();
+  await expect(page.locator('.sk-wv-how')).toHaveText('(your mark)');
+  await expect(page.getByRole('button', { name: '↩️ Use the AI\'s band' })).toBeVisible();
+  await page.getByRole('button', { name: '↩️ Use the AI\'s band' }).click();
+  await expect(wcell(page, 'Bobur Test')).toContainText('8');
+  await expect(page.locator('.sk-wv-how')).toHaveText('(AI\'s band)');
+  expect(errors).toEqual([]);
+});

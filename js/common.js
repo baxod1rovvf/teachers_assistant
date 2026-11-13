@@ -1694,7 +1694,7 @@ function viewMazeResult(idx) {
 }
 
 /* ================= SKILLS COURSE: WRITING MARKS =================
-   A Writing course result carries the page's estimated band; the teacher can give their own.
+   A writing's band comes from the AI's check (older writings: the band they were sent with); the teacher can give their own.
    ta_skills_marks = { "<code>|<studentId>": band } (synced, in the backup). The mark is the student's for
    that step + group (every try of it), so the results table and Results agree. */
 const LS_SKILLS_MARKS = 'ta_skills_marks';
@@ -1707,12 +1707,15 @@ function skClampWritingBand(v) { return typeof v === 'number' && isFinite(v) ? M
 function skTeacherMark(r) {
   return r ? skClampWritingBand(skMarks()[skMarkKey(r)]) : null;
 }
-/* The band a writing counts with (2026-11-12): the teacher's mark, else the AI's (from its saved feedback — worked out here from the
-   scores), else the band an older writing was sent with — all kept to 1–9; null while it waits for the AI (⏳). */
+/* The band a writing counts with (2026-11-12): the teacher's mark, else band 1 for a blank writing (nothing to check — the AI is
+   never asked), else the AI's (from its saved feedback — worked out here from the scores), else the band an older writing was sent
+   with — all kept to 1–9; null while it waits for the AI (⏳). */
+function skWritingIsBlank(r) { return !!r && r.type === 'Writing course' && !String(r.text || '').trim(); }
 function skWritingBandFor(r) {
   if (!r) return null;
   const m = skTeacherMark(r);
   if (m !== null) return m;
+  if (skWritingIsBlank(r)) return 1;
   const ai = skAiFor(r);
   if (ai && ai.scores && typeof skWritingAiBand === 'function') {
     const words = typeof r.words === 'number' ? r.words : String(r.text || '').trim().split(/\s+/).filter(Boolean).length;
@@ -1774,10 +1777,28 @@ function skWritingTextHtml(r) {
   });
   return html + esc(text.slice(pos));
 }
-/* The Writing Journey's AI feedback (2026-11-09): the one the page got at Submit (r.ai), else one the teacher asked for later
-   with "🤖 Check with AI" (ta_skills_ai, keyed like the marks; synced, in the backup). */
+/* The Writing Journey's AI feedback: an old result's own (r.ai, from when the page checked at Submit), else the helper's, kept in
+   ta_skills_ai by the result's id (taWritingAiSync, "🤖 Check now"; synced, in the backup). */
 const LS_SKILLS_AI = 'ta_skills_ai';
-function skAiStore() { try { return JSON.parse(localStorage.getItem(LS_SKILLS_AI) || '{}') || {}; } catch (e) { return {}; } }
+/* The store is read and parsed once and kept (2026-11-13): drawing the Course asks skAiFor several times per writing, and parsing a
+   store of hundreds of feedbacks every time made it slow. The kept copy is dropped when Loom writes it (skAiSave), when another
+   tab does (`storage` event) and when sync puts a copy from another device (js/sync.js setLocal → taStoreChanged). Don't change
+   the returned object: write with skAiSave. */
+let skAiMemo = null;
+function skAiRead() { try { const v = JSON.parse(localStorage.getItem(LS_SKILLS_AI) || '{}'); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; } }
+function skAiStore() { if (!skAiMemo) skAiMemo = skAiRead(); return skAiMemo; }
+function skAiForget() { skAiMemo = null; }
+/* adds feedbacks { <result id>: feedback } to the store: read fresh just before writing (another tab or sync may have added some
+   meanwhile), merged, saved. → false when the browser's storage is full. */
+function skAiSave(add) {
+  const store = skAiRead();
+  Object.assign(store, add);
+  try { localStorage.setItem(LS_SKILLS_AI, JSON.stringify(store)); } catch (e) { skAiMemo = null; return false; }
+  skAiMemo = store;
+  return true;
+}
+window.taStoreChanged = function (key) { if (key === LS_SKILLS_AI) skAiForget(); };
+window.addEventListener('storage', e => { if (!e.key || /(^|::)ta_skills_ai$/.test(e.key)) skAiForget(); });
 /* the feedback of a writing: its own (old results), else kept by the result's database id, else under the old "<code>|<id>" key */
 function skAiFor(r) {
   if (!r) return null;
@@ -1820,9 +1841,7 @@ async function skCheckWritingNow(btn) {
     if (btn) { btn.disabled = false; btn.textContent = '🤖 Check now'; }
     return;
   }
-  const store = skAiStore();
-  store[r.__id] = data.result;
-  try { localStorage.setItem(LS_SKILLS_AI, JSON.stringify(store)); } catch (e) { showToast('⚠️ Couldn\'t save — the browser\'s storage is full.'); return; }
+  if (!skAiSave({ [r.__id]: data.result })) { showToast('⚠️ Couldn\'t save — the browser\'s storage is full.'); return; }
   delete window.__taWritingWaiting[r.__id];
   showToast('✅ Checked with AI: band ' + skWritingBandFor(r) + ' for ' + (r.name || 'the student') + '.', 'ok');
   if (skWvOpen) skWvOpen.modal.body.innerHTML = skWritingViewHtml(r);
@@ -1868,17 +1887,17 @@ async function taWritingAiSync() {
         try { data = await post({ job: 'feedback', ids: batch.map(r => r.__id) }); } catch (e) { data = null; }
         const states = data && data.states && typeof data.states === 'object' ? data.states : null;
         if (!states) continue;
-        const store = skAiStore();
+        const got = {};
         for (const r of batch) {
           const st = states[r.__id];
           if (!st) continue;
-          if (st.state === 'done' && st.result && st.result.scores) { store[r.__id] = st.result; delete window.__taWritingWaiting[r.__id]; out.done++; changed = true; }
+          if (st.state === 'done' && st.result && st.result.scores) { got[r.__id] = st.result; delete window.__taWritingWaiting[r.__id]; out.done++; changed = true; }
           else if (st.state === 'waiting') window.__taWritingWaiting[r.__id] = { tries: st.tries || 0, lastError: st.lastError || '' };
           else if (st.state === 'unknown') {
             try { const q = await post(Object.assign({ job: 'queue' }, skWritingJobBody(r))); if (q && (q.queued || q.done)) out.queued++; } catch (e) { /* asked again later */ }
           }
         }
-        if (changed) { try { localStorage.setItem(LS_SKILLS_AI, JSON.stringify(store)); } catch (e) { /* storage full */ } }
+        if (Object.keys(got).length) skAiSave(got);   // read fresh and merged just before writing (the queue requests above took time)
       }
       if (changed || out.queued) { if (window.taCourseResultsChanged) window.taCourseResultsChanged(); }
     } catch (e) { /* never into the results pipeline */ }
@@ -1932,10 +1951,18 @@ function skWritingViewHtml(r) {
       (v.fix ? ' → <span class="sk-wv-fix">' + esc(v.fix) + '</span>' : '') + (m.message ? '<small>' + esc(m.message) + '</small>' : '') + '</li>'; }).join('') + '</ol>' : '') +
     '<div class="sk-wv-band"><label for="skWvBand">Band</label>' +
       '<input type="number" id="skWvBand" class="ta-input" min="1" max="9" step="0.5" value="' + (band !== null ? band : '') + '">' +
-      '<span class="sk-wv-how">' + (mark !== null ? '(your mark)' : ai ? '(from the AI check)' : '(estimated)') + '</span>' +
+      '<span class="sk-wv-how">' + (mark !== null ? '(your mark)' : skWvBandSource(r, ai).how) + '</span>' +
       '<button type="button" class="mini-btn solid" onclick="skSaveWritingMark()">Save band</button>' +
-      (mark !== null ? '<button type="button" class="mini-btn" onclick="skSaveWritingMark(true)">↩️ Use the estimate</button>' : '') + '</div>' +
+      (mark !== null ? '<button type="button" class="mini-btn" onclick="skSaveWritingMark(true)">↩️ ' + skWvBandSource(r, ai).back + '</button>' : '') + '</div>' +
   '</div>';
+}
+/* where a writing's band comes from without the teacher's mark: words for the window (beside the band, the button that removes
+   the mark, and its message) */
+function skWvBandSource(r, ai) {
+  if (skWritingIsBlank(r)) return { how: '(nothing written)', back: 'Use band 1 (nothing written)', toast: 'Back to band 1 (nothing written).' };
+  if (ai) return { how: '(AI\'s band)', back: 'Use the AI\'s band', toast: 'Back to the AI\'s band.' };
+  if (skClampWritingBand(r.band) !== null) return { how: '(old band)', back: 'Use the old band', toast: 'Back to the band it was sent with.' };
+  return { how: '(waiting for the AI)', back: 'Remove my mark', toast: 'Mark removed — the AI\'s band shows once it is checked.' };
 }
 let skWvOpen = null;   // { r, modal }
 function viewSkillWriting(idx) {
@@ -1955,7 +1982,7 @@ function skSaveWritingMark(clear) {
     marks[key] = v;
   }
   try { localStorage.setItem(LS_SKILLS_MARKS, JSON.stringify(marks)); } catch (e) { showToast('⚠️ Couldn\'t save — the browser\'s storage is full.'); return; }
-  showToast(clear ? 'Back to the estimated band.' : '✅ Band ' + marks[key] + ' saved for ' + (r.name || 'the student') + '.', 'ok');
+  showToast(clear ? skWvBandSource(r, skAiFor(r)).toast : '✅ Band ' + marks[key] + ' saved for ' + (r.name || 'the student') + '.', 'ok');
   skWvOpen.modal.body.innerHTML = skWritingViewHtml(r);
   if (typeof window.renderResultsTable === 'function' && document.getElementById('res-code-input')) {
     try { window.onResultsCodeInput ? window.onResultsCodeInput() : window.renderResultsTable(); } catch (e) { /* ignore */ }

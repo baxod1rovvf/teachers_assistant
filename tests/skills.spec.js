@@ -1179,7 +1179,7 @@ test.describe('results', () => {
     await expect(modal).toContainText('54 words');
     await expect(modal).toContainText('12:34');
     await expect(modal).toContainText('I have');
-    await expect(modal).toContainText('(estimated)');
+    await expect(modal).toContainText('(old band)');
     const input = modal.getByLabel('Band');
     await expect(input).toHaveValue('7');
     await input.fill('6');

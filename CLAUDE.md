@@ -569,7 +569,8 @@ real students' names or results into the repository (it is public).
 tabs — brings them back with the clock going on (time already up → sent at once); cleared once sent. **Speaking is practice only**: topic words, simple questions, a Part 2 card
   with timers — no microphone, nothing sent, no ID screen. One result per Submit: record id from `skResultId`, `setDoc` with timeouts,
   "Send again" on failure; result `type` 'Listening course' / 'Reading course' / 'Writing course' with `code, name, studentId, step, stepNo, skill,
-  correct, total, score, band` (writing: `text, words, minWords, mistakes, mistakeList, grammarChecked, band, timeSeconds`), `builtAt`
+  correct, total, score, band` (writing, since 2026-11-12: `text, words, minWords, maxWords, asked, timeSeconds` — no `band`, `mistakes`,
+  `mistakeList` or `grammarChecked`; older writings may still carry them), `builtAt`
   (= the Submit time, same as `date`: a page opened before "Delete all results" and sent after it counts), `submittedAt`. Preview sends nothing. Results sent before steps carry `level: n` and no `step`; they belong to the step by their code (kept per step in `ta_skills_links`).
 - **Teacher's side**: first Copy link for step + skill + group only keeps a fresh code (`skEnsureCode` in course.js) as `{ code, sentAt }` in
   `ta_skills_links` under "<groupId>|<skill>|<stepId>" (`taSkillLinkKey`) — **no My Exercises item since 2026-11-05** (teacher). Older
@@ -619,7 +620,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   `js/skills-data.js` by `node tools/build-writings.js` (never edit them by hand): `writing { topic, instruction, words[{w, uz}] (8–10
   asked words — the student must use all; ticked live, `skAskedWords` in skill-bands.js accepts other forms), minWords, maxWords, minutes }`
   (1 My Daily Routine 80–100/15 … 20 My Favourite Season 120–150/25). Steps 19–20 now have Reading + Writing. **AI check (since 2026-11-12 not at Submit)**:
-  the student's page saves the writing and puts it on the helper's waiting list (job `queue`, `tools/ai-worker.js`); the helper checks it later →
+  the student's page saves the writing and, once saved, puts it on the helper's waiting list (job `queue`, `tools/ai-worker.js`); the helper checks it later →
   JSON `scores {grammar 0–3, vocabulary 0–2, structure 0–2, task 0–2}`, `mistakes[{wrong,right,why}]`, `better[{word,instead,why}]`, `tips[3]`;
   Loom's band = `skWritingAiBand` (sum, −0.5 only when under the minimum, 1–9, nearest 0.5). Feedback order: score /9 · word count · grammar ·
   better words · asked words · 3 tips. The result has `asked` but no `band`/`ai`; Loom keeps the feedback per writing in `ta_skills_ai[<result id>]`
@@ -660,14 +661,27 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   most once per 10 min, in memory) — done → kept, unknown → `queue` (never for empty text), waiting → tries/reason for the writing's window
   (`.sk-wv-wait`, "🤖 Check now" = `skCheckWritingNow`, job `check`, writes **no** mark). `tests/writing-queue.spec.js`.
 - **Writings checked later + results link (teacher, 2026-11-12)**: Submit never waits for a check. The student page saves the writing
-  (no band) and sends it to the helper's waiting list (job `queue`, KV `q:<id>`); the helper's timer (Cron every 5 minutes → `runQueue`,
-  5 writings a run; a Google 429 stops the run; a failure keeps the writing with tries + reason) writes the feedback (KV `f:<id>`). Loom asks
-  `feedback` (`taWritingAiSync`, also every 10 minutes while anything waits) and keeps it in `ta_skills_ai`; a missing one is queued again (safety net).
+  (no band) and, once it is saved, sends it to the helper's waiting list (job `queue`, KV `q:<id>`); the helper's timer (Cron every 5 minutes → `runQueue`,
+  the 5 oldest writings that are due; a Google 429 or a refused key (401/403, or 400 "API key") stops the run without writing anything; any other
+  failure keeps the writing with tries + reason and **backs off**: due again after 5 min × 2^(tries−1), at most 6 h — `next` in the KV metadata — so a
+  few broken writings never block the rest) writes the feedback (KV `f:<id>`). **The worker reads the writing itself from Firestore** (REST, the
+  public key, `results/<id>` must be `type: 'Writing course'`; its `text`, `minWords`, `maxWords`, `asked` used+missing — the request's copy is
+  never trusted; only topic/instruction come from the request): not there / not a writing → 404; database unreachable → `queue` keeps the
+  request's copy marked `unverified` and the timer reads the record before checking (drops it if it isn't a writing), `check` answers an error.
+  `queue` never overwrites a waiting writing. `/status` keeps its waiting count for 60 s. The Origin check is not protection (any script can send
+  any Origin). Loom asks `feedback` (`taWritingAiSync`, also every 10 minutes while anything waits) and keeps it in `ta_skills_ai` (read and parsed
+  once and kept — `skAiStore`; written only with `skAiSave`, which re-reads and merges; dropped on `storage` events and when sync puts a copy,
+  `taStoreChanged` from js/sync.js `setLocal`); a missing one is queued again (safety net). **A blank writing** (no text, no mark) counts as band 1
+  (`skWritingBandFor`, and on the link). **On the first open after the new worker is deployed, the safety net queues the backlog of all older
+  writings** — that uses KV writes and Gemini's quota for a day or two, and old writings' bands change to the AI's as they are checked. **Gemini's
+  free quota is shared with the robot chat** (a busy checking day can make the robot answer from the saved FAQ).
   **Results link**: "🔗 Share results link" on a step's page makes a token in `ta_skills_shares` (synced, in the backup) and the record
   `share-<token>` (`TA_SYNC:SHARE`, delete + create) → `results-link.html?r=<token>` (`js/results-link.js`): live bands from `feedback`, ⏳ while waiting
-  (polls every `__rlPollMs || 60000` ms), tap a writing band → its AI feedback. **Anyone with the link can read the writings on it** (teacher's choice).
+  (asks again only about writings the helper says are waiting: after `__rlPollMs || 60000` ms, then 2×, 4× … at most 10 min, not while the tab
+  is hidden, for an hour at most — `__rlPollForMs`), tap a writing band → its AI feedback (the helper's, else `w.ai` = the feedback Loom had when the
+  link was shared, `skShareData`); the helper doesn't know it and there's none → "No AI feedback for this writing yet." with the text and band. **Anyone with the link can read the writings on it** (teacher's choice).
   **Cloudflare, done once by the teacher**: create a KV namespace `loom-writings` and bind it to the worker as `LOOM_KV`; add a Cron Trigger
-  `*/5 * * * *`; paste `tools/ai-worker.js` and Deploy; `/status` must show version `2026-11-12q` and `kv: true` (also `running`, `keySaved`, `waiting`, `jobs`).
+  `*/5 * * * *`; paste `tools/ai-worker.js` and Deploy; `/status` must show version `2026-11-13a` and `kv: true` (also `running`, `keySaved`, `waiting`, `jobs`).
   Limits per IP per minute: queue 30, feedback 60, check 10, chat 8, writing 40. **KV free plan: about 1 000 writes and 1 000 lists a day** (the timer
   uses 288 lists); busy days can run out → writings just wait. `tests/ai-queue.spec.js`, `tests/results-link.spec.js`.
 - **Step names (teacher, 2026-11-10: "rename them")**: each step's `theme` + `emoji` = its Speaking Journey topic (1 Daily Routine ⏰ …

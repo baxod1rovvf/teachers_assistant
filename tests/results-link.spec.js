@@ -135,3 +135,71 @@ test('a missing link and no internet show plain messages', async ({ page }) => {
   await page.goto('/results-link.html?r=0ff11e0ff11e0ff1');
   await expect(page.locator('body')).toContainText('Couldn\'t load the results — check the internet and open the link again.');
 });
+
+test('an already-checked writing (its feedback came with the table, the helper doesn\'t know it) shows its feedback', async ({ page, context }) => {
+  const bodies = [];
+  await linkPage(page, context, shareData([alice(wr({ ai: RESULT }))]), {}, bodies);   // the helper answers `unknown`
+  const errors = watchErrors(page);
+  await page.goto('/results-link.html?r=' + TOKEN);
+  const cell = page.locator('.sk-rt-row', { hasText: 'Alice Test' }).locator('.sk-rt-cell').nth(2);
+  await expect(cell).toContainText('7.5');
+  await cell.click();
+  await expect(page.locator('.rl-modal')).toContainText('Grammar 2.5/3');
+  await expect(page.locator('.rl-modal .sk-wv-tips li')).toHaveCount(3);
+  await expect(page.locator('.rl-modal')).not.toContainText('still being checked');
+  expect(errors).toEqual([]);
+});
+
+test('a writing the helper doesn\'t know and with no feedback: a plain "No AI feedback" note with its text and band, and it isn\'t asked about again', async ({ page, context }) => {
+  const bodies = [];
+  await linkPage(page, context, shareData([alice(wr({ band: 6 }))]), {}, bodies);
+  await page.goto('/results-link.html?r=' + TOKEN);
+  const cell = page.locator('.sk-rt-row', { hasText: 'Alice Test' }).locator('.sk-rt-cell').nth(2);
+  await expect(cell).toContainText('6');
+  await cell.click();
+  const m = page.locator('.rl-modal');
+  await expect(m).toContainText('No AI feedback for this writing yet.');
+  await expect(m).not.toContainText('still being checked');
+  await expect(m.locator('.sk-wv-text')).toContainText('I usually wake up at seven.');
+  await expect(m.locator('.rl-score')).toContainText('6');
+  await page.waitForTimeout(1500);
+  expect(bodies.length).toBe(1);   // asked once at the start, never polled
+});
+
+test('the link page asks less and less often while a writing waits (60 s → 2 → 4 … ≤ 10 min) and stops after an hour', async ({ page, context }) => {
+  const bodies = [];
+  await context.addInitScript(() => { window.__rlPollForMs = 2600; });
+  await linkPage(page, context, shareData([alice(wr())]), { sk_WRT555_10001_1: { state: 'waiting', tries: 1 } }, bodies, 200);
+  await page.goto('/results-link.html?r=' + TOKEN);
+  await expect(page.locator('.sk-rt-wbtn')).toContainText('⏳');
+  // asks at 0, then 200, 400, 800, 1600 ms later (0.2 · 0.6 · 1.4 · 3.0 s) — the hour (2.6 s here) ends it
+  await page.waitForTimeout(4500);
+  const n = bodies.length;
+  expect(n).toBeGreaterThanOrEqual(3);
+  expect(n).toBeLessThanOrEqual(5);
+  await page.waitForTimeout(2000);
+  expect(bodies.length).toBe(n);
+});
+
+test('a blank writing counts as band 1 on the link', async ({ page, context }) => {
+  await linkPage(page, context, shareData([alice(wr({ text: '', words: 0, raw: '0 words' }))]), {}, []);
+  await page.goto('/results-link.html?r=' + TOKEN);
+  const cell = page.locator('.sk-rt-row', { hasText: 'Alice Test' }).locator('.sk-rt-cell').nth(2);
+  await expect(cell).toContainText('1');
+  await expect(cell).not.toContainText('⏳');
+  await expect(page.locator('.sk-rt-row', { hasText: 'Alice Test' }).locator('.sk-rt-overall')).toContainText('4');   // (7 + 1) / 2
+});
+
+test('Share results link carries a checked writing\'s feedback (so the link can show it)', async ({ page, context }) => {
+  const W = { __id: 'sk_WRT555_10001_1', v: 1, code: 'WRT555', type: 'Writing course', skill: 'writing', step: 'b1', title: 'Step 1 · Daily Routine — Writing', name: 'Alice Test', studentId: '10001',
+    text: TEXT, words: 90, minWords: 80, maxWords: 100, asked: { used: ['wake up'], missing: [] }, timeSeconds: 600, timeDisplay: '10:00',
+    date: new Date(Date.now() - 60000).toISOString(), submittedAt: new Date(Date.now() - 60000).toISOString() };
+  await prepare(context, { docs: [W], storage: { ta_skills_links: JSON.stringify({ 'g1|writing|b1': { code: 'WRT555' } }), ta_course_group: 'g1',
+    ta_skills_ai: JSON.stringify({ sk_WRT555_10001_1: RESULT }) } });
+  await page.goto('/course.html');
+  await page.waitForFunction(() => (window.__allResults || []).length >= 1, null, { timeout: 10000 });
+  const d = await page.evaluate(() => skShareData('b1', { id: 'g1', name: 'Target' }));
+  const row = d.rows.find(r => r.name === 'Alice Test');
+  expect(row.writing.ai).toMatchObject({ scores: RESULT.scores, tips: RESULT.tips });
+  expect(row.writing.band).toBe(7.5);
+});

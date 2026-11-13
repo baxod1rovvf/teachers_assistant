@@ -44,7 +44,11 @@
   function saveMeta() { freshMeta(); raw.set(META_KEY, JSON.stringify(meta)); }
   function saveSeen() { raw.set(SEEN_KEY, JSON.stringify(seen)); }
   function getLocal(k) { return raw.get(ns + k); }
-  function setLocal(k, v) { if (v === null || v === undefined) raw.remove(ns + k); else raw.set(ns + k, v); }
+  // writes past the page's own hooks, so the page is told (a store it keeps parsed, e.g. ta_skills_ai, is read again)
+  function setLocal(k, v) {
+    if (v === null || v === undefined) raw.remove(ns + k); else raw.set(ns + k, v);
+    try { if (typeof window.taStoreChanged === 'function') window.taStoreChanged(k); } catch (e) { /* ignore */ }
+  }
 
   /* ---------- status line (in the top bar's profile menu) ---------- */
   var status = { text: '', cls: '' };

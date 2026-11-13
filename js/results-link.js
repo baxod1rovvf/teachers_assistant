@@ -1,13 +1,15 @@
 /* Results link (results-link.html?r=<token>): a step's table for one group, shared by the teacher (course.js skShareResults).
    Reads the record results/share-<token> over REST (like play.html). Places, Overall and CEFR are worked out here, live
    (skOverall / skCefr), so a late writing band moves them. Writings the AI hasn't checked yet show ⏳; the page asks the helper
-   (job `feedback`) every __rlPollMs (60 s) until none waits. Tapping a writing band opens its feedback. All text is escaped. */
+   (job `feedback`) about the writings it says are waiting — after 60 s (__rlPollMs), then 2, 4, 8 … minutes (at most 10), not
+   while the tab is hidden, and for an hour at most (__rlPollForMs). Tapping a writing band opens its feedback: the helper's, else
+   the one Loom put in the table (`w.ai` — older writings the helper never saw). All text is escaped. */
 (function () {
   var app = document.getElementById('rlApp');
   var BASE = 'https://firestore.googleapis.com/v1/projects/teachers-assistant-app-ccd1a/databases/(default)/documents/results/';
   var KEY = '?key=AIzaSyCefg2YghdSneABh0ZOUu3-snO4soVw0lA';
   var MEDALS = ['🥇', '🥈', '🥉'];
-  var data = null, fb = {}, pollTimer = 0;
+  var data = null, fb = {}, pollTimer = 0, pollDelay = 0, pollStart = 0;
 
   function esc(v) { return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function say(emoji, text) { app.innerHTML = '<div class="sk-center"><div class="sk-big-emoji">' + emoji + '</div><p>' + esc(text) + '</p></div>'; }
@@ -23,11 +25,19 @@
     return cols[h % cols.length];
   }
 
-  /* a writing's band: the teacher's mark, else the AI's (from its scores), else the band the teacher's page had; null = ⏳ */
-  function aiOf(w) { var s = w && fb[w.id]; return s && s.state === 'done' && s.result && s.result.scores ? s.result : null; }
+  /* a writing's feedback: the helper's, else the one that came with the table (Loom's copy); null = none yet */
+  function aiOf(w) {
+    var s = w && fb[w.id];
+    if (s && s.state === 'done' && s.result && s.result.scores) return s.result;
+    return w && w.ai && w.ai.scores ? w.ai : null;
+  }
+  /* a writing's band: the teacher's mark, else 1 when nothing was written, else the AI's (from its scores), else the band the
+     teacher's page had; null = ⏳ */
+  function blank(w) { return !String(w.text || '').trim(); }
   function bandOf(w) {
     if (!w) return null;
     if (typeof w.mark === 'number') return w.mark;
+    if (blank(w)) return 1;
     var ai = aiOf(w);
     if (ai) return skWritingAiBand(ai.scores, w.words || 0, w.minWords || 0);
     return typeof w.band === 'number' ? w.band : null;
@@ -106,8 +116,9 @@
       (asked ? '<p class="sk-wv-sub">📝 Asked words</p><p class="sk-wv-asked">' + (asked.used || []).map(function (x) { return '✅ ' + esc(x); }).concat((asked.missing || []).map(function (x) { return '❌ ' + esc(x); })).join(' · ') + '</p>' : '') +
       (ai.tips && ai.tips.length ? '<p class="sk-wv-sub">🚀 Tips</p><ol class="sk-wv-tips">' + ai.tips.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ol>' : '');
   }
-  var openId = '', openEl = null;
+  var openId = '', openEl = null, openHadAi = false;
   function closeModal() { if (openEl) { openEl.remove(); openEl = null; openId = ''; document.removeEventListener('keydown', onKey); } }
+  function helperSaysWaiting(w) { var s = w && fb[w.id]; return !!s && s.state === 'waiting'; }
   function onKey(e) { if (e.key === 'Escape') closeModal(); }
   function openWriting(w) {
     closeModal();
@@ -116,8 +127,13 @@
     var inner;
     if (ai) inner = feedbackHtml(w, ai);
     else {
-      inner = '<div class="rl-score"><b>' + (bandOf(w) === null ? '⏳' : esc(bandOf(w))) + '</b><span>' + (bandOf(w) === null ? '' : '/ 9') + '</span></div>' +
-        '<p class="sk-wv-wait">⏳ This writing is still being checked. The feedback appears here by itself.</p><div class="sk-wv-text">' + esc(w.text) + '</div>';
+      var b = bandOf(w);
+      // ⏳ only when it really waits (the helper says so, or it has no band at all); else a plain note
+      var note = helperSaysWaiting(w) || pending(w)
+        ? '<p class="sk-wv-wait">⏳ This writing is still being checked. The feedback appears here by itself.</p>'
+        : '<p class="sk-wv-noai">No AI feedback for this writing yet.</p>';
+      inner = '<div class="rl-score"><b>' + (b === null ? '⏳' : esc(b)) + '</b><span>' + (b === null ? '' : '/ 9') + '</span></div>' +
+        note + '<div class="sk-wv-text">' + (blank(w) ? '<i>(nothing written)</i>' : esc(w.text)) + '</div>';
     }
     openEl = document.createElement('div');
     openEl.className = 'rl-modal';
@@ -128,6 +144,7 @@
     document.addEventListener('keydown', onKey);
     document.body.appendChild(openEl);
     openId = w.id;
+    openHadAi = !!ai;
     openEl.querySelector('.rl-close').focus();
   }
 
@@ -139,20 +156,32 @@
       .then(function (j) { if (j && j.states) Object.keys(j.states).forEach(function (id) { fb[id] = j.states[id]; }); })
       .catch(function () { /* the next poll tries again */ });
   }
-  function waitingIds() { return data.rows.map(function (r) { return r.writing; }).filter(pending).map(function (w) { return w.id; }).filter(Boolean); }
+  /* asked again: writings the helper says are waiting, and ones it hasn't answered about yet (the first ask failed); never ones it
+     doesn't know (`unknown` — Loom puts those on its list) or ones with a band or feedback already */
+  function waitingIds() {
+    return data.rows.map(function (r) { return r.writing; }).filter(function (w) {
+      if (!w || !w.id || aiOf(w) || typeof w.mark === 'number' || blank(w)) return false;
+      return helperSaysWaiting(w) || !fb[w.id];
+    }).map(function (w) { return w.id; });
+  }
+  // the open writing is drawn again only when it had no feedback when opened and has some now
   function refreshModal() {
-    if (!openEl) return;
+    if (!openEl || openHadAi) return;
     var w = null;
     data.rows.forEach(function (r) { if (r.writing && r.writing.id === openId) w = r.writing; });
     if (w && aiOf(w)) openWriting(w);
   }
+  // 60 s, then twice as long each time (at most 10 minutes); waits while the tab is hidden; stops after an hour
   function poll() {
     pollTimer = 0;
-    var ids = waitingIds();
-    if (!ids.length) return;
-    pollTimer = setTimeout(function () {
+    if (!waitingIds().length) return;
+    var base = window.__rlPollMs || 60000;
+    pollDelay = pollDelay ? Math.min(pollDelay * 2, Math.max(base, 600000)) : base;
+    if (pollStart && Date.now() + pollDelay - pollStart > (window.__rlPollForMs || 3600000)) return;
+    pollTimer = setTimeout(function run() {
+      if (document.hidden) { document.addEventListener('visibilitychange', function again() { if (!document.hidden) { document.removeEventListener('visibilitychange', again); run(); } }); return; }
       ask(waitingIds()).then(function () { render(); refreshModal(); poll(); });
-    }, window.__rlPollMs || 60000);
+    }, pollDelay);
   }
 
   var token = new URLSearchParams(location.search).get('r') || '';
@@ -169,7 +198,7 @@
     document.title = 'Step ' + data.stepNo + ' results — Loom';
     render();
     var ids = data.rows.map(function (r) { return r.writing && r.writing.id; }).filter(Boolean);
-    return ask(ids).then(function () { render(); poll(); });
+    return ask(ids).then(function () { pollStart = Date.now(); render(); poll(); });
   }).catch(function (e) {
     if (e && e.message === 'missing') say('🔍', 'This results link doesn\'t exist — ask your teacher for it again.');
     else if (!data) say('📡', 'Couldn\'t load the results — check the internet and open the link again.');
