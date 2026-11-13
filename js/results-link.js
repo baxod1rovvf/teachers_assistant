@@ -110,11 +110,13 @@
     return '<div class="rl-score"><b>' + esc(band) + '</b><span>/ 9</span></div>' +
       '<div class="sk-wv-parts">🤖 Grammar ' + esc(s.grammar) + '/3 · Vocabulary ' + esc(s.vocabulary) + '/2 · Structure ' + esc(s.structure) + '/2 · Task ' + esc(s.task) + '/2' +
         (w.minWords && w.words < w.minWords ? ' · −0.5 (too short)' : '') + '</div>' +
+      (ai.praise && ai.praise.length ? '<p class="sk-wv-sub">⭐ What you did well</p><ul class="sk-wv-praise">' + ai.praise.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' : '') +
       '<div class="sk-wv-text">' + markedText(String(w.text || ''), ai.mistakes) + '</div>' +
-      (ai.mistakes && ai.mistakes.length ? '<ol class="sk-wv-mistakes">' + ai.mistakes.map(function (m) { return '<li><span class="sk-wv-bad">' + esc(m.wrong) + '</span> → <span class="sk-wv-fix">' + esc(m.right) + '</span>' + (m.why ? '<small>' + esc(m.why) + '</small>' : '') + '</li>'; }).join('') + '</ol>' : '<p>No grammar mistakes found.</p>') +
+      (ai.mistakes && ai.mistakes.length ? '<p class="sk-wv-sub">✏️ Things to improve</p><ol class="sk-wv-mistakes">' + ai.mistakes.map(function (m) { return '<li><span class="sk-wv-bad">' + esc(m.wrong) + '</span> → <span class="sk-wv-fix">' + esc(m.right) + '</span>' + (m.why ? '<small>' + esc(m.why) + '</small>' : '') + '</li>'; }).join('') + '</ol>' : '<p>No grammar mistakes found.</p>') +
       (ai.better && ai.better.length ? '<p class="sk-wv-sub">💡 Better words</p><ul class="sk-wv-better">' + ai.better.map(function (b) { return '<li><b>' + esc(b.word) + '</b> → ' + esc(b.instead) + (b.why ? ' <small>— ' + esc(b.why) + '</small>' : '') + '</li>'; }).join('') + '</ul>' : '') +
       (asked ? '<p class="sk-wv-sub">📝 Asked words</p><p class="sk-wv-asked">' + (asked.used || []).map(function (x) { return '✅ ' + esc(x); }).concat((asked.missing || []).map(function (x) { return '❌ ' + esc(x); })).join(' · ') + '</p>' : '') +
-      (ai.tips && ai.tips.length ? '<p class="sk-wv-sub">🚀 Tips</p><ol class="sk-wv-tips">' + ai.tips.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ol>' : '');
+      (ai.tips && ai.tips.length ? '<p class="sk-wv-sub">🚀 Tips</p><ol class="sk-wv-tips">' + ai.tips.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ol>' : '') +
+      (ai.betterVersion ? '<p class="sk-wv-sub">✨ Better version</p><div class="sk-wv-betterv">' + esc(ai.betterVersion) + '</div>' : '');
   }
   var openId = '', openEl = null, openHadAi = false;
   function closeModal() { if (openEl) { openEl.remove(); openEl = null; openId = ''; document.removeEventListener('keydown', onKey); } }

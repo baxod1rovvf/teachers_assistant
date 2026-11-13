@@ -3327,5 +3327,9 @@ body.loom-studio .ai-robot-anim { position: absolute; left: 50%; top: 50%; trans
 .sk-wv-ai { margin-top: 10px; }
 .sk-wv-parts { font-weight: 700; margin-bottom: 6px; }
 .sk-wv-sub { font-weight: 700; margin: 10px 0 4px; }
-.sk-wv-better, .sk-wv-tips { margin: 0 0 0 18px; line-height: 1.55; }
+.sk-wv-better, .sk-wv-tips, .sk-wv-praise { margin: 0 0 0 18px; line-height: 1.55; }
+/* the generous check's extras (2026-11-13): what the student did well, and their writing rewritten a little better */
+.sk-wv-praise li::marker { content: '✓  '; color: #22A06B; }
+.sk-wv-betterv { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.6; padding: 10px 12px; border-radius: 10px;
+  border: 1px dashed rgba(34, 160, 107, .55); background: rgba(34, 160, 107, .08); }
 .sk-wv-wait, .sk-wv-noai { margin-top: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }

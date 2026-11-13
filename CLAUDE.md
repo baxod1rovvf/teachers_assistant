@@ -670,7 +670,16 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   public key, `results/<id>` must be `type: 'Writing course'`; its `text`, `minWords`, `maxWords`, `asked` used+missing — the request's copy is
   never trusted; only topic/instruction come from the request): not there / not a writing → 404; database unreachable → `queue` keeps the
   request's copy marked `unverified` and the timer reads the record before checking (drops it if it isn't a writing), `check` answers an error.
-  `queue` never overwrites a waiting writing. `/status` keeps its waiting count for 60 s. The Origin check is not protection (any script can send
+  `queue` never overwrites a waiting writing. `/status` keeps its waiting count for 60 s.
+  **Generous check (teacher, 2026-11-13: "too strict — make it a little generous to motivate students"; worker `2026-11-13b`)**: the AI's
+  rules are the teacher's "Generous Examiner" — never hunt for mistakes, no double deduction, meaning over accuracy, simple English is
+  fine, small spelling/punctuation slips barely count, unsure → no deduction — and their score guide (excellent 9 · good, a few minor
+  mistakes 8–8.5 · understandable, some grammar mistakes 7–7.5 · several mistakes but task done 6–6.5 · hard to understand or incomplete
+  ≤ 5); the AI picks the level first, then parts that add up to it. At most 5 mistakes (`mistakes` sliced to 5). Two new parts in the
+  feedback: `praise` (2–3, "⭐ What you did well", shown first, `.sk-wv-praise`) and `betterVersion` (the student's writing rewritten a
+  little better at their level, "✨ Better version", last, `.sk-wv-betterv`) — in the teacher's writing window (`skAiFeedbackHtml`) and on
+  the results link (`feedbackHtml` in results-link.js); feedback from before has neither and is shown as it was. Writings already checked
+  **keep their scores** (teacher's choice — no re-check). The −0.5 under the minimum and the teacher's mark winning are unchanged. The Origin check is not protection (any script can send
   any Origin). Loom asks `feedback` (`taWritingAiSync`, also every 10 minutes while anything waits) and keeps it in `ta_skills_ai` (read and parsed
   once and kept — `skAiStore`; written only with `skAiSave`, which re-reads and merges; dropped on `storage` events and when sync puts a copy,
   `taStoreChanged` from js/sync.js `setLocal`); a missing one is queued again (safety net). **A blank writing** (no text, no mark) counts as band 1
@@ -683,7 +692,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   is hidden, for an hour at most — `__rlPollForMs`), tap a writing band → its AI feedback (the helper's, else `w.ai` = the feedback Loom had when the
   link was shared, `skShareData`); the helper doesn't know it and there's none → "No AI feedback for this writing yet." with the text and band. **Anyone with the link can read the writings on it** (teacher's choice).
   **Cloudflare, done once by the teacher**: create a KV namespace `loom-writings` and bind it to the worker as `LOOM_KV`; add a Cron Trigger
-  `*/5 * * * *`; paste `tools/ai-worker.js` and Deploy; `/status` must show version `2026-11-13a` and `kv: true` (also `running`, `keySaved`, `waiting`, `jobs`).
+  `*/5 * * * *`; paste `tools/ai-worker.js` and Deploy; `/status` must show version `2026-11-13b` and `kv: true` (also `running`, `keySaved`, `waiting`, `jobs`).
   Limits per IP per minute: queue 30, feedback 60, check 10, chat 8, writing 40. **KV free plan: about 1 000 writes and 1 000 lists a day** (the timer
   uses 288 lists); busy days can run out → writings just wait. `tests/ai-queue.spec.js`, `tests/results-link.spec.js`.
 - **Step names (teacher, 2026-11-10: "rename them")**: each step's `theme` + `emoji` = its Speaking Journey topic (1 Daily Routine ⏰ …

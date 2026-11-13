@@ -2,9 +2,10 @@
 // Jobs:
 //   - the robot's chat (default): { question, lang, section, teacher, history, knowledge } → { answer }
 //   - job "writing" (the Writing Journey's AI check, 2026-11-09): { job: 'writing', text, topic, instruction, minWords,
-//     maxWords, words: [asked words] } → { result: { scores {grammar, vocabulary, structure, task}, mistakes [{wrong,
-//     right, why}], better [{word, instead, why}], tips [3] } }. Loom itself counts the words, checks the asked words and
-//     works out the final score — the AI only gives the four part scores and the feedback.
+//     maxWords, words: [asked words] } → { result: { scores {grammar, vocabulary, structure, task}, praise [2–3], mistakes
+//     [{wrong, right, why}] (≤ 5), better [{word, instead, why}], tips [3], betterVersion } }. Marked generously (2026-11-13).
+//     Loom itself counts the words, checks the asked words and works out the final score — the AI only gives the four
+//     part scores and the feedback.
 //   - the waiting list (2026-11-12, needs a KV storage bound as LOOM_KV): a student's writing is put on it ("queue"),
 //     a timer (Cron Trigger every 5 minutes → `scheduled`) checks the 5 oldest that are due, "feedback" says what is ready,
 //     "check" checks one now (the teacher's button). The check never fails a student: a writing that couldn't be checked
@@ -23,7 +24,7 @@
 // Free plan: Google may use what is sent to improve its products — no students' private details.
 
 const ALLOWED_ORIGINS = ['https://baxod1rovvf.github.io'];
-const VERSION = '2026-11-13a';
+const VERSION = '2026-11-13b';
 const DEFAULT_MODEL = 'gemini-flash-lite-latest';   // Google's fastest model on the free plan (answers in a few seconds)
 const PER_MODEL_SECONDS = 18, TOTAL_SECONDS = 40;   // Loom waits 60 s, so the helper always answers before that
 const PER_MINUTE = { chat: 8, writing: 40, queue: 30, feedback: 60, check: 10 };          // per visitor (IP) per minute, kept in this worker's memory
@@ -122,24 +123,34 @@ async function checkWriting(q, env) {
   const text = clip(q.text, 6000).trim();
   if (!text) return { error: 'No text', status: 400 };
   const asked = (Array.isArray(q.words) ? q.words : []).slice(0, 12).map(w => clip(w, 40));
+  // A generous examiner (teacher, 2026-11-13: the check was too strict — students should feel motivated). The rules and the
+  // score guide are the teacher's ("Generous Examiner"); the four parts add up to the score, so the guide decides the band.
   const system =
-    'You are an experienced, kind English teacher checking a short writing by an A1+–A2 student (a teenager learning English). ' +
-    'Mark it with this 9-point system: grammar accuracy 0–3, vocabulary usage 0–2 (including how well the asked words are used), ' +
-    'sentence structure and coherence 0–2, task completion 0–2 (does it answer the topic and instruction?). Use halves (e.g. 2.5). ' +
-    'Be fair for the level: simple but correct sentences are NOT mistakes. Never invent mistakes or correct natural English. ' +
-    'For each grammar mistake give the student\'s whole sentence as it is, the corrected sentence, and a very simple explanation ' +
-    '(tenses, articles, prepositions, subject-verb agreement, word order, sentence structure; ignore extra spaces and names). ' +
-    'Also suggest a few better words only where a word is too basic, repeated or unnatural (e.g. "very good" → "excellent", ' +
-    '"very tired" → "exhausted"), at A2 level, with a short reason — these are optional and not mistakes. Give exactly three short, ' +
-    'encouraging tips for the next writing. Write all explanations in simple English. ' +
-    'Reply with JSON only, exactly: {"scores":{"grammar":0,"vocabulary":0,"structure":0,"task":0},' +
-    '"mistakes":[{"wrong":"","right":"","why":""}],"better":[{"word":"","instead":"","why":""}],"tips":["","",""]}';
+    'You are a GENEROUS, encouraging English examiner checking a short writing by an A1+–A2 student (a teenager learning English). ' +
+    'Your aim is to motivate the student. Mark with this 9-point system: grammar accuracy 0–3, vocabulary usage 0–2 (including how ' +
+    'the asked words are used), sentence structure and coherence 0–2, task completion 0–2 (does it answer the topic and instruction?). ' +
+    'Use halves (e.g. 2.5). FIRST decide the overall score with this guide, THEN give part scores that add up to it: ' +
+    'excellent, almost no mistakes = 9; good, a few minor mistakes = 8–8.5; understandable, some grammar mistakes = 7–7.5; ' +
+    'several mistakes but the task is completed = 6–6.5; difficult to understand or incomplete = 5 or below. ' +
+    'Rules: grade generously and positively; never hunt for mistakes; never take marks off twice for the same mistake; meaning ' +
+    'matters more than perfect accuracy; simple English is fine — simple but correct sentences are NOT mistakes; small spelling, ' +
+    'punctuation and capital-letter slips barely count; when you are not sure something is a mistake, do not deduct and do not list it. ' +
+    'Never invent mistakes or correct natural English. List only the most important mistakes, at most 5: for each give the ' +
+    'student\'s whole sentence as it is, the corrected sentence, and a very simple, kind explanation (tenses, articles, ' +
+    'prepositions, subject-verb agreement, word order, sentence structure; ignore extra spaces and names). ' +
+    'Give 2–3 short, specific things the student did well ("praise"). Suggest a few better words only where a word is too basic, ' +
+    'repeated or unnatural (e.g. "very good" → "excellent", "very tired" → "exhausted"), at A2 level, with a short reason — these ' +
+    'are optional and not mistakes. Give exactly three short, encouraging tips for the next writing. Write "betterVersion": the ' +
+    'student\'s own writing rewritten a little better — keep their ideas, order and length, keep it at their level (A2), fix the ' +
+    'mistakes and improve a few words; do not add new ideas. Write all explanations in simple, friendly English. ' +
+    'Reply with JSON only, exactly: {"scores":{"grammar":0,"vocabulary":0,"structure":0,"task":0},"praise":["",""],' +
+    '"mistakes":[{"wrong":"","right":"","why":""}],"better":[{"word":"","instead":"","why":""}],"tips":["","",""],"betterVersion":""}';
   const prompt = 'Topic: ' + clip(q.topic, 120) + '\nInstruction: ' + clip(q.instruction, 400) +
     '\nWord limit: ' + (Number(q.minWords) || 0) + '–' + (Number(q.maxWords) || 0) + ' words' +
     '\nAsked words (the student must use them): ' + asked.join(', ') +
     '\n\nThe student\'s writing:\n"""\n' + text + '\n"""';
   const r = await askGemini(env, system, [{ role: 'user', parts: [{ text: prompt }] }],
-    { maxOutputTokens: 2500, temperature: 0.2, responseMimeType: 'application/json' });
+    { maxOutputTokens: 4000, temperature: 0.2, responseMimeType: 'application/json' });
   if (!r.ok) return { error: r.error, status: r.status, googleStatus: r.googleStatus };
   let out;
   try { out = JSON.parse(r.text.replace(/^```(?:json)?\s*|\s*```$/g, '')); } catch (e) { return { error: 'The AI did not answer in the right shape', status: 502 }; }
@@ -148,10 +159,12 @@ async function checkWriting(q, env) {
   const list = (a, n) => (Array.isArray(a) ? a : []).slice(0, n);
   const result = {
     scores: { grammar: num(s.grammar, 3), vocabulary: num(s.vocabulary, 2), structure: num(s.structure, 2), task: num(s.task, 2) },
-    mistakes: list(out.mistakes, 15).map(m => ({ wrong: clip(m && m.wrong, 400), right: clip(m && m.right, 400), why: clip(m && m.why, 300) }))
+    praise: list(out.praise, 3).map(t => clip(t, 200)).filter(Boolean),
+    mistakes: list(out.mistakes, 5).map(m => ({ wrong: clip(m && m.wrong, 400), right: clip(m && m.right, 400), why: clip(m && m.why, 300) }))
       .filter(m => m.wrong && m.right && m.wrong.trim() !== m.right.trim()),
     better: list(out.better, 8).map(b => ({ word: clip(b && b.word, 60), instead: clip(b && b.instead, 60), why: clip(b && b.why, 200) })).filter(b => b.word && b.instead),
-    tips: list(out.tips, 3).map(t => clip(t, 200)).filter(Boolean)
+    tips: list(out.tips, 3).map(t => clip(t, 200)).filter(Boolean),
+    betterVersion: clip(out.betterVersion, 3000).trim()
   };
   result.words = text.split(/\s+/).length;
   result.band = aiBand(result.scores, result.words, Number(q.minWords) || 0);
