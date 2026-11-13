@@ -70,8 +70,9 @@ import sherpa_onnx
 D = os.environ['ASR_DIR']
 ASR = sherpa_onnx.OfflineRecognizer.from_whisper(encoder=D + '/base.en-encoder.int8.onnx', decoder=D + '/base.en-decoder.int8.onnx',
                                                  tokens=D + '/base.en-tokens.txt', language='en', task='transcribe', num_threads=4)
-def heard(audio):
-    pad = np.concatenate([np.zeros(int(SR * 0.3), np.float32), audio, np.zeros(int(SR * 0.3), np.float32)])
+def heard(audio, pad_s=1.0):
+    # a full second of silence around a clip: with 0.3 s Whisper sometimes heard "you you you…" in a clear line (Step 12)
+    pad = np.concatenate([np.zeros(int(SR * pad_s), np.float32), audio, np.zeros(int(SR * pad_s), np.float32)])
     x = np.interp(np.arange(0, len(pad), SR / 16000), np.arange(len(pad)), pad).astype(np.float32)
     st = ASR.create_stream(); st.accept_waveform(16000, x); ASR.decode_stream(st)
     return st.result.text
@@ -138,12 +139,17 @@ def one_letter(L, prompt):
     double = L.startswith('double ')
     text = ('Double ' + L[-1] if double else L) + '.'
     first = None
-    for s in range(1, 9):
+    def ok(h):
+        toks = re.findall(r"[a-z]+", h.lower())
+        if double: toks = [t for t in toks if t != 'double']
+        return bool(toks) and toks[0] in NAMES[L[-1]].split()
+    for s in range(1, 13):
         a = trim(gen(text, p, seed=s, voice=voice))
         if first is None: first = a
-        toks = re.findall(r"[a-z]+", heard(a).lower())
-        if double: toks = [t for t in toks if t != 'double']
-        if toks and toks[0] in NAMES[L[-1]].split() and len(a) < 1.6 * SR: return a
+        # heard right both ways — with a little silence around it and with a lot (one way alone let a "C" through that is
+        # heard as "B" in the recording, Step 12)
+        if len(a) < 1.6 * SR and ok(heard(a, 0.3)) and ok(heard(a, 1.0)):
+            return a
     print('   ⚠️ letter', L, 'not heard clearly — check by ear', flush=True)
     return first
 
