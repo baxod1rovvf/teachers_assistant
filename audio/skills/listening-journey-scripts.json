@@ -3929,379 +3929,177 @@
  {
   "src": "audio/skills/listen-step-20.mp3",
   "title": "Weather and Life Around the World",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   },
+   "af_ov_adviser": "female, middle-aged, moderate pitch",
+   "af_ov_young": {
+    "instruct": "female, young adult, moderate pitch",
+    "seed": 1
+   },
+   "am_ov_second": "male, middle-aged, low pitch"
+  },
   "lines": [
    [
-    "af_heart",
-    "Welcome to World Weather Today.",
+    "am_ov_energetic",
+    "Welcome to World Weather Today!",
     0.3
    ],
    [
-    "af_heart",
-    "I'm your presenter, Laura Smith.",
+    "am_ov_energetic",
+    "I'm your presenter, Luke Smith.",
     0.3
    ],
    [
-    "af_heart",
-    "Laura.",
+    "am_ov_energetic",
+    "Smith.",
     0.3
    ],
    [
-    "af_heart",
-    "L. A. U. R. A.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Smith.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "S. M. I. T. H.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Today we're visiting four cities to find out how the weather changes daily life.",
     0.3
    ],
    [
-    "af_heart",
-    "Today we're visiting four cities to find out how weather affects daily life.",
+    "am_ov_energetic",
+    "Our first report comes from Oslo, in Norway.",
     0.4
    ],
    [
-    "af_heart",
-    "Our first report comes from Oslo, the capital of Norway.",
+    "af_ov_adviser",
+    "Good morning from Oslo! It's a cold winter morning.",
     0.3
    ],
    [
-    "af_heart",
-    "Oslo.",
+    "af_ov_adviser",
+    "It's minus three degrees, and there's light snow.",
     0.3
    ],
    [
-    "af_heart",
-    "O. S. L. O.",
+    "af_ov_adviser",
+    "People are wearing warm coats, hats and gloves.",
     0.3
    ],
    [
-    "af_heart",
-    "Our reporter is Erik Hansen.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Erik.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "E. R. I. K.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Hansen.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "H. A. N. S. E. N.",
+    "af_ov_adviser",
+    "The roads are slippery, so drivers are going slowly.",
     0.4
    ],
    [
-    "am_michael",
-    "Good morning from Oslo!",
-    0.3
-   ],
-   [
-    "am_michael",
-    "It's a cold winter morning.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "The temperature is minus three degrees Celsius, and there is light snow.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "Many people are wearing warm coats, hats and gloves.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "The roads are slippery, so drivers are moving slowly.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "Some children have outdoor winter activities at school.",
+    "am_ov_energetic",
+    "Now let's travel to Nairobi, in Kenya.",
     0.4
    ],
    [
-    "af_heart",
-    "Thank you.",
+    "af_ov_young",
+    "Hello from Nairobi! It's warm and sunny, and lots of people are spending time outside.",
     0.3
    ],
    [
-    "af_heart",
-    "Now let's travel to Nairobi in Kenya.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Our reporter is Grace Mwangi.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Grace.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "G. R. A. C. E.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Mwangi.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "M. W. A. N. G. I.",
+    "af_ov_young",
+    "The rainy season starts next month, so people are getting their gardens ready.",
     0.4
    ],
    [
-    "af_bella",
-    "Hello from Nairobi!",
-    0.3
-   ],
-   [
-    "af_bella",
-    "It's warm and sunny.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "The temperature is twenty-six degrees.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "Many people enjoy spending time outside.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "The rainy season is expected to begin next month, so people are preparing their gardens and checking their roofs.",
+    "am_ov_energetic",
+    "Our next stop is Tokyo, in Japan.",
     0.4
    ],
    [
-    "af_heart",
-    "Our next stop is Tokyo, Japan.",
+    "am_ov_second",
+    "Good afternoon from Tokyo. It's cloudy, with a light wind but no rain.",
     0.3
    ],
    [
-    "af_heart",
-    "Tokyo.",
+    "am_ov_second",
+    "The stations are busy, because many people travel by train.",
     0.3
    ],
    [
-    "af_heart",
-    "T. O. K. Y. O.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Our reporter is Kenji Sato.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Kenji.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "K. E. N. J. I.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Sato.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "S. A. T. O.",
-    0.4
-   ],
-   [
-    "am_puck",
-    "Good afternoon from Tokyo.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "It's cloudy and eighteen degrees.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "There is a light wind, but no rain.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "The stations are busy because many people travel by train.",
-    0.3
-   ],
-   [
-    "am_puck",
+    "am_ov_second",
     "In spring, Tokyo is famous for its cherry blossoms.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "Visitors go to parks to see the flowers and take photographs.",
     0.4
    ],
    [
-    "af_heart",
-    "Finally, let's visit Sydney in Australia.",
+    "am_ov_energetic",
+    "Finally, let's go to Sydney, in Australia.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "Sydney.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "S. Y. D. N. E. Y.",
+    0.6
+   ],
+   [
+    "af_ov_adviser",
+    "Hello from Sydney! It's a bright summer day, and it's very hot.",
     0.3
    ],
    [
-    "af_heart",
-    "Our reporter is Mia Collins.",
+    "af_ov_adviser",
+    "Lots of people are going to the beach.",
     0.3
    ],
    [
-    "af_heart",
-    "Mia.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "M. I. A.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Collins.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "C. O. L. L. I. N. S.",
+    "af_ov_adviser",
+    "On hot days, drink water, use sun cream and stay in the shade at lunchtime.",
     0.4
    ],
    [
-    "af_nicole",
-    "Hello from Sydney!",
+    "am_ov_energetic",
+    "Thank you to all our reporters!",
     0.3
    ],
    [
-    "af_nicole",
-    "It's a bright summer day.",
+    "am_ov_energetic",
+    "Before you leave home, check the forecast and choose the right clothes.",
     0.3
    ],
    [
-    "af_nicole",
-    "The temperature is thirty-one degrees.",
-    0.3
-   ],
-   [
-    "af_nicole",
-    "Many people are going to the beach, swimming or having lunch outside.",
-    0.3
-   ],
-   [
-    "af_nicole",
-    "In summer, it can become very hot.",
-    0.3
-   ],
-   [
-    "af_nicole",
-    "People should drink water, use sun protection and look for shade during the hottest part of the day.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Thank you to all our reporters.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Weather can be very different around the world.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "In one city, people may wear winter coats, while in another, they enjoy a sunny day at the beach.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Weather affects transport, school activities, work and travel plans.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Before leaving home, it's useful to check the forecast and choose suitable clothes.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "Take an umbrella if rain is expected.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Send us your weather photos!",
     0.3
    ],
    [
-    "af_heart",
-    "Wear warm clothes in cold weather.",
+    "am_ov_energetic",
+    "Call or message us on oh one three one, four seven two, six five eight.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "That's oh one three one, four seven two, six five eight.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Tomorrow, we'll talk about storms.",
     0.3
    ],
    [
-    "af_heart",
-    "On very hot days, drink enough water and avoid staying in the sun for too long.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Here are tomorrow's temperatures.",
+    "am_ov_energetic",
+    "The programme is on every morning at eight, and you can listen again on our website.",
     0.3
    ],
    [
-    "af_heart",
-    "Oslo will be minus one degree.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Nairobi will be twenty-seven degrees.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Tokyo will be nineteen degrees, and Sydney will be thirty degrees.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "That's all for World Weather Today.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "Thank you for listening!",
     0.4
    ]

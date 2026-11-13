@@ -1154,3 +1154,94 @@ There are many jobs behind the camera, not only acting.
 
 1 Turner · 2 schedules · 3 equipment · 4 places · 5 B · 6 C · 7 B · 8 C · 9 True · 10 True · 11 False · 12 Biscuit ·
 13 break · 14 18th · 15 indoor · 16 workshops · 17 0126 583 947 · 18 clearly · 19 learn · 20 camera
+
+------------------------------------------------------------------------
+
+# Step 20 --- Weather and Life Around the World
+
+**Target:** 4 minutes \| **Format:** International radio report \|
+**Questions:** 20
+
+## Audio transcript
+
+**Luke:** Welcome to World Weather Today! I'm your presenter, Luke Smith.
+Smith. That's S-M-I-T-H. Today we're visiting four cities to find out
+how the weather changes daily life. Our first report comes from Oslo, in
+Norway.
+
+**Reporter:** Good morning from Oslo! It's a cold winter morning. It's
+minus three degrees, and there's light snow. People are wearing warm
+coats, hats and gloves. The roads are slippery, so drivers are going
+slowly.
+
+**Luke:** Now let's travel to Nairobi, in Kenya.
+
+**Reporter:** Hello from Nairobi! It's warm and sunny, and lots of
+people are spending time outside. The rainy season starts next month,
+so people are getting their gardens ready.
+
+**Luke:** Our next stop is Tokyo, in Japan.
+
+**Reporter:** Good afternoon from Tokyo. It's cloudy, with a light wind
+but no rain. The stations are busy, because many people travel by
+train. In spring, Tokyo is famous for its cherry blossoms.
+
+**Luke:** Finally, let's go to Sydney, in Australia. Sydney. That's
+S-Y-D-N-E-Y.
+
+**Reporter:** Hello from Sydney! It's a bright summer day, and it's very
+hot. Lots of people are going to the beach. On hot days, drink water,
+use sun cream and stay in the shade at lunchtime.
+
+**Luke:** Thank you to all our reporters! Before you leave home, check
+the forecast and choose the right clothes. Take an umbrella if rain is
+expected.
+
+**Luke:** Send us your weather photos! Call or message us on oh one
+three one, four seven two, six five eight. That's oh one three one,
+four seven two, six five eight.
+
+**Luke:** Tomorrow, we'll talk about storms. The programme is on every
+morning at eight, and you can listen again on our website. Thank you
+for listening!
+
+## Questions
+
+### 1--5. Complete the notes. Write ONE word or A NUMBER.
+
+1.  The presenter's surname: \_\_\_\_\_ (spelled)
+2.  The programme looks at how the weather changes daily \_\_\_\_\_.
+3.  The temperature in Oslo: minus \_\_\_\_\_ degrees
+4.  People in Oslo are wearing warm coats, hats and \_\_\_\_\_.
+5.  The roads in Oslo are \_\_\_\_\_.
+
+### 6--7. Choose the correct answer.
+
+6.  What is the weather like in Nairobi? A) Cold and snowy B) Warm and
+    sunny C) Rainy
+7.  Why are people in Nairobi getting their gardens ready? A) There is a
+    competition B) It's spring C) The rainy season starts next month
+
+### 8--10. True or False?
+
+8.  It's raining in Tokyo.
+9.  The stations in Tokyo are quiet.
+10. Tokyo is famous for its cherry blossoms in spring.
+
+### 11--20. Complete the notes. Write ONE word or A NUMBER.
+
+11. The last city: \_\_\_\_\_ (spelled)
+12. Lots of people in Sydney are going to the \_\_\_\_\_.
+13. On hot days, use sun \_\_\_\_\_.
+14. Stay in the \_\_\_\_\_ at lunchtime.
+15. Before you leave home, check the \_\_\_\_\_.
+16. Take an \_\_\_\_\_ if rain is expected.
+17. The programme's phone number: \_\_\_\_\_ (spelled number)
+18. Tomorrow's programme is about \_\_\_\_\_.
+19. The programme is on every morning at \_\_\_\_\_.
+20. You can listen again on the programme's \_\_\_\_\_.
+
+## Answers
+
+1 Smith · 2 life · 3 three · 4 gloves · 5 slippery · 6 B · 7 C · 8 False · 9 False · 10 True · 11 Sydney · 12 beach ·
+13 cream · 14 shade · 15 forecast · 16 umbrella · 17 0131 472 658 · 18 storms · 19 eight · 20 website

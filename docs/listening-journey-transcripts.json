@@ -1768,69 +1768,59 @@
   "format": "International radio report",
   "transcript": [
    {
-    "who": "Presenter",
-    "man": false,
-    "text": "Welcome to World Weather Today. I'm your presenter, Laura Smith. Laura is L-A-U-R-A, and Smith is S-M-I-T-H. Today we're visiting four cities to find out how weather affects daily life."
-   },
-   {
-    "who": "Presenter",
-    "man": false,
-    "text": "Our first report comes from Oslo, the capital of Norway. Oslo is O-S-L-O. Our reporter is Erik Hansen. Erik is E-R-I-K, and Hansen is H-A-N-S-E-N."
-   },
-   {
-    "who": "Erik",
+    "who": "Luke",
     "man": true,
-    "text": "Good morning from Oslo! It's a cold winter morning. The temperature is minus three degrees Celsius, and there is light snow. Many people are wearing warm coats, hats and gloves. The roads are slippery, so drivers are moving slowly. Some children have outdoor winter activities at school."
+    "text": "Welcome to World Weather Today! I'm your presenter, Luke Smith. Smith. That's S-M-I-T-H. Today we're visiting four cities to find out how the weather changes daily life. Our first report comes from Oslo, in Norway."
    },
    {
-    "who": "Presenter",
+    "who": "Reporter",
     "man": false,
-    "text": "Thank you. Now let's travel to Nairobi in Kenya. Our reporter is Grace Mwangi. Grace is G-R-A-C-E, and Mwangi is M-W-A-N-G-I."
+    "text": "Good morning from Oslo! It's a cold winter morning. It's minus three degrees, and there's light snow. People are wearing warm coats, hats and gloves. The roads are slippery, so drivers are going slowly."
    },
    {
-    "who": "Grace",
-    "man": false,
-    "text": "Hello from Nairobi! It's warm and sunny. The temperature is twenty-six degrees. Many people enjoy spending time outside. The rainy season is expected to begin next month, so people are preparing their gardens and checking their roofs."
-   },
-   {
-    "who": "Presenter",
-    "man": false,
-    "text": "Our next stop is Tokyo, Japan. Tokyo is T-O-K-Y-O. Our reporter is Kenji Sato. Kenji is K-E-N-J-I, and Sato is S-A-T-O."
-   },
-   {
-    "who": "Kenji",
+    "who": "Luke",
     "man": true,
-    "text": "Good afternoon from Tokyo. It's cloudy and eighteen degrees. There is a light wind, but no rain. The stations are busy because many people travel by train. In spring, Tokyo is famous for its cherry blossoms. Visitors go to parks to see the flowers and take photographs."
+    "text": "Now let's travel to Nairobi, in Kenya."
    },
    {
-    "who": "Presenter",
+    "who": "Reporter",
     "man": false,
-    "text": "Finally, let's visit Sydney in Australia. Sydney is S-Y-D-N-E-Y. Our reporter is Mia Collins. Mia is M-I-A, and Collins is C-O-L-L-I-N-S."
+    "text": "Hello from Nairobi! It's warm and sunny, and lots of people are spending time outside. The rainy season starts next month, so people are getting their gardens ready."
    },
    {
-    "who": "Mia",
-    "man": false,
-    "text": "Hello from Sydney! It's a bright summer day. The temperature is thirty-one degrees. Many people are going to the beach, swimming or having lunch outside. In summer, it can become very hot. People should drink water, use sun protection and look for shade during the hottest part of the day."
+    "who": "Luke",
+    "man": true,
+    "text": "Our next stop is Tokyo, in Japan."
    },
    {
-    "who": "Presenter",
-    "man": false,
-    "text": "Thank you to all our reporters. Weather can be very different around the world. In one city, people may wear winter coats, while in another, they enjoy a sunny day at the beach."
+    "who": "Reporter",
+    "man": true,
+    "text": "Good afternoon from Tokyo. It's cloudy, with a light wind but no rain. The stations are busy, because many people travel by train. In spring, Tokyo is famous for its cherry blossoms."
    },
    {
-    "who": "Presenter",
-    "man": false,
-    "text": "Weather affects transport, school activities, work and travel plans. Before leaving home, it's useful to check the forecast and choose suitable clothes. Take an umbrella if rain is expected. Wear warm clothes in cold weather. On very hot days, drink enough water and avoid staying in the sun for too long."
+    "who": "Luke",
+    "man": true,
+    "text": "Finally, let's go to Sydney, in Australia. Sydney. That's S-Y-D-N-E-Y."
    },
    {
-    "who": "Presenter",
+    "who": "Reporter",
     "man": false,
-    "text": "Here are tomorrow's temperatures. Oslo will be minus one degree. Nairobi will be twenty-seven degrees. Tokyo will be nineteen degrees, and Sydney will be thirty degrees."
+    "text": "Hello from Sydney! It's a bright summer day, and it's very hot. Lots of people are going to the beach. On hot days, drink water, use sun cream and stay in the shade at lunchtime."
    },
    {
-    "who": "Presenter",
-    "man": false,
-    "text": "That's all for World Weather Today. Thank you for listening!"
+    "who": "Luke",
+    "man": true,
+    "text": "Thank you to all our reporters! Before you leave home, check the forecast and choose the right clothes. Take an umbrella if rain is expected."
+   },
+   {
+    "who": "Luke",
+    "man": true,
+    "text": "Send us your weather photos! Call or message us on oh one three one, four seven two, six five eight. That's oh one three one, four seven two, six five eight."
+   },
+   {
+    "who": "Luke",
+    "man": true,
+    "text": "Tomorrow, we'll talk about storms. The programme is on every morning at eight, and you can listen again on our website. Thank you for listening!"
    }
   ]
  }
