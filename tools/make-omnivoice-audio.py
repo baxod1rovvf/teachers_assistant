@@ -122,7 +122,7 @@ def voice_prompt(vid, v):
 # How a recogniser writes a letter said on its own ("O" → "oh", "Y" → "why", "X" → "ex"…)
 NAMES = {'A': 'a ay eh', 'B': 'b bee be', 'C': 'c see sea', 'D': 'd dee', 'E': 'e ee', 'F': 'f ef', 'G': 'g gee', 'H': 'h aitch',
          'I': 'i eye aye', 'J': 'j jay', 'K': 'k kay', 'L': 'l el', 'M': 'm em', 'N': 'n en', 'O': 'o oh', 'P': 'p pee pea',
-         'Q': 'q queue cue', 'R': 'r are ar our', 'S': 's ess es', 'T': 't tee tea', 'U': 'u you', 'V': 'v vee', 'W': 'w',
+         'Q': 'q queue cue', 'R': 'r are ar our', 'S': 's ess es', 'T': 't tee tea', 'U': 'u you', 'V': 'v vee', 'W': 'w double',
          'X': 'x ex', 'Y': 'y why', 'Z': 'z zee zed'}
 def trim(a):
     """the sound without the silence around it"""
