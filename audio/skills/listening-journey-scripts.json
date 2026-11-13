@@ -2099,241 +2099,158 @@
  {
   "src": "audio/skills/listen-step-10.mp3",
   "title": "A Tour of My City",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   }
+  },
   "lines": [
    [
-    "am_michael",
-    "Good morning, everyone!",
+    "am_ov_energetic",
+    "Good morning, everyone, and welcome to our city tour!",
     0.3
    ],
    [
-    "am_michael",
-    "Welcome to our city tour.",
+    "am_ov_energetic",
+    "My name is Peter Wilson, and I'll be your guide today.",
     0.3
    ],
    [
-    "am_michael",
-    "My name is Peter Wilson.",
+    "am_ov_energetic",
+    "Wilson.",
     0.3
    ],
    [
-    "am_michael",
-    "Peter.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "P. E. T. E. R.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "And Wilson.",
-    0.3
-   ],
-   [
-    "am_michael",
+    "am_ov_energetic",
     "W. I. L. S. O. N.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "We're starting here in the main square, the biggest square in the city.",
     0.3
    ],
    [
-    "am_michael",
-    "I'll be your guide today.",
-    0.9
-   ],
-   [
-    "am_michael",
-    "We are starting at Central Square, the largest public square in the city.",
+    "am_ov_energetic",
+    "Our first stop is the City Museum, just across the road.",
     0.3
    ],
    [
-    "am_michael",
-    "Our first stop is the City History Museum.",
+    "am_ov_energetic",
+    "The building is very old.",
     0.3
    ],
    [
-    "am_michael",
-    "It is in an old building that was once a school.",
+    "am_ov_energetic",
+    "Before it was a museum, it was a school.",
     0.3
    ],
    [
-    "am_michael",
-    "The museum opened in nineteen eighty-five.",
+    "am_ov_energetic",
+    "The museum is closed on Mondays, so we're lucky it's Tuesday today!",
     0.3
    ],
    [
-    "am_michael",
-    "It is open from Tuesday to Sunday, ten in the morning until five in the afternoon.",
+    "am_ov_energetic",
+    "Inside, you can see old maps and photos of the city.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Next, we'll walk to Riverside Park.",
     0.3
    ],
    [
-    "am_michael",
-    "It is closed on Mondays.",
-    0.9
-   ],
-   [
-    "am_michael",
-    "Next, we will visit Riverside Park.",
-    0.3
-   ],
-   [
-    "am_michael",
+    "am_ov_energetic",
     "Riverside.",
     0.3
    ],
    [
-    "am_michael",
+    "am_ov_energetic",
     "R. I. V. E. R. S. I. D. E.",
-    0.3
+    0.6
    ],
    [
-    "am_michael",
-    "We will walk along River Road.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "River.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "R. I. V. E. R.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "And Road.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "R. O. A. D.",
-    0.3
-   ],
-   [
-    "am_michael",
+    "am_ov_energetic",
     "The park is next to the river.",
     0.3
    ],
    [
-    "am_michael",
-    "It has a walking path, two playgrounds and a small café.",
+    "am_ov_energetic",
+    "It has a long walking path, two playgrounds and a small café.",
     0.3
    ],
    [
-    "am_michael",
-    "Water costs one dollar and fifty cents.",
+    "am_ov_energetic",
+    "At the café, fresh juice costs three dollars, and it's really good!",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "After the park, we'll visit the market.",
     0.3
    ],
    [
-    "am_michael",
-    "Fresh juice costs three dollars.",
-    0.9
-   ],
-   [
-    "am_michael",
-    "After the park, we will visit Green Market.",
+    "am_ov_energetic",
+    "It's famous for fresh fruit and vegetables.",
     0.3
    ],
    [
-    "am_michael",
-    "Green.",
+    "am_ov_energetic",
+    "It's very busy on Saturday mornings, but today it will be quiet.",
     0.3
    ],
    [
-    "am_michael",
-    "G. R. E. E. N.",
+    "am_ov_energetic",
+    "Then, at half past twelve, we'll have lunch at a small restaurant near the market.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Our last stop is the City Library.",
     0.3
    ],
    [
-    "am_michael",
-    "And Market.",
+    "am_ov_energetic",
+    "It has three floors, and the top floor is a quiet study area.",
     0.3
    ],
    [
-    "am_michael",
-    "M. A. R. K. E. T.",
+    "am_ov_energetic",
+    "If you get lost, please meet us at the library entrance.",
     0.3
    ],
    [
-    "am_michael",
-    "It is famous for fresh fruit, vegetables, bread and local food.",
+    "am_ov_energetic",
+    "You can also call me.",
     0.3
    ],
    [
-    "am_michael",
-    "It is busiest on Saturday mornings.",
-    0.9
+    "am_ov_energetic",
+    "My number is oh seven eight one, three five two, six four nine.",
+    0.5
    ],
    [
-    "am_michael",
-    "At twelve thirty, we will have lunch at The Garden Table.",
+    "am_ov_energetic",
+    "That's oh seven eight one, three five two, six four nine.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Oh, and bring an umbrella.",
     0.3
    ],
    [
-    "am_michael",
-    "Garden.",
+    "am_ov_energetic",
+    "It might rain this afternoon.",
     0.3
    ],
    [
-    "am_michael",
-    "G. A. R. D. E. N.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "And Table.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "T. A. B. L. E.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "Chicken and rice costs seven dollars and eighty cents.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "A vegetarian meal costs six dollars and fifty cents.",
-    0.9
-   ],
-   [
-    "am_michael",
-    "Our final stop is the City Library on Park Avenue.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "It has three floors.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "The first floor has children's books, the second has novels and magazines, and the third is a quiet study area.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "Meet us at the library entrance at three thirty if you get lost.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "My phone number is zero seven nine four, six two one, eight three zero.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "That's zero seven nine four, six two one, eight three zero.",
-    0.9
-   ],
-   [
-    "am_michael",
-    "Thank you, and enjoy the tour!",
-    0.9
+    "am_ov_energetic",
+    "Enjoy the tour!",
+    0.4
    ]
   ]
  },

@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const { prepare } = require('./support/app');
 
-const NEW = [8, 9];
+const NEW = [8, 9, 10];
 const COUNT = { 8: 14, 9: 14, 10: 15, 11: 16, 12: 16, 13: 17, 14: 17, 15: 18, 16: 18, 17: 19, 18: 19, 19: 20, 20: 20 };
 const ROLES = /^(Speaker|Presenter|Host|Interviewer|Guide|Teacher|Reporter|Assistant|Customer|Announcer|Narrator|Coach|Receptionist|Driver|Manager|Shop assistant|Staff)$/i;
 

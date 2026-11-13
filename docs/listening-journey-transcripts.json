@@ -888,39 +888,34 @@
   "format": "Guided tour",
   "transcript": [
    {
-    "who": "Speaker",
+    "who": "Guide",
     "man": true,
-    "text": "Good morning, everyone! Welcome to our city tour. My name is Peter Wilson. Peter is P-E-T-E-R, and Wilson is W-I-L-S-O-N. I'll be your guide today."
+    "text": "Good morning, everyone, and welcome to our city tour! My name is Peter Wilson, and I'll be your guide today. Wilson. That's W-I-L-S-O-N."
    },
    {
-    "who": "Speaker",
+    "who": "Guide",
     "man": true,
-    "text": "We are starting at Central Square, the largest public square in the city. Our first stop is the City History Museum. It is in an old building that was once a school. The museum opened in nineteen eighty-five. It is open from Tuesday to Sunday, ten in the morning until five in the afternoon. It is closed on Mondays."
+    "text": "We're starting here in the main square, the biggest square in the city. Our first stop is the City Museum, just across the road. The building is very old. Before it was a museum, it was a school. The museum is closed on Mondays, so we're lucky it's Tuesday today! Inside, you can see old maps and photos of the city."
    },
    {
-    "who": "Speaker",
+    "who": "Guide",
     "man": true,
-    "text": "Next, we will visit Riverside Park. Riverside is R-I-V-E-R-S-I-D-E. We will walk along River Road. River is R-I-V-E-R, and Road is R-O-A-D. The park is next to the river. It has a walking path, two playgrounds and a small café. Water costs one dollar and fifty cents. Fresh juice costs three dollars."
+    "text": "Next, we'll walk to Riverside Park. Riverside. That's R-I-V-E-R-S-I-D-E. The park is next to the river. It has a long walking path, two playgrounds and a small café. At the café, fresh juice costs three dollars, and it's really good!"
    },
    {
-    "who": "Speaker",
+    "who": "Guide",
     "man": true,
-    "text": "After the park, we will visit Green Market. Green is G-R-E-E-N, and Market is M-A-R-K-E-T. It is famous for fresh fruit, vegetables, bread and local food. It is busiest on Saturday mornings."
+    "text": "After the park, we'll visit the market. It's famous for fresh fruit and vegetables. It's very busy on Saturday mornings, but today it will be quiet. Then, at half past twelve, we'll have lunch at a small restaurant near the market."
    },
    {
-    "who": "Speaker",
+    "who": "Guide",
     "man": true,
-    "text": "At twelve thirty, we will have lunch at The Garden Table. Garden is G-A-R-D-E-N, and Table is T-A-B-L-E. Chicken and rice costs seven dollars and eighty cents. A vegetarian meal costs six dollars and fifty cents."
+    "text": "Our last stop is the City Library. It has three floors, and the top floor is a quiet study area. If you get lost, please meet us at the library entrance. You can also call me. My number is oh seven eight one, three five two, six four nine. That's oh seven eight one, three five two, six four nine."
    },
    {
-    "who": "Speaker",
+    "who": "Guide",
     "man": true,
-    "text": "Our final stop is the City Library on Park Avenue. It has three floors. The first floor has children's books, the second has novels and magazines, and the third is a quiet study area. Meet us at the library entrance at three thirty if you get lost. My phone number is 0794 621 830. That's zero seven nine four, six two one, eight three zero."
-   },
-   {
-    "who": "Speaker",
-    "man": true,
-    "text": "Thank you, and enjoy the tour!"
+    "text": "Oh, and bring an umbrella. It might rain this afternoon. Enjoy the tour!"
    }
   ]
  },

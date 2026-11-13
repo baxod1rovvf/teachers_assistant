@@ -203,3 +203,76 @@ desk.
 
 1 Brooks · 2 second · 3 cinema · 4 ten · 5 Toybox · 6 18.50 · 7 B · 8 B · 9 C · 10 False · 11 True · 12 True ·
 13 0207 491 356 · 14 free
+
+------------------------------------------------------------------------
+
+# Step 10 --- A Tour of My City
+
+**Target:** 3 minutes \| **Format:** Guided tour \| **Questions:** 15
+
+## Audio transcript
+
+**Guide:** Good morning, everyone, and welcome to our city tour! My name
+is Peter Wilson, and I'll be your guide today. Wilson. That's
+W-I-L-S-O-N.
+
+**Guide:** We're starting here in the main square, the biggest square in
+the city. Our first stop is the City Museum, just across the road. The
+building is very old. Before it was a museum, it was a school. The
+museum is closed on Mondays, so we're lucky it's Tuesday today! Inside,
+you can see old maps and photos of the city.
+
+**Guide:** Next, we'll walk to Riverside Park. Riverside. That's
+R-I-V-E-R-S-I-D-E. The park is next to the river. It has a long walking
+path, two playgrounds and a small café. At the café, fresh juice costs
+three dollars, and it's really good!
+
+**Guide:** After the park, we'll visit the market. It's famous for fresh
+fruit and vegetables. It's very busy on Saturday mornings, but today it
+will be quiet. Then, at half past twelve, we'll have lunch at a small
+restaurant near the market.
+
+**Guide:** Our last stop is the City Library. It has three floors, and
+the top floor is a quiet study area. If you get lost, please meet us at
+the library entrance. You can also call me. My number is oh seven eight
+one, three five two, six four nine. That's oh seven eight one, three
+five two, six four nine.
+
+**Guide:** Oh, and bring an umbrella. It might rain this afternoon.
+Enjoy the tour!
+
+## Questions
+
+### 1--5. Complete the notes. Write ONE word or A NUMBER.
+
+1.  The guide's surname: \_\_\_\_\_ (spelled)
+2.  Before it was a museum, the building was a \_\_\_\_\_.
+3.  The museum is closed on \_\_\_\_\_.
+4.  In the museum, you can see old \_\_\_\_\_ and photos of the city.
+5.  The name of the park: \_\_\_\_\_ Park (spelled)
+
+### 6--8. Choose the correct answer.
+
+6.  What does the park have? A) A swimming pool B) Two playgrounds C) A
+    zoo
+7.  How much does fresh juice cost at the café? A) \$2 B) \$3 C) \$4
+8.  What is the market famous for? A) Old books B) Fresh fruit and
+    vegetables C) Clothes
+
+### 9--11. True or False?
+
+9.  The market is very busy on Saturday mornings.
+10. The group will have lunch at half past one.
+11. The library has four floors.
+
+### 12--15. Complete the notes. Write ONE word or A NUMBER.
+
+12. The top floor of the library is a quiet \_\_\_\_\_ area.
+13. If you get lost, meet at the library \_\_\_\_\_.
+14. The guide's phone number: \_\_\_\_\_ (spelled number)
+15. Bring an \_\_\_\_\_ because it might rain.
+
+## Answers
+
+1 Wilson · 2 school · 3 Monday(s) · 4 maps · 5 Riverside · 6 B · 7 B · 8 B · 9 True · 10 False · 11 False · 12 study ·
+13 entrance · 14 0781 352 649 · 15 umbrella

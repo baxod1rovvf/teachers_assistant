@@ -1112,34 +1112,33 @@ var TA_SKILLS = {
       id: 'b10', no: 10, stage: 'Beginner', theme: 'Your City', emoji: '🏙️',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
-        src: "audio/skills/listen-step-10.mp3?v=1",
+        src: "audio/skills/listen-step-10.mp3?v=2",
         title: "A Tour of My City",
         intro: "Listen to a guide at the start of a city tour. Then answer the 15 questions.",
         questions: [
-          {"type":"choose","q":"Where does the tour begin?","opts":["Riverside Park","Central Square","Green Market"],"a":["Central Square"],"sec":"Choose the correct answer."},
-          {"type":"choose","q":"What was the museum building before?","opts":["A school","A hospital","A hotel"],"a":["A school"],"sec":"Choose the correct answer."},
-          {"type":"choose","q":"When is the museum closed?","opts":["Tuesday","Saturday","Monday"],"a":["Monday"],"sec":"Choose the correct answer."},
-          {"type":"choose","q":"What is the final stop?","opts":["The market","The library","The museum"],"a":["The library"],"sec":"Choose the correct answer."},
-          {"type":"gap","q":"The park's name: _____ Park","a":["Riverside","Riverside Park"],"sec":"Spelling and numbers."},
-          {"type":"gap","q":"The road's name: _____ Road","a":["River","River Road"],"sec":"Spelling and numbers."},
-          {"type":"gap","q":"Fresh juice costs $_____.","a":["3","three","3.00"],"sec":"Spelling and numbers."},
-          {"type":"gap","q":"The guide's phone number (in digits): _____","a":["0794 621 830"],"sec":"Spelling and numbers."},
-          {"type":"gap","q":"The market is called _____ Market.","a":["Green","Green Market"],"sec":"Complete the notes."},
-          {"type":"gap","q":"Lunch begins at _____.","a":["12:30","12.30","twelve thirty","half past twelve","12:30 pm","12:30 p.m."],"sec":"Complete the notes."},
-          {"type":"gap","q":"The chicken and rice meal costs $_____.","a":["7.80","7,80","7.8"],"sec":"Complete the notes."},
-          {"type":"gap","q":"The library has _____ floors.","a":["3","three","3 floors","three floors"],"sec":"Complete the notes."},
-          {"type":"tf","q":"Green Market is busiest on Saturday mornings.","a":["True"],"sec":"True or False?"},
-          {"type":"tf","q":"The library has a quiet study area on the third floor.","a":["True"],"sec":"True or False?"},
-          {"type":"tf","q":"Lost visitors should meet at the library entrance at 3:30.","a":["True"],"sec":"True or False?"}
+          {"type":"gap","q":"The guide's surname: _____","a":["Wilson"],"sec":"Complete the notes. Write ONE word or A NUMBER."},
+          {"type":"gap","q":"Before it was a museum, the building was a _____.","a":["school"],"sec":"Complete the notes. Write ONE word or A NUMBER."},
+          {"type":"gap","q":"The museum is closed on _____.","a":["Mondays","Monday"],"sec":"Complete the notes. Write ONE word or A NUMBER."},
+          {"type":"gap","q":"In the museum, you can see old _____ and photos of the city.","a":["maps"],"sec":"Complete the notes. Write ONE word or A NUMBER."},
+          {"type":"gap","q":"The name of the park: _____ Park","a":["Riverside","Riverside Park"],"sec":"Complete the notes. Write ONE word or A NUMBER."},
+          {"type":"choose","q":"What does the park have?","opts":["A swimming pool","Two playgrounds","A zoo"],"a":["Two playgrounds"],"sec":"Choose the correct answer."},
+          {"type":"choose","q":"How much does fresh juice cost at the café?","opts":["$2","$3","$4"],"a":["$3"],"sec":"Choose the correct answer."},
+          {"type":"choose","q":"What is the market famous for?","opts":["Old books","Fresh fruit and vegetables","Clothes"],"a":["Fresh fruit and vegetables"],"sec":"Choose the correct answer."},
+          {"type":"tf","q":"The market is very busy on Saturday mornings.","a":["True"],"sec":"True or False?"},
+          {"type":"tf","q":"The group will have lunch at half past one.","a":["False"],"sec":"True or False?"},
+          {"type":"tf","q":"The library has four floors.","a":["False"],"sec":"True or False?"},
+          {"type":"gap","q":"The top floor of the library is a quiet _____ area.","a":["study","study area"],"sec":"Complete the notes. Write ONE word or A NUMBER."},
+          {"type":"gap","q":"If you get lost, meet at the library _____.","a":["entrance"],"sec":"Complete the notes. Write ONE word or A NUMBER."},
+          {"type":"gap","q":"The guide's phone number: _____","a":["0781 352 649"],"sec":"Complete the notes. Write ONE word or A NUMBER."},
+          {"type":"gap","q":"Bring an _____ because it might rain.","a":["umbrella","umbrella because"],"sec":"Complete the notes. Write ONE word or A NUMBER."}
         ],
         transcript: [
-          {"who":"Peter","man":true,"text":"Good morning, everyone! Welcome to our city tour. My name is Peter Wilson. Peter is P-E-T-E-R, and Wilson is W-I-L-S-O-N. I'll be your guide today.","answers":[]},
-          {"who":"Peter","man":true,"text":"We are starting at Central Square, the largest public square in the city. Our first stop is the City History Museum. It is in an old building that was once a school. The museum opened in nineteen eighty-five. It is open from Tuesday to Sunday, ten in the morning until five in the afternoon. It is closed on Mondays.","answers":[1,2,3]},
-          {"who":"Peter","man":true,"text":"Next, we will visit Riverside Park. Riverside is R-I-V-E-R-S-I-D-E. We will walk along River Road. River is R-I-V-E-R, and Road is R-O-A-D. The park is next to the river. It has a walking path, two playgrounds and a small café. Water costs one dollar and fifty cents. Fresh juice costs three dollars.","answers":[5,6,7]},
-          {"who":"Peter","man":true,"text":"After the park, we will visit Green Market. Green is G-R-E-E-N, and Market is M-A-R-K-E-T. It is famous for fresh fruit, vegetables, bread and local food. It is busiest on Saturday mornings.","answers":[9,13]},
-          {"who":"Peter","man":true,"text":"At twelve thirty, we will have lunch at The Garden Table. Garden is G-A-R-D-E-N, and Table is T-A-B-L-E. Chicken and rice costs seven dollars and eighty cents. A vegetarian meal costs six dollars and fifty cents.","answers":[10,11]},
-          {"who":"Peter","man":true,"text":"Our final stop is the City Library on Park Avenue. It has three floors. The first floor has children's books, the second has novels and magazines, and the third is a quiet study area. Meet us at the library entrance at three thirty if you get lost. My phone number is 0794 621 830. That's zero seven nine four, six two one, eight three zero.","answers":[4,8,12,14,15]},
-          {"who":"Peter","man":true,"text":"Thank you, and enjoy the tour!","answers":[]}
+          {"who":"Guide","man":true,"text":"Good morning, everyone, and welcome to our city tour! My name is Peter Wilson, and I'll be your guide today. Wilson. That's W-I-L-S-O-N.","answers":[1]},
+          {"who":"Guide","man":true,"text":"We're starting here in the main square, the biggest square in the city. Our first stop is the City Museum, just across the road. The building is very old. Before it was a museum, it was a school. The museum is closed on Mondays, so we're lucky it's Tuesday today! Inside, you can see old maps and photos of the city.","answers":[2,3,4]},
+          {"who":"Guide","man":true,"text":"Next, we'll walk to Riverside Park. Riverside. That's R-I-V-E-R-S-I-D-E. The park is next to the river. It has a long walking path, two playgrounds and a small café. At the café, fresh juice costs three dollars, and it's really good!","answers":[5,6,7]},
+          {"who":"Guide","man":true,"text":"After the park, we'll visit the market. It's famous for fresh fruit and vegetables. It's very busy on Saturday mornings, but today it will be quiet. Then, at half past twelve, we'll have lunch at a small restaurant near the market.","answers":[8,9,10]},
+          {"who":"Guide","man":true,"text":"Our last stop is the City Library. It has three floors, and the top floor is a quiet study area. If you get lost, please meet us at the library entrance. You can also call me. My number is oh seven eight one, three five two, six four nine. That's oh seven eight one, three five two, six four nine.","answers":[11,12,13,14]},
+          {"who":"Guide","man":true,"text":"Oh, and bring an umbrella. It might rain this afternoon. Enjoy the tour!","answers":[15]}
         ]
         // LISTENING JOURNEY END
       },

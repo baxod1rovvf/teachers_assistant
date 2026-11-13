@@ -155,27 +155,27 @@
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["The information desk's phone number: _____", ["0207 491 356"], "The number is oh two oh seven"],
    ["Gift wrapping at the customer service desk is _____.", ["free"], "Gift wrapping is free"]]}]},
-{"no": 10, "speaker": "Peter", "intro": "Listen to a guide at the start of a city tour.",
+{"no": 10, "speaker": "Guide", "inOrder": true, "names": ["Peter"], "audioV": 2, "intro": "Listen to a guide at the start of a city tour.",
  "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The guide's surname: _____", ["Wilson"], "That's W-I-L-S-O-N"],
+   ["Before it was a museum, the building was a _____.", ["school"], "it was a school"],
+   ["The museum is closed on _____.", ["Mondays", "Monday"], "closed on Mondays"],
+   ["In the museum, you can see old _____ and photos of the city.", ["maps"], "old maps"],
+   ["The name of the park: _____ Park", ["Riverside"], "R-I-V-E-R-S-I-D-E"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["Where does the tour begin?", ["Riverside Park", "Central Square", "Green Market"], "Central Square", "starting at Central Square"],
-   ["What was the museum building before?", ["A school", "A hospital", "A hotel"], "A school", "was once a school"],
-   ["When is the museum closed?", ["Tuesday", "Saturday", "Monday"], "Monday", "closed on Mondays"],
-   ["What is the final stop?", ["The market", "The library", "The museum"], "The library", "final stop is the City Library"]]},
-  {"h": "Spelling and numbers.", "t": "gap", "qs": [
-   ["The park's name: _____ Park", ["Riverside"], "Riverside is R-I-V-E-R-S-I-D-E"],
-   ["The road's name: _____ Road", ["River"], "River is R-I-V-E-R"],
-   ["Fresh juice costs $_____.", ["3", "three", "3.00"], "Fresh juice costs three dollars"],
-   ["The guide's phone number (in digits): _____", ["0794 621 830"], "zero seven nine four"]]},
-  {"h": "Complete the notes.", "t": "gap", "qs": [
-   ["The market is called _____ Market.", ["Green"], "Green is G-R-E-E-N"],
-   ["Lunch begins at _____.", ["12:30", "12.30", "twelve thirty", "half past twelve", "12:30 pm", "12:30 p.m."], "At twelve thirty"],
-   ["The chicken and rice meal costs $_____.", ["7.80", "7,80", "7.8"], "seven dollars and eighty cents"],
-   ["The library has _____ floors.", ["3", "three"], "It has three floors"]]},
+   ["What does the park have?", ["A swimming pool", "Two playgrounds", "A zoo"], "Two playgrounds", "two playgrounds"],
+   ["How much does fresh juice cost at the café?", ["$2", "$3", "$4"], "$3", "fresh juice costs three dollars"],
+   ["What is the market famous for?", ["Old books", "Fresh fruit and vegetables", "Clothes"], "Fresh fruit and vegetables", "famous for fresh fruit"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["Green Market is busiest on Saturday mornings.", "True", "busiest on Saturday mornings"],
-   ["The library has a quiet study area on the third floor.", "True", "the third is a quiet study area"],
-   ["Lost visitors should meet at the library entrance at 3:30.", "True", "at three thirty if you get lost"]]}]},
+   ["The market is very busy on Saturday mornings.", "True", "very busy on Saturday mornings"],
+   ["The group will have lunch at half past one.", "False", "at half past twelve"],
+   ["The library has four floors.", "False", "It has three floors"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The top floor of the library is a quiet _____ area.", ["study"], "quiet study area"],
+   ["If you get lost, meet at the library _____.", ["entrance"], "library entrance"],
+   ["The guide's phone number: _____", ["0781 352 649"], "My number is oh seven eight one"],
+   ["Bring an _____ because it might rain.", ["umbrella"], "bring an umbrella"]]}]},
 {"no": 11, "speaker": "Amelia", "intro": "Listen to Amelia talking about a holiday she remembers.",
  "sections": [
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
