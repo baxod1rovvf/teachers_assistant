@@ -151,6 +151,39 @@ test('feedback tells done / waiting / unknown; check checks one at once', async 
   expect(kv.m.has('q:' + id)).toBe(false);
 });
 
+test('the generous check (2026-11-13): the rules + score guide go to the AI; at most 5 mistakes; praise and a better version come back', async () => {
+  const w = await load();
+  let sent = null;
+  const answer = Object.assign({}, AI, {
+    mistakes: Array.from({ length: 8 }, (_, i) => ({ wrong: 'I goes ' + i + '.', right: 'I go ' + i + '.', why: 'I + go' })),
+    praise: ['You used all the asked words.', 'Your ideas are in a clear order.', 'Nice ending.', 'a fourth one'],
+    betterVersion: 'I go to school every day with my best friend.' + ' x'.repeat(2000) });
+  globalThis.fetch = async (url, init) => {
+    url = String(url);
+    if (url.startsWith('https://firestore.googleapis.com/')) return new Response('{}', { status: 404 });
+    sent = JSON.parse(init.body);
+    return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: JSON.stringify(answer) }] } }] }), { status: 200 });
+  };
+  const r = await w.checkWriting(writingOf('sk_GEN_1'), { GEMINI_API_KEY: 'k' });
+  const rules = sent.systemInstruction.parts[0].text;
+  expect(rules).toContain('GENEROUS');
+  expect(rules).toContain('never take marks off twice');
+  expect(rules).toContain('do not deduct');
+  expect(rules).toContain('good, a few minor mistakes = 8–8.5');
+  expect(rules).toContain('difficult to understand or incomplete = 5 or below');
+  expect(rules).toContain('at most 5');
+  expect(r.result.mistakes).toHaveLength(5);
+  expect(r.result.praise).toEqual(answer.praise.slice(0, 3));
+  expect(r.result.betterVersion.startsWith('I go to school every day with my best friend.')).toBe(true);
+  expect(r.result.betterVersion.length).toBeLessThanOrEqual(3000);
+  expect(r.result.band).toBe(w.aiBand(AI.scores, 9, 5));
+  // an answer without the new parts still works (empty praise, no better version)
+  globalThis.fetch = async () => new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: JSON.stringify(AI) }] } }] }), { status: 200 });
+  const old = await w.checkWriting(writingOf('sk_GEN_2'), { GEMINI_API_KEY: 'k' });
+  expect(old.result.praise).toEqual([]);
+  expect(old.result.betterVersion).toBe('');
+});
+
 test('aiBand: -0.5 only when too short, kept to 1-9', async () => {
   const w = await load();
   expect(w.aiBand({ grammar: 3, vocabulary: 2, structure: 2, task: 2 }, 90, 80)).toBe(9);
@@ -178,7 +211,7 @@ test('/status shows version, kv, waiting count and the jobs', async () => {
   kv.m.set('q:sk_A_1', { value: '{}', metadata: { at: 'x' } });
   kv.m.set('f:sk_B_1', { value: '{}', metadata: null });
   const res = await w.default.fetch(new Request('https://x.workers.dev/status'), { LOOM_KV: kv, GEMINI_API_KEY: 'k' });
-  expect(await res.json()).toEqual({ running: true, version: '2026-11-13a', keySaved: true, kv: true, waiting: 1, jobs: ['chat', 'writing', 'queue', 'feedback', 'check'] });
+  expect(await res.json()).toEqual({ running: true, version: '2026-11-13b', keySaved: true, kv: true, waiting: 1, jobs: ['chat', 'writing', 'queue', 'feedback', 'check'] });
 });
 
 /* ---------- final review fixes (2026-11-13) ---------- */

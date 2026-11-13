@@ -1813,10 +1813,12 @@ function skAiFeedbackHtml(r, ai) {
   return '<div class="sk-wv-ai">' +
     '<div class="sk-wv-parts">🤖 Grammar ' + s.grammar + '/3 · Vocabulary ' + s.vocabulary + '/2 · Structure ' + s.structure + '/2 · Task ' + s.task + '/2' +
       (r.minWords && r.words < r.minWords ? ' · −0.5 (too short)' : '') + '</div>' +
-    (ai.mistakes && ai.mistakes.length ? '<ol class="sk-wv-mistakes">' + ai.mistakes.map(m => '<li><span class="sk-wv-bad">' + esc(m.wrong) + '</span> → <span class="sk-wv-fix">' + esc(m.right) + '</span>' + (m.why ? '<small>' + esc(m.why) + '</small>' : '') + '</li>').join('') + '</ol>' : '<p>No grammar mistakes found.</p>') +
+    (ai.praise && ai.praise.length ? '<p class="sk-wv-sub">⭐ What you did well</p><ul class="sk-wv-praise">' + ai.praise.map(t => '<li>' + esc(t) + '</li>').join('') + '</ul>' : '') +
+    (ai.mistakes && ai.mistakes.length ? '<p class="sk-wv-sub">✏️ Things to improve</p><ol class="sk-wv-mistakes">' + ai.mistakes.map(m => '<li><span class="sk-wv-bad">' + esc(m.wrong) + '</span> → <span class="sk-wv-fix">' + esc(m.right) + '</span>' + (m.why ? '<small>' + esc(m.why) + '</small>' : '') + '</li>').join('') + '</ol>' : '<p>No grammar mistakes found.</p>') +
     (ai.better && ai.better.length ? '<p class="sk-wv-sub">💡 Better words</p><ul class="sk-wv-better">' + ai.better.map(b => '<li><b>' + esc(b.word) + '</b> → ' + esc(b.instead) + (b.why ? ' <small>— ' + esc(b.why) + '</small>' : '') + '</li>').join('') + '</ul>' : '') +
     (asked ? '<p class="sk-wv-sub">📝 Asked words</p><p class="sk-wv-asked">' + (asked.used || []).map(w => '✅ ' + esc(w)).concat((asked.missing || []).map(w => '❌ ' + esc(w))).join(' · ') + '</p>' : '') +
     (ai.tips && ai.tips.length ? '<p class="sk-wv-sub">🚀 Tips</p><ol class="sk-wv-tips">' + ai.tips.map(t => '<li>' + esc(t) + '</li>').join('') + '</ol>' : '') +
+    (ai.betterVersion ? '<p class="sk-wv-sub">✨ Better version</p><div class="sk-wv-betterv">' + esc(ai.betterVersion) + '</div>' : '') +
   '</div>';
 }
 /* What the helper said about waiting writings: { <id>: { tries, lastError } } (memory only — the window shows it) */

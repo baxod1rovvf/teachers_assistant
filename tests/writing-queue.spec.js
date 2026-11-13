@@ -18,7 +18,7 @@ async function fakeHelper(context, state, bodies) {
     const json = o => route.fulfill({ status: 200, contentType: 'application/json', headers: H, body: JSON.stringify(o) });
     if (b.job === 'feedback') return json({ states: Object.fromEntries((b.ids || []).map(id => [id, state.feedback[id] || { state: 'unknown' }])) });
     if (b.job === 'queue') return json({ queued: true });
-    if (b.job === 'check') return json({ result: RESULT });
+    if (b.job === 'check') return json({ result: Object.assign({}, RESULT, { praise: ['You used <b>all</b> the asked words.', 'Clear order.'], betterVersion: 'I usually wake up at seven o\'clock.' }) });
     return route.fulfill({ status: 400, contentType: 'application/json', headers: H, body: '{"error":"?"}' });
   });
 }
@@ -85,6 +85,12 @@ test('the writing window: waiting → "⏳ Waiting for the AI check" with tries 
   await expect(modal.locator('.sk-wv-wait')).toContainText('the free limit is used up');
   await modal.getByRole('button', { name: '🤖 Check now' }).click();
   await expect(modal.locator('.sk-wv-parts')).toContainText('Grammar 2.5/3');
+  // the generous check's extras (2026-11-13): what the student did well (escaped) and the better version
+  await expect(modal).toContainText('⭐ What you did well');
+  await expect(modal.locator('.sk-wv-praise li')).toHaveCount(2);
+  await expect(modal.locator('.sk-wv-praise li').first()).toHaveText('You used <b>all</b> the asked words.');
+  await expect(modal).toContainText('✏️ Things to improve');
+  await expect(modal.locator('.sk-wv-betterv')).toHaveText('I usually wake up at seven o\'clock.');
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skills_marks') || '{}'))).toEqual({});   // no mark is written
   await expect(wcell(page, 'Bobur Test')).toContainText('8');
   expect(errors).toEqual([]);

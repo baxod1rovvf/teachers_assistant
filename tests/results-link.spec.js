@@ -79,7 +79,7 @@ test('the link page: the table, ⏳ for a waiting writing, then its band; tappin
   await cell.click();
   await expect(page.locator('.rl-modal')).toContainText('still being checked');
   await page.keyboard.press('Escape');
-  feedback.sk_WRT555_10001_1 = { state: 'done', result: RESULT };
+  feedback.sk_WRT555_10001_1 = { state: 'done', result: Object.assign({}, RESULT, { praise: ['Good <i>order</i>.', 'Nice words.', 'Clear ending.'], betterVersion: 'I usually wake up at seven o\'clock.' }) };
   await expect(cell).toContainText('7.5');
   await expect(cell).not.toContainText('⏳');
   await expect(page.locator('.sk-rt-row', { hasText: 'Alice Test' }).locator('.sk-rt-overall')).toContainText('7.5');   // (7 + 7.5) / 2 → 7.5
@@ -91,6 +91,10 @@ test('the link page: the table, ⏳ for a waiting writing, then its band; tappin
   await expect(m.locator('.sk-wv-text mark')).toHaveCount(1);
   await expect(m).toContainText('excellent');
   await expect(m.locator('.sk-wv-tips li')).toHaveCount(3);
+  // the generous check's extras (2026-11-13): what the student did well (escaped) and the better version
+  await expect(m.locator('.sk-wv-praise li')).toHaveCount(3);
+  await expect(m.locator('.sk-wv-praise li').first()).toHaveText('Good <i>order</i>.');
+  await expect(m.locator('.sk-wv-betterv')).toHaveText('I usually wake up at seven o\'clock.');
   await expect(m).toContainText('✅ wake up');
   await expect(m).toContainText('❌ go to bed');
   // nothing waits any more: the poll stops
@@ -147,6 +151,9 @@ test('an already-checked writing (its feedback came with the table, the helper d
   await expect(page.locator('.rl-modal')).toContainText('Grammar 2.5/3');
   await expect(page.locator('.rl-modal .sk-wv-tips li')).toHaveCount(3);
   await expect(page.locator('.rl-modal')).not.toContainText('still being checked');
+  // feedback from before the generous check has no praise / better version: those parts are simply left out
+  await expect(page.locator('.rl-modal')).not.toContainText('What you did well');
+  await expect(page.locator('.rl-modal .sk-wv-betterv')).toHaveCount(0);
   expect(errors).toEqual([]);
 });
 
