@@ -127,9 +127,10 @@ NAMES = {'A': 'a ay eh', 'B': 'b bee be', 'C': 'c see sea', 'D': 'd dee', 'E': '
 def trim(a):
     """the sound without the silence around it"""
     seg = AudioSegment((np.clip(a, -1, 1) * 32767).astype(np.int16).tobytes(), frame_rate=SR, sample_width=2, channels=1)
-    parts = detect_nonsilent(seg, min_silence_len=60, silence_thresh=seg.dBFS - 20)
+    # gentle: a soft first sound (the "k" of K) must stay — cut tighter, K was heard as "hey"
+    parts = detect_nonsilent(seg, min_silence_len=60, silence_thresh=seg.dBFS - 30)
     if not parts: return a
-    return a[max(0, int((parts[0][0] - 20) * SR / 1000)):int((parts[-1][1] + 40) * SR / 1000)]
+    return a[max(0, int((parts[0][0] - 90) * SR / 1000)):int((parts[-1][1] + 70) * SR / 1000)]
 
 def one_letter(L, prompt):
     """one letter said on its own ("B."), checked by ear; "double O" is said as one clip"""
