@@ -695,6 +695,15 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   `*/5 * * * *`; paste `tools/ai-worker.js` and Deploy; `/status` must show version `2026-11-13b` and `kv: true` (also `running`, `keySaved`, `waiting`, `jobs`).
   Limits per IP per minute: queue 30, feedback 60, check 10, chat 8, writing 40. **KV free plan: about 1 000 writes and 1 000 lists a day** (the timer
   uses 288 lists); busy days can run out → writings just wait. `tests/ai-queue.spec.js`, `tests/results-link.spec.js`.
+- **Answers that didn't arrive (teacher, 2026-11-13: "students send me screenshots that they completed listening, but the system
+  says they haven't")**: the student page shows the score at Submit, before the save; when the save failed (weak internet) or the
+  page was closed while sending, the student had a score but Loom had nothing (Step 5 Apex: 5 of 25 on the list had no Listening
+  answers, all 20 saved ones matched the list), the phone's "done" note (`ta_skill_done`) said "already done", and the next part
+  said "Oldingi … tugatilmagan" — stuck. Now every Submit keeps its answers on the phone (`ta_skill_unsent`, `{ <record id>: payload }`,
+  the page's own key, 30 days) until the save is confirmed (`keepUnsent`/`forgetUnsent`); any course link sends them again when it
+  opens (`skSendKept`, Start waits ≤ 15 s for it before the checks); the same link with kept answers sends them and shows "already
+  done" (or "📤 Send my answers" if still offline). `skAlreadyDone` trusts the database: the phone's "done" note only counts when the
+  database can't be asked — so students whose answers never arrived can do it again. `tests/course-unsent.spec.js`.
 - **Not finished (teacher, 2026-11-13)**: under a step's results table (`skMissingHtml` in course.js) "🚫 Not finished — <group> (N)": the
   group's students who haven't done every part of the step **whose link was sent** (Listening/Reading/Writing; Speaking sends nothing) — any
   result counts as done (a writing waiting for the AI too), matched like the dots — each with the parts still to do, most missing first

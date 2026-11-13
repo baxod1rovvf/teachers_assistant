@@ -151,6 +151,9 @@ test('"already done" for a writing shows the words, no band', async ({ page, con
   await page.locator('#skWriteBox').fill(TEXT);
   await page.getByRole('button', { name: /Submit my writing/ }).click();
   await expect(page.locator('.sk-send')).toContainText('Saved ✅');
+  // the real database keeps the saved writing; the stand-in starts afresh on every page load, so it is put back
+  const saved = await page.evaluate(() => window.__fakeDocs.filter(d => d.code === 'WRT324'));
+  await context.addInitScript(docs => { window.__FIXTURE = (window.__FIXTURE || []).concat(docs); }, saved);
   await startWriting(page, 'WRT324');
   await expect(page.locator('.sk-done-score')).toContainText('46 words');
   await expect(page.locator('.sk-done-score')).not.toContainText('band');

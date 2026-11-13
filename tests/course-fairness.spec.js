@@ -58,8 +58,10 @@ test('one try per course exercise: a student who already has a result sees it in
       correct: 7, total: 10, score: 70, answers: [], date: new Date(now - 3600000).toISOString(), submittedAt: new Date(now - 3600000).toISOString() }]
   });
   page.on('dialog', d => d.accept());
+  const kept = [];   // answers saved earlier (the stand-in database starts afresh on every page load; the real one keeps them)
   const begin = async (name, id) => {
     await page.goto('/skill.html?s=reading&st=b1&c=RDG123');
+    await page.evaluate(async docs => { await window.skPrevDone({ codes: ['XXXXXX'] }, 'x', 'x'); docs.forEach(d => window.__fakeDocs.push(d)); }, kept);
     await page.locator('#studentNameInput').fill(name);
     await page.locator('#skIdInput').fill(id);
     await page.getByRole('button', { name: /Start/ }).click();
@@ -77,6 +79,7 @@ test('one try per course exercise: a student who already has a result sees it in
   await expect(page.locator('#skSubmit')).toBeVisible();
   await page.locator('#skSubmit').click();
   await expect(page.locator('.sk-send')).toContainText('Saved ✅');
+  kept.push(...await page.evaluate(() => window.__fakeDocs.filter(d => d.code === 'RDG123' && d.studentId === '10002')));
   await begin('Bobur Test', '10002');
   await expect(page.locator('.sk-done-card')).toContainText('You have already done this reading');
   // the teacher's Try (preview) is never blocked
