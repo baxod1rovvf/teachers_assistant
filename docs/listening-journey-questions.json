@@ -220,29 +220,29 @@
    ["The next lesson is in Room _____.", ["14", "fourteen"], "Room fourteen"],
    ["The school office's phone number: _____", ["0161 496 203"], "The number is oh one six one"],
    ["Emma will talk to her _____ about her plan.", ["parents"], "talk to my parents"]]}]},
-{"no": 13, "speaker": "", "intro": "Listen to a radio programme about three people and their jobs.",
+{"no": 13, "speaker": "", "inOrder": true, "names": ["Lucy"], "audioV": 2, "intro": "Listen to a radio interview with Lucy, a careers adviser, about three jobs.",
  "sections": [
-  {"h": "Match the person with the job.", "t": "choose", "qs": [
-   ["Daniel Foster", ["Bus driver", "Hotel receptionist", "Photographer"], "Hotel receptionist", "a hotel receptionist"],
-   ["Emma Brooks", ["Bus driver", "Hotel receptionist", "Photographer"], "Photographer", "photographer Emma Brooks"],
-   ["Mark Wilson", ["Bus driver", "Hotel receptionist", "Photographer"], "Bus driver", "Mark Wilson, a bus driver"],
-   ["Who takes photographs at local events?", ["Daniel", "Emma", "Mark"], "Emma", "families, shops and local events"]]},
-  {"h": "Spelling and numbers.", "t": "gap", "qs": [
-   ["Daniel's surname: _____", ["Foster"], "Foster is F-O-S-T-E-R"],
-   ["The name of Daniel's hotel: the _____ Hotel", ["Sunrise"], "Sunrise is S-U-N-R-I-S-E"],
-   ["Emma's company: _____", ["Bright Frame"], "Bright is B-R-I-G-H-T"],
-   ["Mark's surname: _____", ["Wilson"], "Wilson is W-I-L-S-O-N"],
-   ["The bus route number (in digits): _____", ["24"], "Route 24"]]},
-  {"h": "Complete the notes.", "t": "gap", "qs": [
-   ["Daniel's morning shift starts at _____.", ["7:30", "7.30", "seven thirty", "half past seven", "7:30 am", "7:30 a.m."], "starts at seven thirty"],
-   ["Emma usually works around _____ hours a week.", ["35", "thirty-five", "thirty five"], "thirty-five hours a week"],
-   ["One journey on Mark's route takes about _____ minutes.", ["50", "fifty"], "about fifty minutes"],
-   ["Mark's break is at around _____.", ["10:15", "10.15", "ten fifteen", "quarter past ten", "10:15 am", "10:15 a.m."], "around ten fifteen"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["Lucy's surname: _____", ["Foster"], "That's F-O-S-T-E-R"],
+   ["The hotel is near the railway _____.", ["station"], "near the railway station"],
+   ["Receptionists welcome guests and help them _____ in.", ["check"], "help them check in"],
+   ["The morning shift starts at half past _____.", ["seven", "7"], "half past seven"],
+   ["The name of the hotel: the _____ Hotel", ["Sunrise"], "S-U-N-R-I-S-E"]]},
+  {"h": "Choose the correct answer.", "t": "choose", "qs": [
+   ["Why is English useful for receptionists?", ["The hotel is in England", "Guests come from different countries", "They write many emails"], "Guests come from different countries", "come from different countries"],
+   ["Who does the photographer take pictures for?", ["Families, shops and local events", "Newspapers", "Only schools"], "Families, shops and local events", "pictures for families"],
+   ["Where does the photographer often work?", ["At home", "Only in her studio", "In different places"], "In different places", "often travels to different places"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["Daniel's hotel is far from the railway station.", "False", "near the railway station"],
-   ["Emma only works in her studio.", "False", "often we travel"],
-   ["Mark's route passes the hospital.", "True", "past the hospital"],
-   ["Mark usually finishes work at 3:30 p.m.", "False", "finishes at two thirty"]]}]},
+   ["The bus route goes past the hospital.", "True", "past the hospital"],
+   ["One bus journey takes about fifteen minutes.", "False", "about fifty minutes"],
+   ["The bus driver doesn't like meeting people.", "False", "likes meeting people"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["Drivers need to be calm and _____.", ["careful"], "calm and careful"],
+   ["Drivers need the right driving _____.", ["licence", "license"], "driving licence"],
+   ["The careers office's phone number: _____", ["0203 768 145"], "The number is oh two oh three"],
+   ["The office is open every _____.", ["weekday"], "open every weekday"],
+   ["Lucy's advice: try different _____.", ["things"], "Try different things"],
+   ["A positive _____ is useful in every job.", ["attitude"], "positive attitude"]]}]},
 {"no": 14, "speaker": "", "intro": "Listen to a customer buying a birthday present in a clothes shop.",
  "sections": [
   {"h": "Choose the correct answer.", "t": "choose", "qs": [

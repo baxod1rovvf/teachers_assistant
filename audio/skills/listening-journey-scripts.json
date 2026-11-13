@@ -2587,250 +2587,198 @@
  {
   "src": "audio/skills/listen-step-13.mp3",
   "title": "Different People, Different Jobs",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   },
+   "af_ov_adviser": "female, middle-aged, moderate pitch"
+  },
   "lines": [
    [
-    "af_bella",
-    "Welcome to Careers Today.",
+    "am_ov_energetic",
+    "Welcome to Careers Today!",
     0.3
    ],
    [
-    "af_bella",
-    "Our first guest is Daniel Foster, a hotel receptionist.",
+    "am_ov_energetic",
+    "My guest is a careers adviser, Lucy Foster.",
     0.3
    ],
    [
-    "af_bella",
-    "Daniel.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "D. A. N. I. E. L.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "And Foster.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "F. O. S. T. E. R.",
+    "am_ov_energetic",
+    "Lucy, can you spell your surname for us?",
     0.4
    ],
    [
-    "am_michael",
-    "Hello!",
+    "af_ov_adviser",
+    "Of course.",
     0.3
    ],
    [
-    "am_michael",
-    "I work at the Sunrise Hotel.",
+    "af_ov_adviser",
+    "Foster.",
     0.3
    ],
    [
-    "am_michael",
+    "af_ov_adviser",
+    "F. O. S. T. E. R.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Today we're talking about three different jobs.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Let's start with hotel receptionists.",
+    0.4
+   ],
+   [
+    "af_ov_adviser",
+    "Sure. Last month I visited a hotel in the city centre, near the railway station.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Receptionists welcome guests and help them check in.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Their morning shift starts at half past seven.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "The hotel is called the Sunrise Hotel.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
     "Sunrise.",
     0.3
    ],
    [
-    "am_michael",
+    "af_ov_adviser",
     "S. U. N. R. I. S. E.",
-    0.3
+    0.6
    ],
    [
-    "am_michael",
-    "It's in the city centre, near the railway station.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "I welcome guests, help them check in, answer questions and sometimes arrange transport.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "My morning shift starts at seven thirty and finishes at three thirty.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "Some weeks I work from three until eleven in the evening.",
+    "am_ov_energetic",
+    "What skills do receptionists need?",
     0.4
    ],
    [
-    "af_bella",
-    "What skills do you need?",
+    "af_ov_adviser",
+    "They need to be polite, patient and organised.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Speaking English is useful too, because the guests come from different countries.",
     0.4
    ],
    [
-    "am_michael",
-    "You need to be polite, patient and organised.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "Speaking English is useful because we meet visitors from different countries.",
+    "am_ov_energetic",
+    "Our second job is photographer.",
     0.4
    ],
    [
-    "af_bella",
-    "Our second guest is photographer Emma Brooks.",
+    "af_ov_adviser",
+    "Yes. I spoke to a photographer who takes pictures for families, shops and local events.",
     0.3
    ],
    [
-    "af_bella",
-    "Emma.",
+    "af_ov_adviser",
+    "She sometimes works in her studio, but she often travels to different places.",
     0.3
    ],
    [
-    "af_bella",
-    "E. M. M. A.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "And Brooks.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "B. R. O. O. K. S.",
+    "af_ov_adviser",
+    "She uses a camera, lights and a computer.",
     0.4
    ],
    [
-    "af_heart",
-    "I work for a company called Bright Frame.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Bright.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "B. R. I. G. H. T.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Frame.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "F. R. A. M. E.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "We take photographs for families, shops and local events.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Sometimes we work in our studio, but often we travel to different places.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "I use a camera, lenses, lights and a computer.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "I usually work around thirty-five hours a week, but busy weeks can be longer.",
+    "am_ov_energetic",
+    "And finally, bus drivers.",
     0.4
    ],
    [
-    "af_bella",
-    "Thank you.",
+    "af_ov_adviser",
+    "I met a bus driver who starts work very early.",
     0.3
    ],
    [
-    "af_bella",
-    "Our final guest is Mark Wilson, a bus driver.",
+    "af_ov_adviser",
+    "His route goes through the city centre and past the hospital.",
     0.3
    ],
    [
-    "af_bella",
-    "Mark.",
+    "af_ov_adviser",
+    "One journey takes about fifty minutes.",
     0.3
    ],
    [
-    "af_bella",
-    "M. A. R. K.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "And Wilson.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "W. I. L. S. O. N.",
+    "af_ov_adviser",
+    "He likes meeting people and helping them get to work and school.",
     0.4
    ],
    [
-    "am_puck",
-    "I drive a city bus on Route 24.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "I start at the bus station at six in the morning.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "The route goes through the city centre, past the hospital, and finishes near the university.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "One journey takes about fifty minutes, depending on traffic.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "I have a twenty-minute break at around ten fifteen.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "My working day usually finishes at two thirty.",
+    "am_ov_energetic",
+    "What do drivers need?",
     0.4
    ],
    [
-    "af_bella",
-    "What do you like about your job?",
+    "af_ov_adviser",
+    "They need to be calm and careful, and they need the right driving licence.",
     0.4
    ],
    [
-    "am_puck",
-    "I like meeting people and helping them get to work, school and appointments.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "Drivers need to be responsible, calm and careful.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "They also need the correct driving licence and good knowledge of the city.",
+    "am_ov_energetic",
+    "If our listeners want advice about jobs, how can they contact you?",
     0.4
    ],
    [
-    "af_bella",
-    "Thank you to all three guests.",
+    "af_ov_adviser",
+    "They can call our careers office.",
     0.3
    ],
    [
-    "af_bella",
-    "Every job has different responsibilities, but communication and a positive attitude are useful in many workplaces.",
+    "af_ov_adviser",
+    "The number is oh two oh three, seven six eight, one four five.",
+    0.4
+   ],
+   [
+    "am_ov_energetic",
+    "Oh two oh three, seven six eight, one four five?",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Yes, that's right.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "The office is open every weekday.",
+    0.4
+   ],
+   [
+    "am_ov_energetic",
+    "Thank you, Lucy.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "What's your best advice for young people?",
+    0.4
+   ],
+   [
+    "af_ov_adviser",
+    "Try different things, and remember that good communication and a positive attitude are useful in every job.",
     0.4
    ]
   ]

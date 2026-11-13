@@ -1046,62 +1046,97 @@
  {
   "no": 13,
   "title": "Different People, Different Jobs",
-  "format": "Workplace interviews",
+  "format": "Radio interview",
   "transcript": [
    {
     "who": "Presenter",
-    "man": false,
-    "text": "Welcome to Careers Today. Our first guest is Daniel Foster, a hotel receptionist. Daniel is D-A-N-I-E-L, and Foster is F-O-S-T-E-R."
-   },
-   {
-    "who": "Daniel",
     "man": true,
-    "text": "Hello! I work at the Sunrise Hotel. Sunrise is S-U-N-R-I-S-E. It's in the city centre, near the railway station. I welcome guests, help them check in, answer questions and sometimes arrange transport. My morning shift starts at seven thirty and finishes at three thirty. Some weeks I work from three until eleven in the evening."
+    "text": "Welcome to Careers Today! My guest is a careers adviser, Lucy Foster. Lucy, can you spell your surname for us?"
+   },
+   {
+    "who": "Lucy",
+    "man": false,
+    "text": "Of course. Foster. That's F-O-S-T-E-R."
    },
    {
     "who": "Presenter",
-    "man": false,
-    "text": "What skills do you need?"
-   },
-   {
-    "who": "Daniel",
     "man": true,
-    "text": "You need to be polite, patient and organised. Speaking English is useful because we meet visitors from different countries."
+    "text": "Today we're talking about three different jobs. Let's start with hotel receptionists."
+   },
+   {
+    "who": "Lucy",
+    "man": false,
+    "text": "Sure. Last month I visited a hotel in the city centre, near the railway station. Receptionists welcome guests and help them check in. Their morning shift starts at half past seven. The hotel is called the Sunrise Hotel. Sunrise. That's S-U-N-R-I-S-E."
    },
    {
     "who": "Presenter",
-    "man": false,
-    "text": "Our second guest is photographer Emma Brooks. Emma is E-M-M-A, and Brooks is B-R-O-O-K-S."
-   },
-   {
-    "who": "Emma",
-    "man": false,
-    "text": "I work for a company called Bright Frame. Bright is B-R-I-G-H-T, and Frame is F-R-A-M-E. We take photographs for families, shops and local events. Sometimes we work in our studio, but often we travel to different places. I use a camera, lenses, lights and a computer. I usually work around thirty-five hours a week, but busy weeks can be longer."
-   },
-   {
-    "who": "Presenter",
-    "man": false,
-    "text": "Thank you. Our final guest is Mark Wilson, a bus driver. Mark is M-A-R-K, and Wilson is W-I-L-S-O-N."
-   },
-   {
-    "who": "Mark",
     "man": true,
-    "text": "I drive a city bus on Route 24. I start at the bus station at six in the morning. The route goes through the city centre, past the hospital, and finishes near the university. One journey takes about fifty minutes, depending on traffic. I have a twenty-minute break at around ten fifteen. My working day usually finishes at two thirty."
+    "text": "What skills do receptionists need?"
+   },
+   {
+    "who": "Lucy",
+    "man": false,
+    "text": "They need to be polite, patient and organised. Speaking English is useful too, because the guests come from different countries."
    },
    {
     "who": "Presenter",
-    "man": false,
-    "text": "What do you like about your job?"
-   },
-   {
-    "who": "Mark",
     "man": true,
-    "text": "I like meeting people and helping them get to work, school and appointments. Drivers need to be responsible, calm and careful. They also need the correct driving licence and good knowledge of the city."
+    "text": "Our second job is photographer."
+   },
+   {
+    "who": "Lucy",
+    "man": false,
+    "text": "Yes. I spoke to a photographer who takes pictures for families, shops and local events. She sometimes works in her studio, but she often travels to different places. She uses a camera, lights and a computer."
    },
    {
     "who": "Presenter",
+    "man": true,
+    "text": "And finally, bus drivers."
+   },
+   {
+    "who": "Lucy",
     "man": false,
-    "text": "Thank you to all three guests. Every job has different responsibilities, but communication and a positive attitude are useful in many workplaces."
+    "text": "I met a bus driver who starts work very early. His route goes through the city centre and past the hospital. One journey takes about fifty minutes. He likes meeting people and helping them get to work and school."
+   },
+   {
+    "who": "Presenter",
+    "man": true,
+    "text": "What do drivers need?"
+   },
+   {
+    "who": "Lucy",
+    "man": false,
+    "text": "They need to be calm and careful, and they need the right driving licence."
+   },
+   {
+    "who": "Presenter",
+    "man": true,
+    "text": "If our listeners want advice about jobs, how can they contact you?"
+   },
+   {
+    "who": "Lucy",
+    "man": false,
+    "text": "They can call our careers office. The number is oh two oh three, seven six eight, one four five."
+   },
+   {
+    "who": "Presenter",
+    "man": true,
+    "text": "Oh two oh three, seven six eight, one four five?"
+   },
+   {
+    "who": "Lucy",
+    "man": false,
+    "text": "Yes, that's right. The office is open every weekday."
+   },
+   {
+    "who": "Presenter",
+    "man": true,
+    "text": "Thank you, Lucy. What's your best advice for young people?"
+   },
+   {
+    "who": "Lucy",
+    "man": false,
+    "text": "Try different things, and remember that good communication and a positive attitude are useful in every job."
    }
   ]
  },

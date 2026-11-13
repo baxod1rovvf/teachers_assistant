@@ -441,3 +441,104 @@ four nine six, two oh three.
 
 1 Clarke · 2 doctor · 3 biology · 4 chemistry · 5 Oakwood · 6 B · 7 C · 8 A · 9 True · 10 False · 11 True · 12 three ·
 13 22nd · 14 14 · 15 0161 496 203 · 16 parents
+
+------------------------------------------------------------------------
+
+# Step 13 --- Different People, Different Jobs
+
+**Target:** 3 minutes \| **Format:** Radio interview \| **Questions:** 17
+
+## Audio transcript
+
+**Presenter:** Welcome to Careers Today! My guest is a careers adviser,
+Lucy Foster. Lucy, can you spell your surname for us?
+
+**Lucy:** Of course. Foster. That's F-O-S-T-E-R.
+
+**Presenter:** Today we're talking about three different jobs. Let's
+start with hotel receptionists.
+
+**Lucy:** Sure. Last month I visited a hotel in the city centre, near
+the railway station. Receptionists welcome guests and help them check
+in. Their morning shift starts at half past seven. The hotel is called
+the Sunrise Hotel. Sunrise. That's S-U-N-R-I-S-E.
+
+**Presenter:** What skills do receptionists need?
+
+**Lucy:** They need to be polite, patient and organised. Speaking
+English is useful too, because the guests come from different
+countries.
+
+**Presenter:** Our second job is photographer.
+
+**Lucy:** Yes. I spoke to a photographer who takes pictures for
+families, shops and local events. She sometimes works in her studio,
+but she often travels to different places. She uses a camera, lights
+and a computer.
+
+**Presenter:** And finally, bus drivers.
+
+**Lucy:** I met a bus driver who starts work very early. His route goes
+through the city centre and past the hospital. One journey takes about
+fifty minutes. He likes meeting people and helping them get to work and
+school.
+
+**Presenter:** What do drivers need?
+
+**Lucy:** They need to be calm and careful, and they need the right
+driving licence.
+
+**Presenter:** If our listeners want advice about jobs, how can they
+contact you?
+
+**Lucy:** They can call our careers office. The number is oh two oh
+three, seven six eight, one four five.
+
+**Presenter:** Oh two oh three, seven six eight, one four five?
+
+**Lucy:** Yes, that's right. The office is open every weekday.
+
+**Presenter:** Thank you, Lucy. What's your best advice for young
+people?
+
+**Lucy:** Try different things, and remember that good communication
+and a positive attitude are useful in every job.
+
+## Questions
+
+### 1--5. Complete the notes. Write ONE word or A NUMBER.
+
+1.  Lucy's surname: \_\_\_\_\_ (spelled)
+2.  The hotel is near the railway \_\_\_\_\_.
+3.  Receptionists welcome guests and help them \_\_\_\_\_ in.
+4.  The morning shift starts at half past \_\_\_\_\_.
+5.  The name of the hotel: the \_\_\_\_\_ Hotel (spelled)
+
+### 6--8. Choose the correct answer.
+
+6.  Why is English useful for receptionists? A) The hotel is in England
+    B) Guests come from different countries C) They write many emails
+7.  Who does the photographer take pictures for? A) Families, shops and
+    local events B) Newspapers C) Only schools
+8.  Where does the photographer often work? A) At home B) Only in her
+    studio C) In different places
+
+### 9--11. True or False?
+
+9.  The bus route goes past the hospital.
+10. One bus journey takes about fifteen minutes.
+11. The bus driver doesn't like meeting people.
+
+### 12--17. Complete the notes. Write ONE word or A NUMBER.
+
+12. Drivers need to be calm and \_\_\_\_\_.
+13. Drivers need the right driving \_\_\_\_\_.
+14. The careers office's phone number: \_\_\_\_\_ (spelled number)
+15. The office is open every \_\_\_\_\_.
+16. Lucy's advice: try different \_\_\_\_\_.
+17. A positive \_\_\_\_\_ is useful in every job.
+
+## Answers
+
+1 Foster · 2 station · 3 check · 4 seven · 5 Sunrise · 6 B · 7 A · 8 C · 9 True · 10 False · 11 False · 12 careful ·
+13 licence · 14 0203 768 145 · 15 weekday · 16 things · 17 attitude
