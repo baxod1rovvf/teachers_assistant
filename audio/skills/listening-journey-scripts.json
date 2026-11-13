@@ -2257,221 +2257,153 @@
  {
   "src": "audio/skills/listen-step-11.mp3",
   "title": "An Unforgettable Holiday",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   }
+  },
   "lines": [
    [
-    "af_heart",
-    "Hello!",
+    "am_ov_energetic",
+    "Hi! My name is Tom Fisher.",
     0.3
    ],
    [
-    "af_heart",
-    "My name is Amelia Brown.",
+    "am_ov_energetic",
+    "Fisher.",
     0.3
    ],
    [
-    "af_heart",
-    "Amelia.",
+    "am_ov_energetic",
+    "F. I. S. H. E. R.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Today I'm going to tell you about the best holiday I've ever had.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Last summer, my family went to a small town in the mountains.",
     0.3
    ],
    [
-    "af_heart",
-    "A. M. E. L. I. A.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Brown.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "B. R. O. W. N.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Today I'll tell you about a holiday I remember very well.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "Last summer, my family travelled to a small town near the mountains called Silver Lake.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Silver.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "S. I. L. V. E. R.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Lake.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "L. A. K. E.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "We went by train.",
     0.3
    ],
    [
-    "af_heart",
-    "We left home on the tenth of July at six forty-five in the morning.",
+    "am_ov_energetic",
+    "We left home very early, at a quarter to seven in the morning, and the journey took four hours.",
     0.3
    ],
    [
-    "af_heart",
-    "The journey took four hours, and we arrived at ten forty-five.",
-    0.9
+    "am_ov_energetic",
+    "My uncle was waiting for us at the station.",
+    0.6
    ],
    [
-    "af_heart",
-    "My uncle David was waiting at the station.",
+    "am_ov_energetic",
+    "We stayed in a small guesthouse with a beautiful garden.",
     0.3
    ],
    [
-    "af_heart",
-    "David.",
+    "am_ov_energetic",
+    "Our room had a balcony with a view of the mountains.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "On the first evening, we ate at a local restaurant.",
     0.3
    ],
    [
-    "af_heart",
-    "D. A. V. I. D.",
+    "am_ov_energetic",
+    "I had vegetable soup and grilled chicken.",
     0.3
    ],
    [
-    "af_heart",
-    "He had booked a guesthouse called Mountain View.",
+    "am_ov_energetic",
+    "My little sister had pasta.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "The next morning, we went hiking with a guide.",
     0.3
    ],
    [
-    "af_heart",
-    "It had five rooms, a small garden and a restaurant.",
+    "am_ov_energetic",
+    "She showed us a safe path through the forest.",
     0.3
    ],
    [
-    "af_heart",
-    "Our room had two beds and a balcony with a view of the mountains.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "On the first day, we walked around the town.",
+    "am_ov_energetic",
+    "We saw lots of birds and even a small fox!",
     0.3
    ],
    [
-    "af_heart",
-    "In the evening, we ate at a local restaurant.",
+    "am_ov_energetic",
+    "Later, we stopped at a waterfall and took photos.",
     0.3
    ],
    [
-    "af_heart",
-    "I ordered vegetable soup and grilled chicken.",
-    0.3
+    "am_ov_energetic",
+    "It was sunny in the morning, but in the afternoon it became cloudy and windy.",
+    0.6
    ],
    [
-    "af_heart",
-    "My younger sister Sophie chose pasta.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Sophie.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "S. O. P. H. I. E.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "The next morning, we went hiking with a guide called Nora.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Nora.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "N. O. R. A.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "She showed us a safe walking path.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "We saw birds and a small fox.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Later, we stopped near a waterfall and took photographs.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "The weather was sunny at first, but it became cloudy and windy.",
-    0.9
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "On the third day, we visited a farm.",
     0.3
    ],
    [
-    "af_heart",
-    "There were goats, sheep, chickens and two friendly dogs.",
+    "am_ov_energetic",
+    "There were goats, sheep and chickens, and a friendly dog called Max.",
     0.3
    ],
    [
-    "af_heart",
-    "One dog was called Max.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "Max.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "M. A. X.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "He followed us everywhere and played with my sister.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "The farmer told us that visitors should always phone first.",
     0.3
    ],
    [
-    "af_heart",
-    "He followed us around and played with my sister.",
-    0.9
+    "am_ov_energetic",
+    "His number is oh one two three, six four eight, five nine seven.",
+    0.5
    ],
    [
-    "af_heart",
-    "We stayed for five days and returned home on the fifteenth of July.",
+    "am_ov_energetic",
+    "That's oh one two three, six four eight, five nine seven.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "We stayed for five days and came home on the fifteenth of July.",
     0.3
    ],
    [
-    "af_heart",
-    "I loved the mountain walk, but Sophie said playing with Max was the best part.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "It was a wonderful holiday because we spent time together and discovered a new place.",
-    0.9
+    "am_ov_energetic",
+    "I loved the mountain walk, but my sister says playing with Max was the best part!",
+    0.4
    ]
   ]
  },

@@ -925,39 +925,44 @@
   "format": "Personal story",
   "transcript": [
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "Hello! My name is Amelia Brown. Amelia is A-M-E-L-I-A, and Brown is B-R-O-W-N. Today I'll tell you about a holiday I remember very well."
+    "who": "Tom",
+    "man": true,
+    "text": "Hi! My name is Tom Fisher. Fisher. That's F-I-S-H-E-R. Today I'm going to tell you about the best holiday I've ever had."
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "Last summer, my family travelled to a small town near the mountains called Silver Lake. Silver is S-I-L-V-E-R, and Lake is L-A-K-E. We went by train. We left home on the tenth of July at six forty-five in the morning. The journey took four hours, and we arrived at ten forty-five."
+    "who": "Tom",
+    "man": true,
+    "text": "Last summer, my family went to a small town in the mountains. We went by train. We left home very early, at a quarter to seven in the morning, and the journey took four hours. My uncle was waiting for us at the station."
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "My uncle David was waiting at the station. David is D-A-V-I-D. He had booked a guesthouse called Mountain View. It had five rooms, a small garden and a restaurant. Our room had two beds and a balcony with a view of the mountains."
+    "who": "Tom",
+    "man": true,
+    "text": "We stayed in a small guesthouse with a beautiful garden. Our room had a balcony with a view of the mountains."
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "On the first day, we walked around the town. In the evening, we ate at a local restaurant. I ordered vegetable soup and grilled chicken. My younger sister Sophie chose pasta. Sophie is S-O-P-H-I-E."
+    "who": "Tom",
+    "man": true,
+    "text": "On the first evening, we ate at a local restaurant. I had vegetable soup and grilled chicken. My little sister had pasta."
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "The next morning, we went hiking with a guide called Nora. Nora is N-O-R-A. She showed us a safe walking path. We saw birds and a small fox. Later, we stopped near a waterfall and took photographs. The weather was sunny at first, but it became cloudy and windy."
+    "who": "Tom",
+    "man": true,
+    "text": "The next morning, we went hiking with a guide. She showed us a safe path through the forest. We saw lots of birds and even a small fox! Later, we stopped at a waterfall and took photos. It was sunny in the morning, but in the afternoon it became cloudy and windy."
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "On the third day, we visited a farm. There were goats, sheep, chickens and two friendly dogs. One dog was called Max. Max is M-A-X. He followed us around and played with my sister."
+    "who": "Tom",
+    "man": true,
+    "text": "On the third day, we visited a farm. There were goats, sheep and chickens, and a friendly dog called Max. Max. That's M-A-X. He followed us everywhere and played with my sister."
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "We stayed for five days and returned home on the fifteenth of July. I loved the mountain walk, but Sophie said playing with Max was the best part. It was a wonderful holiday because we spent time together and discovered a new place."
+    "who": "Tom",
+    "man": true,
+    "text": "The farmer told us that visitors should always phone first. His number is oh one two three, six four eight, five nine seven. That's oh one two three, six four eight, five nine seven."
+   },
+   {
+    "who": "Tom",
+    "man": true,
+    "text": "We stayed for five days and came home on the fifteenth of July. I loved the mountain walk, but my sister says playing with Max was the best part!"
    }
   ]
  },

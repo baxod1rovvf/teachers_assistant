@@ -276,3 +276,80 @@ Enjoy the tour!
 
 1 Wilson · 2 school · 3 Monday(s) · 4 maps · 5 Riverside · 6 B · 7 B · 8 B · 9 True · 10 False · 11 False · 12 study ·
 13 entrance · 14 0781 352 649 · 15 umbrella
+
+------------------------------------------------------------------------
+
+# Step 11 --- An Unforgettable Holiday
+
+**Target:** 3 minutes \| **Format:** Personal story \| **Questions:** 16
+
+## Audio transcript
+
+**Tom:** Hi! My name is Tom Fisher. Fisher. That's F-I-S-H-E-R. Today
+I'm going to tell you about the best holiday I've ever had.
+
+**Tom:** Last summer, my family went to a small town in the mountains.
+We went by train. We left home very early, at a quarter to seven in the
+morning, and the journey took four hours. My uncle was waiting for us
+at the station.
+
+**Tom:** We stayed in a small guesthouse with a beautiful garden. Our
+room had a balcony with a view of the mountains.
+
+**Tom:** On the first evening, we ate at a local restaurant. I had
+vegetable soup and grilled chicken. My little sister had pasta.
+
+**Tom:** The next morning, we went hiking with a guide. She showed us a
+safe path through the forest. We saw lots of birds and even a small
+fox! Later, we stopped at a waterfall and took photos. It was sunny in
+the morning, but in the afternoon it became cloudy and windy.
+
+**Tom:** On the third day, we visited a farm. There were goats, sheep
+and chickens, and a friendly dog called Max. Max. That's M-A-X. He
+followed us everywhere and played with my sister.
+
+**Tom:** The farmer told us that visitors should always phone first. His
+number is oh one two three, six four eight, five nine seven. That's oh
+one two three, six four eight, five nine seven.
+
+**Tom:** We stayed for five days and came home on the fifteenth of July.
+I loved the mountain walk, but my sister says playing with Max was the
+best part!
+
+## Questions
+
+### 1--4. Complete the notes. Write ONE word or A NUMBER.
+
+1.  Tom's surname: \_\_\_\_\_ (spelled)
+2.  The family travelled by \_\_\_\_\_.
+3.  They left home at a quarter to \_\_\_\_\_ in the morning.
+4.  Tom's \_\_\_\_\_ was waiting at the station.
+
+### 5--8. Choose the correct answer.
+
+5.  What did their room have? A) A kitchen B) A balcony C) A TV
+6.  What did Tom eat on the first evening? A) Pasta B) Fish and chips C)
+    Vegetable soup and grilled chicken
+7.  What animal did they see in the forest? A) A fox B) A deer C) A
+    rabbit
+8.  Where did they take photos? A) At a lake B) On a bridge C) At a
+    waterfall
+
+### 9--11. True or False?
+
+9.  It was sunny all day during the walk.
+10. There were horses at the farm.
+11. The dog at the farm was unfriendly.
+
+### 12--16. Complete the notes. Write ONE word or A NUMBER.
+
+12. The dog's name: \_\_\_\_\_ (spelled)
+13. The dog played with Tom's \_\_\_\_\_.
+14. The farmer's phone number: \_\_\_\_\_ (spelled number)
+15. They stayed for \_\_\_\_\_ days.
+16. They came home on the \_\_\_\_\_ of July.
+
+## Answers
+
+1 Fisher · 2 train · 3 seven · 4 uncle · 5 B · 6 C · 7 A · 8 C · 9 False · 10 False · 11 False · 12 Max · 13 sister ·
+14 0123 648 597 · 15 five · 16 15th

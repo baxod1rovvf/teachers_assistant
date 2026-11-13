@@ -176,28 +176,28 @@
    ["If you get lost, meet at the library _____.", ["entrance"], "library entrance"],
    ["The guide's phone number: _____", ["0781 352 649"], "My number is oh seven eight one"],
    ["Bring an _____ because it might rain.", ["umbrella"], "bring an umbrella"]]}]},
-{"no": 11, "speaker": "Amelia", "intro": "Listen to Amelia talking about a holiday she remembers.",
+{"no": 11, "speaker": "Tom", "inOrder": true, "names": ["Tom"], "audioV": 2, "intro": "Listen to Tom talking about a holiday.",
  "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["Tom's surname: _____", ["Fisher"], "That's F-I-S-H-E-R"],
+   ["The family travelled by _____.", ["train"], "We went by train"],
+   ["They left home at a quarter to _____ in the morning.", ["seven", "7"], "a quarter to seven"],
+   ["Tom's _____ was waiting at the station.", ["uncle"], "My uncle was waiting"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["How did the family travel?", ["By car", "By train", "By bus"], "By train", "We went by train"],
-   ["Who waited at the station?", ["Uncle David", "Nora, the guide", "Her grandfather"], "Uncle David", "My uncle David was waiting"],
-   ["What did they do on the second day?", ["Went hiking", "Went shopping", "Visited a museum"], "Went hiking", "we went hiking"],
-   ["What was the dog's name?", ["Max", "Rex", "Sam"], "Max", "One dog was called Max"]]},
-  {"h": "Spelling and numbers.", "t": "gap", "qs": [
-   ["The town's name: _____", ["Silver Lake"], "Silver is S-I-L-V-E-R"],
-   ["The guide's name: _____", ["Nora"], "Nora is N-O-R-A"],
-   ["Amelia's sister's name: _____", ["Sophie"], "Sophie is S-O-P-H-I-E"],
-   ["The train left at _____ in the morning.", ["6:45", "6.45", "six forty-five", "6:45 am", "6:45 a.m.", "quarter to seven"], "six forty-five in the morning"],
-   ["They stayed for _____ days.", ["5", "five"], "We stayed for five days"]]},
+   ["What did their room have?", ["A kitchen", "A balcony", "A TV"], "A balcony", "had a balcony"],
+   ["What did Tom eat on the first evening?", ["Pasta", "Fish and chips", "Vegetable soup and grilled chicken"], "Vegetable soup and grilled chicken", "I had vegetable soup"],
+   ["What animal did they see in the forest?", ["A fox", "A deer", "A rabbit"], "A fox", "a small fox"],
+   ["Where did they take photos?", ["At a lake", "On a bridge", "At a waterfall"], "At a waterfall", "stopped at a waterfall"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["The guesthouse had ten rooms.", "False", "It had five rooms"],
-   ["Amelia ordered vegetable soup and grilled chicken.", "True", "vegetable soup and grilled chicken"],
-   ["The family saw a fox during the walk.", "True", "a small fox"],
-   ["The weather stayed sunny all day.", "False", "became cloudy and windy"]]},
-  {"h": "Answer the questions.", "t": "open", "qs": [
-   ["What was the guesthouse called?", ["Mountain View"], "guesthouse called Mountain View"],
-   ["Name one kind of animal they saw at the farm.", ["goat", "sheep", "chicken", "dog"], "There were goats, sheep"],
-   ["On what date did they return home?", ["15", "15th", "fifteenth"], "fifteenth of July"]]}]},
+   ["It was sunny all day during the walk.", "False", "became cloudy and windy"],
+   ["There were horses at the farm.", "False", "There were goats"],
+   ["The dog at the farm was unfriendly.", "False", "a friendly dog"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The dog's name: _____", ["Max"], "That's M-A-X"],
+   ["The dog played with Tom's _____.", ["sister"], "played with my sister"],
+   ["The farmer's phone number: _____", ["0123 648 597"], "His number is oh one two three"],
+   ["They stayed for _____ days.", ["five", "5"], "stayed for five days"],
+   ["They came home on the _____ of July.", ["15th", "15", "fifteenth"], "fifteenth of July"]]}]},
 {"no": 12, "speaker": "", "intro": "Listen to a teacher and four students talking about their dreams.",
  "sections": [
   {"h": "Match the students with their goals.", "t": "choose", "qs": [
