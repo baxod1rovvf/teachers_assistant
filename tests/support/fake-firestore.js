@@ -38,7 +38,8 @@ const match = w => d => colOf(d) === (w.col || 'results') && w.every(c =>
   c.op === 'in' ? c.v.includes(d[c.f]) :
   c.op === '>' ? (d[c.f] != null && ms(d[c.f]) > ms(c.v)) :
   d[c.f] === c.v);
-const wrap = d => ({ id: d.__id, data: () => Object.assign({}, d, d.submittedAt ? { submittedAt: new Ts(ms(d.submittedAt)) } : {}) });
+// like the real database: a record's id is d.id, never a field of d.data() (2026-11-13: Loom relied on it by mistake)
+const wrap = d => ({ id: d.__id, data: () => { const o = Object.assign({}, d, d.submittedAt ? { submittedAt: new Ts(ms(d.submittedAt)) } : {}); delete o.__id; delete o.__col; return o; } });
 const snapOf = (w, changes) => {
   const docs = DOCS.filter(match(w)).map(wrap);
   return { metadata: { hasPendingWrites: false }, docs, docChanges: () => changes || docs.map(x => ({ type: 'added', doc: x })) };
