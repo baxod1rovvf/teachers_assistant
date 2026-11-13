@@ -226,7 +226,10 @@ function rsPlain(data) {
   if (v.submittedAt && typeof v.submittedAt.toMillis === 'function') v.submittedAt = v.submittedAt.toMillis();
   return v;
 }
+// Every kept result carries its database id as `__id` (2026-11-13: the AI writing check names a writing by it — without it the
+// safety net and "🤖 Check now" couldn't ask the helper about any writing).
 function rsPut(id, v) {
+  if (v && typeof v === 'object' && !v.__id) v.__id = id;
   rs.docs.set(id, v);
   if (typeof v.submittedAt === 'number' && v.submittedAt > rs.mark) rs.mark = v.submittedAt;
 }
@@ -243,7 +246,7 @@ rs.ready = (async function () {
     } catch (e) { resolve(null); }
   });
   if (!state) return;
-  (state.docs || []).forEach(([id, v]) => rs.docs.set(id, v));   // shown straight away, even while a new read runs
+  (state.docs || []).forEach(([id, v]) => { if (v && typeof v === 'object' && !v.__id) v.__id = id; rs.docs.set(id, v); });   // shown straight away, even while a new read runs (copies kept before 2026-11-13 get their id)
   rs.mark = state.mark || 0;
   // time for a full refresh (or a copy kept by an older version): every code is read again, and
   // each code's results are replaced only when its new read has worked

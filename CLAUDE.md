@@ -212,6 +212,8 @@ real students' names or results into the repository (it is public).
   are never seen by that listener — every result/points/progress record must carry
   `submittedAt: serverTimestamp()` (exercise files do; the teacher's own points writes do
   since 2026-09-30). `taResultsCacheInfo()` in the console shows what's kept.
+  **Every kept result carries its database id as `__id`** (`rsPut`, and copies loaded from IndexedDB — 2026-11-13: without it the
+  AI writing safety net and "🤖 Check now" found no writing to send; the test stand-in now keeps ids out of `data()`, like the real database).
 
 ## Old exercise files (made before a fix)
 
