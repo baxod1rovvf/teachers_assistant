@@ -969,62 +969,77 @@
  {
   "no": 12,
   "title": "Talking About Future Dreams",
-  "format": "Classroom discussion",
+  "format": "Classroom conversation",
   "transcript": [
    {
     "who": "Teacher",
     "man": true,
-    "text": "Good morning. Today we're talking about future plans. Let's start with Mia."
+    "text": "Good morning, everyone. Today we're talking about our dreams for the future. Emma, would you like to start? First, please tell us your full name for the new class list."
    },
    {
-    "who": "Mia",
+    "who": "Emma",
     "man": false,
-    "text": "My name is Mia Johnson. Mia is M-I-A, and Johnson is J-O-H-N-S-O-N. I want to become a doctor because I enjoy helping people. Biology is my favourite subject, but I need to improve my chemistry."
+    "text": "Sure. I'm Emma Clarke. Clarke. That's C-L-A-R-K-E."
    },
    {
     "who": "Teacher",
     "man": true,
-    "text": "Thank you. Adam, what about you?"
+    "text": "Thanks, Emma. So, what do you want to be?"
    },
    {
-    "who": "Adam",
-    "man": true,
-    "text": "I'm Adam Lee. Adam is A-D-A-M, and Lee is L-E-E. I want to become a computer programmer. I enjoy creating small websites. Last year, I made one for my school club. I'd like to study computer science at university. I'm interested in Northbridge University. Northbridge is N-O-R-T-H-B-R-I-D-G-E."
-   },
-   {
-    "who": "Teacher",
-    "man": true,
-    "text": "Great. Sara?"
-   },
-   {
-    "who": "Sara",
+    "who": "Emma",
     "man": false,
-    "text": "I'm Sara Ahmed. Sara is S-A-R-A, and Ahmed is A-H-M-E-D. I want to travel abroad and learn about different cultures. My dream is to visit Barcelona in Spain. I'd like to stay there for a month and learn Spanish. Maybe I'll go in two years, after I finish school. First, I need to save money and improve my English."
+    "text": "I want to become a doctor, because I enjoy helping people. Biology is my favourite subject, but I need to improve my chemistry."
    },
    {
     "who": "Teacher",
     "man": true,
-    "text": "Ben, what is your dream?"
+    "text": "That's a great dream. Where would you like to study?"
    },
    {
-    "who": "Ben",
-    "man": true,
-    "text": "I'm Ben Carter. Ben is B-E-N, and Carter is C-A-R-T-E-R. I want to become a football coach. I enjoy helping younger players. I'd like to work at Eastside Academy. Eastside is E-A-S-T-S-I-D-E, and Academy is A-C-A-D-E-M-Y."
-   },
-   {
-    "who": "Teacher",
-    "man": true,
-    "text": "These are interesting goals. Remember, a dream needs a plan. You should choose small steps. Mia could review science for thirty minutes a day. Adam could practise programming three times a week. Sara could learn ten Spanish words every week. Ben could help the school football team."
-   },
-   {
-    "who": "Mia",
+    "who": "Emma",
     "man": false,
-    "text": "Should we write down our goals?"
+    "text": "At Oakwood University. Oakwood. That's O-A-K-W-O-O-D. It has a very good medical school, and it's only an hour from my home."
    },
    {
     "who": "Teacher",
     "man": true,
-    "text": "Yes. Write one small goal for this month and one bigger goal for the next three years. Bring your plans to our next lesson on the twenty-second of November. We will meet in Room 14. That's room number fourteen."
+    "text": "Wonderful. And what about your friends? Do you know their dreams?"
+   },
+   {
+    "who": "Emma",
+    "man": false,
+    "text": "Yes! My best friend wants to be a computer programmer. She already makes small websites. And my brother wants to be a football coach, because he loves helping younger players."
+   },
+   {
+    "who": "Teacher",
+    "man": true,
+    "text": "Those are great goals. But remember, a dream needs a plan. You should choose small steps. For example, Emma, you could review science for thirty minutes a day."
+   },
+   {
+    "who": "Emma",
+    "man": false,
+    "text": "Should we write our goals down?"
+   },
+   {
+    "who": "Teacher",
+    "man": true,
+    "text": "Yes. Write one small goal for this month and one bigger goal for the next three years. Bring your plans to our next lesson on the twenty-second of November. We'll meet in Room fourteen. If you have any questions, call the school office. The number is oh one six one, four nine six, two oh three."
+   },
+   {
+    "who": "Emma",
+    "man": false,
+    "text": "Oh one six one, four nine six, two oh three?"
+   },
+   {
+    "who": "Teacher",
+    "man": true,
+    "text": "That's right."
+   },
+   {
+    "who": "Emma",
+    "man": false,
+    "text": "Great. I'll talk to my parents about my plan tonight."
    }
   ]
  },

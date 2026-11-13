@@ -353,3 +353,91 @@ best part!
 
 1 Fisher · 2 train · 3 seven · 4 uncle · 5 B · 6 C · 7 A · 8 C · 9 False · 10 False · 11 False · 12 Max · 13 sister ·
 14 0123 648 597 · 15 five · 16 15th
+
+------------------------------------------------------------------------
+
+# Step 12 --- Talking About Future Dreams
+
+**Target:** 3 minutes \| **Format:** Classroom conversation \|
+**Questions:** 16
+
+## Audio transcript
+
+**Teacher:** Good morning, everyone. Today we're talking about our dreams
+for the future. Emma, would you like to start? First, please tell us
+your full name for the new class list.
+
+**Emma:** Sure. I'm Emma Clarke. Clarke. That's C-L-A-R-K-E.
+
+**Teacher:** Thanks, Emma. So, what do you want to be?
+
+**Emma:** I want to become a doctor, because I enjoy helping people.
+Biology is my favourite subject, but I need to improve my chemistry.
+
+**Teacher:** That's a great dream. Where would you like to study?
+
+**Emma:** At Oakwood University. Oakwood. That's O-A-K-W-O-O-D. It has a
+very good medical school, and it's only an hour from my home.
+
+**Teacher:** Wonderful. And what about your friends? Do you know their
+dreams?
+
+**Emma:** Yes! My best friend wants to be a computer programmer. She
+already makes small websites. And my brother wants to be a football
+coach, because he loves helping younger players.
+
+**Teacher:** Those are great goals. But remember, a dream needs a plan.
+You should choose small steps. For example, Emma, you could review
+science for thirty minutes a day.
+
+**Emma:** Should we write our goals down?
+
+**Teacher:** Yes. Write one small goal for this month and one bigger
+goal for the next three years. Bring your plans to our next lesson on
+the twenty-second of November. We'll meet in Room fourteen. If you have
+any questions, call the school office. The number is oh one six one,
+four nine six, two oh three.
+
+**Emma:** Oh one six one, four nine six, two oh three?
+
+**Teacher:** That's right.
+
+**Emma:** Great. I'll talk to my parents about my plan tonight.
+
+## Questions
+
+### 1--5. Complete the notes. Write ONE word or A NUMBER.
+
+1.  Emma's surname: \_\_\_\_\_ (spelled)
+2.  Emma wants to become a \_\_\_\_\_.
+3.  Her favourite subject is \_\_\_\_\_.
+4.  She needs to improve her \_\_\_\_\_.
+5.  The university she likes: \_\_\_\_\_ University (spelled)
+
+### 6--8. Choose the correct answer.
+
+6.  How far is the university from Emma's home? A) Ten minutes B) An
+    hour C) Two hours
+7.  What does Emma's best friend want to be? A) A doctor B) A teacher C)
+    A computer programmer
+8.  Who does Emma's brother like helping? A) Younger players B) His
+    grandparents C) His classmates
+
+### 9--11. True or False?
+
+9.  The teacher says a dream needs a plan.
+10. The teacher suggests reviewing science for an hour a day.
+11. Students should write down two goals.
+
+### 12--16. Complete the notes. Write ONE word or A NUMBER.
+
+12. The bigger goal is for the next \_\_\_\_\_ years.
+13. The next lesson is on the \_\_\_\_\_ of November.
+14. The next lesson is in Room \_\_\_\_\_.
+15. The school office's phone number: \_\_\_\_\_ (spelled number)
+16. Emma will talk to her \_\_\_\_\_ about her plan.
+
+## Answers
+
+1 Clarke · 2 doctor · 3 biology · 4 chemistry · 5 Oakwood · 6 B · 7 C · 8 A · 9 True · 10 False · 11 True · 12 three ·
+13 22nd · 14 14 · 15 0161 496 203 · 16 parents

@@ -2410,315 +2410,176 @@
  {
   "src": "audio/skills/listen-step-12.mp3",
   "title": "Talking About Future Dreams",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   },
+   "af_ov_young": {
+    "instruct": "female, young adult, moderate pitch",
+    "seed": 1
+   }
+  },
   "lines": [
    [
-    "am_fenrir",
-    "Good morning.",
+    "am_ov_energetic",
+    "Good morning, everyone.",
     0.3
    ],
    [
-    "am_fenrir",
-    "Today we're talking about future plans.",
+    "am_ov_energetic",
+    "Today we're talking about our dreams for the future.",
     0.3
    ],
    [
-    "am_fenrir",
-    "Let's start with Mia.",
+    "am_ov_energetic",
+    "Emma, would you like to start?",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "First, please tell us your full name for the new class list.",
     0.4
    ],
    [
-    "af_heart",
-    "My name is Mia Johnson.",
+    "af_ov_young",
+    "Sure. I'm Emma Clarke.",
     0.3
    ],
    [
-    "af_heart",
-    "Mia.",
+    "af_ov_young",
+    "Clarke.",
     0.3
    ],
    [
-    "af_heart",
-    "M. I. A.",
+    "af_ov_young",
+    "C. L. A. R. K. E.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Thanks, Emma. So, what do you want to be?",
+    0.4
+   ],
+   [
+    "af_ov_young",
+    "I want to become a doctor, because I enjoy helping people.",
     0.3
    ],
    [
-    "af_heart",
-    "And Johnson.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "J. O. H. N. S. O. N.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "I want to become a doctor because I enjoy helping people.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "af_ov_young",
     "Biology is my favourite subject, but I need to improve my chemistry.",
     0.4
    ],
    [
-    "am_fenrir",
-    "Thank you.",
-    0.3
-   ],
-   [
-    "am_fenrir",
-    "Adam, what about you?",
+    "am_ov_energetic",
+    "That's a great dream. Where would you like to study?",
     0.4
    ],
    [
-    "am_michael",
-    "I'm Adam Lee.",
+    "af_ov_young",
+    "At Oakwood University.",
     0.3
    ],
    [
-    "am_michael",
-    "Adam.",
+    "af_ov_young",
+    "Oakwood.",
     0.3
    ],
    [
-    "am_michael",
-    "A. D. A. M.",
-    0.3
+    "af_ov_young",
+    "O. A. K. W. O. O. D.",
+    0.6
    ],
    [
-    "am_michael",
-    "And Lee.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "L. E. E.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "I want to become a computer programmer.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "I enjoy creating small websites.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "Last year, I made one for my school club.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "I'd like to study computer science at university.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "I'm interested in Northbridge University.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "Northbridge.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "N. O. R. T. H. B. R. I. D. G. E.",
+    "af_ov_young",
+    "It has a very good medical school, and it's only an hour from my home.",
     0.4
    ],
    [
-    "am_fenrir",
-    "Great.",
-    0.3
-   ],
-   [
-    "am_fenrir",
-    "Sara?",
+    "am_ov_energetic",
+    "Wonderful. And what about your friends? Do you know their dreams?",
     0.4
    ],
    [
-    "af_bella",
-    "I'm Sara Ahmed.",
+    "af_ov_young",
+    "Yes! My best friend wants to be a computer programmer.",
     0.3
    ],
    [
-    "af_bella",
-    "Sara.",
+    "af_ov_young",
+    "She already makes small websites.",
     0.3
    ],
    [
-    "af_bella",
-    "S. A. R. A.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "And Ahmed.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "A. H. M. E. D.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "I want to travel abroad and learn about different cultures.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "My dream is to visit Barcelona in Spain.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "I'd like to stay there for a month and learn Spanish.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "Maybe I'll go in two years, after I finish school.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "First, I need to save money and improve my English.",
+    "af_ov_young",
+    "And my brother wants to be a football coach, because he loves helping younger players.",
     0.4
    ],
    [
-    "am_fenrir",
-    "Ben, what is your dream?",
-    0.4
-   ],
-   [
-    "am_puck",
-    "I'm Ben Carter.",
+    "am_ov_energetic",
+    "Those are great goals.",
     0.3
    ],
    [
-    "am_puck",
-    "Ben.",
+    "am_ov_energetic",
+    "But remember, a dream needs a plan.",
     0.3
    ],
    [
-    "am_puck",
-    "B. E. N.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "And Carter.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "C. A. R. T. E. R.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "I want to become a football coach.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "I enjoy helping younger players.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "I'd like to work at Eastside Academy.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "Eastside.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "E. A. S. T. S. I. D. E.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "And Academy.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "A. C. A. D. E. M. Y.",
-    0.4
-   ],
-   [
-    "am_fenrir",
-    "These are interesting goals.",
-    0.3
-   ],
-   [
-    "am_fenrir",
-    "Remember, a dream needs a plan.",
-    0.3
-   ],
-   [
-    "am_fenrir",
+    "am_ov_energetic",
     "You should choose small steps.",
     0.3
    ],
    [
-    "am_fenrir",
-    "Mia could review science for thirty minutes a day.",
-    0.3
-   ],
-   [
-    "am_fenrir",
-    "Adam could practise programming three times a week.",
-    0.3
-   ],
-   [
-    "am_fenrir",
-    "Sara could learn ten Spanish words every week.",
-    0.3
-   ],
-   [
-    "am_fenrir",
-    "Ben could help the school football team.",
+    "am_ov_energetic",
+    "For example, Emma, you could review science for thirty minutes a day.",
     0.4
    ],
    [
-    "af_heart",
-    "Should we write down our goals?",
+    "af_ov_young",
+    "Should we write our goals down?",
     0.4
    ],
    [
-    "am_fenrir",
-    "Yes.",
+    "am_ov_energetic",
+    "Yes. Write one small goal for this month and one bigger goal for the next three years.",
     0.3
    ],
    [
-    "am_fenrir",
-    "Write one small goal for this month and one bigger goal for the next three years.",
-    0.3
-   ],
-   [
-    "am_fenrir",
+    "am_ov_energetic",
     "Bring your plans to our next lesson on the twenty-second of November.",
     0.3
    ],
    [
-    "am_fenrir",
-    "We will meet in Room 14.",
+    "am_ov_energetic",
+    "We'll meet in Room fourteen.",
     0.3
    ],
    [
-    "am_fenrir",
-    "That's room number fourteen.",
+    "am_ov_energetic",
+    "If you have any questions, call the school office.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The number is oh one six one, four nine six, two oh three.",
+    0.4
+   ],
+   [
+    "af_ov_young",
+    "Oh one six one, four nine six, two oh three?",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "That's right.",
+    0.4
+   ],
+   [
+    "af_ov_young",
+    "Great. I'll talk to my parents about my plan tonight.",
     0.4
    ]
   ]

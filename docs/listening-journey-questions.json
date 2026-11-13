@@ -198,28 +198,28 @@
    ["The farmer's phone number: _____", ["0123 648 597"], "His number is oh one two three"],
    ["They stayed for _____ days.", ["five", "5"], "stayed for five days"],
    ["They came home on the _____ of July.", ["15th", "15", "fifteenth"], "fifteenth of July"]]}]},
-{"no": 12, "speaker": "", "intro": "Listen to a teacher and four students talking about their dreams.",
+{"no": 12, "speaker": "", "inOrder": true, "names": ["Emma"], "audioV": 2, "intro": "Listen to a teacher talking to a student, Emma, about her dreams for the future.",
  "sections": [
-  {"h": "Match the students with their goals.", "t": "choose", "qs": [
-   ["Mia", ["Become a football coach", "Become a doctor", "Travel and learn about cultures", "Become a computer programmer"], "Become a doctor", "I want to become a doctor"],
-   ["Adam", ["Become a football coach", "Become a doctor", "Travel and learn about cultures", "Become a computer programmer"], "Become a computer programmer", "become a computer programmer"],
-   ["Sara", ["Become a football coach", "Become a doctor", "Travel and learn about cultures", "Become a computer programmer"], "Travel and learn about cultures", "learn about different cultures"],
-   ["Ben", ["Become a football coach", "Become a doctor", "Travel and learn about cultures", "Become a computer programmer"], "Become a football coach", "become a football coach"]]},
-  {"h": "Spelling.", "t": "gap", "qs": [
-   ["Mia's surname: _____", ["Johnson"], "Johnson is J-O-H-N-S-O-N"],
-   ["Adam's surname: _____", ["Lee"], "Lee is L-E-E"],
-   ["The university's name: _____ University", ["Northbridge"], "Northbridge is N-O-R-T-H-B-R-I-D-G-E"],
-   ["The city Sara wants to visit: _____", ["Barcelona"], "visit Barcelona in Spain"],
-   ["The academy's name: _____ Academy", ["Eastside"], "Eastside is E-A-S-T-S-I-D-E"]]},
-  {"h": "Complete the sentences. Write ONE word or A NUMBER.", "t": "gap", "qs": [
-   ["Mia could review science for _____ minutes a day.", ["30", "thirty"], "thirty minutes a day"],
-   ["Sara could learn _____ Spanish words every week.", ["10", "ten"], "ten Spanish words"],
-   ["Ben could help the school _____ team.", ["football"], "help the school football team"]]},
-  {"h": "Numbers and short answers.", "t": "gap", "qs": [
-   ["The students should bring their plans on the _____ of November.", ["22nd", "22", "twenty-second", "twenty second"], "twenty-second of November"],
-   ["The next lesson is in Room _____.", ["14", "fourteen"], "Room 14"],
-   ["Mia needs to improve her _____.", ["chemistry"], "improve my chemistry"],
-   ["Sara hopes to travel in _____ years.", ["2", "two"], "go in two years"]]}]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["Emma's surname: _____", ["Clarke"], "That's C-L-A-R-K-E"],
+   ["Emma wants to become a _____.", ["doctor"], "become a doctor"],
+   ["Her favourite subject is _____.", ["biology"], "Biology is my favourite"],
+   ["She needs to improve her _____.", ["chemistry"], "improve my chemistry"],
+   ["The university she likes: _____ University", ["Oakwood"], "O-A-K-W-O-O-D"]]},
+  {"h": "Choose the correct answer.", "t": "choose", "qs": [
+   ["How far is the university from Emma's home?", ["Ten minutes", "An hour", "Two hours"], "An hour", "only an hour from my home"],
+   ["What does Emma's best friend want to be?", ["A doctor", "A teacher", "A computer programmer"], "A computer programmer", "wants to be a computer programmer"],
+   ["Who does Emma's brother like helping?", ["Younger players", "His grandparents", "His classmates"], "Younger players", "helping younger players"]]},
+  {"h": "True or False?", "t": "tf", "qs": [
+   ["The teacher says a dream needs a plan.", "True", "a dream needs a plan"],
+   ["The teacher suggests reviewing science for an hour a day.", "False", "thirty minutes a day"],
+   ["Students should write down two goals.", "True", "one small goal"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The bigger goal is for the next _____ years.", ["three", "3"], "next three years"],
+   ["The next lesson is on the _____ of November.", ["22nd", "22", "twenty-second", "twenty second"], "twenty-second of November"],
+   ["The next lesson is in Room _____.", ["14", "fourteen"], "Room fourteen"],
+   ["The school office's phone number: _____", ["0161 496 203"], "The number is oh one six one"],
+   ["Emma will talk to her _____ about her plan.", ["parents"], "talk to my parents"]]}]},
 {"no": 13, "speaker": "", "intro": "Listen to a radio programme about three people and their jobs.",
  "sections": [
   {"h": "Match the person with the job.", "t": "choose", "qs": [
