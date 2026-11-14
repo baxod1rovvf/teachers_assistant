@@ -395,9 +395,10 @@ function skMissingRows(lv, g, ctx) {
 /* Answers from an ID that isn't on the Students list (2026-11-14: a new student, or a wrong ID typed on a link without the class
    check — her answers arrived but counted for nobody, so she looked "not finished"). One row per typed ID (else name). */
 function skUnlistedRows(lv, g, ctx, parts) {
-  const by = {};
+  const by = {}, fixed = new Set();   // answers saved again under the right ID carry correctedFrom = the old record's id
+  parts.forEach(k => skSlotResults(ctx.map, skCodesFor(k, lv.id, g, ctx.links)).forEach(r => { if (r && r.correctedFrom) fixed.add(r.correctedFrom); }));
   parts.forEach(k => skSlotResults(ctx.map, skCodesFor(k, lv.id, g, ctx.links)).forEach(r => {
-    if (rosterStudentForResult(r, ctx.idx)) return;
+    if (rosterStudentForResult(r, ctx.idx) || fixed.has(r.__id)) return;
     const key = taIdKey(r.studentId) || 'name:' + String(r.name || '').trim().toLowerCase();
     if (key === 'name:') return;
     const row = by[key] || (by[key] = { name: String(r.name || '').trim(), id: String(r.studentId || '').trim(), parts: [] });

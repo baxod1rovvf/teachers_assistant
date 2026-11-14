@@ -715,6 +715,8 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   "Step 5 · Free Time — Apex / Not finished yet: / 1. Name — Reading, Writing" (the teacher's choice). `tests/course-missing.spec.js`.
   Below it, "❓ Not on your Students list (N)" (`skUnlistedRows`, 2026-11-14): answers of the step's sent parts whose ID matches no
   student (a new student, or a wrong ID on a link without the class check) — typed name, ID and parts, so the teacher can add them.
+  An answer saved again under the right ID carries `correctedFrom` = the old record's id, and the old one is left out of this box
+  (the lock forbids deleting it without the teacher's sign-in; 2026-11-14 Muhlisa A.'s Step 4 Listening + Writing, typed 1415 → 90613).
 - **"Already done" though not done, and the reverse (teacher, 2026-11-14)** — what the database showed for Steps 4–5 (Apex): three
   Step 4 writings with **0 words**, sent 21–63 min after the page opened — the writing clock goes on while the page is closed, and a
   student who came back after it ran out had an empty writing sent at once → "already done" without writing; one student's answers came

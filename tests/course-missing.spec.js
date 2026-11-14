@@ -83,3 +83,11 @@ test('answers from an ID that isn\'t on the Students list are shown under Not fi
   await expect(page.locator('.sk-missing')).not.toContainText('Muxlisa');
   expect(errors).toEqual([]);
 });
+
+test('an answer saved again under the right ID (correctedFrom) is no longer listed as not on the Students list', async ({ page, context }) => {
+  const wrong = L('1415', 'Muxlisa'), fixed = Object.assign(L('10002', 'Bobur Test'), { __id: 'sk_LST111_10002_9', correctedFrom: wrong.__id });
+  const errors = await openStep(page, context, [L('10001', 'Alice Test'), wrong, fixed], ALL_LINKS);
+  await expect(page.locator('.sk-missing')).toBeVisible();
+  await expect(page.locator('.sk-unlisted')).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
