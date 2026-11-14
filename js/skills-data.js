@@ -1907,7 +1907,7 @@ var TA_SKILLS = {
       id: 'e6', no: 16, stage: 'Elementary', theme: 'Animals & Pets', emoji: '🐾',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
-        src: "audio/skills/listen-step-16.mp3?v=2",
+        src: "audio/skills/listen-step-16.mp3?v=3",
         title: "An Interesting Animal Story",
         intro: "Listen to an interview with Noah, a young volunteer at an animal centre. Then answer the 18 questions.",
         questions: [
@@ -1931,27 +1931,27 @@ var TA_SKILLS = {
           {"type":"tf","q":"Next week's programme is about horses.","a":["True"],"sec":"True or False?"}
         ],
         transcript: [
-          {"who":"Presenter","man":false,"text":"Welcome to Animal Friends! Today our guest is a young volunteer, Noah Reed. Noah, how do you spell your surname?","answers":[]},
-          {"who":"Noah","man":true,"text":"Reed. That's R-E-E-D.","answers":[1]},
-          {"who":"Presenter","man":false,"text":"How did you become interested in helping animals?","answers":[]},
-          {"who":"Noah","man":true,"text":"When I was ten, my family found a small dog near our home. He looked tired, and he didn't have a collar. We gave him some water and called an animal centre, and they found his owner.","answers":[2,3,4]},
-          {"who":"Presenter","man":false,"text":"Do you have a pet now?","answers":[]},
-          {"who":"Noah","man":true,"text":"Yes, a cat. She's three years old, and she has white and grey fur. She's very friendly, but she doesn't like loud noises.","answers":[5,6]},
-          {"who":"Presenter","man":false,"text":"Where do you volunteer?","answers":[]},
-          {"who":"Noah","man":true,"text":"At an animal centre that looks after dogs and cats that need new homes. I clean the animals' areas, prepare their food and take the dogs for walks.","answers":[7,8]},
-          {"who":"Presenter","man":false,"text":"Is there an animal you remember well?","answers":[]},
-          {"who":"Noah","man":true,"text":"Yes, a dog called Rocky. Rocky. That's R-O-C-K-Y. When he arrived, he was very nervous and stayed in a corner. We gave him time and treated him gently, and after a few weeks he started playing with the other dogs.","answers":[9,10,11]},
-          {"who":"Presenter","man":false,"text":"Did Rocky find a home?","answers":[]},
-          {"who":"Noah","man":true,"text":"Yes! In April, a family with two children and a large garden adopted him. A month later, they sent us a photo. He looked so happy.","answers":[12,13]},
-          {"who":"Presenter","man":false,"text":"How can people help?","answers":[]},
-          {"who":"Noah","man":true,"text":"They can volunteer, or give food and blankets. But please call before you visit. The number is oh two oh seven, seven four five, one nine three.","answers":[14,15]},
+          {"who":"Presenter","man":false,"text":"Welcome to Animal Friends, the programme for everyone who loves animals! Today our guest is a young volunteer who spends every weekend with dogs and cats. Noah Reed, welcome to the programme! Noah, how do you spell your surname?","answers":[]},
+          {"who":"Noah","man":true,"text":"Reed. That's R-E-E-D. Like the plants that grow by the river.","answers":[1]},
+          {"who":"Presenter","man":false,"text":"Lovely. So, Noah, how did you become interested in helping animals? Was it your parents?","answers":[]},
+          {"who":"Noah","man":true,"text":"No, actually, my parents aren't really animal people! It started when I was ten. One rainy evening, my family found a small animal near our home. At first we thought it was a fox, because it was so dirty. But it was a small dog. He looked tired and hungry, and he was shaking with cold. My little sister wanted to keep him straight away, of course! My dad wasn't so sure. We looked for a name, but he didn't have a collar, so we didn't know where he lived. It was getting dark, and it was raining harder and harder. We couldn't leave him outside. So we took him inside, dried him with a towel and gave him some water. He drank it all in about ten seconds! The next morning, we called an animal centre, and they found his owner. She was an old lady from the next street, and she cried when she saw him. That's when I knew I wanted to help animals.","answers":[2,3,4]},
+          {"who":"Presenter","man":false,"text":"What a lovely story. Do you have a pet now?","answers":[]},
+          {"who":"Noah","man":true,"text":"Yes, a cat. She's three years old. She was a present for my birthday. She isn't black and white, like most cats in our street. She has white and grey fur, and big green eyes. She's very friendly, and she sleeps on my bed every night. She's quite lazy, to be honest. She sleeps most of the day, and she only wakes up when she hears the fridge door! But she doesn't like loud noises. When there are fireworks, she hides under the sofa all evening, and nothing can make her come out.","answers":[5,6]},
+          {"who":"Presenter","man":false,"text":"Poor thing! So, where do you volunteer?","answers":[]},
+          {"who":"Noah","man":true,"text":"At an animal centre on the edge of town. It's a big old building with a garden, and it's always noisy! It looks after dogs and cats that need new homes. Some of them were lost, and some of them had owners who couldn't look after them any more. I go there every Saturday and Sunday. I clean the animals' areas and prepare their food. But my favourite job is the last one of the day. I take the dogs for walks in the woods behind the centre. Some of them pull very hard, so my arms are always tired!","answers":[7,8]},
+          {"who":"Presenter","man":false,"text":"Ha! Is there an animal you remember well?","answers":[]},
+          {"who":"Noah","man":true,"text":"Oh, yes. I'll never forget him. He was a big brown dog with one ear up and one ear down. His name was Rocky. Rocky. That's R-O-C-K-Y. When he arrived, he was very nervous. He didn't eat, he didn't play, and he was afraid of people. We think someone wasn't very kind to him before. For the first few days, he just stayed in a corner of his room, with his back to the wall. We didn't push him. We gave him time and treated him gently. I sat near him every weekend and read my school books out loud, so he could get used to my voice. And slowly, slowly, things changed. After a few weeks, he started playing with the other dogs, and he even brought me his ball!","answers":[9,10,11]},
+          {"who":"Presenter","man":false,"text":"That's wonderful. Did Rocky find a home in the end?","answers":[]},
+          {"who":"Noah","man":true,"text":"Yes! Lots of people came to see him in the winter, but nobody chose him. Then, in April, a family with two children and a large garden adopted him. The children had never had a dog before, so they came to the centre every day for a week to get to know him. I was happy, but I also cried a bit when he left! A month later, they sent us a photo. Rocky was lying on the grass in the sun, with the two children next to him. He looked so happy. It's on the wall in our office now.","answers":[12,13]},
+          {"who":"Presenter","man":false,"text":"That's beautiful. So, how can people help? Do they need to adopt an animal?","answers":[]},
+          {"who":"Noah","man":true,"text":"No, not at all. They can volunteer, like me, or they can give things. We always need food and blankets, especially in winter. Old towels are great too. The dogs love sleeping on them, and they often steal them from each other! But please call before you visit, because sometimes we're very busy with the animals. The number is oh two oh seven, seven four five, one nine three.","answers":[14,15]},
           {"who":"Presenter","man":false,"text":"Oh two oh seven, seven four five, one nine three?","answers":[]},
           {"who":"Noah","man":true,"text":"That's right.","answers":[]},
-          {"who":"Presenter","man":false,"text":"Can children volunteer too?","answers":[]},
-          {"who":"Noah","man":true,"text":"Yes, from the age of twelve, with a parent.","answers":[16]},
-          {"who":"Presenter","man":false,"text":"Thank you, Noah!","answers":[]},
-          {"who":"Noah","man":true,"text":"Thank you. And remember, small acts of kindness can make a big difference.","answers":[17]},
-          {"who":"Presenter","man":false,"text":"Next week on Animal Friends, we're talking about horses.","answers":[18]}
+          {"who":"Presenter","man":false,"text":"Lots of children listen to our programme. Can children volunteer too?","answers":[]},
+          {"who":"Noah","man":true,"text":"Yes, they can. Children often ask me about this at school. They can't come alone, but they can come from the age of twelve, with a parent. Lots of families come together on Sunday mornings, and the children love brushing the cats.","answers":[16]},
+          {"who":"Presenter","man":false,"text":"Thank you so much, Noah. It was great to talk to you.","answers":[]},
+          {"who":"Noah","man":true,"text":"Thank you for having me. And remember, you don't need to do something big. Even giving one old blanket helps. Small acts of kindness can make a big difference.","answers":[17]},
+          {"who":"Presenter","man":false,"text":"What a lovely message. If you'd like to help Noah's animal centre, you can find all the details on our website. And that's all for today. Next week on Animal Friends, we're talking about horses, and we'll visit a farm where horses help people feel better. See you then!","answers":[18]}
         ]
         // LISTENING JOURNEY END
       },
@@ -2046,7 +2046,7 @@ var TA_SKILLS = {
       id: 'e7', no: 17, stage: 'Elementary', theme: 'Health & Lifestyle', emoji: '💪',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
-        src: "audio/skills/listen-step-17.mp3?v=2",
+        src: "audio/skills/listen-step-17.mp3?v=3",
         title: "Healthy Habits and Daily Life",
         intro: "Listen to Ryan's podcast about healthy habits. Then answer the 19 questions.",
         questions: [
@@ -2071,18 +2071,18 @@ var TA_SKILLS = {
           {"type":"gap","q":"A healthy lifestyle is built through small _____.","a":["choices"],"sec":"Complete the notes. Write ONE word or A NUMBER."}
         ],
         transcript: [
-          {"who":"Ryan","man":true,"text":"Hello, and welcome to Everyday Choices, a podcast about simple habits that make daily life better. I'm your presenter, Ryan Moore. Moore. That's M-O-O-R-E.","answers":[1]},
-          {"who":"Ryan","man":true,"text":"Today we're talking about healthy habits. Some people think a healthy life needs expensive food or special equipment, but many useful habits are simple.","answers":[2]},
-          {"who":"Ryan","man":true,"text":"Let's begin with sleep. A regular sleeping routine helps you feel organised. If you wake up at seven, try to go to bed at about half past ten.","answers":[3,4]},
-          {"who":"Ryan","man":true,"text":"The second habit is drinking water. Some people forget to drink on busy days, so keep a bottle near you. I fill mine every morning.","answers":[5]},
-          {"who":"Ryan","man":true,"text":"Another habit is eating a variety of foods. You could have eggs and bread for breakfast, rice with vegetables for lunch, and soup for dinner.","answers":[6]},
-          {"who":"Ryan","man":true,"text":"Movement is important too. My neighbour walks to work every day. You don't have to join a sports club. Walking, cycling, dancing and playing outside are all good.","answers":[7,8]},
-          {"who":"Ryan","man":true,"text":"It's also useful to take short breaks when you study. Stand up, stretch gently or walk around.","answers":[9]},
-          {"who":"Ryan","man":true,"text":"Rest is important as well. Reading, listening to music and spending time with friends can help you relax.","answers":[10]},
-          {"who":"Ryan","man":true,"text":"Now, here's a message from a listener in Brookfield. Brookfield. That's B-R-O-O-K-F-I-E-L-D. He works in an office, and he often feels tired in the evening. He wants to be more active.","answers":[11,12,13]},
-          {"who":"Ryan","man":true,"text":"My suggestion is to start small. He could go for a short walk after lunch, or take the stairs instead of the lift. He could also cook a simple meal at home.","answers":[14,15,16]},
-          {"who":"Ryan","man":true,"text":"If you'd like to send us a question, call the podcast line. The number is oh one five two, eight three six, four seven nine. That's oh one five two, eight three six, four seven nine.","answers":[17]},
-          {"who":"Ryan","man":true,"text":"Remember, you don't need to change everything in one day. Choose one or two realistic goals and practise them regularly. A healthy lifestyle is built through small choices repeated over time. Thank you for listening!","answers":[18,19]}
+          {"who":"Ryan","man":true,"text":"Hello, and welcome to Everyday Choices, a podcast about simple habits that make daily life better. I'm your presenter, Ryan Moore. Moore. That's M-O-O-R-E. Thank you for all your lovely messages last week. I read every single one of them, usually with a cup of tea in my hand!","answers":[1]},
+          {"who":"Ryan","man":true,"text":"Today we're talking about healthy habits. When I started this podcast, I thought a healthy life needed expensive food from special shops and lots of equipment for the gym. I was wrong. Many useful habits are simple, and most of them are free.","answers":[2]},
+          {"who":"Ryan","man":true,"text":"Let's begin with sleep. I know, I know. Sleep isn't very exciting! But it's the most important habit of all. When I was at university, I went to bed at a different time every night, and I always felt confused. A regular sleeping routine helps you feel organised. It also helps you concentrate at school or at work, and it puts you in a better mood. My family says I'm much nicer now! So here's a simple rule. If you wake up at seven, try to go to bed at about half past ten. And put your phone in another room! I used to check my messages in bed until very late, and I felt terrible in the morning.","answers":[3,4]},
+          {"who":"Ryan","man":true,"text":"The second habit is drinking water. It sounds easy, doesn't it? But some people forget to drink on busy days, and then they get headaches. So keep a bottle near you. I fill mine every morning, and I take it everywhere: to work, to the shops, even to the cinema. My friends laugh at me, but I haven't had a headache for months!","answers":[5]},
+          {"who":"Ryan","man":true,"text":"Another habit is eating a variety of foods. Don't eat the same thing every day. For example, you could have eggs and bread for breakfast, rice with vegetables for lunch, and soup for dinner. My grandmother makes the best vegetable soup in the world. She says the secret is lots of colours: orange carrots, green beans, red peppers. The more colours on your plate, the better!","answers":[6]},
+          {"who":"Ryan","man":true,"text":"Movement is important too. My neighbour is a great example. He used to take the bus to work, but it was always late. Now he walks to work every day, and he says he feels ten years younger! On the way, he stops to talk to the man at the newspaper shop, and he always arrives at work with a smile. And you don't have to join a sports club or buy expensive trainers. Walking, cycling, dancing and playing outside are all good. Last weekend I played football in the park with my nephews, and I was the most tired person there!","answers":[7,8]},
+          {"who":"Ryan","man":true,"text":"It's also useful to take short breaks when you study or work. Sitting at a desk for hours isn't good for your body or your brain. Every hour, stand up and stretch gently, or walk around the room.","answers":[9]},
+          {"who":"Ryan","man":true,"text":"Rest is important as well. Being healthy isn't only about your body. Your mind needs a rest too. Some people like reading, and some people like listening to music. Personally, I think the best thing is spending time with friends. It always helps me relax.","answers":[10]},
+          {"who":"Ryan","man":true,"text":"Now, here's a message from a listener. He sent us a long email, so I'll tell you the most important part. He lives in a small town called Brookfield. Brookfield. That's B-R-O-O-K-F-I-E-L-D. Thank you for writing to us, and hello to everyone in Brookfield! I've never been there, but I hear it has a beautiful lake. Anyway, our listener says he loves his job, but it isn't very active. He works in an office, and he sits in front of a computer most of the day. He even eats his lunch at his desk. When he gets home, he just wants to lie on the sofa. He often feels tired in the evening, and he wants to be more active. But he says he doesn't have time for the gym.","answers":[11,12,13]},
+          {"who":"Ryan","man":true,"text":"Well, I have good news for you! My suggestion is to start small. You don't need a gym. You could go for a short walk after lunch, instead of eating at your desk. Even a few minutes outside makes a big difference. And here's another easy idea. Your office is probably in a big building. When you arrive in the morning, take the stairs instead of the lift. At first you'll be out of breath, but after a few weeks it'll be easy. And finally, try cooking at home. You don't have to be a great cook. I'm a terrible cook! Just cook a simple meal at home, with lots of vegetables. It's cheaper than eating out, and it's much healthier. Good luck, and please write to us again in a month to tell us how it's going!","answers":[14,15,16]},
+          {"who":"Ryan","man":true,"text":"That was a great question. If you'd like to send us a question too, we'd love to hear from you. You can call the podcast line and leave a message, any time of the day or night. The number is oh one five two, eight three six, four seven nine. That's oh one five two, eight three six, four seven nine.","answers":[17]},
+          {"who":"Ryan","man":true,"text":"Before I go, here's the most important thing to remember. You don't need to change everything in one day. People who try to change everything at once usually give up after a week. So choose one or two realistic goals and practise them regularly. Maybe this week you'll drink more water, and next month you'll start walking to work. Step by step, it gets easier. A healthy lifestyle isn't built in one day. It's built through small choices, repeated over time. Thank you for listening, and see you next week on Everyday Choices!","answers":[18,19]}
         ]
         // LISTENING JOURNEY END
       },
@@ -2178,7 +2178,7 @@ var TA_SKILLS = {
       id: 'e8', no: 18, stage: 'Elementary', theme: 'Technology', emoji: '📱',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
-        src: "audio/skills/listen-step-18.mp3?v=2",
+        src: "audio/skills/listen-step-18.mp3?v=3",
         title: "How Technology Changes Our Lives",
         intro: "Listen to two students, Emily and Jack, talking about technology on a school radio programme. Then answer the 19 questions.",
         questions: [
@@ -2203,28 +2203,29 @@ var TA_SKILLS = {
           {"type":"gap","q":"Next week's topic: _____","a":["sport","sports"],"sec":"Complete the notes. Write ONE word or A NUMBER."}
         ],
         transcript: [
-          {"who":"Host","man":false,"text":"Welcome to School Voices! Today's topic is technology, and my guests are two students, Emily and Jack. Emily, can you spell your surname for our listeners?","answers":[]},
+          {"who":"Host","man":false,"text":"Welcome to School Voices, the radio programme made by students, for students! Today's topic is technology. We all use it, but do we use it well? To help us find out, I have two guests from our school, Emily and Jack. Emily, can you spell your surname for our listeners?","answers":[]},
           {"who":"Emily","man":false,"text":"Sure. It's Parker. That's P-A-R-K-E-R.","answers":[1]},
-          {"who":"Host","man":false,"text":"Emily, how do you use your phone?","answers":[]},
-          {"who":"Emily","man":false,"text":"I use it every day to message my friends, check my school timetable and listen to music. I also use a language app for about fifteen minutes a day. But when I'm studying, I put my phone away, because I sometimes watch too many short videos.","answers":[2,3,4]},
-          {"who":"Host","man":false,"text":"Jack, what about you?","answers":[]},
-          {"who":"Jack","man":true,"text":"I use my laptop more than my phone, because I do my school projects on it. I also take free online lessons about typing and presentations.","answers":[5,6]},
-          {"who":"Host","man":false,"text":"What should students remember about online safety?","answers":[]},
-          {"who":"Emily","man":false,"text":"Use strong passwords, and don't share private information with strangers.","answers":[7]},
-          {"who":"Jack","man":true,"text":"And check information before you share it. Not everything online is true.","answers":[8]},
-          {"who":"Host","man":false,"text":"Will technology change schools?","answers":[]},
-          {"who":"Emily","man":false,"text":"Probably. We'll use more digital books, and teachers will share more materials online.","answers":[9]},
-          {"who":"Jack","man":true,"text":"Technology will help teachers, but it won't replace them.","answers":[10]},
-          {"who":"Host","man":false,"text":"Emily, what's your favourite device?","answers":[]},
-          {"who":"Emily","man":false,"text":"My tablet. It's called Nova. Nova. That's N-O-V-A. I use it to read and draw.","answers":[11,12]},
-          {"who":"Host","man":false,"text":"And Jack?","answers":[]},
-          {"who":"Jack","man":true,"text":"My wireless headphones. I bought them at a small shop on Market Road. They cost forty dollars.","answers":[13,14,15]},
-          {"who":"Host","man":false,"text":"If our listeners have questions about technology, they can call the school radio. The number is oh one seven three, two nine five, eight four one.","answers":[16]},
+          {"who":"Host","man":false,"text":"Thanks, Emily. Let's start with something we all have. How do you use your phone? Be honest!","answers":[]},
+          {"who":"Emily","man":false,"text":"Ha, OK! Well, I use it every day, from the moment I wake up. It's my alarm clock, my music player, everything. I message my friends, of course, and I check my school timetable, because I always forget which classroom I'm in! I also listen to music on the bus. And I'm learning Spanish, so I use a language app. My best friend uses it for an hour a day, but I'm not that patient. I use it for about fifteen minutes a day, usually before breakfast. But I have a problem. When I start watching short videos, I can't stop! Sometimes I look up, and an hour has gone, and my homework isn't finished. So when I'm studying, I put my phone away, in another room.","answers":[2,3,4]},
+          {"who":"Host","man":false,"text":"I think we all know that feeling! Jack, what about you? Are you a phone person too?","answers":[]},
+          {"who":"Jack","man":true,"text":"Not really. I use my laptop more than my phone. I play games on it sometimes, but mostly it's for school. I do my school projects on it. Last month I made a video about recycling for my science class, and my teacher showed it to the whole school! I also take free online lessons. At the moment I'm learning about typing and presentations. I used to type with two fingers, and it took forever. Now I can type without looking at the keyboard!","answers":[5,6]},
+          {"who":"Host","man":false,"text":"Impressive! Now, something important. What should students remember about online safety? Emily?","answers":[]},
+          {"who":"Emily","man":false,"text":"Well, the first thing is passwords. Lots of people use their name or their birthday, and that's a big mistake. Use strong passwords, with letters, numbers and symbols. And don't share private information with strangers, like your address or your school. You never really know who is on the other side of the screen.","answers":[7]},
+          {"who":"Jack","man":true,"text":"I agree. And there's one more thing. Check information before you share it. My grandad sends me crazy stories every week, like a cat that can talk! Not everything online is true.","answers":[8]},
+          {"who":"Host","man":false,"text":"Ha! Poor grandad. Let's look at the future. Will technology change schools? Emily, what do you think?","answers":[]},
+          {"who":"Emily","man":false,"text":"Probably, yes. My little brother's school already gives every student a tablet. I think in a few years, our heavy school bags will disappear. We'll use more digital books, and teachers will share more materials online.","answers":[9]},
+          {"who":"Host","man":false,"text":"Jack, do you agree?","answers":[]},
+          {"who":"Jack","man":true,"text":"Maybe. But I don't think robots will teach us! A computer can't tell when you're sad or confused. Technology will help teachers, but it won't replace them. A good teacher is much more than a screen.","answers":[10]},
+          {"who":"Host","man":false,"text":"Well said. Now, a fun question. Emily, what's your favourite device?","answers":[]},
+          {"who":"Emily","man":false,"text":"That's easy! My tablet. I got it for my birthday last year, and I gave it a name, because I use it so much. It's called Nova. Nova. That's N-O-V-A. Like a star. My friends think it's a funny name, but I love it. I take it everywhere, even on holiday. The screen is quite big, and the colours are beautiful. I don't play games on it much. I mostly use it to read and draw. I want to be an artist one day, so I draw something every evening, usually animals. Last night I drew my cat sleeping on the sofa.","answers":[11,12]},
+          {"who":"Host","man":false,"text":"Lovely. And Jack, what about you?","answers":[]},
+          {"who":"Jack","man":true,"text":"For me, it's not my laptop, actually. It's my wireless headphones. I wear them on the bus, at the gym, everywhere. My mum says they're glued to my head! The sound is amazing, and they stop all the noise around you, so I can't hear my little sister screaming. I bought them at a small shop on Market Road, near the station. The man there knows everything about technology, and he lets you try everything before you buy it. They weren't expensive. In the big shops they cost about seventy dollars, but in his shop they cost forty dollars. I've already told all my friends about it.","answers":[13,14,15]},
+          {"who":"Host","man":false,"text":"What a bargain! If our listeners have questions about technology, they can call the school radio. We read your questions out every Friday, and the best ones win a prize. The number is oh one seven three, two nine five, eight four one.","answers":[16]},
           {"who":"Jack","man":true,"text":"Oh one seven three, two nine five, eight four one?","answers":[]},
-          {"who":"Host","man":false,"text":"That's right! One final piece of advice?","answers":[]},
-          {"who":"Emily","man":false,"text":"Make sure technology helps you reach your goals.","answers":[17]},
-          {"who":"Jack","man":true,"text":"And spend time away from screens too.","answers":[18]},
-          {"who":"Host","man":false,"text":"Thank you both! Next week, we're talking about sport.","answers":[19]}
+          {"who":"Host","man":false,"text":"That's right! Well, we're nearly out of time. Before you go, one final piece of advice for our listeners. Emily?","answers":[]},
+          {"who":"Emily","man":false,"text":"Technology is a great tool, but it's only a tool. Don't let it control you. Make sure technology helps you reach your goals. For example, if you want to learn a language, use an app. But if you just scroll for hours, put it down.","answers":[17]},
+          {"who":"Jack","man":true,"text":"Exactly. Go outside, see your friends, play a sport. And spend time away from screens too. Every Sunday, my family has a no-phone day. It was terrible at first, but now I love it. We play board games and go for long walks.","answers":[18]},
+          {"who":"Host","man":false,"text":"What a great idea. Thank you both! And next week on School Voices, we're talking about sport, with the captain of our football team. See you then!","answers":[19]}
         ]
         // LISTENING JOURNEY END
       },
@@ -2319,7 +2320,7 @@ var TA_SKILLS = {
     { id: 'e9', no: 19, stage: 'Elementary', theme: 'Movies & Music', emoji: '🎬',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
-        src: "audio/skills/listen-step-19.mp3?v=2",
+        src: "audio/skills/listen-step-19.mp3?v=3",
         title: "Behind the Scenes of a Movie",
         intro: "Listen to an interview with Sam, a production assistant on a film. Then answer the 20 questions.",
         questions: [
@@ -2345,30 +2346,31 @@ var TA_SKILLS = {
           {"type":"gap","q":"There are many jobs behind the _____.","a":["camera"],"sec":"Complete the notes. Write ONE word or A NUMBER."}
         ],
         transcript: [
-          {"who":"Presenter","man":false,"text":"Welcome to Film Makers! Today I'm talking to a production assistant, Sam Turner. Sam, could you spell your surname?","answers":[]},
+          {"who":"Presenter","man":false,"text":"Welcome to Film Makers, the programme that takes you behind the scenes of your favourite films! Today I'm talking to someone who works on a film set every day. He's a production assistant, Sam Turner. Sam, could you spell your surname?","answers":[]},
           {"who":"Sam","man":true,"text":"Sure. Turner. That's T-U-R-N-E-R.","answers":[1]},
-          {"who":"Presenter","man":false,"text":"So, what does a production assistant do?","answers":[]},
-          {"who":"Sam","man":true,"text":"I help the film team organise the daily work. I prepare schedules, check the equipment and help the actors find the right places. It's busy, because so many people work together.","answers":[2,3,4]},
-          {"who":"Presenter","man":false,"text":"What film are you working on?","answers":[]},
-          {"who":"Sam","man":true,"text":"A family adventure film called The Hidden Garden. It's about two children who find a strange garden near their grandmother's house.","answers":[5]},
-          {"who":"Presenter","man":false,"text":"Where are you filming?","answers":[]},
-          {"who":"Sam","man":true,"text":"Most scenes are filmed in a small village in the hills, about an hour from the city. We film the indoor scenes in a studio.","answers":[6]},
+          {"who":"Presenter","man":false,"text":"Thank you, Sam. Now, I think lots of our listeners don't know this job. So, what does a production assistant do?","answers":[]},
+          {"who":"Sam","man":true,"text":"Ha, my friends ask me that all the time! Well, a film set is like a small town, with lots of people doing different jobs. I help the film team organise the daily work. Every evening, I prepare schedules for the next day, so everyone knows where to be and when. If I make a mistake, everyone ends up in the wrong place, so I check everything twice! Then, early in the morning, before anyone else arrives, I check the equipment: the cameras, the lights, the microphones. Everything must be ready. And when the actors arrive, I help them. The set is big and confusing, and there are cables everywhere, so I help the actors find the right places. It's a busy job, because so many people work together, but I love it.","answers":[2,3,4]},
+          {"who":"Presenter","man":false,"text":"It sounds exciting! What film are you working on at the moment?","answers":[]},
+          {"who":"Sam","man":true,"text":"It's a family adventure film called The Hidden Garden. Some people think it's about a football team, because the main boy plays football in the first scene. But no. It's about two children who find a strange garden near their grandmother's house. In the garden, the flowers can talk, and the trees move at night! I can't tell you the ending, of course.","answers":[5]},
+          {"who":"Presenter","man":false,"text":"Of course not! Where are you filming?","answers":[]},
+          {"who":"Sam","man":true,"text":"Well, the story happens in the countryside, so we couldn't film in the city. Most scenes are filmed in a small village in the hills, about an hour from the city. The people there are very kind. They bring us cakes and tea every afternoon! We film the indoor scenes in a studio, where we can control the light.","answers":[6]},
           {"who":"Presenter","man":false,"text":"How long does filming take?","answers":[]},
-          {"who":"Sam","man":true,"text":"About twelve weeks. After that, the editors work on the film for several months. They choose the best scenes and add music.","answers":[7,8]},
-          {"who":"Presenter","man":false,"text":"How big is the team?","answers":[]},
-          {"who":"Sam","man":true,"text":"About forty-five people: the director, camera operators, actors, costume designers and sound assistants.","answers":[9,10]},
-          {"who":"Presenter","man":false,"text":"Is there an animal in the film?","answers":[]},
-          {"who":"Sam","man":true,"text":"Yes, a small dog called Biscuit. Biscuit. That's B-I-S-C-U-I-T. He's very friendly, but sometimes he doesn't follow instructions, so we take a short break and try again.","answers":[11,12,13]},
-          {"who":"Presenter","man":false,"text":"When can we see the film?","answers":[]},
-          {"who":"Sam","man":true,"text":"It comes to cinemas on the eighteenth of December.","answers":[14]},
-          {"who":"Presenter","man":false,"text":"What's the hardest part of your job?","answers":[]},
-          {"who":"Sam","man":true,"text":"The weather! If it rains during an outdoor scene, we change the plan and film an indoor scene instead.","answers":[15]},
-          {"who":"Presenter","man":false,"text":"How can young people learn more about film jobs?","answers":[]},
-          {"who":"Sam","man":true,"text":"Our studio runs free workshops for teenagers. You can call the studio on oh one two six, five eight three, nine four seven.","answers":[16,17]},
+          {"who":"Sam","man":true,"text":"Most people think a film takes a few days, but this one takes about twelve weeks. And that's only the filming! After that, the editors work on the film for several months. That's a very important job. The editors watch hours and hours of film. Sometimes a scene we filmed for a whole day is cut completely! They choose the best scenes and add music. The music for this film is beautiful. I've heard some of it already.","answers":[7,8]},
+          {"who":"Presenter","man":false,"text":"Wow. And how big is the team?","answers":[]},
+          {"who":"Sam","man":true,"text":"Bigger than you think! On a normal day, there are about forty-five people on set. We all eat lunch together in a big tent, and it's very noisy! There's the director, of course, who decides everything. There are camera operators and actors. There are people who do make-up and hair, and there are costume designers, who make all the clothes. And there are sound assistants, who hold the big microphones above the actors' heads.","answers":[9,10]},
+          {"who":"Presenter","man":false,"text":"Is there an animal in the film? Children love animals in films.","answers":[]},
+          {"who":"Sam","man":true,"text":"Yes! We have a small dog in the film. He's brown and white, with very short legs, and he belongs to the children's grandmother in the story. Everybody on set loves him, especially the actors. His name is Biscuit. Biscuit. That's B-I-S-C-U-I-T. He's very friendly, but he's not a perfect actor! Sometimes he doesn't follow instructions. Yesterday, he ran away with an actor's sandwich in the middle of a scene! When that happens, we don't get angry. We take a short break and try again.","answers":[11,12,13]},
+          {"who":"Presenter","man":false,"text":"Ha! I love Biscuit already. So, when can we see the film?","answers":[]},
+          {"who":"Sam","man":true,"text":"Not this summer, I'm afraid. We need time to finish it. It comes to cinemas on the eighteenth of December, just in time for Christmas. It's the perfect film to watch with your family.","answers":[14]},
+          {"who":"Presenter","man":false,"text":"I'll be there! What's the hardest part of your job?","answers":[]},
+          {"who":"Sam","man":true,"text":"Oh, that's easy. The weather! We plan everything carefully, but the weather doesn't read our schedules. Last week we wanted to film a picnic in the sunshine, and it rained all day. If it rains during an outdoor scene, we change the plan and film an indoor scene instead. That's why we always have a second plan ready.","answers":[15]},
+          {"who":"Presenter","man":false,"text":"Very clever. Lots of young people listen to this programme. How can they learn more about film jobs?","answers":[]},
+          {"who":"Sam","man":true,"text":"That's a great question. Our studio runs free workshops for teenagers, every school holiday. You can try using a real camera, write a short scene, or even act in front of the camera. Last summer, one of our students made a short film, and it won a prize! If you're interested, you can call the studio on oh one two six, five eight three, nine four seven.","answers":[16,17]},
           {"who":"Presenter","man":false,"text":"Oh one two six, five eight three, nine four seven?","answers":[]},
-          {"who":"Sam","man":true,"text":"Yes, that's right.","answers":[]},
-          {"who":"Presenter","man":false,"text":"Any advice for someone who wants to work in films?","answers":[]},
-          {"who":"Sam","man":true,"text":"Be organised, communicate clearly and always be ready to learn. There are many jobs behind the camera, not only acting.","answers":[18,19,20]}
+          {"who":"Sam","man":true,"text":"Yes, that's right. The workshops are very popular, so call early!","answers":[]},
+          {"who":"Presenter","man":false,"text":"Great. And finally, any advice for someone who wants to work in films?","answers":[]},
+          {"who":"Sam","man":true,"text":"Yes. First, be organised. On a film set, everything happens very fast. Second, communicate clearly. When so many people work together, a small misunderstanding can cause big problems. Once, the camera team went to the wrong village, because nobody told them about a change in the plan! And always be ready to learn. I learn something new every day, from the camera team, from the actors, even from Biscuit! And remember, you don't have to be an actor. Most people in films never appear on the screen. There are many jobs behind the camera, not only acting.","answers":[18,19,20]},
+          {"who":"Presenter","man":false,"text":"Thank you, Sam Turner, and good luck with The Hidden Garden!","answers":[]}
         ]
         // LISTENING JOURNEY END
       },

@@ -290,11 +290,11 @@
    ["Board the train through the front and _____ doors.", ["middle"], "front and middle doors"],
    ["Don't leave your _____ alone.", ["bags"], "leave your bags alone"],
    ["Jack will buy a bottle of _____ first.", ["water"], "bottle of water"]]}]},
-{"no": 16, "speaker": "", "inOrder": true, "names": ["Noah"], "audioV": 2, "intro": "Listen to an interview with Noah, a young volunteer at an animal centre.",
+{"no": 16, "speaker": "", "inOrder": true, "spaced": true, "names": ["Noah"], "audioV": 3, "intro": "Listen to an interview with Noah, a young volunteer at an animal centre.",
  "sections": [
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["Noah's surname: _____", ["Reed"], "That's R-E-E-D"],
-   ["Noah's family found a small _____ near their home.", ["dog"], "found a small dog"],
+   ["Noah's family found a small _____ near their home.", ["dog"], "it was a small dog"],
    ["The animal didn't have a _____.", ["collar"], "didn't have a collar"],
    ["They gave it some _____.", ["water"], "gave him some water"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
@@ -306,7 +306,7 @@
    ["The dog Noah remembers: _____", ["Rocky"], "R-O-C-K-Y"],
    ["When Rocky arrived, he stayed in a _____.", ["corner"], "stayed in a corner"],
    ["After a few weeks, he started _____ with the other dogs.", ["playing"], "started playing"],
-   ["Rocky was adopted in _____.", ["April"], "In April"],
+   ["Rocky was adopted in _____.", ["April"], "in April"],
    ["A month later, the family sent a _____.", ["photo", "photograph", "picture"], "sent us a photo"],
    ["People can give food and _____.", ["blankets"], "food and blankets"],
    ["The centre's phone number: _____", ["0207 745 193"], "The number is oh two oh seven"]]},
@@ -314,7 +314,7 @@
    ["Children under twelve can volunteer alone.", "False", "from the age of twelve, with a parent"],
    ["Noah thinks small acts of kindness don't help much.", "False", "small acts of kindness"],
    ["Next week's programme is about horses.", "True", "talking about horses"]]}]},
-{"no": 17, "speaker": "Ryan", "inOrder": true, "names": ["Ryan"], "audioV": 2, "intro": "Listen to Ryan's podcast about healthy habits.",
+{"no": 17, "speaker": "Ryan", "inOrder": true, "spaced": true, "names": ["Ryan"], "audioV": 3, "intro": "Listen to Ryan's podcast about healthy habits.",
  "sections": [
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["The presenter's surname: _____", ["Moore"], "That's M-O-O-R-E"],
@@ -339,7 +339,7 @@
    ["The podcast's phone number: _____", ["0152 836 479"], "The number is oh one five two"],
    ["Choose one or two realistic _____.", ["goals"], "realistic goals"],
    ["A healthy lifestyle is built through small _____.", ["choices"], "small choices"]]}]},
-{"no": 18, "speaker": "", "inOrder": true, "names": ["Emily", "Jack"], "audioV": 2, "intro": "Listen to two students, Emily and Jack, talking about technology on a school radio programme.",
+{"no": 18, "speaker": "", "inOrder": true, "spaced": true, "names": ["Emily", "Jack"], "audioV": 3, "intro": "Listen to two students, Emily and Jack, talking about technology on a school radio programme.",
  "sections": [
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["Emily's surname: _____", ["Parker"], "That's P-A-R-K-E-R"],
@@ -364,7 +364,7 @@
    ["Make sure technology helps you reach your _____.", ["goals"], "reach your goals"],
    ["Spend time away from _____ too.", ["screens"], "away from screens"],
    ["Next week's topic: _____", ["sport", "sports"], "talking about sport"]]}]},
-{"no": 19, "speaker": "", "inOrder": true, "names": ["Sam"], "audioV": 2, "intro": "Listen to an interview with Sam, a production assistant on a film.",
+{"no": 19, "speaker": "", "inOrder": true, "spaced": true, "names": ["Sam"], "audioV": 3, "intro": "Listen to an interview with Sam, a production assistant on a film.",
  "sections": [
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["Sam's surname: _____", ["Turner"], "That's T-U-R-N-E-R"],
@@ -374,12 +374,12 @@
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
    ["What is the film about?", ["A football team", "Two children who find a garden", "A school trip"], "Two children who find a garden", "two children who find"],
    ["Where are most scenes filmed?", ["In a big city", "By the sea", "In a small village"], "In a small village", "in a small village"],
-   ["How long does filming take?", ["About two weeks", "About twelve weeks", "About twenty weeks"], "About twelve weeks", "About twelve weeks"],
+   ["How long does filming take?", ["About two weeks", "About twelve weeks", "About twenty weeks"], "About twelve weeks", "about twelve weeks"],
    ["What do the editors do?", ["Write the story", "Make the costumes", "Choose the best scenes and add music"], "Choose the best scenes and add music", "choose the best scenes"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["The film team has about forty-five people.", "True", "About forty-five people"],
+   ["The film team has about forty-five people.", "True", "about forty-five people"],
    ["The team includes costume designers.", "True", "costume designers"],
-   ["There is a cat in the film.", "False", "a small dog called Biscuit"]]},
+   ["There is a cat in the film.", "False", "a small dog in the film"]]},
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["The dog's name: _____", ["Biscuit"], "B-I-S-C-U-I-T"],
    ["When the dog doesn't follow instructions, they take a short _____.", ["break"], "take a short break"],

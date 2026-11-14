@@ -9,7 +9,7 @@ const { prepare } = require('./support/app');
 const NEW = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 // time to write (teacher, 2026-11-14: "after one question speakers should speak about other things… like IELTS Part 1"):
 // at least MIN_GAP words of talk from one answer to the next. Grows as the steps are re-spaced.
-const SPACED = [20];
+const SPACED = NEW;
 const MIN_GAP = 35;
 const COUNT = { 8: 14, 9: 14, 10: 15, 11: 16, 12: 16, 13: 17, 14: 17, 15: 18, 16: 18, 17: 19, 18: 19, 19: 20, 20: 20 };
 const ROLES = /^(Speaker|Presenter|Host|Interviewer|Guide|Teacher|Reporter|Assistant|Customer|Announcer|Narrator|Coach|Receptionist|Driver|Manager|Shop assistant|Staff)$/i;
