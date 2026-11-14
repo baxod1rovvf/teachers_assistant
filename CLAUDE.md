@@ -713,6 +713,21 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   result counts as done (a writing waiting for the AI too), matched like the dots — each with the parts still to do, most missing first
   (`skMissingRows`); nothing sent / no students → no list; everyone done → "🎉 Everyone has finished". "📋 Copy list" (`skCopyMissing`) copies
   "Step 5 · Free Time — Apex / Not finished yet: / 1. Name — Reading, Writing" (the teacher's choice). `tests/course-missing.spec.js`.
+  Below it, "❓ Not on your Students list (N)" (`skUnlistedRows`, 2026-11-14): answers of the step's sent parts whose ID matches no
+  student (a new student, or a wrong ID on a link without the class check) — typed name, ID and parts, so the teacher can add them.
+  An answer saved again under the right ID carries `correctedFrom` = the old record's id, and the old one is left out of this box
+  (the lock forbids deleting it without the teacher's sign-in; 2026-11-14 Muhlisa A.'s Step 4 Listening + Writing, typed 1415 → 90613).
+- **"Already done" though not done, and the reverse (teacher, 2026-11-14)** — what the database showed for Steps 4–5 (Apex): three
+  Step 4 writings with **0 words**, sent 21–63 min after the page opened — the writing clock goes on while the page is closed, and a
+  student who came back after it ran out had an empty writing sent at once → "already done" without writing; one student's answers came
+  with an ID not on the list (old links without a class list) → counted for nobody. Fixes in js/skill-player.js: **the time runs out
+  with nothing written → nothing is sent** (`skNothingWritten`: "Time's up — nothing was written" + ✍️ Start again, a fresh clock);
+  **an empty writing in the database doesn't count as done** (`skBlankWriting`) so those students can write it; the one-try check and
+  kept answers match **the same ID, or the same name only when the result has no ID** (`skSameStudent` — a "Mubina" with another ID is
+  someone else; with a class list the names are the listed ones anyway); **"already done" shows whose answers** (name · ID) with
+  "Not you? Write your own name and ID" (`skNotMe` forgets the phone's remembered name + ID — on a shared phone the next student could
+  start as the first). The "part before" check (`skPrevDone`) still accepts ID or name (it lets in rather than stops).
+  `tests/course-done-check.spec.js`.
 - **Listening Steps 8–20 rewritten (teacher, 2026-11-13: "listening is a little weird" — up to 15 spelled words, 5 named people,
   questions jumping back and forth, six temperatures in a row)**: the teacher's rules — **1–2 spelled words** (the first is Question 1,
   a second Question 5 or later; one word each, never a two-word name), **1 spelled number** (a phone number said digit by digit, read

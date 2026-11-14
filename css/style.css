@@ -2757,7 +2757,8 @@ button.sk-dot:hover { transform: scale(1.12); }
 .sk-results-head h3 { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.25rem; margin: 0; }
 .sk-results-note { margin: 10px 0 0; }
 /* Not finished (2026-11-13): under a step's results — each student with the parts still to do */
-.sk-missing { margin-top: 28px; }
+.sk-missing, .sk-unlisted { margin-top: 28px; }
+.sk-unlisted small { color: var(--text-muted, inherit); font-weight: 600; }
 .sk-missing-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .sk-missing-list li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 14px; padding: 10px 14px;
   border-radius: 14px; border: 1px solid var(--border); background: var(--surface); }

@@ -71,9 +71,9 @@ test('one try per course exercise: a student who already has a result sees it in
   await expect(page.locator('.sk-done-card')).toContainText('You have already done this reading');
   await expect(page.locator('.sk-done-card')).toContainText('7 / 10');
   await expect(page.locator('#skSubmit')).toHaveCount(0);
-  // … and by name
+  // the same name with another ID is another student (2026-11-14: names are shared in a group — course-done-check.spec.js)
   await begin('alice test', '99999');
-  await expect(page.locator('.sk-done-card')).toBeVisible();
+  await expect(page.locator('#skSubmit')).toBeVisible();
   // somebody new can do it — once: after Submit, this device won't open it again
   await begin('Bobur Test', '10002');
   await expect(page.locator('#skSubmit')).toBeVisible();

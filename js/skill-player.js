@@ -151,9 +151,20 @@ function keepUnsent(p) {
 }
 function forgetUnsent(id) { const all = keptAll(); if (all[id]) { delete all[id]; keptWrite(all); } }
 function keptFor(code, name, id) {
-  const k = taIdKey(id), nm = String(name || '').trim().toLowerCase();
-  return Object.values(keptAll()).find(p => p && p.code === code &&
-    ((p.studentId && taIdKey(p.studentId) === k) || String(p.name || '').trim().toLowerCase() === nm)) || null;
+  return Object.values(keptAll()).find(p => p && p.code === code && skSameStudent(p, name, id)) || null;
+}
+/* Is this result (or kept answer) this student's? The same ID; or the same name when the result has no ID of another student
+   (2026-11-14: a "Mubina" with another ID was told "already done" — names are often shared in a group). */
+function skSameStudent(r, name, id) {
+  if (!r) return false;
+  const k = taIdKey(id), rk = taIdKey(r.studentId);
+  if (rk && k) return rk === k;
+  return String(r.name || '').trim().toLowerCase() === String(name || '').trim().toLowerCase();
+}
+/* An empty writing (no words) — the old clock sent one by itself when a student came back after the time had run out
+   (2026-11-14): it doesn't count as done, so the student can write it. */
+function skBlankWriting(r) {
+  return !!r && (r.skill === 'writing' || /^Writing/.test(r.type || '')) && !String(r.text || '').trim() && !(Number(r.words) > 0);
 }
 async function skSendKept() {
   if (SK.preview) return;
@@ -187,7 +198,8 @@ async function skAlreadyDone(name, id) {
     const names = Array.from(new Set([name, title, name.toLowerCase()]));
     const snaps = await Promise.all([ask('studentId', id), within(fs.getDocsFromServer(fs.query(col, fs.where('code', '==', SK.code), fs.where('name', 'in', names))), 8000)]);
     for (const snap of snaps) {
-      const doc = (snap.docs || []).map(d => d.data()).find(r => r && (r.skill === SK.skill || /course$/.test(r.type || '')));
+      const doc = (snap.docs || []).map(d => d.data()).find(r => r && (r.skill === SK.skill || /course$/.test(r.type || '')) &&
+        skSameStudent(r, name, id) && !skBlankWriting(r));
       if (doc) return { at: doc.date, summary: doneSummary(doc) };
     }
     return null;   // nothing from this student: free to do it
@@ -244,9 +256,12 @@ function showAlreadyDone(level, done) {
     root().innerHTML = `${headerHtml(level)}<section class="sk-card sk-center sk-done-card">
       <div class="sk-big-emoji" aria-hidden="true">✅</div>
       <h2>You have already done this ${esc(info.name.toLowerCase())}</h2>
+      <p class="sk-done-who">👤 <b>${esc(SK.name)}</b> · ID ${esc(SK.studentId)}</p>
       ${score}
       <p>Each exercise can be done only once. Your teacher already has your answers.</p>
+      <div class="sk-actions"><button type="button" class="sk-btn sk-btn-small" id="skNotMe">Not you? Write your own name and ID</button></div>
     </section>`;
+    $('#skNotMe').addEventListener('click', skNotMe);
     return;
   }
   // answers kept on this phone that haven't reached the teacher: never "already done" until they have (2026-11-13)
@@ -312,7 +327,16 @@ function showComingSoon(level, text) {
   </div>`;
 }
 
+let startArgs = null;   // the start card's step + content, for "Not you?"
+/* "Not you?" on "already done" (2026-11-14): the phone remembers the last student's name + ID, so on a shared phone the next
+   student could start as the first one. Forgets them and shows an empty start card. */
+function skNotMe() {
+  try { localStorage.removeItem(NAME_KEY); } catch (e) { /* private window */ }
+  SK.name = ''; SK.studentId = '';
+  if (startArgs) showStart(startArgs[0], startArgs[1]);
+}
 function showStart(level, content) {
+  startArgs = [level, content];
   const info = SKILL_INFO[SK.skill];
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(NAME_KEY) || '{}') || {}; } catch (e) { saved = {}; }
@@ -680,6 +704,7 @@ function showWriting(level) {
     if (done) return;
     done = true;
     clearInterval(writeTimer);
+    if (timeUp && !box.value.trim()) { skNothingWritten(level); return; }   // nothing to send (2026-11-14)
     submitWriting(level, W, timeUp);
   };
   $('#skSubmit').addEventListener('click', () => finish(false));
@@ -696,6 +721,20 @@ function showWriting(level) {
   // leaving the page before Submit loses the text: ask first
   window.addEventListener('beforeunload', e => { if (!done && box.value.trim()) { e.preventDefault(); e.returnValue = ''; } });
   window.scrollTo(0, 0);
+}
+
+/* The time ran out and nothing was written — often the page was closed and opened again later, while the clock went on.
+   Before 2026-11-14 an empty writing was sent then, and the student was "already done" without having written. Now nothing is
+   sent: the kept clock is forgotten and "Start again" gives a fresh one. */
+function skNothingWritten(level) {
+  clearDraft();
+  root().innerHTML = `${headerHtml(level)}<section class="sk-card sk-center sk-done-card">
+    <div class="sk-big-emoji" aria-hidden="true">⏰</div>
+    <h2>Time's up — nothing was written</h2>
+    <p>Nothing was sent to your teacher. You can start again with a new clock.</p>
+    <div class="sk-actions"><button type="button" class="sk-btn sk-btn-main" id="skWriteAgain">✍️ Start again</button></div>
+  </section>`;
+  $('#skWriteAgain').addEventListener('click', () => showWriting(level));
 }
 
 /* ---------- Submit: the writing goes to the AI's waiting list (teacher, 2026-11-12) ----------
