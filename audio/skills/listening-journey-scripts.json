@@ -1702,23 +1702,18 @@
   "lines": [
    [
     "am_michael",
-    "Welcome to Teen Life.",
+    "Welcome to Teen Life, the show for young people with big ideas.",
     0.3
    ],
    [
     "am_michael",
-    "Today we're talking about hobbies.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "Our guest is Olivia Green.",
+    "Today we're talking about hobbies, and our guest is a student from our city, Olivia Green.",
     0.3
    ],
    [
     "am_michael",
     "Olivia, could you spell your surname for our listeners?",
-    0.4
+    0.5
    ],
    [
     "af_heart",
@@ -1737,13 +1732,23 @@
    ],
    [
     "am_michael",
-    "Thank you.",
+    "Thank you. And thank you for coming in so early in the morning!",
     0.3
    ],
    [
     "am_michael",
-    "So, what do you enjoy doing in your free time?",
-    0.4
+    "I know most teenagers are still in bed at this time.",
+    0.3
+   ],
+   [
+    "am_michael",
+    "So, let's start with the big question: what do you enjoy doing in your free time?",
+    0.5
+   ],
+   [
+    "af_heart",
+    "Well, I'm not a big fan of early mornings, but this was worth it.",
+    0.3
    ],
    [
     "af_heart",
@@ -1752,22 +1757,72 @@
    ],
    [
     "af_heart",
-    "I started two years ago, when my uncle gave me his old camera.",
+    "I started two years ago.",
     0.3
    ],
    [
     "af_heart",
-    "I like taking pictures of nature, especially birds and flowers.",
-    0.4
+    "At first I took photos with my mum's phone, but the pictures weren't very good, and she always wanted her phone back!",
+    0.3
+   ],
+   [
+    "af_heart",
+    "My dad wanted to buy me a camera for my birthday, but new cameras are really expensive.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "Then my uncle gave me his old camera.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "It's quite heavy, but it takes beautiful pictures.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "He's a photographer, so he taught me a lot.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "I like taking pictures of nature.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "I've tried taking photos of people too, but my little sister always pulls funny faces!",
+    0.3
+   ],
+   [
+    "af_heart",
+    "So now I mostly photograph birds and flowers.",
+    0.5
+   ],
+   [
+    "am_michael",
+    "Lovely. I'm sure our listeners would like to see them one day!",
+    0.3
    ],
    [
     "am_michael",
     "Where do you take your photos?",
-    0.4
+    0.5
    ],
    [
     "af_heart",
-    "Usually in Maple Park, near my house.",
+    "Usually in a park near my house.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "It's very close, so I can walk there with my camera.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "It's called Maple Park.",
     0.3
    ],
    [
@@ -1782,18 +1837,48 @@
    ],
    [
     "af_heart",
-    "It has a lake and lots of tall trees.",
+    "It has a big lake and lots of tall trees, and in spring there are ducks with their babies everywhere.",
     0.3
    ],
    [
     "af_heart",
-    "I go there on Saturday mornings, because it's quiet and there aren't many people.",
-    0.4
+    "You need to be patient, though.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "Sometimes I wait for half an hour to get one good picture!",
+    0.3
+   ],
+   [
+    "af_heart",
+    "I usually go there on Saturday mornings.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "I take a flask of hot chocolate, sit on a bench by the lake, and just wait.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "My uncle says the light is better in the morning, but that's not the reason.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "I go then because it's quiet, and there aren't many people to scare the birds.",
+    0.5
+   ],
+   [
+    "am_michael",
+    "That sounds very peaceful.",
+    0.3
    ],
    [
     "am_michael",
     "Do you have another hobby?",
-    0.4
+    0.5
    ],
    [
     "af_heart",
@@ -1802,12 +1887,47 @@
    ],
    [
     "af_heart",
-    "We usually make biscuits.",
+    "She lives next door, so I visit her a lot.",
     0.3
    ],
    [
     "af_heart",
-    "She has an old notebook full of family recipes, and we try a new one every week.",
+    "We usually make biscuits, because they're quick and my grandfather eats them all!",
+    0.3
+   ],
+   [
+    "af_heart",
+    "Her biscuits are famous in our street.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "Everyone asks her for the recipe, but she never tells them!",
+    0.3
+   ],
+   [
+    "af_heart",
+    "She never uses a website or a cookbook.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "Instead, she has an old notebook full of family recipes, and we try a new one every week.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "Some of the recipes are a hundred years old!",
+    0.3
+   ],
+   [
+    "af_heart",
+    "The writing is very small, so sometimes I read them out loud for her.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "And I'm getting better at baking on my own, too.",
     0.3
    ],
    [
@@ -1818,36 +1938,56 @@
    [
     "af_heart",
     "It was a big surprise!",
-    0.4
+    0.3
+   ],
+   [
+    "af_heart",
+    "She cried a little when she saw it, and then we ate the whole cake in ten minutes.",
+    0.5
    ],
    [
     "am_michael",
-    "How do you find time for all this?",
-    0.4
+    "Photography and baking! How do you find time for all this?",
+    0.5
    ],
    [
     "af_heart",
-    "During the week, I do my homework first.",
+    "It's not always easy.",
     0.3
    ],
    [
     "af_heart",
-    "Then I have some free time in the evening.",
+    "During the week, I do my homework first, because my parents are very strict about that.",
     0.3
    ],
    [
     "af_heart",
-    "At weekends, I have more time for my hobbies.",
-    0.4
+    "Then I have some free time in the evening, but only an hour or so.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "At weekends, I have much more time for my hobbies.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "My friends sometimes say I'm too busy, but I'm happy!",
+    0.5
    ],
    [
     "am_michael",
     "Do you have a goal for this year?",
-    0.4
+    0.5
    ],
    [
     "af_heart",
     "Yes! I'd like to enter a photography competition.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "I saw a poster for it at school last week.",
     0.3
    ],
    [
@@ -1857,13 +1997,28 @@
    ],
    [
     "af_heart",
+    "I've already chosen three: a big white bird by the lake, a red flower after the rain, and a little duck.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "Now I need two more!",
+    0.3
+   ],
+   [
+    "af_heart",
     "The last day to send them is the fifteenth of May.",
     0.3
    ],
    [
     "af_heart",
-    "I don't expect to win, but I want to learn from the experience.",
-    0.4
+    "I don't expect to win, because lots of people enter, but I want to learn from the experience.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "The best photos go in a big exhibition in the city library.",
+    0.5
    ],
    [
     "am_michael",
@@ -1873,32 +2028,47 @@
    [
     "am_michael",
     "How can our listeners find out more?",
-    0.4
+    0.5
    ],
    [
     "af_heart",
-    "They can call the competition office.",
+    "There's a website, but it isn't very clear, to be honest.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "It's easier to call the competition office.",
     0.3
    ],
    [
     "af_heart",
     "The number is oh seven nine four, six two one, eight three zero.",
-    0.4
+    0.5
    ],
    [
     "am_michael",
     "Oh seven nine four, six two one, eight three zero?",
-    0.3
+    0.5
    ],
    [
     "af_heart",
-    "Yes, that's right.",
-    0.4
+    "Yes, that's right. The people there are really friendly.",
+    0.5
    ],
    [
     "am_michael",
-    "Thank you, Olivia, and good luck!",
-    0.4
+    "Thank you, Olivia, and good luck with the competition!",
+    0.3
+   ],
+   [
+    "am_michael",
+    "After the news, we'll meet a boy who builds robots in his garage.",
+    0.3
+   ],
+   [
+    "am_michael",
+    "Stay with us.",
+    0.5
    ]
   ]
  },
@@ -1922,32 +2092,42 @@
    [
     "am_ov_energetic",
     "How can I help you today?",
-    0.4
+    0.5
    ],
    [
     "af_ov_customer",
     "Hi. I'm meeting my cousin here, but I can't find her.",
-    0.4
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "We were supposed to meet a while ago, and her phone is switched off.",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "No problem! What's her name?",
+    "No problem! It happens all the time here, especially on Saturdays.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "What's her name?",
     0.3
    ],
    [
     "am_ov_energetic",
     "I can call her over the speakers.",
-    0.4
+    0.5
    ],
    [
     "af_ov_customer",
     "Hannah Brooks.",
-    0.4
+    0.5
    ],
    [
     "am_ov_energetic",
     "Brooks? How do you spell that?",
-    0.4
+    0.5
    ],
    [
     "af_ov_customer",
@@ -1961,37 +2141,92 @@
    ],
    [
     "am_ov_energetic",
-    "Great, thanks! Did she say where to meet?",
-    0.4
-   ],
-   [
-    "af_ov_customer",
-    "She said near the bookshop.",
-    0.4
-   ],
-   [
-    "am_ov_energetic",
-    "The bookshop is on the second floor, next to the cinema.",
+    "Great, thanks! I'll call her in a minute.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "You can take the lift right behind you.",
-    0.4
+    "Did she say where to meet?",
+    0.5
    ],
    [
     "af_ov_customer",
-    "Thank you. I also need a present for my little brother.",
+    "She said near the bookshop.",
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "But I've never been here before, and this place is enormous!",
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "I keep walking past the same shoe shop.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Don't worry, everybody gets lost here at first.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The bookshop isn't on this floor.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's on the second floor, above the supermarket.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You can take the lift right behind you, or the escalator over there, but the escalator is very slow today, so I'd take the lift.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "When you come out of the lift, turn left, and you'll find the bookshop next to the cinema.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "There's a film starting soon, so it might be a bit busy over there.",
+    0.5
+   ],
+   [
+    "af_ov_customer",
+    "Thank you. Oh, and while I'm here, I also need a present for my little brother.",
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "It's his birthday tomorrow, and I completely forgot!",
     0.3
    ],
    [
     "af_ov_customer",
     "He's ten, and he loves building things.",
-    0.4
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "Last year he built a castle out of cardboard boxes, and it filled his whole bedroom!",
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "My mum wasn't very happy.",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "Then you should try Toybox.",
+    "Ha! I know the perfect shop for him.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You should try Toybox.",
     0.3
    ],
    [
@@ -2001,98 +2236,223 @@
    ],
    [
     "am_ov_energetic",
-    "It's a toy shop near the main entrance.",
+    "It's a toy shop near the main entrance, so it's very easy to find.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "They have a great wooden building set for just eighteen dollars and fifty cents.",
-    0.4
+    "Their building sets are really popular.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Most of them cost more than forty dollars, but at the moment they have a great wooden building set for just eighteen dollars and fifty cents.",
+    0.5
    ],
    [
     "af_ov_customer",
-    "Perfect. Is there somewhere to eat?",
-    0.4
-   ],
-   [
-    "am_ov_energetic",
-    "Yes! The food court is near the car park entrance.",
+    "Perfect, he'll love that. I'll go there after I find my cousin.",
     0.3
-   ],
-   [
-    "am_ov_energetic",
-    "There's a little café there that sells really good sandwiches.",
-    0.4
    ],
    [
     "af_ov_customer",
-    "And what time does the centre close today?",
-    0.4
+    "Is there somewhere to eat?",
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "I haven't had lunch yet, and I'm starving.",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "Today is Saturday, so we close at nine p.m.",
+    "Yes, there are lots of places.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "On Sundays, we close earlier.",
-    0.4
+    "The food court is near the car park entrance, on the ground floor.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "There are burger bars and noodle places, but my favourite is a little café in the corner.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Everything is made fresh every morning.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It sells really good sandwiches, and the coffee isn't bad either.",
+    0.5
+   ],
+   [
+    "af_ov_customer",
+    "Sounds great. And what time does the centre close today?",
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "I might stay and watch a film later.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Let me think.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "On weekdays we close at eight, but today is Saturday, so we close at nine p.m.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The cinema stays open even later, so you have plenty of time.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I saw a great comedy there last week.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I laughed so much that the people next to me moved to different seats!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "But be careful if you come back tomorrow.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "On Sundays, we close earlier, because the shop workers like to spend time with their families.",
+    0.5
+   ],
+   [
+    "af_ov_customer",
+    "Good to know. Oh, I almost forgot.",
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "I need some cash for the bus home.",
+    0.3
    ],
    [
     "af_ov_customer",
     "Is there an ATM?",
-    0.4
+    0.5
    ],
    [
     "am_ov_energetic",
-    "Yes, right next to the customer service desk.",
-    0.4
+    "Yes, there's one right next to the customer service desk.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's just over there, next to the toilets.",
+    0.5
    ],
    [
     "af_ov_customer",
-    "OK. And what if I still can't find my cousin?",
-    0.4
+    "Great. And what if I still can't find my cousin?",
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "She's always late, and her phone battery is always empty!",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "Just call us at the information desk.",
+    "Then just call us at the information desk, and we'll call her name again over the speakers.",
     0.3
+   ],
+   [
+    "am_ov_energetic",
+    "We do it all day long, so don't feel bad!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Let me give you our number.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Have you got a pen?",
+    0.5
+   ],
+   [
+    "af_ov_customer",
+    "Yes, just a second. OK.",
+    0.5
    ],
    [
     "am_ov_energetic",
     "The number is oh two oh seven, four nine one, three five six.",
-    0.4
+    0.5
    ],
    [
     "af_ov_customer",
     "Oh two oh seven, four nine one, three five six?",
-    0.3
+    0.5
    ],
    [
     "am_ov_energetic",
     "That's right!",
-    0.4
+    0.5
    ],
    [
     "af_ov_customer",
-    "One more thing. Can I get the present wrapped?",
-    0.4
+    "Thanks. One more thing. Can I get the present wrapped?",
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "I'm terrible at wrapping presents.",
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "Last year my brother's present looked like a potato!",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "Of course! Gift wrapping is free at the customer service desk.",
-    0.4
+    "Ha! Don't worry. Gift wrapping is free at the customer service desk.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "And they have lovely paper with dinosaurs and rockets on it.",
+    0.5
    ],
    [
     "af_ov_customer",
     "Wonderful. Thank you so much!",
-    0.4
+    0.5
    ],
    [
     "am_ov_energetic",
-    "You're welcome. Have a great day!",
-    0.4
+    "You're welcome. I'll call your cousin now.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Attention, please. Could Hannah Brooks come to the information desk on the ground floor?",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Her cousin is waiting for her.",
+    0.5
    ]
   ]
  },
@@ -2129,7 +2489,27 @@
    ],
    [
     "am_ov_energetic",
+    "I've been a guide here for many years, and I still love this city.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Before we start, please make sure you have comfortable shoes, because we're going to walk a lot today.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Is everybody ready? Great, let's go!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
     "We're starting here in the main square, the biggest square in the city.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Every December, there's a huge Christmas market here, with lights everywhere.",
     0.3
    ],
    [
@@ -2144,7 +2524,17 @@
    ],
    [
     "am_ov_energetic",
-    "Before it was a museum, it was a school.",
+    "People often think it was a hospital, but no. Before it was a museum, it was a school.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "My grandfather studied here when he was a boy, and he says the teachers were very strict!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "He still remembers his classroom, with a big black stove in the corner.",
     0.3
    ],
    [
@@ -2154,12 +2544,32 @@
    ],
    [
     "am_ov_energetic",
-    "Inside, you can see old maps and photos of the city.",
-    0.6
+    "Inside, there's a lot to see.",
+    0.3
    ],
    [
     "am_ov_energetic",
-    "Next, we'll walk to Riverside Park.",
+    "My favourite room is at the very top, where you can look out over the whole city.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "On the walls, you can see old maps and photos of the city from a hundred years ago.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's funny to see the streets with horses instead of cars!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "After the museum, we'll walk along the river to our next stop, a beautiful park.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's called Riverside Park.",
     0.3
    ],
    [
@@ -2174,18 +2584,38 @@
    ],
    [
     "am_ov_energetic",
-    "The park is next to the river.",
+    "The park is right next to the river, and in summer people swim there.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "It has a long walking path, two playgrounds and a small café.",
+    "It has a long walking path, where people go running in the morning, and the children in our group will be happy, because it has two playgrounds.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "At the café, fresh juice costs three dollars, and it's really good!",
-    0.6
+    "One has a big wooden pirate ship, and the other has the longest slide in the city.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I tried it once, and I got stuck halfway down!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "There's also a small café by the water.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The coffee there costs four dollars, which is a bit expensive, to be honest, but the fresh juice costs three dollars, and it's really good!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I always have the orange one, and the man who sells it always tells a joke.",
+    0.5
    ],
    [
     "am_ov_energetic",
@@ -2194,18 +2624,48 @@
    ],
    [
     "am_ov_energetic",
-    "It's famous for fresh fruit and vegetables.",
+    "It's been here for a very long time.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "It's very busy on Saturday mornings, but today it will be quiet.",
+    "It's famous for fresh fruit and vegetables, and the strawberries are the best I've ever eaten.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "Then, at half past twelve, we'll have lunch at a small restaurant near the market.",
-    0.6
+    "The farmers bring everything in from the villages very early in the morning, so it's always fresh.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Ask them for a taste. They're usually happy to let you try.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's very busy on Saturday mornings, but today it will be quiet, so we can take our time.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "By then, you'll all be hungry, so we'll go to a small restaurant near the market for lunch.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "We'll eat there at half past twelve.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "They make the best soup in town, and the plates are enormous.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Don't eat too much, though, because there's one more stop!",
+    0.5
    ],
    [
     "am_ov_energetic",
@@ -2214,23 +2674,68 @@
    ],
    [
     "am_ov_energetic",
-    "It has three floors, and the top floor is a quiet study area.",
+    "It's a beautiful glass building, and it has three floors.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "If you get lost, please meet us at the library entrance.",
+    "The children's books are on the ground floor, and there's a computer room on the first floor, where you can use the internet for free.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "You can also call me.",
+    "My favourite part is the top floor.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "When you go up there, please be very quiet, because the top floor is a quiet study area.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Students sit there for hours with their books.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Now, this is important.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "If you get lost at any time, don't panic.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The city centre is small, but the old streets all look the same, and every year someone gets lost.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Please meet us at the library entrance, by the big glass doors.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Every tour finishes there, so you can't miss us.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Last month, a lady got lost, and we found her an hour later, eating ice cream in the park! She was very happy.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You can also call me. Write this down, please.",
     0.3
    ],
    [
     "am_ov_energetic",
     "My number is oh seven eight one, three five two, six four nine.",
-    0.5
+    0.3
    ],
    [
     "am_ov_energetic",
@@ -2239,18 +2744,23 @@
    ],
    [
     "am_ov_energetic",
-    "Oh, and bring an umbrella.",
+    "Oh, and one more thing. Look at the sky!",
     0.3
    ],
    [
     "am_ov_energetic",
-    "It might rain this afternoon.",
+    "It's sunny now, but the weather here changes very quickly.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "Enjoy the tour!",
-    0.4
+    "The forecast says it might rain this afternoon, so if you have one, bring an umbrella.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Right, is everybody ready? Then follow me, and enjoy the tour!",
+    0.5
    ]
   ]
  },
@@ -2282,8 +2792,13 @@
    ],
    [
     "am_ov_energetic",
+    "I live in a big, noisy city, so for me, quiet places are really special.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
     "Today I'm going to tell you about the best holiday I've ever had.",
-    0.6
+    0.5
    ],
    [
     "am_ov_energetic",
@@ -2292,28 +2807,68 @@
    ],
    [
     "am_ov_energetic",
-    "We went by train.",
+    "My dad wanted to drive, but our car is very old, and my mum said no way!",
     0.3
    ],
    [
     "am_ov_energetic",
-    "We left home very early, at a quarter to seven in the morning, and the journey took four hours.",
+    "So we went by train.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "My uncle was waiting for us at the station.",
-    0.6
-   ],
-   [
-    "am_ov_energetic",
-    "We stayed in a small guesthouse with a beautiful garden.",
+    "I didn't mind, because I love trains. You can read, play games, or just look out of the window.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "Our room had a balcony with a view of the mountains.",
-    0.6
+    "My little sister and I played cards, and she won every game, which was very annoying.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "We left home very early, at a quarter to seven in the morning.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I was so tired that I almost fell asleep at breakfast.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The journey was long, but the views were amazing: green hills, little villages and cows everywhere.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "When we arrived, my uncle was waiting for us at the station.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "He lives in the town, and he knows everyone there.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "He drove us to a small guesthouse with a beautiful garden full of roses.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The owner was a kind old lady who made fresh bread every morning.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Our room didn't have a TV, but it had a balcony with a view of the mountains.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Every morning, I sat there with a cup of hot chocolate and watched the sun come up.",
+    0.5
    ],
    [
     "am_ov_energetic",
@@ -2322,13 +2877,23 @@
    ],
    [
     "am_ov_energetic",
-    "I had vegetable soup and grilled chicken.",
+    "The menu was very long, and it took me ages to choose.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "My little sister had pasta.",
-    0.6
+    "In the end, I had vegetable soup and grilled chicken.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "My little sister had pasta, as usual. She eats pasta everywhere we go!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The food was delicious, and we all went to bed early, because we had big plans for the next day.",
+    0.5
    ],
    [
     "am_ov_energetic",
@@ -2347,22 +2912,77 @@
    ],
    [
     "am_ov_energetic",
-    "Later, we stopped at a waterfall and took photos.",
+    "It ran across the path right in front of us, and then it was gone.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "It was sunny in the morning, but in the afternoon it became cloudy and windy.",
-    0.6
-   ],
-   [
-    "am_ov_energetic",
-    "On the third day, we visited a farm.",
+    "Our guide said she sees one only once or twice a year, so we were very lucky.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "There were goats, sheep and chickens, and a friendly dog called Max.",
+    "Later, after a long walk uphill, we stopped at a waterfall and took photos.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The water was freezing, but my dad put his feet in it anyway, and he shouted so loudly that everyone laughed.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It was sunny in the morning, but in the afternoon it became cloudy and windy, so we walked back quickly.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "We got back just before the rain started.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "On the third day, we visited a farm near the town.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I had never been on a real farm before, and the smell was quite strong!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "There were goats, sheep and chickens.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "One of the goats tried to eat my sister's hat, and she screamed!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The farmer gave us some food for the animals, and we fed the baby goats from our hands.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Then we met a friendly dog.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "He was big and black, with one white ear, and he had a very long tail that never stopped moving.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "He was the farmer's favourite, and he slept by the fire every night.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "His name was Max.",
     0.3
    ],
    [
@@ -2377,18 +2997,48 @@
    ],
    [
     "am_ov_energetic",
-    "He followed us everywhere and played with my sister.",
-    0.6
+    "He followed us everywhere, even into the chicken house!",
+    0.3
    ],
    [
     "am_ov_energetic",
-    "The farmer told us that visitors should always phone first.",
+    "He loved playing with sticks, and he brought one to everybody he met.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "But he liked one person more than anyone else.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "All afternoon, he played with my sister.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "She didn't want to leave!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "She even asked my parents if we could take Max home with us. The answer was no, of course!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Before we left, the farmer told us something important.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The farm is very busy, so visitors should always phone first.",
     0.3
    ],
    [
     "am_ov_energetic",
     "His number is oh one two three, six four eight, five nine seven.",
-    0.5
+    0.3
    ],
    [
     "am_ov_energetic",
@@ -2397,13 +3047,38 @@
    ],
    [
     "am_ov_energetic",
-    "We stayed for five days and came home on the fifteenth of July.",
+    "We had a wonderful time in the mountains.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "My parents wanted to stay longer, but my dad had to go back to work.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "In the end, we stayed for five days.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "On the last morning, the old lady gave us a big bag of her fresh bread for the journey, and we ate all of it on the train.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "We came home on the fifteenth of July, just in time for my best friend's birthday party.",
     0.3
    ],
    [
     "am_ov_energetic",
     "I loved the mountain walk, but my sister says playing with Max was the best part!",
-    0.4
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Next summer, we want to go back. And this time, maybe my dad will drive, if we get a new car!",
+    0.5
    ]
   ]
  },

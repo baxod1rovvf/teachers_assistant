@@ -115,7 +115,7 @@
    ["Where are the students going on their school trip?", ["history museum", "museum"], "going to the history museum"],
    ["How long will the bus journey take?", ["40", "forty"], "about forty minutes"],
    ["How much does the museum ticket cost?", ["4", "four"], "ticket costs four dollars"]]}]},
-{"no": 8, "speaker": "Olivia", "inOrder": true, "names": ["Olivia"], "audioV": 2, "intro": "Listen to a radio interview with Olivia about her hobbies.",
+{"no": 8, "speaker": "Olivia", "inOrder": true, "spaced": true, "names": ["Olivia"], "audioV": 5, "intro": "Listen to a radio interview with Olivia about her hobbies.",
  "sections": [
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["Olivia's surname: _____", ["Green"], "That's G-R-E-E-N"],
@@ -135,7 +135,7 @@
   {"h": "Complete the notes. Write a date or a number.", "t": "gap", "qs": [
    ["The last day to send photos: the _____ of May", ["15th", "15", "fifteenth"], "the fifteenth of May"],
    ["The competition office's phone number: _____", ["0794 621 830"], "The number is oh seven nine four"]]}]},
-{"no": 9, "speaker": "", "inOrder": true, "names": ["Hannah"], "audioV": 2, "intro": "Listen to a customer talking to an assistant at a shopping centre.",
+{"no": 9, "speaker": "", "inOrder": true, "spaced": true, "names": ["Hannah"], "audioV": 3, "intro": "Listen to a customer talking to an assistant at a shopping centre.",
  "sections": [
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["The cousin's surname: _____", ["Brooks"], "That's B-R-O-O-K-S"],
@@ -151,11 +151,11 @@
   {"h": "True or False?", "t": "tf", "qs": [
    ["The centre closes later on Sundays.", "False", "On Sundays, we close earlier"],
    ["There is an ATM next to the customer service desk.", "True", "right next to the customer service desk"],
-   ["The customer can call the information desk if she can't find her cousin.", "True", "Just call us at the information desk"]]},
+   ["The customer can call the information desk if she can't find her cousin.", "True", "just call us at the information desk"]]},
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["The information desk's phone number: _____", ["0207 491 356"], "The number is oh two oh seven"],
    ["Gift wrapping at the customer service desk is _____.", ["free"], "Gift wrapping is free"]]}]},
-{"no": 10, "speaker": "Guide", "inOrder": true, "names": ["Peter"], "audioV": 2, "intro": "Listen to a guide at the start of a city tour.",
+{"no": 10, "speaker": "Guide", "inOrder": true, "spaced": true, "names": ["Peter"], "audioV": 3, "intro": "Listen to a guide at the start of a city tour.",
  "sections": [
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["The guide's surname: _____", ["Wilson"], "That's W-I-L-S-O-N"],
@@ -170,19 +170,19 @@
   {"h": "True or False?", "t": "tf", "qs": [
    ["The market is very busy on Saturday mornings.", "True", "very busy on Saturday mornings"],
    ["The group will have lunch at half past one.", "False", "at half past twelve"],
-   ["The library has four floors.", "False", "It has three floors"]]},
+   ["The library has four floors.", "False", "it has three floors"]]},
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["The top floor of the library is a quiet _____ area.", ["study"], "quiet study area"],
    ["If you get lost, meet at the library _____.", ["entrance"], "library entrance"],
    ["The guide's phone number: _____", ["0781 352 649"], "My number is oh seven eight one"],
    ["Bring an _____ because it might rain.", ["umbrella"], "bring an umbrella"]]}]},
-{"no": 11, "speaker": "Tom", "inOrder": true, "names": ["Tom"], "audioV": 2, "intro": "Listen to Tom talking about a holiday.",
+{"no": 11, "speaker": "Tom", "inOrder": true, "spaced": true, "names": ["Tom"], "audioV": 3, "intro": "Listen to Tom talking about a holiday.",
  "sections": [
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["Tom's surname: _____", ["Fisher"], "That's F-I-S-H-E-R"],
    ["The family travelled by _____.", ["train"], "We went by train"],
    ["They left home at a quarter to _____ in the morning.", ["seven", "7"], "a quarter to seven"],
-   ["Tom's _____ was waiting at the station.", ["uncle"], "My uncle was waiting"]]},
+   ["Tom's _____ was waiting at the station.", ["uncle"], "my uncle was waiting"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
    ["What did their room have?", ["A kitchen", "A balcony", "A TV"], "A balcony", "had a balcony"],
    ["What did Tom eat on the first evening?", ["Pasta", "Fish and chips", "Vegetable soup and grilled chicken"], "Vegetable soup and grilled chicken", "I had vegetable soup"],

@@ -857,7 +857,7 @@ var TA_SKILLS = {
       id: 'b8', no: 8, stage: 'Beginner', theme: 'Hobbies & Sports', emoji: '⚽',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
-        src: "audio/skills/listen-step-8.mp3?v=2",
+        src: "audio/skills/listen-step-8.mp3?v=5",
         title: "An Interview About Hobbies",
         intro: "Listen to a radio interview with Olivia about her hobbies. Then answer the 14 questions.",
         questions: [
@@ -877,23 +877,23 @@ var TA_SKILLS = {
           {"type":"gap","q":"The competition office's phone number: _____","a":["0794 621 830"],"sec":"Complete the notes. Write a date or a number."}
         ],
         transcript: [
-          {"who":"Presenter","man":true,"text":"Welcome to Teen Life. Today we're talking about hobbies. Our guest is Olivia Green. Olivia, could you spell your surname for our listeners?","answers":[]},
+          {"who":"Presenter","man":true,"text":"Welcome to Teen Life, the show for young people with big ideas. Today we're talking about hobbies, and our guest is a student from our city, Olivia Green. Olivia, could you spell your surname for our listeners?","answers":[]},
           {"who":"Olivia","man":false,"text":"Of course. Green. That's G-R-E-E-N.","answers":[1]},
-          {"who":"Presenter","man":true,"text":"Thank you. So, what do you enjoy doing in your free time?","answers":[]},
-          {"who":"Olivia","man":false,"text":"Photography is my favourite hobby. I started two years ago, when my uncle gave me his old camera. I like taking pictures of nature, especially birds and flowers.","answers":[2,3,4]},
-          {"who":"Presenter","man":true,"text":"Where do you take your photos?","answers":[]},
-          {"who":"Olivia","man":false,"text":"Usually in Maple Park, near my house. Maple. That's M-A-P-L-E. It has a lake and lots of tall trees. I go there on Saturday mornings, because it's quiet and there aren't many people.","answers":[5,6,7]},
-          {"who":"Presenter","man":true,"text":"Do you have another hobby?","answers":[]},
-          {"who":"Olivia","man":false,"text":"Yes, I love baking with my grandmother. We usually make biscuits. She has an old notebook full of family recipes, and we try a new one every week. Last month, I made a chocolate cake for my best friend's birthday. It was a big surprise!","answers":[8,9,10]},
-          {"who":"Presenter","man":true,"text":"How do you find time for all this?","answers":[]},
-          {"who":"Olivia","man":false,"text":"During the week, I do my homework first. Then I have some free time in the evening. At weekends, I have more time for my hobbies.","answers":[11]},
+          {"who":"Presenter","man":true,"text":"Thank you. And thank you for coming in so early in the morning! I know most teenagers are still in bed at this time. So, let's start with the big question: what do you enjoy doing in your free time?","answers":[]},
+          {"who":"Olivia","man":false,"text":"Well, I'm not a big fan of early mornings, but this was worth it. Photography is my favourite hobby. I started two years ago. At first I took photos with my mum's phone, but the pictures weren't very good, and she always wanted her phone back! My dad wanted to buy me a camera for my birthday, but new cameras are really expensive. Then my uncle gave me his old camera. It's quite heavy, but it takes beautiful pictures. He's a photographer, so he taught me a lot. I like taking pictures of nature. I've tried taking photos of people too, but my little sister always pulls funny faces! So now I mostly photograph birds and flowers.","answers":[2,3,4]},
+          {"who":"Presenter","man":true,"text":"Lovely. I'm sure our listeners would like to see them one day! Where do you take your photos?","answers":[]},
+          {"who":"Olivia","man":false,"text":"Usually in a park near my house. It's very close, so I can walk there with my camera. It's called Maple Park. Maple. That's M-A-P-L-E. It has a big lake and lots of tall trees, and in spring there are ducks with their babies everywhere. You need to be patient, though. Sometimes I wait for half an hour to get one good picture! I usually go there on Saturday mornings. I take a flask of hot chocolate, sit on a bench by the lake, and just wait. My uncle says the light is better in the morning, but that's not the reason. I go then because it's quiet, and there aren't many people to scare the birds.","answers":[5,6,7]},
+          {"who":"Presenter","man":true,"text":"That sounds very peaceful. Do you have another hobby?","answers":[]},
+          {"who":"Olivia","man":false,"text":"Yes, I love baking with my grandmother. She lives next door, so I visit her a lot. We usually make biscuits, because they're quick and my grandfather eats them all! Her biscuits are famous in our street. Everyone asks her for the recipe, but she never tells them! She never uses a website or a cookbook. Instead, she has an old notebook full of family recipes, and we try a new one every week. Some of the recipes are a hundred years old! The writing is very small, so sometimes I read them out loud for her. And I'm getting better at baking on my own, too. Last month, I made a chocolate cake for my best friend's birthday. It was a big surprise! She cried a little when she saw it, and then we ate the whole cake in ten minutes.","answers":[8,9,10]},
+          {"who":"Presenter","man":true,"text":"Photography and baking! How do you find time for all this?","answers":[]},
+          {"who":"Olivia","man":false,"text":"It's not always easy. During the week, I do my homework first, because my parents are very strict about that. Then I have some free time in the evening, but only an hour or so. At weekends, I have much more time for my hobbies. My friends sometimes say I'm too busy, but I'm happy!","answers":[11]},
           {"who":"Presenter","man":true,"text":"Do you have a goal for this year?","answers":[]},
-          {"who":"Olivia","man":false,"text":"Yes! I'd like to enter a photography competition. It's for teenagers aged thirteen to seventeen, and you can send up to five photos. The last day to send them is the fifteenth of May. I don't expect to win, but I want to learn from the experience.","answers":[12,13]},
+          {"who":"Olivia","man":false,"text":"Yes! I'd like to enter a photography competition. I saw a poster for it at school last week. It's for teenagers aged thirteen to seventeen, and you can send up to five photos. I've already chosen three: a big white bird by the lake, a red flower after the rain, and a little duck. Now I need two more! The last day to send them is the fifteenth of May. I don't expect to win, because lots of people enter, but I want to learn from the experience. The best photos go in a big exhibition in the city library.","answers":[12,13]},
           {"who":"Presenter","man":true,"text":"That sounds great. How can our listeners find out more?","answers":[]},
-          {"who":"Olivia","man":false,"text":"They can call the competition office. The number is oh seven nine four, six two one, eight three zero.","answers":[14]},
+          {"who":"Olivia","man":false,"text":"There's a website, but it isn't very clear, to be honest. It's easier to call the competition office. The number is oh seven nine four, six two one, eight three zero.","answers":[14]},
           {"who":"Presenter","man":true,"text":"Oh seven nine four, six two one, eight three zero?","answers":[]},
-          {"who":"Olivia","man":false,"text":"Yes, that's right.","answers":[]},
-          {"who":"Presenter","man":true,"text":"Thank you, Olivia, and good luck!","answers":[]}
+          {"who":"Olivia","man":false,"text":"Yes, that's right. The people there are really friendly.","answers":[]},
+          {"who":"Presenter","man":true,"text":"Thank you, Olivia, and good luck with the competition! After the news, we'll meet a boy who builds robots in his garage. Stay with us.","answers":[]}
         ]
         // LISTENING JOURNEY END
       },
@@ -980,7 +980,7 @@ var TA_SKILLS = {
       id: 'b9', no: 9, stage: 'Beginner', theme: 'Shopping', emoji: '🛍️',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
-        src: "audio/skills/listen-step-9.mp3?v=2",
+        src: "audio/skills/listen-step-9.mp3?v=3",
         title: "At the Shopping Centre",
         intro: "Listen to a customer talking to an assistant at a shopping centre. Then answer the 14 questions.",
         questions: [
@@ -1001,30 +1001,32 @@ var TA_SKILLS = {
         ],
         transcript: [
           {"who":"Assistant","man":true,"text":"Good afternoon, and welcome to the shopping centre! How can I help you today?","answers":[]},
-          {"who":"Customer","man":false,"text":"Hi. I'm meeting my cousin here, but I can't find her.","answers":[]},
-          {"who":"Assistant","man":true,"text":"No problem! What's her name? I can call her over the speakers.","answers":[]},
+          {"who":"Customer","man":false,"text":"Hi. I'm meeting my cousin here, but I can't find her. We were supposed to meet a while ago, and her phone is switched off.","answers":[]},
+          {"who":"Assistant","man":true,"text":"No problem! It happens all the time here, especially on Saturdays. What's her name? I can call her over the speakers.","answers":[]},
           {"who":"Customer","man":false,"text":"Hannah Brooks.","answers":[]},
           {"who":"Assistant","man":true,"text":"Brooks? How do you spell that?","answers":[]},
           {"who":"Customer","man":false,"text":"Brooks. That's B-R-O-O-K-S.","answers":[1]},
-          {"who":"Assistant","man":true,"text":"Great, thanks! Did she say where to meet?","answers":[]},
-          {"who":"Customer","man":false,"text":"She said near the bookshop.","answers":[]},
-          {"who":"Assistant","man":true,"text":"The bookshop is on the second floor, next to the cinema. You can take the lift right behind you.","answers":[2,3]},
-          {"who":"Customer","man":false,"text":"Thank you. I also need a present for my little brother. He's ten, and he loves building things.","answers":[4]},
-          {"who":"Assistant","man":true,"text":"Then you should try Toybox. That's T-O-Y-B-O-X. It's a toy shop near the main entrance. They have a great wooden building set for just eighteen dollars and fifty cents.","answers":[5,6]},
-          {"who":"Customer","man":false,"text":"Perfect. Is there somewhere to eat?","answers":[]},
-          {"who":"Assistant","man":true,"text":"Yes! The food court is near the car park entrance. There's a little café there that sells really good sandwiches.","answers":[7,8]},
-          {"who":"Customer","man":false,"text":"And what time does the centre close today?","answers":[]},
-          {"who":"Assistant","man":true,"text":"Today is Saturday, so we close at nine p.m. On Sundays, we close earlier.","answers":[9,10]},
-          {"who":"Customer","man":false,"text":"Is there an ATM?","answers":[]},
-          {"who":"Assistant","man":true,"text":"Yes, right next to the customer service desk.","answers":[11]},
-          {"who":"Customer","man":false,"text":"OK. And what if I still can't find my cousin?","answers":[]},
-          {"who":"Assistant","man":true,"text":"Just call us at the information desk. The number is oh two oh seven, four nine one, three five six.","answers":[12,13]},
+          {"who":"Assistant","man":true,"text":"Great, thanks! I'll call her in a minute. Did she say where to meet?","answers":[]},
+          {"who":"Customer","man":false,"text":"She said near the bookshop. But I've never been here before, and this place is enormous! I keep walking past the same shoe shop.","answers":[]},
+          {"who":"Assistant","man":true,"text":"Don't worry, everybody gets lost here at first. The bookshop isn't on this floor. It's on the second floor, above the supermarket. You can take the lift right behind you, or the escalator over there, but the escalator is very slow today, so I'd take the lift. When you come out of the lift, turn left, and you'll find the bookshop next to the cinema. There's a film starting soon, so it might be a bit busy over there.","answers":[2,3]},
+          {"who":"Customer","man":false,"text":"Thank you. Oh, and while I'm here, I also need a present for my little brother. It's his birthday tomorrow, and I completely forgot! He's ten, and he loves building things. Last year he built a castle out of cardboard boxes, and it filled his whole bedroom! My mum wasn't very happy.","answers":[4]},
+          {"who":"Assistant","man":true,"text":"Ha! I know the perfect shop for him. You should try Toybox. That's T-O-Y-B-O-X. It's a toy shop near the main entrance, so it's very easy to find. Their building sets are really popular. Most of them cost more than forty dollars, but at the moment they have a great wooden building set for just eighteen dollars and fifty cents.","answers":[5,6]},
+          {"who":"Customer","man":false,"text":"Perfect, he'll love that. I'll go there after I find my cousin. Is there somewhere to eat? I haven't had lunch yet, and I'm starving.","answers":[]},
+          {"who":"Assistant","man":true,"text":"Yes, there are lots of places. The food court is near the car park entrance, on the ground floor. There are burger bars and noodle places, but my favourite is a little café in the corner. Everything is made fresh every morning. It sells really good sandwiches, and the coffee isn't bad either.","answers":[7,8]},
+          {"who":"Customer","man":false,"text":"Sounds great. And what time does the centre close today? I might stay and watch a film later.","answers":[]},
+          {"who":"Assistant","man":true,"text":"Let me think. On weekdays we close at eight, but today is Saturday, so we close at nine p.m. The cinema stays open even later, so you have plenty of time. I saw a great comedy there last week. I laughed so much that the people next to me moved to different seats! But be careful if you come back tomorrow. On Sundays, we close earlier, because the shop workers like to spend time with their families.","answers":[9,10]},
+          {"who":"Customer","man":false,"text":"Good to know. Oh, I almost forgot. I need some cash for the bus home. Is there an ATM?","answers":[]},
+          {"who":"Assistant","man":true,"text":"Yes, there's one right next to the customer service desk. It's just over there, next to the toilets.","answers":[11]},
+          {"who":"Customer","man":false,"text":"Great. And what if I still can't find my cousin? She's always late, and her phone battery is always empty!","answers":[]},
+          {"who":"Assistant","man":true,"text":"Then just call us at the information desk, and we'll call her name again over the speakers. We do it all day long, so don't feel bad! Let me give you our number. Have you got a pen?","answers":[12]},
+          {"who":"Customer","man":false,"text":"Yes, just a second. OK.","answers":[]},
+          {"who":"Assistant","man":true,"text":"The number is oh two oh seven, four nine one, three five six.","answers":[13]},
           {"who":"Customer","man":false,"text":"Oh two oh seven, four nine one, three five six?","answers":[]},
           {"who":"Assistant","man":true,"text":"That's right!","answers":[]},
-          {"who":"Customer","man":false,"text":"One more thing. Can I get the present wrapped?","answers":[]},
-          {"who":"Assistant","man":true,"text":"Of course! Gift wrapping is free at the customer service desk.","answers":[14]},
+          {"who":"Customer","man":false,"text":"Thanks. One more thing. Can I get the present wrapped? I'm terrible at wrapping presents. Last year my brother's present looked like a potato!","answers":[]},
+          {"who":"Assistant","man":true,"text":"Ha! Don't worry. Gift wrapping is free at the customer service desk. And they have lovely paper with dinosaurs and rockets on it.","answers":[14]},
           {"who":"Customer","man":false,"text":"Wonderful. Thank you so much!","answers":[]},
-          {"who":"Assistant","man":true,"text":"You're welcome. Have a great day!","answers":[]}
+          {"who":"Assistant","man":true,"text":"You're welcome. I'll call your cousin now. Attention, please. Could Hannah Brooks come to the information desk on the ground floor? Her cousin is waiting for her.","answers":[]}
         ]
         // LISTENING JOURNEY END
       },
@@ -1112,7 +1114,7 @@ var TA_SKILLS = {
       id: 'b10', no: 10, stage: 'Beginner', theme: 'Your City', emoji: '🏙️',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
-        src: "audio/skills/listen-step-10.mp3?v=2",
+        src: "audio/skills/listen-step-10.mp3?v=3",
         title: "A Tour of My City",
         intro: "Listen to a guide at the start of a city tour. Then answer the 15 questions.",
         questions: [
@@ -1133,12 +1135,13 @@ var TA_SKILLS = {
           {"type":"gap","q":"Bring an _____ because it might rain.","a":["umbrella","umbrella because"],"sec":"Complete the notes. Write ONE word or A NUMBER."}
         ],
         transcript: [
-          {"who":"Guide","man":true,"text":"Good morning, everyone, and welcome to our city tour! My name is Peter Wilson, and I'll be your guide today. Wilson. That's W-I-L-S-O-N.","answers":[1]},
-          {"who":"Guide","man":true,"text":"We're starting here in the main square, the biggest square in the city. Our first stop is the City Museum, just across the road. The building is very old. Before it was a museum, it was a school. The museum is closed on Mondays, so we're lucky it's Tuesday today! Inside, you can see old maps and photos of the city.","answers":[2,3,4]},
-          {"who":"Guide","man":true,"text":"Next, we'll walk to Riverside Park. Riverside. That's R-I-V-E-R-S-I-D-E. The park is next to the river. It has a long walking path, two playgrounds and a small café. At the café, fresh juice costs three dollars, and it's really good!","answers":[5,6,7]},
-          {"who":"Guide","man":true,"text":"After the park, we'll visit the market. It's famous for fresh fruit and vegetables. It's very busy on Saturday mornings, but today it will be quiet. Then, at half past twelve, we'll have lunch at a small restaurant near the market.","answers":[8,9,10]},
-          {"who":"Guide","man":true,"text":"Our last stop is the City Library. It has three floors, and the top floor is a quiet study area. If you get lost, please meet us at the library entrance. You can also call me. My number is oh seven eight one, three five two, six four nine. That's oh seven eight one, three five two, six four nine.","answers":[11,12,13,14]},
-          {"who":"Guide","man":true,"text":"Oh, and bring an umbrella. It might rain this afternoon. Enjoy the tour!","answers":[15]}
+          {"who":"Guide","man":true,"text":"Good morning, everyone, and welcome to our city tour! My name is Peter Wilson, and I'll be your guide today. Wilson. That's W-I-L-S-O-N. I've been a guide here for many years, and I still love this city. Before we start, please make sure you have comfortable shoes, because we're going to walk a lot today. Is everybody ready? Great, let's go!","answers":[1]},
+          {"who":"Guide","man":true,"text":"We're starting here in the main square, the biggest square in the city. Every December, there's a huge Christmas market here, with lights everywhere. Our first stop is the City Museum, just across the road. The building is very old. People often think it was a hospital, but no. Before it was a museum, it was a school. My grandfather studied here when he was a boy, and he says the teachers were very strict! He still remembers his classroom, with a big black stove in the corner. The museum is closed on Mondays, so we're lucky it's Tuesday today! Inside, there's a lot to see. My favourite room is at the very top, where you can look out over the whole city. On the walls, you can see old maps and photos of the city from a hundred years ago. It's funny to see the streets with horses instead of cars!","answers":[2,3,4]},
+          {"who":"Guide","man":true,"text":"After the museum, we'll walk along the river to our next stop, a beautiful park. It's called Riverside Park. Riverside. That's R-I-V-E-R-S-I-D-E. The park is right next to the river, and in summer people swim there. It has a long walking path, where people go running in the morning, and the children in our group will be happy, because it has two playgrounds. One has a big wooden pirate ship, and the other has the longest slide in the city. I tried it once, and I got stuck halfway down! There's also a small café by the water. The coffee there costs four dollars, which is a bit expensive, to be honest, but the fresh juice costs three dollars, and it's really good! I always have the orange one, and the man who sells it always tells a joke.","answers":[5,6,7]},
+          {"who":"Guide","man":true,"text":"After the park, we'll visit the market. It's been here for a very long time. It's famous for fresh fruit and vegetables, and the strawberries are the best I've ever eaten. The farmers bring everything in from the villages very early in the morning, so it's always fresh. Ask them for a taste. They're usually happy to let you try. It's very busy on Saturday mornings, but today it will be quiet, so we can take our time. By then, you'll all be hungry, so we'll go to a small restaurant near the market for lunch. We'll eat there at half past twelve. They make the best soup in town, and the plates are enormous. Don't eat too much, though, because there's one more stop!","answers":[8,9,10]},
+          {"who":"Guide","man":true,"text":"Our last stop is the City Library. It's a beautiful glass building, and it has three floors. The children's books are on the ground floor, and there's a computer room on the first floor, where you can use the internet for free. My favourite part is the top floor. When you go up there, please be very quiet, because the top floor is a quiet study area. Students sit there for hours with their books.","answers":[11,12]},
+          {"who":"Guide","man":true,"text":"Now, this is important. If you get lost at any time, don't panic. The city centre is small, but the old streets all look the same, and every year someone gets lost. Please meet us at the library entrance, by the big glass doors. Every tour finishes there, so you can't miss us. Last month, a lady got lost, and we found her an hour later, eating ice cream in the park! She was very happy. You can also call me. Write this down, please. My number is oh seven eight one, three five two, six four nine. That's oh seven eight one, three five two, six four nine.","answers":[13,14]},
+          {"who":"Guide","man":true,"text":"Oh, and one more thing. Look at the sky! It's sunny now, but the weather here changes very quickly. The forecast says it might rain this afternoon, so if you have one, bring an umbrella. Right, is everybody ready? Then follow me, and enjoy the tour!","answers":[15]}
         ]
         // LISTENING JOURNEY END
       },
@@ -1226,7 +1229,7 @@ var TA_SKILLS = {
       id: 'e1', no: 11, stage: 'Elementary', theme: 'Holidays', emoji: '🏖️',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
-        src: "audio/skills/listen-step-11.mp3?v=2",
+        src: "audio/skills/listen-step-11.mp3?v=3",
         title: "An Unforgettable Holiday",
         intro: "Listen to Tom talking about a holiday. Then answer the 16 questions.",
         questions: [
@@ -1248,14 +1251,14 @@ var TA_SKILLS = {
           {"type":"gap","q":"They came home on the _____ of July.","a":["15th","15","fifteenth"],"sec":"Complete the notes. Write ONE word or A NUMBER."}
         ],
         transcript: [
-          {"who":"Tom","man":true,"text":"Hi! My name is Tom Fisher. Fisher. That's F-I-S-H-E-R. Today I'm going to tell you about the best holiday I've ever had.","answers":[1]},
-          {"who":"Tom","man":true,"text":"Last summer, my family went to a small town in the mountains. We went by train. We left home very early, at a quarter to seven in the morning, and the journey took four hours. My uncle was waiting for us at the station.","answers":[2,3,4]},
-          {"who":"Tom","man":true,"text":"We stayed in a small guesthouse with a beautiful garden. Our room had a balcony with a view of the mountains.","answers":[5]},
-          {"who":"Tom","man":true,"text":"On the first evening, we ate at a local restaurant. I had vegetable soup and grilled chicken. My little sister had pasta.","answers":[6]},
-          {"who":"Tom","man":true,"text":"The next morning, we went hiking with a guide. She showed us a safe path through the forest. We saw lots of birds and even a small fox! Later, we stopped at a waterfall and took photos. It was sunny in the morning, but in the afternoon it became cloudy and windy.","answers":[7,8,9]},
-          {"who":"Tom","man":true,"text":"On the third day, we visited a farm. There were goats, sheep and chickens, and a friendly dog called Max. Max. That's M-A-X. He followed us everywhere and played with my sister.","answers":[10,11,12,13]},
-          {"who":"Tom","man":true,"text":"The farmer told us that visitors should always phone first. His number is oh one two three, six four eight, five nine seven. That's oh one two three, six four eight, five nine seven.","answers":[14]},
-          {"who":"Tom","man":true,"text":"We stayed for five days and came home on the fifteenth of July. I loved the mountain walk, but my sister says playing with Max was the best part!","answers":[15,16]}
+          {"who":"Tom","man":true,"text":"Hi! My name is Tom Fisher. Fisher. That's F-I-S-H-E-R. I live in a big, noisy city, so for me, quiet places are really special. Today I'm going to tell you about the best holiday I've ever had.","answers":[1]},
+          {"who":"Tom","man":true,"text":"Last summer, my family went to a small town in the mountains. My dad wanted to drive, but our car is very old, and my mum said no way! So we went by train. I didn't mind, because I love trains. You can read, play games, or just look out of the window. My little sister and I played cards, and she won every game, which was very annoying. We left home very early, at a quarter to seven in the morning. I was so tired that I almost fell asleep at breakfast. The journey was long, but the views were amazing: green hills, little villages and cows everywhere. When we arrived, my uncle was waiting for us at the station. He lives in the town, and he knows everyone there.","answers":[2,3,4]},
+          {"who":"Tom","man":true,"text":"He drove us to a small guesthouse with a beautiful garden full of roses. The owner was a kind old lady who made fresh bread every morning. Our room didn't have a TV, but it had a balcony with a view of the mountains. Every morning, I sat there with a cup of hot chocolate and watched the sun come up.","answers":[5]},
+          {"who":"Tom","man":true,"text":"On the first evening, we ate at a local restaurant. The menu was very long, and it took me ages to choose. In the end, I had vegetable soup and grilled chicken. My little sister had pasta, as usual. She eats pasta everywhere we go! The food was delicious, and we all went to bed early, because we had big plans for the next day.","answers":[6]},
+          {"who":"Tom","man":true,"text":"The next morning, we went hiking with a guide. She showed us a safe path through the forest. We saw lots of birds and even a small fox! It ran across the path right in front of us, and then it was gone. Our guide said she sees one only once or twice a year, so we were very lucky. Later, after a long walk uphill, we stopped at a waterfall and took photos. The water was freezing, but my dad put his feet in it anyway, and he shouted so loudly that everyone laughed. It was sunny in the morning, but in the afternoon it became cloudy and windy, so we walked back quickly. We got back just before the rain started.","answers":[7,8,9]},
+          {"who":"Tom","man":true,"text":"On the third day, we visited a farm near the town. I had never been on a real farm before, and the smell was quite strong! There were goats, sheep and chickens. One of the goats tried to eat my sister's hat, and she screamed! The farmer gave us some food for the animals, and we fed the baby goats from our hands. Then we met a friendly dog. He was big and black, with one white ear, and he had a very long tail that never stopped moving. He was the farmer's favourite, and he slept by the fire every night. His name was Max. Max. That's M-A-X. He followed us everywhere, even into the chicken house! He loved playing with sticks, and he brought one to everybody he met. But he liked one person more than anyone else. All afternoon, he played with my sister. She didn't want to leave! She even asked my parents if we could take Max home with us. The answer was no, of course!","answers":[10,11,12,13]},
+          {"who":"Tom","man":true,"text":"Before we left, the farmer told us something important. The farm is very busy, so visitors should always phone first. His number is oh one two three, six four eight, five nine seven. That's oh one two three, six four eight, five nine seven.","answers":[14]},
+          {"who":"Tom","man":true,"text":"We had a wonderful time in the mountains. My parents wanted to stay longer, but my dad had to go back to work. In the end, we stayed for five days. On the last morning, the old lady gave us a big bag of her fresh bread for the journey, and we ate all of it on the train. We came home on the fifteenth of July, just in time for my best friend's birthday party. I loved the mountain walk, but my sister says playing with Max was the best part! Next summer, we want to go back. And this time, maybe my dad will drive, if we get a new car!","answers":[15,16]}
         ]
         // LISTENING JOURNEY END
       },
