@@ -732,6 +732,12 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   (~45 s per clip on this CPU, ~40 min per step). Setup: venv with torch/transformers≥5.10/pydub/audioop-lts/sherpa-onnx + a clone of
   github.com/debpalash/voicestudio; the model `k2-fsa/OmniVoice` downloads from Hugging Face (the environment allows huggingface.co,
   us.aws.cdn.hf.co and the xethub/cdn-lfs hosts). **Licence: OmniVoice's weights are CC-BY-NC (non-commercial)** — the teacher was told.
+  **Time to write (teacher, 2026-11-14: "in this text there are 3 or 4 answers… students should have a time to write the answer… after
+  one question speakers should speak about other things… like IELTS Part 1")**: after each answer the speakers talk about things that
+  aren't asked — **at least 35 words from one answer to the next** (`"spaced": true` in the questions JSON; the build tool refuses a
+  closer pair, `MIN_GAP`; `tests/listening-rules.spec.js` checks it) — and each step has **1–2 gentle traps** (a speaker says one thing,
+  then the right one: "the app says minus five, but the thermometer says minus three"; listed under "Traps:" in the v2 file; never in a
+  True/False question). Same stories and questions as 2026-11-13, so the recordings are longer: ~700–950 words, 4–7 minutes.
 - **Step names (teacher, 2026-11-10: "rename them")**: each step's `theme` + `emoji` = its Speaking Journey topic (1 Daily Routine ⏰ …
   20 Weather & Seasons ☀️), so the map matches the four parts; older names in the notes above ("Hello!", "Meeting people"…) are gone.
   Results sent before keep the old name in their `title`.
