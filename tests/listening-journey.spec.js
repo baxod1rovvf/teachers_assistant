@@ -31,8 +31,10 @@ test('all 20 steps: the teacher\'s recording, question counts, a heading for eve
     expect((await res.body()).length).toBeGreaterThan(500000);
   }
   // the teacher's mix: every kind is used, and the steps don't all use the same mix
-  const mixes = new Set(steps.map(L => [...new Set(L.questions.map(q => q.sec))].join('|')));
-  expect(mixes.size).toBeGreaterThan(10);
+  // (Steps 1–7, the teacher's own mixes; Steps 8–20 follow the 2026-11-13 rules instead — blocks in recording order —
+  // checked by tests/listening-rules.spec.js)
+  const mixes = new Set(steps.slice(0, 7).map(L => [...new Set(L.questions.map(q => q.sec))].join('|')));
+  expect(mixes.size).toBeGreaterThan(4);
 });
 
 test('Steps 11–20 can be done with full marks; a spelled name counts letter by letter, a wrong letter doesn\'t', async ({ page, context }) => {

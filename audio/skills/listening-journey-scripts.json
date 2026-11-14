@@ -1702,48 +1702,53 @@
   "lines": [
    [
     "am_michael",
-    "Welcome to Teen Life.",
+    "Welcome to Teen Life, the show for young people with big ideas.",
     0.3
    ],
    [
     "am_michael",
-    "Today we're talking about hobbies.",
+    "Today we're talking about hobbies, and our guest is a student from our city, Olivia Green.",
     0.3
    ],
    [
     "am_michael",
-    "Our guest is Olivia Green.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "Olivia, could you spell your name?",
-    0.4
+    "Olivia, could you spell your surname for our listeners?",
+    0.5
    ],
    [
     "af_heart",
-    "Olivia.",
+    "Of course.",
     0.3
    ],
    [
     "af_heart",
-    "O. L. I. V. I. A.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Green.",
+    "Green.",
     0.3
    ],
    [
     "af_heart",
     "G. R. E. E. N.",
-    0.4
+    0.6
    ],
    [
     "am_michael",
-    "What do you enjoy doing?",
-    0.4
+    "Thank you. And thank you for coming in so early in the morning!",
+    0.3
+   ],
+   [
+    "am_michael",
+    "I know most teenagers are still in bed at this time.",
+    0.3
+   ],
+   [
+    "am_michael",
+    "So, let's start with the big question: what do you enjoy doing in your free time?",
+    0.5
+   ],
+   [
+    "af_heart",
+    "Well, I'm not a big fan of early mornings, but this was worth it.",
+    0.3
    ],
    [
     "af_heart",
@@ -1752,3480 +1757,5161 @@
    ],
    [
     "af_heart",
-    "I started two years ago when my uncle gave me his old camera.",
+    "I started two years ago.",
     0.3
    ],
    [
     "af_heart",
-    "I like taking pictures of nature, buildings and everyday life.",
+    "At first I took photos with my mum's phone, but the pictures weren't very good, and she always wanted her phone back!",
     0.3
    ],
    [
     "af_heart",
-    "I often visit Greenfield Park.",
+    "My dad wanted to buy me a camera for my birthday, but new cameras are really expensive.",
     0.3
    ],
    [
     "af_heart",
-    "Greenfield.",
+    "Then my uncle gave me his old camera.",
     0.3
    ],
    [
     "af_heart",
-    "G. R. E. E. N. F. I. E. L. D.",
+    "It's quite heavy, but it takes beautiful pictures.",
     0.3
    ],
    [
     "af_heart",
-    "It has a lake, a flower garden and many trees.",
+    "He's a photographer, so he taught me a lot.",
     0.3
    ],
    [
     "af_heart",
-    "I usually go there on Saturday mornings because it's quiet.",
-    0.4
+    "I like taking pictures of nature.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "I've tried taking photos of people too, but my little sister always pulls funny faces!",
+    0.3
+   ],
+   [
+    "af_heart",
+    "So now I mostly photograph birds and flowers.",
+    0.5
+   ],
+   [
+    "am_michael",
+    "Lovely. I'm sure our listeners would like to see them one day!",
+    0.3
+   ],
+   [
+    "am_michael",
+    "Where do you take your photos?",
+    0.5
+   ],
+   [
+    "af_heart",
+    "Usually in a park near my house.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "It's very close, so I can walk there with my camera.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "It's called Maple Park.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "Maple.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "M. A. P. L. E.",
+    0.6
+   ],
+   [
+    "af_heart",
+    "It has a big lake and lots of tall trees, and in spring there are ducks with their babies everywhere.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "You need to be patient, though.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "Sometimes I wait for half an hour to get one good picture!",
+    0.3
+   ],
+   [
+    "af_heart",
+    "I usually go there on Saturday mornings.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "I take a flask of hot chocolate, sit on a bench by the lake, and just wait.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "My uncle says the light is better in the morning, but that's not the reason.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "I go then because it's quiet, and there aren't many people to scare the birds.",
+    0.5
+   ],
+   [
+    "am_michael",
+    "That sounds very peaceful.",
+    0.3
    ],
    [
     "am_michael",
     "Do you have another hobby?",
-    0.4
+    0.5
    ],
    [
     "af_heart",
-    "Yes, I enjoy baking with my grandmother.",
+    "Yes, I love baking with my grandmother.",
     0.3
    ],
    [
     "af_heart",
-    "We make biscuits and simple cakes.",
+    "She lives next door, so I visit her a lot.",
     0.3
    ],
    [
     "af_heart",
-    "Last month, I made a chocolate cake for my friend Lily.",
+    "We usually make biscuits, because they're quick and my grandfather eats them all!",
     0.3
    ],
    [
     "af_heart",
-    "Lily.",
+    "Her biscuits are famous in our street.",
     0.3
    ],
    [
     "af_heart",
-    "L. I. L. Y.",
+    "Everyone asks her for the recipe, but she never tells them!",
     0.3
    ],
    [
     "af_heart",
-    "I use recipes from a website called Easy Kitchen.",
+    "She never uses a website or a cookbook.",
     0.3
    ],
    [
     "af_heart",
-    "Easy.",
+    "Instead, she has an old notebook full of family recipes, and we try a new one every week.",
     0.3
    ],
    [
     "af_heart",
-    "E. A. S. Y.",
+    "Some of the recipes are a hundred years old!",
     0.3
    ],
    [
     "af_heart",
-    "And Kitchen.",
+    "The writing is very small, so sometimes I read them out loud for her.",
     0.3
    ],
    [
     "af_heart",
-    "K. I. T. C. H. E. N.",
-    0.4
+    "And I'm getting better at baking on my own, too.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "Last month, I made a chocolate cake for my best friend's birthday.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "It was a big surprise!",
+    0.3
+   ],
+   [
+    "af_heart",
+    "She cried a little when she saw it, and then we ate the whole cake in ten minutes.",
+    0.5
    ],
    [
     "am_michael",
-    "How much time do you spend on your hobbies?",
-    0.4
+    "Photography and baking! How do you find time for all this?",
+    0.5
    ],
    [
     "af_heart",
-    "I take photographs for about two hours at weekends.",
+    "It's not always easy.",
     0.3
    ],
    [
     "af_heart",
-    "Baking can take three hours.",
+    "During the week, I do my homework first, because my parents are very strict about that.",
     0.3
    ],
    [
     "af_heart",
-    "During the week, I do my homework first, then I have some free time.",
-    0.4
+    "Then I have some free time in the evening, but only an hour or so.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "At weekends, I have much more time for my hobbies.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "My friends sometimes say I'm too busy, but I'm happy!",
+    0.5
    ],
    [
     "am_michael",
-    "Do you have a goal?",
-    0.4
+    "Do you have a goal for this year?",
+    0.5
    ],
    [
     "af_heart",
-    "I'd like to enter a photography competition called Young Eyes.",
+    "Yes! I'd like to enter a photography competition.",
     0.3
    ],
    [
     "af_heart",
-    "Young.",
+    "I saw a poster for it at school last week.",
     0.3
    ],
    [
     "af_heart",
-    "Y. O. U. N. G.",
+    "It's for teenagers aged thirteen to seventeen, and you can send up to five photos.",
     0.3
    ],
    [
     "af_heart",
-    "And Eyes.",
+    "I've already chosen three: a big white bird by the lake, a red flower after the rain, and a little duck.",
     0.3
    ],
    [
     "af_heart",
-    "E. Y. E. S.",
+    "Now I need two more!",
     0.3
    ],
    [
     "af_heart",
-    "The last day to send photographs is the fifteenth of May.",
+    "The last day to send them is the fifteenth of May.",
     0.3
    ],
    [
     "af_heart",
-    "We can send five pictures.",
+    "I don't expect to win, because lots of people enter, but I want to learn from the experience.",
     0.3
    ],
    [
     "af_heart",
-    "The results will be announced on the second of June.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "I don't expect to win, but I want to learn from the experience.",
-    0.4
+    "The best photos go in a big exhibition in the city library.",
+    0.5
    ],
    [
     "am_michael",
-    "Thank you, Olivia!",
-    0.4
+    "That sounds great.",
+    0.3
+   ],
+   [
+    "am_michael",
+    "How can our listeners find out more?",
+    0.5
+   ],
+   [
+    "af_heart",
+    "There's a website, but it isn't very clear, to be honest.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "It's easier to call the competition office.",
+    0.3
+   ],
+   [
+    "af_heart",
+    "The number is oh seven nine four, six two one, eight three zero.",
+    0.5
+   ],
+   [
+    "am_michael",
+    "Oh seven nine four, six two one, eight three zero?",
+    0.5
+   ],
+   [
+    "af_heart",
+    "Yes, that's right. The people there are really friendly.",
+    0.5
+   ],
+   [
+    "am_michael",
+    "Thank you, Olivia, and good luck with the competition!",
+    0.3
+   ],
+   [
+    "am_michael",
+    "After the news, we'll meet a boy who builds robots in his garage.",
+    0.3
+   ],
+   [
+    "am_michael",
+    "Stay with us.",
+    0.5
    ]
   ]
  },
  {
   "src": "audio/skills/listen-step-9.mp3",
   "title": "At the Shopping Centre",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   },
+   "af_ov_customer": "female, young adult, moderate pitch"
+  },
   "lines": [
    [
-    "af_heart",
-    "Good afternoon.",
+    "am_ov_energetic",
+    "Good afternoon, and welcome to the shopping centre!",
     0.3
    ],
    [
-    "af_heart",
-    "Welcome to Westgate Shopping Centre.",
+    "am_ov_energetic",
+    "How can I help you today?",
+    0.5
+   ],
+   [
+    "af_ov_customer",
+    "Hi. I'm meeting my cousin here, but I can't find her.",
     0.3
    ],
    [
-    "af_heart",
-    "How can I help?",
-    0.4
+    "af_ov_customer",
+    "We were supposed to meet a while ago, and her phone is switched off.",
+    0.5
    ],
    [
-    "am_michael",
-    "I'm meeting my cousin, but I can't remember where she asked me to wait.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Do you know her name?",
-    0.4
-   ],
-   [
-    "am_michael",
-    "Yes.",
+    "am_ov_energetic",
+    "No problem! It happens all the time here, especially on Saturdays.",
     0.3
    ],
    [
-    "am_michael",
-    "Layla Karim.",
+    "am_ov_energetic",
+    "What's her name?",
     0.3
    ],
    [
-    "am_michael",
-    "Layla.",
+    "am_ov_energetic",
+    "I can call her over the speakers.",
+    0.5
+   ],
+   [
+    "af_ov_customer",
+    "Hannah Brooks.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Brooks? How do you spell that?",
+    0.5
+   ],
+   [
+    "af_ov_customer",
+    "Brooks.",
     0.3
    ],
    [
-    "am_michael",
-    "L. A. Y. L. A.",
+    "af_ov_customer",
+    "B. R. O. O. K. S.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Great, thanks! I'll call her in a minute.",
     0.3
    ],
    [
-    "am_michael",
-    "And Karim.",
+    "am_ov_energetic",
+    "Did she say where to meet?",
+    0.5
+   ],
+   [
+    "af_ov_customer",
+    "She said near the bookshop.",
     0.3
    ],
    [
-    "am_michael",
-    "K. A. R. I. M.",
+    "af_ov_customer",
+    "But I've never been here before, and this place is enormous!",
     0.3
    ],
    [
-    "am_michael",
-    "She said to meet near the bookshop.",
-    0.4
+    "af_ov_customer",
+    "I keep walking past the same shoe shop.",
+    0.5
    ],
    [
-    "af_heart",
-    "The bookshop is on the second floor, opposite the electronics shop.",
+    "am_ov_energetic",
+    "Don't worry, everybody gets lost here at first.",
     0.3
    ],
    [
-    "af_heart",
-    "Use the escalator near the main entrance on King Street.",
+    "am_ov_energetic",
+    "The bookshop isn't on this floor.",
     0.3
    ],
    [
-    "af_heart",
-    "King.",
+    "am_ov_energetic",
+    "It's on the second floor, above the supermarket.",
     0.3
    ],
    [
-    "af_heart",
-    "K. I. N. G.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "Thank you.",
+    "am_ov_energetic",
+    "You can take the lift right behind you, or the escalator over there, but the escalator is very slow today, so I'd take the lift.",
     0.3
    ],
    [
-    "am_michael",
-    "I also need a birthday present for my ten-year-old brother.",
+    "am_ov_energetic",
+    "When you come out of the lift, turn left, and you'll find the bookshop next to the cinema.",
     0.3
    ],
    [
-    "am_michael",
-    "He likes building things and playing games.",
-    0.4
+    "am_ov_energetic",
+    "There's a film starting soon, so it might be a bit busy over there.",
+    0.5
    ],
    [
-    "af_heart",
-    "There's a toy shop called Play House on the first floor.",
+    "af_ov_customer",
+    "Thank you. Oh, and while I'm here, I also need a present for my little brother.",
     0.3
    ],
    [
-    "af_heart",
-    "Play.",
+    "af_ov_customer",
+    "It's his birthday tomorrow, and I completely forgot!",
     0.3
    ],
    [
-    "af_heart",
-    "P. L. A. Y.",
+    "af_ov_customer",
+    "He's ten, and he loves building things.",
     0.3
    ],
    [
-    "af_heart",
-    "And House.",
+    "af_ov_customer",
+    "Last year he built a castle out of cardboard boxes, and it filled his whole bedroom!",
     0.3
    ],
    [
-    "af_heart",
-    "H. O. U. S. E.",
+    "af_ov_customer",
+    "My mum wasn't very happy.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Ha! I know the perfect shop for him.",
     0.3
    ],
    [
-    "af_heart",
-    "Small games start at six dollars.",
+    "am_ov_energetic",
+    "You should try Toybox.",
     0.3
    ],
    [
-    "af_heart",
-    "Larger building sets can cost forty-five dollars.",
-    0.4
+    "am_ov_energetic",
+    "T. O. Y. B. O. X.",
+    0.6
    ],
    [
-    "am_michael",
-    "I'd prefer something under twenty dollars.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "This wooden building set costs eighteen dollars and fifty cents.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "Great.",
+    "am_ov_energetic",
+    "It's a toy shop near the main entrance, so it's very easy to find.",
     0.3
    ],
    [
-    "am_michael",
+    "am_ov_energetic",
+    "Their building sets are really popular.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Most of them cost more than forty dollars, but at the moment they have a great wooden building set for just eighteen dollars and fifty cents.",
+    0.5
+   ],
+   [
+    "af_ov_customer",
+    "Perfect, he'll love that. I'll go there after I find my cousin.",
+    0.3
+   ],
+   [
+    "af_ov_customer",
     "Is there somewhere to eat?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "The food court is on the third floor.",
     0.3
    ],
    [
-    "af_heart",
-    "There's a café called Blue Cup.",
+    "af_ov_customer",
+    "I haven't had lunch yet, and I'm starving.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Yes, there are lots of places.",
     0.3
    ],
    [
-    "af_heart",
-    "Blue.",
+    "am_ov_energetic",
+    "The food court is near the car park entrance, on the ground floor.",
     0.3
    ],
    [
-    "af_heart",
-    "B. L. U. E.",
+    "am_ov_energetic",
+    "There are burger bars and noodle places, but my favourite is a little café in the corner.",
     0.3
    ],
    [
-    "af_heart",
-    "And Cup.",
+    "am_ov_energetic",
+    "Everything is made fresh every morning.",
     0.3
    ],
    [
-    "af_heart",
-    "C. U. P.",
+    "am_ov_energetic",
+    "It sells really good sandwiches, and the coffee isn't bad either.",
+    0.5
+   ],
+   [
+    "af_ov_customer",
+    "Sounds great. And what time does the centre close today?",
     0.3
    ],
    [
-    "af_heart",
-    "It sells vegetable sandwiches for four dollars and twenty cents.",
-    0.4
+    "af_ov_customer",
+    "I might stay and watch a film later.",
+    0.5
    ],
    [
-    "am_michael",
-    "What time does the centre close?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "From Monday to Saturday, it closes at nine in the evening.",
+    "am_ov_energetic",
+    "Let me think.",
     0.3
    ],
    [
-    "af_heart",
-    "On Sundays, it closes at seven.",
+    "am_ov_energetic",
+    "On weekdays we close at eight, but today is Saturday, so we close at nine p.m.",
     0.3
    ],
    [
-    "af_heart",
-    "Today is Saturday.",
-    0.4
+    "am_ov_energetic",
+    "The cinema stays open even later, so you have plenty of time.",
+    0.3
    ],
    [
-    "am_michael",
+    "am_ov_energetic",
+    "I saw a great comedy there last week.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I laughed so much that the people next to me moved to different seats!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "But be careful if you come back tomorrow.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "On Sundays, we close earlier, because the shop workers like to spend time with their families.",
+    0.5
+   ],
+   [
+    "af_ov_customer",
+    "Good to know. Oh, I almost forgot.",
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "I need some cash for the bus home.",
+    0.3
+   ],
+   [
+    "af_ov_customer",
     "Is there an ATM?",
-    0.4
+    0.5
    ],
    [
-    "af_heart",
-    "Yes, next to the customer service desk on the ground floor.",
-    0.4
+    "am_ov_energetic",
+    "Yes, there's one right next to the customer service desk.",
+    0.3
    ],
    [
-    "am_michael",
-    "Thank you!",
-    0.4
+    "am_ov_energetic",
+    "It's just over there, next to the toilets.",
+    0.5
+   ],
+   [
+    "af_ov_customer",
+    "Great. And what if I still can't find my cousin?",
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "She's always late, and her phone battery is always empty!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Then just call us at the information desk, and we'll call her name again over the speakers.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "We do it all day long, so don't feel bad!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Let me give you our number.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Have you got a pen?",
+    0.5
+   ],
+   [
+    "af_ov_customer",
+    "Yes, just a second. OK.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "The number is oh two oh seven, four nine one, three five six.",
+    0.5
+   ],
+   [
+    "af_ov_customer",
+    "Oh two oh seven, four nine one, three five six?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "That's right!",
+    0.5
+   ],
+   [
+    "af_ov_customer",
+    "Thanks. One more thing. Can I get the present wrapped?",
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "I'm terrible at wrapping presents.",
+    0.3
+   ],
+   [
+    "af_ov_customer",
+    "Last year my brother's present looked like a potato!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Ha! Don't worry. Gift wrapping is free at the customer service desk.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "And they have lovely paper with dinosaurs and rockets on it.",
+    0.5
+   ],
+   [
+    "af_ov_customer",
+    "Wonderful. Thank you so much!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "You're welcome. I'll call your cousin now.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Attention, please. Could Hannah Brooks come to the information desk on the ground floor?",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Her cousin is waiting for her.",
+    0.5
    ]
   ]
  },
  {
   "src": "audio/skills/listen-step-10.mp3",
   "title": "A Tour of My City",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   }
+  },
   "lines": [
    [
-    "am_michael",
-    "Good morning, everyone!",
+    "am_ov_energetic",
+    "Good morning, everyone, and welcome to our city tour!",
     0.3
    ],
    [
-    "am_michael",
-    "Welcome to our city tour.",
+    "am_ov_energetic",
+    "My name is Peter Wilson, and I'll be your guide today.",
     0.3
    ],
    [
-    "am_michael",
-    "My name is Peter Wilson.",
+    "am_ov_energetic",
+    "Wilson.",
     0.3
    ],
    [
-    "am_michael",
-    "Peter.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "P. E. T. E. R.",
-    0.3
-   ],
-   [
-    "am_michael",
-    "And Wilson.",
-    0.3
-   ],
-   [
-    "am_michael",
+    "am_ov_energetic",
     "W. I. L. S. O. N.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "I've been a guide here for many years, and I still love this city.",
     0.3
    ],
    [
-    "am_michael",
-    "I'll be your guide today.",
-    0.9
-   ],
-   [
-    "am_michael",
-    "We are starting at Central Square, the largest public square in the city.",
+    "am_ov_energetic",
+    "Before we start, please make sure you have comfortable shoes, because we're going to walk a lot today.",
     0.3
    ],
    [
-    "am_michael",
-    "Our first stop is the City History Museum.",
+    "am_ov_energetic",
+    "Is everybody ready? Great, let's go!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "We're starting here in the main square, the biggest square in the city.",
     0.3
    ],
    [
-    "am_michael",
-    "It is in an old building that was once a school.",
+    "am_ov_energetic",
+    "Every December, there's a huge Christmas market here, with lights everywhere.",
     0.3
    ],
    [
-    "am_michael",
-    "The museum opened in nineteen eighty-five.",
+    "am_ov_energetic",
+    "Our first stop is the City Museum, just across the road.",
     0.3
    ],
    [
-    "am_michael",
-    "It is open from Tuesday to Sunday, ten in the morning until five in the afternoon.",
+    "am_ov_energetic",
+    "The building is very old.",
     0.3
    ],
    [
-    "am_michael",
-    "It is closed on Mondays.",
-    0.9
-   ],
-   [
-    "am_michael",
-    "Next, we will visit Riverside Park.",
+    "am_ov_energetic",
+    "People often think it was a hospital, but no. Before it was a museum, it was a school.",
     0.3
    ],
    [
-    "am_michael",
+    "am_ov_energetic",
+    "My grandfather studied here when he was a boy, and he says the teachers were very strict!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "He still remembers his classroom, with a big black stove in the corner.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The museum is closed on Mondays, so we're lucky it's Tuesday today!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Inside, there's a lot to see.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "My favourite room is at the very top, where you can look out over the whole city.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "On the walls, you can see old maps and photos of the city from a hundred years ago.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's funny to see the streets with horses instead of cars!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "After the museum, we'll walk along the river to our next stop, a beautiful park.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's called Riverside Park.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
     "Riverside.",
     0.3
    ],
    [
-    "am_michael",
+    "am_ov_energetic",
     "R. I. V. E. R. S. I. D. E.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "The park is right next to the river, and in summer people swim there.",
     0.3
    ],
    [
-    "am_michael",
-    "We will walk along River Road.",
+    "am_ov_energetic",
+    "It has a long walking path, where people go running in the morning, and the children in our group will be happy, because it has two playgrounds.",
     0.3
    ],
    [
-    "am_michael",
-    "River.",
+    "am_ov_energetic",
+    "One has a big wooden pirate ship, and the other has the longest slide in the city.",
     0.3
    ],
    [
-    "am_michael",
-    "R. I. V. E. R.",
+    "am_ov_energetic",
+    "I tried it once, and I got stuck halfway down!",
     0.3
    ],
    [
-    "am_michael",
-    "And Road.",
+    "am_ov_energetic",
+    "There's also a small café by the water.",
     0.3
    ],
    [
-    "am_michael",
-    "R. O. A. D.",
+    "am_ov_energetic",
+    "The coffee there costs four dollars, which is a bit expensive, to be honest, but the fresh juice costs three dollars, and it's really good!",
     0.3
    ],
    [
-    "am_michael",
-    "The park is next to the river.",
+    "am_ov_energetic",
+    "I always have the orange one, and the man who sells it always tells a joke.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "After the park, we'll visit the market.",
     0.3
    ],
    [
-    "am_michael",
-    "It has a walking path, two playgrounds and a small café.",
+    "am_ov_energetic",
+    "It's been here for a very long time.",
     0.3
    ],
    [
-    "am_michael",
-    "Water costs one dollar and fifty cents.",
+    "am_ov_energetic",
+    "It's famous for fresh fruit and vegetables, and the strawberries are the best I've ever eaten.",
     0.3
    ],
    [
-    "am_michael",
-    "Fresh juice costs three dollars.",
-    0.9
-   ],
-   [
-    "am_michael",
-    "After the park, we will visit Green Market.",
+    "am_ov_energetic",
+    "The farmers bring everything in from the villages very early in the morning, so it's always fresh.",
     0.3
    ],
    [
-    "am_michael",
-    "Green.",
+    "am_ov_energetic",
+    "Ask them for a taste. They're usually happy to let you try.",
     0.3
    ],
    [
-    "am_michael",
-    "G. R. E. E. N.",
+    "am_ov_energetic",
+    "It's very busy on Saturday mornings, but today it will be quiet, so we can take our time.",
     0.3
    ],
    [
-    "am_michael",
-    "And Market.",
+    "am_ov_energetic",
+    "By then, you'll all be hungry, so we'll go to a small restaurant near the market for lunch.",
     0.3
    ],
    [
-    "am_michael",
-    "M. A. R. K. E. T.",
+    "am_ov_energetic",
+    "We'll eat there at half past twelve.",
     0.3
    ],
    [
-    "am_michael",
-    "It is famous for fresh fruit, vegetables, bread and local food.",
+    "am_ov_energetic",
+    "They make the best soup in town, and the plates are enormous.",
     0.3
    ],
    [
-    "am_michael",
-    "It is busiest on Saturday mornings.",
-    0.9
+    "am_ov_energetic",
+    "Don't eat too much, though, because there's one more stop!",
+    0.5
    ],
    [
-    "am_michael",
-    "At twelve thirty, we will have lunch at The Garden Table.",
+    "am_ov_energetic",
+    "Our last stop is the City Library.",
     0.3
    ],
    [
-    "am_michael",
-    "Garden.",
+    "am_ov_energetic",
+    "It's a beautiful glass building, and it has three floors.",
     0.3
    ],
    [
-    "am_michael",
-    "G. A. R. D. E. N.",
+    "am_ov_energetic",
+    "The children's books are on the ground floor, and there's a computer room on the first floor, where you can use the internet for free.",
     0.3
    ],
    [
-    "am_michael",
-    "And Table.",
+    "am_ov_energetic",
+    "My favourite part is the top floor.",
     0.3
    ],
    [
-    "am_michael",
-    "T. A. B. L. E.",
+    "am_ov_energetic",
+    "When you go up there, please be very quiet, because the top floor is a quiet study area.",
     0.3
    ],
    [
-    "am_michael",
-    "Chicken and rice costs seven dollars and eighty cents.",
+    "am_ov_energetic",
+    "Students sit there for hours with their books.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Now, this is important.",
     0.3
    ],
    [
-    "am_michael",
-    "A vegetarian meal costs six dollars and fifty cents.",
-    0.9
-   ],
-   [
-    "am_michael",
-    "Our final stop is the City Library on Park Avenue.",
+    "am_ov_energetic",
+    "If you get lost at any time, don't panic.",
     0.3
    ],
    [
-    "am_michael",
-    "It has three floors.",
+    "am_ov_energetic",
+    "The city centre is small, but the old streets all look the same, and every year someone gets lost.",
     0.3
    ],
    [
-    "am_michael",
-    "The first floor has children's books, the second has novels and magazines, and the third is a quiet study area.",
+    "am_ov_energetic",
+    "Please meet us at the library entrance, by the big glass doors.",
     0.3
    ],
    [
-    "am_michael",
-    "Meet us at the library entrance at three thirty if you get lost.",
+    "am_ov_energetic",
+    "Every tour finishes there, so you can't miss us.",
     0.3
    ],
    [
-    "am_michael",
-    "My phone number is zero seven nine four, six two one, eight three zero.",
+    "am_ov_energetic",
+    "Last month, a lady got lost, and we found her an hour later, eating ice cream in the park! She was very happy.",
     0.3
    ],
    [
-    "am_michael",
-    "That's zero seven nine four, six two one, eight three zero.",
-    0.9
+    "am_ov_energetic",
+    "You can also call me. Write this down, please.",
+    0.3
    ],
    [
-    "am_michael",
-    "Thank you, and enjoy the tour!",
-    0.9
+    "am_ov_energetic",
+    "My number is oh seven eight one, three five two, six four nine.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "That's oh seven eight one, three five two, six four nine.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Oh, and one more thing. Look at the sky!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's sunny now, but the weather here changes very quickly.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The forecast says it might rain this afternoon, so if you have one, bring an umbrella.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Right, is everybody ready? Then follow me, and enjoy the tour!",
+    0.5
    ]
   ]
  },
  {
   "src": "audio/skills/listen-step-11.mp3",
   "title": "An Unforgettable Holiday",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   }
+  },
   "lines": [
    [
-    "af_heart",
-    "Hello!",
+    "am_ov_energetic",
+    "Hi! My name is Tom Fisher.",
     0.3
    ],
    [
-    "af_heart",
-    "My name is Amelia Brown.",
+    "am_ov_energetic",
+    "Fisher.",
     0.3
    ],
    [
-    "af_heart",
-    "Amelia.",
+    "am_ov_energetic",
+    "F. I. S. H. E. R.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "I live in a big, noisy city, so for me, quiet places are really special.",
     0.3
    ],
    [
-    "af_heart",
-    "A. M. E. L. I. A.",
+    "am_ov_energetic",
+    "Today I'm going to tell you about the best holiday I've ever had.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Last summer, my family went to a small town in the mountains.",
     0.3
    ],
    [
-    "af_heart",
-    "And Brown.",
+    "am_ov_energetic",
+    "My dad wanted to drive, but our car is very old, and my mum said no way!",
     0.3
    ],
    [
-    "af_heart",
-    "B. R. O. W. N.",
+    "am_ov_energetic",
+    "So we went by train.",
     0.3
    ],
    [
-    "af_heart",
-    "Today I'll tell you about a holiday I remember very well.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "Last summer, my family travelled to a small town near the mountains called Silver Lake.",
+    "am_ov_energetic",
+    "I didn't mind, because I love trains. You can read, play games, or just look out of the window.",
     0.3
    ],
    [
-    "af_heart",
-    "Silver.",
+    "am_ov_energetic",
+    "My little sister and I played cards, and she won every game, which was very annoying.",
     0.3
    ],
    [
-    "af_heart",
-    "S. I. L. V. E. R.",
+    "am_ov_energetic",
+    "We left home very early, at a quarter to seven in the morning.",
     0.3
    ],
    [
-    "af_heart",
-    "And Lake.",
+    "am_ov_energetic",
+    "I was so tired that I almost fell asleep at breakfast.",
     0.3
    ],
    [
-    "af_heart",
-    "L. A. K. E.",
+    "am_ov_energetic",
+    "The journey was long, but the views were amazing: green hills, little villages and cows everywhere.",
     0.3
    ],
    [
-    "af_heart",
-    "We went by train.",
+    "am_ov_energetic",
+    "When we arrived, my uncle was waiting for us at the station.",
     0.3
    ],
    [
-    "af_heart",
-    "We left home on the tenth of July at six forty-five in the morning.",
+    "am_ov_energetic",
+    "He lives in the town, and he knows everyone there.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "He drove us to a small guesthouse with a beautiful garden full of roses.",
     0.3
    ],
    [
-    "af_heart",
-    "The journey took four hours, and we arrived at ten forty-five.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "My uncle David was waiting at the station.",
+    "am_ov_energetic",
+    "The owner was a kind old lady who made fresh bread every morning.",
     0.3
    ],
    [
-    "af_heart",
-    "David.",
+    "am_ov_energetic",
+    "Our room didn't have a TV, but it had a balcony with a view of the mountains.",
     0.3
    ],
    [
-    "af_heart",
-    "D. A. V. I. D.",
+    "am_ov_energetic",
+    "Every morning, I sat there with a cup of hot chocolate and watched the sun come up.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "On the first evening, we ate at a local restaurant.",
     0.3
    ],
    [
-    "af_heart",
-    "He had booked a guesthouse called Mountain View.",
+    "am_ov_energetic",
+    "The menu was very long, and it took me ages to choose.",
     0.3
    ],
    [
-    "af_heart",
-    "It had five rooms, a small garden and a restaurant.",
+    "am_ov_energetic",
+    "In the end, I had vegetable soup and grilled chicken.",
     0.3
    ],
    [
-    "af_heart",
-    "Our room had two beds and a balcony with a view of the mountains.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "On the first day, we walked around the town.",
+    "am_ov_energetic",
+    "My little sister had pasta, as usual. She eats pasta everywhere we go!",
     0.3
    ],
    [
-    "af_heart",
-    "In the evening, we ate at a local restaurant.",
+    "am_ov_energetic",
+    "The food was delicious, and we all went to bed early, because we had big plans for the next day.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "The next morning, we went hiking with a guide.",
     0.3
    ],
    [
-    "af_heart",
-    "I ordered vegetable soup and grilled chicken.",
+    "am_ov_energetic",
+    "She showed us a safe path through the forest.",
     0.3
    ],
    [
-    "af_heart",
-    "My younger sister Sophie chose pasta.",
+    "am_ov_energetic",
+    "We saw lots of birds and even a small fox!",
     0.3
    ],
    [
-    "af_heart",
-    "Sophie.",
+    "am_ov_energetic",
+    "It ran across the path right in front of us, and then it was gone.",
     0.3
    ],
    [
-    "af_heart",
-    "S. O. P. H. I. E.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "The next morning, we went hiking with a guide called Nora.",
+    "am_ov_energetic",
+    "Our guide said she sees one only once or twice a year, so we were very lucky.",
     0.3
    ],
    [
-    "af_heart",
-    "Nora.",
+    "am_ov_energetic",
+    "Later, after a long walk uphill, we stopped at a waterfall and took photos.",
     0.3
    ],
    [
-    "af_heart",
-    "N. O. R. A.",
+    "am_ov_energetic",
+    "The water was freezing, but my dad put his feet in it anyway, and he shouted so loudly that everyone laughed.",
     0.3
    ],
    [
-    "af_heart",
-    "She showed us a safe walking path.",
+    "am_ov_energetic",
+    "It was sunny in the morning, but in the afternoon it became cloudy and windy, so we walked back quickly.",
     0.3
    ],
    [
-    "af_heart",
-    "We saw birds and a small fox.",
+    "am_ov_energetic",
+    "We got back just before the rain started.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "On the third day, we visited a farm near the town.",
     0.3
    ],
    [
-    "af_heart",
-    "Later, we stopped near a waterfall and took photographs.",
+    "am_ov_energetic",
+    "I had never been on a real farm before, and the smell was quite strong!",
     0.3
    ],
    [
-    "af_heart",
-    "The weather was sunny at first, but it became cloudy and windy.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "On the third day, we visited a farm.",
+    "am_ov_energetic",
+    "There were goats, sheep and chickens.",
     0.3
    ],
    [
-    "af_heart",
-    "There were goats, sheep, chickens and two friendly dogs.",
+    "am_ov_energetic",
+    "One of the goats tried to eat my sister's hat, and she screamed!",
     0.3
    ],
    [
-    "af_heart",
-    "One dog was called Max.",
+    "am_ov_energetic",
+    "The farmer gave us some food for the animals, and we fed the baby goats from our hands.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
+    "Then we met a friendly dog.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "He was big and black, with one white ear, and he had a very long tail that never stopped moving.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "He was the farmer's favourite, and he slept by the fire every night.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "His name was Max.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
     "Max.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "M. A. X.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "He followed us everywhere, even into the chicken house!",
     0.3
    ],
    [
-    "af_heart",
-    "He followed us around and played with my sister.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "We stayed for five days and returned home on the fifteenth of July.",
+    "am_ov_energetic",
+    "He loved playing with sticks, and he brought one to everybody he met.",
     0.3
    ],
    [
-    "af_heart",
-    "I loved the mountain walk, but Sophie said playing with Max was the best part.",
+    "am_ov_energetic",
+    "But he liked one person more than anyone else.",
     0.3
    ],
    [
-    "af_heart",
-    "It was a wonderful holiday because we spent time together and discovered a new place.",
-    0.9
+    "am_ov_energetic",
+    "All afternoon, he played with my sister.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "She didn't want to leave!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "She even asked my parents if we could take Max home with us. The answer was no, of course!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Before we left, the farmer told us something important.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The farm is very busy, so visitors should always phone first.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "His number is oh one two three, six four eight, five nine seven.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "That's oh one two three, six four eight, five nine seven.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "We had a wonderful time in the mountains.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "My parents wanted to stay longer, but my dad had to go back to work.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "In the end, we stayed for five days.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "On the last morning, the old lady gave us a big bag of her fresh bread for the journey, and we ate all of it on the train.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "We came home on the fifteenth of July, just in time for my best friend's birthday party.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I loved the mountain walk, but my sister says playing with Max was the best part!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Next summer, we want to go back. And this time, maybe my dad will drive, if we get a new car!",
+    0.5
    ]
   ]
  },
  {
   "src": "audio/skills/listen-step-12.mp3",
   "title": "Talking About Future Dreams",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   },
+   "af_ov_young": {
+    "instruct": "female, young adult, moderate pitch",
+    "seed": 1
+   }
+  },
   "lines": [
    [
-    "am_fenrir",
-    "Good morning.",
+    "am_ov_energetic",
+    "Good morning, everyone. I hope you all had a nice weekend.",
     0.3
    ],
    [
-    "am_fenrir",
-    "Today we're talking about future plans.",
+    "am_ov_energetic",
+    "Today we're talking about our dreams for the future.",
     0.3
    ],
    [
-    "am_fenrir",
-    "Let's start with Mia.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "My name is Mia Johnson.",
+    "am_ov_energetic",
+    "This is one of my favourite lessons every year, because I always learn something new about you.",
     0.3
    ],
    [
-    "af_heart",
-    "Mia.",
+    "am_ov_energetic",
+    "Emma, would you like to start?",
     0.3
    ],
    [
-    "af_heart",
-    "M. I. A.",
+    "am_ov_energetic",
+    "First, please tell us your full name for the new class list.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Sure. I'm Emma Clarke.",
     0.3
    ],
    [
-    "af_heart",
-    "And Johnson.",
+    "af_ov_young",
+    "Clarke.",
     0.3
    ],
    [
-    "af_heart",
-    "J. O. H. N. S. O. N.",
+    "af_ov_young",
+    "C. L. A. R. K. E.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Thanks, Emma. With an E at the end. I always forget that E!",
     0.3
    ],
    [
-    "af_heart",
-    "I want to become a doctor because I enjoy helping people.",
+    "am_ov_energetic",
+    "So, Emma, what do you want to be when you finish school?",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Well, when I was little, I wanted to be a pilot, because I loved planes.",
     0.3
    ],
    [
-    "af_heart",
-    "Biology is my favourite subject, but I need to improve my chemistry.",
-    0.4
-   ],
-   [
-    "am_fenrir",
-    "Thank you.",
+    "af_ov_young",
+    "But now I want to become a doctor, because I enjoy helping people.",
     0.3
    ],
    [
-    "am_fenrir",
-    "Adam, what about you?",
-    0.4
-   ],
-   [
-    "am_michael",
-    "I'm Adam Lee.",
+    "af_ov_young",
+    "Last year my grandmother was in hospital for a few weeks, and the doctors there were so kind to her.",
     0.3
    ],
    [
-    "am_michael",
-    "Adam.",
+    "af_ov_young",
+    "She's fine now, don't worry!",
     0.3
    ],
    [
-    "am_michael",
-    "A. D. A. M.",
+    "af_ov_young",
+    "That's when I decided.",
     0.3
    ],
    [
-    "am_michael",
-    "And Lee.",
+    "af_ov_young",
+    "At school, biology is my favourite subject.",
     0.3
    ],
    [
-    "am_michael",
-    "L. E. E.",
+    "af_ov_young",
+    "I love learning how the body works, and our biology teacher makes every lesson fun.",
     0.3
    ],
    [
-    "am_michael",
-    "I want to become a computer programmer.",
+    "af_ov_young",
+    "Last week we looked at a real fish heart. Some of my classmates felt sick, but I thought it was amazing!",
     0.3
    ],
    [
-    "am_michael",
-    "I enjoy creating small websites.",
+    "af_ov_young",
+    "But I need to improve my chemistry.",
     0.3
    ],
    [
-    "am_michael",
-    "Last year, I made one for my school club.",
+    "af_ov_young",
+    "I got a low mark in my last test.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Don't worry, Emma. Lots of students find chemistry difficult at first. I did too!",
     0.3
    ],
    [
-    "am_michael",
-    "I'd like to study computer science at university.",
+    "am_ov_energetic",
+    "That's a great dream. Where would you like to study?",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "My cousin studies at a big university in the capital, but it's very expensive, and it's far from my family.",
     0.3
    ],
    [
-    "am_michael",
-    "I'm interested in Northbridge University.",
+    "af_ov_young",
+    "So I'd like to go to Oakwood University.",
     0.3
    ],
    [
-    "am_michael",
-    "Northbridge.",
+    "af_ov_young",
+    "Oakwood.",
     0.3
    ],
    [
-    "am_michael",
-    "N. O. R. T. H. B. R. I. D. G. E.",
-    0.4
+    "af_ov_young",
+    "O. A. K. W. O. O. D.",
+    0.6
    ],
    [
-    "am_fenrir",
-    "Great.",
+    "af_ov_young",
+    "I visited it last spring with my mum.",
     0.3
    ],
    [
-    "am_fenrir",
-    "Sara?",
-    0.4
-   ],
-   [
-    "af_bella",
-    "I'm Sara Ahmed.",
+    "af_ov_young",
+    "The buildings are old and beautiful, and there's a big park in the middle where students have lunch on the grass.",
     0.3
    ],
    [
-    "af_bella",
-    "Sara.",
+    "af_ov_young",
+    "It has a very good medical school, and it's only an hour from my home, so I can visit my family at weekends.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "That's nice. I'm sure your family will be happy about that.",
     0.3
    ],
    [
-    "af_bella",
-    "S. A. R. A.",
+    "am_ov_energetic",
+    "And what about your friends and family? Do you know their dreams?",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Yes! My best friend's parents are both teachers, and they want her to be a teacher too.",
     0.3
    ],
    [
-    "af_bella",
-    "And Ahmed.",
+    "af_ov_young",
+    "But she wants to be a computer programmer.",
     0.3
    ],
    [
-    "af_bella",
-    "A. H. M. E. D.",
+    "af_ov_young",
+    "She's really good with computers.",
     0.3
    ],
    [
-    "af_bella",
-    "I want to travel abroad and learn about different cultures.",
+    "af_ov_young",
+    "She already makes small websites for people in our town, and she even made one for my mum's cake shop!",
     0.3
    ],
    [
-    "af_bella",
-    "My dream is to visit Barcelona in Spain.",
+    "af_ov_young",
+    "And my brother wants to be a football coach.",
     0.3
    ],
    [
-    "af_bella",
-    "I'd like to stay there for a month and learn Spanish.",
+    "af_ov_young",
+    "He plays every weekend, and he's quite good, but he says he prefers teaching to playing.",
     0.3
    ],
    [
-    "af_bella",
-    "Maybe I'll go in two years, after I finish school.",
+    "af_ov_young",
+    "He loves helping younger players.",
     0.3
    ],
    [
-    "af_bella",
-    "First, I need to save money and improve my English.",
-    0.4
+    "af_ov_young",
+    "On Saturdays he helps the coach with the little ones at his club.",
+    0.5
    ],
    [
-    "am_fenrir",
-    "Ben, what is your dream?",
-    0.4
-   ],
-   [
-    "am_puck",
-    "I'm Ben Carter.",
+    "am_ov_energetic",
+    "Those are great goals.",
     0.3
    ],
    [
-    "am_puck",
-    "Ben.",
+    "am_ov_energetic",
+    "Every dream is different, and that's what makes this class so interesting.",
     0.3
    ],
    [
-    "am_puck",
-    "B. E. N.",
+    "am_ov_energetic",
+    "But remember one thing. A dream is not enough. A dream needs a plan.",
     0.3
    ],
    [
-    "am_puck",
-    "And Carter.",
+    "am_ov_energetic",
+    "Without a plan, it's just a wish.",
     0.3
    ],
    [
-    "am_puck",
-    "C. A. R. T. E. R.",
+    "am_ov_energetic",
+    "You should choose small steps, one at a time.",
     0.3
    ],
    [
-    "am_puck",
-    "I want to become a football coach.",
+    "am_ov_energetic",
+    "For example, Emma, you said chemistry is difficult for you.",
     0.3
    ],
    [
-    "am_puck",
-    "I enjoy helping younger players.",
+    "am_ov_energetic",
+    "You don't need to study for hours every evening.",
     0.3
    ],
    [
-    "am_puck",
-    "I'd like to work at Eastside Academy.",
+    "am_ov_energetic",
+    "Just review science for thirty minutes a day.",
     0.3
    ],
    [
-    "am_puck",
-    "Eastside.",
+    "am_ov_energetic",
+    "Small steps, every day, are better than one big step once a month.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "That makes sense. Should we write our goals down?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Yes, good idea. People who write their goals down are much more likely to reach them.",
     0.3
    ],
    [
-    "am_puck",
-    "E. A. S. T. S. I. D. E.",
+    "am_ov_energetic",
+    "So, please write one small goal for this month.",
     0.3
    ],
    [
-    "am_puck",
-    "And Academy.",
+    "am_ov_energetic",
+    "It can be something easy, like reading one book in English, or learning new words every week.",
     0.3
    ],
    [
-    "am_puck",
-    "A. C. A. D. E. M. Y.",
-    0.4
-   ],
-   [
-    "am_fenrir",
-    "These are interesting goals.",
+    "am_ov_energetic",
+    "Small goals are easy to check, and they make you feel good when you finish them.",
     0.3
    ],
    [
-    "am_fenrir",
-    "Remember, a dream needs a plan.",
+    "am_ov_energetic",
+    "Then write one bigger goal for the next three years.",
     0.3
    ],
    [
-    "am_fenrir",
-    "You should choose small steps.",
+    "am_ov_energetic",
+    "Think big! It could be passing an important exam, or getting into a good university, like Emma.",
     0.3
    ],
    [
-    "am_fenrir",
-    "Mia could review science for thirty minutes a day.",
+    "am_ov_energetic",
+    "Bring your plans to our next lesson.",
     0.3
    ],
    [
-    "am_fenrir",
-    "Adam could practise programming three times a week.",
+    "am_ov_energetic",
+    "That's not next week, because there's a school trip.",
     0.3
    ],
    [
-    "am_fenrir",
-    "Sara could learn ten Spanish words every week.",
+    "am_ov_energetic",
+    "It's on the twenty-second of November.",
     0.3
    ],
    [
-    "am_fenrir",
-    "Ben could help the school football team.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Should we write down our goals?",
-    0.4
-   ],
-   [
-    "am_fenrir",
-    "Yes.",
+    "am_ov_energetic",
+    "And please remember, we won't be in this classroom.",
     0.3
    ],
    [
-    "am_fenrir",
-    "Write one small goal for this month and one bigger goal for the next three years.",
+    "am_ov_energetic",
+    "They're painting it, and the smell will be terrible!",
     0.3
    ],
    [
-    "am_fenrir",
-    "Bring your plans to our next lesson on the twenty-second of November.",
+    "am_ov_energetic",
+    "So we'll be in a different room on the first floor, next to the library. It's Room fourteen.",
     0.3
    ],
    [
-    "am_fenrir",
-    "We will meet in Room 14.",
+    "am_ov_energetic",
+    "Some of you have never been there, so look for the big blue door at the end of the corridor.",
     0.3
    ],
    [
-    "am_fenrir",
-    "That's room number fourteen.",
-    0.4
+    "am_ov_energetic",
+    "If you have any questions before then, or if you're ill and can't come, call the school office.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The number is oh one six one, four nine six, two oh three.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Oh one six one, four nine six, two oh three?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "That's right. Write it in your notebooks, please.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Great. I'm excited about my plan now.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "I'll talk to my parents about it tonight.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "My dad will be happy, because he always says I should plan more!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Excellent. OK, who's next?",
+    0.5
    ]
   ]
  },
  {
   "src": "audio/skills/listen-step-13.mp3",
   "title": "Different People, Different Jobs",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   },
+   "af_ov_adviser": "female, middle-aged, moderate pitch"
+  },
   "lines": [
    [
-    "af_bella",
-    "Welcome to Careers Today.",
+    "am_ov_energetic",
+    "Welcome to Careers Today, the programme that helps you choose your future!",
     0.3
    ],
    [
-    "af_bella",
-    "Our first guest is Daniel Foster, a hotel receptionist.",
+    "am_ov_energetic",
+    "Every week we look at different jobs, and this week we have a very special guest.",
     0.3
    ],
    [
-    "af_bella",
-    "Daniel.",
+    "am_ov_energetic",
+    "She's a careers adviser, and she has helped thousands of young people find the right job.",
     0.3
    ],
    [
-    "af_bella",
-    "D. A. N. I. E. L.",
+    "am_ov_energetic",
+    "Lucy Foster, welcome!",
     0.3
    ],
    [
-    "af_bella",
-    "And Foster.",
+    "am_ov_energetic",
+    "Lucy, can you spell your surname for us?",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Of course. Foster.",
     0.3
    ],
    [
-    "af_bella",
+    "af_ov_adviser",
     "F. O. S. T. E. R.",
-    0.4
+    0.6
    ],
    [
-    "am_michael",
-    "Hello!",
+    "am_ov_energetic",
+    "Thank you. So, today we're talking about three different jobs.",
     0.3
    ],
    [
-    "am_michael",
-    "I work at the Sunrise Hotel.",
+    "am_ov_energetic",
+    "Let's start with hotel receptionists.",
     0.3
    ],
    [
-    "am_michael",
+    "am_ov_energetic",
+    "Have you ever worked in a hotel yourself, Lucy?",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Ha, no, never! But last month I spent a day at a hotel to see what the job is like.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "It's in the city centre.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Lots of hotels in our city are near the airport, but this one is near the railway station, so lots of guests arrive with big suitcases.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Some of them are tired after a long journey, and some are a bit lost.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "The receptionists are the first people the guests meet.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "They welcome guests and help them check in.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "They also answer the phone, book taxis, and tell guests about good restaurants nearby.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "It's a busy job!",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "The receptionists work in shifts.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "The night shift is very quiet, but the morning shift is the busiest.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "It starts at half past seven, when most guests want breakfast and need help with their plans for the day.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Oh, and I should tell you the hotel's name.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "It's a lovely place, with flowers in every window.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "It's called the Sunrise Hotel.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
     "Sunrise.",
     0.3
    ],
    [
-    "am_michael",
+    "af_ov_adviser",
     "S. U. N. R. I. S. E.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "What a nice name! What skills do receptionists need?",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "They need to be polite, patient and organised.",
     0.3
    ],
    [
-    "am_michael",
-    "It's in the city centre, near the railway station.",
+    "af_ov_adviser",
+    "Some guests can be difficult, especially when they're tired, so you have to stay friendly.",
     0.3
    ],
    [
-    "am_michael",
-    "I welcome guests, help them check in, answer questions and sometimes arrange transport.",
+    "af_ov_adviser",
+    "Speaking English is useful too, because the guests come from different countries.",
     0.3
    ],
    [
-    "am_michael",
-    "My morning shift starts at seven thirty and finishes at three thirty.",
+    "af_ov_adviser",
+    "On the day I was there, I heard Spanish, Chinese and Arabic in just one hour!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Amazing. Our second job is photographer.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Yes, this is a job lots of young people dream about.",
     0.3
    ],
    [
-    "am_michael",
-    "Some weeks I work from three until eleven in the evening.",
-    0.4
-   ],
-   [
-    "af_bella",
-    "What skills do you need?",
-    0.4
-   ],
-   [
-    "am_michael",
-    "You need to be polite, patient and organised.",
+    "af_ov_adviser",
+    "I spoke to a photographer who has her own small business.",
     0.3
    ],
    [
-    "am_michael",
-    "Speaking English is useful because we meet visitors from different countries.",
-    0.4
-   ],
-   [
-    "af_bella",
-    "Our second guest is photographer Emma Brooks.",
+    "af_ov_adviser",
+    "People think photographers work for newspapers, but she doesn't.",
     0.3
    ],
    [
-    "af_bella",
-    "Emma.",
+    "af_ov_adviser",
+    "She takes pictures for families, shops and local events, like weddings and school concerts.",
     0.3
    ],
    [
-    "af_bella",
-    "E. M. M. A.",
+    "af_ov_adviser",
+    "Last week she spent a whole day at a wedding, and her feet hurt for days afterwards!",
     0.3
    ],
    [
-    "af_bella",
-    "And Brooks.",
+    "af_ov_adviser",
+    "She has a small studio in her house, and she sometimes works there, but she often travels to different places, like parks, beaches and old buildings.",
     0.3
    ],
    [
-    "af_bella",
-    "B. R. O. O. K. S.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "I work for a company called Bright Frame.",
+    "af_ov_adviser",
+    "She uses a camera, lights and a computer.",
     0.3
    ],
    [
-    "af_heart",
-    "Bright.",
+    "af_ov_adviser",
+    "Editing the photos on the computer takes a long time, often longer than taking them!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "I didn't know that. And finally, bus drivers.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Yes. I met a bus driver who starts work very early, before the sun comes up.",
     0.3
    ],
    [
-    "af_heart",
-    "B. R. I. G. H. T.",
+    "af_ov_adviser",
+    "He has driven the same bus for many years, and lots of passengers know him by name.",
     0.3
    ],
    [
-    "af_heart",
-    "And Frame.",
+    "af_ov_adviser",
+    "His route goes through the city centre and past the hospital, so many of his passengers are nurses and doctors going to work.",
     0.3
    ],
    [
-    "af_heart",
-    "F. R. A. M. E.",
+    "af_ov_adviser",
+    "Some of them fall asleep on the bus, and he has to wake them up at their stop!",
     0.3
    ],
    [
-    "af_heart",
-    "We take photographs for families, shops and local events.",
+    "af_ov_adviser",
+    "It's a long route. One journey takes about fifty minutes, from one end of the city to the other.",
     0.3
    ],
    [
-    "af_heart",
-    "Sometimes we work in our studio, but often we travel to different places.",
+    "af_ov_adviser",
+    "In the evening, when the roads are busy, it can take even longer.",
     0.3
    ],
    [
-    "af_heart",
-    "I use a camera, lenses, lights and a computer.",
+    "af_ov_adviser",
+    "He listens to the radio and sings quietly when the traffic stops.",
     0.3
    ],
    [
-    "af_heart",
-    "I usually work around thirty-five hours a week, but busy weeks can be longer.",
-    0.4
-   ],
-   [
-    "af_bella",
-    "Thank you.",
+    "af_ov_adviser",
+    "But he never gets angry.",
     0.3
    ],
    [
-    "af_bella",
-    "Our final guest is Mark Wilson, a bus driver.",
+    "af_ov_adviser",
+    "He likes meeting people and helping them get to work and school.",
     0.3
    ],
    [
-    "af_bella",
-    "Mark.",
+    "af_ov_adviser",
+    "Every morning, an old lady gives him a biscuit when she gets on!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "He sounds like a happy man! What do drivers need?",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Well, driving a bus is very different from driving a car.",
     0.3
    ],
    [
-    "af_bella",
-    "M. A. R. K.",
+    "af_ov_adviser",
+    "It's big and heavy, and you're responsible for lots of people.",
     0.3
    ],
    [
-    "af_bella",
-    "And Wilson.",
+    "af_ov_adviser",
+    "So they need to be calm and careful, even when other drivers aren't.",
     0.3
    ],
    [
-    "af_bella",
-    "W. I. L. S. O. N.",
-    0.4
-   ],
-   [
-    "am_puck",
-    "I drive a city bus on Route 24.",
+    "af_ov_adviser",
+    "They also need to be good with people, of course.",
     0.3
    ],
    [
-    "am_puck",
-    "I start at the bus station at six in the morning.",
+    "af_ov_adviser",
+    "And there's one thing they can't work without.",
     0.3
    ],
    [
-    "am_puck",
-    "The route goes through the city centre, past the hospital, and finishes near the university.",
+    "af_ov_adviser",
+    "A normal car licence isn't enough.",
     0.3
    ],
    [
-    "am_puck",
-    "One journey takes about fifty minutes, depending on traffic.",
+    "af_ov_adviser",
+    "They need the right driving licence.",
     0.3
    ],
    [
-    "am_puck",
-    "I have a twenty-minute break at around ten fifteen.",
+    "af_ov_adviser",
+    "Getting one takes a few months of lessons and tests.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Thank you. That's really interesting.",
     0.3
    ],
    [
-    "am_puck",
-    "My working day usually finishes at two thirty.",
-    0.4
+    "am_ov_energetic",
+    "If our listeners want advice about jobs, how can they contact you?",
+    0.5
    ],
    [
-    "af_bella",
-    "What do you like about your job?",
-    0.4
-   ],
-   [
-    "am_puck",
-    "I like meeting people and helping them get to work, school and appointments.",
+    "af_ov_adviser",
+    "They can visit our website, or they can call our careers office.",
     0.3
    ],
    [
-    "am_puck",
-    "Drivers need to be responsible, calm and careful.",
+    "af_ov_adviser",
+    "We love talking to young people, and the advice is free.",
     0.3
    ],
    [
-    "am_puck",
-    "They also need the correct driving licence and good knowledge of the city.",
-    0.4
+    "af_ov_adviser",
+    "The number is oh two oh three, seven six eight, one four five.",
+    0.5
    ],
    [
-    "af_bella",
-    "Thank you to all three guests.",
+    "am_ov_energetic",
+    "Oh two oh three, seven six eight, one four five?",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Yes, that's right. Just ask for me, or for any of my colleagues.",
     0.3
    ],
    [
-    "af_bella",
-    "Every job has different responsibilities, but communication and a positive attitude are useful in many workplaces.",
-    0.4
+    "af_ov_adviser",
+    "We're closed at weekends, but the office is open every weekday, from morning until late afternoon.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Thank you, Lucy. Before you go, what's your best advice for young people who don't know what job they want?",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Don't worry if you don't know yet. I didn't know until I was much older!",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "My advice is simple. Try different things.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Get a weekend job, help a neighbour, join a club.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Every job teaches you something.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "When I was at school, I worked in a bakery on Saturdays, and I learned how to talk to customers.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "That helped me in every job after that.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "And remember, good communication and a positive attitude are useful in every job.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Great advice. Thank you, Lucy Foster, and thank you for listening to Careers Today!",
+    0.5
    ]
   ]
  },
  {
   "src": "audio/skills/listen-step-14.mp3",
   "title": "Shopping for Clothes",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   },
+   "af_ov_young": {
+    "instruct": "female, young adult, moderate pitch",
+    "seed": 1
+   }
+  },
   "lines": [
    [
-    "af_bella",
-    "Hello!",
+    "am_ov_energetic",
+    "Hello, and welcome to Style Street!",
     0.3
    ],
    [
-    "af_bella",
-    "Welcome to Style Street.",
+    "am_ov_energetic",
+    "Are you looking for anything special today, or just looking around?",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Yes, please, I need some help.",
     0.3
    ],
    [
-    "af_bella",
-    "Can I help you?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "I'm looking for a jacket for my brother.",
+    "af_ov_young",
+    "I'm looking for a present for my brother.",
     0.3
    ],
    [
-    "af_heart",
-    "His name is Yusuf.",
+    "af_ov_young",
+    "I'll need a gift label with his name later, so let me tell you now.",
     0.3
    ],
    [
-    "af_heart",
-    "Yusuf.",
+    "af_ov_young",
+    "It's Oliver.",
     0.3
    ],
    [
-    "af_heart",
-    "Y. U. S. U. F.",
+    "af_ov_young",
+    "O. L. I. V. E. R.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Thank you. Is it for a special occasion?",
     0.3
    ],
    [
-    "af_heart",
-    "His birthday is next week.",
-    0.4
-   ],
-   [
-    "af_bella",
-    "Does he prefer casual or formal clothes?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Casual clothes.",
+    "am_ov_energetic",
+    "Lots of people are buying Christmas presents already.",
     0.3
    ],
    [
-    "af_heart",
-    "He likes simple jackets without bright colours.",
-    0.4
+    "am_ov_energetic",
+    "We put up our Christmas lights last week, and the shop's been busy ever since!",
+    0.5
    ],
    [
-    "af_bella",
-    "This dark blue jacket costs forty-eight dollars.",
+    "af_ov_young",
+    "No, it's not for Christmas.",
     0.3
    ],
    [
-    "af_bella",
-    "We have medium and large sizes.",
-    0.4
+    "af_ov_young",
+    "It's his birthday next week, and I always buy him something nice.",
+    0.5
    ],
    [
-    "af_heart",
-    "Could I see the medium one?",
-    0.4
-   ],
-   [
-    "af_bella",
-    "Certainly.",
+    "am_ov_energetic",
+    "Lovely! Does he like casual or formal clothes?",
     0.3
    ],
    [
-    "af_bella",
-    "The changing rooms are at the back, next to the mirrors.",
-    0.4
+    "am_ov_energetic",
+    "We have some very smart shirts over there, if he works in an office.",
+    0.5
    ],
    [
-    "af_heart",
-    "It looks good, but it's a little expensive.",
+    "af_ov_young",
+    "No, he hates shirts and ties!",
     0.3
    ],
    [
-    "af_heart",
+    "af_ov_young",
+    "Casual. He likes simple jackets.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "He's a student, and he cycles everywhere, even in the rain.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Last year I bought him a bright yellow jumper, and he never wore it once!",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Oh, and nothing too colourful.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "He likes jackets without bright colours.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "He says they make him look like a traffic light!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "I understand.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "This dark blue jacket is very popular with students.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's warm, it's waterproof, and it's from a really good company called Kestrel.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Kestrel.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "K. E. S. T. R. E. L.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "It's named after a small bird.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "It's nice, but it's a bit expensive.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "I'm a student too, so I can't spend too much.",
+    0.3
+   ],
+   [
+    "af_ov_young",
     "Do you have something cheaper?",
-    0.4
+    0.5
    ],
    [
-    "af_bella",
-    "This grey jacket costs thirty-five dollars.",
+    "am_ov_energetic",
+    "Of course. Let me see.",
     0.3
    ],
    [
-    "af_bella",
-    "It's lighter and good for spring or autumn.",
+    "am_ov_energetic",
+    "This grey jacket is on sale this week.",
     0.3
    ],
    [
-    "af_bella",
-    "It has two outside pockets and one small pocket inside.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "That's useful.",
+    "am_ov_energetic",
+    "It was fifty dollars, and now it costs thirty-five dollars.",
     0.3
    ],
    [
-    "af_heart",
-    "My brother carries his phone and keys.",
+    "am_ov_energetic",
+    "It's lighter than the blue one, so it's good for cycling.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
+    "The material is very soft, too. Feel it!",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Oh, yes, it's really soft.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "And it has lots of really useful pockets: two outside, and one small pocket inside.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The inside one is quite deep, so nothing can fall out, even when you're on a bike.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "That's perfect, because he loses things all the time.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Last month he lost his keys twice!",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Honestly, he always carries his phone and keys, and they're always falling out of his pockets.",
+    0.3
+   ],
+   [
+    "af_ov_young",
     "I'll take it.",
     0.3
    ],
    [
-    "af_heart",
-    "Can I also buy a T-shirt?",
-    0.4
+    "af_ov_young",
+    "Can I also buy a T-shirt? He can never have too many T-shirts.",
+    0.5
    ],
    [
-    "af_bella",
-    "Of course.",
+    "am_ov_energetic",
+    "Sure. They're just here, next to the jackets.",
     0.3
    ],
    [
-    "af_bella",
-    "We have white and green T-shirts.",
+    "am_ov_energetic",
+    "We have white ones and green ones.",
     0.3
    ],
    [
-    "af_bella",
-    "The white one costs twelve dollars, and the green one costs fourteen dollars.",
-    0.4
+    "am_ov_energetic",
+    "The white ones are more popular, but they get dirty very quickly.",
+    0.5
    ],
    [
-    "af_heart",
+    "af_ov_young",
+    "Hmm. He cycles in the rain, remember!",
+    0.3
+   ],
+   [
+    "af_ov_young",
     "I'll take the green one.",
     0.3
    ],
    [
-    "af_heart",
-    "What is your return policy?",
-    0.4
+    "af_ov_young",
+    "What if he doesn't like the clothes? He's quite fussy.",
+    0.3
    ],
    [
-    "af_bella",
-    "You can return or exchange clothes within thirty days if you have the receipt and the items are unworn.",
-    0.4
+    "af_ov_young",
+    "Last year he changed almost all of his birthday presents.",
+    0.5
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
+    "Ha! Don't worry, we're very flexible.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You can return or exchange them within thirty days.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "He can choose a different size or a different colour, or get his money back, if he prefers.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "That's no problem at all.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Oh, that's good to know.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "There's just one thing to remember.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You need the receipt.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Without it, we can't do anything, I'm afraid.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "So keep it somewhere safe!",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "OK. I'll give it to my mum, because she never loses anything, unlike my brother!",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Now, I haven't got much cash with me.",
+    0.3
+   ],
+   [
+    "af_ov_young",
     "Can I pay by card?",
-    0.4
+    0.5
    ],
    [
-    "af_bella",
-    "Yes.",
+    "am_ov_energetic",
+    "Yes, of course. Just put your card here.",
     0.3
    ],
    [
-    "af_bella",
-    "Your total is forty-nine dollars.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Here is my card.",
+    "am_ov_energetic",
+    "The machine is a bit slow today, so it might take a minute.",
     0.3
    ],
    [
-    "af_heart",
-    "Could you put everything in a gift bag?",
-    0.4
-   ],
-   [
-    "af_bella",
-    "Certainly.",
+    "am_ov_energetic",
+    "OK, here's your receipt. Remember, keep it safe!",
     0.3
    ],
    [
-    "af_bella",
-    "Would you like a name on the gift label?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Yes, please write Yusuf.",
+    "am_ov_energetic",
+    "And because it's a present, we can make it look nice.",
     0.3
    ],
    [
-    "af_heart",
-    "Y. U. S. U. F.",
-    0.3
+    "am_ov_energetic",
+    "Would you like a gift bag?",
+    0.5
    ],
    [
-    "af_heart",
-    "And write, \"Happy birthday!",
-    0.3
+    "af_ov_young",
+    "Yes, please. A gift bag would be great.",
+    0.5
    ],
    [
-    "af_heart",
-    "From your sister.\".",
-    0.4
-   ],
-   [
-    "af_bella",
-    "No problem.",
-    0.3
-   ],
-   [
-    "af_bella",
+    "am_ov_energetic",
     "Here you are.",
     0.3
    ],
    [
-    "af_bella",
-    "Have a lovely day!",
-    0.4
+    "am_ov_energetic",
+    "And if you ever want to check if we have your size, you don't need to come in.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You can just call us.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Our number is oh one nine eight, two five four, seven three six.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Oh one nine eight, two five four, seven three six?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "That's right. Someone is always happy to help, even at the weekend.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "We're open every day until eight o'clock.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Great. One last thing. Can you write on the gift label for me?",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "My handwriting is terrible. My teachers always said so!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Of course. What would you like it to say?",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Please write \"Happy birthday! From your sister\" on the label.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Oh, and where's the exit? This shop is so big, I'm completely lost!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Ha, everybody says that!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Don't go back the way you came, because that's the staff area.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Just go past the mirrors and turn left. You'll see the big glass doors.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Have a lovely day, and I hope your brother likes his present!",
+    0.5
    ]
   ]
  },
  {
   "src": "audio/skills/listen-step-15.mp3",
   "title": "A Journey by Train",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   },
+   "af_ov_young": {
+    "instruct": "female, young adult, moderate pitch",
+    "seed": 1
+   }
+  },
   "lines": [
    [
-    "af_bella",
-    "Good morning, passengers.",
+    "af_ov_young",
+    "Good morning, and welcome to Central Station! How can I help?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Hi. I booked a seat on the train to Lakeside, but I can't find my ticket on my phone.",
     0.3
    ],
    [
-    "af_bella",
-    "The train to Lakeside will depart from Platform 4 at nine twenty.",
+    "am_ov_energetic",
+    "I've looked everywhere: in my emails, in my photos, nothing!",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Don't worry, that happens a lot, especially early in the morning!",
     0.3
    ],
    [
-    "af_bella",
-    "The train to Hilltown leaves from Platform 2 at nine forty-five.",
+    "af_ov_young",
+    "What's your surname?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Miller.",
     0.3
    ],
    [
-    "af_bella",
-    "The train to Westport is delayed and is now expected to leave at ten thirty.",
-    0.4
-   ],
-   [
-    "af_bella",
-    "The journey to Lakeside takes approximately two hours and ten minutes.",
-    0.3
-   ],
-   [
-    "af_bella",
-    "There is a café on the train where passengers can buy sandwiches, drinks and snacks.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Excuse me.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Could you tell me where Platform 4 is?",
-    0.4
-   ],
-   [
-    "am_michael",
-    "Walk straight ahead, then turn left after the information desk.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Thank you.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "I'm travelling to Lakeside to visit my friend, Anna Miller.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "Anna.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "A. N. N. A.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Miller.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "M. I. L. L. E. R.",
+    0.6
+   ],
+   [
+    "af_ov_young",
+    "Let me look. Miller, Miller.",
     0.3
    ],
    [
-    "af_heart",
-    "She lives near the lake.",
-    0.4
+    "af_ov_young",
+    "There are three Millers on this list today! Is your first name Jack?",
+    0.5
    ],
    [
-    "am_michael",
-    "Do you know her address?",
-    0.4
+    "am_ov_energetic",
+    "Yes, that's me. I'm so sorry, I'm not usually this disorganised!",
+    0.5
    ],
    [
-    "af_heart",
-    "Yes, it's 18 Garden Street.",
+    "af_ov_young",
+    "Don't worry! Here it is.",
     0.3
    ],
    [
-    "af_heart",
-    "Garden.",
+    "af_ov_young",
+    "You bought it online yesterday, very late at night.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Yes, I couldn't sleep, so I was planning my trip!",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Well, it's a beautiful journey.",
     0.3
    ],
    [
-    "af_heart",
-    "G. A. R. D. E. N.",
+    "af_ov_young",
+    "I'll send the ticket to your phone again.",
     0.3
    ],
    [
-    "af_heart",
-    "And Street.",
+    "af_ov_young",
+    "Let me see. Your seat is in coach C, by the window.",
     0.3
    ],
    [
-    "af_heart",
-    "S. T. R. E. E. T.",
-    0.4
+    "af_ov_young",
+    "That's the quiet coach, so no phone calls, please!",
+    0.5
    ],
    [
-    "am_michael",
-    "Have you bought your ticket?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Yes, online yesterday.",
+    "am_ov_energetic",
+    "Ha, OK. Which platform does the train leave from?",
     0.3
    ],
    [
-    "af_heart",
-    "It cost twenty-six dollars and fifty cents.",
+    "am_ov_energetic",
+    "It's my first time at this station, and it's huge.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "It's not on the board yet, but it always leaves from the same place.",
     0.3
    ],
    [
-    "af_heart",
-    "It's a return ticket.",
+    "af_ov_young",
+    "Platform four.",
     0.3
    ],
    [
-    "af_heart",
+    "af_ov_young",
+    "Go down the stairs, through the tunnel, and up the other side.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "There's a lift if your bag is heavy. Is it heavy?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "No, it's just a small bag. I'm only going for the weekend.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "The train leaves at nine twenty, so you have plenty of time.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "The journey takes about two hours, and the views are lovely after the first half hour, when you leave the city.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Great, thanks. I'm visiting a friend in Lakeside.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "We were at school together, but she moved there last year for work.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I haven't seen her for ages!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Is there a bus from the station to her street?",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's called Rowan Street.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Rowan.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "R. O. W. A. N.",
+    0.6
+   ],
+   [
+    "af_ov_young",
+    "Yes. I know Lakeside well, because my grandparents live there.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "It's a lovely little town, with a lake in the middle, of course!",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "There's a bus that goes along Rowan Street, and it's very frequent.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "You don't need to walk far.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "The bus stops right outside the station café.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "You can't miss it. It has a big red sign, and it smells of fresh coffee.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Perfect. Is there Wi-Fi on the train?",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I need to send some emails for work.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Yes, there is, and it's free.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "But to be honest, the signal can be weak, especially when the train goes through the hills.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "So send your emails before you leave!",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "There's also a café on the train, next to the quiet coach.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "It doesn't have hot meals, but you can buy sandwiches and drinks.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "The coffee there is much better than ours, I'm sorry to say!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Great. And are there power sockets?",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "My laptop battery is nearly dead.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Hmm. Not everywhere, I'm afraid. It's quite an old train.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "They're only under some seats.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Your seat is by the window, so look down near your feet.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "If there isn't one, ask the guard. He's very helpful.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "OK, thanks. I'm really looking forward to this weekend.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "My friend wants to show me a nature park near her house.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "She says there are lots of birds there, and you can walk for hours without seeing anyone.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I can't wait!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I live in the city, so I don't see much nature.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "And she has a dog that loves walking by the water.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "He's enormous, but he's very gentle.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Last time I visited, he jumped into the lake and then shook all the water over me!",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Ha! Bring a towel, then. When are you coming back?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
     "I'm coming back on Sunday evening.",
     0.3
    ],
    [
-    "af_heart",
-    "My return train leaves Lakeside at six fifteen.",
-    0.4
+    "am_ov_energetic",
+    "I have to work on Monday morning, unfortunately.",
+    0.5
    ],
    [
-    "am_michael",
-    "What will you do there?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Anna wants to show me the town centre and a nature park.",
+    "af_ov_young",
+    "That sounds like a lovely weekend.",
     0.3
    ],
    [
-    "af_heart",
-    "She also has a dog called Charlie.",
+    "af_ov_young",
+    "If you need any help at Lakeside, for example if your train is late or you lose something, call the station office.",
     0.3
    ],
    [
-    "af_heart",
-    "Charlie.",
+    "af_ov_young",
+    "The number is oh one four four, nine two six, three five eight.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Oh one four four, nine two six, three five eight?",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "That's right.",
     0.3
    ],
    [
-    "af_heart",
-    "C. H. A. R. L. I. E.",
+    "af_ov_young",
+    "And if you're hungry or thirsty before the train leaves, you don't have to wait for the café on the train.",
     0.3
    ],
    [
-    "af_heart",
-    "He loves walking near the water.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "Does the train have Wi-Fi?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "I think so, but I heard the signal can be weak.",
+    "af_ov_young",
+    "There's also a small shop next to Platform three.",
     0.3
    ],
    [
-    "af_heart",
-    "Are there power sockets?",
-    0.4
-   ],
-   [
-    "am_michael",
-    "There are sockets under some seats.",
+    "af_ov_young",
+    "It sells snacks and newspapers, and the man there knows everything about trains.",
     0.3
    ],
    [
-    "am_michael",
-    "There's also a small shop next to Platform 3.",
+    "af_ov_young",
+    "Just one more thing before you go.",
     0.3
    ],
    [
-    "am_michael",
-    "It opens at seven in the morning and closes at eight in the evening.",
-    0.4
-   ],
-   [
-    "af_bella",
-    "The nine twenty train to Lakeside is now ready for boarding at Platform 4.",
+    "af_ov_young",
+    "When the train arrives, please don't use the back doors, because that part of the train doesn't go to Lakeside.",
     0.3
    ],
    [
-    "af_bella",
-    "Please board through the front and middle doors.",
+    "af_ov_young",
+    "Board the train through the front and middle doors.",
     0.3
    ],
    [
-    "af_bella",
-    "Do not leave bags unattended.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "That's my train.",
+    "af_ov_young",
+    "The train is often busy at the weekend, so get on quickly and find your seat.",
     0.3
    ],
    [
-    "af_heart",
-    "Thanks for your help!",
-    0.4
+    "af_ov_young",
+    "There are big shelves at the end of each coach for suitcases.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "But wherever you put your things, please don't leave your bags alone, not even for a minute.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "The station staff sometimes have to take them away, and that can make the train late.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "I won't, I promise. Thanks for your help!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I'm going to buy a bottle of water first, and maybe a newspaper for the journey.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Good idea. Have a lovely trip, Mr Miller!",
+    0.5
    ]
   ]
  },
  {
   "src": "audio/skills/listen-step-16.mp3",
   "title": "An Interesting Animal Story",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   },
+   "af_ov_adviser": "female, middle-aged, moderate pitch"
+  },
   "lines": [
    [
-    "af_heart",
-    "Welcome to Animal Friends.",
+    "af_ov_adviser",
+    "Welcome to Animal Friends, the programme for everyone who loves animals!",
     0.3
    ],
    [
-    "af_heart",
-    "Today our guest is a young volunteer called Noah Reed.",
+    "af_ov_adviser",
+    "Today our guest is a young volunteer who spends every weekend with dogs and cats.",
     0.3
    ],
    [
-    "af_heart",
-    "Noah.",
+    "af_ov_adviser",
+    "Noah Reed, welcome to the programme!",
     0.3
    ],
    [
-    "af_heart",
-    "N. O. A. H.",
+    "af_ov_adviser",
+    "Noah, how do you spell your surname?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Reed.",
     0.3
    ],
    [
-    "af_heart",
-    "And Reed.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "R. E. E. D.",
-    0.4
+    0.6
    ],
    [
-    "af_heart",
-    "How did you become interested in helping animals?",
-    0.4
+    "am_ov_energetic",
+    "Like the plants that grow by the river.",
+    0.5
    ],
    [
-    "am_puck",
-    "My family once found a small dog near our home.",
+    "af_ov_adviser",
+    "Lovely. So, Noah, how did you become interested in helping animals?",
     0.3
    ],
    [
-    "am_puck",
-    "He looked tired and didn't have a collar.",
+    "af_ov_adviser",
+    "Was it your parents?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "No, actually, my parents aren't really animal people!",
     0.3
    ],
    [
-    "am_puck",
-    "We gave him water and contacted an animal centre.",
+    "am_ov_energetic",
+    "It started when I was ten.",
     0.3
    ],
    [
-    "am_puck",
-    "The centre helped us find his owner.",
+    "am_ov_energetic",
+    "One rainy evening, my family found a small animal near our home.",
     0.3
    ],
    [
-    "am_puck",
-    "After that, I became interested in animal care.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Do you have a pet?",
-    0.4
-   ],
-   [
-    "am_puck",
-    "Yes, I have a cat called Bella.",
+    "am_ov_energetic",
+    "At first we thought it was a fox, because it was so dirty.",
     0.3
    ],
    [
-    "am_puck",
-    "Bella.",
+    "am_ov_energetic",
+    "But it was a small dog.",
     0.3
    ],
    [
-    "am_puck",
-    "B. E. L. L. A.",
+    "am_ov_energetic",
+    "He looked tired and hungry, and he was shaking with cold.",
     0.3
    ],
    [
-    "am_puck",
-    "She's three years old and has white and grey fur.",
+    "am_ov_energetic",
+    "My little sister wanted to keep him straight away, of course! My dad wasn't so sure.",
     0.3
    ],
    [
-    "am_puck",
-    "She's friendly, but she doesn't like loud noises.",
+    "am_ov_energetic",
+    "We looked for a name, but he didn't have a collar, so we didn't know where he lived.",
     0.3
    ],
    [
-    "am_puck",
-    "I feed her twice a day and change her water every day.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Where do you volunteer?",
-    0.4
-   ],
-   [
-    "am_puck",
-    "At Happy Tails Centre.",
+    "am_ov_energetic",
+    "It was getting dark, and it was raining harder and harder.",
     0.3
    ],
    [
-    "am_puck",
-    "Happy.",
+    "am_ov_energetic",
+    "We couldn't leave him outside.",
     0.3
    ],
    [
-    "am_puck",
-    "H. A. P. P. Y.",
+    "am_ov_energetic",
+    "So we took him inside, dried him with a towel and gave him some water.",
     0.3
    ],
    [
-    "am_puck",
-    "And Tails.",
+    "am_ov_energetic",
+    "He drank it all in about ten seconds!",
     0.3
    ],
    [
-    "am_puck",
-    "T. A. I. L. S.",
+    "am_ov_energetic",
+    "The next morning, we called an animal centre, and they found his owner.",
     0.3
    ],
    [
-    "am_puck",
-    "It's on Oak Street.",
+    "am_ov_energetic",
+    "She was an old lady from the next street, and she cried when she saw him.",
     0.3
    ],
    [
-    "am_puck",
-    "Oak.",
+    "am_ov_energetic",
+    "That's when I knew I wanted to help animals.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "What a lovely story. Do you have a pet now?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Yes, a cat. She's three years old. She was a present for my birthday.",
     0.3
    ],
    [
-    "am_puck",
-    "O. A. K.",
+    "am_ov_energetic",
+    "She isn't black and white, like most cats in our street.",
     0.3
    ],
    [
-    "am_puck",
-    "The centre looks after dogs and cats that need temporary homes.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "What do you do there?",
-    0.4
-   ],
-   [
-    "am_puck",
-    "I clean the animals' areas, prepare food and take dogs for walks.",
+    "am_ov_energetic",
+    "She has white and grey fur, and big green eyes.",
     0.3
    ],
    [
-    "am_puck",
-    "I also speak to visitors about responsible pet ownership.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Is there an animal you remember especially well?",
-    0.4
-   ],
-   [
-    "am_puck",
-    "Yes, a dog called Rocky.",
+    "am_ov_energetic",
+    "She's very friendly, and she sleeps on my bed every night.",
     0.3
    ],
    [
-    "am_puck",
+    "am_ov_energetic",
+    "She's quite lazy, to be honest. She sleeps most of the day, and she only wakes up when she hears the fridge door!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "But she doesn't like loud noises.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "When there are fireworks, she hides under the sofa all evening, and nothing can make her come out.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Poor thing! So, where do you volunteer?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "At an animal centre on the edge of town.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's a big old building with a garden, and it's always noisy!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It looks after dogs and cats that need new homes.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Some of them were lost, and some of them had owners who couldn't look after them any more.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I go there every Saturday and Sunday.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I clean the animals' areas and prepare their food.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "But my favourite job is the last one of the day.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I take the dogs for walks in the woods behind the centre.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Some of them pull very hard, so my arms are always tired!",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Ha! Is there an animal you remember well?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Oh, yes. I'll never forget him.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "He was a big brown dog with one ear up and one ear down.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "His name was Rocky.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
     "Rocky.",
     0.3
    ],
    [
-    "am_puck",
+    "am_ov_energetic",
     "R. O. C. K. Y.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "When he arrived, he was very nervous.",
     0.3
    ],
    [
-    "am_puck",
-    "He arrived in March.",
+    "am_ov_energetic",
+    "He didn't eat, he didn't play, and he was afraid of people.",
     0.3
    ],
    [
-    "am_puck",
-    "At first, he was nervous and stayed in a corner.",
+    "am_ov_energetic",
+    "We think someone wasn't very kind to him before.",
     0.3
    ],
    [
-    "am_puck",
-    "Volunteers gave him time and treated him gently.",
+    "am_ov_energetic",
+    "For the first few days, he just stayed in a corner of his room, with his back to the wall.",
     0.3
    ],
    [
-    "am_puck",
-    "After a few weeks, he became more confident and started playing with other dogs.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Did Rocky find a home?",
-    0.4
-   ],
-   [
-    "am_puck",
-    "Yes.",
+    "am_ov_energetic",
+    "We didn't push him. We gave him time and treated him gently.",
     0.3
    ],
    [
-    "am_puck",
-    "A family visited in April.",
+    "am_ov_energetic",
+    "I sat near him every weekend and read my school books out loud, so he could get used to my voice.",
     0.3
    ],
    [
-    "am_puck",
-    "They had two children and a large garden.",
+    "am_ov_energetic",
+    "And slowly, slowly, things changed.",
     0.3
    ],
    [
-    "am_puck",
-    "They adopted Rocky and sent us a photograph a month later.",
+    "am_ov_energetic",
+    "After a few weeks, he started playing with the other dogs, and he even brought me his ball!",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "That's wonderful. Did Rocky find a home in the end?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Yes! Lots of people came to see him in the winter, but nobody chose him.",
     0.3
    ],
    [
-    "am_puck",
-    "He looked very happy.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "How many animals does the centre usually have?",
-    0.4
-   ],
-   [
-    "am_puck",
-    "Around thirty, but the number changes.",
+    "am_ov_energetic",
+    "Then, in April, a family with two children and a large garden adopted him.",
     0.3
    ],
    [
-    "am_puck",
-    "Last week, there were twenty-four dogs and eleven cats.",
+    "am_ov_energetic",
+    "The children had never had a dog before, so they came to the centre every day for a week to get to know him.",
     0.3
    ],
    [
-    "am_puck",
-    "The centre needs volunteers, food, blankets and cleaning supplies.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "How can people help?",
-    0.4
-   ],
-   [
-    "am_puck",
-    "They can volunteer or donate useful items.",
+    "am_ov_energetic",
+    "I was happy, but I also cried a bit when he left!",
     0.3
    ],
    [
-    "am_puck",
-    "They should contact the centre before visiting.",
+    "am_ov_energetic",
+    "A month later, they sent us a photo.",
     0.3
    ],
    [
-    "am_puck",
-    "The phone number is zero two zero, seven seven four, five one nine.",
+    "am_ov_energetic",
+    "Rocky was lying on the grass in the sun, with the two children next to him.",
     0.3
    ],
    [
-    "am_puck",
-    "That's zero two zero, seven seven four, five one nine.",
-    0.4
+    "am_ov_energetic",
+    "He looked so happy. It's on the wall in our office now.",
+    0.5
    ],
    [
-    "af_heart",
-    "Thank you, Noah.",
+    "af_ov_adviser",
+    "That's beautiful. So, how can people help?",
     0.3
    ],
    [
-    "af_heart",
-    "Small acts of kindness can make a difference.",
-    0.4
+    "af_ov_adviser",
+    "Do they need to adopt an animal?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "No, not at all. They can volunteer, like me, or they can give things.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "We always need food and blankets, especially in winter.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Old towels are great too.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The dogs love sleeping on them, and they often steal them from each other!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "But please call before you visit, because sometimes we're very busy with the animals.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The number is oh two oh seven, seven four five, one nine three.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Oh two oh seven, seven four five, one nine three?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "That's right.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Lots of children listen to our programme. Can children volunteer too?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Yes, they can. Children often ask me about this at school.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "They can't come alone, but they can come from the age of twelve, with a parent.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Lots of families come together on Sunday mornings, and the children love brushing the cats.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Thank you so much, Noah. It was great to talk to you.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Thank you for having me.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "And remember, you don't need to do something big. Even giving one old blanket helps.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Small acts of kindness can make a big difference.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "What a lovely message.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "If you'd like to help Noah's animal centre, you can find all the details on our website.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "And that's all for today.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Next week on Animal Friends, we're talking about horses, and we'll visit a farm where horses help people feel better.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "See you then!",
+    0.5
    ]
   ]
  },
  {
   "src": "audio/skills/listen-step-17.mp3",
   "title": "Healthy Habits and Daily Life",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   }
+  },
   "lines": [
    [
-    "af_heart",
-    "Hello, and welcome to Everyday Choices, a podcast about simple habits that can make daily life better.",
+    "am_ov_energetic",
+    "Hello, and welcome to Everyday Choices, a podcast about simple habits that make daily life better.",
     0.3
    ],
    [
-    "af_heart",
-    "I'm your presenter, Rachel Moore.",
+    "am_ov_energetic",
+    "I'm your presenter, Ryan Moore.",
     0.3
    ],
    [
-    "af_heart",
-    "Rachel.",
+    "am_ov_energetic",
+    "Moore.",
     0.3
    ],
    [
-    "af_heart",
-    "R. A. C. H. E. L.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Moore.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "M. O. O. R. E.",
-    0.9
+    0.6
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
+    "Thank you for all your lovely messages last week.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I read every single one of them, usually with a cup of tea in my hand!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
     "Today we're talking about healthy habits.",
     0.3
    ],
    [
-    "af_heart",
-    "Some people think a healthy lifestyle requires expensive food, special equipment or lots of free time.",
+    "am_ov_energetic",
+    "When I started this podcast, I thought a healthy life needed expensive food from special shops and lots of equipment for the gym.",
     0.3
    ],
    [
-    "af_heart",
-    "However, many useful habits are simple.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "Let's begin with sleep.",
+    "am_ov_energetic",
+    "I was wrong.",
     0.3
    ],
    [
-    "af_heart",
-    "Having a regular sleeping routine can help you feel more organised.",
+    "am_ov_energetic",
+    "Many useful habits are simple, and most of them are free.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Let's begin with sleep. I know, I know. Sleep isn't very exciting!",
     0.3
    ],
    [
-    "af_heart",
-    "If you wake up at seven, you might choose to go to bed at around ten thirty or eleven.",
+    "am_ov_energetic",
+    "But it's the most important habit of all.",
     0.3
    ],
    [
-    "af_heart",
-    "People need different amounts of sleep, but enough rest is important.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "The second habit is drinking water.",
+    "am_ov_energetic",
+    "When I was at university, I went to bed at a different time every night, and I always felt confused.",
     0.3
    ],
    [
-    "af_heart",
-    "Some people forget to drink during busy days.",
+    "am_ov_energetic",
+    "A regular sleeping routine helps you feel organised.",
     0.3
    ],
    [
-    "af_heart",
-    "One useful idea is to keep a bottle nearby.",
+    "am_ov_energetic",
+    "It also helps you concentrate at school or at work, and it puts you in a better mood.",
     0.3
    ],
    [
-    "af_heart",
-    "My bottle holds seven hundred and fifty millilitres.",
+    "am_ov_energetic",
+    "My family says I'm much nicer now!",
     0.3
    ],
    [
-    "af_heart",
-    "I fill it in the morning and take it to work.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "Another habit is eating a variety of foods.",
+    "am_ov_energetic",
+    "So here's a simple rule.",
     0.3
    ],
    [
-    "af_heart",
-    "Fruit, vegetables, grains and other foods can all be part of balanced meals.",
+    "am_ov_energetic",
+    "If you wake up at seven, try to go to bed at about half past ten.",
     0.3
    ],
    [
-    "af_heart",
-    "You don't need to eat the same thing every day.",
+    "am_ov_energetic",
+    "And put your phone in another room!",
     0.3
    ],
    [
-    "af_heart",
-    "You could have eggs and bread for breakfast, rice with vegetables for lunch, and soup for dinner.",
-    0.9
+    "am_ov_energetic",
+    "I used to check my messages in bed until very late, and I felt terrible in the morning.",
+    0.5
    ],
    [
-    "af_heart",
-    "Movement is important too.",
+    "am_ov_energetic",
+    "The second habit is drinking water. It sounds easy, doesn't it?",
     0.3
    ],
    [
-    "af_heart",
-    "You don't have to join a sports club.",
+    "am_ov_energetic",
+    "But some people forget to drink on busy days, and then they get headaches.",
     0.3
    ],
    [
-    "af_heart",
-    "Walking, cycling, dancing and playing outside are all ways to move more.",
+    "am_ov_energetic",
+    "So keep a bottle near you.",
     0.3
    ],
    [
-    "af_heart",
-    "My neighbour, Thomas Hill, is a good example.",
+    "am_ov_energetic",
+    "I fill mine every morning, and I take it everywhere: to work, to the shops, even to the cinema.",
     0.3
    ],
    [
-    "af_heart",
-    "Thomas.",
+    "am_ov_energetic",
+    "My friends laugh at me, but I haven't had a headache for months!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Another habit is eating a variety of foods. Don't eat the same thing every day.",
     0.3
    ],
    [
-    "af_heart",
-    "T. H. O. M. A. S.",
+    "am_ov_energetic",
+    "For example, you could have eggs and bread for breakfast, rice with vegetables for lunch, and soup for dinner.",
     0.3
    ],
    [
-    "af_heart",
-    "And Hill.",
+    "am_ov_energetic",
+    "My grandmother makes the best vegetable soup in the world.",
     0.3
    ],
    [
-    "af_heart",
-    "H. I. L. L.",
+    "am_ov_energetic",
+    "She says the secret is lots of colours: orange carrots, green beans, red peppers.",
     0.3
    ],
    [
-    "af_heart",
-    "He walks to work every day.",
+    "am_ov_energetic",
+    "The more colours on your plate, the better!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Movement is important too. My neighbour is a great example.",
     0.3
    ],
    [
-    "af_heart",
-    "His office is twenty-five minutes from his home.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "It's also useful to take short breaks when studying.",
+    "am_ov_energetic",
+    "He used to take the bus to work, but it was always late.",
     0.3
    ],
    [
-    "af_heart",
-    "If you sit for a long time, stand up, stretch gently or walk around.",
+    "am_ov_energetic",
+    "Now he walks to work every day, and he says he feels ten years younger!",
     0.3
    ],
    [
-    "af_heart",
-    "Some people study for twenty-five minutes and then take a five-minute break.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "Rest and enjoyable activities matter as well.",
+    "am_ov_energetic",
+    "On the way, he stops to talk to the man at the newspaper shop, and he always arrives at work with a smile.",
     0.3
    ],
    [
-    "af_heart",
-    "Reading, listening to music and spending time with friends can help people relax.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "Now, here's a message from Daniel in Brookfield.",
+    "am_ov_energetic",
+    "And you don't have to join a sports club or buy expensive trainers.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
+    "Walking, cycling, dancing and playing outside are all good.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Last weekend I played football in the park with my nephews, and I was the most tired person there!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "It's also useful to take short breaks when you study or work.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Sitting at a desk for hours isn't good for your body or your brain.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Every hour, stand up and stretch gently, or walk around the room.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Rest is important as well.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Being healthy isn't only about your body. Your mind needs a rest too.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Some people like reading, and some people like listening to music.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Personally, I think the best thing is spending time with friends.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It always helps me relax.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Now, here's a message from a listener.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "He sent us a long email, so I'll tell you the most important part.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "He lives in a small town called Brookfield.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
     "Brookfield.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "B. R. O. O. K. F. I. E. L. D.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Thank you for writing to us, and hello to everyone in Brookfield!",
     0.3
    ],
    [
-    "af_heart",
-    "Daniel works from nine until five and often feels tired in the evening.",
+    "am_ov_energetic",
+    "I've never been there, but I hear it has a beautiful lake.",
     0.3
    ],
    [
-    "af_heart",
-    "He wants to become more active.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "My suggestion is to start with a small change.",
+    "am_ov_energetic",
+    "Anyway, our listener says he loves his job, but it isn't very active.",
     0.3
    ],
    [
-    "af_heart",
-    "Daniel could walk for ten minutes after lunch or take the stairs instead of the lift.",
+    "am_ov_energetic",
+    "He works in an office, and he sits in front of a computer most of the day.",
     0.3
    ],
    [
-    "af_heart",
-    "He could also prepare a simple meal at home.",
-    0.9
-   ],
-   [
-    "af_heart",
-    "Remember, you don't need to change everything in one day.",
+    "am_ov_energetic",
+    "He even eats his lunch at his desk.",
     0.3
    ],
    [
-    "af_heart",
-    "Choose one or two realistic goals and practise them regularly.",
+    "am_ov_energetic",
+    "When he gets home, he just wants to lie on the sofa.",
     0.3
    ],
    [
-    "af_heart",
-    "A healthy lifestyle is built through small choices repeated over time.",
+    "am_ov_energetic",
+    "He often feels tired in the evening, and he wants to be more active.",
     0.3
    ],
    [
-    "af_heart",
-    "Thank you for listening to Everyday Choices.",
-    0.9
+    "am_ov_energetic",
+    "But he says he doesn't have time for the gym.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Well, I have good news for you! My suggestion is to start small.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You don't need a gym.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You could go for a short walk after lunch, instead of eating at your desk.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Even a few minutes outside makes a big difference.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "And here's another easy idea.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Your office is probably in a big building.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "When you arrive in the morning, take the stairs instead of the lift.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "At first you'll be out of breath, but after a few weeks it'll be easy.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "And finally, try cooking at home.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You don't have to be a great cook. I'm a terrible cook!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Just cook a simple meal at home, with lots of vegetables.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's cheaper than eating out, and it's much healthier.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Good luck, and please write to us again in a month to tell us how it's going!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "That was a great question.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "If you'd like to send us a question too, we'd love to hear from you.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You can call the podcast line and leave a message, any time of the day or night.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The number is oh one five two, eight three six, four seven nine.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "That's oh one five two, eight three six, four seven nine.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "Before I go, here's the most important thing to remember.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You don't need to change everything in one day.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "People who try to change everything at once usually give up after a week.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "So choose one or two realistic goals and practise them regularly.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Maybe this week you'll drink more water, and next month you'll start walking to work.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Step by step, it gets easier.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "A healthy lifestyle isn't built in one day.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's built through small choices, repeated over time.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Thank you for listening, and see you next week on Everyday Choices!",
+    0.5
    ]
   ]
  },
  {
   "src": "audio/skills/listen-step-18.mp3",
   "title": "How Technology Changes Our Lives",
+  "engine": "omnivoice",
+  "voices": {
+   "af_ov_adviser": "female, middle-aged, moderate pitch",
+   "af_ov_young": {
+    "instruct": "female, young adult, moderate pitch",
+    "seed": 1
+   },
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   }
+  },
   "lines": [
    [
-    "am_michael",
-    "Welcome to School Voices.",
+    "af_ov_adviser",
+    "Welcome to School Voices, the radio programme made by students, for students!",
     0.3
    ],
    [
-    "am_michael",
-    "Today's topic is technology.",
+    "af_ov_adviser",
+    "Today's topic is technology. We all use it, but do we use it well?",
     0.3
    ],
    [
-    "am_michael",
-    "Our guests are Emily Parker and Jack Brown.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Emily.",
+    "af_ov_adviser",
+    "To help us find out, I have two guests from our school, Emily and Jack.",
     0.3
    ],
    [
-    "af_heart",
-    "E. M. I. L. Y.",
+    "af_ov_adviser",
+    "Emily, can you spell your surname for our listeners?",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Sure. It's Parker.",
     0.3
    ],
    [
-    "af_heart",
-    "And Parker.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "af_ov_young",
     "P. A. R. K. E. R.",
-    0.4
+    0.6
    ],
    [
-    "am_puck",
-    "Jack.",
+    "af_ov_adviser",
+    "Thanks, Emily. Let's start with something we all have.",
     0.3
    ],
    [
-    "am_puck",
-    "J. A. C. K.",
+    "af_ov_adviser",
+    "How do you use your phone? Be honest!",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Ha, OK! Well, I use it every day, from the moment I wake up.",
     0.3
    ],
    [
-    "am_puck",
-    "And Brown.",
+    "af_ov_young",
+    "It's my alarm clock, my music player, everything.",
     0.3
    ],
    [
-    "am_puck",
-    "B. R. O. W. N.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "Emily, how often do you use your phone?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Every day.",
+    "af_ov_young",
+    "I message my friends, of course, and I check my school timetable, because I always forget which classroom I'm in!",
     0.3
    ],
    [
-    "af_heart",
-    "I use it to message friends, check my school timetable, listen to music and find information.",
+    "af_ov_young",
+    "I also listen to music on the bus.",
     0.3
    ],
    [
-    "af_heart",
-    "I also use a language-learning app for about fifteen minutes a day.",
+    "af_ov_young",
+    "And I'm learning Spanish, so I use a language app.",
     0.3
    ],
    [
-    "af_heart",
-    "Smartphones make life easier because I can contact my family and find directions.",
+    "af_ov_young",
+    "My best friend uses it for an hour a day, but I'm not that patient.",
     0.3
    ],
    [
-    "af_heart",
-    "However, I sometimes watch too many short videos, so I put my phone away when studying.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "Jack, what about you?",
-    0.4
-   ],
-   [
-    "am_puck",
-    "I use my laptop more than my phone because I do school projects on it.",
+    "af_ov_young",
+    "I use it for about fifteen minutes a day, usually before breakfast.",
     0.3
    ],
    [
-    "am_puck",
-    "I also learn computer skills through free online lessons.",
+    "af_ov_young",
+    "But I have a problem. When I start watching short videos, I can't stop!",
     0.3
    ],
    [
-    "am_puck",
-    "I often use a website called Learn Online.",
+    "af_ov_young",
+    "Sometimes I look up, and an hour has gone, and my homework isn't finished.",
     0.3
    ],
    [
-    "am_puck",
-    "Learn.",
+    "af_ov_young",
+    "So when I'm studying, I put my phone away, in another room.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "I think we all know that feeling!",
     0.3
    ],
    [
-    "am_puck",
-    "L. E. A. R. N.",
+    "af_ov_adviser",
+    "Jack, what about you? Are you a phone person too?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Not really. I use my laptop more than my phone.",
     0.3
    ],
    [
-    "am_puck",
-    "And Online.",
+    "am_ov_energetic",
+    "I play games on it sometimes, but mostly it's for school.",
     0.3
    ],
    [
-    "am_puck",
-    "O. N. L. I. N. E.",
+    "am_ov_energetic",
+    "I do my school projects on it.",
     0.3
    ],
    [
-    "am_puck",
-    "It has short lessons about typing, presentations and spreadsheets.",
+    "am_ov_energetic",
+    "Last month I made a video about recycling for my science class, and my teacher showed it to the whole school!",
     0.3
    ],
    [
-    "am_puck",
-    "Some lessons are ten minutes long.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "Do you use technology for entertainment?",
-    0.4
-   ],
-   [
-    "am_puck",
-    "Yes.",
+    "am_ov_energetic",
+    "I also take free online lessons.",
     0.3
    ],
    [
-    "am_puck",
-    "I watch films, play games and listen to podcasts.",
+    "am_ov_energetic",
+    "At the moment I'm learning about typing and presentations.",
     0.3
    ],
    [
-    "am_puck",
-    "But I try to finish homework first.",
+    "am_ov_energetic",
+    "I used to type with two fingers, and it took forever.",
     0.3
    ],
    [
-    "am_puck",
-    "Otherwise, I can lose track of time.",
-    0.4
+    "am_ov_energetic",
+    "Now I can type without looking at the keyboard!",
+    0.5
    ],
    [
-    "am_michael",
-    "What should students remember about online safety?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Use strong passwords and avoid sharing private information with strangers.",
+    "af_ov_adviser",
+    "Impressive! Now, something important.",
     0.3
    ],
    [
-    "af_heart",
-    "Think carefully before posting photographs or personal details.",
-    0.4
+    "af_ov_adviser",
+    "What should students remember about online safety? Emily?",
+    0.5
    ],
    [
-    "am_puck",
-    "Also, check information before believing or sharing it.",
+    "af_ov_young",
+    "Well, the first thing is passwords.",
     0.3
    ],
    [
-    "am_puck",
-    "Not everything online is correct.",
+    "af_ov_young",
+    "Lots of people use their name or their birthday, and that's a big mistake.",
     0.3
    ],
    [
-    "am_puck",
-    "If I read an unusual story, I look for another reliable source.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "Will technology change schools in the future?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Probably.",
+    "af_ov_young",
+    "Use strong passwords, with letters, numbers and symbols.",
     0.3
    ],
    [
-    "af_heart",
-    "Students may use more digital books and interactive lessons.",
+    "af_ov_young",
+    "And don't share private information with strangers, like your address or your school.",
     0.3
    ],
    [
-    "af_heart",
-    "Teachers can share materials online, which makes studying at home easier.",
-    0.4
+    "af_ov_young",
+    "You never really know who is on the other side of the screen.",
+    0.5
    ],
    [
-    "am_puck",
+    "am_ov_energetic",
+    "I agree. And there's one more thing. Check information before you share it.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "My grandad sends me crazy stories every week, like a cat that can talk!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Not everything online is true.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Ha! Poor grandad. Let's look at the future.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Will technology change schools? Emily, what do you think?",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Probably, yes. My little brother's school already gives every student a tablet.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "I think in a few years, our heavy school bags will disappear.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "We'll use more digital books, and teachers will share more materials online.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Jack, do you agree?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Maybe. But I don't think robots will teach us!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "A computer can't tell when you're sad or confused.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
     "Technology will help teachers, but it won't replace them.",
     0.3
    ],
    [
-    "am_puck",
-    "Students still need people to explain difficult ideas and answer questions.",
-    0.4
+    "am_ov_energetic",
+    "A good teacher is much more than a screen.",
+    0.5
    ],
    [
-    "am_michael",
-    "Emily, do you have a favourite device?",
-    0.4
+    "af_ov_adviser",
+    "Well said. Now, a fun question. Emily, what's your favourite device?",
+    0.5
    ],
    [
-    "af_heart",
-    "My favourite is my tablet, Nova.",
+    "af_ov_young",
+    "That's easy! My tablet.",
     0.3
    ],
    [
-    "af_heart",
+    "af_ov_young",
+    "I got it for my birthday last year, and I gave it a name, because I use it so much.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "It's called Nova.",
+    0.3
+   ],
+   [
+    "af_ov_young",
     "Nova.",
     0.3
    ],
    [
-    "af_heart",
+    "af_ov_young",
     "N. O. V. A.",
+    0.6
+   ],
+   [
+    "af_ov_young",
+    "Like a star.",
     0.3
    ],
    [
-    "af_heart",
-    "I use it to read and draw.",
+    "af_ov_young",
+    "My friends think it's a funny name, but I love it.",
     0.3
    ],
    [
-    "af_heart",
-    "I bought it last year for one hundred and eighty dollars.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "Jack?",
-    0.4
-   ],
-   [
-    "am_puck",
-    "I like my wireless headphones.",
+    "af_ov_young",
+    "I take it everywhere, even on holiday.",
     0.3
    ],
    [
-    "am_puck",
-    "I bought them at Tech Corner.",
+    "af_ov_young",
+    "The screen is quite big, and the colours are beautiful.",
     0.3
    ],
    [
-    "am_puck",
-    "Tech.",
+    "af_ov_young",
+    "I don't play games on it much. I mostly use it to read and draw.",
     0.3
    ],
    [
-    "am_puck",
-    "T. E. C. H.",
+    "af_ov_young",
+    "I want to be an artist one day, so I draw something every evening, usually animals.",
     0.3
    ],
    [
-    "am_puck",
-    "And Corner.",
+    "af_ov_young",
+    "Last night I drew my cat sleeping on the sofa.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Lovely. And Jack, what about you?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "For me, it's not my laptop, actually.",
     0.3
    ],
    [
-    "am_puck",
-    "C. O. R. N. E. R.",
+    "am_ov_energetic",
+    "It's my wireless headphones.",
     0.3
    ],
    [
-    "am_puck",
-    "The shop is at 42 Market Road.",
+    "am_ov_energetic",
+    "I wear them on the bus, at the gym, everywhere. My mum says they're glued to my head!",
     0.3
    ],
    [
-    "am_puck",
-    "Market.",
+    "am_ov_energetic",
+    "The sound is amazing, and they stop all the noise around you, so I can't hear my little sister screaming.",
     0.3
    ],
    [
-    "am_puck",
-    "M. A. R. K. E. T.",
+    "am_ov_energetic",
+    "I bought them at a small shop on Market Road, near the station.",
     0.3
    ],
    [
-    "am_puck",
-    "And Road.",
+    "am_ov_energetic",
+    "The man there knows everything about technology, and he lets you try everything before you buy it.",
     0.3
    ],
    [
-    "am_puck",
-    "R. O. A. D.",
-    0.4
+    "am_ov_energetic",
+    "They weren't expensive.",
+    0.3
    ],
    [
-    "am_michael",
-    "Give us one final piece of advice.",
-    0.4
+    "am_ov_energetic",
+    "In the big shops they cost about seventy dollars, but in his shop they cost forty dollars.",
+    0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
+    "I've already told all my friends about it.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "What a bargain!",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "If our listeners have questions about technology, they can call the school radio.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "We read your questions out every Friday, and the best ones win a prize.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "The number is oh one seven three, two nine five, eight four one.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Oh one seven three, two nine five, eight four one?",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "That's right! Well, we're nearly out of time.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Before you go, one final piece of advice for our listeners. Emily?",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Technology is a great tool, but it's only a tool. Don't let it control you.",
+    0.3
+   ],
+   [
+    "af_ov_young",
     "Make sure technology helps you reach your goals.",
-    0.4
+    0.3
    ],
    [
-    "am_puck",
-    "Learn to use digital tools, but spend time away from screens too.",
-    0.4
+    "af_ov_young",
+    "For example, if you want to learn a language, use an app. But if you just scroll for hours, put it down.",
+    0.5
    ],
    [
-    "am_michael",
-    "Thank you both!",
-    0.4
+    "am_ov_energetic",
+    "Exactly. Go outside, see your friends, play a sport.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "And spend time away from screens too.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Every Sunday, my family has a no-phone day.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It was terrible at first, but now I love it. We play board games and go for long walks.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "What a great idea. Thank you both!",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "And next week on School Voices, we're talking about sport, with the captain of our football team.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "See you then!",
+    0.5
    ]
   ]
  },
  {
   "src": "audio/skills/listen-step-19.mp3",
   "title": "Behind the Scenes of a Movie",
+  "engine": "omnivoice",
+  "voices": {
+   "af_ov_adviser": "female, middle-aged, moderate pitch",
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   }
+  },
   "lines": [
    [
-    "am_michael",
-    "Welcome to Film Makers.",
+    "af_ov_adviser",
+    "Welcome to Film Makers, the programme that takes you behind the scenes of your favourite films!",
     0.3
    ],
    [
-    "am_michael",
-    "Today we're speaking to a production assistant called Sophie Turner.",
+    "af_ov_adviser",
+    "Today I'm talking to someone who works on a film set every day.",
     0.3
    ],
    [
-    "am_michael",
-    "Sophie.",
+    "af_ov_adviser",
+    "He's a production assistant, Sam Turner.",
     0.3
    ],
    [
-    "am_michael",
-    "S. O. P. H. I. E.",
+    "af_ov_adviser",
+    "Sam, could you spell your surname?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Sure. Turner.",
     0.3
    ],
    [
-    "am_michael",
-    "And Turner.",
-    0.3
-   ],
-   [
-    "am_michael",
+    "am_ov_energetic",
     "T. U. R. N. E. R.",
-    0.4
+    0.6
    ],
    [
-    "am_michael",
-    "What does a production assistant do?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "I help the film team organise daily work.",
+    "af_ov_adviser",
+    "Thank you, Sam. Now, I think lots of our listeners don't know this job.",
     0.3
    ],
    [
-    "af_heart",
-    "I prepare schedules, check equipment, help actors find the correct places and communicate with different departments.",
+    "af_ov_adviser",
+    "So, what does a production assistant do?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Ha, my friends ask me that all the time!",
     0.3
    ],
    [
-    "af_heart",
-    "It's busy because many people work together.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "What film are you working on?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "A family adventure film called The Secret Garden.",
+    "am_ov_energetic",
+    "Well, a film set is like a small town, with lots of people doing different jobs.",
     0.3
    ],
    [
-    "af_heart",
-    "The Secret.",
+    "am_ov_energetic",
+    "I help the film team organise the daily work.",
     0.3
    ],
    [
-    "af_heart",
-    "T. H. E.",
+    "am_ov_energetic",
+    "Every evening, I prepare schedules for the next day, so everyone knows where to be and when.",
     0.3
    ],
    [
-    "af_heart",
-    "S. E. C. R. E. T.",
+    "am_ov_energetic",
+    "If I make a mistake, everyone ends up in the wrong place, so I check everything twice!",
     0.3
    ],
    [
-    "af_heart",
-    "Garden.",
+    "am_ov_energetic",
+    "Then, early in the morning, before anyone else arrives, I check the equipment: the cameras, the lights, the microphones.",
     0.3
    ],
    [
-    "af_heart",
-    "G. A. R. D. E. N.",
+    "am_ov_energetic",
+    "Everything must be ready.",
     0.3
    ],
    [
-    "af_heart",
-    "It's about two children who discover an unusual garden near their grandmother's house.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "Where are you filming?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Most scenes are filmed in Willow Creek.",
+    "am_ov_energetic",
+    "And when the actors arrive, I help them.",
     0.3
    ],
    [
-    "af_heart",
-    "Willow.",
+    "am_ov_energetic",
+    "The set is big and confusing, and there are cables everywhere, so I help the actors find the right places.",
     0.3
    ],
    [
-    "af_heart",
-    "W. I. L. L. O. W.",
+    "am_ov_energetic",
+    "It's a busy job, because so many people work together, but I love it.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "It sounds exciting! What film are you working on at the moment?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "It's a family adventure film called The Hidden Garden.",
     0.3
    ],
    [
-    "af_heart",
-    "And Creek.",
+    "am_ov_energetic",
+    "Some people think it's about a football team, because the main boy plays football in the first scene. But no.",
     0.3
    ],
    [
-    "af_heart",
-    "C. R. E. E. K.",
+    "am_ov_energetic",
+    "It's about two children who find a strange garden near their grandmother's house.",
     0.3
    ],
    [
-    "af_heart",
-    "It's about forty kilometres from the nearest large city.",
+    "am_ov_energetic",
+    "In the garden, the flowers can talk, and the trees move at night!",
     0.3
    ],
    [
-    "af_heart",
-    "We also film indoor scenes at Studio North.",
+    "am_ov_energetic",
+    "I can't tell you the ending, of course.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Of course not! Where are you filming?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Well, the story happens in the countryside, so we couldn't film in the city.",
     0.3
    ],
    [
-    "af_heart",
-    "Studio.",
+    "am_ov_energetic",
+    "Most scenes are filmed in a small village in the hills, about an hour from the city.",
     0.3
    ],
    [
-    "af_heart",
-    "S. T. U. D. I. O.",
+    "am_ov_energetic",
+    "The people there are very kind. They bring us cakes and tea every afternoon!",
     0.3
    ],
    [
-    "af_heart",
-    "And North.",
-    0.3
+    "am_ov_energetic",
+    "We film the indoor scenes in a studio, where we can control the light.",
+    0.5
    ],
    [
-    "af_heart",
-    "N. O. R. T. H.",
-    0.4
-   ],
-   [
-    "am_michael",
+    "af_ov_adviser",
     "How long does filming take?",
-    0.4
+    0.5
    ],
    [
-    "af_heart",
-    "About twelve weeks.",
+    "am_ov_energetic",
+    "Most people think a film takes a few days, but this one takes about twelve weeks.",
     0.3
    ],
    [
-    "af_heart",
-    "After that, editors work on the film for several months.",
+    "am_ov_energetic",
+    "And that's only the filming!",
     0.3
    ],
    [
-    "af_heart",
-    "They choose the best scenes, add music, improve the sound and prepare the final version.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "How many people are in the team?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "About forty-five people, including the director, camera operators, actors, costume designers and sound assistants.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "Tell us about the main actors.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "The main character is played by Oliver James.",
+    "am_ov_energetic",
+    "After that, the editors work on the film for several months.",
     0.3
    ],
    [
-    "af_heart",
-    "Oliver.",
+    "am_ov_energetic",
+    "That's a very important job. The editors watch hours and hours of film.",
     0.3
    ],
    [
-    "af_heart",
-    "O. L. I. V. E. R.",
+    "am_ov_energetic",
+    "Sometimes a scene we filmed for a whole day is cut completely!",
     0.3
    ],
    [
-    "af_heart",
-    "And James.",
+    "am_ov_energetic",
+    "They choose the best scenes and add music.",
     0.3
    ],
    [
-    "af_heart",
-    "J. A. M. E. S.",
+    "am_ov_energetic",
+    "The music for this film is beautiful. I've heard some of it already.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Wow. And how big is the team?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Bigger than you think! On a normal day, there are about forty-five people on set.",
     0.3
    ],
    [
-    "af_heart",
-    "He plays a boy called Leo.",
+    "am_ov_energetic",
+    "We all eat lunch together in a big tent, and it's very noisy!",
     0.3
    ],
    [
-    "af_heart",
-    "Leo.",
+    "am_ov_energetic",
+    "There's the director, of course, who decides everything.",
     0.3
    ],
    [
-    "af_heart",
-    "L. E. O.",
+    "am_ov_energetic",
+    "There are camera operators and actors.",
     0.3
    ],
    [
-    "af_heart",
-    "His sister is played by Hannah Price.",
+    "am_ov_energetic",
+    "There are people who do make-up and hair, and there are costume designers, who make all the clothes.",
     0.3
    ],
    [
-    "af_heart",
-    "Hannah.",
+    "am_ov_energetic",
+    "And there are sound assistants, who hold the big microphones above the actors' heads.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Is there an animal in the film? Children love animals in films.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Yes! We have a small dog in the film.",
     0.3
    ],
    [
-    "af_heart",
-    "H. A. N. N. A. H.",
+    "am_ov_energetic",
+    "He's brown and white, with very short legs, and he belongs to the children's grandmother in the story.",
     0.3
    ],
    [
-    "af_heart",
-    "And Price.",
+    "am_ov_energetic",
+    "Everybody on set loves him, especially the actors.",
     0.3
    ],
    [
-    "af_heart",
-    "P. R. I. C. E.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "Is there an animal in the film?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Yes, a small dog called Biscuit.",
+    "am_ov_energetic",
+    "His name is Biscuit.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "Biscuit.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "B. I. S. C. U. I. T.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "He's very friendly, but he's not a perfect actor!",
     0.3
    ],
    [
-    "af_heart",
-    "He's friendly, but sometimes he doesn't follow instructions.",
+    "am_ov_energetic",
+    "Sometimes he doesn't follow instructions.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
+    "Yesterday, he ran away with an actor's sandwich in the middle of a scene!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "When that happens, we don't get angry.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
     "We take a short break and try again.",
-    0.4
+    0.5
    ],
    [
-    "am_michael",
-    "When will the film be released?",
-    0.4
+    "af_ov_adviser",
+    "Ha! I love Biscuit already. So, when can we see the film?",
+    0.5
    ],
    [
-    "af_heart",
-    "The cinema release is planned for the eighteenth of December.",
+    "am_ov_energetic",
+    "Not this summer, I'm afraid. We need time to finish it.",
     0.3
    ],
    [
-    "af_heart",
-    "The first trailer will come out on the fifth of October.",
+    "am_ov_energetic",
+    "It comes to cinemas on the eighteenth of December, just in time for Christmas.",
     0.3
    ],
    [
-    "af_heart",
-    "The film will last about one hour and forty minutes.",
-    0.4
+    "am_ov_energetic",
+    "It's the perfect film to watch with your family.",
+    0.5
    ],
    [
-    "am_michael",
-    "What is the most difficult part of your job?",
-    0.4
+    "af_ov_adviser",
+    "I'll be there! What's the hardest part of your job?",
+    0.5
    ],
    [
-    "af_heart",
-    "Keeping everything organised when the weather changes.",
+    "am_ov_energetic",
+    "Oh, that's easy. The weather!",
     0.3
    ],
    [
-    "af_heart",
-    "If it rains during an outdoor scene, we may change the schedule and record an indoor scene instead.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "What advice would you give someone interested in films?",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Be organised, communicate clearly and be ready to learn.",
+    "am_ov_energetic",
+    "We plan everything carefully, but the weather doesn't read our schedules.",
     0.3
    ],
    [
-    "af_heart",
-    "There are many jobs behind the camera, not only acting and directing.",
-    0.4
+    "am_ov_energetic",
+    "Last week we wanted to film a picnic in the sunshine, and it rained all day.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "If it rains during an outdoor scene, we change the plan and film an indoor scene instead.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "That's why we always have a second plan ready.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Very clever. Lots of young people listen to this programme.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "How can they learn more about film jobs?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "That's a great question.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Our studio runs free workshops for teenagers, every school holiday.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You can try using a real camera, write a short scene, or even act in front of the camera.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Last summer, one of our students made a short film, and it won a prize!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "If you're interested, you can call the studio on oh one two six, five eight three, nine four seven.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Oh one two six, five eight three, nine four seven?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Yes, that's right. The workshops are very popular, so call early!",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Great. And finally, any advice for someone who wants to work in films?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Yes. First, be organised. On a film set, everything happens very fast.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Second, communicate clearly.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "When so many people work together, a small misunderstanding can cause big problems.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Once, the camera team went to the wrong village, because nobody told them about a change in the plan!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "And always be ready to learn.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I learn something new every day, from the camera team, from the actors, even from Biscuit!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "And remember, you don't have to be an actor.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Most people in films never appear on the screen.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "There are many jobs behind the camera, not only acting.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Thank you, Sam Turner, and good luck with The Hidden Garden!",
+    0.5
    ]
   ]
  },
  {
   "src": "audio/skills/listen-step-20.mp3",
   "title": "Weather and Life Around the World",
+  "engine": "omnivoice",
+  "voices": {
+   "am_ov_energetic": {
+    "instruct": "male, young adult, high pitch",
+    "seed": 4
+   },
+   "af_ov_adviser": "female, middle-aged, moderate pitch",
+   "af_ov_young": {
+    "instruct": "female, young adult, moderate pitch",
+    "seed": 1
+   },
+   "am_ov_second": "male, middle-aged, low pitch"
+  },
   "lines": [
    [
-    "af_heart",
-    "Welcome to World Weather Today.",
+    "am_ov_energetic",
+    "Welcome to World Weather Today!",
     0.3
    ],
    [
-    "af_heart",
-    "I'm your presenter, Laura Smith.",
+    "am_ov_energetic",
+    "I'm your presenter, Luke Smith.",
     0.3
    ],
    [
-    "af_heart",
-    "Laura.",
+    "am_ov_energetic",
+    "Smith.",
     0.3
    ],
    [
-    "af_heart",
-    "L. A. U. R. A.",
-    0.3
-   ],
-   [
-    "af_heart",
-    "And Smith.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "S. M. I. T. H.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "It's lovely to be with you again.",
     0.3
    ],
    [
-    "af_heart",
-    "Today we're visiting four cities to find out how weather affects daily life.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Our first report comes from Oslo, the capital of Norway.",
+    "am_ov_energetic",
+    "If you're new to the programme, here's how it works.",
     0.3
    ],
    [
-    "af_heart",
-    "Oslo.",
+    "am_ov_energetic",
+    "Every week we call our friends in different countries and ask them one simple question: what's the weather like where you are?",
     0.3
    ],
    [
-    "af_heart",
-    "O. S. L. O.",
+    "am_ov_energetic",
+    "And today we're visiting four cities to find out how the weather changes daily life.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "We're going from the cold north to the hot south, so get ready for snow, sunshine and everything in between.",
     0.3
    ],
    [
-    "af_heart",
-    "Our reporter is Erik Hansen.",
+    "am_ov_energetic",
+    "Our first report comes from Oslo, in Norway.",
     0.3
    ],
    [
-    "af_heart",
-    "Erik.",
+    "am_ov_energetic",
+    "Good morning, Oslo!",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Good morning, Luke, and good morning from Oslo!",
     0.3
    ],
    [
-    "af_heart",
-    "E. R. I. K.",
+    "af_ov_adviser",
+    "I'm standing in the main square, next to a big Christmas tree, and it's very cold.",
     0.3
    ],
    [
-    "af_heart",
-    "And Hansen.",
+    "af_ov_adviser",
+    "The weather app on my phone says minus five, but the thermometer here says minus three degrees, and I believe the thermometer!",
     0.3
    ],
    [
-    "af_heart",
-    "H. A. N. S. E. N.",
-    0.4
-   ],
-   [
-    "am_michael",
-    "Good morning from Oslo!",
+    "af_ov_adviser",
+    "There's light snow this morning, and the children on their way to school are trying to catch it on their tongues.",
     0.3
    ],
    [
-    "am_michael",
-    "It's a cold winter morning.",
+    "af_ov_adviser",
+    "Everyone is dressed for winter: warm coats, hats, and almost everyone has gloves on.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "A man next to me just told me he's wearing two pairs!",
     0.3
    ],
    [
-    "am_michael",
-    "The temperature is minus three degrees Celsius, and there is light snow.",
+    "af_ov_adviser",
+    "I forgot mine at the hotel, of course, so my hands are freezing as I speak to you.",
     0.3
    ],
    [
-    "am_michael",
-    "Many people are wearing warm coats, hats and gloves.",
+    "af_ov_adviser",
+    "Driving isn't easy this morning, either.",
     0.3
    ],
    [
-    "am_michael",
-    "The roads are slippery, so drivers are moving slowly.",
+    "af_ov_adviser",
+    "The roads are slippery, so the buses are late and drivers are going very slowly.",
     0.3
    ],
    [
-    "am_michael",
-    "Some children have outdoor winter activities at school.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Thank you.",
+    "af_ov_adviser",
+    "Some people are walking to work instead.",
     0.3
    ],
    [
-    "af_heart",
-    "Now let's travel to Nairobi in Kenya.",
+    "af_ov_adviser",
+    "Back to you, Luke!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Thank you! Keep warm out there.",
     0.3
    ],
    [
-    "af_heart",
-    "Our reporter is Grace Mwangi.",
+    "am_ov_energetic",
+    "Now let's travel a long way south, to Nairobi, in Kenya.",
     0.3
    ],
    [
-    "af_heart",
-    "Grace.",
+    "am_ov_energetic",
+    "Hello, Nairobi!",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Hello, Luke! What a difference!",
     0.3
    ],
    [
-    "af_heart",
-    "G. R. A. C. E.",
+    "af_ov_young",
+    "Yesterday it was cloudy, but today it's warm and sunny, and lots of people are spending time outside.",
     0.3
    ],
    [
-    "af_heart",
-    "And Mwangi.",
+    "af_ov_young",
+    "It's a perfect day to be outdoors.",
     0.3
    ],
    [
-    "af_heart",
-    "M. W. A. N. G. I.",
-    0.4
-   ],
-   [
-    "af_bella",
-    "Hello from Nairobi!",
+    "af_ov_young",
+    "The parks are full of families having picnics, and I can see some boys playing football in the street behind me.",
     0.3
    ],
    [
-    "af_bella",
-    "It's warm and sunny.",
+    "af_ov_young",
+    "But this weather won't last long.",
     0.3
    ],
    [
-    "af_bella",
-    "The temperature is twenty-six degrees.",
+    "af_ov_young",
+    "The rainy season starts next month, so people are getting their gardens ready.",
     0.3
    ],
    [
-    "af_bella",
-    "Many people enjoy spending time outside.",
+    "af_ov_young",
+    "They're planting beans and tomatoes now, so the rain can help them grow.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Lovely! Enjoy the sunshine while it lasts.",
     0.3
    ],
    [
-    "af_bella",
-    "The rainy season is expected to begin next month, so people are preparing their gardens and checking their roofs.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Our next stop is Tokyo, Japan.",
+    "am_ov_energetic",
+    "Our next stop is Tokyo, in Japan.",
     0.3
    ],
    [
-    "af_heart",
-    "Tokyo.",
+    "am_ov_energetic",
+    "Good afternoon, Tokyo!",
+    0.5
+   ],
+   [
+    "am_ov_second",
+    "Good afternoon, Luke! The sky is grey and cloudy today, and there's a light wind, but so far there's no rain.",
     0.3
    ],
    [
-    "af_heart",
-    "T. O. K. Y. O.",
+    "am_ov_second",
+    "People here say it's a good day for walking, and the cafes are full of office workers drinking hot green tea.",
     0.3
    ],
    [
-    "af_heart",
-    "Our reporter is Kenji Sato.",
+    "am_ov_second",
+    "Right now I'm standing outside one of the biggest stations in the city, and it's very busy.",
     0.3
    ],
    [
-    "af_heart",
-    "Kenji.",
+    "am_ov_second",
+    "Thousands of people are hurrying to their trains.",
     0.3
    ],
    [
-    "af_heart",
-    "K. E. N. J. I.",
+    "am_ov_second",
+    "Most people in Tokyo travel by train, because it's fast and it's always on time.",
     0.3
    ],
    [
-    "af_heart",
-    "And Sato.",
+    "am_ov_second",
+    "And if you visit, come in spring.",
     0.3
    ],
    [
-    "af_heart",
-    "S. A. T. O.",
-    0.4
+    "am_ov_second",
+    "That's when Tokyo is famous for its cherry blossoms, and the parks turn pink and white.",
+    0.5
    ],
    [
-    "am_puck",
-    "Good afternoon from Tokyo.",
+    "am_ov_energetic",
+    "Beautiful! Thank you, Tokyo.",
     0.3
    ],
    [
-    "am_puck",
-    "It's cloudy and eighteen degrees.",
+    "am_ov_energetic",
+    "Finally, let's go to the other side of the world, where it's summer right now.",
     0.3
    ],
    [
-    "am_puck",
-    "There is a light wind, but no rain.",
+    "am_ov_energetic",
+    "We're going to Sydney, in Australia.",
     0.3
    ],
    [
-    "am_puck",
-    "The stations are busy because many people travel by train.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "In spring, Tokyo is famous for its cherry blossoms.",
-    0.3
-   ],
-   [
-    "am_puck",
-    "Visitors go to parks to see the flowers and take photographs.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Finally, let's visit Sydney in Australia.",
-    0.3
-   ],
-   [
-    "af_heart",
+    "am_ov_energetic",
     "Sydney.",
     0.3
    ],
    [
-    "af_heart",
+    "am_ov_energetic",
     "S. Y. D. N. E. Y.",
+    0.6
+   ],
+   [
+    "af_ov_adviser",
+    "Hello from Sydney! It's a bright summer day, and it's already very hot, even though it's still the morning.",
     0.3
    ],
    [
-    "af_heart",
-    "Our reporter is Mia Collins.",
+    "af_ov_adviser",
+    "The sky is completely blue, without a single cloud.",
     0.3
    ],
    [
-    "af_heart",
-    "Mia.",
+    "af_ov_adviser",
+    "Schools are on holiday, so lots of families are going to the beach.",
     0.3
    ],
    [
-    "af_heart",
-    "M. I. A.",
+    "af_ov_adviser",
+    "The trains to the coast are full of children with surfboards and big bags of sandwiches.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "But the doctors here have some advice for hot days like this.",
     0.3
    ],
    [
-    "af_heart",
-    "And Collins.",
+    "af_ov_adviser",
+    "Drink lots of water, and use sun cream, even if you're only outside for a short time.",
     0.3
    ],
    [
-    "af_heart",
-    "C. O. L. L. I. N. S.",
-    0.4
-   ],
-   [
-    "af_nicole",
-    "Hello from Sydney!",
+    "af_ov_adviser",
+    "The sun is very strong here, and it's easy to get burnt.",
     0.3
    ],
    [
-    "af_nicole",
-    "It's a bright summer day.",
+    "af_ov_adviser",
+    "My little brother forgot his sun cream last summer, and his nose was red for a week!",
     0.3
    ],
    [
-    "af_nicole",
-    "The temperature is thirty-one degrees.",
+    "af_ov_adviser",
+    "And one more thing: stay in the shade at lunchtime, when the sun is at its strongest.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Great advice! Thank you to all our reporters.",
     0.3
    ],
    [
-    "af_nicole",
-    "Many people are going to the beach, swimming or having lunch outside.",
+    "am_ov_energetic",
+    "So, what can we learn from today's programme?",
     0.3
    ],
    [
-    "af_nicole",
-    "In summer, it can become very hot.",
+    "am_ov_energetic",
+    "The weather is different everywhere, but the rules are the same.",
     0.3
    ],
    [
-    "af_nicole",
-    "People should drink water, use sun protection and look for shade during the hottest part of the day.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Thank you to all our reporters.",
+    "am_ov_energetic",
+    "Before you leave home, check the forecast and choose the right clothes.",
     0.3
    ],
    [
-    "af_heart",
-    "Weather can be very different around the world.",
+    "am_ov_energetic",
+    "It only takes a minute, and it can save you from a very bad day.",
     0.3
    ],
    [
-    "af_heart",
-    "In one city, people may wear winter coats, while in another, they enjoy a sunny day at the beach.",
-    0.4
+    "am_ov_energetic",
+    "I learned that last week, when I went to the park in my new white shoes and came home with muddy brown ones!",
+    0.5
    ],
    [
-    "af_heart",
-    "Weather affects transport, school activities, work and travel plans.",
+    "am_ov_energetic",
+    "So here's my advice: take an umbrella if rain is expected, even if the sky looks blue in the morning.",
     0.3
    ],
    [
-    "af_heart",
-    "Before leaving home, it's useful to check the forecast and choose suitable clothes.",
+    "am_ov_energetic",
+    "Now, we love hearing from you.",
     0.3
    ],
    [
-    "af_heart",
-    "Take an umbrella if rain is expected.",
+    "am_ov_energetic",
+    "Every week, listeners send us photos of the sky where they live: rainbows, snowmen, even a cat in a raincoat!",
     0.3
    ],
    [
-    "af_heart",
-    "Wear warm clothes in cold weather.",
+    "am_ov_energetic",
+    "So send us your weather photos.",
     0.3
    ],
    [
-    "af_heart",
-    "On very hot days, drink enough water and avoid staying in the sun for too long.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "Here are tomorrow's temperatures.",
+    "am_ov_energetic",
+    "You can call or message us on oh one three one, four seven two, six five eight.",
     0.3
    ],
    [
-    "af_heart",
-    "Oslo will be minus one degree.",
+    "am_ov_energetic",
+    "That's oh one three one, four seven two, six five eight.",
+    0.6
+   ],
+   [
+    "am_ov_energetic",
+    "The best photo each week wins a World Weather Today mug!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "OK, that's all for today.",
     0.3
    ],
    [
-    "af_heart",
-    "Nairobi will be twenty-seven degrees.",
+    "am_ov_energetic",
+    "Tomorrow, we were going to talk about rainbows, but a big storm is coming to the north of the country, so we'll talk about storms instead.",
     0.3
    ],
    [
-    "af_heart",
-    "Tokyo will be nineteen degrees, and Sydney will be thirty degrees.",
-    0.4
-   ],
-   [
-    "af_heart",
-    "That's all for World Weather Today.",
+    "am_ov_energetic",
+    "We'll find out how storms start, and how to stay safe when one comes.",
     0.3
    ],
    [
-    "af_heart",
-    "Thank you for listening!",
-    0.4
+    "am_ov_energetic",
+    "Our reporter in America will tell us about the biggest storm she's ever seen.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's going to be exciting. Don't miss it!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "The programme is on every morning at eight, from Monday to Friday.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "If you're busy at that time, don't worry.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You can listen again whenever you like, at home, on the bus or on the way to school.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Every programme is on our website, with all the photos from our listeners.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I'm Luke Smith. Thank you for listening, and see you tomorrow!",
+    0.5
    ]
   ]
  }

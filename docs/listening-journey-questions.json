@@ -115,306 +115,305 @@
    ["Where are the students going on their school trip?", ["history museum", "museum"], "going to the history museum"],
    ["How long will the bus journey take?", ["40", "forty"], "about forty minutes"],
    ["How much does the museum ticket cost?", ["4", "four"], "ticket costs four dollars"]]}]},
-{"no": 8, "speaker": "", "intro": "Listen to a radio interview with Olivia about her hobbies.",
+{"no": 8, "speaker": "Olivia", "inOrder": true, "spaced": true, "names": ["Olivia"], "audioV": 5, "intro": "Listen to a radio interview with Olivia about her hobbies.",
  "sections": [
-  {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["What is Olivia's favourite hobby?", ["Baking", "Photography", "Cycling"], "Photography", "Photography is my favourite hobby"],
-   ["Who gave her the camera?", ["Her uncle", "Her grandmother", "Her friend"], "Her uncle", "my uncle gave me"],
-   ["When does she visit Greenfield Park?", ["Saturday morning", "Friday evening", "Sunday night"], "Saturday morning", "on Saturday mornings"],
-   ["What does Olivia make with her grandmother?", ["Bread and soup", "Biscuits and simple cakes", "Pizza"], "Biscuits and simple cakes", "We make biscuits"]]},
-  {"h": "Spelling and numbers.", "t": "gap", "qs": [
-   ["Olivia's surname: _____", ["Green"], "Green is G-R-E-E-N"],
-   ["The park's name: _____ Park", ["Greenfield"], "Greenfield is G-R-E-E-N-F-I-E-L-D"],
-   ["Hours Olivia usually spends taking photographs at weekends: _____", ["2", "two", "2 hours", "two hours"], "about two hours at weekends"],
-   ["The last day for sending photographs: the _____ of May", ["15th", "15", "fifteenth"], "fifteenth of May"]]},
-  {"h": "True or False?", "t": "tf", "qs": [
-   ["Olivia likes taking pictures of nature.", "True", "pictures of nature"],
-   ["Olivia sometimes bakes with her grandmother.", "True", "baking with my grandmother"],
-   ["People can send up to five pictures.", "True", "We can send five pictures"]]},
-  {"h": "Answer the questions.", "t": "open", "qs": [
-   ["What is the name of the recipe website?", ["Easy Kitchen"], "website called Easy Kitchen"],
-   ["What is Olivia's friend's name?", ["Lily"], "my friend Lily"],
-   ["When will the competition results be announced?", ["2 June", "2nd June", "second of June", "June 2", "june 2nd", "second June"], "second of June"]]}]},
-{"no": 9, "speaker": "", "intro": "Listen to a customer talking to an assistant at a shopping centre.",
- "sections": [
-  {"h": "Complete the information.", "t": "gap", "qs": [
-   ["The cousin's first name: _____", ["Layla"], "Layla is L-A-Y-L-A"],
-   ["The cousin's surname: _____", ["Karim"], "Karim is K-A-R-I-M"],
-   ["The bookshop is on the _____ floor.", ["second", "2nd", "2"], "bookshop is on the second floor"],
-   ["The bookshop is opposite the _____ shop.", ["electronics"], "opposite the electronics shop"]]},
-  {"h": "Spelling and numbers.", "t": "gap", "qs": [
-   ["The street name: _____ Street", ["King"], "King is K-I-N-G"],
-   ["The wooden building set costs $_____.", ["18.50", "18,50", "18.5"], "eighteen dollars and fifty"],
-   ["On Saturday the centre closes at _____ in the evening.", ["9", "nine", "9:00", "9.00", "9 pm", "9 p.m.", "9:00 pm", "9:00 p.m."], "closes at nine in the evening"]]},
-  {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["Where is the toy shop?", ["Ground floor", "First floor", "Third floor"], "First floor", "Play House on the first floor"],
-   ["How old is the customer's brother?", ["8", "10", "12"], "10", "ten-year-old brother"],
-   ["Where is the food court?", ["First floor", "Second floor", "Third floor"], "Third floor", "food court is on the third floor"]]},
-  {"h": "True or False?", "t": "tf", "qs": [
-   ["The café is called Green Cup.", "False", "called Blue Cup"],
-   ["The ATM is next to the customer service desk.", "True", "next to the customer service desk"]]},
-  {"h": "Write the answers.", "t": "gap", "qs": [
-   ["The vegetable sandwich costs $_____.", ["4.20", "4,20", "4.2"], "four dollars and twenty cents"],
-   ["On Sundays the centre closes at _____ in the evening.", ["7", "seven", "7:00", "7.00", "7 pm", "7 p.m.", "7:00 pm", "7:00 p.m."], "On Sundays, it closes at seven"]]}]},
-{"no": 10, "speaker": "Peter", "intro": "Listen to a guide at the start of a city tour.",
- "sections": [
-  {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["Where does the tour begin?", ["Riverside Park", "Central Square", "Green Market"], "Central Square", "starting at Central Square"],
-   ["What was the museum building before?", ["A school", "A hospital", "A hotel"], "A school", "was once a school"],
-   ["When is the museum closed?", ["Tuesday", "Saturday", "Monday"], "Monday", "closed on Mondays"],
-   ["What is the final stop?", ["The market", "The library", "The museum"], "The library", "final stop is the City Library"]]},
-  {"h": "Spelling and numbers.", "t": "gap", "qs": [
-   ["The park's name: _____ Park", ["Riverside"], "Riverside is R-I-V-E-R-S-I-D-E"],
-   ["The road's name: _____ Road", ["River"], "River is R-I-V-E-R"],
-   ["Fresh juice costs $_____.", ["3", "three", "3.00"], "Fresh juice costs three dollars"],
-   ["The guide's phone number (in digits): _____", ["0794 621 830"], "zero seven nine four"]]},
-  {"h": "Complete the notes.", "t": "gap", "qs": [
-   ["The market is called _____ Market.", ["Green"], "Green is G-R-E-E-N"],
-   ["Lunch begins at _____.", ["12:30", "12.30", "twelve thirty", "half past twelve", "12:30 pm", "12:30 p.m."], "At twelve thirty"],
-   ["The chicken and rice meal costs $_____.", ["7.80", "7,80", "7.8"], "seven dollars and eighty cents"],
-   ["The library has _____ floors.", ["3", "three"], "It has three floors"]]},
-  {"h": "True or False?", "t": "tf", "qs": [
-   ["Green Market is busiest on Saturday mornings.", "True", "busiest on Saturday mornings"],
-   ["The library has a quiet study area on the third floor.", "True", "the third is a quiet study area"],
-   ["Lost visitors should meet at the library entrance at 3:30.", "True", "at three thirty if you get lost"]]}]},
-{"no": 11, "speaker": "Amelia", "intro": "Listen to Amelia talking about a holiday she remembers.",
- "sections": [
-  {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["How did the family travel?", ["By car", "By train", "By bus"], "By train", "We went by train"],
-   ["Who waited at the station?", ["Uncle David", "Nora, the guide", "Her grandfather"], "Uncle David", "My uncle David was waiting"],
-   ["What did they do on the second day?", ["Went hiking", "Went shopping", "Visited a museum"], "Went hiking", "we went hiking"],
-   ["What was the dog's name?", ["Max", "Rex", "Sam"], "Max", "One dog was called Max"]]},
-  {"h": "Spelling and numbers.", "t": "gap", "qs": [
-   ["The town's name: _____", ["Silver Lake"], "Silver is S-I-L-V-E-R"],
-   ["The guide's name: _____", ["Nora"], "Nora is N-O-R-A"],
-   ["Amelia's sister's name: _____", ["Sophie"], "Sophie is S-O-P-H-I-E"],
-   ["The train left at _____ in the morning.", ["6:45", "6.45", "six forty-five", "6:45 am", "6:45 a.m.", "quarter to seven"], "six forty-five in the morning"],
-   ["They stayed for _____ days.", ["5", "five"], "We stayed for five days"]]},
-  {"h": "True or False?", "t": "tf", "qs": [
-   ["The guesthouse had ten rooms.", "False", "It had five rooms"],
-   ["Amelia ordered vegetable soup and grilled chicken.", "True", "vegetable soup and grilled chicken"],
-   ["The family saw a fox during the walk.", "True", "a small fox"],
-   ["The weather stayed sunny all day.", "False", "became cloudy and windy"]]},
-  {"h": "Answer the questions.", "t": "open", "qs": [
-   ["What was the guesthouse called?", ["Mountain View"], "guesthouse called Mountain View"],
-   ["Name one kind of animal they saw at the farm.", ["goat", "sheep", "chicken", "dog"], "There were goats, sheep"],
-   ["On what date did they return home?", ["15", "15th", "fifteenth"], "fifteenth of July"]]}]},
-{"no": 12, "speaker": "", "intro": "Listen to a teacher and four students talking about their dreams.",
- "sections": [
-  {"h": "Match the students with their goals.", "t": "choose", "qs": [
-   ["Mia", ["Become a football coach", "Become a doctor", "Travel and learn about cultures", "Become a computer programmer"], "Become a doctor", "I want to become a doctor"],
-   ["Adam", ["Become a football coach", "Become a doctor", "Travel and learn about cultures", "Become a computer programmer"], "Become a computer programmer", "become a computer programmer"],
-   ["Sara", ["Become a football coach", "Become a doctor", "Travel and learn about cultures", "Become a computer programmer"], "Travel and learn about cultures", "learn about different cultures"],
-   ["Ben", ["Become a football coach", "Become a doctor", "Travel and learn about cultures", "Become a computer programmer"], "Become a football coach", "become a football coach"]]},
-  {"h": "Spelling.", "t": "gap", "qs": [
-   ["Mia's surname: _____", ["Johnson"], "Johnson is J-O-H-N-S-O-N"],
-   ["Adam's surname: _____", ["Lee"], "Lee is L-E-E"],
-   ["The university's name: _____ University", ["Northbridge"], "Northbridge is N-O-R-T-H-B-R-I-D-G-E"],
-   ["The city Sara wants to visit: _____", ["Barcelona"], "visit Barcelona in Spain"],
-   ["The academy's name: _____ Academy", ["Eastside"], "Eastside is E-A-S-T-S-I-D-E"]]},
-  {"h": "Complete the sentences. Write ONE word or A NUMBER.", "t": "gap", "qs": [
-   ["Mia could review science for _____ minutes a day.", ["30", "thirty"], "thirty minutes a day"],
-   ["Sara could learn _____ Spanish words every week.", ["10", "ten"], "ten Spanish words"],
-   ["Ben could help the school _____ team.", ["football"], "help the school football team"]]},
-  {"h": "Numbers and short answers.", "t": "gap", "qs": [
-   ["The students should bring their plans on the _____ of November.", ["22nd", "22", "twenty-second", "twenty second"], "twenty-second of November"],
-   ["The next lesson is in Room _____.", ["14", "fourteen"], "Room 14"],
-   ["Mia needs to improve her _____.", ["chemistry"], "improve my chemistry"],
-   ["Sara hopes to travel in _____ years.", ["2", "two"], "go in two years"]]}]},
-{"no": 13, "speaker": "", "intro": "Listen to a radio programme about three people and their jobs.",
- "sections": [
-  {"h": "Match the person with the job.", "t": "choose", "qs": [
-   ["Daniel Foster", ["Bus driver", "Hotel receptionist", "Photographer"], "Hotel receptionist", "a hotel receptionist"],
-   ["Emma Brooks", ["Bus driver", "Hotel receptionist", "Photographer"], "Photographer", "photographer Emma Brooks"],
-   ["Mark Wilson", ["Bus driver", "Hotel receptionist", "Photographer"], "Bus driver", "Mark Wilson, a bus driver"],
-   ["Who takes photographs at local events?", ["Daniel", "Emma", "Mark"], "Emma", "families, shops and local events"]]},
-  {"h": "Spelling and numbers.", "t": "gap", "qs": [
-   ["Daniel's surname: _____", ["Foster"], "Foster is F-O-S-T-E-R"],
-   ["The name of Daniel's hotel: the _____ Hotel", ["Sunrise"], "Sunrise is S-U-N-R-I-S-E"],
-   ["Emma's company: _____", ["Bright Frame"], "Bright is B-R-I-G-H-T"],
-   ["Mark's surname: _____", ["Wilson"], "Wilson is W-I-L-S-O-N"],
-   ["The bus route number (in digits): _____", ["24"], "Route 24"]]},
-  {"h": "Complete the notes.", "t": "gap", "qs": [
-   ["Daniel's morning shift starts at _____.", ["7:30", "7.30", "seven thirty", "half past seven", "7:30 am", "7:30 a.m."], "starts at seven thirty"],
-   ["Emma usually works around _____ hours a week.", ["35", "thirty-five", "thirty five"], "thirty-five hours a week"],
-   ["One journey on Mark's route takes about _____ minutes.", ["50", "fifty"], "about fifty minutes"],
-   ["Mark's break is at around _____.", ["10:15", "10.15", "ten fifteen", "quarter past ten", "10:15 am", "10:15 a.m."], "around ten fifteen"]]},
-  {"h": "True or False?", "t": "tf", "qs": [
-   ["Daniel's hotel is far from the railway station.", "False", "near the railway station"],
-   ["Emma only works in her studio.", "False", "often we travel"],
-   ["Mark's route passes the hospital.", "True", "past the hospital"],
-   ["Mark usually finishes work at 3:30 p.m.", "False", "finishes at two thirty"]]}]},
-{"no": 14, "speaker": "", "intro": "Listen to a customer buying a birthday present in a clothes shop.",
- "sections": [
-  {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["Who is the customer buying clothes for?", ["Her father", "Her brother", "Her friend"], "Her brother", "a jacket for my brother"],
-   ["Which jacket does she choose?", ["The dark blue one", "The black one", "The grey one"], "The grey one", "I'll take it"],
-   ["How many pockets does the grey jacket have?", ["Two", "Three", "Four"], "Three", "two outside pockets and one small pocket inside"],
-   ["What colour is the T-shirt she buys?", ["White", "Green", "Blue"], "Green", "I'll take the green one"]]},
-  {"h": "Spelling and numbers.", "t": "gap", "qs": [
-   ["The brother's name: _____", ["Yusuf"], "Yusuf is Y-U-S-U-F"],
-   ["The grey jacket costs $_____.", ["35", "thirty-five", "35.00"], "costs thirty-five dollars"],
-   ["The green T-shirt costs $_____.", ["14", "fourteen", "14.00"], "green one costs fourteen dollars"],
-   ["Clothes can be returned within _____ days.", ["30", "thirty"], "within thirty days"]]},
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
-   ["The dark blue jacket costs _____ dollars.", ["48", "forty-eight", "forty eight"], "forty-eight dollars"],
-   ["The white T-shirt costs _____ dollars.", ["12", "twelve"], "white one costs twelve dollars"],
-   ["The total bill is _____ dollars.", ["49", "forty-nine", "forty nine"], "total is forty-nine dollars"],
-   ["The customer pays by _____.", ["card"], "Can I pay by card?"]]},
-  {"h": "True or False?", "t": "tf", "qs": [
-   ["Yusuf prefers formal clothes.", "False", "Casual clothes"],
-   ["The grey jacket has one inside pocket.", "True", "one small pocket inside"],
-   ["The customer buys the white T-shirt.", "False", "I'll take the green one"],
-   ["A receipt is needed to return an item.", "True", "if you have the receipt"],
-   ["The customer asks for a gift bag.", "True", "in a gift bag"]]}]},
-{"no": 15, "speaker": "", "intro": "Listen to an announcement at a train station and two passengers talking.",
- "sections": [
+   ["Olivia's surname: _____", ["Green"], "That's G-R-E-E-N"],
+   ["Olivia started taking photos _____ years ago.", ["two", "2"], "started two years ago"],
+   ["Her first camera was a present from her _____.", ["uncle"], "my uncle gave me"],
+   ["She likes taking pictures of birds and _____.", ["flowers"], "birds and flowers"],
+   ["The park where she takes photos: _____ Park", ["Maple"], "M-A-P-L-E"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["Which platform does the Lakeside train leave from?", ["2", "3", "4"], "4", "Lakeside will depart from Platform 4"],
-   ["What time does the Hilltown train leave?", ["9:20", "9:45", "10:30"], "9:45", "Platform 2 at nine forty-five"],
-   ["How long is the journey to Lakeside?", ["1 hour 20 minutes", "2 hours 10 minutes", "2 hours 30 minutes"], "2 hours 10 minutes", "two hours and ten minutes"],
-   ["What time does the return train leave?", ["6:15", "6:30", "7:15"], "6:15", "leaves Lakeside at six fifteen"]]},
-  {"h": "Spelling and numbers.", "t": "gap", "qs": [
-   ["The friend's first name: _____", ["Anna"], "Anna is A-N-N-A"],
-   ["The friend's surname: _____", ["Miller"], "Miller is M-I-L-L-E-R"],
-   ["The street name: _____ Street", ["Garden"], "Garden is G-A-R-D-E-N"],
-   ["The house number: _____", ["18", "eighteen"], "18 Garden Street"],
-   ["The dog's name: _____", ["Charlie"], "Charlie is C-H-A-R-L-I-E"]]},
-  {"h": "Complete the notes.", "t": "gap", "qs": [
-   ["The ticket costs $_____.", ["26.50", "26,50", "26.5"], "twenty-six dollars and fifty cents"],
-   ["The passenger comes back on _____ evening.", ["Sunday"], "back on Sunday evening"],
-   ["The shop is next to Platform _____.", ["3", "three"], "next to Platform 3"],
-   ["The shop closes at _____ p.m.", ["8", "eight", "8:00", "8.00"], "closes at eight in the evening"]]},
+   ["When does Olivia usually go to the park?", ["Saturday morning", "Sunday afternoon", "Friday evening"], "Saturday morning", "on Saturday mornings"],
+   ["Why does she go then?", ["Her friends are there", "It's quiet", "The light is better"], "It's quiet", "because it's quiet"],
+   ["What does Olivia usually bake with her grandmother?", ["Bread", "Biscuits", "Pizza"], "Biscuits", "usually make biscuits"],
+   ["Where do they find their recipes?", ["On a website", "In an old notebook", "In a magazine"], "In an old notebook", "old notebook full of family recipes"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["The train to Westport is leaving earlier than planned.", "False", "Westport is delayed"],
-   ["The passenger bought the ticket online.", "True", "online yesterday"],
-   ["Anna lives near the lake.", "True", "She lives near the lake"],
-   ["The passenger plans to visit a nature park.", "True", "a nature park"],
-   ["Every seat has a power socket.", "False", "sockets under some seats"]]}]},
-{"no": 16, "speaker": "", "intro": "Listen to an interview with Noah, a young volunteer who helps animals.",
+   ["Olivia made a chocolate cake for her best friend's birthday.", "True", "chocolate cake for my best friend"],
+   ["On weekdays, Olivia does her homework before her hobbies.", "True", "I do my homework first"],
+   ["The competition is only for adults.", "False", "for teenagers aged thirteen"]]},
+  {"h": "Complete the notes. Write a date or a number.", "t": "gap", "qs": [
+   ["The last day to send photos: the _____ of May", ["15th", "15", "fifteenth"], "the fifteenth of May"],
+   ["The competition office's phone number: _____", ["0794 621 830"], "The number is oh seven nine four"]]}]},
+{"no": 9, "speaker": "", "inOrder": true, "spaced": true, "names": ["Hannah"], "audioV": 3, "intro": "Listen to a customer talking to an assistant at a shopping centre.",
  "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The cousin's surname: _____", ["Brooks"], "That's B-R-O-O-K-S"],
+   ["The bookshop is on the _____ floor.", ["second", "2nd", "2"], "on the second floor"],
+   ["The bookshop is next to the _____.", ["cinema"], "next to the cinema"],
+   ["The customer's brother is _____ years old.", ["ten", "10"], "He's ten"],
+   ["The name of the toy shop: _____", ["Toybox"], "T-O-Y-B-O-X"],
+   ["The wooden building set costs $_____.", ["18.50", "18,50", "18.5"], "eighteen dollars and fifty cents"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["What animal did Noah's family find?", ["A cat", "A dog", "A rabbit"], "A dog", "found a small dog"],
-   ["What is his cat's name?", ["Bella", "Rocky", "Daisy"], "Bella", "a cat called Bella"],
-   ["Where does Noah volunteer?", ["Happy Tails Centre", "Green Animal Hospital", "Oak School"], "Happy Tails Centre", "At Happy Tails Centre"],
-   ["When was Rocky adopted?", ["March", "April", "May"], "April", "A family visited in April"]]},
-  {"h": "Spelling.", "t": "gap", "qs": [
-   ["Noah's surname: _____", ["Reed"], "Reed is R-E-E-D"],
-   ["The cat's name: _____", ["Bella"], "Bella is B-E-L-L-A"],
-   ["The animal centre: _____ Centre", ["Happy Tails"], "Happy is H-A-P-P-Y"],
-   ["The street name: _____ Street", ["Oak"], "Oak is O-A-K"],
-   ["The dog's name: _____", ["Rocky"], "Rocky is R-O-C-K-Y"]]},
-  {"h": "Numbers and details.", "t": "gap", "qs": [
-   ["Bella is _____ years old.", ["3", "three"], "three years old"],
-   ["Noah feeds Bella _____ a day.", ["twice", "2 times", "two times"], "twice a day"],
-   ["Last week there were _____ dogs and eleven cats.", ["24", "twenty-four", "twenty four"], "twenty-four dogs"],
-   ["The centre's phone number (in digits): _____", ["020 774 519"], "zero two zero"]]},
+   ["Where is the food court?", ["Near the main entrance", "Near the car park entrance", "Next to the bookshop"], "Near the car park entrance", "food court is near the car park"],
+   ["What does the café sell?", ["Pizza", "Sandwiches", "Ice cream"], "Sandwiches", "really good sandwiches"],
+   ["What time does the centre close today?", ["7 p.m.", "8 p.m.", "9 p.m."], "9 p.m.", "we close at nine"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["Bella has black and brown fur.", "False", "white and grey fur"],
-   ["Noah changes Bella's water every day.", "True", "change her water every day"],
-   ["Rocky was confident when he arrived.", "False", "At first, he was nervous"],
-   ["Rocky's new family had a large garden.", "True", "a large garden"],
-   ["Visitors should contact the centre before visiting.", "True", "contact the centre before visiting"]]}]},
-{"no": 17, "speaker": "Rachel", "intro": "Listen to a podcast about healthy habits.",
+   ["The centre closes later on Sundays.", "False", "On Sundays, we close earlier"],
+   ["There is an ATM next to the customer service desk.", "True", "right next to the customer service desk"],
+   ["The customer can call the information desk if she can't find her cousin.", "True", "just call us at the information desk"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The information desk's phone number: _____", ["0207 491 356"], "The number is oh two oh seven"],
+   ["Gift wrapping at the customer service desk is _____.", ["free"], "Gift wrapping is free"]]}]},
+{"no": 10, "speaker": "Guide", "inOrder": true, "spaced": true, "names": ["Peter"], "audioV": 3, "intro": "Listen to a guide at the start of a city tour.",
  "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The guide's surname: _____", ["Wilson"], "That's W-I-L-S-O-N"],
+   ["Before it was a museum, the building was a _____.", ["school"], "it was a school"],
+   ["The museum is closed on _____.", ["Mondays", "Monday"], "closed on Mondays"],
+   ["In the museum, you can see old _____ and photos of the city.", ["maps"], "old maps"],
+   ["The name of the park: _____ Park", ["Riverside"], "R-I-V-E-R-S-I-D-E"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["What is the podcast called?", ["Healthy World", "Everyday Choices", "Better Living"], "Everyday Choices", "welcome to Everyday Choices"],
-   ["What bedtime does she suggest for someone who wakes up at seven?", ["8:30", "10:30 or 11:00", "Midnight"], "10:30 or 11:00", "ten thirty or eleven"],
-   ["How much water does the presenter's bottle hold?", ["500 ml", "650 ml", "750 ml"], "750 ml", "seven hundred and fifty millilitres"],
-   ["How does Thomas travel to work?", ["By bus", "On foot", "By car"], "On foot", "He walks to work"],
-   ["How long is the study break she talks about?", ["5 minutes", "10 minutes", "25 minutes"], "5 minutes", "five-minute break"]]},
-  {"h": "Spelling and numbers.", "t": "gap", "qs": [
-   ["The presenter's first name: _____", ["Rachel"], "Rachel is R-A-C-H-E-L"],
-   ["The presenter's surname: _____", ["Moore"], "Moore is M-O-O-R-E"],
-   ["The neighbour's first name: _____", ["Thomas"], "Thomas is T-H-O-M-A-S"],
-   ["The listener's town: _____", ["Brookfield"], "Brookfield is B-R-O-O-K-F-I-E-L-D"],
-   ["Thomas's office is _____ minutes from his home.", ["25", "twenty-five", "twenty five"], "twenty-five minutes from his home"]]},
-  {"h": "Complete the sentences. Write ONE word or A NUMBER.", "t": "gap", "qs": [
-   ["Keep a water _____ nearby.", ["bottle"], "keep a bottle nearby"],
-   ["Playing _____ is one way to move more.", ["outside"], "playing outside"],
-   ["Daniel works from nine until _____.", ["5", "five", "5:00", "5 pm", "5 p.m."], "from nine until five"],
-   ["Daniel could walk for _____ minutes after lunch.", ["10", "ten"], "walk for ten minutes"],
-   ["The podcast is called _____ Choices.", ["Everyday"], "Thank you for listening to Everyday Choices"]]},
+   ["What does the park have?", ["A swimming pool", "Two playgrounds", "A zoo"], "Two playgrounds", "two playgrounds"],
+   ["How much does fresh juice cost at the café?", ["$2", "$3", "$4"], "$3", "fresh juice costs three dollars"],
+   ["What is the market famous for?", ["Old books", "Fresh fruit and vegetables", "Clothes"], "Fresh fruit and vegetables", "famous for fresh fruit"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["The presenter says everyone needs expensive equipment to be healthy.", "False", "many useful habits are simple"],
-   ["The presenter recommends eating a variety of foods.", "True", "eating a variety of foods"],
-   ["Thomas drives to work every day.", "False", "He walks to work every day"],
-   ["The presenter suggests changing every habit in one day.", "False", "don't need to change everything in one day"]]}]},
-{"no": 18, "speaker": "", "intro": "Listen to a school radio programme about technology.",
+   ["The market is very busy on Saturday mornings.", "True", "very busy on Saturday mornings"],
+   ["The group will have lunch at half past one.", "False", "at half past twelve"],
+   ["The library has four floors.", "False", "it has three floors"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The top floor of the library is a quiet _____ area.", ["study"], "quiet study area"],
+   ["If you get lost, meet at the library _____.", ["entrance"], "library entrance"],
+   ["The guide's phone number: _____", ["0781 352 649"], "My number is oh seven eight one"],
+   ["Bring an _____ because it might rain.", ["umbrella"], "bring an umbrella"]]}]},
+{"no": 11, "speaker": "Tom", "inOrder": true, "spaced": true, "names": ["Tom"], "audioV": 3, "intro": "Listen to Tom talking about a holiday.",
  "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["Tom's surname: _____", ["Fisher"], "That's F-I-S-H-E-R"],
+   ["The family travelled by _____.", ["train"], "We went by train"],
+   ["They left home at a quarter to _____ in the morning.", ["seven", "7"], "a quarter to seven"],
+   ["Tom's _____ was waiting at the station.", ["uncle"], "my uncle was waiting"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["What is the programme called?", ["School Voices", "Student Life", "Digital World"], "School Voices", "Welcome to School Voices"],
-   ["How long does Emily use her language app each day?", ["5 minutes", "15 minutes", "30 minutes"], "15 minutes", "about fifteen minutes a day"],
-   ["What does Jack mainly use his laptop for?", ["Shopping", "School projects", "Sports"], "School projects", "I do school projects on it"],
-   ["What is the website called?", ["Learn Online", "Study World", "Online School"], "Learn Online", "website called Learn Online"],
-   ["What is Emily's favourite device?", ["Her laptop", "Her tablet", "Her camera"], "Her tablet", "My favourite is my tablet"]]},
-  {"h": "Spelling.", "t": "gap", "qs": [
-   ["Emily's surname: _____", ["Parker"], "Parker is P-A-R-K-E-R"],
-   ["Jack's surname: _____", ["Brown"], "Brown is B-R-O-W-N"],
-   ["The website's name: _____", ["Learn Online"], "Learn is L-E-A-R-N"],
-   ["The tablet's name: _____", ["Nova"], "Nova is N-O-V-A"],
-   ["The shop's name: _____", ["Tech Corner"], "Tech is T-E-C-H"]]},
-  {"h": "Numbers and details.", "t": "gap", "qs": [
-   ["Emily paid $_____ for her tablet.", ["180", "one hundred and eighty", "180.00"], "one hundred and eighty dollars"],
-   ["The shop's street number: _____", ["42", "forty-two"], "42 Market Road"],
-   ["The street name: _____ Road", ["Market"], "Market is M-A-R-K-E-T"],
-   ["Some lessons on Learn Online are _____ minutes long.", ["10", "ten"], "ten minutes long"]]},
+   ["What did their room have?", ["A kitchen", "A balcony", "A TV"], "A balcony", "had a balcony"],
+   ["What did Tom eat on the first evening?", ["Pasta", "Fish and chips", "Vegetable soup and grilled chicken"], "Vegetable soup and grilled chicken", "I had vegetable soup"],
+   ["What animal did they see in the forest?", ["A fox", "A deer", "A rabbit"], "A fox", "a small fox"],
+   ["Where did they take photos?", ["At a lake", "On a bridge", "At a waterfall"], "At a waterfall", "stopped at a waterfall"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["Emily puts her phone away when she studies.", "True", "put my phone away when studying"],
-   ["Jack believes everything on the internet is correct.", "False", "Not everything online is correct"],
-   ["Emily thinks teachers may share more materials online.", "True", "share materials online"],
-   ["Jack thinks technology will completely replace teachers.", "False", "it won't replace them"],
-   ["Jack recommends spending some time away from screens.", "True", "spend time away from screens"]]}]},
-{"no": 19, "speaker": "", "intro": "Listen to an interview with Sophie, who works on a film.",
+   ["It was sunny all day during the walk.", "False", "became cloudy and windy"],
+   ["There were horses at the farm.", "False", "There were goats"],
+   ["The dog at the farm was unfriendly.", "False", "a friendly dog"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The dog's name: _____", ["Max"], "That's M-A-X"],
+   ["The dog played with Tom's _____.", ["sister"], "played with my sister"],
+   ["The farmer's phone number: _____", ["0123 648 597"], "His number is oh one two three"],
+   ["They stayed for _____ days.", ["five", "5"], "stayed for five days"],
+   ["They came home on the _____ of July.", ["15th", "15", "fifteenth"], "fifteenth of July"]]}]},
+{"no": 12, "speaker": "", "inOrder": true, "spaced": true, "names": ["Emma"], "audioV": 3, "intro": "Listen to a teacher talking to a student, Emma, about her dreams for the future.",
  "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["Emma's surname: _____", ["Clarke"], "That's C-L-A-R-K-E"],
+   ["Emma wants to become a _____.", ["doctor"], "become a doctor"],
+   ["Her favourite subject is _____.", ["biology"], "biology is my favourite"],
+   ["She needs to improve her _____.", ["chemistry"], "improve my chemistry"],
+   ["The university she likes: _____ University", ["Oakwood"], "O-A-K-W-O-O-D"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["What is Sophie's job?", ["Actor", "Production assistant", "Director"], "Production assistant", "production assistant called Sophie Turner"],
-   ["What is the film called?", ["The Secret Garden", "The Green House", "The Lost Village"], "The Secret Garden", "film called The Secret Garden"],
-   ["Where are most scenes filmed?", ["Willow Creek", "Studio North", "The city centre"], "Willow Creek", "Most scenes are filmed in Willow Creek"],
-   ["How many people are in the team?", ["25", "40", "45"], "45", "About forty-five people"],
-   ["How long will the film last?", ["1 hour 20 minutes", "1 hour 40 minutes", "2 hours"], "1 hour 40 minutes", "one hour and forty minutes"]]},
-  {"h": "Spelling.", "t": "gap", "qs": [
-   ["Sophie's surname: _____", ["Turner"], "Turner is T-U-R-N-E-R"],
-   ["The village: _____", ["Willow Creek"], "Willow is W-I-L-L-O-W"],
-   ["The studio: _____", ["Studio North"], "Studio is S-T-U-D-I-O"],
-   ["The main actor's first name: _____", ["Oliver"], "Oliver is O-L-I-V-E-R"],
-   ["The main character's name: _____", ["Leo"], "Leo is L-E-O"],
-   ["The girl actor's first name: _____", ["Hannah"], "Hannah is H-A-N-N-A-H"],
-   ["The dog's name: _____", ["Biscuit"], "Biscuit is B-I-S-C-U-I-T"]]},
-  {"h": "Numbers and dates.", "t": "gap", "qs": [
-   ["Filming takes about _____ weeks.", ["12", "twelve"], "About twelve weeks"],
-   ["The first trailer comes out on the _____ of October.", ["5th", "5", "fifth"], "fifth of October"],
+   ["How far is the university from Emma's home?", ["Ten minutes", "An hour", "Two hours"], "An hour", "only an hour from my home"],
+   ["What does Emma's best friend want to be?", ["A doctor", "A teacher", "A computer programmer"], "A computer programmer", "wants to be a computer programmer"],
+   ["Who does Emma's brother like helping?", ["Younger players", "His grandparents", "His classmates"], "Younger players", "helping younger players"]]},
+  {"h": "True or False?", "t": "tf", "qs": [
+   ["The teacher says a dream needs a plan.", "True", "a dream needs a plan"],
+   ["The teacher suggests reviewing science for an hour a day.", "False", "thirty minutes a day"],
+   ["Students should write down two goals.", "True", "one small goal"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The bigger goal is for the next _____ years.", ["three", "3"], "next three years"],
+   ["The next lesson is on the _____ of November.", ["22nd", "22", "twenty-second", "twenty second"], "twenty-second of November"],
+   ["The next lesson is in Room _____.", ["14", "fourteen"], "Room fourteen"],
+   ["The school office's phone number: _____", ["0161 496 203"], "The number is oh one six one"],
+   ["Emma will talk to her _____ about her plan.", ["parents"], "talk to my parents"]]}]},
+{"no": 13, "speaker": "", "inOrder": true, "spaced": true, "names": ["Lucy"], "audioV": 3, "intro": "Listen to a radio interview with Lucy, a careers adviser, about three jobs.",
+ "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["Lucy's surname: _____", ["Foster"], "That's F-O-S-T-E-R"],
+   ["The hotel is near the railway _____.", ["station"], "near the railway station"],
+   ["Receptionists welcome guests and help them _____ in.", ["check"], "help them check in"],
+   ["The morning shift starts at half past _____.", ["seven", "7"], "half past seven"],
+   ["The name of the hotel: the _____ Hotel", ["Sunrise"], "S-U-N-R-I-S-E"]]},
+  {"h": "Choose the correct answer.", "t": "choose", "qs": [
+   ["Why is English useful for receptionists?", ["The hotel is in England", "Guests come from different countries", "They write many emails"], "Guests come from different countries", "come from different countries"],
+   ["Who does the photographer take pictures for?", ["Families, shops and local events", "Newspapers", "Only schools"], "Families, shops and local events", "pictures for families"],
+   ["Where does the photographer often work?", ["At home", "Only in her studio", "In different places"], "In different places", "often travels to different places"]]},
+  {"h": "True or False?", "t": "tf", "qs": [
+   ["The bus route goes past the hospital.", "True", "past the hospital"],
+   ["One bus journey takes about fifteen minutes.", "False", "about fifty minutes"],
+   ["The bus driver doesn't like meeting people.", "False", "likes meeting people"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["Drivers need to be calm and _____.", ["careful"], "calm and careful"],
+   ["Drivers need the right driving _____.", ["licence", "license"], "driving licence"],
+   ["The careers office's phone number: _____", ["0203 768 145"], "The number is oh two oh three"],
+   ["The office is open every _____.", ["weekday"], "open every weekday"],
+   ["Lucy's advice: try different _____.", ["things"], "Try different things"],
+   ["A positive _____ is useful in every job.", ["attitude"], "positive attitude"]]}]},
+{"no": 14, "speaker": "", "inOrder": true, "spaced": true, "names": ["Oliver"], "audioV": 3, "intro": "Listen to a customer buying a present in a clothes shop.",
+ "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The brother's name: _____", ["Oliver"], "That's O-L-I-V-E-R"],
+   ["It's the brother's _____ next week.", ["birthday"], "his birthday next week"],
+   ["The brother likes _____ clothes.", ["casual"], "Casual. He likes"],
+   ["He doesn't like bright _____.", ["colours", "colors"], "without bright colours"],
+   ["The company that makes the dark blue jacket: _____", ["Kestrel"], "K-E-S-T-R-E-L"]]},
+  {"h": "Choose the correct answer.", "t": "choose", "qs": [
+   ["How much does the grey jacket cost?", ["$25", "$35", "$45"], "$35", "costs thirty-five dollars"],
+   ["How many pockets does the grey jacket have inside?", ["One", "Two", "None"], "One", "one small pocket inside"],
+   ["Why does the customer like the pockets?", ["Her brother carries his phone and keys", "They are very big", "They have zips"], "Her brother carries his phone and keys", "carries his phone and keys"]]},
+  {"h": "True or False?", "t": "tf", "qs": [
+   ["The customer buys a white T-shirt.", "False", "I'll take the green one"],
+   ["You can return clothes within ten days.", "False", "within thirty days"],
+   ["You need the receipt to return clothes.", "True", "you need the receipt"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The customer pays by _____.", ["card"], "pay by card"],
+   ["She wants a gift _____.", ["bag"], "Would you like a gift bag"],
+   ["The shop's phone number: _____", ["0198 254 736"], "Our number is oh one nine eight"],
+   ["The shop is open every day until _____ o'clock.", ["eight", "8"], "until eight o'clock"],
+   ["The label says: \"Happy birthday! From your _____.\"", ["sister"], "From your sister"],
+   ["To find the exit, go past the _____ and turn left.", ["mirrors"], "go past the mirrors"]]}]},
+{"no": 15, "speaker": "", "inOrder": true, "spaced": true, "names": ["Jack"], "audioV": 3, "intro": "Listen to Jack talking to an assistant at a train station.",
+ "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["Jack's surname: _____", ["Miller"], "That's M-I-L-L-E-R"],
+   ["Jack bought his ticket _____ yesterday.", ["online"], "bought it online"],
+   ["His seat is in coach _____.", ["C"], "in coach C"],
+   ["The train leaves from Platform _____.", ["four", "4"], "Platform four"],
+   ["The train leaves at _____.", ["9:20", "9.20", "nine twenty", "twenty past nine"], "leaves at nine twenty"],
+   ["His friend lives on _____ Street.", ["Rowan"], "R-O-W-A-N"],
+   ["The bus stops outside the station _____.", ["café", "cafe"], "outside the station café"]]},
+  {"h": "Choose the correct answer.", "t": "choose", "qs": [
+   ["What is the Wi-Fi on the train like?", ["Very fast", "The signal can be weak", "There is no Wi-Fi"], "The signal can be weak", "signal can be weak"],
+   ["What can Jack buy in the café on the train?", ["Hot meals", "Books", "Sandwiches and drinks"], "Sandwiches and drinks", "buy sandwiches and drinks"],
+   ["Where are the power sockets?", ["Under some seats", "In every coach", "Next to the doors"], "Under some seats", "only under some seats"]]},
+  {"h": "True or False?", "t": "tf", "qs": [
+   ["Jack's friend wants to show him a nature park.", "True", "show me a nature park"],
+   ["Jack's friend has a cat.", "False", "she has a dog"],
+   ["Jack is coming back on Saturday.", "False", "coming back on Sunday"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The station office's phone number: _____", ["0144 926 358"], "The number is oh one four four"],
+   ["The small shop sells snacks and _____.", ["newspapers"], "snacks and newspapers"],
+   ["Board the train through the front and _____ doors.", ["middle"], "front and middle doors"],
+   ["Don't leave your _____ alone.", ["bags"], "leave your bags alone"],
+   ["Jack will buy a bottle of _____ first.", ["water"], "bottle of water"]]}]},
+{"no": 16, "speaker": "", "inOrder": true, "spaced": true, "names": ["Noah"], "audioV": 3, "intro": "Listen to an interview with Noah, a young volunteer at an animal centre.",
+ "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["Noah's surname: _____", ["Reed"], "That's R-E-E-D"],
+   ["Noah's family found a small _____ near their home.", ["dog"], "it was a small dog"],
+   ["The animal didn't have a _____.", ["collar"], "didn't have a collar"],
+   ["They gave it some _____.", ["water"], "gave him some water"]]},
+  {"h": "Choose the correct answer.", "t": "choose", "qs": [
+   ["What colour is Noah's cat?", ["Black and white", "White and grey", "Brown"], "White and grey", "white and grey fur"],
+   ["What doesn't the cat like?", ["Other cats", "Water", "Loud noises"], "Loud noises", "doesn't like loud noises"],
+   ["What does the centre do?", ["It sells pets", "It looks after dogs and cats that need new homes", "It trains police dogs"], "It looks after dogs and cats that need new homes", "looks after dogs and cats"],
+   ["What does Noah do with the dogs?", ["Takes them for walks", "Washes them", "Teaches them tricks"], "Takes them for walks", "take the dogs for walks"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The dog Noah remembers: _____", ["Rocky"], "R-O-C-K-Y"],
+   ["When Rocky arrived, he stayed in a _____.", ["corner"], "stayed in a corner"],
+   ["After a few weeks, he started _____ with the other dogs.", ["playing"], "started playing"],
+   ["Rocky was adopted in _____.", ["April"], "in April"],
+   ["A month later, the family sent a _____.", ["photo", "photograph", "picture"], "sent us a photo"],
+   ["People can give food and _____.", ["blankets"], "food and blankets"],
+   ["The centre's phone number: _____", ["0207 745 193"], "The number is oh two oh seven"]]},
+  {"h": "True or False?", "t": "tf", "qs": [
+   ["Children under twelve can volunteer alone.", "False", "from the age of twelve, with a parent"],
+   ["Noah thinks small acts of kindness don't help much.", "False", "small acts of kindness"],
+   ["Next week's programme is about horses.", "True", "talking about horses"]]}]},
+{"no": 17, "speaker": "Ryan", "inOrder": true, "spaced": true, "names": ["Ryan"], "audioV": 3, "intro": "Listen to Ryan's podcast about healthy habits.",
+ "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The presenter's surname: _____", ["Moore"], "That's M-O-O-R-E"],
+   ["Many useful healthy habits are _____.", ["simple"], "many useful habits are simple"],
+   ["A regular sleeping _____ helps you feel organised.", ["routine"], "regular sleeping routine"],
+   ["If you wake up at seven, go to bed at about half past _____.", ["ten", "10"], "half past ten"]]},
+  {"h": "Choose the correct answer.", "t": "choose", "qs": [
+   ["What does Ryan suggest for drinking water?", ["Drink only at lunch", "Keep a bottle near you", "Buy expensive water"], "Keep a bottle near you", "keep a bottle near you"],
+   ["What does Ryan suggest for dinner?", ["Pizza", "Eggs and bread", "Soup"], "Soup", "soup for dinner"],
+   ["How does Ryan's neighbour get to work?", ["By bike", "On foot", "By bus"], "On foot", "walks to work every day"]]},
+  {"h": "True or False?", "t": "tf", "qs": [
+   ["You must join a sports club to move more.", "False", "don't have to join a sports club"],
+   ["Ryan says you should stretch during study breaks.", "True", "stretch gently"],
+   ["Ryan says spending time with friends can help you relax.", "True", "spending time with friends"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The listener's town: _____", ["Brookfield"], "B-R-O-O-K-F-I-E-L-D"],
+   ["The listener works in an _____.", ["office"], "works in an office"],
+   ["He often feels _____ in the evening.", ["tired"], "feels tired"],
+   ["He could go for a short _____ after lunch.", ["walk"], "short walk after lunch"],
+   ["He could take the _____ instead of the lift.", ["stairs"], "take the stairs"],
+   ["He could cook a simple _____ at home.", ["meal"], "simple meal"],
+   ["The podcast's phone number: _____", ["0152 836 479"], "The number is oh one five two"],
+   ["Choose one or two realistic _____.", ["goals"], "realistic goals"],
+   ["A healthy lifestyle is built through small _____.", ["choices"], "small choices"]]}]},
+{"no": 18, "speaker": "", "inOrder": true, "spaced": true, "names": ["Emily", "Jack"], "audioV": 3, "intro": "Listen to two students, Emily and Jack, talking about technology on a school radio programme.",
+ "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["Emily's surname: _____", ["Parker"], "That's P-A-R-K-E-R"],
+   ["Emily uses her phone to check her school _____.", ["timetable"], "school timetable"],
+   ["She uses a language app for about _____ minutes a day.", ["fifteen", "15"], "fifteen minutes a day"],
+   ["When she studies, she puts her _____ away.", ["phone"], "put my phone away"]]},
+  {"h": "Choose the correct answer.", "t": "choose", "qs": [
+   ["Why does Jack use his laptop more than his phone?", ["For games", "For films", "For school projects"], "For school projects", "school projects on it"],
+   ["What are Jack's online lessons about?", ["Typing and presentations", "Music", "Drawing"], "Typing and presentations", "typing and presentations"],
+   ["What does Emily say about passwords?", ["Share them with friends", "Use strong passwords", "Change them every day"], "Use strong passwords", "Use strong passwords"]]},
+  {"h": "True or False?", "t": "tf", "qs": [
+   ["Jack says everything online is true.", "False", "Not everything online is true"],
+   ["Emily thinks students will use more digital books.", "True", "more digital books"],
+   ["Jack thinks technology will replace teachers.", "False", "won't replace them"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The name of Emily's tablet: _____", ["Nova"], "N-O-V-A"],
+   ["Emily uses her tablet to read and _____.", ["draw"], "read and draw"],
+   ["Jack's favourite device: wireless _____", ["headphones"], "wireless headphones"],
+   ["He bought them at a shop on _____ Road.", ["Market"], "Market Road"],
+   ["They cost $_____.", ["40", "forty", "40.00"], "cost forty dollars"],
+   ["The school radio's phone number: _____", ["0173 295 841"], "The number is oh one seven three"],
+   ["Make sure technology helps you reach your _____.", ["goals"], "reach your goals"],
+   ["Spend time away from _____ too.", ["screens"], "away from screens"],
+   ["Next week's topic: _____", ["sport", "sports"], "talking about sport"]]}]},
+{"no": 19, "speaker": "", "inOrder": true, "spaced": true, "names": ["Sam"], "audioV": 3, "intro": "Listen to an interview with Sam, a production assistant on a film.",
+ "sections": [
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["Sam's surname: _____", ["Turner"], "That's T-U-R-N-E-R"],
+   ["Sam prepares _____.", ["schedules"], "I prepare schedules"],
+   ["He checks the _____.", ["equipment"], "check the equipment"],
+   ["He helps the actors find the right _____.", ["places"], "the right places"]]},
+  {"h": "Choose the correct answer.", "t": "choose", "qs": [
+   ["What is the film about?", ["A football team", "Two children who find a garden", "A school trip"], "Two children who find a garden", "two children who find"],
+   ["Where are most scenes filmed?", ["In a big city", "By the sea", "In a small village"], "In a small village", "in a small village"],
+   ["How long does filming take?", ["About two weeks", "About twelve weeks", "About twenty weeks"], "About twelve weeks", "about twelve weeks"],
+   ["What do the editors do?", ["Write the story", "Make the costumes", "Choose the best scenes and add music"], "Choose the best scenes and add music", "choose the best scenes"]]},
+  {"h": "True or False?", "t": "tf", "qs": [
+   ["The film team has about forty-five people.", "True", "about forty-five people"],
+   ["The team includes costume designers.", "True", "costume designers"],
+   ["There is a cat in the film.", "False", "a small dog in the film"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The dog's name: _____", ["Biscuit"], "B-I-S-C-U-I-T"],
+   ["When the dog doesn't follow instructions, they take a short _____.", ["break"], "take a short break"],
    ["The film comes to cinemas on the _____ of December.", ["18th", "18", "eighteenth"], "eighteenth of December"],
-   ["Willow Creek is _____ kilometres from the nearest large city.", ["40", "forty"], "forty kilometres"]]},
-  {"h": "True or False?", "t": "tf", "qs": [
-   ["Production assistants only work with actors.", "False", "communicate with different departments"],
-   ["Editors work on the film after filming finishes.", "True", "editors work on the film for several months"],
-   ["Biscuit always follows instructions immediately.", "False", "doesn't follow instructions"],
-   ["The team may film an indoor scene if the weather changes.", "True", "record an indoor scene instead"]]}]},
-{"no": 20, "speaker": "", "intro": "Listen to a radio report about the weather in four cities.",
+   ["If it rains, they film an _____ scene instead.", ["indoor"], "film an indoor scene"],
+   ["The studio runs free _____ for teenagers.", ["workshops"], "free workshops"],
+   ["The studio's phone number: _____", ["0126 583 947"], "call the studio on oh one two six"],
+   ["Be organised and communicate _____.", ["clearly"], "communicate clearly"],
+   ["Always be ready to _____.", ["learn"], "ready to learn"],
+   ["There are many jobs behind the _____.", ["camera"], "behind the camera"]]}]},
+{"no": 20, "speaker": "", "inOrder": true, "spaced": true, "names": ["Luke"], "audioV": 3, "intro": "Listen to a radio programme about the weather in four cities.",
  "sections": [
-  {"h": "Match the reporter with the city.", "t": "choose", "qs": [
-   ["Erik Hansen", ["Nairobi", "Sydney", "Oslo", "Tokyo"], "Oslo", "Good morning from Oslo"],
-   ["Grace Mwangi", ["Nairobi", "Sydney", "Oslo", "Tokyo"], "Nairobi", "Hello from Nairobi"],
-   ["Kenji Sato", ["Nairobi", "Sydney", "Oslo", "Tokyo"], "Tokyo", "Good afternoon from Tokyo"],
-   ["Mia Collins", ["Nairobi", "Sydney", "Oslo", "Tokyo"], "Sydney", "Hello from Sydney"]]},
-  {"h": "Spelling.", "t": "gap", "qs": [
-   ["The presenter's first name: _____", ["Laura"], "Laura is L-A-U-R-A"],
-   ["The presenter's surname: _____", ["Smith"], "Smith is S-M-I-T-H"],
-   ["The first name of the reporter in Oslo: _____", ["Erik"], "Erik is E-R-I-K"],
-   ["The surname of the reporter in Nairobi: _____", ["Mwangi"], "Mwangi is M-W-A-N-G-I"],
-   ["The surname of the reporter in Tokyo: _____", ["Sato"], "Sato is S-A-T-O"],
-   ["The Australian city: _____", ["Sydney"], "Sydney is S-Y-D-N-E-Y"]]},
-  {"h": "Temperatures today and tomorrow. Write a number.", "t": "gap", "qs": [
-   ["Oslo today: _____ °C", ["-3", "minus 3", "minus three", "−3"], "minus three degrees"],
-   ["Nairobi today: _____ °C", ["26", "twenty-six"], "temperature is twenty-six"],
-   ["Tokyo today: _____ °C", ["18", "eighteen"], "cloudy and eighteen degrees"],
-   ["Sydney today: _____ °C", ["31", "thirty-one"], "temperature is thirty-one"],
-   ["Nairobi tomorrow: _____ °C", ["27", "twenty-seven"], "Nairobi will be twenty-seven"],
-   ["Sydney tomorrow: _____ °C", ["30", "thirty"], "Sydney will be thirty"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The presenter's surname: _____", ["Smith"], "That's S-M-I-T-H"],
+   ["The programme looks at how the weather changes daily _____.", ["life"], "changes daily life"],
+   ["The temperature in Oslo: minus _____ degrees", ["three", "3"], "minus three degrees"],
+   ["People in Oslo are wearing warm coats, hats and _____.", ["gloves"], "has gloves on"],
+   ["Driving in Oslo is difficult because the roads are _____.", ["slippery"], "roads are slippery"]]},
+  {"h": "Choose the correct answer.", "t": "choose", "qs": [
+   ["What is the weather like in Nairobi today?", ["Cloudy", "Warm and sunny", "Rainy"], "Warm and sunny", "warm and sunny"],
+   ["Why are people in Nairobi getting their gardens ready?", ["There is a garden competition", "It's spring", "The rainy season starts soon"], "The rainy season starts soon", "rainy season starts next month"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["Oslo is having a warm and sunny day.", "False", "a cold winter morning"],
-   ["Nairobi's rainy season is expected to begin next month.", "True", "begin next month"],
-   ["Tokyo is famous for cherry blossoms in spring.", "True", "famous for its cherry blossoms"],
-   ["The presenter recommends drinking water on very hot days.", "True", "drink enough water"]]}]}
+   ["It's raining in Tokyo.", "False", "no rain"],
+   ["The station in Tokyo is quiet.", "False", "it's very busy"],
+   ["The best time to see Tokyo's cherry blossoms is in spring.", "True", "cherry blossoms"]]},
+  {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
+   ["The last city: _____", ["Sydney"], "S-Y-D-N-E-Y"],
+   ["Many families in Sydney are going to the _____.", ["beach"], "going to the beach"],
+   ["On hot days, use sun _____.", ["cream"], "use sun cream"],
+   ["Stay in the _____ at lunchtime.", ["shade"], "stay in the shade"],
+   ["Before you go out, check the _____.", ["forecast"], "check the forecast"],
+   ["If rain is expected, take an _____.", ["umbrella"], "take an umbrella"],
+   ["The programme's phone number: _____", ["0131 472 658"], "message us on oh one three one"],
+   ["Tomorrow's programme is about _____.", ["storms"], "talk about storms"],
+   ["The programme is on every morning at _____.", ["eight", "8", "8:00", "8.00", "eight o'clock"], "every morning at eight"],
+   ["You can listen again on the programme's _____.", ["website"], "on our website"]]}]}
 ]

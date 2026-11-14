@@ -666,57 +666,87 @@
    {
     "who": "Presenter",
     "man": true,
-    "text": "Welcome to Teen Life. Today we're talking about hobbies. Our guest is Olivia Green. Olivia, could you spell your name?"
+    "text": "Welcome to Teen Life, the show for young people with big ideas. Today we're talking about hobbies, and our guest is a student from our city, Olivia Green. Olivia, could you spell your surname for our listeners?"
    },
    {
     "who": "Olivia",
     "man": false,
-    "text": "Olivia is O-L-I-V-I-A, and Green is G-R-E-E-N."
+    "text": "Of course. Green. That's G-R-E-E-N."
    },
    {
     "who": "Presenter",
     "man": true,
-    "text": "What do you enjoy doing?"
+    "text": "Thank you. And thank you for coming in so early in the morning! I know most teenagers are still in bed at this time. So, let's start with the big question: what do you enjoy doing in your free time?"
    },
    {
     "who": "Olivia",
     "man": false,
-    "text": "Photography is my favourite hobby. I started two years ago when my uncle gave me his old camera. I like taking pictures of nature, buildings and everyday life. I often visit Greenfield Park. Greenfield is G-R-E-E-N-F-I-E-L-D. It has a lake, a flower garden and many trees. I usually go there on Saturday mornings because it's quiet."
+    "text": "Well, I'm not a big fan of early mornings, but this was worth it. Photography is my favourite hobby. I started two years ago. At first I took photos with my mum's phone, but the pictures weren't very good, and she always wanted her phone back! My dad wanted to buy me a camera for my birthday, but new cameras are really expensive. Then my uncle gave me his old camera. It's quite heavy, but it takes beautiful pictures. He's a photographer, so he taught me a lot. I like taking pictures of nature. I've tried taking photos of people too, but my little sister always pulls funny faces! So now I mostly photograph birds and flowers."
    },
    {
     "who": "Presenter",
     "man": true,
-    "text": "Do you have another hobby?"
+    "text": "Lovely. I'm sure our listeners would like to see them one day! Where do you take your photos?"
    },
    {
     "who": "Olivia",
     "man": false,
-    "text": "Yes, I enjoy baking with my grandmother. We make biscuits and simple cakes. Last month, I made a chocolate cake for my friend Lily. Lily is L-I-L-Y. I use recipes from a website called Easy Kitchen. Easy is E-A-S-Y, and Kitchen is K-I-T-C-H-E-N."
+    "text": "Usually in a park near my house. It's very close, so I can walk there with my camera. It's called Maple Park. Maple. That's M-A-P-L-E. It has a big lake and lots of tall trees, and in spring there are ducks with their babies everywhere. You need to be patient, though. Sometimes I wait for half an hour to get one good picture! I usually go there on Saturday mornings. I take a flask of hot chocolate, sit on a bench by the lake, and just wait. My uncle says the light is better in the morning, but that's not the reason. I go then because it's quiet, and there aren't many people to scare the birds."
    },
    {
     "who": "Presenter",
     "man": true,
-    "text": "How much time do you spend on your hobbies?"
+    "text": "That sounds very peaceful. Do you have another hobby?"
    },
    {
     "who": "Olivia",
     "man": false,
-    "text": "I take photographs for about two hours at weekends. Baking can take three hours. During the week, I do my homework first, then I have some free time."
+    "text": "Yes, I love baking with my grandmother. She lives next door, so I visit her a lot. We usually make biscuits, because they're quick and my grandfather eats them all! Her biscuits are famous in our street. Everyone asks her for the recipe, but she never tells them! She never uses a website or a cookbook. Instead, she has an old notebook full of family recipes, and we try a new one every week. Some of the recipes are a hundred years old! The writing is very small, so sometimes I read them out loud for her. And I'm getting better at baking on my own, too. Last month, I made a chocolate cake for my best friend's birthday. It was a big surprise! She cried a little when she saw it, and then we ate the whole cake in ten minutes."
    },
    {
     "who": "Presenter",
     "man": true,
-    "text": "Do you have a goal?"
+    "text": "Photography and baking! How do you find time for all this?"
    },
    {
     "who": "Olivia",
     "man": false,
-    "text": "I'd like to enter a photography competition called Young Eyes. Young is Y-O-U-N-G, and Eyes is E-Y-E-S. The last day to send photographs is the fifteenth of May. We can send five pictures. The results will be announced on the second of June. I don't expect to win, but I want to learn from the experience."
+    "text": "It's not always easy. During the week, I do my homework first, because my parents are very strict about that. Then I have some free time in the evening, but only an hour or so. At weekends, I have much more time for my hobbies. My friends sometimes say I'm too busy, but I'm happy!"
    },
    {
     "who": "Presenter",
     "man": true,
-    "text": "Thank you, Olivia!"
+    "text": "Do you have a goal for this year?"
+   },
+   {
+    "who": "Olivia",
+    "man": false,
+    "text": "Yes! I'd like to enter a photography competition. I saw a poster for it at school last week. It's for teenagers aged thirteen to seventeen, and you can send up to five photos. I've already chosen three: a big white bird by the lake, a red flower after the rain, and a little duck. Now I need two more! The last day to send them is the fifteenth of May. I don't expect to win, because lots of people enter, but I want to learn from the experience. The best photos go in a big exhibition in the city library."
+   },
+   {
+    "who": "Presenter",
+    "man": true,
+    "text": "That sounds great. How can our listeners find out more?"
+   },
+   {
+    "who": "Olivia",
+    "man": false,
+    "text": "There's a website, but it isn't very clear, to be honest. It's easier to call the competition office. The number is oh seven nine four, six two one, eight three zero."
+   },
+   {
+    "who": "Presenter",
+    "man": true,
+    "text": "Oh seven nine four, six two one, eight three zero?"
+   },
+   {
+    "who": "Olivia",
+    "man": false,
+    "text": "Yes, that's right. The people there are really friendly."
+   },
+   {
+    "who": "Presenter",
+    "man": true,
+    "text": "Thank you, Olivia, and good luck with the competition! After the news, we'll meet a boy who builds robots in his garage. Stay with us."
    }
   ]
  },
@@ -727,83 +757,138 @@
   "transcript": [
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Good afternoon. Welcome to Westgate Shopping Centre. How can I help?"
+    "man": true,
+    "text": "Good afternoon, and welcome to the shopping centre! How can I help you today?"
    },
    {
     "who": "Customer",
-    "man": true,
-    "text": "I'm meeting my cousin, but I can't remember where she asked me to wait."
+    "man": false,
+    "text": "Hi. I'm meeting my cousin here, but I can't find her. We were supposed to meet a while ago, and her phone is switched off."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Do you know her name?"
+    "man": true,
+    "text": "No problem! It happens all the time here, especially on Saturdays. What's her name? I can call her over the speakers."
    },
    {
     "who": "Customer",
-    "man": true,
-    "text": "Yes. Layla Karim. Layla is L-A-Y-L-A, and Karim is K-A-R-I-M. She said to meet near the bookshop."
+    "man": false,
+    "text": "Hannah Brooks."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "The bookshop is on the second floor, opposite the electronics shop. Use the escalator near the main entrance on King Street. King is K-I-N-G."
+    "man": true,
+    "text": "Brooks? How do you spell that?"
    },
    {
     "who": "Customer",
-    "man": true,
-    "text": "Thank you. I also need a birthday present for my ten-year-old brother. He likes building things and playing games."
+    "man": false,
+    "text": "Brooks. That's B-R-O-O-K-S."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "There's a toy shop called Play House on the first floor. Play is P-L-A-Y, and House is H-O-U-S-E. Small games start at six dollars. Larger building sets can cost forty-five dollars."
+    "man": true,
+    "text": "Great, thanks! I'll call her in a minute. Did she say where to meet?"
    },
    {
     "who": "Customer",
-    "man": true,
-    "text": "I'd prefer something under twenty dollars."
+    "man": false,
+    "text": "She said near the bookshop. But I've never been here before, and this place is enormous! I keep walking past the same shoe shop."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "This wooden building set costs eighteen dollars and fifty cents."
+    "man": true,
+    "text": "Don't worry, everybody gets lost here at first. The bookshop isn't on this floor. It's on the second floor, above the supermarket. You can take the lift right behind you, or the escalator over there, but the escalator is very slow today, so I'd take the lift. When you come out of the lift, turn left, and you'll find the bookshop next to the cinema. There's a film starting soon, so it might be a bit busy over there."
    },
    {
     "who": "Customer",
-    "man": true,
-    "text": "Great. Is there somewhere to eat?"
+    "man": false,
+    "text": "Thank you. Oh, and while I'm here, I also need a present for my little brother. It's his birthday tomorrow, and I completely forgot! He's ten, and he loves building things. Last year he built a castle out of cardboard boxes, and it filled his whole bedroom! My mum wasn't very happy."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "The food court is on the third floor. There's a café called Blue Cup. Blue is B-L-U-E, and Cup is C-U-P. It sells vegetable sandwiches for four dollars and twenty cents."
+    "man": true,
+    "text": "Ha! I know the perfect shop for him. You should try Toybox. That's T-O-Y-B-O-X. It's a toy shop near the main entrance, so it's very easy to find. Their building sets are really popular. Most of them cost more than forty dollars, but at the moment they have a great wooden building set for just eighteen dollars and fifty cents."
    },
    {
     "who": "Customer",
-    "man": true,
-    "text": "What time does the centre close?"
+    "man": false,
+    "text": "Perfect, he'll love that. I'll go there after I find my cousin. Is there somewhere to eat? I haven't had lunch yet, and I'm starving."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "From Monday to Saturday, it closes at nine in the evening. On Sundays, it closes at seven. Today is Saturday."
+    "man": true,
+    "text": "Yes, there are lots of places. The food court is near the car park entrance, on the ground floor. There are burger bars and noodle places, but my favourite is a little café in the corner. Everything is made fresh every morning. It sells really good sandwiches, and the coffee isn't bad either."
    },
    {
     "who": "Customer",
-    "man": true,
-    "text": "Is there an ATM?"
+    "man": false,
+    "text": "Sounds great. And what time does the centre close today? I might stay and watch a film later."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Yes, next to the customer service desk on the ground floor."
+    "man": true,
+    "text": "Let me think. On weekdays we close at eight, but today is Saturday, so we close at nine p.m. The cinema stays open even later, so you have plenty of time. I saw a great comedy there last week. I laughed so much that the people next to me moved to different seats! But be careful if you come back tomorrow. On Sundays, we close earlier, because the shop workers like to spend time with their families."
    },
    {
     "who": "Customer",
+    "man": false,
+    "text": "Good to know. Oh, I almost forgot. I need some cash for the bus home. Is there an ATM?"
+   },
+   {
+    "who": "Assistant",
     "man": true,
-    "text": "Thank you!"
+    "text": "Yes, there's one right next to the customer service desk. It's just over there, next to the toilets."
+   },
+   {
+    "who": "Customer",
+    "man": false,
+    "text": "Great. And what if I still can't find my cousin? She's always late, and her phone battery is always empty!"
+   },
+   {
+    "who": "Assistant",
+    "man": true,
+    "text": "Then just call us at the information desk, and we'll call her name again over the speakers. We do it all day long, so don't feel bad! Let me give you our number. Have you got a pen?"
+   },
+   {
+    "who": "Customer",
+    "man": false,
+    "text": "Yes, just a second. OK."
+   },
+   {
+    "who": "Assistant",
+    "man": true,
+    "text": "The number is oh two oh seven, four nine one, three five six."
+   },
+   {
+    "who": "Customer",
+    "man": false,
+    "text": "Oh two oh seven, four nine one, three five six?"
+   },
+   {
+    "who": "Assistant",
+    "man": true,
+    "text": "That's right!"
+   },
+   {
+    "who": "Customer",
+    "man": false,
+    "text": "Thanks. One more thing. Can I get the present wrapped? I'm terrible at wrapping presents. Last year my brother's present looked like a potato!"
+   },
+   {
+    "who": "Assistant",
+    "man": true,
+    "text": "Ha! Don't worry. Gift wrapping is free at the customer service desk. And they have lovely paper with dinosaurs and rockets on it."
+   },
+   {
+    "who": "Customer",
+    "man": false,
+    "text": "Wonderful. Thank you so much!"
+   },
+   {
+    "who": "Assistant",
+    "man": true,
+    "text": "You're welcome. I'll call your cousin now. Attention, please. Could Hannah Brooks come to the information desk on the ground floor? Her cousin is waiting for her."
    }
   ]
  },
@@ -813,39 +898,39 @@
   "format": "Guided tour",
   "transcript": [
    {
-    "who": "Speaker",
+    "who": "Guide",
     "man": true,
-    "text": "Good morning, everyone! Welcome to our city tour. My name is Peter Wilson. Peter is P-E-T-E-R, and Wilson is W-I-L-S-O-N. I'll be your guide today."
+    "text": "Good morning, everyone, and welcome to our city tour! My name is Peter Wilson, and I'll be your guide today. Wilson. That's W-I-L-S-O-N. I've been a guide here for many years, and I still love this city. Before we start, please make sure you have comfortable shoes, because we're going to walk a lot today. Is everybody ready? Great, let's go!"
    },
    {
-    "who": "Speaker",
+    "who": "Guide",
     "man": true,
-    "text": "We are starting at Central Square, the largest public square in the city. Our first stop is the City History Museum. It is in an old building that was once a school. The museum opened in nineteen eighty-five. It is open from Tuesday to Sunday, ten in the morning until five in the afternoon. It is closed on Mondays."
+    "text": "We're starting here in the main square, the biggest square in the city. Every December, there's a huge Christmas market here, with lights everywhere. Our first stop is the City Museum, just across the road. The building is very old. People often think it was a hospital, but no. Before it was a museum, it was a school. My grandfather studied here when he was a boy, and he says the teachers were very strict! He still remembers his classroom, with a big black stove in the corner. The museum is closed on Mondays, so we're lucky it's Tuesday today! Inside, there's a lot to see. My favourite room is at the very top, where you can look out over the whole city. On the walls, you can see old maps and photos of the city from a hundred years ago. It's funny to see the streets with horses instead of cars!"
    },
    {
-    "who": "Speaker",
+    "who": "Guide",
     "man": true,
-    "text": "Next, we will visit Riverside Park. Riverside is R-I-V-E-R-S-I-D-E. We will walk along River Road. River is R-I-V-E-R, and Road is R-O-A-D. The park is next to the river. It has a walking path, two playgrounds and a small café. Water costs one dollar and fifty cents. Fresh juice costs three dollars."
+    "text": "After the museum, we'll walk along the river to our next stop, a beautiful park. It's called Riverside Park. Riverside. That's R-I-V-E-R-S-I-D-E. The park is right next to the river, and in summer people swim there. It has a long walking path, where people go running in the morning, and the children in our group will be happy, because it has two playgrounds. One has a big wooden pirate ship, and the other has the longest slide in the city. I tried it once, and I got stuck halfway down! There's also a small café by the water. The coffee there costs four dollars, which is a bit expensive, to be honest, but the fresh juice costs three dollars, and it's really good! I always have the orange one, and the man who sells it always tells a joke."
    },
    {
-    "who": "Speaker",
+    "who": "Guide",
     "man": true,
-    "text": "After the park, we will visit Green Market. Green is G-R-E-E-N, and Market is M-A-R-K-E-T. It is famous for fresh fruit, vegetables, bread and local food. It is busiest on Saturday mornings."
+    "text": "After the park, we'll visit the market. It's been here for a very long time. It's famous for fresh fruit and vegetables, and the strawberries are the best I've ever eaten. The farmers bring everything in from the villages very early in the morning, so it's always fresh. Ask them for a taste. They're usually happy to let you try. It's very busy on Saturday mornings, but today it will be quiet, so we can take our time. By then, you'll all be hungry, so we'll go to a small restaurant near the market for lunch. We'll eat there at half past twelve. They make the best soup in town, and the plates are enormous. Don't eat too much, though, because there's one more stop!"
    },
    {
-    "who": "Speaker",
+    "who": "Guide",
     "man": true,
-    "text": "At twelve thirty, we will have lunch at The Garden Table. Garden is G-A-R-D-E-N, and Table is T-A-B-L-E. Chicken and rice costs seven dollars and eighty cents. A vegetarian meal costs six dollars and fifty cents."
+    "text": "Our last stop is the City Library. It's a beautiful glass building, and it has three floors. The children's books are on the ground floor, and there's a computer room on the first floor, where you can use the internet for free. My favourite part is the top floor. When you go up there, please be very quiet, because the top floor is a quiet study area. Students sit there for hours with their books."
    },
    {
-    "who": "Speaker",
+    "who": "Guide",
     "man": true,
-    "text": "Our final stop is the City Library on Park Avenue. It has three floors. The first floor has children's books, the second has novels and magazines, and the third is a quiet study area. Meet us at the library entrance at three thirty if you get lost. My phone number is 0794 621 830. That's zero seven nine four, six two one, eight three zero."
+    "text": "Now, this is important. If you get lost at any time, don't panic. The city centre is small, but the old streets all look the same, and every year someone gets lost. Please meet us at the library entrance, by the big glass doors. Every tour finishes there, so you can't miss us. Last month, a lady got lost, and we found her an hour later, eating ice cream in the park! She was very happy. You can also call me. Write this down, please. My number is oh seven eight one, three five two, six four nine. That's oh seven eight one, three five two, six four nine."
    },
    {
-    "who": "Speaker",
+    "who": "Guide",
     "man": true,
-    "text": "Thank you, and enjoy the tour!"
+    "text": "Oh, and one more thing. Look at the sky! It's sunny now, but the weather here changes very quickly. The forecast says it might rain this afternoon, so if you have one, bring an umbrella. Right, is everybody ready? Then follow me, and enjoy the tour!"
    }
   ]
  },
@@ -855,163 +940,228 @@
   "format": "Personal story",
   "transcript": [
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "Hello! My name is Amelia Brown. Amelia is A-M-E-L-I-A, and Brown is B-R-O-W-N. Today I'll tell you about a holiday I remember very well."
+    "who": "Tom",
+    "man": true,
+    "text": "Hi! My name is Tom Fisher. Fisher. That's F-I-S-H-E-R. I live in a big, noisy city, so for me, quiet places are really special. Today I'm going to tell you about the best holiday I've ever had."
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "Last summer, my family travelled to a small town near the mountains called Silver Lake. Silver is S-I-L-V-E-R, and Lake is L-A-K-E. We went by train. We left home on the tenth of July at six forty-five in the morning. The journey took four hours, and we arrived at ten forty-five."
+    "who": "Tom",
+    "man": true,
+    "text": "Last summer, my family went to a small town in the mountains. My dad wanted to drive, but our car is very old, and my mum said no way! So we went by train. I didn't mind, because I love trains. You can read, play games, or just look out of the window. My little sister and I played cards, and she won every game, which was very annoying. We left home very early, at a quarter to seven in the morning. I was so tired that I almost fell asleep at breakfast. The journey was long, but the views were amazing: green hills, little villages and cows everywhere. When we arrived, my uncle was waiting for us at the station. He lives in the town, and he knows everyone there."
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "My uncle David was waiting at the station. David is D-A-V-I-D. He had booked a guesthouse called Mountain View. It had five rooms, a small garden and a restaurant. Our room had two beds and a balcony with a view of the mountains."
+    "who": "Tom",
+    "man": true,
+    "text": "He drove us to a small guesthouse with a beautiful garden full of roses. The owner was a kind old lady who made fresh bread every morning. Our room didn't have a TV, but it had a balcony with a view of the mountains. Every morning, I sat there with a cup of hot chocolate and watched the sun come up."
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "On the first day, we walked around the town. In the evening, we ate at a local restaurant. I ordered vegetable soup and grilled chicken. My younger sister Sophie chose pasta. Sophie is S-O-P-H-I-E."
+    "who": "Tom",
+    "man": true,
+    "text": "On the first evening, we ate at a local restaurant. The menu was very long, and it took me ages to choose. In the end, I had vegetable soup and grilled chicken. My little sister had pasta, as usual. She eats pasta everywhere we go! The food was delicious, and we all went to bed early, because we had big plans for the next day."
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "The next morning, we went hiking with a guide called Nora. Nora is N-O-R-A. She showed us a safe walking path. We saw birds and a small fox. Later, we stopped near a waterfall and took photographs. The weather was sunny at first, but it became cloudy and windy."
+    "who": "Tom",
+    "man": true,
+    "text": "The next morning, we went hiking with a guide. She showed us a safe path through the forest. We saw lots of birds and even a small fox! It ran across the path right in front of us, and then it was gone. Our guide said she sees one only once or twice a year, so we were very lucky. Later, after a long walk uphill, we stopped at a waterfall and took photos. The water was freezing, but my dad put his feet in it anyway, and he shouted so loudly that everyone laughed. It was sunny in the morning, but in the afternoon it became cloudy and windy, so we walked back quickly. We got back just before the rain started."
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "On the third day, we visited a farm. There were goats, sheep, chickens and two friendly dogs. One dog was called Max. Max is M-A-X. He followed us around and played with my sister."
+    "who": "Tom",
+    "man": true,
+    "text": "On the third day, we visited a farm near the town. I had never been on a real farm before, and the smell was quite strong! There were goats, sheep and chickens. One of the goats tried to eat my sister's hat, and she screamed! The farmer gave us some food for the animals, and we fed the baby goats from our hands. Then we met a friendly dog. He was big and black, with one white ear, and he had a very long tail that never stopped moving. He was the farmer's favourite, and he slept by the fire every night. His name was Max. Max. That's M-A-X. He followed us everywhere, even into the chicken house! He loved playing with sticks, and he brought one to everybody he met. But he liked one person more than anyone else. All afternoon, he played with my sister. She didn't want to leave! She even asked my parents if we could take Max home with us. The answer was no, of course!"
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "We stayed for five days and returned home on the fifteenth of July. I loved the mountain walk, but Sophie said playing with Max was the best part. It was a wonderful holiday because we spent time together and discovered a new place."
+    "who": "Tom",
+    "man": true,
+    "text": "Before we left, the farmer told us something important. The farm is very busy, so visitors should always phone first. His number is oh one two three, six four eight, five nine seven. That's oh one two three, six four eight, five nine seven."
+   },
+   {
+    "who": "Tom",
+    "man": true,
+    "text": "We had a wonderful time in the mountains. My parents wanted to stay longer, but my dad had to go back to work. In the end, we stayed for five days. On the last morning, the old lady gave us a big bag of her fresh bread for the journey, and we ate all of it on the train. We came home on the fifteenth of July, just in time for my best friend's birthday party. I loved the mountain walk, but my sister says playing with Max was the best part! Next summer, we want to go back. And this time, maybe my dad will drive, if we get a new car!"
    }
   ]
  },
  {
   "no": 12,
   "title": "Talking About Future Dreams",
-  "format": "Classroom discussion",
+  "format": "Classroom conversation",
   "transcript": [
    {
     "who": "Teacher",
     "man": true,
-    "text": "Good morning. Today we're talking about future plans. Let's start with Mia."
+    "text": "Good morning, everyone. I hope you all had a nice weekend. Today we're talking about our dreams for the future. This is one of my favourite lessons every year, because I always learn something new about you. Emma, would you like to start? First, please tell us your full name for the new class list."
    },
    {
-    "who": "Mia",
+    "who": "Emma",
     "man": false,
-    "text": "My name is Mia Johnson. Mia is M-I-A, and Johnson is J-O-H-N-S-O-N. I want to become a doctor because I enjoy helping people. Biology is my favourite subject, but I need to improve my chemistry."
+    "text": "Sure. I'm Emma Clarke. Clarke. That's C-L-A-R-K-E."
    },
    {
     "who": "Teacher",
     "man": true,
-    "text": "Thank you. Adam, what about you?"
+    "text": "Thanks, Emma. With an E at the end. I always forget that E! So, Emma, what do you want to be when you finish school?"
    },
    {
-    "who": "Adam",
-    "man": true,
-    "text": "I'm Adam Lee. Adam is A-D-A-M, and Lee is L-E-E. I want to become a computer programmer. I enjoy creating small websites. Last year, I made one for my school club. I'd like to study computer science at university. I'm interested in Northbridge University. Northbridge is N-O-R-T-H-B-R-I-D-G-E."
-   },
-   {
-    "who": "Teacher",
-    "man": true,
-    "text": "Great. Sara?"
-   },
-   {
-    "who": "Sara",
+    "who": "Emma",
     "man": false,
-    "text": "I'm Sara Ahmed. Sara is S-A-R-A, and Ahmed is A-H-M-E-D. I want to travel abroad and learn about different cultures. My dream is to visit Barcelona in Spain. I'd like to stay there for a month and learn Spanish. Maybe I'll go in two years, after I finish school. First, I need to save money and improve my English."
+    "text": "Well, when I was little, I wanted to be a pilot, because I loved planes. But now I want to become a doctor, because I enjoy helping people. Last year my grandmother was in hospital for a few weeks, and the doctors there were so kind to her. She's fine now, don't worry! That's when I decided. At school, biology is my favourite subject. I love learning how the body works, and our biology teacher makes every lesson fun. Last week we looked at a real fish heart. Some of my classmates felt sick, but I thought it was amazing! But I need to improve my chemistry. I got a low mark in my last test."
    },
    {
     "who": "Teacher",
     "man": true,
-    "text": "Ben, what is your dream?"
+    "text": "Don't worry, Emma. Lots of students find chemistry difficult at first. I did too! That's a great dream. Where would you like to study?"
    },
    {
-    "who": "Ben",
-    "man": true,
-    "text": "I'm Ben Carter. Ben is B-E-N, and Carter is C-A-R-T-E-R. I want to become a football coach. I enjoy helping younger players. I'd like to work at Eastside Academy. Eastside is E-A-S-T-S-I-D-E, and Academy is A-C-A-D-E-M-Y."
-   },
-   {
-    "who": "Teacher",
-    "man": true,
-    "text": "These are interesting goals. Remember, a dream needs a plan. You should choose small steps. Mia could review science for thirty minutes a day. Adam could practise programming three times a week. Sara could learn ten Spanish words every week. Ben could help the school football team."
-   },
-   {
-    "who": "Mia",
+    "who": "Emma",
     "man": false,
-    "text": "Should we write down our goals?"
+    "text": "My cousin studies at a big university in the capital, but it's very expensive, and it's far from my family. So I'd like to go to Oakwood University. Oakwood. That's O-A-K-W-O-O-D. I visited it last spring with my mum. The buildings are old and beautiful, and there's a big park in the middle where students have lunch on the grass. It has a very good medical school, and it's only an hour from my home, so I can visit my family at weekends."
    },
    {
     "who": "Teacher",
     "man": true,
-    "text": "Yes. Write one small goal for this month and one bigger goal for the next three years. Bring your plans to our next lesson on the twenty-second of November. We will meet in Room 14. That's room number fourteen."
+    "text": "That's nice. I'm sure your family will be happy about that. And what about your friends and family? Do you know their dreams?"
+   },
+   {
+    "who": "Emma",
+    "man": false,
+    "text": "Yes! My best friend's parents are both teachers, and they want her to be a teacher too. But she wants to be a computer programmer. She's really good with computers. She already makes small websites for people in our town, and she even made one for my mum's cake shop! And my brother wants to be a football coach. He plays every weekend, and he's quite good, but he says he prefers teaching to playing. He loves helping younger players. On Saturdays he helps the coach with the little ones at his club."
+   },
+   {
+    "who": "Teacher",
+    "man": true,
+    "text": "Those are great goals. Every dream is different, and that's what makes this class so interesting. But remember one thing. A dream is not enough. A dream needs a plan. Without a plan, it's just a wish. You should choose small steps, one at a time. For example, Emma, you said chemistry is difficult for you. You don't need to study for hours every evening. Just review science for thirty minutes a day. Small steps, every day, are better than one big step once a month."
+   },
+   {
+    "who": "Emma",
+    "man": false,
+    "text": "That makes sense. Should we write our goals down?"
+   },
+   {
+    "who": "Teacher",
+    "man": true,
+    "text": "Yes, good idea. People who write their goals down are much more likely to reach them. So, please write one small goal for this month. It can be something easy, like reading one book in English, or learning new words every week. Small goals are easy to check, and they make you feel good when you finish them. Then write one bigger goal for the next three years. Think big! It could be passing an important exam, or getting into a good university, like Emma. Bring your plans to our next lesson. That's not next week, because there's a school trip. It's on the twenty-second of November. And please remember, we won't be in this classroom. They're painting it, and the smell will be terrible! So we'll be in a different room on the first floor, next to the library. It's Room fourteen. Some of you have never been there, so look for the big blue door at the end of the corridor. If you have any questions before then, or if you're ill and can't come, call the school office. The number is oh one six one, four nine six, two oh three."
+   },
+   {
+    "who": "Emma",
+    "man": false,
+    "text": "Oh one six one, four nine six, two oh three?"
+   },
+   {
+    "who": "Teacher",
+    "man": true,
+    "text": "That's right. Write it in your notebooks, please."
+   },
+   {
+    "who": "Emma",
+    "man": false,
+    "text": "Great. I'm excited about my plan now. I'll talk to my parents about it tonight. My dad will be happy, because he always says I should plan more!"
+   },
+   {
+    "who": "Teacher",
+    "man": true,
+    "text": "Excellent. OK, who's next?"
    }
   ]
  },
  {
   "no": 13,
   "title": "Different People, Different Jobs",
-  "format": "Workplace interviews",
+  "format": "Radio interview",
   "transcript": [
    {
     "who": "Presenter",
-    "man": false,
-    "text": "Welcome to Careers Today. Our first guest is Daniel Foster, a hotel receptionist. Daniel is D-A-N-I-E-L, and Foster is F-O-S-T-E-R."
-   },
-   {
-    "who": "Daniel",
     "man": true,
-    "text": "Hello! I work at the Sunrise Hotel. Sunrise is S-U-N-R-I-S-E. It's in the city centre, near the railway station. I welcome guests, help them check in, answer questions and sometimes arrange transport. My morning shift starts at seven thirty and finishes at three thirty. Some weeks I work from three until eleven in the evening."
+    "text": "Welcome to Careers Today, the programme that helps you choose your future! Every week we look at different jobs, and this week we have a very special guest. She's a careers adviser, and she has helped thousands of young people find the right job. Lucy Foster, welcome! Lucy, can you spell your surname for us?"
+   },
+   {
+    "who": "Lucy",
+    "man": false,
+    "text": "Of course. Foster. That's F-O-S-T-E-R."
    },
    {
     "who": "Presenter",
-    "man": false,
-    "text": "What skills do you need?"
-   },
-   {
-    "who": "Daniel",
     "man": true,
-    "text": "You need to be polite, patient and organised. Speaking English is useful because we meet visitors from different countries."
+    "text": "Thank you. So, today we're talking about three different jobs. Let's start with hotel receptionists. Have you ever worked in a hotel yourself, Lucy?"
+   },
+   {
+    "who": "Lucy",
+    "man": false,
+    "text": "Ha, no, never! But last month I spent a day at a hotel to see what the job is like. It's in the city centre. Lots of hotels in our city are near the airport, but this one is near the railway station, so lots of guests arrive with big suitcases. Some of them are tired after a long journey, and some are a bit lost. The receptionists are the first people the guests meet. They welcome guests and help them check in. They also answer the phone, book taxis, and tell guests about good restaurants nearby. It's a busy job! The receptionists work in shifts. The night shift is very quiet, but the morning shift is the busiest. It starts at half past seven, when most guests want breakfast and need help with their plans for the day. Oh, and I should tell you the hotel's name. It's a lovely place, with flowers in every window. It's called the Sunrise Hotel. Sunrise. That's S-U-N-R-I-S-E."
    },
    {
     "who": "Presenter",
-    "man": false,
-    "text": "Our second guest is photographer Emma Brooks. Emma is E-M-M-A, and Brooks is B-R-O-O-K-S."
-   },
-   {
-    "who": "Emma",
-    "man": false,
-    "text": "I work for a company called Bright Frame. Bright is B-R-I-G-H-T, and Frame is F-R-A-M-E. We take photographs for families, shops and local events. Sometimes we work in our studio, but often we travel to different places. I use a camera, lenses, lights and a computer. I usually work around thirty-five hours a week, but busy weeks can be longer."
-   },
-   {
-    "who": "Presenter",
-    "man": false,
-    "text": "Thank you. Our final guest is Mark Wilson, a bus driver. Mark is M-A-R-K, and Wilson is W-I-L-S-O-N."
-   },
-   {
-    "who": "Mark",
     "man": true,
-    "text": "I drive a city bus on Route 24. I start at the bus station at six in the morning. The route goes through the city centre, past the hospital, and finishes near the university. One journey takes about fifty minutes, depending on traffic. I have a twenty-minute break at around ten fifteen. My working day usually finishes at two thirty."
+    "text": "What a nice name! What skills do receptionists need?"
+   },
+   {
+    "who": "Lucy",
+    "man": false,
+    "text": "They need to be polite, patient and organised. Some guests can be difficult, especially when they're tired, so you have to stay friendly. Speaking English is useful too, because the guests come from different countries. On the day I was there, I heard Spanish, Chinese and Arabic in just one hour!"
    },
    {
     "who": "Presenter",
-    "man": false,
-    "text": "What do you like about your job?"
-   },
-   {
-    "who": "Mark",
     "man": true,
-    "text": "I like meeting people and helping them get to work, school and appointments. Drivers need to be responsible, calm and careful. They also need the correct driving licence and good knowledge of the city."
+    "text": "Amazing. Our second job is photographer."
+   },
+   {
+    "who": "Lucy",
+    "man": false,
+    "text": "Yes, this is a job lots of young people dream about. I spoke to a photographer who has her own small business. People think photographers work for newspapers, but she doesn't. She takes pictures for families, shops and local events, like weddings and school concerts. Last week she spent a whole day at a wedding, and her feet hurt for days afterwards! She has a small studio in her house, and she sometimes works there, but she often travels to different places, like parks, beaches and old buildings. She uses a camera, lights and a computer. Editing the photos on the computer takes a long time, often longer than taking them!"
    },
    {
     "who": "Presenter",
+    "man": true,
+    "text": "I didn't know that. And finally, bus drivers."
+   },
+   {
+    "who": "Lucy",
     "man": false,
-    "text": "Thank you to all three guests. Every job has different responsibilities, but communication and a positive attitude are useful in many workplaces."
+    "text": "Yes. I met a bus driver who starts work very early, before the sun comes up. He has driven the same bus for many years, and lots of passengers know him by name. His route goes through the city centre and past the hospital, so many of his passengers are nurses and doctors going to work. Some of them fall asleep on the bus, and he has to wake them up at their stop! It's a long route. One journey takes about fifty minutes, from one end of the city to the other. In the evening, when the roads are busy, it can take even longer. He listens to the radio and sings quietly when the traffic stops. But he never gets angry. He likes meeting people and helping them get to work and school. Every morning, an old lady gives him a biscuit when she gets on!"
+   },
+   {
+    "who": "Presenter",
+    "man": true,
+    "text": "He sounds like a happy man! What do drivers need?"
+   },
+   {
+    "who": "Lucy",
+    "man": false,
+    "text": "Well, driving a bus is very different from driving a car. It's big and heavy, and you're responsible for lots of people. So they need to be calm and careful, even when other drivers aren't. They also need to be good with people, of course. And there's one thing they can't work without. A normal car licence isn't enough. They need the right driving licence. Getting one takes a few months of lessons and tests."
+   },
+   {
+    "who": "Presenter",
+    "man": true,
+    "text": "Thank you. That's really interesting. If our listeners want advice about jobs, how can they contact you?"
+   },
+   {
+    "who": "Lucy",
+    "man": false,
+    "text": "They can visit our website, or they can call our careers office. We love talking to young people, and the advice is free. The number is oh two oh three, seven six eight, one four five."
+   },
+   {
+    "who": "Presenter",
+    "man": true,
+    "text": "Oh two oh three, seven six eight, one four five?"
+   },
+   {
+    "who": "Lucy",
+    "man": false,
+    "text": "Yes, that's right. Just ask for me, or for any of my colleagues. We're closed at weekends, but the office is open every weekday, from morning until late afternoon."
+   },
+   {
+    "who": "Presenter",
+    "man": true,
+    "text": "Thank you, Lucy. Before you go, what's your best advice for young people who don't know what job they want?"
+   },
+   {
+    "who": "Lucy",
+    "man": false,
+    "text": "Don't worry if you don't know yet. I didn't know until I was much older! My advice is simple. Try different things. Get a weekend job, help a neighbour, join a club. Every job teaches you something. When I was at school, I worked in a bakery on Saturdays, and I learned how to talk to customers. That helped me in every job after that. And remember, good communication and a positive attitude are useful in every job."
+   },
+   {
+    "who": "Presenter",
+    "man": true,
+    "text": "Great advice. Thank you, Lucy Foster, and thank you for listening to Careers Today!"
    }
   ]
  },
@@ -1022,185 +1172,280 @@
   "transcript": [
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Hello! Welcome to Style Street. Can I help you?"
+    "man": true,
+    "text": "Hello, and welcome to Style Street! Are you looking for anything special today, or just looking around?"
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "I'm looking for a jacket for my brother. His name is Yusuf. Yusuf is Y-U-S-U-F. His birthday is next week."
+    "text": "Yes, please, I need some help. I'm looking for a present for my brother. I'll need a gift label with his name later, so let me tell you now. It's Oliver. That's O-L-I-V-E-R."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Does he prefer casual or formal clothes?"
+    "man": true,
+    "text": "Thank you. Is it for a special occasion? Lots of people are buying Christmas presents already. We put up our Christmas lights last week, and the shop's been busy ever since!"
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "Casual clothes. He likes simple jackets without bright colours."
+    "text": "No, it's not for Christmas. It's his birthday next week, and I always buy him something nice."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "This dark blue jacket costs forty-eight dollars. We have medium and large sizes."
+    "man": true,
+    "text": "Lovely! Does he like casual or formal clothes? We have some very smart shirts over there, if he works in an office."
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "Could I see the medium one?"
+    "text": "No, he hates shirts and ties! Casual. He likes simple jackets. He's a student, and he cycles everywhere, even in the rain. Last year I bought him a bright yellow jumper, and he never wore it once! Oh, and nothing too colourful. He likes jackets without bright colours. He says they make him look like a traffic light!"
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Certainly. The changing rooms are at the back, next to the mirrors."
+    "man": true,
+    "text": "I understand. This dark blue jacket is very popular with students. It's warm, it's waterproof, and it's from a really good company called Kestrel. Kestrel. That's K-E-S-T-R-E-L. It's named after a small bird."
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "It looks good, but it's a little expensive. Do you have something cheaper?"
+    "text": "It's nice, but it's a bit expensive. I'm a student too, so I can't spend too much. Do you have something cheaper?"
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "This grey jacket costs thirty-five dollars. It's lighter and good for spring or autumn. It has two outside pockets and one small pocket inside."
+    "man": true,
+    "text": "Of course. Let me see. This grey jacket is on sale this week. It was fifty dollars, and now it costs thirty-five dollars. It's lighter than the blue one, so it's good for cycling. The material is very soft, too. Feel it!"
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "That's useful. My brother carries his phone and keys. I'll take it. Can I also buy a T-shirt?"
+    "text": "Oh, yes, it's really soft."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Of course. We have white and green T-shirts. The white one costs twelve dollars, and the green one costs fourteen dollars."
+    "man": true,
+    "text": "And it has lots of really useful pockets: two outside, and one small pocket inside. The inside one is quite deep, so nothing can fall out, even when you're on a bike."
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "I'll take the green one. What is your return policy?"
+    "text": "That's perfect, because he loses things all the time. Last month he lost his keys twice! Honestly, he always carries his phone and keys, and they're always falling out of his pockets. I'll take it. Can I also buy a T-shirt? He can never have too many T-shirts."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "You can return or exchange clothes within thirty days if you have the receipt and the items are unworn."
+    "man": true,
+    "text": "Sure. They're just here, next to the jackets. We have white ones and green ones. The white ones are more popular, but they get dirty very quickly."
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "Can I pay by card?"
+    "text": "Hmm. He cycles in the rain, remember! I'll take the green one. What if he doesn't like the clothes? He's quite fussy. Last year he changed almost all of his birthday presents."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Yes. Your total is forty-nine dollars."
+    "man": true,
+    "text": "Ha! Don't worry, we're very flexible. You can return or exchange them within thirty days. He can choose a different size or a different colour, or get his money back, if he prefers. That's no problem at all."
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "Here is my card. Could you put everything in a gift bag?"
+    "text": "Oh, that's good to know."
    },
    {
     "who": "Assistant",
-    "man": false,
-    "text": "Certainly. Would you like a name on the gift label?"
+    "man": true,
+    "text": "There's just one thing to remember. You need the receipt. Without it, we can't do anything, I'm afraid. So keep it somewhere safe!"
    },
    {
     "who": "Customer",
     "man": false,
-    "text": "Yes, please write Yusuf. That's Y-U-S-U-F. And write, \"Happy birthday! From your sister.\""
+    "text": "OK. I'll give it to my mum, because she never loses anything, unlike my brother! Now, I haven't got much cash with me. Can I pay by card?"
    },
    {
     "who": "Assistant",
+    "man": true,
+    "text": "Yes, of course. Just put your card here. The machine is a bit slow today, so it might take a minute. OK, here's your receipt. Remember, keep it safe! And because it's a present, we can make it look nice. Would you like a gift bag?"
+   },
+   {
+    "who": "Customer",
     "man": false,
-    "text": "No problem. Here you are. Have a lovely day!"
+    "text": "Yes, please. A gift bag would be great."
+   },
+   {
+    "who": "Assistant",
+    "man": true,
+    "text": "Here you are. And if you ever want to check if we have your size, you don't need to come in. You can just call us. Our number is oh one nine eight, two five four, seven three six."
+   },
+   {
+    "who": "Customer",
+    "man": false,
+    "text": "Oh one nine eight, two five four, seven three six?"
+   },
+   {
+    "who": "Assistant",
+    "man": true,
+    "text": "That's right. Someone is always happy to help, even at the weekend. We're open every day until eight o'clock."
+   },
+   {
+    "who": "Customer",
+    "man": false,
+    "text": "Great. One last thing. Can you write on the gift label for me? My handwriting is terrible. My teachers always said so!"
+   },
+   {
+    "who": "Assistant",
+    "man": true,
+    "text": "Of course. What would you like it to say?"
+   },
+   {
+    "who": "Customer",
+    "man": false,
+    "text": "Please write \"Happy birthday! From your sister\" on the label. Oh, and where's the exit? This shop is so big, I'm completely lost!"
+   },
+   {
+    "who": "Assistant",
+    "man": true,
+    "text": "Ha, everybody says that! Don't go back the way you came, because that's the staff area. Just go past the mirrors and turn left. You'll see the big glass doors. Have a lovely day, and I hope your brother likes his present!"
    }
   ]
  },
  {
   "no": 15,
   "title": "A Journey by Train",
-  "format": "Station announcement and",
+  "format": "Conversation at a station",
   "transcript": [
    {
-    "who": "Announcement",
+    "who": "Assistant",
     "man": false,
-    "text": "Good morning, passengers. The train to Lakeside will depart from Platform 4 at nine twenty. The train to Hilltown leaves from Platform 2 at nine forty-five. The train to Westport is delayed and is now expected to leave at ten thirty."
+    "text": "Good morning, and welcome to Central Station! How can I help?"
    },
    {
-    "who": "Announcement",
-    "man": false,
-    "text": "The journey to Lakeside takes approximately two hours and ten minutes. There is a café on the train where passengers can buy sandwiches, drinks and snacks."
-   },
-   {
-    "who": "Passenger 1",
-    "man": false,
-    "text": "Excuse me. Could you tell me where Platform 4 is?"
-   },
-   {
-    "who": "Passenger 2",
+    "who": "Jack",
     "man": true,
-    "text": "Walk straight ahead, then turn left after the information desk."
+    "text": "Hi. I booked a seat on the train to Lakeside, but I can't find my ticket on my phone. I've looked everywhere: in my emails, in my photos, nothing!"
    },
    {
-    "who": "Passenger 1",
+    "who": "Assistant",
     "man": false,
-    "text": "Thank you. I'm travelling to Lakeside to visit my friend, Anna Miller. Anna is A-N-N-A, and Miller is M-I-L-L-E-R. She lives near the lake."
+    "text": "Don't worry, that happens a lot, especially early in the morning! What's your surname?"
    },
    {
-    "who": "Passenger 2",
+    "who": "Jack",
     "man": true,
-    "text": "Do you know her address?"
+    "text": "Miller. That's M-I-L-L-E-R."
    },
    {
-    "who": "Passenger 1",
+    "who": "Assistant",
     "man": false,
-    "text": "Yes, it's 18 Garden Street. Garden is G-A-R-D-E-N, and Street is S-T-R-E-E-T."
+    "text": "Let me look. Miller, Miller. There are three Millers on this list today! Is your first name Jack?"
    },
    {
-    "who": "Passenger 2",
+    "who": "Jack",
     "man": true,
-    "text": "Have you bought your ticket?"
+    "text": "Yes, that's me. I'm so sorry, I'm not usually this disorganised!"
    },
    {
-    "who": "Passenger 1",
+    "who": "Assistant",
     "man": false,
-    "text": "Yes, online yesterday. It cost twenty-six dollars and fifty cents. It's a return ticket. I'm coming back on Sunday evening. My return train leaves Lakeside at six fifteen."
+    "text": "Don't worry! Here it is. You bought it online yesterday, very late at night."
    },
    {
-    "who": "Passenger 2",
+    "who": "Jack",
     "man": true,
-    "text": "What will you do there?"
+    "text": "Yes, I couldn't sleep, so I was planning my trip!"
    },
    {
-    "who": "Passenger 1",
+    "who": "Assistant",
     "man": false,
-    "text": "Anna wants to show me the town centre and a nature park. She also has a dog called Charlie. Charlie is C-H-A-R-L-I-E. He loves walking near the water."
+    "text": "Well, it's a beautiful journey. I'll send the ticket to your phone again. Let me see. Your seat is in coach C, by the window. That's the quiet coach, so no phone calls, please!"
    },
    {
-    "who": "Passenger 2",
+    "who": "Jack",
     "man": true,
-    "text": "Does the train have Wi-Fi?"
+    "text": "Ha, OK. Which platform does the train leave from? It's my first time at this station, and it's huge."
    },
    {
-    "who": "Passenger 1",
+    "who": "Assistant",
     "man": false,
-    "text": "I think so, but I heard the signal can be weak. Are there power sockets?"
+    "text": "It's not on the board yet, but it always leaves from the same place. Platform four. Go down the stairs, through the tunnel, and up the other side. There's a lift if your bag is heavy. Is it heavy?"
    },
    {
-    "who": "Passenger 2",
+    "who": "Jack",
     "man": true,
-    "text": "There are sockets under some seats. There's also a small shop next to Platform 3. It opens at seven in the morning and closes at eight in the evening."
+    "text": "No, it's just a small bag. I'm only going for the weekend."
    },
    {
-    "who": "Announcement",
+    "who": "Assistant",
     "man": false,
-    "text": "The nine twenty train to Lakeside is now ready for boarding at Platform 4. Please board through the front and middle doors. Do not leave bags unattended."
+    "text": "The train leaves at nine twenty, so you have plenty of time. The journey takes about two hours, and the views are lovely after the first half hour, when you leave the city."
    },
    {
-    "who": "Passenger 1",
+    "who": "Jack",
+    "man": true,
+    "text": "Great, thanks. I'm visiting a friend in Lakeside. We were at school together, but she moved there last year for work. I haven't seen her for ages! Is there a bus from the station to her street? It's called Rowan Street. Rowan. That's R-O-W-A-N."
+   },
+   {
+    "who": "Assistant",
     "man": false,
-    "text": "That's my train. Thanks for your help!"
+    "text": "Yes. I know Lakeside well, because my grandparents live there. It's a lovely little town, with a lake in the middle, of course! There's a bus that goes along Rowan Street, and it's very frequent. You don't need to walk far. The bus stops right outside the station café. You can't miss it. It has a big red sign, and it smells of fresh coffee."
+   },
+   {
+    "who": "Jack",
+    "man": true,
+    "text": "Perfect. Is there Wi-Fi on the train? I need to send some emails for work."
+   },
+   {
+    "who": "Assistant",
+    "man": false,
+    "text": "Yes, there is, and it's free. But to be honest, the signal can be weak, especially when the train goes through the hills. So send your emails before you leave! There's also a café on the train, next to the quiet coach. It doesn't have hot meals, but you can buy sandwiches and drinks. The coffee there is much better than ours, I'm sorry to say!"
+   },
+   {
+    "who": "Jack",
+    "man": true,
+    "text": "Great. And are there power sockets? My laptop battery is nearly dead."
+   },
+   {
+    "who": "Assistant",
+    "man": false,
+    "text": "Hmm. Not everywhere, I'm afraid. It's quite an old train. They're only under some seats. Your seat is by the window, so look down near your feet. If there isn't one, ask the guard. He's very helpful."
+   },
+   {
+    "who": "Jack",
+    "man": true,
+    "text": "OK, thanks. I'm really looking forward to this weekend. My friend wants to show me a nature park near her house. She says there are lots of birds there, and you can walk for hours without seeing anyone. I can't wait! I live in the city, so I don't see much nature. And she has a dog that loves walking by the water. He's enormous, but he's very gentle. Last time I visited, he jumped into the lake and then shook all the water over me!"
+   },
+   {
+    "who": "Assistant",
+    "man": false,
+    "text": "Ha! Bring a towel, then. When are you coming back?"
+   },
+   {
+    "who": "Jack",
+    "man": true,
+    "text": "I'm coming back on Sunday evening. I have to work on Monday morning, unfortunately."
+   },
+   {
+    "who": "Assistant",
+    "man": false,
+    "text": "That sounds like a lovely weekend. If you need any help at Lakeside, for example if your train is late or you lose something, call the station office. The number is oh one four four, nine two six, three five eight."
+   },
+   {
+    "who": "Jack",
+    "man": true,
+    "text": "Oh one four four, nine two six, three five eight?"
+   },
+   {
+    "who": "Assistant",
+    "man": false,
+    "text": "That's right. And if you're hungry or thirsty before the train leaves, you don't have to wait for the café on the train. There's also a small shop next to Platform three. It sells snacks and newspapers, and the man there knows everything about trains. Just one more thing before you go. When the train arrives, please don't use the back doors, because that part of the train doesn't go to Lakeside. Board the train through the front and middle doors. The train is often busy at the weekend, so get on quickly and find your seat. There are big shelves at the end of each coach for suitcases. But wherever you put your things, please don't leave your bags alone, not even for a minute. The station staff sometimes have to take them away, and that can make the train late."
+   },
+   {
+    "who": "Jack",
+    "man": true,
+    "text": "I won't, I promise. Thanks for your help! I'm going to buy a bottle of water first, and maybe a newspaper for the journey."
+   },
+   {
+    "who": "Assistant",
+    "man": false,
+    "text": "Good idea. Have a lovely trip, Mr Miller!"
    }
   ]
  },
@@ -1212,92 +1457,107 @@
    {
     "who": "Presenter",
     "man": false,
-    "text": "Welcome to Animal Friends. Today our guest is a young volunteer called Noah Reed. Noah is N-O-A-H, and Reed is R-E-E-D."
-   },
-   {
-    "who": "Presenter",
-    "man": false,
-    "text": "How did you become interested in helping animals?"
+    "text": "Welcome to Animal Friends, the programme for everyone who loves animals! Today our guest is a young volunteer who spends every weekend with dogs and cats. Noah Reed, welcome to the programme! Noah, how do you spell your surname?"
    },
    {
     "who": "Noah",
     "man": true,
-    "text": "My family once found a small dog near our home. He looked tired and didn't have a collar. We gave him water and contacted an animal centre. The centre helped us find his owner. After that, I became interested in animal care."
+    "text": "Reed. That's R-E-E-D. Like the plants that grow by the river."
    },
    {
     "who": "Presenter",
     "man": false,
-    "text": "Do you have a pet?"
+    "text": "Lovely. So, Noah, how did you become interested in helping animals? Was it your parents?"
    },
    {
     "who": "Noah",
     "man": true,
-    "text": "Yes, I have a cat called Bella. Bella is B-E-L-L-A. She's three years old and has white and grey fur. She's friendly, but she doesn't like loud noises. I feed her twice a day and change her water every day."
+    "text": "No, actually, my parents aren't really animal people! It started when I was ten. One rainy evening, my family found a small animal near our home. At first we thought it was a fox, because it was so dirty. But it was a small dog. He looked tired and hungry, and he was shaking with cold. My little sister wanted to keep him straight away, of course! My dad wasn't so sure. We looked for a name, but he didn't have a collar, so we didn't know where he lived. It was getting dark, and it was raining harder and harder. We couldn't leave him outside. So we took him inside, dried him with a towel and gave him some water. He drank it all in about ten seconds! The next morning, we called an animal centre, and they found his owner. She was an old lady from the next street, and she cried when she saw him. That's when I knew I wanted to help animals."
    },
    {
     "who": "Presenter",
     "man": false,
-    "text": "Where do you volunteer?"
+    "text": "What a lovely story. Do you have a pet now?"
    },
    {
     "who": "Noah",
     "man": true,
-    "text": "At Happy Tails Centre. Happy is H-A-P-P-Y, and Tails is T-A-I-L-S. It's on Oak Street. Oak is O-A-K. The centre looks after dogs and cats that need temporary homes."
+    "text": "Yes, a cat. She's three years old. She was a present for my birthday. She isn't black and white, like most cats in our street. She has white and grey fur, and big green eyes. She's very friendly, and she sleeps on my bed every night. She's quite lazy, to be honest. She sleeps most of the day, and she only wakes up when she hears the fridge door! But she doesn't like loud noises. When there are fireworks, she hides under the sofa all evening, and nothing can make her come out."
    },
    {
     "who": "Presenter",
     "man": false,
-    "text": "What do you do there?"
+    "text": "Poor thing! So, where do you volunteer?"
    },
    {
     "who": "Noah",
     "man": true,
-    "text": "I clean the animals' areas, prepare food and take dogs for walks. I also speak to visitors about responsible pet ownership."
+    "text": "At an animal centre on the edge of town. It's a big old building with a garden, and it's always noisy! It looks after dogs and cats that need new homes. Some of them were lost, and some of them had owners who couldn't look after them any more. I go there every Saturday and Sunday. I clean the animals' areas and prepare their food. But my favourite job is the last one of the day. I take the dogs for walks in the woods behind the centre. Some of them pull very hard, so my arms are always tired!"
    },
    {
     "who": "Presenter",
     "man": false,
-    "text": "Is there an animal you remember especially well?"
+    "text": "Ha! Is there an animal you remember well?"
    },
    {
     "who": "Noah",
     "man": true,
-    "text": "Yes, a dog called Rocky. Rocky is R-O-C-K-Y. He arrived in March. At first, he was nervous and stayed in a corner. Volunteers gave him time and treated him gently. After a few weeks, he became more confident and started playing with other dogs."
+    "text": "Oh, yes. I'll never forget him. He was a big brown dog with one ear up and one ear down. His name was Rocky. Rocky. That's R-O-C-K-Y. When he arrived, he was very nervous. He didn't eat, he didn't play, and he was afraid of people. We think someone wasn't very kind to him before. For the first few days, he just stayed in a corner of his room, with his back to the wall. We didn't push him. We gave him time and treated him gently. I sat near him every weekend and read my school books out loud, so he could get used to my voice. And slowly, slowly, things changed. After a few weeks, he started playing with the other dogs, and he even brought me his ball!"
    },
    {
     "who": "Presenter",
     "man": false,
-    "text": "Did Rocky find a home?"
+    "text": "That's wonderful. Did Rocky find a home in the end?"
    },
    {
     "who": "Noah",
     "man": true,
-    "text": "Yes. A family visited in April. They had two children and a large garden. They adopted Rocky and sent us a photograph a month later. He looked very happy."
+    "text": "Yes! Lots of people came to see him in the winter, but nobody chose him. Then, in April, a family with two children and a large garden adopted him. The children had never had a dog before, so they came to the centre every day for a week to get to know him. I was happy, but I also cried a bit when he left! A month later, they sent us a photo. Rocky was lying on the grass in the sun, with the two children next to him. He looked so happy. It's on the wall in our office now."
    },
    {
     "who": "Presenter",
     "man": false,
-    "text": "How many animals does the centre usually have?"
+    "text": "That's beautiful. So, how can people help? Do they need to adopt an animal?"
    },
    {
     "who": "Noah",
     "man": true,
-    "text": "Around thirty, but the number changes. Last week, there were twenty-four dogs and eleven cats. The centre needs volunteers, food, blankets and cleaning supplies."
+    "text": "No, not at all. They can volunteer, like me, or they can give things. We always need food and blankets, especially in winter. Old towels are great too. The dogs love sleeping on them, and they often steal them from each other! But please call before you visit, because sometimes we're very busy with the animals. The number is oh two oh seven, seven four five, one nine three."
    },
    {
     "who": "Presenter",
     "man": false,
-    "text": "How can people help?"
+    "text": "Oh two oh seven, seven four five, one nine three?"
    },
    {
     "who": "Noah",
     "man": true,
-    "text": "They can volunteer or donate useful items. They should contact the centre before visiting. The phone number is 020 774 519. That's zero two zero, seven seven four, five one nine."
+    "text": "That's right."
    },
    {
     "who": "Presenter",
     "man": false,
-    "text": "Thank you, Noah. Small acts of kindness can make a difference."
+    "text": "Lots of children listen to our programme. Can children volunteer too?"
+   },
+   {
+    "who": "Noah",
+    "man": true,
+    "text": "Yes, they can. Children often ask me about this at school. They can't come alone, but they can come from the age of twelve, with a parent. Lots of families come together on Sunday mornings, and the children love brushing the cats."
+   },
+   {
+    "who": "Presenter",
+    "man": false,
+    "text": "Thank you so much, Noah. It was great to talk to you."
+   },
+   {
+    "who": "Noah",
+    "man": true,
+    "text": "Thank you for having me. And remember, you don't need to do something big. Even giving one old blanket helps. Small acts of kindness can make a big difference."
+   },
+   {
+    "who": "Presenter",
+    "man": false,
+    "text": "What a lovely message. If you'd like to help Noah's animal centre, you can find all the details on our website. And that's all for today. Next week on Animal Friends, we're talking about horses, and we'll visit a farm where horses help people feel better. See you then!"
    }
   ]
  },
@@ -1307,181 +1567,186 @@
   "format": "Lifestyle podcast",
   "transcript": [
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "Hello, and welcome to Everyday Choices, a podcast about simple habits that can make daily life better. I'm your presenter, Rachel Moore. Rachel is R-A-C-H-E-L, and Moore is M-O-O-R-E."
+    "who": "Ryan",
+    "man": true,
+    "text": "Hello, and welcome to Everyday Choices, a podcast about simple habits that make daily life better. I'm your presenter, Ryan Moore. Moore. That's M-O-O-R-E. Thank you for all your lovely messages last week. I read every single one of them, usually with a cup of tea in my hand!"
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "Today we're talking about healthy habits. Some people think a healthy lifestyle requires expensive food, special equipment or lots of free time. However, many useful habits are simple."
+    "who": "Ryan",
+    "man": true,
+    "text": "Today we're talking about healthy habits. When I started this podcast, I thought a healthy life needed expensive food from special shops and lots of equipment for the gym. I was wrong. Many useful habits are simple, and most of them are free."
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "Let's begin with sleep. Having a regular sleeping routine can help you feel more organised. If you wake up at seven, you might choose to go to bed at around ten thirty or eleven. People need different amounts of sleep, but enough rest is important."
+    "who": "Ryan",
+    "man": true,
+    "text": "Let's begin with sleep. I know, I know. Sleep isn't very exciting! But it's the most important habit of all. When I was at university, I went to bed at a different time every night, and I always felt confused. A regular sleeping routine helps you feel organised. It also helps you concentrate at school or at work, and it puts you in a better mood. My family says I'm much nicer now! So here's a simple rule. If you wake up at seven, try to go to bed at about half past ten. And put your phone in another room! I used to check my messages in bed until very late, and I felt terrible in the morning."
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "The second habit is drinking water. Some people forget to drink during busy days. One useful idea is to keep a bottle nearby. My bottle holds seven hundred and fifty millilitres. I fill it in the morning and take it to work."
+    "who": "Ryan",
+    "man": true,
+    "text": "The second habit is drinking water. It sounds easy, doesn't it? But some people forget to drink on busy days, and then they get headaches. So keep a bottle near you. I fill mine every morning, and I take it everywhere: to work, to the shops, even to the cinema. My friends laugh at me, but I haven't had a headache for months!"
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "Another habit is eating a variety of foods. Fruit, vegetables, grains and other foods can all be part of balanced meals. You don't need to eat the same thing every day. You could have eggs and bread for breakfast, rice with vegetables for lunch, and soup for dinner."
+    "who": "Ryan",
+    "man": true,
+    "text": "Another habit is eating a variety of foods. Don't eat the same thing every day. For example, you could have eggs and bread for breakfast, rice with vegetables for lunch, and soup for dinner. My grandmother makes the best vegetable soup in the world. She says the secret is lots of colours: orange carrots, green beans, red peppers. The more colours on your plate, the better!"
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "Movement is important too. You don't have to join a sports club. Walking, cycling, dancing and playing outside are all ways to move more. My neighbour, Thomas Hill, is a good example. Thomas is T-H-O-M-A-S, and Hill is H-I-L-L. He walks to work every day. His office is twenty-five minutes from his home."
+    "who": "Ryan",
+    "man": true,
+    "text": "Movement is important too. My neighbour is a great example. He used to take the bus to work, but it was always late. Now he walks to work every day, and he says he feels ten years younger! On the way, he stops to talk to the man at the newspaper shop, and he always arrives at work with a smile. And you don't have to join a sports club or buy expensive trainers. Walking, cycling, dancing and playing outside are all good. Last weekend I played football in the park with my nephews, and I was the most tired person there!"
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "It's also useful to take short breaks when studying. If you sit for a long time, stand up, stretch gently or walk around. Some people study for twenty-five minutes and then take a five-minute break."
+    "who": "Ryan",
+    "man": true,
+    "text": "It's also useful to take short breaks when you study or work. Sitting at a desk for hours isn't good for your body or your brain. Every hour, stand up and stretch gently, or walk around the room."
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "Rest and enjoyable activities matter as well. Reading, listening to music and spending time with friends can help people relax."
+    "who": "Ryan",
+    "man": true,
+    "text": "Rest is important as well. Being healthy isn't only about your body. Your mind needs a rest too. Some people like reading, and some people like listening to music. Personally, I think the best thing is spending time with friends. It always helps me relax."
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "Now, here's a message from Daniel in Brookfield. Brookfield is B-R-O-O-K-F-I-E-L-D. Daniel works from nine until five and often feels tired in the evening. He wants to become more active."
+    "who": "Ryan",
+    "man": true,
+    "text": "Now, here's a message from a listener. He sent us a long email, so I'll tell you the most important part. He lives in a small town called Brookfield. Brookfield. That's B-R-O-O-K-F-I-E-L-D. Thank you for writing to us, and hello to everyone in Brookfield! I've never been there, but I hear it has a beautiful lake. Anyway, our listener says he loves his job, but it isn't very active. He works in an office, and he sits in front of a computer most of the day. He even eats his lunch at his desk. When he gets home, he just wants to lie on the sofa. He often feels tired in the evening, and he wants to be more active. But he says he doesn't have time for the gym."
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "My suggestion is to start with a small change. Daniel could walk for ten minutes after lunch or take the stairs instead of the lift. He could also prepare a simple meal at home."
+    "who": "Ryan",
+    "man": true,
+    "text": "Well, I have good news for you! My suggestion is to start small. You don't need a gym. You could go for a short walk after lunch, instead of eating at your desk. Even a few minutes outside makes a big difference. And here's another easy idea. Your office is probably in a big building. When you arrive in the morning, take the stairs instead of the lift. At first you'll be out of breath, but after a few weeks it'll be easy. And finally, try cooking at home. You don't have to be a great cook. I'm a terrible cook! Just cook a simple meal at home, with lots of vegetables. It's cheaper than eating out, and it's much healthier. Good luck, and please write to us again in a month to tell us how it's going!"
    },
    {
-    "who": "Speaker",
-    "man": false,
-    "text": "Remember, you don't need to change everything in one day. Choose one or two realistic goals and practise them regularly. A healthy lifestyle is built through small choices repeated over time. Thank you for listening to Everyday Choices."
+    "who": "Ryan",
+    "man": true,
+    "text": "That was a great question. If you'd like to send us a question too, we'd love to hear from you. You can call the podcast line and leave a message, any time of the day or night. The number is oh one five two, eight three six, four seven nine. That's oh one five two, eight three six, four seven nine."
+   },
+   {
+    "who": "Ryan",
+    "man": true,
+    "text": "Before I go, here's the most important thing to remember. You don't need to change everything in one day. People who try to change everything at once usually give up after a week. So choose one or two realistic goals and practise them regularly. Maybe this week you'll drink more water, and next month you'll start walking to work. Step by step, it gets easier. A healthy lifestyle isn't built in one day. It's built through small choices, repeated over time. Thank you for listening, and see you next week on Everyday Choices!"
    }
   ]
  },
  {
   "no": 18,
   "title": "How Technology Changes Our Lives",
-  "format": "Student discussion programme",
+  "format": "Student radio programme",
   "transcript": [
    {
     "who": "Host",
-    "man": true,
-    "text": "Welcome to School Voices. Today's topic is technology. Our guests are Emily Parker and Jack Brown."
+    "man": false,
+    "text": "Welcome to School Voices, the radio programme made by students, for students! Today's topic is technology. We all use it, but do we use it well? To help us find out, I have two guests from our school, Emily and Jack. Emily, can you spell your surname for our listeners?"
    },
    {
     "who": "Emily",
     "man": false,
-    "text": "Emily is E-M-I-L-Y, and Parker is P-A-R-K-E-R."
-   },
-   {
-    "who": "Jack",
-    "man": false,
-    "text": "Jack is J-A-C-K, and Brown is B-R-O-W-N."
+    "text": "Sure. It's Parker. That's P-A-R-K-E-R."
    },
    {
     "who": "Host",
-    "man": true,
-    "text": "Emily, how often do you use your phone?"
+    "man": false,
+    "text": "Thanks, Emily. Let's start with something we all have. How do you use your phone? Be honest!"
    },
    {
     "who": "Emily",
     "man": false,
-    "text": "Every day. I use it to message friends, check my school timetable, listen to music and find information. I also use a language-learning app for about fifteen minutes a day. Smartphones make life easier because I can contact my family and find directions. However, I sometimes watch too many short videos, so I put my phone away when studying."
+    "text": "Ha, OK! Well, I use it every day, from the moment I wake up. It's my alarm clock, my music player, everything. I message my friends, of course, and I check my school timetable, because I always forget which classroom I'm in! I also listen to music on the bus. And I'm learning Spanish, so I use a language app. My best friend uses it for an hour a day, but I'm not that patient. I use it for about fifteen minutes a day, usually before breakfast. But I have a problem. When I start watching short videos, I can't stop! Sometimes I look up, and an hour has gone, and my homework isn't finished. So when I'm studying, I put my phone away, in another room."
    },
    {
     "who": "Host",
-    "man": true,
-    "text": "Jack, what about you?"
+    "man": false,
+    "text": "I think we all know that feeling! Jack, what about you? Are you a phone person too?"
    },
    {
     "who": "Jack",
     "man": true,
-    "text": "I use my laptop more than my phone because I do school projects on it. I also learn computer skills through free online lessons. I often use a website called Learn Online. Learn is L-E-A-R-N, and Online is O-N-L-I-N-E. It has short lessons about typing, presentations and spreadsheets. Some lessons are ten minutes long."
+    "text": "Not really. I use my laptop more than my phone. I play games on it sometimes, but mostly it's for school. I do my school projects on it. Last month I made a video about recycling for my science class, and my teacher showed it to the whole school! I also take free online lessons. At the moment I'm learning about typing and presentations. I used to type with two fingers, and it took forever. Now I can type without looking at the keyboard!"
    },
    {
     "who": "Host",
-    "man": true,
-    "text": "Do you use technology for entertainment?"
-   },
-   {
-    "who": "Jack",
-    "man": true,
-    "text": "Yes. I watch films, play games and listen to podcasts. But I try to finish homework first. Otherwise, I can lose track of time."
-   },
-   {
-    "who": "Host",
-    "man": true,
-    "text": "What should students remember about online safety?"
+    "man": false,
+    "text": "Impressive! Now, something important. What should students remember about online safety? Emily?"
    },
    {
     "who": "Emily",
     "man": false,
-    "text": "Use strong passwords and avoid sharing private information with strangers. Think carefully before posting photographs or personal details."
+    "text": "Well, the first thing is passwords. Lots of people use their name or their birthday, and that's a big mistake. Use strong passwords, with letters, numbers and symbols. And don't share private information with strangers, like your address or your school. You never really know who is on the other side of the screen."
    },
    {
     "who": "Jack",
     "man": true,
-    "text": "Also, check information before believing or sharing it. Not everything online is correct. If I read an unusual story, I look for another reliable source."
+    "text": "I agree. And there's one more thing. Check information before you share it. My grandad sends me crazy stories every week, like a cat that can talk! Not everything online is true."
    },
    {
     "who": "Host",
-    "man": true,
-    "text": "Will technology change schools in the future?"
+    "man": false,
+    "text": "Ha! Poor grandad. Let's look at the future. Will technology change schools? Emily, what do you think?"
    },
    {
     "who": "Emily",
     "man": false,
-    "text": "Probably. Students may use more digital books and interactive lessons. Teachers can share materials online, which makes studying at home easier."
+    "text": "Probably, yes. My little brother's school already gives every student a tablet. I think in a few years, our heavy school bags will disappear. We'll use more digital books, and teachers will share more materials online."
+   },
+   {
+    "who": "Host",
+    "man": false,
+    "text": "Jack, do you agree?"
    },
    {
     "who": "Jack",
     "man": true,
-    "text": "Technology will help teachers, but it won't replace them. Students still need people to explain difficult ideas and answer questions."
+    "text": "Maybe. But I don't think robots will teach us! A computer can't tell when you're sad or confused. Technology will help teachers, but it won't replace them. A good teacher is much more than a screen."
    },
    {
     "who": "Host",
-    "man": true,
-    "text": "Emily, do you have a favourite device?"
+    "man": false,
+    "text": "Well said. Now, a fun question. Emily, what's your favourite device?"
    },
    {
     "who": "Emily",
     "man": false,
-    "text": "My favourite is my tablet, Nova. Nova is N-O-V-A. I use it to read and draw. I bought it last year for one hundred and eighty dollars."
+    "text": "That's easy! My tablet. I got it for my birthday last year, and I gave it a name, because I use it so much. It's called Nova. Nova. That's N-O-V-A. Like a star. My friends think it's a funny name, but I love it. I take it everywhere, even on holiday. The screen is quite big, and the colours are beautiful. I don't play games on it much. I mostly use it to read and draw. I want to be an artist one day, so I draw something every evening, usually animals. Last night I drew my cat sleeping on the sofa."
    },
    {
     "who": "Host",
-    "man": true,
-    "text": "Jack?"
+    "man": false,
+    "text": "Lovely. And Jack, what about you?"
    },
    {
     "who": "Jack",
     "man": true,
-    "text": "I like my wireless headphones. I bought them at Tech Corner. Tech is T-E-C-H, and Corner is C-O-R-N-E-R. The shop is at 42 Market Road. Market is M-A-R-K-E-T, and Road is R-O-A-D."
+    "text": "For me, it's not my laptop, actually. It's my wireless headphones. I wear them on the bus, at the gym, everywhere. My mum says they're glued to my head! The sound is amazing, and they stop all the noise around you, so I can't hear my little sister screaming. I bought them at a small shop on Market Road, near the station. The man there knows everything about technology, and he lets you try everything before you buy it. They weren't expensive. In the big shops they cost about seventy dollars, but in his shop they cost forty dollars. I've already told all my friends about it."
    },
    {
     "who": "Host",
+    "man": false,
+    "text": "What a bargain! If our listeners have questions about technology, they can call the school radio. We read your questions out every Friday, and the best ones win a prize. The number is oh one seven three, two nine five, eight four one."
+   },
+   {
+    "who": "Jack",
     "man": true,
-    "text": "Give us one final piece of advice."
+    "text": "Oh one seven three, two nine five, eight four one?"
+   },
+   {
+    "who": "Host",
+    "man": false,
+    "text": "That's right! Well, we're nearly out of time. Before you go, one final piece of advice for our listeners. Emily?"
    },
    {
     "who": "Emily",
     "man": false,
-    "text": "Make sure technology helps you reach your goals."
+    "text": "Technology is a great tool, but it's only a tool. Don't let it control you. Make sure technology helps you reach your goals. For example, if you want to learn a language, use an app. But if you just scroll for hours, put it down."
    },
    {
     "who": "Jack",
     "man": true,
-    "text": "Learn to use digital tools, but spend time away from screens too."
+    "text": "Exactly. Go outside, see your friends, play a sport. And spend time away from screens too. Every Sunday, my family has a no-phone day. It was terrible at first, but now I love it. We play board games and go for long walks."
    },
    {
     "who": "Host",
-    "man": true,
-    "text": "Thank you both!"
+    "man": false,
+    "text": "What a great idea. Thank you both! And next week on School Voices, we're talking about sport, with the captain of our football team. See you then!"
    }
   ]
  },
@@ -1492,108 +1757,128 @@
   "transcript": [
    {
     "who": "Presenter",
-    "man": true,
-    "text": "Welcome to Film Makers. Today we're speaking to a production assistant called Sophie Turner. Sophie is S-O-P-H-I-E, and Turner is T-U-R-N-E-R."
-   },
-   {
-    "who": "Presenter",
-    "man": true,
-    "text": "What does a production assistant do?"
-   },
-   {
-    "who": "Sophie",
     "man": false,
-    "text": "I help the film team organise daily work. I prepare schedules, check equipment, help actors find the correct places and communicate with different departments. It's busy because many people work together."
+    "text": "Welcome to Film Makers, the programme that takes you behind the scenes of your favourite films! Today I'm talking to someone who works on a film set every day. He's a production assistant, Sam Turner. Sam, could you spell your surname?"
+   },
+   {
+    "who": "Sam",
+    "man": true,
+    "text": "Sure. Turner. That's T-U-R-N-E-R."
    },
    {
     "who": "Presenter",
-    "man": true,
-    "text": "What film are you working on?"
-   },
-   {
-    "who": "Sophie",
     "man": false,
-    "text": "A family adventure film called The Secret Garden. The Secret is T-H-E, then S-E-C-R-E-T. Garden is G-A-R-D-E-N. It's about two children who discover an unusual garden near their grandmother's house."
+    "text": "Thank you, Sam. Now, I think lots of our listeners don't know this job. So, what does a production assistant do?"
+   },
+   {
+    "who": "Sam",
+    "man": true,
+    "text": "Ha, my friends ask me that all the time! Well, a film set is like a small town, with lots of people doing different jobs. I help the film team organise the daily work. Every evening, I prepare schedules for the next day, so everyone knows where to be and when. If I make a mistake, everyone ends up in the wrong place, so I check everything twice! Then, early in the morning, before anyone else arrives, I check the equipment: the cameras, the lights, the microphones. Everything must be ready. And when the actors arrive, I help them. The set is big and confusing, and there are cables everywhere, so I help the actors find the right places. It's a busy job, because so many people work together, but I love it."
    },
    {
     "who": "Presenter",
-    "man": true,
-    "text": "Where are you filming?"
-   },
-   {
-    "who": "Sophie",
     "man": false,
-    "text": "Most scenes are filmed in Willow Creek. Willow is W-I-L-L-O-W, and Creek is C-R-E-E-K. It's about forty kilometres from the nearest large city. We also film indoor scenes at Studio North. Studio is S-T-U-D-I-O, and North is N-O-R-T-H."
+    "text": "It sounds exciting! What film are you working on at the moment?"
+   },
+   {
+    "who": "Sam",
+    "man": true,
+    "text": "It's a family adventure film called The Hidden Garden. Some people think it's about a football team, because the main boy plays football in the first scene. But no. It's about two children who find a strange garden near their grandmother's house. In the garden, the flowers can talk, and the trees move at night! I can't tell you the ending, of course."
    },
    {
     "who": "Presenter",
+    "man": false,
+    "text": "Of course not! Where are you filming?"
+   },
+   {
+    "who": "Sam",
     "man": true,
+    "text": "Well, the story happens in the countryside, so we couldn't film in the city. Most scenes are filmed in a small village in the hills, about an hour from the city. The people there are very kind. They bring us cakes and tea every afternoon! We film the indoor scenes in a studio, where we can control the light."
+   },
+   {
+    "who": "Presenter",
+    "man": false,
     "text": "How long does filming take?"
    },
    {
-    "who": "Sophie",
-    "man": false,
-    "text": "About twelve weeks. After that, editors work on the film for several months. They choose the best scenes, add music, improve the sound and prepare the final version."
+    "who": "Sam",
+    "man": true,
+    "text": "Most people think a film takes a few days, but this one takes about twelve weeks. And that's only the filming! After that, the editors work on the film for several months. That's a very important job. The editors watch hours and hours of film. Sometimes a scene we filmed for a whole day is cut completely! They choose the best scenes and add music. The music for this film is beautiful. I've heard some of it already."
    },
    {
     "who": "Presenter",
-    "man": true,
-    "text": "How many people are in the team?"
+    "man": false,
+    "text": "Wow. And how big is the team?"
    },
    {
-    "who": "Sophie",
-    "man": false,
-    "text": "About forty-five people, including the director, camera operators, actors, costume designers and sound assistants."
+    "who": "Sam",
+    "man": true,
+    "text": "Bigger than you think! On a normal day, there are about forty-five people on set. We all eat lunch together in a big tent, and it's very noisy! There's the director, of course, who decides everything. There are camera operators and actors. There are people who do make-up and hair, and there are costume designers, who make all the clothes. And there are sound assistants, who hold the big microphones above the actors' heads."
    },
    {
     "who": "Presenter",
-    "man": true,
-    "text": "Tell us about the main actors."
+    "man": false,
+    "text": "Is there an animal in the film? Children love animals in films."
    },
    {
-    "who": "Sophie",
-    "man": false,
-    "text": "The main character is played by Oliver James. Oliver is O-L-I-V-E-R, and James is J-A-M-E-S. He plays a boy called Leo. Leo is L-E-O. His sister is played by Hannah Price. Hannah is H-A-N-N-A-H, and Price is P-R-I-C-E."
+    "who": "Sam",
+    "man": true,
+    "text": "Yes! We have a small dog in the film. He's brown and white, with very short legs, and he belongs to the children's grandmother in the story. Everybody on set loves him, especially the actors. His name is Biscuit. Biscuit. That's B-I-S-C-U-I-T. He's very friendly, but he's not a perfect actor! Sometimes he doesn't follow instructions. Yesterday, he ran away with an actor's sandwich in the middle of a scene! When that happens, we don't get angry. We take a short break and try again."
    },
    {
     "who": "Presenter",
-    "man": true,
-    "text": "Is there an animal in the film?"
+    "man": false,
+    "text": "Ha! I love Biscuit already. So, when can we see the film?"
    },
    {
-    "who": "Sophie",
-    "man": false,
-    "text": "Yes, a small dog called Biscuit. Biscuit is B-I-S-C-U-I-T. He's friendly, but sometimes he doesn't follow instructions. We take a short break and try again."
+    "who": "Sam",
+    "man": true,
+    "text": "Not this summer, I'm afraid. We need time to finish it. It comes to cinemas on the eighteenth of December, just in time for Christmas. It's the perfect film to watch with your family."
    },
    {
     "who": "Presenter",
-    "man": true,
-    "text": "When will the film be released?"
+    "man": false,
+    "text": "I'll be there! What's the hardest part of your job?"
    },
    {
-    "who": "Sophie",
-    "man": false,
-    "text": "The cinema release is planned for the eighteenth of December. The first trailer will come out on the fifth of October. The film will last about one hour and forty minutes."
+    "who": "Sam",
+    "man": true,
+    "text": "Oh, that's easy. The weather! We plan everything carefully, but the weather doesn't read our schedules. Last week we wanted to film a picnic in the sunshine, and it rained all day. If it rains during an outdoor scene, we change the plan and film an indoor scene instead. That's why we always have a second plan ready."
    },
    {
     "who": "Presenter",
-    "man": true,
-    "text": "What is the most difficult part of your job?"
+    "man": false,
+    "text": "Very clever. Lots of young people listen to this programme. How can they learn more about film jobs?"
    },
    {
-    "who": "Sophie",
-    "man": false,
-    "text": "Keeping everything organised when the weather changes. If it rains during an outdoor scene, we may change the schedule and record an indoor scene instead."
+    "who": "Sam",
+    "man": true,
+    "text": "That's a great question. Our studio runs free workshops for teenagers, every school holiday. You can try using a real camera, write a short scene, or even act in front of the camera. Last summer, one of our students made a short film, and it won a prize! If you're interested, you can call the studio on oh one two six, five eight three, nine four seven."
    },
    {
     "who": "Presenter",
-    "man": true,
-    "text": "What advice would you give someone interested in films?"
+    "man": false,
+    "text": "Oh one two six, five eight three, nine four seven?"
    },
    {
-    "who": "Sophie",
+    "who": "Sam",
+    "man": true,
+    "text": "Yes, that's right. The workshops are very popular, so call early!"
+   },
+   {
+    "who": "Presenter",
     "man": false,
-    "text": "Be organised, communicate clearly and be ready to learn. There are many jobs behind the camera, not only acting and directing."
+    "text": "Great. And finally, any advice for someone who wants to work in films?"
+   },
+   {
+    "who": "Sam",
+    "man": true,
+    "text": "Yes. First, be organised. On a film set, everything happens very fast. Second, communicate clearly. When so many people work together, a small misunderstanding can cause big problems. Once, the camera team went to the wrong village, because nobody told them about a change in the plan! And always be ready to learn. I learn something new every day, from the camera team, from the actors, even from Biscuit! And remember, you don't have to be an actor. Most people in films never appear on the screen. There are many jobs behind the camera, not only acting."
+   },
+   {
+    "who": "Presenter",
+    "man": false,
+    "text": "Thank you, Sam Turner, and good luck with The Hidden Garden!"
    }
   ]
  },
@@ -1603,69 +1888,79 @@
   "format": "International radio report",
   "transcript": [
    {
-    "who": "Presenter",
-    "man": false,
-    "text": "Welcome to World Weather Today. I'm your presenter, Laura Smith. Laura is L-A-U-R-A, and Smith is S-M-I-T-H. Today we're visiting four cities to find out how weather affects daily life."
-   },
-   {
-    "who": "Presenter",
-    "man": false,
-    "text": "Our first report comes from Oslo, the capital of Norway. Oslo is O-S-L-O. Our reporter is Erik Hansen. Erik is E-R-I-K, and Hansen is H-A-N-S-E-N."
-   },
-   {
-    "who": "Erik",
+    "who": "Luke",
     "man": true,
-    "text": "Good morning from Oslo! It's a cold winter morning. The temperature is minus three degrees Celsius, and there is light snow. Many people are wearing warm coats, hats and gloves. The roads are slippery, so drivers are moving slowly. Some children have outdoor winter activities at school."
+    "text": "Welcome to World Weather Today! I'm your presenter, Luke Smith. Smith. That's S-M-I-T-H. It's lovely to be with you again. If you're new to the programme, here's how it works. Every week we call our friends in different countries and ask them one simple question: what's the weather like where you are? And today we're visiting four cities to find out how the weather changes daily life."
    },
    {
-    "who": "Presenter",
-    "man": false,
-    "text": "Thank you. Now let's travel to Nairobi in Kenya. Our reporter is Grace Mwangi. Grace is G-R-A-C-E, and Mwangi is M-W-A-N-G-I."
-   },
-   {
-    "who": "Grace",
-    "man": false,
-    "text": "Hello from Nairobi! It's warm and sunny. The temperature is twenty-six degrees. Many people enjoy spending time outside. The rainy season is expected to begin next month, so people are preparing their gardens and checking their roofs."
-   },
-   {
-    "who": "Presenter",
-    "man": false,
-    "text": "Our next stop is Tokyo, Japan. Tokyo is T-O-K-Y-O. Our reporter is Kenji Sato. Kenji is K-E-N-J-I, and Sato is S-A-T-O."
-   },
-   {
-    "who": "Kenji",
+    "who": "Luke",
     "man": true,
-    "text": "Good afternoon from Tokyo. It's cloudy and eighteen degrees. There is a light wind, but no rain. The stations are busy because many people travel by train. In spring, Tokyo is famous for its cherry blossoms. Visitors go to parks to see the flowers and take photographs."
+    "text": "We're going from the cold north to the hot south, so get ready for snow, sunshine and everything in between. Our first report comes from Oslo, in Norway. Good morning, Oslo!"
    },
    {
-    "who": "Presenter",
+    "who": "Reporter",
     "man": false,
-    "text": "Finally, let's visit Sydney in Australia. Sydney is S-Y-D-N-E-Y. Our reporter is Mia Collins. Mia is M-I-A, and Collins is C-O-L-L-I-N-S."
+    "text": "Good morning, Luke, and good morning from Oslo! I'm standing in the main square, next to a big Christmas tree, and it's very cold. The weather app on my phone says minus five, but the thermometer here says minus three degrees, and I believe the thermometer! There's light snow this morning, and the children on their way to school are trying to catch it on their tongues. Everyone is dressed for winter: warm coats, hats, and almost everyone has gloves on."
    },
    {
-    "who": "Mia",
+    "who": "Reporter",
     "man": false,
-    "text": "Hello from Sydney! It's a bright summer day. The temperature is thirty-one degrees. Many people are going to the beach, swimming or having lunch outside. In summer, it can become very hot. People should drink water, use sun protection and look for shade during the hottest part of the day."
+    "text": "A man next to me just told me he's wearing two pairs! I forgot mine at the hotel, of course, so my hands are freezing as I speak to you. Driving isn't easy this morning, either. The roads are slippery, so the buses are late and drivers are going very slowly. Some people are walking to work instead. Back to you, Luke!"
    },
    {
-    "who": "Presenter",
-    "man": false,
-    "text": "Thank you to all our reporters. Weather can be very different around the world. In one city, people may wear winter coats, while in another, they enjoy a sunny day at the beach."
+    "who": "Luke",
+    "man": true,
+    "text": "Thank you! Keep warm out there. Now let's travel a long way south, to Nairobi, in Kenya. Hello, Nairobi!"
    },
    {
-    "who": "Presenter",
+    "who": "Reporter",
     "man": false,
-    "text": "Weather affects transport, school activities, work and travel plans. Before leaving home, it's useful to check the forecast and choose suitable clothes. Take an umbrella if rain is expected. Wear warm clothes in cold weather. On very hot days, drink enough water and avoid staying in the sun for too long."
+    "text": "Hello, Luke! What a difference! Yesterday it was cloudy, but today it's warm and sunny, and lots of people are spending time outside. It's a perfect day to be outdoors. The parks are full of families having picnics, and I can see some boys playing football in the street behind me. But this weather won't last long. The rainy season starts next month, so people are getting their gardens ready. They're planting beans and tomatoes now, so the rain can help them grow."
    },
    {
-    "who": "Presenter",
-    "man": false,
-    "text": "Here are tomorrow's temperatures. Oslo will be minus one degree. Nairobi will be twenty-seven degrees. Tokyo will be nineteen degrees, and Sydney will be thirty degrees."
+    "who": "Luke",
+    "man": true,
+    "text": "Lovely! Enjoy the sunshine while it lasts. Our next stop is Tokyo, in Japan. Good afternoon, Tokyo!"
    },
    {
-    "who": "Presenter",
+    "who": "Reporter",
+    "man": true,
+    "text": "Good afternoon, Luke! The sky is grey and cloudy today, and there's a light wind, but so far there's no rain. People here say it's a good day for walking, and the cafes are full of office workers drinking hot green tea. Right now I'm standing outside one of the biggest stations in the city, and it's very busy. Thousands of people are hurrying to their trains. Most people in Tokyo travel by train, because it's fast and it's always on time. And if you visit, come in spring. That's when Tokyo is famous for its cherry blossoms, and the parks turn pink and white."
+   },
+   {
+    "who": "Luke",
+    "man": true,
+    "text": "Beautiful! Thank you, Tokyo. Finally, let's go to the other side of the world, where it's summer right now. We're going to Sydney, in Australia. Sydney. That's S-Y-D-N-E-Y."
+   },
+   {
+    "who": "Reporter",
     "man": false,
-    "text": "That's all for World Weather Today. Thank you for listening!"
+    "text": "Hello from Sydney! It's a bright summer day, and it's already very hot, even though it's still the morning. The sky is completely blue, without a single cloud. Schools are on holiday, so lots of families are going to the beach. The trains to the coast are full of children with surfboards and big bags of sandwiches."
+   },
+   {
+    "who": "Reporter",
+    "man": false,
+    "text": "But the doctors here have some advice for hot days like this. Drink lots of water, and use sun cream, even if you're only outside for a short time. The sun is very strong here, and it's easy to get burnt. My little brother forgot his sun cream last summer, and his nose was red for a week! And one more thing: stay in the shade at lunchtime, when the sun is at its strongest."
+   },
+   {
+    "who": "Luke",
+    "man": true,
+    "text": "Great advice! Thank you to all our reporters. So, what can we learn from today's programme? The weather is different everywhere, but the rules are the same. Before you leave home, check the forecast and choose the right clothes. It only takes a minute, and it can save you from a very bad day. I learned that last week, when I went to the park in my new white shoes and came home with muddy brown ones!"
+   },
+   {
+    "who": "Luke",
+    "man": true,
+    "text": "So here's my advice: take an umbrella if rain is expected, even if the sky looks blue in the morning. Now, we love hearing from you. Every week, listeners send us photos of the sky where they live: rainbows, snowmen, even a cat in a raincoat! So send us your weather photos. You can call or message us on oh one three one, four seven two, six five eight. That's oh one three one, four seven two, six five eight. The best photo each week wins a World Weather Today mug!"
+   },
+   {
+    "who": "Luke",
+    "man": true,
+    "text": "OK, that's all for today. Tomorrow, we were going to talk about rainbows, but a big storm is coming to the north of the country, so we'll talk about storms instead: how they start, and how to stay safe when one comes. Our reporter in America will tell us about the biggest storm she's ever seen. It's going to be exciting. Don't miss it!"
+   },
+   {
+    "who": "Luke",
+    "man": true,
+    "text": "The programme is on every morning at eight, from Monday to Friday. If you're busy at that time, don't worry. You can listen again whenever you like, at home, on the bus or on the way to school. Every programme is on our website, with all the photos from our listeners. I'm Luke Smith. Thank you for listening, and see you tomorrow!"
    }
   ]
  }

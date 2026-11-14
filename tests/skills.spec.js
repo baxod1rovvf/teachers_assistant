@@ -215,13 +215,15 @@ test.describe('student page', () => {
     await expect(page.locator('audio')).toHaveAttribute('src', /audio\/skills\/listen-step-11\.mp3/);
     const L = await page.evaluate(() => TA_SKILLS.steps.find(s => s.id === 'e1').listening);
     expect(L.questions).toHaveLength(16);
-    await expect(page.locator('.sk-sub')).toHaveText(['Choose the correct answer.', 'Spelling and numbers.', 'True or False?', 'Answer the questions.']);
-    // the student: Q1 wrong, the town spelled out letter by letter (right), the last one wrong — 14 of 16
-    await answerAll(page, L, { 1: 'wrong', 5: 'S-I-L-V-E-R L-A-K-E', 15: 'We saw goats and sheep.', 16: 'in August' });
+    // the rewritten Step 11 (2026-11-13): blocks in recording order — notes, a/b/c, True/False, notes
+    await expect(page.locator('.sk-sub')).toHaveText(['Complete the notes. Write ONE word or A NUMBER.', 'Choose the correct answer.', 'True or False?',
+      'Complete the notes. Write ONE word or A NUMBER.']);
+    // the student: the surname spelled out letter by letter (right), Q5 wrong, the last one wrong — 14 of 16
+    await answerAll(page, L, { 1: 'F-I-S-H-E-R', 5: 'wrong', 16: '16th' });
     await page.getByRole('button', { name: /Submit/ }).click();
     await expect(page.locator('.sk-q.right')).toHaveCount(14);
     await expect(page.locator('.sk-q.wrong')).toHaveCount(2);
-    await expect(page.locator('.sk-q.wrong').nth(0)).toContainText('By train');
+    await expect(page.locator('.sk-q.wrong').nth(0)).toContainText('A balcony');
     await expect(page.locator('.sk-score')).toContainText('14 / 16');
     await expect(page.locator('.sk-words li')).toHaveCount(0);   // no word list: the Listening Journey has none
     await expect(page.locator('.sk-send')).toContainText('Saved ✅');
@@ -230,8 +232,8 @@ test.describe('student page', () => {
     const want = L.transcript.filter(t => t.answers.length).length;
     await expect(page.locator('.sk-line.hl')).toHaveCount(want);
     expect(await page.locator('.sk-line.hl .sk-qno').count()).toBe(16);
-    await expect(page.locator('.sk-line.hl', { hasText: 'Nora is N-O-R-A' }).locator('.sk-qno')).toContainText(['Q3', 'Q6']);
-    await expect(page.locator('.sk-line').first().locator('.sk-who')).toContainText('👩 Amelia');
+    await expect(page.locator('.sk-line.hl', { hasText: 'F-I-S-H-E-R' }).locator('.sk-qno')).toContainText(['Q1']);
+    await expect(page.locator('.sk-line').first().locator('.sk-who')).toContainText('👨 Tom');
 
     const recs = await sentRecords(page);
     expect(recs).toHaveLength(1);
@@ -239,14 +241,14 @@ test.describe('student page', () => {
       skill: 'listening', name: 'Test Student', studentId: '10001', correct: 14, total: 16, score: 88 });
     expect(recs[0].band).toBe(await page.evaluate(() => skBand(14, 16)));
     expect(recs[0].answers).toHaveLength(16);
-    expect(recs[0].answers[4]).toEqual({ q: "The town's name: _____", given: 'S-I-L-V-E-R L-A-K-E', right: true });
-    expect(recs[0].answers[0].right).toBe(false);
+    expect(recs[0].answers[0]).toEqual({ q: "Tom's surname: _____", given: 'F-I-S-H-E-R', right: true });
+    expect(recs[0].answers[4].right).toBe(false);
     expect(recs[0].submittedAt).toBeTruthy();
     expect(recs[0].timeDisplay).toMatch(/^\d\d:\d\d$/);
     // builtAt = the Submit time (a page opened before "Delete all results" and sent after it still counts)
     expect(recs[0].builtAt).toBe(recs[0].date);
     // the answers stay on the screen; a second press sends nothing more
-    await expect(page.locator('.sk-q').nth(4).locator('input')).toHaveValue('S-I-L-V-E-R L-A-K-E');
+    await expect(page.locator('.sk-q').nth(0).locator('input')).toHaveValue('F-I-S-H-E-R');
     await expect(page.getByRole('button', { name: /Submit/ })).toHaveCount(0);
     expect(errors).toEqual([]);
   });
@@ -298,7 +300,7 @@ test.describe('student page', () => {
     await page.goto('/skill.html?s=listening&st=e1&preview=1');
     await expect(page.locator('.sk-preview')).toContainText('Preview');
     await expect(page.locator('#studentNameInput')).toHaveCount(0);
-    await page.locator('.sk-q').first().getByRole('button', { name: 'By train' }).click();
+    await page.locator('.sk-q').first().locator('input').fill('Fisher');
     await page.getByRole('button', { name: /Submit/ }).click();
     await expect(page.locator('.sk-q.right')).toHaveCount(1);
     await expect(page.locator('.sk-score')).toContainText('1 / 16');
@@ -339,11 +341,11 @@ test.describe('student page', () => {
   test('sending fails → Send again', async ({ page, context }) => {
     await prepare(context);
     await start(page, '/skill.html?s=listening&st=e1&c=ABC123');
-    await page.locator('.sk-q').first().getByRole('button', { name: 'By train' }).click();
+    await page.locator('.sk-q').first().locator('input').fill('Fisher');
     await page.evaluate(() => { window.__failWrites = 3; });   // the 3 automatic tries fail
     await page.getByRole('button', { name: /Submit/ }).click();
     await expect(page.locator('.sk-send')).toContainText('Not sent yet — press Send again', { timeout: 10000 });
-    await expect(page.locator('.sk-q').first().locator('.sk-opt.on')).toContainText('By train');
+    await expect(page.locator('.sk-q').first().locator('input')).toHaveValue('Fisher');
     expect(await page.evaluate(() => window.__writes.length)).toBe(0);
     await page.getByRole('button', { name: /Send again/ }).click();
     await expect(page.locator('.sk-send')).toContainText('Saved ✅');
@@ -355,7 +357,7 @@ test.describe('student page', () => {
   test('offline: the write waits, the student sees Send again, and only one record is ever saved', async ({ page, context }) => {
     await prepare(context, { rules: true });   // like the real rules: a record can't be changed once it's there
     await start(page, '/skill.html?s=listening&st=e1&c=ABC123');
-    await page.locator('.sk-q').first().getByRole('button', { name: 'By train' }).click();
+    await page.locator('.sk-q').first().locator('input').fill('Fisher');
     await page.evaluate(() => { window.__skSendTimeoutMs = 300; window.__holdWrites = true; });
     await page.getByRole('button', { name: /Submit/ }).click();
     await expect(page.locator('.sk-send')).toContainText('Sending');
