@@ -2,7 +2,9 @@
 
 **Level:** A1+--A2\
 The teacher's rules (2026-11-13): 1--2 spelled words per listening (the first is Question 1, a second is Question 5 or later),
-1 spelled number, at most 2 named people, questions in the order of the recording, no look-alike answers. A step written here
+1 spelled number, at most 2 named people, questions in the order of the recording, no look-alike answers. **Time to write**
+(2026-11-14, "like IELTS Part 1"): after each answer the speakers talk about things that aren't asked (at least 35 words before
+the next answer), with one or two gentle traps (a speaker says one thing, then the right one). A step written here
 replaces the same step in `listening-journey-steps-8-20.md` (kept as history). Spec:
 `docs/superpowers/specs/2026-11-13-listening-journey-8-20-rewrite-design.md`.
 
@@ -1159,51 +1161,102 @@ There are many jobs behind the camera, not only acting.
 
 # Step 20 --- Weather and Life Around the World
 
-**Target:** 4 minutes \| **Format:** International radio report \|
+**Target:** 6--7 minutes \| **Format:** International radio report \|
 **Questions:** 20
 
 ## Audio transcript
 
 **Luke:** Welcome to World Weather Today! I'm your presenter, Luke Smith.
-Smith. That's S-M-I-T-H. Today we're visiting four cities to find out
-how the weather changes daily life. Our first report comes from Oslo, in
-Norway.
+Smith. That's S-M-I-T-H. It's lovely to be with you again. If you're new
+to the programme, here's how it works. Every week we call our friends in
+different countries and ask them one simple question: what's the weather
+like where you are? And today we're visiting four cities to find out how
+the weather changes daily life.
 
-**Reporter:** Good morning from Oslo! It's a cold winter morning. It's
-minus three degrees, and there's light snow. People are wearing warm
-coats, hats and gloves. The roads are slippery, so drivers are going
-slowly.
+**Luke:** We're going from the cold north to the hot south, so get ready
+for snow, sunshine and everything in between. Our first report comes from
+Oslo, in Norway. Good morning, Oslo!
 
-**Luke:** Now let's travel to Nairobi, in Kenya.
+**Reporter:** Good morning, Luke, and good morning from Oslo! I'm standing
+in the main square, next to a big Christmas tree, and it's very cold. The
+weather app on my phone says minus five, but the thermometer here says
+minus three degrees, and I believe the thermometer! There's light snow this
+morning, and the children on their way to school are trying to catch it on
+their tongues. Everyone is dressed for winter: warm coats, hats, and almost
+everyone has gloves on.
 
-**Reporter:** Hello from Nairobi! It's warm and sunny, and lots of
-people are spending time outside. The rainy season starts next month,
-so people are getting their gardens ready.
+**Reporter:** A man next to me just told me he's wearing two pairs! I forgot
+mine at the hotel, of course, so my hands are freezing as I speak to you.
+Driving isn't easy this morning, either. The roads are slippery, so the
+buses are late and drivers are going very slowly. Some people are walking
+to work instead. Back to you, Luke!
 
-**Luke:** Our next stop is Tokyo, in Japan.
+**Luke:** Thank you! Keep warm out there. Now let's travel a long way
+south, to Nairobi, in Kenya. Hello, Nairobi!
 
-**Reporter:** Good afternoon from Tokyo. It's cloudy, with a light wind
-but no rain. The stations are busy, because many people travel by
-train. In spring, Tokyo is famous for its cherry blossoms.
+**Reporter:** Hello, Luke! What a difference! Yesterday it was cloudy, but
+today it's warm and sunny, and lots of people are spending time outside. It's
+a perfect day to be outdoors. The parks are full of families having
+picnics, and I can see some boys playing football in the street behind me.
+But this weather won't last long. The rainy season starts next month, so
+people are getting their gardens ready. They're planting beans and tomatoes
+now, so the rain can help them grow.
 
-**Luke:** Finally, let's go to Sydney, in Australia. Sydney. That's
-S-Y-D-N-E-Y.
+**Luke:** Lovely! Enjoy the sunshine while it lasts. Our next stop is
+Tokyo, in Japan. Good afternoon, Tokyo!
 
-**Reporter:** Hello from Sydney! It's a bright summer day, and it's very
-hot. Lots of people are going to the beach. On hot days, drink water,
-use sun cream and stay in the shade at lunchtime.
+**Reporter:** Good afternoon, Luke! The sky is grey and cloudy today, and
+there's a light wind, but so far there's no rain. People here say it's a
+good day for walking, and the cafes are full of office workers drinking
+hot green tea. Right now I'm standing outside one of the biggest stations
+in the city, and it's very busy. Thousands of people are hurrying to their
+trains. Most people in Tokyo travel by train, because it's fast and it's
+always on time. And if you visit, come in spring. That's when Tokyo is
+famous for its cherry blossoms, and the parks turn pink and white.
 
-**Luke:** Thank you to all our reporters! Before you leave home, check
-the forecast and choose the right clothes. Take an umbrella if rain is
-expected.
+**Luke:** Beautiful! Thank you, Tokyo. Finally, let's go to the other side
+of the world, where it's summer right now. We're going to Sydney, in
+Australia. Sydney. That's S-Y-D-N-E-Y.
 
-**Luke:** Send us your weather photos! Call or message us on oh one
-three one, four seven two, six five eight. That's oh one three one,
-four seven two, six five eight.
+**Reporter:** Hello from Sydney! It's a bright summer day, and it's already
+very hot, even though it's still the morning. The sky is completely blue,
+without a single cloud. Schools are on holiday, so lots of families are
+going to the beach. The trains to the coast are full of children with
+surfboards and big bags of sandwiches.
 
-**Luke:** Tomorrow, we'll talk about storms. The programme is on every
-morning at eight, and you can listen again on our website. Thank you
-for listening!
+**Reporter:** But the doctors here have some advice for hot days like this.
+Drink lots of water, and use sun cream, even if you're only outside for a
+short time. The sun is very strong here, and it's easy to get burnt. My
+little brother forgot his sun cream last summer, and his nose was red for
+a week! And one more thing: stay in the shade at lunchtime, when the sun is
+at its strongest.
+
+**Luke:** Great advice! Thank you to all our reporters. So, what can we
+learn from today's programme? The weather is different everywhere, but the
+rules are the same. Before you leave home, check the forecast and choose
+the right clothes. It only takes a minute, and it can save you from a very
+bad day. I learned that last week, when I went to the park in my new white
+shoes and came home with muddy brown ones!
+
+**Luke:** So here's my advice: take an umbrella if rain is expected, even
+if the sky looks blue in the morning. Now, we love hearing from you. Every
+week, listeners send us photos of the sky where they live: rainbows,
+snowmen, even a cat in a raincoat! So send us your weather photos. You can
+call or message us on oh one three one, four seven two, six five eight.
+That's oh one three one, four seven two, six five eight. The best photo
+each week wins a World Weather Today mug!
+
+**Luke:** OK, that's all for today. Tomorrow, we were going to talk about
+rainbows, but a big storm is coming to the north of the country, so we'll
+talk about storms instead: how they start, and how to stay safe when one
+comes. Our reporter in America will tell us about the biggest storm she's
+ever seen. It's going to be exciting. Don't miss it!
+
+**Luke:** The programme is on every morning at eight, from Monday to
+Friday. If you're busy at that time, don't worry. You can listen again
+whenever you like, at home, on the bus or on the way to school. Every
+programme is on our website, with all the photos from our listeners. I'm
+Luke Smith. Thank you for listening, and see you tomorrow!
 
 ## Questions
 
@@ -1213,29 +1266,29 @@ for listening!
 2.  The programme looks at how the weather changes daily \_\_\_\_\_.
 3.  The temperature in Oslo: minus \_\_\_\_\_ degrees
 4.  People in Oslo are wearing warm coats, hats and \_\_\_\_\_.
-5.  The roads in Oslo are \_\_\_\_\_.
+5.  Driving in Oslo is difficult because the roads are \_\_\_\_\_.
 
 ### 6--7. Choose the correct answer.
 
-6.  What is the weather like in Nairobi? A) Cold and snowy B) Warm and
+6.  What is the weather like in Nairobi today? A) Cloudy B) Warm and
     sunny C) Rainy
 7.  Why are people in Nairobi getting their gardens ready? A) There is a
-    competition B) It's spring C) The rainy season starts next month
+    garden competition B) It's spring C) The rainy season starts soon
 
 ### 8--10. True or False?
 
 8.  It's raining in Tokyo.
-9.  The stations in Tokyo are quiet.
-10. Tokyo is famous for its cherry blossoms in spring.
+9.  The station in Tokyo is quiet.
+10. The best time to see Tokyo's cherry blossoms is in spring.
 
 ### 11--20. Complete the notes. Write ONE word or A NUMBER.
 
 11. The last city: \_\_\_\_\_ (spelled)
-12. Lots of people in Sydney are going to the \_\_\_\_\_.
+12. Many families in Sydney are going to the \_\_\_\_\_.
 13. On hot days, use sun \_\_\_\_\_.
 14. Stay in the \_\_\_\_\_ at lunchtime.
-15. Before you leave home, check the \_\_\_\_\_.
-16. Take an \_\_\_\_\_ if rain is expected.
+15. Before you go out, check the \_\_\_\_\_.
+16. If rain is expected, take an \_\_\_\_\_.
 17. The programme's phone number: \_\_\_\_\_ (spelled number)
 18. Tomorrow's programme is about \_\_\_\_\_.
 19. The programme is on every morning at \_\_\_\_\_.
@@ -1245,3 +1298,5 @@ for listening!
 
 1 Smith · 2 life · 3 three · 4 gloves · 5 slippery · 6 B · 7 C · 8 False · 9 False · 10 True · 11 Sydney · 12 beach ·
 13 cream · 14 shade · 15 forecast · 16 umbrella · 17 0131 472 658 · 18 storms · 19 eight · 20 website
+
+Traps: Q3 (the phone app says minus five, the thermometer minus three), Q18 (rainbows were planned, storms instead).

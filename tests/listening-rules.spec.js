@@ -7,6 +7,10 @@ const path = require('path');
 const { prepare } = require('./support/app');
 
 const NEW = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+// time to write (teacher, 2026-11-14: "after one question speakers should speak about other things… like IELTS Part 1"):
+// at least MIN_GAP words of talk from one answer to the next. Grows as the steps are re-spaced.
+const SPACED = [20];
+const MIN_GAP = 35;
 const COUNT = { 8: 14, 9: 14, 10: 15, 11: 16, 12: 16, 13: 17, 14: 17, 15: 18, 16: 18, 17: 19, 18: 19, 19: 20, 20: 20 };
 const ROLES = /^(Speaker|Presenter|Host|Interviewer|Guide|Teacher|Reporter|Assistant|Customer|Announcer|Narrator|Coach|Receptionist|Driver|Manager|Shop assistant|Staff)$/i;
 
@@ -62,6 +66,17 @@ for (const no of NEW) {
     // in the order of the recording
     const para = Q.map((q, k) => L.transcript.findIndex(t => t.answers.includes(k + 1)));
     para.forEach((p, k) => { if (k) expect(p, `Q${k + 1} comes after Q${k}`).toBeGreaterThanOrEqual(para[k - 1]); });
+
+    // time to write: talk that isn't asked about between two answers
+    if (SPACED.includes(no)) {
+      const ats = QS.find(s => s.no === no).sections.flatMap(sec => sec.qs.map(row => row[row.length - 1]));
+      const low = s => s.toLowerCase().replace(/[’‘]/g, "'");
+      const full = L.transcript.map(t => t.text).join(' ');
+      const wordsIn = s => (s.match(/\S+/g) || []).filter(w => /[a-z0-9]/i.test(w)).length;
+      const at = ats.map(a => wordsIn(full.slice(0, low(full).indexOf(low(a)))));
+      at.forEach((w, k) => { if (k) expect(w - at[k - 1], `words of talk between Q${k} and Q${k + 1}`).toBeGreaterThanOrEqual(MIN_GAP); });
+      expect(QS.find(s => s.no === no).spaced).toBe(true);
+    }
 
     // no look-alikes: at most one price, clock time, temperature, date; no answer twice
     const kinds = Q.map(kindOf).filter(Boolean);

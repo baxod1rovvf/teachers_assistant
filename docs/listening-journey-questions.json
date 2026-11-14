@@ -390,30 +390,30 @@
    ["Be organised and communicate _____.", ["clearly"], "communicate clearly"],
    ["Always be ready to _____.", ["learn"], "ready to learn"],
    ["There are many jobs behind the _____.", ["camera"], "behind the camera"]]}]},
-{"no": 20, "speaker": "", "inOrder": true, "names": ["Luke"], "audioV": 2, "intro": "Listen to a radio programme about the weather in four cities.",
+{"no": 20, "speaker": "", "inOrder": true, "spaced": true, "names": ["Luke"], "audioV": 3, "intro": "Listen to a radio programme about the weather in four cities.",
  "sections": [
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["The presenter's surname: _____", ["Smith"], "That's S-M-I-T-H"],
    ["The programme looks at how the weather changes daily _____.", ["life"], "changes daily life"],
    ["The temperature in Oslo: minus _____ degrees", ["three", "3"], "minus three degrees"],
-   ["People in Oslo are wearing warm coats, hats and _____.", ["gloves"], "hats and gloves"],
-   ["The roads in Oslo are _____.", ["slippery"], "roads are slippery"]]},
+   ["People in Oslo are wearing warm coats, hats and _____.", ["gloves"], "has gloves on"],
+   ["Driving in Oslo is difficult because the roads are _____.", ["slippery"], "roads are slippery"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
-   ["What is the weather like in Nairobi?", ["Cold and snowy", "Warm and sunny", "Rainy"], "Warm and sunny", "warm and sunny"],
-   ["Why are people in Nairobi getting their gardens ready?", ["There is a competition", "It's spring", "The rainy season starts next month"], "The rainy season starts next month", "rainy season starts next month"]]},
+   ["What is the weather like in Nairobi today?", ["Cloudy", "Warm and sunny", "Rainy"], "Warm and sunny", "warm and sunny"],
+   ["Why are people in Nairobi getting their gardens ready?", ["There is a garden competition", "It's spring", "The rainy season starts soon"], "The rainy season starts soon", "rainy season starts next month"]]},
   {"h": "True or False?", "t": "tf", "qs": [
-   ["It's raining in Tokyo.", "False", "but no rain"],
-   ["The stations in Tokyo are quiet.", "False", "stations are busy"],
-   ["Tokyo is famous for its cherry blossoms in spring.", "True", "cherry blossoms"]]},
+   ["It's raining in Tokyo.", "False", "no rain"],
+   ["The station in Tokyo is quiet.", "False", "it's very busy"],
+   ["The best time to see Tokyo's cherry blossoms is in spring.", "True", "cherry blossoms"]]},
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["The last city: _____", ["Sydney"], "S-Y-D-N-E-Y"],
-   ["Lots of people in Sydney are going to the _____.", ["beach"], "going to the beach"],
-   ["On hot days, use sun _____.", ["cream"], "sun cream"],
+   ["Many families in Sydney are going to the _____.", ["beach"], "going to the beach"],
+   ["On hot days, use sun _____.", ["cream"], "use sun cream"],
    ["Stay in the _____ at lunchtime.", ["shade"], "stay in the shade"],
-   ["Before you leave home, check the _____.", ["forecast"], "check the forecast"],
-   ["Take an _____ if rain is expected.", ["umbrella"], "Take an umbrella"],
+   ["Before you go out, check the _____.", ["forecast"], "check the forecast"],
+   ["If rain is expected, take an _____.", ["umbrella"], "take an umbrella"],
    ["The programme's phone number: _____", ["0131 472 658"], "message us on oh one three one"],
    ["Tomorrow's programme is about _____.", ["storms"], "talk about storms"],
-   ["The programme is on every morning at _____.", ["eight", "8"], "every morning at eight"],
+   ["The programme is on every morning at _____.", ["eight", "8", "8:00", "8.00", "eight o'clock"], "every morning at eight"],
    ["You can listen again on the programme's _____.", ["website"], "on our website"]]}]}
 ]

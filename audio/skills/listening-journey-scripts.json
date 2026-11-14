@@ -3965,72 +3965,207 @@
    ],
    [
     "am_ov_energetic",
-    "Today we're visiting four cities to find out how the weather changes daily life.",
+    "It's lovely to be with you again.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "If you're new to the programme, here's how it works.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Every week we call our friends in different countries and ask them one simple question: what's the weather like where you are?",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "And today we're visiting four cities to find out how the weather changes daily life.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "We're going from the cold north to the hot south, so get ready for snow, sunshine and everything in between.",
     0.3
    ],
    [
     "am_ov_energetic",
     "Our first report comes from Oslo, in Norway.",
-    0.4
-   ],
-   [
-    "af_ov_adviser",
-    "Good morning from Oslo! It's a cold winter morning.",
     0.3
-   ],
-   [
-    "af_ov_adviser",
-    "It's minus three degrees, and there's light snow.",
-    0.3
-   ],
-   [
-    "af_ov_adviser",
-    "People are wearing warm coats, hats and gloves.",
-    0.3
-   ],
-   [
-    "af_ov_adviser",
-    "The roads are slippery, so drivers are going slowly.",
-    0.4
    ],
    [
     "am_ov_energetic",
-    "Now let's travel to Nairobi, in Kenya.",
-    0.4
+    "Good morning, Oslo!",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Good morning, Luke, and good morning from Oslo!",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "I'm standing in the main square, next to a big Christmas tree, and it's very cold.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "The weather app on my phone says minus five, but the thermometer here says minus three degrees, and I believe the thermometer!",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "There's light snow this morning, and the children on their way to school are trying to catch it on their tongues.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Everyone is dressed for winter: warm coats, hats, and almost everyone has gloves on.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "A man next to me just told me he's wearing two pairs!",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "I forgot mine at the hotel, of course, so my hands are freezing as I speak to you.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Driving isn't easy this morning, either.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "The roads are slippery, so the buses are late and drivers are going very slowly.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Some people are walking to work instead.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Back to you, Luke!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Thank you! Keep warm out there.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Now let's travel a long way south, to Nairobi, in Kenya.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Hello, Nairobi!",
+    0.5
    ],
    [
     "af_ov_young",
-    "Hello from Nairobi! It's warm and sunny, and lots of people are spending time outside.",
+    "Hello, Luke! What a difference!",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Yesterday it was cloudy, but today it's warm and sunny, and lots of people are spending time outside.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "It's a perfect day to be outdoors.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "The parks are full of families having picnics, and I can see some boys playing football in the street behind me.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "But this weather won't last long.",
     0.3
    ],
    [
     "af_ov_young",
     "The rainy season starts next month, so people are getting their gardens ready.",
-    0.4
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "They're planting beans and tomatoes now, so the rain can help them grow.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Lovely! Enjoy the sunshine while it lasts.",
+    0.3
    ],
    [
     "am_ov_energetic",
     "Our next stop is Tokyo, in Japan.",
-    0.4
-   ],
-   [
-    "am_ov_second",
-    "Good afternoon from Tokyo. It's cloudy, with a light wind but no rain.",
     0.3
-   ],
-   [
-    "am_ov_second",
-    "The stations are busy, because many people travel by train.",
-    0.3
-   ],
-   [
-    "am_ov_second",
-    "In spring, Tokyo is famous for its cherry blossoms.",
-    0.4
    ],
    [
     "am_ov_energetic",
-    "Finally, let's go to Sydney, in Australia.",
+    "Good afternoon, Tokyo!",
+    0.5
+   ],
+   [
+    "am_ov_second",
+    "Good afternoon, Luke! The sky is grey and cloudy today, and there's a light wind, but so far there's no rain.",
+    0.3
+   ],
+   [
+    "am_ov_second",
+    "People here say it's a good day for walking, and the cafes are full of office workers drinking hot green tea.",
+    0.3
+   ],
+   [
+    "am_ov_second",
+    "Right now I'm standing outside one of the biggest stations in the city, and it's very busy.",
+    0.3
+   ],
+   [
+    "am_ov_second",
+    "Thousands of people are hurrying to their trains.",
+    0.3
+   ],
+   [
+    "am_ov_second",
+    "Most people in Tokyo travel by train, because it's fast and it's always on time.",
+    0.3
+   ],
+   [
+    "am_ov_second",
+    "And if you visit, come in spring.",
+    0.3
+   ],
+   [
+    "am_ov_second",
+    "That's when Tokyo is famous for its cherry blossoms, and the parks turn pink and white.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Beautiful! Thank you, Tokyo.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Finally, let's go to the other side of the world, where it's summer right now.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "We're going to Sydney, in Australia.",
     0.3
    ],
    [
@@ -4045,22 +4180,62 @@
    ],
    [
     "af_ov_adviser",
-    "Hello from Sydney! It's a bright summer day, and it's very hot.",
+    "Hello from Sydney! It's a bright summer day, and it's already very hot, even though it's still the morning.",
     0.3
    ],
    [
     "af_ov_adviser",
-    "Lots of people are going to the beach.",
+    "The sky is completely blue, without a single cloud.",
     0.3
    ],
    [
     "af_ov_adviser",
-    "On hot days, drink water, use sun cream and stay in the shade at lunchtime.",
-    0.4
+    "Schools are on holiday, so lots of families are going to the beach.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "The trains to the coast are full of children with surfboards and big bags of sandwiches.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "But the doctors here have some advice for hot days like this.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Drink lots of water, and use sun cream, even if you're only outside for a short time.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "The sun is very strong here, and it's easy to get burnt.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "My little brother forgot his sun cream last summer, and his nose was red for a week!",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "And one more thing: stay in the shade at lunchtime, when the sun is at its strongest.",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "Thank you to all our reporters!",
+    "Great advice! Thank you to all our reporters.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "So, what can we learn from today's programme?",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The weather is different everywhere, but the rules are the same.",
     0.3
    ],
    [
@@ -4070,18 +4245,38 @@
    ],
    [
     "am_ov_energetic",
-    "Take an umbrella if rain is expected.",
-    0.6
-   ],
-   [
-    "am_ov_energetic",
-    "Send us your weather photos!",
+    "It only takes a minute, and it can save you from a very bad day.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "Call or message us on oh one three one, four seven two, six five eight.",
+    "I learned that last week, when I went to the park in my new white shoes and came home with muddy brown ones!",
     0.5
+   ],
+   [
+    "am_ov_energetic",
+    "So here's my advice: take an umbrella if rain is expected, even if the sky looks blue in the morning.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Now, we love hearing from you.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Every week, listeners send us photos of the sky where they live: rainbows, snowmen, even a cat in a raincoat!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "So send us your weather photos.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You can call or message us on oh one three one, four seven two, six five eight.",
+    0.3
    ],
    [
     "am_ov_energetic",
@@ -4090,18 +4285,58 @@
    ],
    [
     "am_ov_energetic",
-    "Tomorrow, we'll talk about storms.",
+    "The best photo each week wins a World Weather Today mug!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "OK, that's all for today.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "The programme is on every morning at eight, and you can listen again on our website.",
+    "Tomorrow, we were going to talk about rainbows, but a big storm is coming to the north of the country, so we'll talk about storms instead.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "Thank you for listening!",
-    0.4
+    "We'll find out how storms start, and how to stay safe when one comes.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Our reporter in America will tell us about the biggest storm she's ever seen.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's going to be exciting. Don't miss it!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "The programme is on every morning at eight, from Monday to Friday.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "If you're busy at that time, don't worry.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You can listen again whenever you like, at home, on the bus or on the way to school.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Every programme is on our website, with all the photos from our listeners.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I'm Luke Smith. Thank you for listening, and see you tomorrow!",
+    0.5
    ]
   ]
  }
