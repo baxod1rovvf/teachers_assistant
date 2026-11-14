@@ -498,13 +498,14 @@ test.describe('writing', () => {
     await page.addInitScript(() => { window.__skFast = 1; });
     await start(page, '/skill.html?s=writing&st=b1&c=WRT789');
     await expect(page.locator('.sk-timer')).toContainText('15:00');
+    await page.locator('#skWriteBox').fill('Hello.');   // with nothing written, nothing is sent (2026-11-14, course-done-check.spec.js)
     await expect(page.locator('.sk-send')).toContainText('Saved ✅', { timeout: 30000 });
     await expect(page.locator('body')).toContainText("Time's up");
     await expect(page.locator('#skWriteBox')).toHaveJSProperty('readOnly', true);
     await page.waitForTimeout(1500);
     const recs = await sentRecords(page);
     expect(recs).toHaveLength(1);
-    expect(recs[0]).toMatchObject({ words: 0, text: '', skill: 'writing' });
+    expect(recs[0]).toMatchObject({ words: 1, text: 'Hello.', skill: 'writing' });
     expect(recs[0].band).toBeUndefined();
   });
 

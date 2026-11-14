@@ -392,6 +392,19 @@ function skMissingRows(lv, g, ctx) {
     .sort((a, b) => (b.missing.length - a.missing.length) || a.name.localeCompare(b.name));
   return { parts: parts, rows: rows };
 }
+/* Answers from an ID that isn't on the Students list (2026-11-14: a new student, or a wrong ID typed on a link without the class
+   check — her answers arrived but counted for nobody, so she looked "not finished"). One row per typed ID (else name). */
+function skUnlistedRows(lv, g, ctx, parts) {
+  const by = {};
+  parts.forEach(k => skSlotResults(ctx.map, skCodesFor(k, lv.id, g, ctx.links)).forEach(r => {
+    if (rosterStudentForResult(r, ctx.idx)) return;
+    const key = taIdKey(r.studentId) || 'name:' + String(r.name || '').trim().toLowerCase();
+    if (key === 'name:') return;
+    const row = by[key] || (by[key] = { name: String(r.name || '').trim(), id: String(r.studentId || '').trim(), parts: [] });
+    if (!row.parts.includes(k)) row.parts.push(k);
+  }));
+  return Object.values(by).map(r => Object.assign(r, { parts: parts.filter(k => r.parts.includes(k)) })).sort((a, b) => a.name.localeCompare(b.name));
+}
 function skSkillLabel(k) { const s = SK_SKILLS.find(x => x.key === k); return s ? s.label : k; }
 function skMissingHtml(lv, g, ctx) {
   const m = skMissingRows(lv, g, ctx);
@@ -399,6 +412,13 @@ function skMissingHtml(lv, g, ctx) {
   const gName = '<span translate="no">' + escapeForHtml(g.name) + '</span>';
   const sent = m.parts.map(skSkillLabel).join(', ');
   const chip = k => { const s = SK_SKILLS.find(x => x.key === k); return '<span class="sk-missing-part" style="--skc:' + s.color + '">' + s.emoji + ' ' + s.label + '</span>'; };
+  const odd = skUnlistedRows(lv, g, ctx, m.parts);
+  const unlisted = odd.length ? '<section class="sk-unlisted" aria-label="Not on your Students list">' +
+    '<div class="sk-results-head"><h3>❓ Not on your Students list (' + odd.length + ')</h3></div>' +
+    '<ol class="sk-missing-list">' + odd.map(r => '<li><b translate="no">' + escapeForHtml(r.name || '—') + '</b> <small>ID ' + escapeForHtml(r.id || '—') + '</small>' +
+      '<span class="sk-missing-parts">' + r.parts.map(chip).join('') + '</span></li>').join('') + '</ol>' +
+    '<p class="sk-hint sk-results-note">These answers came with an ID that isn\'t on the Students list, so they count for nobody. A new student: add them to ' +
+    gName + ' with this ID. A wrong ID: change the student\'s ID on the Students page, or tell them their right ID.</p></section>' : '';
   return '<section class="sk-missing" aria-label="Not finished">' +
     '<div class="sk-results-head"><h3>🚫 Not finished — ' + gName + ' (' + m.rows.length + ')</h3>' +
     (m.rows.length ? '<button type="button" class="mini-btn solid" onclick="skCopyMissing()">📋 Copy list</button>' : '') + '</div>' +
@@ -406,7 +426,7 @@ function skMissingHtml(lv, g, ctx) {
       ? '<ol class="sk-missing-list">' + m.rows.map(r => '<li><b translate="no">' + escapeForHtml(r.name) + '</b><span class="sk-missing-parts">' + r.missing.map(chip).join('') + '</span></li>').join('') + '</ol>' +
         '<p class="sk-hint sk-results-note">Students in ' + gName + ' who haven\'t done every part you sent (' + sent + '). Copy list gives a message ready to paste into the group\'s chat.</p>'
       : '<div class="sk-results-empty"><span class="sk-results-empty-emoji">🎉</span><div><b>Everyone has finished</b><span>Every student in ' + gName + ' has done ' + sent + '.</span></div></div>') +
-    '</section>';
+    '</section>' + unlisted;
 }
 /* 📋 Copy list: "Step 5 · Free Time — Apex / Not finished yet: / 1. Name — Reading, Writing" (the teacher's choice) */
 function skMissingText(lv, g, rows) {

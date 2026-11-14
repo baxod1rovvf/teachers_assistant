@@ -69,3 +69,17 @@ test('Not finished: no list before any link is sent', async ({ page, context }) 
   await expect(page.locator('.sk-missing')).toHaveCount(0);
   expect(errors).toEqual([]);
 });
+
+// 2026-11-14: a student typed an ID that isn't on the Students list (a new student, or a wrong ID) on a link without the class
+// check — her answers arrived, but the Course counted them for nobody, so she looked "not finished" though she had done it.
+test('answers from an ID that isn\'t on the Students list are shown under Not finished, with the typed name and ID', async ({ page, context }) => {
+  const errors = await openStep(page, context, [L('10001', 'Alice Test'), L('1415', 'Muxlisa'), W('1415', 'Muxlisa')], ALL_LINKS);
+  const box = page.locator('.sk-unlisted');
+  await expect(box.locator('h3')).toContainText('Not on your Students list (1)');
+  await expect(box.locator('li')).toHaveCount(1);
+  await expect(box.locator('li')).toContainText('Muxlisa');
+  await expect(box.locator('li')).toContainText('ID 1415');
+  await expect(box.locator('.sk-missing-part')).toHaveText(['🎧 Listening', '✍️ Writing']);
+  await expect(page.locator('.sk-missing')).not.toContainText('Muxlisa');
+  expect(errors).toEqual([]);
+});
