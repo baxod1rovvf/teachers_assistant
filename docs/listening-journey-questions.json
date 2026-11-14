@@ -198,12 +198,12 @@
    ["The farmer's phone number: _____", ["0123 648 597"], "His number is oh one two three"],
    ["They stayed for _____ days.", ["five", "5"], "stayed for five days"],
    ["They came home on the _____ of July.", ["15th", "15", "fifteenth"], "fifteenth of July"]]}]},
-{"no": 12, "speaker": "", "inOrder": true, "names": ["Emma"], "audioV": 2, "intro": "Listen to a teacher talking to a student, Emma, about her dreams for the future.",
+{"no": 12, "speaker": "", "inOrder": true, "spaced": true, "names": ["Emma"], "audioV": 3, "intro": "Listen to a teacher talking to a student, Emma, about her dreams for the future.",
  "sections": [
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["Emma's surname: _____", ["Clarke"], "That's C-L-A-R-K-E"],
    ["Emma wants to become a _____.", ["doctor"], "become a doctor"],
-   ["Her favourite subject is _____.", ["biology"], "Biology is my favourite"],
+   ["Her favourite subject is _____.", ["biology"], "biology is my favourite"],
    ["She needs to improve her _____.", ["chemistry"], "improve my chemistry"],
    ["The university she likes: _____ University", ["Oakwood"], "O-A-K-W-O-O-D"]]},
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
@@ -220,7 +220,7 @@
    ["The next lesson is in Room _____.", ["14", "fourteen"], "Room fourteen"],
    ["The school office's phone number: _____", ["0161 496 203"], "The number is oh one six one"],
    ["Emma will talk to her _____ about her plan.", ["parents"], "talk to my parents"]]}]},
-{"no": 13, "speaker": "", "inOrder": true, "names": ["Lucy"], "audioV": 2, "intro": "Listen to a radio interview with Lucy, a careers adviser, about three jobs.",
+{"no": 13, "speaker": "", "inOrder": true, "spaced": true, "names": ["Lucy"], "audioV": 3, "intro": "Listen to a radio interview with Lucy, a careers adviser, about three jobs.",
  "sections": [
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["Lucy's surname: _____", ["Foster"], "That's F-O-S-T-E-R"],
@@ -243,7 +243,7 @@
    ["The office is open every _____.", ["weekday"], "open every weekday"],
    ["Lucy's advice: try different _____.", ["things"], "Try different things"],
    ["A positive _____ is useful in every job.", ["attitude"], "positive attitude"]]}]},
-{"no": 14, "speaker": "", "inOrder": true, "names": ["Oliver"], "audioV": 2, "intro": "Listen to a customer buying a present in a clothes shop.",
+{"no": 14, "speaker": "", "inOrder": true, "spaced": true, "names": ["Oliver"], "audioV": 3, "intro": "Listen to a customer buying a present in a clothes shop.",
  "sections": [
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["The brother's name: _____", ["Oliver"], "That's O-L-I-V-E-R"],
@@ -266,7 +266,7 @@
    ["The shop is open every day until _____ o'clock.", ["eight", "8"], "until eight o'clock"],
    ["The label says: \"Happy birthday! From your _____.\"", ["sister"], "From your sister"],
    ["To find the exit, go past the _____ and turn left.", ["mirrors"], "go past the mirrors"]]}]},
-{"no": 15, "speaker": "", "inOrder": true, "names": ["Jack"], "audioV": 2, "intro": "Listen to Jack talking to an assistant at a train station.",
+{"no": 15, "speaker": "", "inOrder": true, "spaced": true, "names": ["Jack"], "audioV": 3, "intro": "Listen to Jack talking to an assistant at a train station.",
  "sections": [
   {"h": "Complete the notes. Write ONE word or A NUMBER.", "t": "gap", "qs": [
    ["Jack's surname: _____", ["Miller"], "That's M-I-L-L-E-R"],
@@ -279,7 +279,7 @@
   {"h": "Choose the correct answer.", "t": "choose", "qs": [
    ["What is the Wi-Fi on the train like?", ["Very fast", "The signal can be weak", "There is no Wi-Fi"], "The signal can be weak", "signal can be weak"],
    ["What can Jack buy in the café on the train?", ["Hot meals", "Books", "Sandwiches and drinks"], "Sandwiches and drinks", "buy sandwiches and drinks"],
-   ["Where are the power sockets?", ["Under some seats", "In every coach", "Next to the doors"], "Under some seats", "Only under some seats"]]},
+   ["Where are the power sockets?", ["Under some seats", "In every coach", "Next to the doors"], "Under some seats", "only under some seats"]]},
   {"h": "True or False?", "t": "tf", "qs": [
    ["Jack's friend wants to show him a nature park.", "True", "show me a nature park"],
    ["Jack's friend has a cat.", "False", "she has a dog"],

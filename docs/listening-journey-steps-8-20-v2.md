@@ -507,51 +507,89 @@ Traps: Q2 (his dad wanted to drive; they went by train), Q5 (the room had no TV,
 
 # Step 12 --- Talking About Future Dreams
 
-**Target:** 3 minutes \| **Format:** Classroom conversation \|
+**Target:** 5 minutes \| **Format:** Classroom conversation \|
 **Questions:** 16
 
 ## Audio transcript
 
-**Teacher:** Good morning, everyone. Today we're talking about our dreams
-for the future. Emma, would you like to start? First, please tell us
-your full name for the new class list.
+**Teacher:** Good morning, everyone. I hope you all had a nice weekend.
+Today we're talking about our dreams for the future. This is one of my
+favourite lessons every year, because I always learn something new about
+you. Emma, would you like to start? First, please tell us your full name
+for the new class list.
 
 **Emma:** Sure. I'm Emma Clarke. Clarke. That's C-L-A-R-K-E.
 
-**Teacher:** Thanks, Emma. So, what do you want to be?
+**Teacher:** Thanks, Emma. With an E at the end. I always forget that E!
+So, Emma, what do you want to be when you finish school?
 
-**Emma:** I want to become a doctor, because I enjoy helping people.
-Biology is my favourite subject, but I need to improve my chemistry.
+**Emma:** Well, when I was little, I wanted to be a pilot, because I loved
+planes. But now I want to become a doctor, because I enjoy helping people.
+Last year my grandmother was in hospital for a few weeks, and the doctors
+there were so kind to her. She's fine now, don't worry! That's when I
+decided. At school, biology is my favourite subject. I love learning how
+the body works, and our biology teacher makes every lesson fun. Last week
+we looked at a real fish heart. Some of my classmates felt sick, but I
+thought it was amazing! But I need to improve my chemistry. I got a low
+mark in my last test.
 
-**Teacher:** That's a great dream. Where would you like to study?
+**Teacher:** Don't worry, Emma. Lots of students find chemistry difficult
+at first. I did too! That's a great dream. Where would you like to study?
 
-**Emma:** At Oakwood University. Oakwood. That's O-A-K-W-O-O-D. It has a
-very good medical school, and it's only an hour from my home.
+**Emma:** My cousin studies at a big university in the capital, but it's
+very expensive, and it's far from my family. So I'd like to go to Oakwood
+University. Oakwood. That's O-A-K-W-O-O-D. I visited it last spring with
+my mum. The buildings are old and beautiful, and there's a big park in the
+middle where students have lunch on the grass. It has a very good medical
+school, and it's only an hour from my home, so I can visit my family at
+weekends.
 
-**Teacher:** Wonderful. And what about your friends? Do you know their
-dreams?
+**Teacher:** That's nice. I'm sure your family will be happy about that.
+And what about your friends and family? Do you know their dreams?
 
-**Emma:** Yes! My best friend wants to be a computer programmer. She
-already makes small websites. And my brother wants to be a football
-coach, because he loves helping younger players.
+**Emma:** Yes! My best friend's parents are both teachers, and they want
+her to be a teacher too. But she wants to be a computer programmer. She's
+really good with computers. She already makes small websites for people in
+our town, and she even made one for my mum's cake shop! And my brother
+wants to be a football coach. He plays every weekend, and he's quite good,
+but he says he prefers teaching to playing. He loves helping younger
+players. On Saturdays he helps the coach with the little ones at his club.
 
-**Teacher:** Those are great goals. But remember, a dream needs a plan.
-You should choose small steps. For example, Emma, you could review
-science for thirty minutes a day.
+**Teacher:** Those are great goals. Every dream is different, and that's
+what makes this class so interesting. But remember one thing. A dream is
+not enough. A dream needs a plan. Without a plan, it's just a wish. You
+should choose small steps, one at a time. For example, Emma, you said
+chemistry is difficult for you. You don't need to study for hours every
+evening. Just review science for thirty minutes a day. Small steps, every
+day, are better than one big step once a month.
 
-**Emma:** Should we write our goals down?
+**Emma:** That makes sense. Should we write our goals down?
 
-**Teacher:** Yes. Write one small goal for this month and one bigger
-goal for the next three years. Bring your plans to our next lesson on
-the twenty-second of November. We'll meet in Room fourteen. If you have
-any questions, call the school office. The number is oh one six one,
-four nine six, two oh three.
+**Teacher:** Yes, good idea. People who write their goals down are much
+more likely to reach them. So, please write one small goal for this month.
+It can be something easy, like reading one book in English, or learning
+new words every week. Small goals are easy to check, and they make you
+feel good when you finish them. Then write one bigger goal for the next
+three years. Think big! It could be passing an important exam, or getting
+into a good university, like Emma. Bring your plans to our next lesson.
+That's not next week, because there's a school trip. It's on the
+twenty-second of November. And please remember, we won't be in this
+classroom. They're painting it, and the smell will be terrible! So we'll
+be in a different room on the first floor, next to the library. It's Room
+fourteen. Some of you have never been there, so look for the big blue door
+at the end of the corridor. If you have any questions before then, or if
+you're ill and can't come, call the school office. The number is oh one
+six one, four nine six, two oh three.
 
 **Emma:** Oh one six one, four nine six, two oh three?
 
-**Teacher:** That's right.
+**Teacher:** That's right. Write it in your notebooks, please.
 
-**Emma:** Great. I'll talk to my parents about my plan tonight.
+**Emma:** Great. I'm excited about my plan now. I'll talk to my parents
+about it tonight. My dad will be happy, because he always says I should
+plan more!
+
+**Teacher:** Excellent. OK, who's next?
 
 ## Questions
 
@@ -591,67 +629,112 @@ four nine six, two oh three.
 1 Clarke · 2 doctor · 3 biology · 4 chemistry · 5 Oakwood · 6 B · 7 C · 8 A · 9 True · 10 False · 11 True · 12 three ·
 13 22nd · 14 14 · 15 0161 496 203 · 16 parents
 
+Traps: Q2 (as a child she wanted to be a pilot; now a doctor), Q7 (her friend's parents want her to be a teacher; she
+wants to be a computer programmer).
+
 ------------------------------------------------------------------------
 
 # Step 13 --- Different People, Different Jobs
 
-**Target:** 3 minutes \| **Format:** Radio interview \| **Questions:** 17
+**Target:** 5 minutes \| **Format:** Radio interview \| **Questions:**
+17
 
 ## Audio transcript
 
-**Presenter:** Welcome to Careers Today! My guest is a careers adviser,
-Lucy Foster. Lucy, can you spell your surname for us?
+**Presenter:** Welcome to Careers Today, the programme that helps you
+choose your future! Every week we look at different jobs, and this week we
+have a very special guest. She's a careers adviser, and she has helped
+thousands of young people find the right job. Lucy Foster, welcome! Lucy,
+can you spell your surname for us?
 
 **Lucy:** Of course. Foster. That's F-O-S-T-E-R.
 
-**Presenter:** Today we're talking about three different jobs. Let's
-start with hotel receptionists.
+**Presenter:** Thank you. So, today we're talking about three different
+jobs. Let's start with hotel receptionists. Have you ever worked in a
+hotel yourself, Lucy?
 
-**Lucy:** Sure. Last month I visited a hotel in the city centre, near
-the railway station. Receptionists welcome guests and help them check
-in. Their morning shift starts at half past seven. The hotel is called
-the Sunrise Hotel. Sunrise. That's S-U-N-R-I-S-E.
+**Lucy:** Ha, no, never! But last month I spent a day at a hotel to see
+what the job is like. It's in the city centre. Lots of hotels in our city
+are near the airport, but this one is near the railway station, so lots of
+guests arrive with big suitcases. Some of them are tired after a long
+journey, and some are a bit lost. The receptionists are the first people
+the guests meet. They welcome guests and help them check in. They also
+answer the phone, book taxis, and tell guests about good restaurants
+nearby. It's a busy job! The receptionists work in shifts. The night shift
+is very quiet, but the morning shift is the busiest. It starts at half
+past seven, when most guests want breakfast and need help with their plans
+for the day. Oh, and I should tell you the hotel's name. It's a lovely
+place, with flowers in every window. It's called the Sunrise Hotel.
+Sunrise. That's S-U-N-R-I-S-E.
 
-**Presenter:** What skills do receptionists need?
+**Presenter:** What a nice name! What skills do receptionists need?
 
-**Lucy:** They need to be polite, patient and organised. Speaking
-English is useful too, because the guests come from different
-countries.
+**Lucy:** They need to be polite, patient and organised. Some guests can
+be difficult, especially when they're tired, so you have to stay friendly.
+Speaking English is useful too, because the guests come from different
+countries. On the day I was there, I heard Spanish, Chinese and Arabic in
+just one hour!
 
-**Presenter:** Our second job is photographer.
+**Presenter:** Amazing. Our second job is photographer.
 
-**Lucy:** Yes. I spoke to a photographer who takes pictures for
-families, shops and local events. She sometimes works in her studio,
-but she often travels to different places. She uses a camera, lights
-and a computer.
+**Lucy:** Yes, this is a job lots of young people dream about. I spoke to
+a photographer who has her own small business. People think photographers
+work for newspapers, but she doesn't. She takes pictures for families,
+shops and local events, like weddings and school concerts. Last week she
+spent a whole day at a wedding, and her feet hurt for days afterwards! She
+has a small studio in her house, and she sometimes works there, but she
+often travels to different places, like parks, beaches and old buildings.
+She uses a camera, lights and a computer. Editing the photos on the
+computer takes a long time, often longer than taking them!
 
-**Presenter:** And finally, bus drivers.
+**Presenter:** I didn't know that. And finally, bus drivers.
 
-**Lucy:** I met a bus driver who starts work very early. His route goes
-through the city centre and past the hospital. One journey takes about
-fifty minutes. He likes meeting people and helping them get to work and
-school.
+**Lucy:** Yes. I met a bus driver who starts work very early, before the
+sun comes up. He has driven the same bus for many years, and lots of
+passengers know him by name. His route goes through the city centre and
+past the hospital, so many of his passengers are nurses and doctors going
+to work. Some of them fall asleep on the bus, and he has to wake them up
+at their stop! It's a long route. One journey takes about fifty minutes,
+from one end of the city to the other. In the evening, when the roads are
+busy, it can take even longer. He listens to the radio and sings quietly
+when the traffic stops. But he never gets angry. He likes meeting people
+and helping them get to work and school. Every morning, an old lady gives
+him a biscuit when she gets on!
 
-**Presenter:** What do drivers need?
+**Presenter:** He sounds like a happy man! What do drivers need?
 
-**Lucy:** They need to be calm and careful, and they need the right
-driving licence.
+**Lucy:** Well, driving a bus is very different from driving a car. It's
+big and heavy, and you're responsible for lots of people. So they need to
+be calm and careful, even when other drivers aren't. They also need to be
+good with people, of course. And there's one thing they can't work
+without. A normal car licence isn't enough. They need the right driving
+licence. Getting one takes a few months of lessons and tests.
 
-**Presenter:** If our listeners want advice about jobs, how can they
-contact you?
+**Presenter:** Thank you. That's really interesting. If our listeners want
+advice about jobs, how can they contact you?
 
-**Lucy:** They can call our careers office. The number is oh two oh
-three, seven six eight, one four five.
+**Lucy:** They can visit our website, or they can call our careers office.
+We love talking to young people, and the advice is free. The number is oh
+two oh three, seven six eight, one four five.
 
 **Presenter:** Oh two oh three, seven six eight, one four five?
 
-**Lucy:** Yes, that's right. The office is open every weekday.
+**Lucy:** Yes, that's right. Just ask for me, or for any of my colleagues.
+We're closed at weekends, but the office is open every weekday, from
+morning until late afternoon.
 
-**Presenter:** Thank you, Lucy. What's your best advice for young
-people?
+**Presenter:** Thank you, Lucy. Before you go, what's your best advice for
+young people who don't know what job they want?
 
-**Lucy:** Try different things, and remember that good communication
-and a positive attitude are useful in every job.
+**Lucy:** Don't worry if you don't know yet. I didn't know until I was
+much older! My advice is simple. Try different things. Get a weekend job,
+help a neighbour, join a club. Every job teaches you something. When I was
+at school, I worked in a bakery on Saturdays, and I learned how to talk to
+customers. That helped me in every job after that. And remember, good
+communication and a positive attitude are useful in every job.
+
+**Presenter:** Great advice. Thank you, Lucy Foster, and thank you for
+listening to Careers Today!
 
 ## Questions
 
@@ -689,67 +772,118 @@ and a positive attitude are useful in every job.
 
 ## Answers
 
-1 Foster · 2 station · 3 check · 4 seven · 5 Sunrise · 6 B · 7 A · 8 C · 9 True · 10 False · 11 False · 12 careful ·
-13 licence · 14 0203 768 145 · 15 weekday · 16 things · 17 attitude
+1 Foster · 2 station · 3 check · 4 seven · 5 Sunrise · 6 B · 7 A · 8 C · 9 True · 10 False · 11 False · 12 careful · 13
+licence · 14 0203 768 145 · 15 weekday · 16 things · 17 attitude
+
+Traps: Q2 (many hotels are near the airport; this one is near the railway station), Q7 (people think photographers work
+for newspapers; she doesn't).
 
 ------------------------------------------------------------------------
 
 # Step 14 --- Shopping for Clothes
 
-**Target:** 3 minutes \| **Format:** Shop conversation \| **Questions:**
+**Target:** 5 minutes \| **Format:** Shop conversation \| **Questions:**
 17
 
 ## Audio transcript
 
-**Assistant:** Hello, and welcome! Can I help you?
+**Assistant:** Hello, and welcome to Style Street! Are you looking for
+anything special today, or just looking around?
 
-**Customer:** Yes, please. I'm looking for a present for my brother. I'll
-need a gift label with his name later. It's Oliver. That's O-L-I-V-E-R.
-It's his birthday next week.
+**Customer:** Yes, please, I need some help. I'm looking for a present for
+my brother. I'll need a gift label with his name later, so let me tell you
+now. It's Oliver. That's O-L-I-V-E-R.
 
-**Assistant:** Lovely! Does he like casual or formal clothes?
+**Assistant:** Thank you. Is it for a special occasion? Lots of people are
+buying Christmas presents already. We put up our Christmas lights last
+week, and the shop's been busy ever since!
 
-**Customer:** Casual. He likes simple jackets without bright colours.
+**Customer:** No, it's not for Christmas. It's his birthday next week, and
+I always buy him something nice.
 
-**Assistant:** This dark blue jacket is very popular. It's from a
-company called Kestrel. Kestrel. That's K-E-S-T-R-E-L.
+**Assistant:** Lovely! Does he like casual or formal clothes? We have some
+very smart shirts over there, if he works in an office.
 
-**Customer:** It's nice, but it's a bit expensive. Do you have something
-cheaper?
+**Customer:** No, he hates shirts and ties! Casual. He likes simple
+jackets. He's a student, and he cycles everywhere, even in the rain. Last
+year I bought him a bright yellow jumper, and he never wore it once! Oh,
+and nothing too colourful. He likes jackets without bright colours. He
+says they make him look like a traffic light!
 
-**Assistant:** This grey jacket costs thirty-five dollars. It's lighter,
-and it has two pockets outside and one small pocket inside.
+**Assistant:** I understand. This dark blue jacket is very popular with
+students. It's warm, it's waterproof, and it's from a really good company
+called Kestrel. Kestrel. That's K-E-S-T-R-E-L. It's named after a small
+bird.
 
-**Customer:** Perfect. He always carries his phone and keys. I'll take
-it. Can I also buy a T-shirt?
+**Customer:** It's nice, but it's a bit expensive. I'm a student too, so I
+can't spend too much. Do you have something cheaper?
 
-**Assistant:** Sure. We have white ones and green ones.
+**Assistant:** Of course. Let me see. This grey jacket is on sale this
+week. It was fifty dollars, and now it costs thirty-five dollars. It's
+lighter than the blue one, so it's good for cycling. The material is very
+soft, too. Feel it!
 
-**Customer:** I'll take the green one. What if he doesn't like the
-clothes?
+**Customer:** Oh, yes, it's really soft.
 
-**Assistant:** You can return or exchange them within thirty days, but
-you need the receipt.
+**Assistant:** And it has lots of really useful pockets: two outside, and
+one small pocket inside. The inside one is quite deep, so nothing can fall
+out, even when you're on a bike.
 
-**Customer:** OK. Can I pay by card?
+**Customer:** That's perfect, because he loses things all the time. Last
+month he lost his keys twice! Honestly, he always carries his phone and
+keys, and they're always falling out of his pockets. I'll take it. Can I
+also buy a T-shirt? He can never have too many T-shirts.
 
-**Assistant:** Yes, of course. Would you like a gift bag?
+**Assistant:** Sure. They're just here, next to the jackets. We have white
+ones and green ones. The white ones are more popular, but they get dirty
+very quickly.
 
-**Customer:** Yes, please.
+**Customer:** Hmm. He cycles in the rain, remember! I'll take the green
+one. What if he doesn't like the clothes? He's quite fussy. Last year he
+changed almost all of his birthday presents.
 
-**Assistant:** And if you ever want to check if we have your size, you
-can call us. Our number is oh one nine eight, two five four, seven three
-six.
+**Assistant:** Ha! Don't worry, we're very flexible. You can return or
+exchange them within thirty days. He can choose a different size or a
+different colour, or get his money back, if he prefers. That's no problem
+at all.
+
+**Customer:** Oh, that's good to know.
+
+**Assistant:** There's just one thing to remember. You need the receipt.
+Without it, we can't do anything, I'm afraid. So keep it somewhere safe!
+
+**Customer:** OK. I'll give it to my mum, because she never loses
+anything, unlike my brother! Now, I haven't got much cash with me. Can I
+pay by card?
+
+**Assistant:** Yes, of course. Just put your card here. The machine is a
+bit slow today, so it might take a minute. OK, here's your receipt.
+Remember, keep it safe! And because it's a present, we can make it look
+nice. Would you like a gift bag?
+
+**Customer:** Yes, please. A gift bag would be great.
+
+**Assistant:** Here you are. And if you ever want to check if we have your
+size, you don't need to come in. You can just call us. Our number is oh
+one nine eight, two five four, seven three six.
 
 **Customer:** Oh one nine eight, two five four, seven three six?
 
-**Assistant:** That's right. We're open every day until eight o'clock.
+**Assistant:** That's right. Someone is always happy to help, even at the
+weekend. We're open every day until eight o'clock.
 
-**Customer:** Great. Please write "Happy birthday! From your sister" on
-the label. And where's the exit?
+**Customer:** Great. One last thing. Can you write on the gift label for
+me? My handwriting is terrible. My teachers always said so!
 
-**Assistant:** Just go past the mirrors and turn left. Have a lovely
-day!
+**Assistant:** Of course. What would you like it to say?
+
+**Customer:** Please write "Happy birthday! From your sister" on the
+label. Oh, and where's the exit? This shop is so big, I'm completely lost!
+
+**Assistant:** Ha, everybody says that! Don't go back the way you came,
+because that's the staff area. Just go past the mirrors and turn left.
+You'll see the big glass doors. Have a lovely day, and I hope your brother
+likes his present!
 
 ## Questions
 
@@ -763,7 +897,7 @@ day!
 
 ### 6--8. Choose the correct answer.
 
-6.  How much does the grey jacket cost? A) \$25 B) \$35 C) \$45
+6.  How much does the grey jacket cost? A) $25 B) $35 C) $45
 7.  How many pockets does the grey jacket have inside? A) One B) Two C)
     None
 8.  Why does the customer like the pockets? A) Her brother carries his
@@ -786,63 +920,123 @@ day!
 
 ## Answers
 
-1 Oliver · 2 birthday · 3 casual · 4 colours · 5 Kestrel · 6 B · 7 A · 8 A · 9 False · 10 False · 11 True · 12 card ·
-13 bag · 14 0198 254 736 · 15 eight · 16 sister · 17 mirrors
+1 Oliver · 2 birthday · 3 casual · 4 colours · 5 Kestrel · 6 B · 7 A · 8 A · 9 False · 10 False · 11 True · 12 card · 13
+bag · 14 0198 254 736 · 15 eight · 16 sister · 17 mirrors
+
+Traps: Q2 (many people are buying Christmas presents; this is for his birthday), Q6 (the jacket was fifty dollars; now
+it costs thirty-five).
 
 ------------------------------------------------------------------------
 
 # Step 15 --- A Journey by Train
 
-**Target:** 3 minutes \| **Format:** Conversation at a station \|
+**Target:** 5--6 minutes \| **Format:** Conversation at a station \|
 **Questions:** 18
 
 ## Audio transcript
 
-**Assistant:** Good morning! How can I help?
+**Assistant:** Good morning, and welcome to Central Station! How can I
+help?
 
 **Jack:** Hi. I booked a seat on the train to Lakeside, but I can't find
-my ticket on my phone.
+my ticket on my phone. I've looked everywhere: in my emails, in my photos,
+nothing!
 
-**Assistant:** No problem. What's your surname?
+**Assistant:** Don't worry, that happens a lot, especially early in the
+morning! What's your surname?
 
 **Jack:** Miller. That's M-I-L-L-E-R.
 
-**Assistant:** Here it is. You bought it online yesterday. Your seat is
-in coach C.
+**Assistant:** Let me look. Miller, Miller. There are three Millers on
+this list today! Is your first name Jack?
 
-**Jack:** Great. Which platform does the train leave from?
+**Jack:** Yes, that's me. I'm so sorry, I'm not usually this disorganised!
 
-**Assistant:** Platform four. It leaves at nine twenty, and the journey
-takes about two hours.
+**Assistant:** Don't worry! Here it is. You bought it online yesterday,
+very late at night.
 
-**Jack:** Thanks. I'm visiting a friend in Lakeside. Is there a bus from
-the station to Rowan Street? Rowan. That's R-O-W-A-N.
+**Jack:** Yes, I couldn't sleep, so I was planning my trip!
 
-**Assistant:** Yes. The bus stops right outside the station café.
+**Assistant:** Well, it's a beautiful journey. I'll send the ticket to
+your phone again. Let me see. Your seat is in coach C, by the window.
+That's the quiet coach, so no phone calls, please!
 
-**Jack:** Perfect. Is there Wi-Fi on the train?
+**Jack:** Ha, OK. Which platform does the train leave from? It's my first
+time at this station, and it's huge.
 
-**Assistant:** Yes, but the signal can be weak. There's also a café on
-the train where you can buy sandwiches and drinks.
+**Assistant:** It's not on the board yet, but it always leaves from the
+same place. Platform four. Go down the stairs, through the tunnel, and up
+the other side. There's a lift if your bag is heavy. Is it heavy?
 
-**Jack:** Are there power sockets?
+**Jack:** No, it's just a small bag. I'm only going for the weekend.
 
-**Assistant:** Only under some seats.
+**Assistant:** The train leaves at nine twenty, so you have plenty of
+time. The journey takes about two hours, and the views are lovely after
+the first half hour, when you leave the city.
 
-**Jack:** OK. My friend wants to show me a nature park, and she has a
-dog that loves walking by the water. I'm coming back on Sunday evening.
+**Jack:** Great, thanks. I'm visiting a friend in Lakeside. We were at
+school together, but she moved there last year for work. I haven't seen
+her for ages! Is there a bus from the station to her street? It's called
+Rowan Street. Rowan. That's R-O-W-A-N.
 
-**Assistant:** That sounds lovely. If you need help at Lakeside, call
+**Assistant:** Yes. I know Lakeside well, because my grandparents live
+there. It's a lovely little town, with a lake in the middle, of course!
+There's a bus that goes along Rowan Street, and it's very frequent. You
+don't need to walk far. The bus stops right outside the station café. You
+can't miss it. It has a big red sign, and it smells of fresh coffee.
+
+**Jack:** Perfect. Is there Wi-Fi on the train? I need to send some emails
+for work.
+
+**Assistant:** Yes, there is, and it's free. But to be honest, the signal
+can be weak, especially when the train goes through the hills. So send
+your emails before you leave! There's also a café on the train, next to
+the quiet coach. It doesn't have hot meals, but you can buy sandwiches and
+drinks. The coffee there is much better than ours, I'm sorry to say!
+
+**Jack:** Great. And are there power sockets? My laptop battery is nearly
+dead.
+
+**Assistant:** Hmm. Not everywhere, I'm afraid. It's quite an old train.
+They're only under some seats. Your seat is by the window, so look down
+near your feet. If there isn't one, ask the guard. He's very helpful.
+
+**Jack:** OK, thanks. I'm really looking forward to this weekend. My
+friend wants to show me a nature park near her house. She says there are
+lots of birds there, and you can walk for hours without seeing anyone. I
+can't wait! I live in the city, so I don't see much nature. And she has a
+dog that loves walking by the water. He's enormous, but he's very gentle.
+Last time I visited, he jumped into the lake and then shook all the water
+over me!
+
+**Assistant:** Ha! Bring a towel, then. When are you coming back?
+
+**Jack:** I'm coming back on Sunday evening. I have to work on Monday
+morning, unfortunately.
+
+**Assistant:** That sounds like a lovely weekend. If you need any help at
+Lakeside, for example if your train is late or you lose something, call
 the station office. The number is oh one four four, nine two six, three
 five eight.
 
 **Jack:** Oh one four four, nine two six, three five eight?
 
-**Assistant:** That's right. There's also a small shop next to Platform
-three. It sells snacks and newspapers. Please board the train through
-the front and middle doors, and don't leave your bags alone.
+**Assistant:** That's right. And if you're hungry or thirsty before the
+train leaves, you don't have to wait for the café on the train. There's
+also a small shop next to Platform three. It sells snacks and newspapers,
+and the man there knows everything about trains. Just one more thing
+before you go. When the train arrives, please don't use the back doors,
+because that part of the train doesn't go to Lakeside. Board the train
+through the front and middle doors. The train is often busy at the
+weekend, so get on quickly and find your seat. There are big shelves at
+the end of each coach for suitcases. But wherever you put your things,
+please don't leave your bags alone, not even for a minute. The station
+staff sometimes have to take them away, and that can make the train late.
 
-**Jack:** Thanks for your help! I'll buy a bottle of water first.
+**Jack:** I won't, I promise. Thanks for your help! I'm going to buy a
+bottle of water first, and maybe a newspaper for the journey.
+
+**Assistant:** Good idea. Have a lovely trip, Mr Miller!
 
 ## Questions
 
@@ -881,8 +1075,11 @@ the front and middle doors, and don't leave your bags alone.
 
 ## Answers
 
-1 Miller · 2 online · 3 C · 4 four · 5 9:20 · 6 Rowan · 7 café · 8 B · 9 C · 10 A · 11 True · 12 False · 13 False ·
-14 0144 926 358 · 15 newspapers · 16 middle · 17 bags · 18 water
+1 Miller · 2 online · 3 C · 4 four · 5 9:20 · 6 Rowan · 7 café · 8 B · 9 C · 10 A · 11 True · 12 False · 13 False · 14
+0144 926 358 · 15 newspapers · 16 middle · 17 bags · 18 water
+
+Traps: Q9 (the café on the train has no hot meals; it sells sandwiches and drinks), Q16 (don't use the back doors; use
+the front and middle doors).
 
 ------------------------------------------------------------------------
 

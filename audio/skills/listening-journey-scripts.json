@@ -3099,12 +3099,17 @@
   "lines": [
    [
     "am_ov_energetic",
-    "Good morning, everyone.",
+    "Good morning, everyone. I hope you all had a nice weekend.",
     0.3
    ],
    [
     "am_ov_energetic",
     "Today we're talking about our dreams for the future.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "This is one of my favourite lessons every year, because I always learn something new about you.",
     0.3
    ],
    [
@@ -3115,7 +3120,7 @@
    [
     "am_ov_energetic",
     "First, please tell us your full name for the new class list.",
-    0.4
+    0.5
    ],
    [
     "af_ov_young",
@@ -3134,27 +3139,82 @@
    ],
    [
     "am_ov_energetic",
-    "Thanks, Emma. So, what do you want to be?",
-    0.4
+    "Thanks, Emma. With an E at the end. I always forget that E!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "So, Emma, what do you want to be when you finish school?",
+    0.5
    ],
    [
     "af_ov_young",
-    "I want to become a doctor, because I enjoy helping people.",
+    "Well, when I was little, I wanted to be a pilot, because I loved planes.",
     0.3
    ],
    [
     "af_ov_young",
-    "Biology is my favourite subject, but I need to improve my chemistry.",
-    0.4
+    "But now I want to become a doctor, because I enjoy helping people.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Last year my grandmother was in hospital for a few weeks, and the doctors there were so kind to her.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "She's fine now, don't worry!",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "That's when I decided.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "At school, biology is my favourite subject.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "I love learning how the body works, and our biology teacher makes every lesson fun.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Last week we looked at a real fish heart. Some of my classmates felt sick, but I thought it was amazing!",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "But I need to improve my chemistry.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "I got a low mark in my last test.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Don't worry, Emma. Lots of students find chemistry difficult at first. I did too!",
+    0.3
    ],
    [
     "am_ov_energetic",
     "That's a great dream. Where would you like to study?",
-    0.4
+    0.5
    ],
    [
     "af_ov_young",
-    "At Oakwood University.",
+    "My cousin studies at a big university in the capital, but it's very expensive, and it's far from my family.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "So I'd like to go to Oakwood University.",
     0.3
    ],
    [
@@ -3169,28 +3229,68 @@
    ],
    [
     "af_ov_young",
-    "It has a very good medical school, and it's only an hour from my home.",
-    0.4
+    "I visited it last spring with my mum.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "The buildings are old and beautiful, and there's a big park in the middle where students have lunch on the grass.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "It has a very good medical school, and it's only an hour from my home, so I can visit my family at weekends.",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "Wonderful. And what about your friends? Do you know their dreams?",
-    0.4
+    "That's nice. I'm sure your family will be happy about that.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "And what about your friends and family? Do you know their dreams?",
+    0.5
    ],
    [
     "af_ov_young",
-    "Yes! My best friend wants to be a computer programmer.",
+    "Yes! My best friend's parents are both teachers, and they want her to be a teacher too.",
     0.3
    ],
    [
     "af_ov_young",
-    "She already makes small websites.",
+    "But she wants to be a computer programmer.",
     0.3
    ],
    [
     "af_ov_young",
-    "And my brother wants to be a football coach, because he loves helping younger players.",
-    0.4
+    "She's really good with computers.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "She already makes small websites for people in our town, and she even made one for my mum's cake shop!",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "And my brother wants to be a football coach.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "He plays every weekend, and he's quite good, but he says he prefers teaching to playing.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "He loves helping younger players.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "On Saturdays he helps the coach with the little ones at his club.",
+    0.5
    ],
    [
     "am_ov_energetic",
@@ -3199,63 +3299,153 @@
    ],
    [
     "am_ov_energetic",
-    "But remember, a dream needs a plan.",
+    "Every dream is different, and that's what makes this class so interesting.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "You should choose small steps.",
+    "But remember one thing. A dream is not enough. A dream needs a plan.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "For example, Emma, you could review science for thirty minutes a day.",
-    0.4
+    "Without a plan, it's just a wish.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You should choose small steps, one at a time.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "For example, Emma, you said chemistry is difficult for you.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You don't need to study for hours every evening.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Just review science for thirty minutes a day.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Small steps, every day, are better than one big step once a month.",
+    0.5
    ],
    [
     "af_ov_young",
-    "Should we write our goals down?",
-    0.4
+    "That makes sense. Should we write our goals down?",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "Yes. Write one small goal for this month and one bigger goal for the next three years.",
+    "Yes, good idea. People who write their goals down are much more likely to reach them.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "Bring your plans to our next lesson on the twenty-second of November.",
+    "So, please write one small goal for this month.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "We'll meet in Room fourteen.",
+    "It can be something easy, like reading one book in English, or learning new words every week.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "If you have any questions, call the school office.",
+    "Small goals are easy to check, and they make you feel good when you finish them.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Then write one bigger goal for the next three years.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Think big! It could be passing an important exam, or getting into a good university, like Emma.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Bring your plans to our next lesson.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "That's not next week, because there's a school trip.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's on the twenty-second of November.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "And please remember, we won't be in this classroom.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "They're painting it, and the smell will be terrible!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "So we'll be in a different room on the first floor, next to the library. It's Room fourteen.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Some of you have never been there, so look for the big blue door at the end of the corridor.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "If you have any questions before then, or if you're ill and can't come, call the school office.",
     0.3
    ],
    [
     "am_ov_energetic",
     "The number is oh one six one, four nine six, two oh three.",
-    0.4
+    0.5
    ],
    [
     "af_ov_young",
     "Oh one six one, four nine six, two oh three?",
-    0.3
+    0.5
    ],
    [
     "am_ov_energetic",
-    "That's right.",
-    0.4
+    "That's right. Write it in your notebooks, please.",
+    0.5
    ],
    [
     "af_ov_young",
-    "Great. I'll talk to my parents about my plan tonight.",
-    0.4
+    "Great. I'm excited about my plan now.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "I'll talk to my parents about it tonight.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "My dad will be happy, because he always says I should plan more!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Excellent. OK, who's next?",
+    0.5
    ]
   ]
  },
@@ -3273,27 +3463,32 @@
   "lines": [
    [
     "am_ov_energetic",
-    "Welcome to Careers Today!",
+    "Welcome to Careers Today, the programme that helps you choose your future!",
     0.3
    ],
    [
     "am_ov_energetic",
-    "My guest is a careers adviser, Lucy Foster.",
+    "Every week we look at different jobs, and this week we have a very special guest.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "She's a careers adviser, and she has helped thousands of young people find the right job.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Lucy Foster, welcome!",
     0.3
    ],
    [
     "am_ov_energetic",
     "Lucy, can you spell your surname for us?",
-    0.4
+    0.5
    ],
    [
     "af_ov_adviser",
-    "Of course.",
-    0.3
-   ],
-   [
-    "af_ov_adviser",
-    "Foster.",
+    "Of course. Foster.",
     0.3
    ],
    [
@@ -3303,32 +3498,87 @@
    ],
    [
     "am_ov_energetic",
-    "Today we're talking about three different jobs.",
+    "Thank you. So, today we're talking about three different jobs.",
     0.3
    ],
    [
     "am_ov_energetic",
     "Let's start with hotel receptionists.",
-    0.4
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Have you ever worked in a hotel yourself, Lucy?",
+    0.5
    ],
    [
     "af_ov_adviser",
-    "Sure. Last month I visited a hotel in the city centre, near the railway station.",
+    "Ha, no, never! But last month I spent a day at a hotel to see what the job is like.",
     0.3
    ],
    [
     "af_ov_adviser",
-    "Receptionists welcome guests and help them check in.",
+    "It's in the city centre.",
     0.3
    ],
    [
     "af_ov_adviser",
-    "Their morning shift starts at half past seven.",
+    "Lots of hotels in our city are near the airport, but this one is near the railway station, so lots of guests arrive with big suitcases.",
     0.3
    ],
    [
     "af_ov_adviser",
-    "The hotel is called the Sunrise Hotel.",
+    "Some of them are tired after a long journey, and some are a bit lost.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "The receptionists are the first people the guests meet.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "They welcome guests and help them check in.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "They also answer the phone, book taxis, and tell guests about good restaurants nearby.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "It's a busy job!",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "The receptionists work in shifts.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "The night shift is very quiet, but the morning shift is the busiest.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "It starts at half past seven, when most guests want breakfast and need help with their plans for the day.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Oh, and I should tell you the hotel's name.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "It's a lovely place, with flowers in every window.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "It's called the Sunrise Hotel.",
     0.3
    ],
    [
@@ -3343,8 +3593,8 @@
    ],
    [
     "am_ov_energetic",
-    "What skills do receptionists need?",
-    0.4
+    "What a nice name! What skills do receptionists need?",
+    0.5
    ],
    [
     "af_ov_adviser",
@@ -3353,108 +3603,248 @@
    ],
    [
     "af_ov_adviser",
-    "Speaking English is useful too, because the guests come from different countries.",
-    0.4
-   ],
-   [
-    "am_ov_energetic",
-    "Our second job is photographer.",
-    0.4
-   ],
-   [
-    "af_ov_adviser",
-    "Yes. I spoke to a photographer who takes pictures for families, shops and local events.",
+    "Some guests can be difficult, especially when they're tired, so you have to stay friendly.",
     0.3
    ],
    [
     "af_ov_adviser",
-    "She sometimes works in her studio, but she often travels to different places.",
+    "Speaking English is useful too, because the guests come from different countries.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "On the day I was there, I heard Spanish, Chinese and Arabic in just one hour!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Amazing. Our second job is photographer.",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Yes, this is a job lots of young people dream about.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "I spoke to a photographer who has her own small business.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "People think photographers work for newspapers, but she doesn't.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "She takes pictures for families, shops and local events, like weddings and school concerts.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Last week she spent a whole day at a wedding, and her feet hurt for days afterwards!",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "She has a small studio in her house, and she sometimes works there, but she often travels to different places, like parks, beaches and old buildings.",
     0.3
    ],
    [
     "af_ov_adviser",
     "She uses a camera, lights and a computer.",
-    0.4
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Editing the photos on the computer takes a long time, often longer than taking them!",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "And finally, bus drivers.",
-    0.4
+    "I didn't know that. And finally, bus drivers.",
+    0.5
    ],
    [
     "af_ov_adviser",
-    "I met a bus driver who starts work very early.",
+    "Yes. I met a bus driver who starts work very early, before the sun comes up.",
     0.3
    ],
    [
     "af_ov_adviser",
-    "His route goes through the city centre and past the hospital.",
+    "He has driven the same bus for many years, and lots of passengers know him by name.",
     0.3
    ],
    [
     "af_ov_adviser",
-    "One journey takes about fifty minutes.",
+    "His route goes through the city centre and past the hospital, so many of his passengers are nurses and doctors going to work.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Some of them fall asleep on the bus, and he has to wake them up at their stop!",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "It's a long route. One journey takes about fifty minutes, from one end of the city to the other.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "In the evening, when the roads are busy, it can take even longer.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "He listens to the radio and sings quietly when the traffic stops.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "But he never gets angry.",
     0.3
    ],
    [
     "af_ov_adviser",
     "He likes meeting people and helping them get to work and school.",
-    0.4
-   ],
-   [
-    "am_ov_energetic",
-    "What do drivers need?",
-    0.4
+    0.3
    ],
    [
     "af_ov_adviser",
-    "They need to be calm and careful, and they need the right driving licence.",
-    0.4
+    "Every morning, an old lady gives him a biscuit when she gets on!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "He sounds like a happy man! What do drivers need?",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Well, driving a bus is very different from driving a car.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "It's big and heavy, and you're responsible for lots of people.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "So they need to be calm and careful, even when other drivers aren't.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "They also need to be good with people, of course.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "And there's one thing they can't work without.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "A normal car licence isn't enough.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "They need the right driving licence.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Getting one takes a few months of lessons and tests.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Thank you. That's really interesting.",
+    0.3
    ],
    [
     "am_ov_energetic",
     "If our listeners want advice about jobs, how can they contact you?",
-    0.4
+    0.5
    ],
    [
     "af_ov_adviser",
-    "They can call our careers office.",
+    "They can visit our website, or they can call our careers office.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "We love talking to young people, and the advice is free.",
     0.3
    ],
    [
     "af_ov_adviser",
     "The number is oh two oh three, seven six eight, one four five.",
-    0.4
+    0.5
    ],
    [
     "am_ov_energetic",
     "Oh two oh three, seven six eight, one four five?",
+    0.5
+   ],
+   [
+    "af_ov_adviser",
+    "Yes, that's right. Just ask for me, or for any of my colleagues.",
     0.3
    ],
    [
     "af_ov_adviser",
-    "Yes, that's right.",
-    0.3
-   ],
-   [
-    "af_ov_adviser",
-    "The office is open every weekday.",
-    0.4
+    "We're closed at weekends, but the office is open every weekday, from morning until late afternoon.",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "Thank you, Lucy.",
-    0.3
-   ],
-   [
-    "am_ov_energetic",
-    "What's your best advice for young people?",
-    0.4
+    "Thank you, Lucy. Before you go, what's your best advice for young people who don't know what job they want?",
+    0.5
    ],
    [
     "af_ov_adviser",
-    "Try different things, and remember that good communication and a positive attitude are useful in every job.",
-    0.4
+    "Don't worry if you don't know yet. I didn't know until I was much older!",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "My advice is simple. Try different things.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Get a weekend job, help a neighbour, join a club.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "Every job teaches you something.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "When I was at school, I worked in a bakery on Saturdays, and I learned how to talk to customers.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "That helped me in every job after that.",
+    0.3
+   ],
+   [
+    "af_ov_adviser",
+    "And remember, good communication and a positive attitude are useful in every job.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Great advice. Thank you, Lucy Foster, and thank you for listening to Careers Today!",
+    0.5
    ]
   ]
  },
@@ -3475,17 +3865,27 @@
   "lines": [
    [
     "am_ov_energetic",
-    "Hello, and welcome! Can I help you?",
-    0.4
+    "Hello, and welcome to Style Street!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Are you looking for anything special today, or just looking around?",
+    0.5
    ],
    [
     "af_ov_young",
-    "Yes, please. I'm looking for a present for my brother.",
+    "Yes, please, I need some help.",
     0.3
    ],
    [
     "af_ov_young",
-    "I'll need a gift label with his name later.",
+    "I'm looking for a present for my brother.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "I'll need a gift label with his name later, so let me tell you now.",
     0.3
    ],
    [
@@ -3499,28 +3899,88 @@
     0.6
    ],
    [
-    "af_ov_young",
-    "It's his birthday next week.",
-    0.4
-   ],
-   [
     "am_ov_energetic",
-    "Lovely! Does he like casual or formal clothes?",
-    0.4
-   ],
-   [
-    "af_ov_young",
-    "Casual. He likes simple jackets without bright colours.",
-    0.4
-   ],
-   [
-    "am_ov_energetic",
-    "This dark blue jacket is very popular.",
+    "Thank you. Is it for a special occasion?",
     0.3
    ],
    [
     "am_ov_energetic",
-    "It's from a company called Kestrel.",
+    "Lots of people are buying Christmas presents already.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "We put up our Christmas lights last week, and the shop's been busy ever since!",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "No, it's not for Christmas.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "It's his birthday next week, and I always buy him something nice.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Lovely! Does he like casual or formal clothes?",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "We have some very smart shirts over there, if he works in an office.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "No, he hates shirts and ties!",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Casual. He likes simple jackets.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "He's a student, and he cycles everywhere, even in the rain.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Last year I bought him a bright yellow jumper, and he never wore it once!",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Oh, and nothing too colourful.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "He likes jackets without bright colours.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "He says they make him look like a traffic light!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "I understand.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "This dark blue jacket is very popular with students.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's warm, it's waterproof, and it's from a really good company called Kestrel.",
     0.3
    ],
    [
@@ -3534,34 +3994,109 @@
     0.6
    ],
    [
-    "af_ov_young",
-    "It's nice, but it's a bit expensive. Do you have something cheaper?",
-    0.4
-   ],
-   [
     "am_ov_energetic",
-    "This grey jacket costs thirty-five dollars.",
-    0.3
-   ],
-   [
-    "am_ov_energetic",
-    "It's lighter, and it has two pockets outside and one small pocket inside.",
-    0.4
+    "It's named after a small bird.",
+    0.5
    ],
    [
     "af_ov_young",
-    "Perfect. He always carries his phone and keys.",
+    "It's nice, but it's a bit expensive.",
     0.3
    ],
    [
     "af_ov_young",
-    "I'll take it. Can I also buy a T-shirt?",
-    0.4
+    "I'm a student too, so I can't spend too much.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Do you have something cheaper?",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "Sure. We have white ones and green ones.",
-    0.4
+    "Of course. Let me see.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "This grey jacket is on sale this week.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It was fifty dollars, and now it costs thirty-five dollars.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's lighter than the blue one, so it's good for cycling.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The material is very soft, too. Feel it!",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Oh, yes, it's really soft.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "And it has lots of really useful pockets: two outside, and one small pocket inside.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The inside one is quite deep, so nothing can fall out, even when you're on a bike.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "That's perfect, because he loses things all the time.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Last month he lost his keys twice!",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Honestly, he always carries his phone and keys, and they're always falling out of his pockets.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "I'll take it.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Can I also buy a T-shirt? He can never have too many T-shirts.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Sure. They're just here, next to the jackets.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "We have white ones and green ones.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The white ones are more popular, but they get dirty very quickly.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Hmm. He cycles in the rain, remember!",
+    0.3
    ],
    [
     "af_ov_young",
@@ -3570,68 +4105,183 @@
    ],
    [
     "af_ov_young",
-    "What if he doesn't like the clothes?",
-    0.4
-   ],
-   [
-    "am_ov_energetic",
-    "You can return or exchange them within thirty days, but you need the receipt.",
-    0.4
+    "What if he doesn't like the clothes? He's quite fussy.",
+    0.3
    ],
    [
     "af_ov_young",
-    "OK. Can I pay by card?",
-    0.4
+    "Last year he changed almost all of his birthday presents.",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "Yes, of course. Would you like a gift bag?",
-    0.4
+    "Ha! Don't worry, we're very flexible.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You can return or exchange them within thirty days.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "He can choose a different size or a different colour, or get his money back, if he prefers.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "That's no problem at all.",
+    0.5
    ],
    [
     "af_ov_young",
-    "Yes, please.",
-    0.4
+    "Oh, that's good to know.",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "And if you ever want to check if we have your size, you can call us.",
+    "There's just one thing to remember.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You need the receipt.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Without it, we can't do anything, I'm afraid.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "So keep it somewhere safe!",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "OK. I'll give it to my mum, because she never loses anything, unlike my brother!",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Now, I haven't got much cash with me.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Can I pay by card?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Yes, of course. Just put your card here.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "The machine is a bit slow today, so it might take a minute.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "OK, here's your receipt. Remember, keep it safe!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "And because it's a present, we can make it look nice.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Would you like a gift bag?",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Yes, please. A gift bag would be great.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Here you are.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "And if you ever want to check if we have your size, you don't need to come in.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "You can just call us.",
     0.3
    ],
    [
     "am_ov_energetic",
     "Our number is oh one nine eight, two five four, seven three six.",
-    0.4
+    0.5
    ],
    [
     "af_ov_young",
     "Oh one nine eight, two five four, seven three six?",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "That's right. Someone is always happy to help, even at the weekend.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "That's right. We're open every day until eight o'clock.",
-    0.4
+    "We're open every day until eight o'clock.",
+    0.5
    ],
    [
     "af_ov_young",
-    "Great. Please write Happy birthday! From your sister on the label.",
+    "Great. One last thing. Can you write on the gift label for me?",
     0.3
    ],
    [
     "af_ov_young",
-    "And where's the exit?",
-    0.4
+    "My handwriting is terrible. My teachers always said so!",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "Just go past the mirrors and turn left.",
+    "Of course. What would you like it to say?",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Please write \"Happy birthday! From your sister\" on the label.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Oh, and where's the exit? This shop is so big, I'm completely lost!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Ha, everybody says that!",
     0.3
    ],
    [
     "am_ov_energetic",
-    "Have a lovely day!",
-    0.4
+    "Don't go back the way you came, because that's the staff area.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Just go past the mirrors and turn left. You'll see the big glass doors.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Have a lovely day, and I hope your brother likes his present!",
+    0.5
    ]
   ]
  },
@@ -3652,18 +4302,28 @@
   "lines": [
    [
     "af_ov_young",
-    "Good morning! How can I help?",
-    0.4
+    "Good morning, and welcome to Central Station! How can I help?",
+    0.5
    ],
    [
     "am_ov_energetic",
     "Hi. I booked a seat on the train to Lakeside, but I can't find my ticket on my phone.",
-    0.4
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I've looked everywhere: in my emails, in my photos, nothing!",
+    0.5
    ],
    [
     "af_ov_young",
-    "No problem. What's your surname?",
-    0.4
+    "Don't worry, that happens a lot, especially early in the morning!",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "What's your surname?",
+    0.5
    ],
    [
     "am_ov_energetic",
@@ -3677,18 +4337,68 @@
    ],
    [
     "af_ov_young",
-    "Here it is. You bought it online yesterday.",
+    "Let me look. Miller, Miller.",
     0.3
    ],
    [
     "af_ov_young",
-    "Your seat is in coach C.",
-    0.4
+    "There are three Millers on this list today! Is your first name Jack?",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "Great. Which platform does the train leave from?",
-    0.4
+    "Yes, that's me. I'm so sorry, I'm not usually this disorganised!",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Don't worry! Here it is.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "You bought it online yesterday, very late at night.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Yes, I couldn't sleep, so I was planning my trip!",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Well, it's a beautiful journey.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "I'll send the ticket to your phone again.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Let me see. Your seat is in coach C, by the window.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "That's the quiet coach, so no phone calls, please!",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Ha, OK. Which platform does the train leave from?",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's my first time at this station, and it's huge.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "It's not on the board yet, but it always leaves from the same place.",
+    0.3
    ],
    [
     "af_ov_young",
@@ -3697,17 +4407,52 @@
    ],
    [
     "af_ov_young",
-    "It leaves at nine twenty, and the journey takes about two hours.",
-    0.4
+    "Go down the stairs, through the tunnel, and up the other side.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "There's a lift if your bag is heavy. Is it heavy?",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "Thanks. I'm visiting a friend in Lakeside.",
+    "No, it's just a small bag. I'm only going for the weekend.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "The train leaves at nine twenty, so you have plenty of time.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "The journey takes about two hours, and the views are lovely after the first half hour, when you leave the city.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "Great, thanks. I'm visiting a friend in Lakeside.",
     0.3
    ],
    [
     "am_ov_energetic",
-    "Is there a bus from the station to Rowan Street?",
+    "We were at school together, but she moved there last year for work.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I haven't seen her for ages!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Is there a bus from the station to her street?",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "It's called Rowan Street.",
     0.3
    ],
    [
@@ -3722,67 +4467,187 @@
    ],
    [
     "af_ov_young",
-    "Yes. The bus stops right outside the station café.",
-    0.4
+    "Yes. I know Lakeside well, because my grandparents live there.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "It's a lovely little town, with a lake in the middle, of course!",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "There's a bus that goes along Rowan Street, and it's very frequent.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "You don't need to walk far.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "The bus stops right outside the station café.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "You can't miss it. It has a big red sign, and it smells of fresh coffee.",
+    0.5
    ],
    [
     "am_ov_energetic",
     "Perfect. Is there Wi-Fi on the train?",
-    0.4
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I need to send some emails for work.",
+    0.5
    ],
    [
     "af_ov_young",
-    "Yes, but the signal can be weak.",
+    "Yes, there is, and it's free.",
     0.3
    ],
    [
     "af_ov_young",
-    "There's also a café on the train where you can buy sandwiches and drinks.",
-    0.4
-   ],
-   [
-    "am_ov_energetic",
-    "Are there power sockets?",
-    0.4
+    "But to be honest, the signal can be weak, especially when the train goes through the hills.",
+    0.3
    ],
    [
     "af_ov_young",
-    "Only under some seats.",
-    0.4
+    "So send your emails before you leave!",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "There's also a café on the train, next to the quiet coach.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "It doesn't have hot meals, but you can buy sandwiches and drinks.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "The coffee there is much better than ours, I'm sorry to say!",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "OK. My friend wants to show me a nature park, and she has a dog that loves walking by the water.",
+    "Great. And are there power sockets?",
     0.3
+   ],
+   [
+    "am_ov_energetic",
+    "My laptop battery is nearly dead.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Hmm. Not everywhere, I'm afraid. It's quite an old train.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "They're only under some seats.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Your seat is by the window, so look down near your feet.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "If there isn't one, ask the guard. He's very helpful.",
+    0.5
+   ],
+   [
+    "am_ov_energetic",
+    "OK, thanks. I'm really looking forward to this weekend.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "My friend wants to show me a nature park near her house.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "She says there are lots of birds there, and you can walk for hours without seeing anyone.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I can't wait!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I live in the city, so I don't see much nature.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "And she has a dog that loves walking by the water.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "He's enormous, but he's very gentle.",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "Last time I visited, he jumped into the lake and then shook all the water over me!",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Ha! Bring a towel, then. When are you coming back?",
+    0.5
    ],
    [
     "am_ov_energetic",
     "I'm coming back on Sunday evening.",
-    0.4
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I have to work on Monday morning, unfortunately.",
+    0.5
    ],
    [
     "af_ov_young",
-    "That sounds lovely.",
+    "That sounds like a lovely weekend.",
     0.3
    ],
    [
     "af_ov_young",
-    "If you need help at Lakeside, call the station office.",
+    "If you need any help at Lakeside, for example if your train is late or you lose something, call the station office.",
     0.3
    ],
    [
     "af_ov_young",
     "The number is oh one four four, nine two six, three five eight.",
-    0.4
+    0.5
    ],
    [
     "am_ov_energetic",
     "Oh one four four, nine two six, three five eight?",
-    0.3
+    0.5
    ],
    [
     "af_ov_young",
     "That's right.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "And if you're hungry or thirsty before the train leaves, you don't have to wait for the café on the train.",
     0.3
    ],
    [
@@ -3792,18 +4657,58 @@
    ],
    [
     "af_ov_young",
-    "It sells snacks and newspapers.",
+    "It sells snacks and newspapers, and the man there knows everything about trains.",
     0.3
    ],
    [
     "af_ov_young",
-    "Please board the train through the front and middle doors, and don't leave your bags alone.",
-    0.4
+    "Just one more thing before you go.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "When the train arrives, please don't use the back doors, because that part of the train doesn't go to Lakeside.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "Board the train through the front and middle doors.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "The train is often busy at the weekend, so get on quickly and find your seat.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "There are big shelves at the end of each coach for suitcases.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "But wherever you put your things, please don't leave your bags alone, not even for a minute.",
+    0.3
+   ],
+   [
+    "af_ov_young",
+    "The station staff sometimes have to take them away, and that can make the train late.",
+    0.5
    ],
    [
     "am_ov_energetic",
-    "Thanks for your help! I'll buy a bottle of water first.",
-    0.4
+    "I won't, I promise. Thanks for your help!",
+    0.3
+   ],
+   [
+    "am_ov_energetic",
+    "I'm going to buy a bottle of water first, and maybe a newspaper for the journey.",
+    0.5
+   ],
+   [
+    "af_ov_young",
+    "Good idea. Have a lovely trip, Mr Miller!",
+    0.5
    ]
   ]
  },

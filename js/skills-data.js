@@ -1351,7 +1351,7 @@ var TA_SKILLS = {
       id: 'e2', no: 12, stage: 'Elementary', theme: 'Future Plans', emoji: '🚀',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
-        src: "audio/skills/listen-step-12.mp3?v=2",
+        src: "audio/skills/listen-step-12.mp3?v=3",
         title: "Talking About Future Dreams",
         intro: "Listen to a teacher talking to a student, Emma, about her dreams for the future. Then answer the 16 questions.",
         questions: [
@@ -1373,20 +1373,21 @@ var TA_SKILLS = {
           {"type":"gap","q":"Emma will talk to her _____ about her plan.","a":["parents","parents about"],"sec":"Complete the notes. Write ONE word or A NUMBER."}
         ],
         transcript: [
-          {"who":"Teacher","man":true,"text":"Good morning, everyone. Today we're talking about our dreams for the future. Emma, would you like to start? First, please tell us your full name for the new class list.","answers":[]},
+          {"who":"Teacher","man":true,"text":"Good morning, everyone. I hope you all had a nice weekend. Today we're talking about our dreams for the future. This is one of my favourite lessons every year, because I always learn something new about you. Emma, would you like to start? First, please tell us your full name for the new class list.","answers":[]},
           {"who":"Emma","man":false,"text":"Sure. I'm Emma Clarke. Clarke. That's C-L-A-R-K-E.","answers":[1]},
-          {"who":"Teacher","man":true,"text":"Thanks, Emma. So, what do you want to be?","answers":[]},
-          {"who":"Emma","man":false,"text":"I want to become a doctor, because I enjoy helping people. Biology is my favourite subject, but I need to improve my chemistry.","answers":[2,3,4]},
-          {"who":"Teacher","man":true,"text":"That's a great dream. Where would you like to study?","answers":[]},
-          {"who":"Emma","man":false,"text":"At Oakwood University. Oakwood. That's O-A-K-W-O-O-D. It has a very good medical school, and it's only an hour from my home.","answers":[5,6]},
-          {"who":"Teacher","man":true,"text":"Wonderful. And what about your friends? Do you know their dreams?","answers":[]},
-          {"who":"Emma","man":false,"text":"Yes! My best friend wants to be a computer programmer. She already makes small websites. And my brother wants to be a football coach, because he loves helping younger players.","answers":[7,8]},
-          {"who":"Teacher","man":true,"text":"Those are great goals. But remember, a dream needs a plan. You should choose small steps. For example, Emma, you could review science for thirty minutes a day.","answers":[9,10]},
-          {"who":"Emma","man":false,"text":"Should we write our goals down?","answers":[]},
-          {"who":"Teacher","man":true,"text":"Yes. Write one small goal for this month and one bigger goal for the next three years. Bring your plans to our next lesson on the twenty-second of November. We'll meet in Room fourteen. If you have any questions, call the school office. The number is oh one six one, four nine six, two oh three.","answers":[11,12,13,14,15]},
+          {"who":"Teacher","man":true,"text":"Thanks, Emma. With an E at the end. I always forget that E! So, Emma, what do you want to be when you finish school?","answers":[]},
+          {"who":"Emma","man":false,"text":"Well, when I was little, I wanted to be a pilot, because I loved planes. But now I want to become a doctor, because I enjoy helping people. Last year my grandmother was in hospital for a few weeks, and the doctors there were so kind to her. She's fine now, don't worry! That's when I decided. At school, biology is my favourite subject. I love learning how the body works, and our biology teacher makes every lesson fun. Last week we looked at a real fish heart. Some of my classmates felt sick, but I thought it was amazing! But I need to improve my chemistry. I got a low mark in my last test.","answers":[2,3,4]},
+          {"who":"Teacher","man":true,"text":"Don't worry, Emma. Lots of students find chemistry difficult at first. I did too! That's a great dream. Where would you like to study?","answers":[]},
+          {"who":"Emma","man":false,"text":"My cousin studies at a big university in the capital, but it's very expensive, and it's far from my family. So I'd like to go to Oakwood University. Oakwood. That's O-A-K-W-O-O-D. I visited it last spring with my mum. The buildings are old and beautiful, and there's a big park in the middle where students have lunch on the grass. It has a very good medical school, and it's only an hour from my home, so I can visit my family at weekends.","answers":[5,6]},
+          {"who":"Teacher","man":true,"text":"That's nice. I'm sure your family will be happy about that. And what about your friends and family? Do you know their dreams?","answers":[]},
+          {"who":"Emma","man":false,"text":"Yes! My best friend's parents are both teachers, and they want her to be a teacher too. But she wants to be a computer programmer. She's really good with computers. She already makes small websites for people in our town, and she even made one for my mum's cake shop! And my brother wants to be a football coach. He plays every weekend, and he's quite good, but he says he prefers teaching to playing. He loves helping younger players. On Saturdays he helps the coach with the little ones at his club.","answers":[7,8]},
+          {"who":"Teacher","man":true,"text":"Those are great goals. Every dream is different, and that's what makes this class so interesting. But remember one thing. A dream is not enough. A dream needs a plan. Without a plan, it's just a wish. You should choose small steps, one at a time. For example, Emma, you said chemistry is difficult for you. You don't need to study for hours every evening. Just review science for thirty minutes a day. Small steps, every day, are better than one big step once a month.","answers":[9,10]},
+          {"who":"Emma","man":false,"text":"That makes sense. Should we write our goals down?","answers":[]},
+          {"who":"Teacher","man":true,"text":"Yes, good idea. People who write their goals down are much more likely to reach them. So, please write one small goal for this month. It can be something easy, like reading one book in English, or learning new words every week. Small goals are easy to check, and they make you feel good when you finish them. Then write one bigger goal for the next three years. Think big! It could be passing an important exam, or getting into a good university, like Emma. Bring your plans to our next lesson. That's not next week, because there's a school trip. It's on the twenty-second of November. And please remember, we won't be in this classroom. They're painting it, and the smell will be terrible! So we'll be in a different room on the first floor, next to the library. It's Room fourteen. Some of you have never been there, so look for the big blue door at the end of the corridor. If you have any questions before then, or if you're ill and can't come, call the school office. The number is oh one six one, four nine six, two oh three.","answers":[11,12,13,14,15]},
           {"who":"Emma","man":false,"text":"Oh one six one, four nine six, two oh three?","answers":[]},
-          {"who":"Teacher","man":true,"text":"That's right.","answers":[]},
-          {"who":"Emma","man":false,"text":"Great. I'll talk to my parents about my plan tonight.","answers":[16]}
+          {"who":"Teacher","man":true,"text":"That's right. Write it in your notebooks, please.","answers":[]},
+          {"who":"Emma","man":false,"text":"Great. I'm excited about my plan now. I'll talk to my parents about it tonight. My dad will be happy, because he always says I should plan more!","answers":[16]},
+          {"who":"Teacher","man":true,"text":"Excellent. OK, who's next?","answers":[]}
         ]
         // LISTENING JOURNEY END
       },
@@ -1479,7 +1480,7 @@ var TA_SKILLS = {
       id: 'e3', no: 13, stage: 'Elementary', theme: 'Jobs & Careers', emoji: '💼',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
-        src: "audio/skills/listen-step-13.mp3?v=2",
+        src: "audio/skills/listen-step-13.mp3?v=3",
         title: "Different People, Different Jobs",
         intro: "Listen to a radio interview with Lucy, a careers adviser, about three jobs. Then answer the 17 questions.",
         questions: [
@@ -1502,24 +1503,25 @@ var TA_SKILLS = {
           {"type":"gap","q":"A positive _____ is useful in every job.","a":["attitude","attitude is"],"sec":"Complete the notes. Write ONE word or A NUMBER."}
         ],
         transcript: [
-          {"who":"Presenter","man":true,"text":"Welcome to Careers Today! My guest is a careers adviser, Lucy Foster. Lucy, can you spell your surname for us?","answers":[]},
+          {"who":"Presenter","man":true,"text":"Welcome to Careers Today, the programme that helps you choose your future! Every week we look at different jobs, and this week we have a very special guest. She's a careers adviser, and she has helped thousands of young people find the right job. Lucy Foster, welcome! Lucy, can you spell your surname for us?","answers":[]},
           {"who":"Lucy","man":false,"text":"Of course. Foster. That's F-O-S-T-E-R.","answers":[1]},
-          {"who":"Presenter","man":true,"text":"Today we're talking about three different jobs. Let's start with hotel receptionists.","answers":[]},
-          {"who":"Lucy","man":false,"text":"Sure. Last month I visited a hotel in the city centre, near the railway station. Receptionists welcome guests and help them check in. Their morning shift starts at half past seven. The hotel is called the Sunrise Hotel. Sunrise. That's S-U-N-R-I-S-E.","answers":[2,3,4,5]},
-          {"who":"Presenter","man":true,"text":"What skills do receptionists need?","answers":[]},
-          {"who":"Lucy","man":false,"text":"They need to be polite, patient and organised. Speaking English is useful too, because the guests come from different countries.","answers":[6]},
-          {"who":"Presenter","man":true,"text":"Our second job is photographer.","answers":[]},
-          {"who":"Lucy","man":false,"text":"Yes. I spoke to a photographer who takes pictures for families, shops and local events. She sometimes works in her studio, but she often travels to different places. She uses a camera, lights and a computer.","answers":[7,8]},
-          {"who":"Presenter","man":true,"text":"And finally, bus drivers.","answers":[]},
-          {"who":"Lucy","man":false,"text":"I met a bus driver who starts work very early. His route goes through the city centre and past the hospital. One journey takes about fifty minutes. He likes meeting people and helping them get to work and school.","answers":[9,10,11]},
-          {"who":"Presenter","man":true,"text":"What do drivers need?","answers":[]},
-          {"who":"Lucy","man":false,"text":"They need to be calm and careful, and they need the right driving licence.","answers":[12,13]},
-          {"who":"Presenter","man":true,"text":"If our listeners want advice about jobs, how can they contact you?","answers":[]},
-          {"who":"Lucy","man":false,"text":"They can call our careers office. The number is oh two oh three, seven six eight, one four five.","answers":[14]},
+          {"who":"Presenter","man":true,"text":"Thank you. So, today we're talking about three different jobs. Let's start with hotel receptionists. Have you ever worked in a hotel yourself, Lucy?","answers":[]},
+          {"who":"Lucy","man":false,"text":"Ha, no, never! But last month I spent a day at a hotel to see what the job is like. It's in the city centre. Lots of hotels in our city are near the airport, but this one is near the railway station, so lots of guests arrive with big suitcases. Some of them are tired after a long journey, and some are a bit lost. The receptionists are the first people the guests meet. They welcome guests and help them check in. They also answer the phone, book taxis, and tell guests about good restaurants nearby. It's a busy job! The receptionists work in shifts. The night shift is very quiet, but the morning shift is the busiest. It starts at half past seven, when most guests want breakfast and need help with their plans for the day. Oh, and I should tell you the hotel's name. It's a lovely place, with flowers in every window. It's called the Sunrise Hotel. Sunrise. That's S-U-N-R-I-S-E.","answers":[2,3,4,5]},
+          {"who":"Presenter","man":true,"text":"What a nice name! What skills do receptionists need?","answers":[]},
+          {"who":"Lucy","man":false,"text":"They need to be polite, patient and organised. Some guests can be difficult, especially when they're tired, so you have to stay friendly. Speaking English is useful too, because the guests come from different countries. On the day I was there, I heard Spanish, Chinese and Arabic in just one hour!","answers":[6]},
+          {"who":"Presenter","man":true,"text":"Amazing. Our second job is photographer.","answers":[]},
+          {"who":"Lucy","man":false,"text":"Yes, this is a job lots of young people dream about. I spoke to a photographer who has her own small business. People think photographers work for newspapers, but she doesn't. She takes pictures for families, shops and local events, like weddings and school concerts. Last week she spent a whole day at a wedding, and her feet hurt for days afterwards! She has a small studio in her house, and she sometimes works there, but she often travels to different places, like parks, beaches and old buildings. She uses a camera, lights and a computer. Editing the photos on the computer takes a long time, often longer than taking them!","answers":[7,8]},
+          {"who":"Presenter","man":true,"text":"I didn't know that. And finally, bus drivers.","answers":[]},
+          {"who":"Lucy","man":false,"text":"Yes. I met a bus driver who starts work very early, before the sun comes up. He has driven the same bus for many years, and lots of passengers know him by name. His route goes through the city centre and past the hospital, so many of his passengers are nurses and doctors going to work. Some of them fall asleep on the bus, and he has to wake them up at their stop! It's a long route. One journey takes about fifty minutes, from one end of the city to the other. In the evening, when the roads are busy, it can take even longer. He listens to the radio and sings quietly when the traffic stops. But he never gets angry. He likes meeting people and helping them get to work and school. Every morning, an old lady gives him a biscuit when she gets on!","answers":[9,10,11]},
+          {"who":"Presenter","man":true,"text":"He sounds like a happy man! What do drivers need?","answers":[]},
+          {"who":"Lucy","man":false,"text":"Well, driving a bus is very different from driving a car. It's big and heavy, and you're responsible for lots of people. So they need to be calm and careful, even when other drivers aren't. They also need to be good with people, of course. And there's one thing they can't work without. A normal car licence isn't enough. They need the right driving licence. Getting one takes a few months of lessons and tests.","answers":[12,13]},
+          {"who":"Presenter","man":true,"text":"Thank you. That's really interesting. If our listeners want advice about jobs, how can they contact you?","answers":[]},
+          {"who":"Lucy","man":false,"text":"They can visit our website, or they can call our careers office. We love talking to young people, and the advice is free. The number is oh two oh three, seven six eight, one four five.","answers":[14]},
           {"who":"Presenter","man":true,"text":"Oh two oh three, seven six eight, one four five?","answers":[]},
-          {"who":"Lucy","man":false,"text":"Yes, that's right. The office is open every weekday.","answers":[15]},
-          {"who":"Presenter","man":true,"text":"Thank you, Lucy. What's your best advice for young people?","answers":[]},
-          {"who":"Lucy","man":false,"text":"Try different things, and remember that good communication and a positive attitude are useful in every job.","answers":[16,17]}
+          {"who":"Lucy","man":false,"text":"Yes, that's right. Just ask for me, or for any of my colleagues. We're closed at weekends, but the office is open every weekday, from morning until late afternoon.","answers":[15]},
+          {"who":"Presenter","man":true,"text":"Thank you, Lucy. Before you go, what's your best advice for young people who don't know what job they want?","answers":[]},
+          {"who":"Lucy","man":false,"text":"Don't worry if you don't know yet. I didn't know until I was much older! My advice is simple. Try different things. Get a weekend job, help a neighbour, join a club. Every job teaches you something. When I was at school, I worked in a bakery on Saturdays, and I learned how to talk to customers. That helped me in every job after that. And remember, good communication and a positive attitude are useful in every job.","answers":[16,17]},
+          {"who":"Presenter","man":true,"text":"Great advice. Thank you, Lucy Foster, and thank you for listening to Careers Today!","answers":[]}
         ]
         // LISTENING JOURNEY END
       },
@@ -1614,7 +1616,7 @@ var TA_SKILLS = {
       id: 'e4', no: 14, stage: 'Elementary', theme: 'Clothes & Fashion', emoji: '👕',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
-        src: "audio/skills/listen-step-14.mp3?v=2",
+        src: "audio/skills/listen-step-14.mp3?v=3",
         title: "Shopping for Clothes",
         intro: "Listen to a customer buying a present in a clothes shop. Then answer the 17 questions.",
         questions: [
@@ -1637,25 +1639,33 @@ var TA_SKILLS = {
           {"type":"gap","q":"To find the exit, go past the _____ and turn left.","a":["mirrors"],"sec":"Complete the notes. Write ONE word or A NUMBER."}
         ],
         transcript: [
-          {"who":"Assistant","man":true,"text":"Hello, and welcome! Can I help you?","answers":[]},
-          {"who":"Customer","man":false,"text":"Yes, please. I'm looking for a present for my brother. I'll need a gift label with his name later. It's Oliver. That's O-L-I-V-E-R. It's his birthday next week.","answers":[1,2]},
-          {"who":"Assistant","man":true,"text":"Lovely! Does he like casual or formal clothes?","answers":[]},
-          {"who":"Customer","man":false,"text":"Casual. He likes simple jackets without bright colours.","answers":[3,4]},
-          {"who":"Assistant","man":true,"text":"This dark blue jacket is very popular. It's from a company called Kestrel. Kestrel. That's K-E-S-T-R-E-L.","answers":[5]},
-          {"who":"Customer","man":false,"text":"It's nice, but it's a bit expensive. Do you have something cheaper?","answers":[]},
-          {"who":"Assistant","man":true,"text":"This grey jacket costs thirty-five dollars. It's lighter, and it has two pockets outside and one small pocket inside.","answers":[6,7]},
-          {"who":"Customer","man":false,"text":"Perfect. He always carries his phone and keys. I'll take it. Can I also buy a T-shirt?","answers":[8]},
-          {"who":"Assistant","man":true,"text":"Sure. We have white ones and green ones.","answers":[]},
-          {"who":"Customer","man":false,"text":"I'll take the green one. What if he doesn't like the clothes?","answers":[9]},
-          {"who":"Assistant","man":true,"text":"You can return or exchange them within thirty days, but you need the receipt.","answers":[10,11]},
-          {"who":"Customer","man":false,"text":"OK. Can I pay by card?","answers":[12]},
-          {"who":"Assistant","man":true,"text":"Yes, of course. Would you like a gift bag?","answers":[13]},
-          {"who":"Customer","man":false,"text":"Yes, please.","answers":[]},
-          {"who":"Assistant","man":true,"text":"And if you ever want to check if we have your size, you can call us. Our number is oh one nine eight, two five four, seven three six.","answers":[14]},
+          {"who":"Assistant","man":true,"text":"Hello, and welcome to Style Street! Are you looking for anything special today, or just looking around?","answers":[]},
+          {"who":"Customer","man":false,"text":"Yes, please, I need some help. I'm looking for a present for my brother. I'll need a gift label with his name later, so let me tell you now. It's Oliver. That's O-L-I-V-E-R.","answers":[1]},
+          {"who":"Assistant","man":true,"text":"Thank you. Is it for a special occasion? Lots of people are buying Christmas presents already. We put up our Christmas lights last week, and the shop's been busy ever since!","answers":[]},
+          {"who":"Customer","man":false,"text":"No, it's not for Christmas. It's his birthday next week, and I always buy him something nice.","answers":[2]},
+          {"who":"Assistant","man":true,"text":"Lovely! Does he like casual or formal clothes? We have some very smart shirts over there, if he works in an office.","answers":[]},
+          {"who":"Customer","man":false,"text":"No, he hates shirts and ties! Casual. He likes simple jackets. He's a student, and he cycles everywhere, even in the rain. Last year I bought him a bright yellow jumper, and he never wore it once! Oh, and nothing too colourful. He likes jackets without bright colours. He says they make him look like a traffic light!","answers":[3,4]},
+          {"who":"Assistant","man":true,"text":"I understand. This dark blue jacket is very popular with students. It's warm, it's waterproof, and it's from a really good company called Kestrel. Kestrel. That's K-E-S-T-R-E-L. It's named after a small bird.","answers":[5]},
+          {"who":"Customer","man":false,"text":"It's nice, but it's a bit expensive. I'm a student too, so I can't spend too much. Do you have something cheaper?","answers":[]},
+          {"who":"Assistant","man":true,"text":"Of course. Let me see. This grey jacket is on sale this week. It was fifty dollars, and now it costs thirty-five dollars. It's lighter than the blue one, so it's good for cycling. The material is very soft, too. Feel it!","answers":[6]},
+          {"who":"Customer","man":false,"text":"Oh, yes, it's really soft.","answers":[]},
+          {"who":"Assistant","man":true,"text":"And it has lots of really useful pockets: two outside, and one small pocket inside. The inside one is quite deep, so nothing can fall out, even when you're on a bike.","answers":[7]},
+          {"who":"Customer","man":false,"text":"That's perfect, because he loses things all the time. Last month he lost his keys twice! Honestly, he always carries his phone and keys, and they're always falling out of his pockets. I'll take it. Can I also buy a T-shirt? He can never have too many T-shirts.","answers":[8]},
+          {"who":"Assistant","man":true,"text":"Sure. They're just here, next to the jackets. We have white ones and green ones. The white ones are more popular, but they get dirty very quickly.","answers":[]},
+          {"who":"Customer","man":false,"text":"Hmm. He cycles in the rain, remember! I'll take the green one. What if he doesn't like the clothes? He's quite fussy. Last year he changed almost all of his birthday presents.","answers":[9]},
+          {"who":"Assistant","man":true,"text":"Ha! Don't worry, we're very flexible. You can return or exchange them within thirty days. He can choose a different size or a different colour, or get his money back, if he prefers. That's no problem at all.","answers":[10]},
+          {"who":"Customer","man":false,"text":"Oh, that's good to know.","answers":[]},
+          {"who":"Assistant","man":true,"text":"There's just one thing to remember. You need the receipt. Without it, we can't do anything, I'm afraid. So keep it somewhere safe!","answers":[11]},
+          {"who":"Customer","man":false,"text":"OK. I'll give it to my mum, because she never loses anything, unlike my brother! Now, I haven't got much cash with me. Can I pay by card?","answers":[12]},
+          {"who":"Assistant","man":true,"text":"Yes, of course. Just put your card here. The machine is a bit slow today, so it might take a minute. OK, here's your receipt. Remember, keep it safe! And because it's a present, we can make it look nice. Would you like a gift bag?","answers":[13]},
+          {"who":"Customer","man":false,"text":"Yes, please. A gift bag would be great.","answers":[]},
+          {"who":"Assistant","man":true,"text":"Here you are. And if you ever want to check if we have your size, you don't need to come in. You can just call us. Our number is oh one nine eight, two five four, seven three six.","answers":[14]},
           {"who":"Customer","man":false,"text":"Oh one nine eight, two five four, seven three six?","answers":[]},
-          {"who":"Assistant","man":true,"text":"That's right. We're open every day until eight o'clock.","answers":[15]},
-          {"who":"Customer","man":false,"text":"Great. Please write \"Happy birthday! From your sister\" on the label. And where's the exit?","answers":[16]},
-          {"who":"Assistant","man":true,"text":"Just go past the mirrors and turn left. Have a lovely day!","answers":[17]}
+          {"who":"Assistant","man":true,"text":"That's right. Someone is always happy to help, even at the weekend. We're open every day until eight o'clock.","answers":[15]},
+          {"who":"Customer","man":false,"text":"Great. One last thing. Can you write on the gift label for me? My handwriting is terrible. My teachers always said so!","answers":[]},
+          {"who":"Assistant","man":true,"text":"Of course. What would you like it to say?","answers":[]},
+          {"who":"Customer","man":false,"text":"Please write \"Happy birthday! From your sister\" on the label. Oh, and where's the exit? This shop is so big, I'm completely lost!","answers":[16]},
+          {"who":"Assistant","man":true,"text":"Ha, everybody says that! Don't go back the way you came, because that's the staff area. Just go past the mirrors and turn left. You'll see the big glass doors. Have a lovely day, and I hope your brother likes his present!","answers":[17]}
         ]
         // LISTENING JOURNEY END
       },
@@ -1751,7 +1761,7 @@ var TA_SKILLS = {
       id: 'e5', no: 15, stage: 'Elementary', theme: 'Transport', emoji: '🚆',
       listening: {
         // LISTENING JOURNEY — the teacher's (2026-11-10); made by tools/build-listenings.js from docs/listening-journey-*.json
-        src: "audio/skills/listen-step-15.mp3?v=2",
+        src: "audio/skills/listen-step-15.mp3?v=3",
         title: "A Journey by Train",
         intro: "Listen to Jack talking to an assistant at a train station. Then answer the 18 questions.",
         questions: [
@@ -1775,24 +1785,33 @@ var TA_SKILLS = {
           {"type":"gap","q":"Jack will buy a bottle of _____ first.","a":["water","water first"],"sec":"Complete the notes. Write ONE word or A NUMBER."}
         ],
         transcript: [
-          {"who":"Assistant","man":false,"text":"Good morning! How can I help?","answers":[]},
-          {"who":"Jack","man":true,"text":"Hi. I booked a seat on the train to Lakeside, but I can't find my ticket on my phone.","answers":[]},
-          {"who":"Assistant","man":false,"text":"No problem. What's your surname?","answers":[]},
+          {"who":"Assistant","man":false,"text":"Good morning, and welcome to Central Station! How can I help?","answers":[]},
+          {"who":"Jack","man":true,"text":"Hi. I booked a seat on the train to Lakeside, but I can't find my ticket on my phone. I've looked everywhere: in my emails, in my photos, nothing!","answers":[]},
+          {"who":"Assistant","man":false,"text":"Don't worry, that happens a lot, especially early in the morning! What's your surname?","answers":[]},
           {"who":"Jack","man":true,"text":"Miller. That's M-I-L-L-E-R.","answers":[1]},
-          {"who":"Assistant","man":false,"text":"Here it is. You bought it online yesterday. Your seat is in coach C.","answers":[2,3]},
-          {"who":"Jack","man":true,"text":"Great. Which platform does the train leave from?","answers":[]},
-          {"who":"Assistant","man":false,"text":"Platform four. It leaves at nine twenty, and the journey takes about two hours.","answers":[4,5]},
-          {"who":"Jack","man":true,"text":"Thanks. I'm visiting a friend in Lakeside. Is there a bus from the station to Rowan Street? Rowan. That's R-O-W-A-N.","answers":[6]},
-          {"who":"Assistant","man":false,"text":"Yes. The bus stops right outside the station café.","answers":[7]},
-          {"who":"Jack","man":true,"text":"Perfect. Is there Wi-Fi on the train?","answers":[]},
-          {"who":"Assistant","man":false,"text":"Yes, but the signal can be weak. There's also a café on the train where you can buy sandwiches and drinks.","answers":[8,9]},
-          {"who":"Jack","man":true,"text":"Are there power sockets?","answers":[]},
-          {"who":"Assistant","man":false,"text":"Only under some seats.","answers":[10]},
-          {"who":"Jack","man":true,"text":"OK. My friend wants to show me a nature park, and she has a dog that loves walking by the water. I'm coming back on Sunday evening.","answers":[11,12,13]},
-          {"who":"Assistant","man":false,"text":"That sounds lovely. If you need help at Lakeside, call the station office. The number is oh one four four, nine two six, three five eight.","answers":[14]},
+          {"who":"Assistant","man":false,"text":"Let me look. Miller, Miller. There are three Millers on this list today! Is your first name Jack?","answers":[]},
+          {"who":"Jack","man":true,"text":"Yes, that's me. I'm so sorry, I'm not usually this disorganised!","answers":[]},
+          {"who":"Assistant","man":false,"text":"Don't worry! Here it is. You bought it online yesterday, very late at night.","answers":[2]},
+          {"who":"Jack","man":true,"text":"Yes, I couldn't sleep, so I was planning my trip!","answers":[]},
+          {"who":"Assistant","man":false,"text":"Well, it's a beautiful journey. I'll send the ticket to your phone again. Let me see. Your seat is in coach C, by the window. That's the quiet coach, so no phone calls, please!","answers":[3]},
+          {"who":"Jack","man":true,"text":"Ha, OK. Which platform does the train leave from? It's my first time at this station, and it's huge.","answers":[]},
+          {"who":"Assistant","man":false,"text":"It's not on the board yet, but it always leaves from the same place. Platform four. Go down the stairs, through the tunnel, and up the other side. There's a lift if your bag is heavy. Is it heavy?","answers":[4]},
+          {"who":"Jack","man":true,"text":"No, it's just a small bag. I'm only going for the weekend.","answers":[]},
+          {"who":"Assistant","man":false,"text":"The train leaves at nine twenty, so you have plenty of time. The journey takes about two hours, and the views are lovely after the first half hour, when you leave the city.","answers":[5]},
+          {"who":"Jack","man":true,"text":"Great, thanks. I'm visiting a friend in Lakeside. We were at school together, but she moved there last year for work. I haven't seen her for ages! Is there a bus from the station to her street? It's called Rowan Street. Rowan. That's R-O-W-A-N.","answers":[6]},
+          {"who":"Assistant","man":false,"text":"Yes. I know Lakeside well, because my grandparents live there. It's a lovely little town, with a lake in the middle, of course! There's a bus that goes along Rowan Street, and it's very frequent. You don't need to walk far. The bus stops right outside the station café. You can't miss it. It has a big red sign, and it smells of fresh coffee.","answers":[7]},
+          {"who":"Jack","man":true,"text":"Perfect. Is there Wi-Fi on the train? I need to send some emails for work.","answers":[]},
+          {"who":"Assistant","man":false,"text":"Yes, there is, and it's free. But to be honest, the signal can be weak, especially when the train goes through the hills. So send your emails before you leave! There's also a café on the train, next to the quiet coach. It doesn't have hot meals, but you can buy sandwiches and drinks. The coffee there is much better than ours, I'm sorry to say!","answers":[8,9]},
+          {"who":"Jack","man":true,"text":"Great. And are there power sockets? My laptop battery is nearly dead.","answers":[]},
+          {"who":"Assistant","man":false,"text":"Hmm. Not everywhere, I'm afraid. It's quite an old train. They're only under some seats. Your seat is by the window, so look down near your feet. If there isn't one, ask the guard. He's very helpful.","answers":[10]},
+          {"who":"Jack","man":true,"text":"OK, thanks. I'm really looking forward to this weekend. My friend wants to show me a nature park near her house. She says there are lots of birds there, and you can walk for hours without seeing anyone. I can't wait! I live in the city, so I don't see much nature. And she has a dog that loves walking by the water. He's enormous, but he's very gentle. Last time I visited, he jumped into the lake and then shook all the water over me!","answers":[11,12]},
+          {"who":"Assistant","man":false,"text":"Ha! Bring a towel, then. When are you coming back?","answers":[]},
+          {"who":"Jack","man":true,"text":"I'm coming back on Sunday evening. I have to work on Monday morning, unfortunately.","answers":[13]},
+          {"who":"Assistant","man":false,"text":"That sounds like a lovely weekend. If you need any help at Lakeside, for example if your train is late or you lose something, call the station office. The number is oh one four four, nine two six, three five eight.","answers":[14]},
           {"who":"Jack","man":true,"text":"Oh one four four, nine two six, three five eight?","answers":[]},
-          {"who":"Assistant","man":false,"text":"That's right. There's also a small shop next to Platform three. It sells snacks and newspapers. Please board the train through the front and middle doors, and don't leave your bags alone.","answers":[15,16,17]},
-          {"who":"Jack","man":true,"text":"Thanks for your help! I'll buy a bottle of water first.","answers":[18]}
+          {"who":"Assistant","man":false,"text":"That's right. And if you're hungry or thirsty before the train leaves, you don't have to wait for the café on the train. There's also a small shop next to Platform three. It sells snacks and newspapers, and the man there knows everything about trains. Just one more thing before you go. When the train arrives, please don't use the back doors, because that part of the train doesn't go to Lakeside. Board the train through the front and middle doors. The train is often busy at the weekend, so get on quickly and find your seat. There are big shelves at the end of each coach for suitcases. But wherever you put your things, please don't leave your bags alone, not even for a minute. The station staff sometimes have to take them away, and that can make the train late.","answers":[15,16,17]},
+          {"who":"Jack","man":true,"text":"I won't, I promise. Thanks for your help! I'm going to buy a bottle of water first, and maybe a newspaper for the journey.","answers":[18]},
+          {"who":"Assistant","man":false,"text":"Good idea. Have a lovely trip, Mr Miller!","answers":[]}
         ]
         // LISTENING JOURNEY END
       },
