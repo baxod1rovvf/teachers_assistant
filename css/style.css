@@ -3523,3 +3523,50 @@ body.loom-air .welcome-splash { background: url('../images/app/background.webp')
 body.loom-studio.loom-air .login-stage { background: rgba(255,255,255,0.72) !important; border: 1px solid var(--glass-edge) !important;
   -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); box-shadow: var(--shadow-lg) !important; }
 
+
+/* ---- Mountain Air: the picture stays visible (teacher, 2026-11-15: "my goal is to unhide the image") ----
+   Dashboard: no Top 5 / Quick actions; the four numbers in one row right above Upcoming Lessons, both on the left.
+   Create: the exercise cards in a narrower area on the left. Course: the Journey runs top → bottom on the left,
+   a glowing marker per step on a line (done = ✓, the step to teach = ★), the picture on the right. Computers only. */
+@media (min-width: 861px) {
+  body.loom-air #panel-main > .dash-stats-grid, body.loom-air #panel-main > .main-dashboard-row { max-width: 820px; }
+  body.loom-air #panel-main .dash-stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  body.loom-air #panel-main .dash-stats-grid .results-stat-card { padding: 14px; gap: 10px; }
+  body.loom-air #panel-main .dash-stats-grid .results-stat-icon { width: 40px; height: 40px; font-size: 1.15rem; flex: 0 0 auto; }
+  body.loom-air #panel-main .dash-stats-grid .results-stat-value { font-size: 1.5rem; }
+  body.loom-air #panel-main .dash-stats-grid .results-stat-label { font-size: 0.8rem; line-height: 1.25; }
+  body.loom-air #panel-main .main-block-lessons { flex: 1 1 100%; }
+  body.loom-air #panel-createpicker { max-width: 700px; }
+  body.loom-air #panel-createpicker .picker-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+}
+@media (min-width: 761px) {
+  body.loom-air .sk-path { --air-mark: 40px; --air-gap: 18px; max-width: 600px; padding: 6px 0 12px; gap: var(--air-gap); }
+  body.loom-air .sk-row, body.loom-air .sk-row.rev { flex-direction: row; height: auto; min-height: 84px; gap: 14px; padding-left: calc(var(--air-mark) + 26px); }
+  /* the marker on the line */
+  body.loom-air .sk-row::before { content: ''; position: absolute; z-index: 2; left: 0; top: 50%; width: var(--air-mark); height: var(--air-mark);
+    transform: translateY(-50%); border-radius: 50%; box-sizing: border-box; border: 3px solid rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.35); box-shadow: 0 2px 10px rgba(20,26,34,0.25); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+  body.loom-air .sk-row.complete::before { content: '✓'; display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 1.15rem; border: 0;
+    background: radial-gradient(circle at 35% 30%, #FFD36B, #F59E0B 70%); box-shadow: 0 0 0 4px rgba(245,158,11,0.25), 0 0 18px rgba(245,158,11,0.75); }
+  body.loom-air .sk-row.focus::before { content: '★'; display: grid; place-items: center; color: #fff; font-size: 1.2rem; border: 0;
+    width: calc(var(--air-mark) + 8px); height: calc(var(--air-mark) + 8px); left: -4px;
+    background: radial-gradient(circle at 35% 30%, #FFE08A, #F59E0B 70%); box-shadow: 0 0 0 5px rgba(245,158,11,0.3), 0 0 26px rgba(245,158,11,0.9); }
+  body.loom-air .sk-row.skipped::before { opacity: .6; border-style: dashed; }
+  /* the line to the next marker */
+  body.loom-air .sk-row:not(:last-child)::after, body.loom-air .sk-row.rev:not(:last-child)::after {
+    left: calc(var(--air-mark) / 2 - 2px); right: auto; top: 50%; width: 0; height: calc(100% + var(--air-gap)); transform: none;
+    border: 0; border-left: 4px dashed rgba(255,255,255,0.85); border-radius: 0; filter: drop-shadow(0 0 2px rgba(20,26,34,0.35)); }
+  body.loom-air .sk-row.complete:not(:last-child)::after { border-left: 4px solid #FBBF24; filter: drop-shadow(0 0 6px rgba(245,158,11,0.8)); }
+  /* the card, then the part dots small beside it */
+  body.loom-air .sk-node-wrap, body.loom-air .sk-row.focus .sk-node-wrap { flex: 0 0 320px; width: auto; }
+  body.loom-air .sk-row.focus .sk-node { transform: none; }
+  body.loom-air .sk-row .sk-track, body.loom-air .sk-row.rev .sk-track { flex: 0 0 auto; flex-direction: row; gap: 8px; padding: 10px 12px;
+    border-radius: 999px; background: rgba(255,255,255,0.72); border: 1px solid rgba(255,255,255,0.85); box-shadow: var(--shadow-md);
+    -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
+  body.loom-air .sk-row .sk-seg, body.loom-air .sk-row .sk-flag { display: none; }
+  body.loom-air .sk-row .sk-dot { width: 24px; height: 24px; border-width: 2px; }
+  body.loom-air .sk-row .sk-dot.done { border: 0; box-shadow: none; }
+  body.loom-air .sk-row .sk-dot-check { font-size: .75rem; }
+  body.loom-air .sk-teach-tag { transform: rotate(-2deg); }
+}
+@media (min-width: 761px) and (prefers-reduced-motion: reduce) { body.loom-air .sk-row.focus .sk-node { animation: none; } }

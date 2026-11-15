@@ -1308,22 +1308,6 @@ test.describe('results', () => {
     expect(errors).toEqual([]);
   });
 
-  test('Top 5 leaves the Skills course out: open levels sent ahead never count as 0 %, and their results don\'t count either', async ({ page, context }) => {
-    const extra = [{ uid: 'tst1', code: 'TST001', typeLabel: 'Test', groupId: 'g1', title: 'A test (Target)', contentSummary: 'Test', date: new Date().toISOString() }];
-    await prepare(context, { docs: docs().concat([{ __id: 'tst-c', v: 1, code: 'TST001', type: 'Test', title: 'A test', name: 'Cora Test', studentId: '10003',
-      score: 90, correct: 9, total: 10, date: new Date().toISOString(), submittedAt: new Date().toISOString(), timeSeconds: 60, timeDisplay: '01:00' }]),
-      storage: { ta_recent_exercises: JSON.stringify(items().concat(extra)), ta_skills_links: links(), ta_course_group: 'g1' } });
-    await page.goto('/index.html');
-    await page.waitForFunction(() => (window.__allResults || []).length >= 11, null, { timeout: 10000 });
-    const r = await page.evaluate(() => ({
-      top: getTopActiveStudents(5, 'g1').map(s => ({ name: s.name, pct: Math.round(s.avg), did: s.did, given: s.given })),
-      assigned: [...(taAssignedCodesByGroup().g1 || [])]
-    }));
-    expect(r.assigned).toEqual(['TST001']);
-    // Cora: only the test counts (90 %); Alice and Bobur did only course levels → not listed
-    expect(r.top).toEqual([{ name: 'Cora Test', pct: 90, did: 1, given: 1 }]);
-  });
-
   test('"Delete all results" hides older course results only: a newer one sent without builtAt still shows', async ({ page, context }) => {
     const errors = await open(page, context, '/results.html', { ta_code_resets: '{}' });
     await page.evaluate(() => setLocalReset('LSN001', new Date(Date.now() - 30 * 60000).toISOString()));   // after every seeded result

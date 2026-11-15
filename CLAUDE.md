@@ -147,7 +147,7 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
 15. **Very long audio in the Dictation builder** (e.g. 30+ min) is shrunk in the teacher's
     browser; on a weak phone this can take long or crash the tab — suggest a computer.
 16. **Student ID typos / shared IDs**: results then don't match the Students list and are
-    left out of Statistics, Top 5 and "Didn't do it".
+    left out of Statistics and "Didn't do it".
 17. **Reminders and notifications only work while the app is open** (no server to push them).
 22. **Listening voices for Steps 9–20 come from OmniVoice, whose model weights are licensed for non-commercial use only (CC-BY-NC).**
     If the course is sold or used commercially, check the licence — the recordings can be remade with Kokoro (Apache-2.0) instead.
@@ -386,12 +386,9 @@ real students' names or results into the repository (it is public).
   Beginner … Advanced, IELTS; an old typed level like "A2" stays as a choice).
   New points only update the numbers (`renderPointsBoard` → `[data-pts-for]`/`[data-group-pts]`),
   so the add-student form isn't wiped. `tests/students-points.spec.js`.
-- **Top 5 Active Students** (Dashboard, `getTopActiveStudents` in `js/pages/main.js`, 2026-10-05): per group, the average
-  over the exercises given to that group (`taAssignedCodesByGroup`: My Exercises items with that `groupId`; a set's rounds
-  one by one) plus any others the student did — best try per exercise, **not done = 0%** (the teacher asked: one good
-  exercise mustn't beat three good + one bad). Done-but-unscored (unrated Sentences) is left out; IELTS and code-less games
-  (Jungle, Bamboozle) don't count; students who did nothing aren't listed. Shows "N of M exercises done".
-  `tests/results.spec.js` ("Top 5: …").
+- **Top 5 Active Students and Quick actions were removed from the Dashboard (teacher, 2026-11-15: "they hide our image")** —
+  with `getTopActiveStudents`, `taAssignedCodesByGroup` and their tests; robot answers no longer mention Top 5. "Students' overall results"
+  (`renderDashboardStats`, now also redrawn when results/roster/ratings change) is what's left of it; Sentences stars count there.
 - The lesson plan opens from the group's name on an Upcoming Lesson (Dashboard). Lessons in the next
   24 hours stand out there (`.lesson-row.lesson-soon`, tinted in the group's colour `--lesson-c`).
 - **Statistics** (`renderDashboard` in `js/pages/statistics.js`, 2026-10-03): one card per exercise
@@ -515,6 +512,10 @@ real students' names or results into the repository (it is public).
   (Instrument Serif, OFL, Google Fonts — the greeting's name `#mainGreetingName` and the top bar's "loom"); **thinner icons** (Lucide
   stroke 1.6, in tools/make-icons.js). The greeting sits on the landscape with no card; moss green `--air-moss` for small accents.
   Teacher pages only — skill.html (dark, `sk-studio`) and exercise files are unchanged. `tests/pages.spec.js` ("top bar: …").
+  **Keep the picture visible (teacher, same day)**: on computers the Dashboard's four numbers sit in one row above Upcoming Lessons, both
+  ≤ 820 px on the left; the Create picker is ≤ 700 px, 3 cards a row; the Course Journey (≥ 761 px) is one column on the left — a marker per
+  step on a vertical line (`.sk-row::before`: hollow, orange ✓ done, orange ★ the step to teach; `::after` the line, solid orange when done),
+  the card, then the part dots small in a glass pill (no `.sk-seg`/🏁). CSS only, at the very end of css/style.css; phones unchanged.
 - **Students' course pages dark too (teacher, 2026-11-08: "now change course exercises design")**: skill.html has `id="skBody"`
   + `sk-studio` and loads `css/skill-dark.css`, made by `node tools/make-skill-dark.js` from the "SKILLS COURSE — STUDENT PAGE" rules
   in css/style.css (only colours, borders, shadows and fonts, turned dark; `#skBody` in front outweighs the student theme). **After changing
@@ -603,8 +604,7 @@ tabs — brings them back with the clock going on (time already up → sent at o
   `skCodesFor`): both codes load (firebase.js also reads the raw stored object) and both count in dots, Progress and the table. `firebase.js` loads the codes
   from `ta_skills_links`; `isExpiredResult` falls back to the date for " course" types; the results table uses `isExpiredResult` too (`skResultsMap`, one
 read per drawing; the hidden/preloaded Course panel isn't redrawn). Listening/Reading bands are always worked out from correct/total
-(a result's own `band` is ignored); writing bands (estimate and teacher's mark) are kept to 1–9. **Skills course items and results are
-left out of Top 5** (`TA_SKILL_COURSE_RE` in main.js: steps are open and sent ahead, unreached ones would count as 0 %). CSV: a
+(a result's own `band` is ignored); writing bands (estimate and teacher's mark) are kept to 1–9. (Top 5, which left the course out, was removed 2026-11-15.) CSV: a
 writing's band goes in "Other result". Results for writing: `viewSkillWriting` (text, words,
   time, mistakes, a band box). **The teacher's mark wins everywhere**: `ta_skills_marks` keyed "<code>|<studentId>". Both keys are synced and
   in the backup. **Results table** per step + group, on the step page (`skTableRows`, `skTableHtml`, PNG by `skDrawTablePng`): ranked by Overall (equal places

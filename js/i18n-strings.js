@@ -121,9 +121,7 @@ window.TA_I18N_ROWS = [
   ['Manage schedule', 'Jadvalni boshqarish', 'Управлять расписанием'],
   ['No lessons scheduled yet', 'Hali darslar rejalashtirilmagan', 'Уроков пока нет'],
   ['Add your weekly schedule', 'Haftalik jadvalingizni qoʻshing', 'Добавьте недельное расписание'],
-  ['Top 5 Active Students', 'Eng faol 5 oʻquvchi', 'Топ-5 активных учеников'],
   ['No scored results from your students yet. Only students who enter with their ID appear here', 'Oʻquvchilaringizdan hali baholangan natija yoʻq. Bu yerda faqat ID bilan kirgan oʻquvchilar koʻrinadi', 'Оценённых результатов пока нет. Здесь видны только ученики, вошедшие со своим ID'],
-  ['Quick actions', 'Tezkor amallar', 'Быстрые действия'],
   ['Create Exercise', 'Mashq yaratish', 'Создать упражнение'],
   ['Add Students', 'Oʻquvchi qoʻshish', 'Добавить учеников'],
   ['Lesson Plan', 'Dars rejasi', 'План урока'],
@@ -987,9 +985,9 @@ window.TA_ROBOT_I18N = {
     'У набора нажмите ⋯, затем «📤 Взять одно упражнение». Скачайте одно из упражнений или добавьте его в «Мои упражнения» отдельно. Сам набор не меняется.'],
   'What is the Students list for?': [
     'Oʻquvchilar roʻyxati nima uchun?',
-    'Har bir oʻquvchiga alohida ID bering — ular mashqda ism oʻrniga shuni yozadi. Faqat shu roʻyxatdagi oʻquvchilar Statistika, Top 5 va “Didn\'t do it” da hisoblanadi.',
+    'Har bir oʻquvchiga alohida ID bering — ular mashqda ism oʻrniga shuni yozadi. Faqat shu roʻyxatdagi oʻquvchilar Statistika va “Didn\'t do it” da hisoblanadi.',
     'Для чего список «Ученики»?',
-    'Дайте каждому ученику свой ID — его он вводит в упражнении вместо имени. Только ученики из этого списка учитываются в Статистике, Топ-5 и «Didn\'t do it».'],
+    'Дайте каждому ученику свой ID — его он вводит в упражнении вместо имени. Только ученики из этого списка учитываются в Статистике и «Didn\'t do it».'],
   'How do I add a whole class at once?': [
     'Butun sinfni birdaniga qanday qoʻshaman?',
     '“📋 Koʻp qoʻshish” ni bosing. Sinf roʻyxatini joylang (har qatorda bitta oʻquvchi, “Ism, ID” yoki toʻgʻridan-toʻgʻri Excel/Google Sheets’dan nusxalangan) yoki CSV faylni tanlang. IDsi yoʻq oʻquvchilarga keyingi boʻsh raqam beriladi.',
@@ -1002,9 +1000,9 @@ window.TA_ROBOT_I18N = {
     'Нет — чтобы отправлять упражнения и получать баллы, им нужен только ID.'],
   'A student\'s results are missing — why?': [
     'Oʻquvchining natijalari yoʻq — nega?',
-    'Odatda oʻquvchi IDni notoʻgʻri yoki faqat ismini yozgan boʻladi. Shunda natijalari “Entered with a name only” ostida chiqadi va Statistika hamda Top 5 ga kirmaydi.',
+    'Odatda oʻquvchi IDni notoʻgʻri yoki faqat ismini yozgan boʻladi. Shunda natijalari “Entered with a name only” ostida chiqadi va Statistikaga kirmaydi.',
     'Нет результатов ученика — почему?',
-    'Обычно ученик ввёл неверный ID или только имя. Тогда его результаты попадают в «Entered with a name only» и не учитываются в Статистике и Топ-5.'],
+    'Обычно ученик ввёл неверный ID или только имя. Тогда его результаты попадают в «Entered with a name only» и не учитываются в Статистике.'],
   'Where do I see my students\' results?': [
     'Oʻquvchilarim natijalarini qayerda koʻraman?',
     'Mashqlarim boʻlimida mashq kartochkasidagi “📊 Natijalarni koʻrish” ni bosing. “← Mashqlarimga qaytish” sizni orqaga qaytaradi. Yangi natijalar oʻzi kelib turadi.',
@@ -1017,14 +1015,14 @@ window.TA_ROBOT_I18N = {
     'Ученики группы этого упражнения, у которых ещё нет результата. Список есть только у упражнений, сделанных для группы.'],
   'What is "Entered with a name only"?': [
     '“Entered with a name only” nima?',
-    'Oʻquvchilar roʻyxatingizdagi ID oʻrniga ism yozgan kishilar. Ular Statistika va Top 5 ga kirmaydi.',
+    'Oʻquvchilar roʻyxatingizdagi ID oʻrniga ism yozgan kishilar. Ular Statistikaga kirmaydi.',
     'Что такое «Entered with a name only»?',
-    'Это те, кто ввёл имя вместо ID из вашего списка учеников. Они не учитываются в Статистике и Топ-5.'],
+    'Это те, кто ввёл имя вместо ID из вашего списка учеников. Они не учитываются в Статистике.'],
   'How do I rate Sentences?': [
     'Gaplarni qanday baholayman?',
-    '“Gaplar” natijasi yonidagi “☆ Baholash” ni bosing va 1–5 yulduzcha bering. Yulduzchalar “Eng faol 5 oʻquvchi” uchun ishlatiladi.',
+    '“Gaplar” natijasi yonidagi “☆ Baholash” ni bosing va 1–5 yulduzcha bering. Yulduzchalar Bosh sahifadagi “Oʻquvchilarning umumiy natijalari” da hisoblanadi.',
     'Как оценить «Предложения»?',
-    'Нажмите «☆ Оценить» рядом с результатом «Предложений» и поставьте 1–5 звёзд. Звёзды используются в «Топ-5 активных учеников».'],
+    'Нажмите «☆ Оценить» рядом с результатом «Предложений» и поставьте 1–5 звёзд. Звёзды учитываются в «Общих результатах учеников» на главной.'],
   'How do I see a student\'s answers?': [
     'Oʻquvchining javoblarini qanday koʻraman?',
     'Uning qatoridagi “👁 Koʻrish” ni bosing. Uy vazifasi/Dars toʻplamida oʻquvchi qatorini bosib, bosqichlarini oching, keyin har biri uchun 👁 ni bosing.',

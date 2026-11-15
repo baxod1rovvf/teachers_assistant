@@ -118,104 +118,6 @@ function performanceScores(results) {
   return out;
 }
 
-// The Skills course (typeLabel / result type "… course") is left out of Top 5: its 20 steps are all open and their
-// links are sent ahead, so levels a student hasn't reached yet would count as 0 %.
-const TA_SKILL_COURSE_RE = / course$/;
-// The exercise codes given to each group: { groupId: Set of codes } (a set's rounds one by one).
-function taAssignedCodesByGroup() {
-  const out = {};
-  (getRecentExercises() || []).forEach(e => {
-    if (!e || !e.groupId || TA_SKILL_COURSE_RE.test(String(e.typeLabel || ''))) return;
-    const codes = e.mergedItems && e.mergedItems.length
-      ? e.mergedItems.filter(m => m && !/IELTS/i.test(m.typeLabel || m.title || '') && !TA_SKILL_COURSE_RE.test(String(m.typeLabel || ''))).map(m => m.code)
-      : (/IELTS/i.test(e.typeLabel || '') ? [] : [e.code]);
-    codes.forEach(c => { if (c) (out[e.groupId] = out[e.groupId] || new Set()).add(c); });
-  });
-  return out;
-}
-
-// groupId: only that group's students (Top 5 of Target, of Apex…); left out: everyone.
-function getTopActiveStudents(limit, groupId) {
-  const rosterIdx = taRosterIndex();
-  const results = getAllScoredResultsCombined().filter(r => !(r && TA_SKILL_COURSE_RE.test(String(r.type || ''))));
-  const keyOf = st => String(st.id).trim().toLowerCase();
-  const students = {};   // key -> { st, best: {code: score}, done: Set of codes }
-  const studentFor = st => students[keyOf(st)] || (students[keyOf(st)] = { st: st, best: {}, done: new Set() });
-  const inGroup = st => !!st && (groupId === undefined || st.group === groupId);
-  getPointsRoster().forEach(st => { if (inGroup(st)) studentFor(st); });
-  // every exercise a student did (even one without a score yet, like an unrated Sentences)
-  results.forEach(r => {
-    if (!r || !r.code || /^IELTS/i.test(String(r.type || ''))) return;
-    const st = rosterStudentForResult(r, rosterIdx);
-    if (inGroup(st)) studentFor(st).done.add(r.code);
-  });
-  // their best score in each
-  performanceScores(results).forEach(({ r, score }) => {
-    const st = rosterStudentForResult(r, rosterIdx);
-    if (!inGroup(st) || !r.code) return;
-    const s = studentFor(st);
-    if (!(r.code in s.best) || score > s.best[r.code]) s.best[r.code] = score;
-  });
-  const assigned = taAssignedCodesByGroup();
-  const arr = [];
-  Object.keys(students).forEach(k => {
-    const s = students[k];
-    const codes = new Set([...(assigned[s.st.group] || []), ...Object.keys(s.best)]);
-    let total = 0, count = 0, did = 0;
-    codes.forEach(c => {
-      if (c in s.best) { total += s.best[c]; count++; did++; }
-      else if (!s.done.has(c)) count++;          // not done: counts as 0
-    });
-    if (!did) return;   // "active": did at least one
-    arr.push({ name: s.st.name, avg: total / count, did: did, given: count });
-  });
-  arr.sort((a, b) => (b.avg - a.avg) || (b.did - a.did));
-  return arr.slice(0, limit);
-}
-const RANK_ICONS = ['🥇', '🥈', '🥉'];
-function topStudentRowsHtml(top) {
-  return top.map((s, i) => {
-    const initials = initialsForName(s.name);
-    const avatarColor = avatarColorForName(s.name);
-    const rankIcon = RANK_ICONS[i]
-      ? '<span class="top-student-rank-img" role="img" aria-label="#' + (i + 1) + '">' + RANK_ICONS[i] + '</span>'
-      : '#' + (i + 1);
-    const pct = Math.round(s.avg);
-    const scoreColor = pct >= 80 ? 'var(--success)' : (pct >= 50 ? 'var(--warning)' : 'var(--danger)');
-    return '<div class="top-student-row">' +
-      '<span class="top-student-rank">' + rankIcon + '</span>' +
-      '<span class="res-avatar" style="background:' + avatarColor + ';">' + escapeForHtml(initials) + '</span>' +
-      '<div class="top-student-name"><span translate="no">' + escapeForHtml(s.name) + '</span><span class="top-student-count">' + s.did + ' of ' + s.given + ' exercise' + (s.given === 1 ? '' : 's') + ' done</span></div>' +
-      '<div class="top-student-score" style="color:' + scoreColor + ';" title="Average over the exercises given to their group — an exercise not done counts as 0%">' + pct + '%</div>' +
-    '</div>';
-  }).join('');
-}
-// One group's Top 5 at a time: a button per group (Target, Apex…) picks which.
-// The choice is remembered on this device.
-const LS_TOP_GROUP = 'ta_top_students_group';
-function renderTopActiveStudents() {
-  const wrap = document.getElementById('mainTopStudentsList');
-  if (!wrap) return;
-  const roster = getPointsRoster();
-  const groups = getStudentGroups().filter(g => roster.some(st => st.group === g.id));
-  if (!groups.length) { wrap.innerHTML = '<div class="empty-results">Put your students into groups on the Students page to see each group\'s Top 5.</div>'; return; }
-  let cur = '';
-  try { cur = localStorage.getItem(LS_TOP_GROUP) || ''; } catch (e) { /* ignore */ }
-  if (!groups.some(g => g.id === cur)) cur = groups[0].id;
-  const top = getTopActiveStudents(5, cur);
-  wrap.innerHTML = '<div class="top-group-tabs" role="tablist">' + groups.map(g =>
-      '<button type="button" role="tab" class="top-group-tab' + (g.id === cur ? ' active' : '') + '" aria-selected="' + (g.id === cur) + '"' +
-      ' onclick="selectTopStudentsGroup(' + jsAttr(g.id) + ')"><span translate="no">' + escapeForHtml(g.name) + '</span></button>').join('') + '</div>' +
-    (top.length ? topStudentRowsHtml(top)
-      : '<div class="empty-results">No results from this group yet. Only students who enter with their ID appear here; Sentences count once you rate them in Results.</div>');
-}
-function selectTopStudentsGroup(id) {
-  try { localStorage.setItem(LS_TOP_GROUP, id); } catch (e) { /* ignore */ }
-  renderTopActiveStudents();
-}
-window.selectTopStudentsGroup = selectTopStudentsGroup;
-window.renderTopActiveStudents = renderTopActiveStudents;
-
 /* ================= DASHBOARD: stat tiles ================= */
 function renderDashboardStats() {
   const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
@@ -223,33 +125,20 @@ function renderDashboardStats() {
   // Every lesson taught so far, since each weekly lesson was added to the schedule.
   set('dashStatLessons', String(getLessonsTaughtTotal()));
   set('dashStatExercises', String(getRecentExercises().filter(e => !taIsSkillCourseItem(e)).length));
-  // Average score of results from students on the Students list (same rule as Top Active Students).
+  // Average score of results from students on the Students list.
   const rosterIdx = taRosterIndex();
   const scores = performanceScores(getAllScoredResultsCombined())
     .filter(x => rosterStudentForResult(x.r, rosterIdx))
     .map(x => x.score);
   set('dashStatResults', scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) + '%' : '—');
 }
-
-// Same animation as the sidebar's Create entry.
-function initQuickCreateAnim() {
-  if (document.body.classList.contains('loom-studio')) return;   // icons, no animations, since 2026-11-07
-  const el = document.getElementById('quickCreateAnim');
-  if (!el || el.dataset.ready || typeof lottie === 'undefined') return;
-  try {
-    el.innerHTML = '';
-    lottie.loadAnimation({ container: el, renderer: 'svg', loop: true, autoplay: true, animationData: REPORT_GEN_ANIM });
-    el.dataset.ready = '1';
-  } catch (e) { /* decorative — fail silently */ }
-}
+window.renderDashboardStats = renderDashboardStats;
 
 /* ================= PAGE START ================= */
 taOnTab('main', function () {
   renderMainGreeting();
   renderDashboardStats();
-  initQuickCreateAnim();
   renderNextLessons();
-  renderTopActiveStudents();
   initRobotHiAnim();
 });
 taStartPage('main');

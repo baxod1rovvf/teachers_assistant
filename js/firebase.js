@@ -205,7 +205,7 @@ window.taFetchAccounts = async function () {
      (getDocsFromServer: no connection = an error, nothing is kept), a failed code
      is read again when the internet is back, and RS_VERSION 2 makes every device
      that kept such an empty copy read everything again once.
-   Everything else (Results, Statistics, Points, Top 5…) is worked out from
+   Everything else (Results, Statistics, Points…) is worked out from
    the copy kept here. Without IndexedDB it simply reads everything, as before. */
 const RS_OVERLAP = 10 * 60 * 1000;
 const RS_FULL_EVERY = 7 * 86400000;
@@ -379,7 +379,7 @@ window.startPointsSync = function (boardCode) {
 };
 if (window.getPointsBoardCode) window.startPointsSync(window.getPointsBoardCode());
 
-// ---- Every result of every exercise (Statistics, Top 5, Didn't do it…) ----
+// ---- Every result of every exercise (Statistics, Didn't do it…) ----
 // Types like English Content and Bidirectional Language never award points, so
 // their completions never show up in the points ledger — Statistics counts them
 // from here, picked out by the result's own type (so the ones inside
@@ -424,7 +424,7 @@ function rsDerivePlain() {
   window.__allResults = all;
   window.__plainCompletions = all.filter(r => NO_POINTS_TYPES.indexOf(r.type) !== -1);
   if (window.renderDashboard) window.renderDashboard();
-  if (window.renderTopActiveStudents) window.renderTopActiveStudents();
+  if (window.renderDashboardStats) window.renderDashboardStats();
   if (window.taCompletionsChanged) window.taCompletionsChanged();
   if (window.taWritingAiSyncSoon) window.taWritingAiSyncSoon();   // course writings with no AI feedback yet (common.js)
   if (window.taCourseResultsChanged) window.taCourseResultsChanged();   // the Course page: its tiles' 🏆 Results table buttons and an open results table

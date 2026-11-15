@@ -814,7 +814,7 @@ function refreshRosterViews() {
   if (window.renderStudentsList) window.renderStudentsList();
   if (window.renderPointsBoard) window.renderPointsBoard();
   if (window.renderDashboard) window.renderDashboard();
-  if (window.renderTopActiveStudents) window.renderTopActiveStudents();
+  if (window.renderDashboardStats) window.renderDashboardStats();
   if (window.renderResultsTable) { try { window.renderResultsTable(); } catch (e) { /* ignore */ } }
 }
 
@@ -1379,7 +1379,7 @@ const TA_FILE_FIXES = [
   { id: 'dictation', at: '2026-09-30T07:06:00Z', types: /dictation/i, minor: true,
     what: 'students see too high a score when they type extra words (your Results show the right one)' },
   { id: 'flashtime', at: '2026-10-02T17:14:00Z', types: /flashcard|vocabulary journey/i,
-    what: 'the result often says 0 seconds (the time is lost when the exercise ends), so Results and Top 5 show it wrong' },
+    what: 'the result often says 0 seconds (the time is lost when the exercise ends), so Results show it wrong' },
   { id: 'sentencesend', at: '2026-10-02T17:14:00Z', types: /^sentences$|sentence writing/i, minor: true,
     what: 'when a student finishes, the start screen can come back instead of the certificate, with one extra warning' },
   // Each round showed its own ID screen and certificate for ~2 s inside the set (2026-10-27)
@@ -2182,7 +2182,7 @@ function rateSentences(key, n, btn) {
     box.querySelector('.star-rating-word').textContent = now ? now + '/5 — ' + SENTENCE_RATING_WORDS[now] : 'Not rated yet';
   }
   document.querySelectorAll('.sentence-rate-chip[data-key="' + CSS.escape(key) + '"]').forEach(c => { c.textContent = now ? '★ ' + now + '/5' : '☆ Rate'; c.classList.toggle('rated', !!now); });
-  if (window.renderTopActiveStudents) window.renderTopActiveStudents();
+  if (window.renderDashboardStats) window.renderDashboardStats();
 }
 window.rateSentences = rateSentences;
 
@@ -3119,19 +3119,19 @@ const AI_ROBOT_FAQ_BY_TAB = {
     { q: 'Why are my exercises under dates?', a: 'They are grouped by the day you made them — Today, Yesterday, then each earlier day — newest first. The 🔍 search and the type and group buttons still work across all days.' }
   ]),
   students: aiFaq([
-    { q: 'What is the Students list for?', a: 'Give each student a unique ID — this is what they type into an exercise instead of a name. Only students on this list count in Statistics, Top 5 and "Didn\'t do it".' },
+    { q: 'What is the Students list for?', a: 'Give each student a unique ID — this is what they type into an exercise instead of a name. Only students on this list count in Statistics and "Didn\'t do it".' },
     { q: 'How do I add a whole class at once?', a: 'Tap "📋 Add many". Paste a class list (one student per line, "Name, ID", or copied straight from Excel/Google Sheets) or choose a CSV file. Students without an ID get the next free number.' },
     { q: 'How do I give or take points by hand?', a: 'Open the group and tap + or − next to the student\'s points, then type how many. It shows up as "Bonus: By Teacher <your name>" (to change it, tap your picture at the top right, then your name).' },
     { q: 'Do students need an account?', a: 'No — their ID is all they need to submit exercises and get points.' },
-    { q: 'A student\'s results are missing — why?', a: 'Usually the student typed a wrong ID or just a name. Their results then show under "Entered with a name only" and are left out of Statistics and Top 5.' }
+    { q: 'A student\'s results are missing — why?', a: 'Usually the student typed a wrong ID or just a name. Their results then show under "Entered with a name only" and are left out of Statistics.' }
   ]),
   results: aiFaq([
     { q: "Where do I see my students' results?", a: 'In My Exercises tap "📊 View Results" on the exercise\'s card. "← Back to My Exercises" takes you back. New results arrive by themselves.' },
     { q: 'What do ⚖️ and ⚠️ next to a student mean?', a: 'Tap ⚖️ next to a student to mark them "will be punished" — it turns into a red ⚠️ and their row turns red. Tap ⚠️ to take the mark off. It works in the results table, in a set\'s student list and in "Didn\'t do it". The mark is only for that exercise.' },
     { q: 'What do ✓ and ✕ next to a student mean?', a: '✕ means you haven\'t checked the student\'s answers yet; tap it after you have looked at them and it becomes ✓ (checked). Tap ✓ to change it back. Checked students stop appearing in the "finished exercises" note you get when you open the app.' },
     { q: 'Who is in "Didn\'t do it"?', a: 'Students in the exercise\'s group who have no result yet. It only shows for exercises made for a group.' },
-    { q: 'What is "Entered with a name only"?', a: 'People who typed a name instead of an ID from your Students list. They are left out of Statistics and Top 5.' },
-    { q: 'How do I rate Sentences?', a: 'Tap "☆ Rate" next to a Sentences result and give 1–5 stars. The stars are used for Top 5 Active Students.' },
+    { q: 'What is "Entered with a name only"?', a: 'People who typed a name instead of an ID from your Students list. They are left out of Statistics.' },
+    { q: 'How do I rate Sentences?', a: 'Tap "☆ Rate" next to a Sentences result and give 1–5 stars. The stars count in "Students\' overall results" on the Dashboard.' },
     { q: 'How do I see a student\'s answers?', a: 'Tap "👁 View" in their row. In a Homework/Class set, tap the student\'s row to open their rounds, then 👁 for each one.' },
     { q: 'How are dictations scored?', a: 'Each missing, wrong or extra word counts as a mistake. 👁 View shows the student\'s text with the mistakes marked where they were typed.' },
     { q: 'How are Homework & Class results different?', a: 'They are grouped by student across the whole set: how many exercises each student finished (e.g. 2/3), their total time (red if under 15 minutes) and their answers.' },

@@ -10,9 +10,9 @@ test('results: a re-read with no internet keeps the old copy, and reads again wh
   await page.waitForFunction(() => window.taResultsCacheInfo && taResultsCacheInfo().kept > 0, null, { timeout: 10000 });
   await page.waitForTimeout(1500);   // the copy is saved on the device
   const kept = await page.evaluate(() => taResultsCacheInfo().kept);
-  const topText = () => page.locator('#mainTopStudentsList').evaluate(el => el.textContent);
+  const topText = () => page.locator('#dashStatResults').evaluate(el => el.textContent);   // the overall % (Top 5 was removed 2026-11-15)
   const top = await topText();
-  expect(top).toContain('exercise');
+  expect(top).toMatch(/%/);
 
   // a week later (time for the full re-read) — with no internet
   await page.evaluate(() => new Promise(res => {
@@ -30,7 +30,7 @@ test('results: a re-read with no internet keeps the old copy, and reads again wh
   await hideNotices(page);
   expect(await page.evaluate(() => taResultsCacheInfo().kept)).toBe(kept);           // nothing lost
   expect(await page.evaluate(() => taResultsCacheInfo().codes)).toBe(0);             // and nothing marked as read
-  await expect.poll(topText).toBe(top);                                                   // Top 5 unchanged
+  await expect.poll(topText).toBe(top);                                                   // the overall % unchanged
 
   // the internet is back: the codes are read again
   await page.evaluate(() => { window.__failReads = 0; window.dispatchEvent(new Event('online')); });
