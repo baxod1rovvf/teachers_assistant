@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
 
 :root {
   /* ================= LOOM — PLAYFUL DESIGN (2026-11-02) =================
@@ -3350,3 +3350,171 @@ body.loom-studio .ai-robot-anim { position: absolute; left: 50%; top: 50%; trans
 .sk-wv-betterv { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.6; padding: 10px 12px; border-radius: 10px;
   border: 1px dashed rgba(34, 160, 107, .55); background: rgba(34, 160, 107, .08); }
 .sk-wv-wait, .sk-wv-noai { margin-top: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+/* =====================================================================================
+   LOOM — MOUNTAIN AIR (2026-11-15, the teacher: "change loom's design into like this, but not exactly" + a screenshot
+   of a light outdoor-gear site). Light only; a misty mountain landscape behind every teacher page
+   (images/app/landscape.svg, made by tools/make-landscape.js); frosted-glass cards (no blur on phones — it made
+   scrolling lag, 2026-10-27); dark pill buttons with an arrow; one elegant italic serif accent (Instrument Serif,
+   OFL — the greeting's name, the "loom" word); thin line icons (css/icons.css, stroke 1.6).
+   body.loom-air is added by applyTheme on top of body.loom-studio (which keeps its behaviour: no lotties, bot button…).
+   Never put a backdrop-filter on #taTopbar (it would hold the phone tab bar inside it).
+   ===================================================================================== */
+body.loom-studio.loom-air, body.loom-studio.loom-air.light-theme {
+  --surface-page: #EEF2F2; --surface: rgba(255,255,255,0.72); --surface-sunken: rgba(255,255,255,0.92); --surface-2: rgba(255,255,255,0.62);
+  --glass-edge: rgba(255,255,255,0.85);
+  --border: rgba(20,26,34,0.09); --border-line: rgba(20,26,34,0.07); --line: rgba(20,26,34,0.1);
+  --ink: #12161D; --ink-soft: #4A5260; --ink-faint: #6B7380;
+  --brand: #14181F; --brand-strong: #000; --brand-soft: rgba(20,24,31,0.06); --on-brand: #fff;
+  --accent-green: #3D7434; --air-moss: #3D7434; --air-red: #D2412D; --air-moss-soft: rgba(61,116,52,0.1);
+  --grad-brand: linear-gradient(135deg, #1E232C, #0D1015);
+  --shadow-sm: 0 1px 2px rgba(16,24,40,0.06);
+  --shadow-md: 0 1px 2px rgba(16,24,40,0.05), 0 14px 34px -16px rgba(30,45,60,0.28);
+  --shadow-lg: 0 30px 60px -24px rgba(30,45,60,0.35); --shadow-brand: 0 10px 24px -12px rgba(10,14,20,0.55); --shadow-celebrate: var(--shadow-md);
+  --radius-sm: 12px; --radius-md: 14px; --radius-lg: 20px; --radius-xl: 24px;
+  --glass-blur: blur(18px) saturate(1.25);
+  --c-yellow: #E3ECD6;
+  background: var(--surface-page) !important; color: var(--ink); color-scheme: light;
+}
+/* the landscape: a fixed layer behind everything (a pseudo-element, so phones don't repaint it while scrolling) */
+body.loom-air::before { content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(238,242,242,0.15) 0%, rgba(238,242,242,0) 40%),
+    url('../images/app/landscape.svg') center bottom / cover no-repeat, #EEF2F2; }
+body.loom-studio.loom-air ::selection { background: rgba(61,116,52,0.22); color: var(--ink); }
+.air-serif, body.loom-air #mainGreetingName, body.loom-air .tb-brand .brand-name b {
+  font-family: 'Instrument Serif', 'Iowan Old Style', Georgia, 'Times New Roman', serif !important; font-style: italic; font-weight: 400 !important; letter-spacing: 0;
+}
+
+/* glass cards */
+body.loom-studio.loom-air :is(.card, .dash-card, .hero-card, .results-stat-card, .picker-card, .recent-exercise-row, .group-block, .student-group,
+.points-modal, .chart-wrap.stats-chart, .stats-card, .login-card, .sync-unlock-card, .tb-profile-menu, .myex-menu, .ai-robot-bubble,
+.qs-box, .wheel-winner-card, .hwc-student-row, .set-round-row, .myex-card, .masthead, .sk-gcard, .sk-part, .notice-stack > *) {
+  background: var(--surface) !important; border: 1px solid var(--glass-edge) !important; box-shadow: var(--shadow-md) !important;
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); color: var(--ink);
+}
+/* menus and windows: nearly solid, so text behind never shows through */
+body.loom-studio.loom-air.loom-air :is(.tb-profile-menu, .myex-menu, .ai-robot-bubble, .points-modal, .qs-box, .sync-unlock-card, .notice-stack > *, .lesson-warn) { background: #FBFCFB !important; }
+body.loom-studio.loom-air :is(.picker-card, .quick-action-btn, .results-stat-card, .myex-card, .group-block):hover {
+  transform: translateY(-2px); background: rgba(255,255,255,0.86) !important; border-color: #fff !important; box-shadow: var(--shadow-lg) !important;
+}
+
+/* headings: big, calm, a little tight */
+body.loom-studio.loom-air :is(h1, h2, h3, .dash-card-title, .results-stat-value, .card-head h2) { color: var(--ink); letter-spacing: -0.02em; }
+body.loom-studio.loom-air .panel > .card-head h2 { font-size: clamp(1.7rem, 2.6vw, 2.2rem); font-weight: 600; }
+body.loom-studio.loom-air .card-head p { color: var(--ink-soft); }
+body.loom-studio.loom-air .dash-card-title { color: var(--ink); font-weight: 600; }
+body.loom-studio.loom-air .dash-card-emoji.lc { color: var(--air-moss); }
+body.loom-studio.loom-air .main-block-top-students .dash-card-emoji.lc { color: #B7791F; }
+
+/* the greeting sits right on the landscape, like a headline (no card) */
+body.loom-studio.loom-air.loom-studio .hero-card { background: transparent !important; border: 0 !important; box-shadow: none !important;
+  -webkit-backdrop-filter: none; backdrop-filter: none; padding-left: 4px; padding-right: 4px; }
+body.loom-studio.loom-air .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 12px; border-radius: 999px;
+  background: rgba(255,255,255,0.7); border: 1px solid var(--glass-edge); color: var(--ink); font-size: 0.75rem; letter-spacing: 0.08em; font-weight: 600; }
+body.loom-studio.loom-air .hero-eyebrow::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--air-moss); flex: 0 0 auto; }
+body.loom-studio.loom-air .hero-card h1 { font-size: clamp(2.2rem, 4.4vw, 3.6rem); font-weight: 600; line-height: 1.05; color: var(--ink); letter-spacing: -0.03em; }
+body.loom-studio.loom-air #mainGreetingName { font-size: 1.12em; color: var(--ink); }
+body.loom-studio.loom-air .hero-card p { color: var(--ink-soft); font-size: 1.05rem; max-width: 46ch; }
+body.loom-studio.loom-air .hero-content h1 span { color: var(--ink); }
+body.loom-studio.loom-air .hero-next { background: rgba(255,255,255,0.72); border: 1px solid var(--glass-edge); box-shadow: var(--shadow-md);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); border-radius: 18px; }
+body.loom-studio.loom-air .hero-next b { color: var(--ink); }
+body.loom-studio.loom-air .hero-next-ic { background: var(--brand); color: #fff; border: 0; border-radius: 50%; }
+
+/* the four numbers */
+body.loom-studio.loom-air .results-stat-value { color: var(--ink); font-weight: 600; }
+body.loom-studio.loom-air #dashStatResults { color: var(--air-moss); }
+body.loom-studio.loom-air .results-stats-grid > .results-stat-card .results-stat-icon { border: 1px solid var(--border) !important; border-radius: 50%; }
+body.loom-studio.loom-air .results-stats-grid > .results-stat-card .results-stat-icon.si-blue { background: rgba(59,91,153,0.1) !important; color: #3B5B99; }
+body.loom-studio.loom-air .results-stats-grid > .results-stat-card .results-stat-icon.si-red { background: rgba(210,65,45,0.1) !important; color: var(--air-red); }
+body.loom-studio.loom-air .results-stats-grid > .results-stat-card .results-stat-icon.si-green { background: var(--air-moss-soft) !important; color: var(--air-moss); }
+body.loom-studio.loom-air .results-stats-grid > .results-stat-card .results-stat-icon.si-amber { background: rgba(183,121,31,0.12) !important; color: #9A6417; }
+body.loom-studio.loom-air .results-stats-grid > .results-stat-card .results-stat-icon:not([class*="si-"]) { background: var(--brand-soft) !important; color: var(--ink); }
+
+/* main buttons: dark pills, an arrow after the words */
+body.loom-studio.loom-air :is(.create-btn, .login-submit, .lesson-plan-btn, .sync-unlock-btns .sync-unlock-ok, .masthead-btn.primary, .sk-teach, .mini-btn.solid) {
+  background: var(--brand) !important; color: #fff !important; border: 1px solid var(--brand) !important; border-radius: 999px !important;
+  box-shadow: var(--shadow-brand) !important; font-weight: 600;
+}
+body.loom-studio.loom-air :is(.create-btn, .login-submit, .lesson-plan-btn, .sk-teach, .mini-btn.solid):hover { background: #2A303B !important; transform: translateY(-1px); }
+body.loom-studio.loom-air .login-submit::after { content: ''; display: inline-block; width: 1.05em; height: 1.05em; margin-left: 10px; vertical-align: -0.17em;
+  background: currentColor; -webkit-mask: var(--ic-arrow-right) center/contain no-repeat; mask: var(--ic-arrow-right) center/contain no-repeat; transition: transform .2s ease; }
+body.loom-studio.loom-air .login-submit:hover::after { transform: translateX(3px); }
+/* other buttons: light glass pills with a thin edge */
+body.loom-studio.loom-air :is(.mini-btn, .reset-btn, .ta-btn, .ta-modal-btns button, .sync-unlock-btns button, .res-view-btn, .results-upload-btn, .compose-enter-btn, .dash-manage-link, .quick-action-btn, .back-to-picker-btn):not(.solid):not(.sync-unlock-ok) {
+  background: rgba(255,255,255,0.7) !important; color: var(--ink) !important; border: 1px solid var(--border) !important; border-radius: 999px; box-shadow: none !important;
+}
+body.loom-studio.loom-air :is(.quick-action-btn) { border-radius: 18px; }
+body.loom-studio.loom-air :is(.mini-btn, .reset-btn, .ta-modal-btns button, .res-view-btn, .dash-manage-link, .quick-action-btn, .back-to-picker-btn):not(.solid):hover {
+  background: #fff !important; border-color: rgba(20,26,34,0.18) !important;
+}
+body.loom-studio.loom-air :is(.mini-btn.danger, .reset-btn):hover { background: rgba(210,65,45,0.08) !important; color: var(--air-red) !important; }
+body.loom-studio.loom-air .quick-actions .quick-action-btn { background: rgba(255,255,255,0.7) !important; border: 1px solid var(--border) !important; }
+body.loom-studio.loom-air .quick-actions .quick-action-btn:hover { background: #fff !important; }
+body.loom-studio.loom-air .quick-action-icon { background: var(--brand-soft); color: var(--ink); border-radius: 50%; }
+body.loom-studio.loom-air .top-group-tab { background: rgba(255,255,255,0.6); color: var(--ink-soft); border: 1px solid var(--border) !important; border-radius: 999px; }
+body.loom-studio.loom-air .top-group-tab.active { background: var(--brand) !important; color: #fff !important; }
+body.loom-studio.loom-air .picker-section-title { background: rgba(255,255,255,0.7) !important; color: var(--ink) !important; border: 1px solid var(--glass-edge) !important;
+  border-radius: 999px !important; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* inputs: white, a thin edge, a moss focus ring */
+body.loom-studio.loom-air :is(input[type="text"], input[type="number"], input[type="password"], input[type="email"], input[type="search"], select, textarea, .ai-robot-search, .sync-unlock-card input, .ta-modal-body textarea) {
+  background: var(--surface-sunken) !important; border: 1px solid rgba(20,26,34,0.14) !important; color: var(--ink);
+}
+body.loom-studio.loom-air :is(input, select, textarea):focus { border-color: var(--ink) !important; box-shadow: 0 0 0 3px rgba(61,116,52,0.2) !important; }
+body.loom-studio.loom-air :focus-visible { outline: 2px solid var(--air-moss); outline-offset: 2px; }
+
+/* top bar: floats over the landscape — a fade instead of a strip, glass pills for the sections and tools */
+body.loom-studio.loom-air #taTopbar { background: linear-gradient(180deg, rgba(238,242,242,0.92) 0%, rgba(238,242,242,0.6) 60%, rgba(238,242,242,0) 100%); border-bottom: 0; }
+body.loom-studio.loom-air .tb-logo { background: var(--brand); box-shadow: var(--shadow-brand); border-radius: 50%; }
+body.loom-studio.loom-air .tb-brand .brand-name b { font-size: 1.75rem; color: var(--ink); line-height: 1; }
+body.loom-studio.loom-air .tb-brand .brand-name small { color: var(--ink-faint); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
+body.loom-studio.loom-air :is(.tb-nav, .tb-tool) { background: rgba(255,255,255,0.72); border: 1px solid var(--glass-edge); box-shadow: var(--shadow-md);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
+body.loom-studio.loom-air .tb-blob-path { fill: var(--brand); }
+body.loom-studio.loom-air .tb-ic { color: var(--ink-soft); }
+body.loom-studio.loom-air .tb-tab:hover .tb-ic { color: var(--ink); }
+body.loom-studio.loom-air .tb-tab.active .tb-ic { color: #fff; }
+body.loom-studio.loom-air .tb-tool { color: var(--ink); }
+body.loom-studio.loom-air .tb-tool:hover { background: #fff; color: var(--ink); }
+body.loom-studio.loom-air :is(.tb-menu-head, .tb-menu-item, .myex-menu-item):hover { background: var(--brand-soft); }
+body.loom-studio.loom-air .avatar-fallback { background: var(--air-moss); }
+body.loom-studio.loom-air .tb-avatar :is(.avatar-fallback, .avatar-img) { border: 2px solid #fff; }
+
+/* exercise types: the type's colour, a little deeper so it reads on white */
+body.loom-studio.loom-air [class*="picker-icon-"] { background: color-mix(in srgb, var(--tc, #3D7434) 12%, white) !important;
+  color: color-mix(in srgb, var(--tc, #3D7434) 80%, black) !important; border: 1px solid color-mix(in srgb, var(--tc, #3D7434) 25%, white) !important; border-radius: 50% !important; }
+
+/* the AI chat: a dark round button, a white chat */
+body.loom-studio.loom-air .ai-robot-anim { background: var(--brand) !important; box-shadow: 0 14px 30px -10px rgba(10,14,20,0.6); border-color: rgba(255,255,255,0.4); }
+body.loom-studio.loom-air .ai-robot-anim:hover { background: #2A303B !important; }
+body.loom-studio.loom-air .ai-robot-bubble { border: 1px solid var(--glass-edge) !important; box-shadow: var(--shadow-lg) !important; }
+body.loom-studio.loom-air .ai-robot-bubble-head { background: rgba(255,255,255,0.6); border-bottom: 1px solid var(--border); }
+body.loom-studio.loom-air .ai-robot-bubble-title { color: var(--ink); }
+body.loom-studio.loom-air .ai-robot-bubble-title .lc { color: var(--air-moss); }
+body.loom-studio.loom-air .ai-robot-bubble-close:hover { background: var(--brand-soft); color: var(--ink); }
+body.loom-air .ai-msg-assistant { background: #F1F3F1; color: var(--ink); }
+body.loom-air .ai-msg-user { background: var(--brand); }
+body.loom-air .ai-chip { background: #fff; color: var(--ink); border: 1px solid var(--border); }
+body.loom-air .ai-chip:hover { background: var(--air-moss-soft); color: var(--ink); }
+body.loom-air .ai-send { background: var(--brand); border-radius: 999px; }
+body.loom-air .ai-send:hover { background: #2A303B; }
+
+/* small things that were drawn for the dark look */
+body.loom-studio.loom-air .myex-day::after { background: var(--border) !important; }
+body.loom-studio.loom-air button.sk-node:hover { box-shadow: 0 0 0 1px rgba(20,26,34,0.25); }
+body.loom-air .toast { background: var(--brand); color: #fff; border-radius: 999px; }
+
+/* phones: no blur (it made scrolling lag) — nearly solid white glass instead */
+@media (max-width: 860px) {
+  body.loom-studio.loom-air, body.loom-studio.loom-air.light-theme { --glass-blur: none; --surface: rgba(255,255,255,0.9); --surface-2: rgba(255,255,255,0.85); }
+  body.loom-studio.loom-air #taTopbar { background: linear-gradient(180deg, rgba(238,242,242,0.95) 0%, rgba(238,242,242,0) 100%); }
+  body.loom-studio.loom-air :is(.tb-nav, .tb-tool) { background: #FBFCFB; }
+  body.loom-studio.loom-air .hero-card h1 { font-size: 2rem; }
+}
+@media (prefers-reduced-motion: reduce) { body.loom-air .login-submit::after { transition: none; } }
+/* the sign-in screen shows the landscape too (its splash had a plain page colour) */
+body.loom-air .welcome-splash { background: url('../images/app/landscape.svg') center bottom / cover no-repeat, #EEF2F2 !important; }
+body.loom-studio.loom-air .login-stage { background: rgba(255,255,255,0.72) !important; border: 1px solid var(--glass-edge) !important;
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); box-shadow: var(--shadow-lg) !important; }
+

@@ -932,8 +932,8 @@ function setTeacherName(v) {
 /* ================= THEME (day / night) ================= */
 const LS_THEME = 'ta_theme';
 
-/* Loom has only the dark look since 2026-11-07 (teacher: "it should have only dark mode") */
-function getTheme() { return 'dark'; }
+/* Loom has one look: dark "Teacher Studio" from 2026-11-07, light "Mountain Air" since 2026-11-15 (teacher's screenshot) */
+function getTheme() { return 'light'; }
 
 function setTheme(t) {
   try { localStorage.setItem(LS_THEME, t); } catch (e) { /* ignore */ }
@@ -943,10 +943,10 @@ function setTheme(t) {
 function applyTheme() {
   const t = getTheme();
   document.body.classList.toggle('light-theme', t === 'light');
-  document.body.classList.add('loom-fun', 'loom-studio');   // the dark "Teacher Studio" look (2026-11-07) on top of the 2026-11-02 layout
+  document.body.classList.add('loom-fun', 'loom-studio', 'loom-air');   // "Mountain Air" (2026-11-15) on top of "Teacher Studio" (2026-11-07) and the 2026-11-02 layout
   // the phone's status bar (installed app) takes the page colour
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', '#0E1017');
+  if (meta) meta.setAttribute('content', '#EEF2F2');
   const btn = document.getElementById('themeToggleBtn');
   if (btn) {
     btn.innerHTML = t === 'light' ? TA_MOON_SVG : TA_SUN_SVG;

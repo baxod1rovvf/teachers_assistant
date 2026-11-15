@@ -4,11 +4,11 @@
 // for ::before icons. Add a name to NAMES and run it again to get a new icon.
 const fs = require('fs'), path = require('path');
 const dir = process.argv[2];
-const NAMES = 'house sparkles map library chart-column graduation-cap search settings refresh-cw layers arrow-left-right puzzle spell-check target car mic rocket route pen-line languages clapperboard headphones trees dices presentation clipboard-check backpack school book-open message-circle trash-2 repeat link download calendar award zap plus users external-link bot send x clock trophy file-text log-out user image pencil check chevron-left ellipsis triangle-alert'.split(' ');
+const NAMES = 'house sparkles map library chart-column graduation-cap search settings refresh-cw layers arrow-left-right puzzle spell-check target car mic rocket route pen-line languages clapperboard headphones trees dices presentation clipboard-check backpack school book-open message-circle trash-2 repeat link download calendar award zap plus users external-link bot send x clock trophy file-text log-out user image pencil check chevron-left ellipsis triangle-alert arrow-right'.split(' ');
 let vars = '', cls = '';
 for (const n of NAMES) {
   let s = fs.readFileSync(path.join(dir, n + '.svg'), 'utf8').replace(/<!--.*?-->/s, '').replace(/class="[^"]*"/, '').replace(/\s+/g, ' ').replace(/> </g, '><').trim();
-  s = s.replace('stroke="currentColor"', 'stroke="black"');
+  s = s.replace('stroke="currentColor"', 'stroke="black"').replace('stroke-width="2"', 'stroke-width="1.6"');   // thin lines ("Mountain Air", 2026-11-15)
   const uri = 'url("data:image/svg+xml,' + encodeURIComponent(s).replace(/%20/g, ' ').replace(/%3D/g, '=').replace(/%3A/g, ':').replace(/%2F/g, '/').replace(/%22/g, "'") + '")';
   vars += '  --ic-' + n + ': ' + uri + ';\n';
   cls += '.lc-' + n + ' { --ic: var(--ic-' + n + '); }\n';

@@ -504,6 +504,16 @@ real students' names or results into the repository (it is public).
   `<i class="lc lc-<name>">` draws in the text colour; `--ic-<name>` for `::before` masks. Top bar: logo square + "loom / Teacher Studio",
   `TA_TOPBAR_TABS[].icon`; exercise types: `--ti` per `picker-icon-*`; My Exercises: `MYEX_ICON`. Dashboard greeting: date + session line
   (`#heroEyebrow`) and "Next class on schedule" (`renderHeroNext`). Many emojis inside texts/messages remain.
+- **Mountain Air design (teacher, 2026-11-15: a screenshot of a light outdoor-gear site — "like this, but not exactly")** — the newest
+  layer, at the very end of css/style.css, on `body.loom-air` (added by `applyTheme` with `loom-studio`, which keeps its behaviour; `getTheme()`
+  is now 'light', so `light-theme` is on too). The teacher chose: **light only**; **a landscape behind every teacher page** —
+  `images/app/landscape.svg` (misty mountains, a mossy hill with red flowers; drawn by `node tools/make-landscape.js`, no photo/licence,
+  ~25 KB) on a fixed `body.loom-air::before` (the sign-in cover `.welcome-splash` has its own copy); **frosted-glass cards** (white 72 %,
+  `--glass-blur`; none on phones ≤ 860 px — near-solid white there); menus, windows and notes solid `#FBFCFB` (text behind showed through);
+  **dark pill buttons** (`--brand` #14181F, radius 999px; an → arrow `--ic-arrow-right` after Sign in); **one italic serif accent**
+  (Instrument Serif, OFL, Google Fonts — the greeting's name `#mainGreetingName` and the top bar's "loom"); **thinner icons** (Lucide
+  stroke 1.6, in tools/make-icons.js). The greeting sits on the landscape with no card; moss green `--air-moss` for small accents.
+  Teacher pages only — skill.html (dark, `sk-studio`) and exercise files are unchanged. `tests/pages.spec.js` ("top bar: …").
 - **Students' course pages dark too (teacher, 2026-11-08: "now change course exercises design")**: skill.html has `id="skBody"`
   + `sk-studio` and loads `css/skill-dark.css`, made by `node tools/make-skill-dark.js` from the "SKILLS COURSE — STUDENT PAGE" rules
   in css/style.css (only colours, borders, shadows and fonts, turned dark; `#skBody` in front outweighs the student theme). **After changing
