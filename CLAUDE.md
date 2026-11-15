@@ -506,9 +506,10 @@ real students' names or results into the repository (it is public).
   (`#heroEyebrow`) and "Next class on schedule" (`renderHeroNext`). Many emojis inside texts/messages remain.
 - **Mountain Air design (teacher, 2026-11-15: a screenshot of a light outdoor-gear site — "like this, but not exactly")** — the newest
   layer, at the very end of css/style.css, on `body.loom-air` (added by `applyTheme` with `loom-studio`, which keeps its behaviour; `getTheme()`
-  is now 'light', so `light-theme` is on too). The teacher chose: **light only**; **a landscape behind every teacher page** —
-  `images/app/landscape.svg` (misty mountains, a mossy hill with red flowers; drawn by `node tools/make-landscape.js`, no photo/licence,
-  ~25 KB) on a fixed `body.loom-air::before` (the sign-in cover `.welcome-splash` has its own copy); **frosted-glass cards** (white 72 %,
+  is now 'light', so `light-theme` is on too). The teacher chose: **light only**; **the teacher's picture behind every teacher page** (sent
+  2026-11-15: sunrise over misty mountains, a red carabiner on a mossy hill) — `images/app/background.webp` (1671 px, ~150 KB) and
+  `background-tall.webp` (a crop round the carabiner, for screens taller than 4:5) on a fixed `body.loom-air::before`, under a white veil at the
+  top/left so the greeting reads (the sign-in cover `.welcome-splash` has its own copy; a drawn SVG landscape was used the first hour, removed); **frosted-glass cards** (white 72 %,
   `--glass-blur`; none on phones ≤ 860 px — near-solid white there); menus, windows and notes solid `#FBFCFB` (text behind showed through);
   **dark pill buttons** (`--brand` #14181F, radius 999px; an → arrow `--ic-arrow-right` after Sign in); **one italic serif accent**
   (Instrument Serif, OFL, Google Fonts — the greeting's name `#mainGreetingName` and the top bar's "loom"); **thinner icons** (Lucide

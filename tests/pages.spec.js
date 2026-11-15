@@ -167,9 +167,9 @@ test('top bar: 6 sections in the middle, the one you\'re in has the coloured cir
   expect(await page.locator('#taTopbar .tb-ic i').evaluateAll(l => l.map(e => e.className))).toEqual(['lc lc-house', 'lc lc-sparkles', 'lc lc-map', 'lc lc-library', 'lc lc-chart-column', 'lc lc-graduation-cap']);
   await expect(page.locator('#themeToggleBtn')).toHaveCount(0);
   await expect(page.locator('body')).toHaveClass(/loom-studio/);
-  // the light "Mountain Air" look (2026-11-15) on top of it: the landscape behind the page, glass cards, a dark pill button, the italic name
+  // the light "Mountain Air" look (2026-11-15) on top of it: the teacher's mountain picture behind the page, glass cards, a dark pill button, the italic name
   await expect(page.locator('body')).toHaveClass(/loom-air/);
-  expect(await page.evaluate(() => getComputedStyle(document.body, '::before').backgroundImage)).toContain('images/app/landscape.svg');
+  expect(await page.evaluate(() => getComputedStyle(document.body, '::before').backgroundImage)).toContain('images/app/background.webp');
   expect(await page.locator('.dash-card').first().evaluate(el => getComputedStyle(el).backgroundColor)).toMatch(/rgba\(255, 255, 255, 0\.\d+\)/);
   expect(await page.locator('#mainGreetingName').evaluate(el => getComputedStyle(el).fontStyle)).toBe('italic');
   expect(await page.locator('meta[name="theme-color"]').getAttribute('content')).toBe('#EEF2F2');
