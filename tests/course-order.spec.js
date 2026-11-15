@@ -3,7 +3,7 @@
 // writing check let "I playing volleybal" through.
 const { test, expect } = require('@playwright/test');
 const crypto = require('crypto');
-const { prepare, watchErrors, hideNotices } = require('./support/app');
+const { passIdCheck, prepare, watchErrors, hideNotices } = require('./support/app');
 
 const hashFor = (code, id) => crypto.createHash('sha256').update(code + '|' + id).digest('hex').slice(0, 24);
 const classDoc = (code, prev) => Object.assign({ __id: 'class-' + code, v: 1, code: 'TAUSER', type: 'TA_SYNC:CLASS', title: code, name: '',
@@ -16,9 +16,9 @@ test('a course exercise opens only after the part before it is done — else the
   const begin = async () => {
     await page.goto('/skill.html?s=reading&st=b5&c=RDG901');
     await page.evaluate(async docs => { await window.skPrevDone({ codes: ['XXXXXX'] }, 'x', 'x'); docs.forEach(d => window.__fakeDocs.push(d)); }, kept);
-    await page.locator('#studentNameInput').fill('Alice');
     await page.locator('#skIdInput').fill('10001');
     await page.getByRole('button', { name: /Start/ }).click();
+    await passIdCheck(page);
   };
   await begin();
   await expect(page.locator('#skStartErr')).toHaveText('⚠️ Oldingi Listening mashq tugatilmagan. Avval Step 5 · Listening mashqini tugating.');

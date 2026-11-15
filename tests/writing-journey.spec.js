@@ -2,7 +2,7 @@
 // check (the teacher's Cloudflare helper → Gemini): score /9 (grammar 3, vocabulary 2, structure 2, task 2, −0.5 when too
 // short), word count, grammar mistakes, better words, the asked-words checklist and three tips. A stand-in AI here.
 const { test, expect } = require('@playwright/test');
-const { prepare, watchErrors, hideNotices } = require('./support/app');
+const { passIdCheck, prepare, watchErrors, hideNotices } = require('./support/app');
 const fs = require('fs'), path = require('path');
 const SOURCE = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'docs', 'writing-journey.json'), 'utf8'));
 
@@ -65,9 +65,9 @@ async function fakeQueue(context, { fail = false, bodies } = {}) {
 }
 const startWriting = async (page, code) => {
   await page.goto('/skill.html?s=writing&st=b1&c=' + code);
-  await page.locator('#studentNameInput').fill('Test Student');
   await page.locator('#skIdInput').fill('10001');
   await page.getByRole('button', { name: /Start/ }).click();
+  await passIdCheck(page);
 };
 const writingRecord = page => page.evaluate(() => window.__writes.map(w => window.__fakeDocs.find(d => d.__id === w.id)).find(d => d && d.type === 'Writing course'));
 

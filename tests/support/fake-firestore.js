@@ -91,6 +91,7 @@ export async function deleteDoc(ref) {
 export async function updateDoc() {}
 export async function getDocFromServer(ref) {
   if (window.__holdWrites) return new Promise(() => {});   // offline: the server can't be asked either
+  if (window.__failReads > 0) { window.__failReads--; throw Object.assign(new Error('Failed to reach the database.'), { code: 'unavailable' }); }
   window.__reads++;
   const d = DOCS.find(x => x.__id === ref.id && colOf(x) === (ref.col || 'results'));
   return { id: ref.id, exists: () => !!d, data: () => d ? Object.assign({}, d) : undefined };

@@ -2,7 +2,7 @@
 // American spelling as mistakes, and gave 7.5 to 52 words when 25–35 were asked; students could do a course exercise
 // again; a student who typed his ID was listed under "name only".
 const { test, expect } = require('@playwright/test');
-const { prepare, watchErrors, hideNotices } = require('./support/app');
+const { passIdCheck, prepare, watchErrors, hideNotices } = require('./support/app');
 
 const WTEXT = 'Well! My bag colour is black and there are 3 books  and also there are many pencils in it. ' +
   'Mainly one thing which i love a book in there it is called ,,deep working ". Hello my name is Mohlaroy. My favorite thing is my tablet.';
@@ -62,9 +62,9 @@ test('one try per course exercise: a student who already has a result sees it in
   const begin = async (name, id) => {
     await page.goto('/skill.html?s=reading&st=b1&c=RDG123');
     await page.evaluate(async docs => { await window.skPrevDone({ codes: ['XXXXXX'] }, 'x', 'x'); docs.forEach(d => window.__fakeDocs.push(d)); }, kept);
-    await page.locator('#studentNameInput').fill(name);
     await page.locator('#skIdInput').fill(id);
     await page.getByRole('button', { name: /Start/ }).click();
+    await passIdCheck(page);
   };
   // in the database (another phone) by ID …
   await begin('Somebody Else', '10001');
@@ -107,7 +107,7 @@ test('a student who typed the ID a little differently ("ID 10 001", "010001", Cy
   expect(out).toEqual({ spaced: 'Alice Test', zeros: 'Alice Test', wide: 'Alice Test', swapped: 'Alice Test', wrong: null, cyr: true, keepsWords: 'idris' });
 });
 
-test('only the group\'s students can start a course exercise: the ID must be on the list and the name must fit it', async ({ page, context }) => {
+test('only the group\'s students can start a course exercise: the ID must be on the list', async ({ page, context }) => {
   const crypto = require('crypto');
   const code = 'RDG777', hash = id => crypto.createHash('sha256').update(code + '|' + id).digest('hex').slice(0, 24);
   const list = [{ h: hash('10001'), n: 'Alice Test' }, { h: hash('10002'), n: 'Yuldasheva Mohlaroy' }];
@@ -115,16 +115,14 @@ test('only the group\'s students can start a course exercise: the ID must be on 
   const errors = watchErrors(page);
   const begin = async (name, id) => {
     await page.goto('/skill.html?s=reading&st=b1&c=' + code);
-    await page.locator('#studentNameInput').fill(name);
     await page.locator('#skIdInput').fill(id);
     await page.getByRole('button', { name: /Start/ }).click();
+    await passIdCheck(page);
   };
   await begin('Alice Test', '99999');
   await expect(page.locator('#skStartErr')).toHaveText("This ID is not on your teacher's list. Check your ID and try again.");
   await expect(page.locator('#skSubmit')).toHaveCount(0);
-  await begin('Bobur', '10001');
-  await expect(page.locator('#skStartErr')).toHaveText('This ID belongs to another student. Write your own name and ID.');
-  // the ID typed a little differently and only the first name: let in, and the result carries the name from the list
+  // the ID typed a little differently: "Bu sizmi?" shows the name from the list, and the result carries it (ID only since 2026-11-15)
   await begin('mohlaroy', ' 10 002 ');
   await expect(page.locator('#skSubmit')).toBeVisible();
   await page.locator('#skSubmit').click();

@@ -521,11 +521,11 @@ function skPutClassOnline(url, g, skill, step) {
   const students = skGroupRoster(g);
   if (!code || typeof window.taPublishClassList !== 'function') return;
   const links = taSkillsLinks();
-  window.taPublishClassList(code, students, skPrevPart(skill, step, g, links)).then(ok => {
+  window.taPublishClassList(code, students, skPrevPart(skill, step, g, links), g.name).then(ok => {
     if (!ok) showToast('⚠️ The class list couldn\'t go online — students can still start without an ID check. Press Copy link again later.');
   });
   const next = skNextPart(skill, step, g, links);
-  if (next) window.taPublishClassList(next.code, students, skPrevPart(next.skill, next.step, g, links));
+  if (next) window.taPublishClassList(next.code, students, skPrevPart(next.skill, next.step, g, links), g.name);
 }
 function skCopyLink(skill, step) {
   const g = skGroup();

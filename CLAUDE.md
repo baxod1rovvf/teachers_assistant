@@ -565,8 +565,15 @@ real students' names or results into the repository (it is public).
   (`.sk-part` — `.sk-card` belongs to the student page) with their done state, ▶️ Try (`skTry`, `&preview=1`, sends nothing) and 🔗 Copy link
   for <group> (`skCopyLink`). **No "View Results"/"Results table" buttons on the Course page** (one exercise's results: My Exercises).
 - **Student page** `skill.html` + `js/skill-player.js` (`js/skill-bands.js` shared): link `skill.html?s=<listening|reading|writing|speaking>&st=<step id>&c=<code>`
-  (`taSkillLink(skill, stepId, code)` in common.js; an old link's `lv=N` with no `st` opens `e<N>` — `taSkillStepId` turns a number into `e<N>`; speaking has no code, never expires, loads from GitHub Pages not Firebase). Start card (name + ID, any ID
-  accepted), the code is checked. Listening: audio + 10 gaps, Submit → ✅/❌, score, 10 useful words, **Analyze >** = transcript with the
+  (`taSkillLink(skill, stepId, code)` in common.js; an old link's `lv=N` with no `st` opens `e<N>` — `taSkillStepId` turns a number into `e<N>`; speaking has no code, never expires, loads from GitHub Pages not Firebase). **Start card: ID only (teacher, 2026-11-15,
+  approach C — no name box anywhere)** → Start shows a spinner (`.sk-spin`) while `skCheckStudent(id)` reads `class-<code>` (tried again
+  until `__skCheckTimeoutMs || 20000`; can't read → "📶 We couldn't check your ID…", never let in) → on the list: **"Bu sizmi:" / <listed
+  name> — <ID> / "Guruh:" / <group>** (`showConfirm`, the teacher's Uzbek; `group` is put on the list by Copy link since 2026-11-15 —
+  older lists have none and the "Guruh" lines are left out) with **Ha** (→ `skBeginChecks`: kept answers, "already done", the part
+  before → the exercise; a problem → back to the start card with the message) and **Yo'q (boshqa ID kiritish)** (`skNotMe`: empty ID box,
+  remembered ID forgotten); not on the list → "This ID is not on your teacher's list"; **no list** (a link copied before 2026-11-09 and
+  not copied again) → straight in, the result has the ID and `name: ''` (the teacher's page matches by ID). `skNameFits` is no longer
+  used on Start. `tests/course-id-check.spec.js` (`passIdCheck` in tests/support/app.js presses Ha in other tests). The code is checked. Listening: audio + 10 gaps, Submit → ✅/❌, score, 10 useful words, **Analyze >** = transcript with the
   answer lines marked. Reading: text + any number of questions (elementary: 15 — 5 T/F/NG, 5 gaps, 5 a/b/c; types `tfng`, `tf` = True/False for beginner steps, `gap`, `choose`), same flow. Writing: topic + 3 points, timer (submits by
   itself), word counter, Submit → the writing is saved and put on the AI helper's waiting list (until 2026-11-12: LanguageTool + better words at Submit); the text + the clock's start are kept as the student types
 (`ta_skill_draft|<code>|<stepId>`, `{text, startedAt, id}`, the page's own key; not in preview; opened from an old `lv=N` link, a draft under the old key `…|<N>` is moved to it) so a reload — phones reload background
