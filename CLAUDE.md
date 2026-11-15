@@ -511,15 +511,17 @@ real students' names or results into the repository (it is public).
   **dark pill buttons** (`--brand` #14181F, radius 999px; an → arrow `--ic-arrow-right` after Sign in); **one italic serif accent**
   (Instrument Serif, OFL, Google Fonts — the greeting's name `#mainGreetingName` and the top bar's "loom"); **thinner icons** (Lucide
   stroke 1.6, in tools/make-icons.js). The greeting sits on the landscape with no card; moss green `--air-moss` for small accents.
-  Teacher pages only — skill.html (dark, `sk-studio`) and exercise files are unchanged. `tests/pages.spec.js` ("top bar: …").
+  Teacher pages; the students' course pages got it too (see below); exercise files are unchanged. `tests/pages.spec.js` ("top bar: …").
   **Keep the picture visible (teacher, same day)**: on computers the Dashboard's four numbers sit in one row above Upcoming Lessons, both
   ≤ 820 px on the left; the Create picker is ≤ 700 px, 3 cards a row; the Course Journey (≥ 761 px) is one column on the left — a marker per
   step on a vertical line (`.sk-row::before`: hollow, orange ✓ done, orange ★ the step to teach; `::after` the line, solid orange when done),
   the card, then the part dots small in a glass pill (no `.sk-seg`/🏁). CSS only, at the very end of css/style.css; phones unchanged.
-- **Students' course pages dark too (teacher, 2026-11-08: "now change course exercises design")**: skill.html has `id="skBody"`
-  + `sk-studio` and loads `css/skill-dark.css`, made by `node tools/make-skill-dark.js` from the "SKILLS COURSE — STUDENT PAGE" rules
-  in css/style.css (only colours, borders, shadows and fonts, turned dark; `#skBody` in front outweighs the student theme). **After changing
-  those rules, run the tool again.** The word emojis stay (the teacher asked for them). Exercise files (Create page) keep their look.
+- **Students' course pages in the light Mountain Air look (teacher, 2026-11-15: preview, then "apply it")** — skill.html and
+  results-link.html have `id="skBody"` + `sk-air` and load `css/skill-air.css` (hand-written; `html body#skBody.sk-air` in front outweighs
+  the student theme): the teacher's picture behind (same files as the app, with a white veil), frosted cards (near-solid on phones), dark
+  pill buttons (Start, Submit), white answer pills (chosen = dark), white word chips with the Uzbek meaning in green. The dark
+  `css/skill-dark.css` + `tools/make-skill-dark.js` (2026-11-08) are gone. The results table (`.sk-rt`) keeps its own colours (it matches the
+  downloaded picture). The word emojis stay. Create-page exercise files keep their look.
 - **AI robot (2026-11-07, teacher: "AI robot should be AI completely… user should ask any question")**: the robot is a chat (`renderAiRobotChat`,
   `aiRobotAsk` in common.js): a greeting, two of the section's questions as chips, a box + Send. Questions go to `TA_AI_URL` (`https://loom-ai.toxiraxii010.workers.dev`, the teacher's worker, set 2026-11-08) — a
   Cloudflare Worker (`tools/ai-worker.js`; **Google Gemini's free plan since 2026-11-08** — teacher chose free over Claude — model
