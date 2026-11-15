@@ -109,7 +109,7 @@ window.taUnpublishPlay = async function (uid, parts) {
 // shows up among results. Resolves true when saved.
 // `prev` (2026-11-12): the part the group does before this one — { skill, stepNo, codes } — kept as JSON in `prev`; the student
 // page lets a student start only after a result for one of those codes (skPrevDone in skill-player.js).
-window.taPublishClassList = async function (code, students, prev) {
+window.taPublishClassList = async function (code, students, prev, group) {
   if (!db || !code || !Array.isArray(students) || typeof skClassHash !== 'function') return false;
   try {
     const list = [];
@@ -123,6 +123,7 @@ window.taPublishClassList = async function (code, students, prev) {
     if (!list.length) return true;   // a group with no students yet: no list, so the link stays open to anyone
     const rec = { v: 1, code: 'TAUSER', builtAt: '', type: 'TA_SYNC:CLASS', title: code, name: '', data: JSON.stringify(list),
       score: list.length, warnings: 0, timeSeconds: 0, timeDisplay: '00:00', date: new Date().toISOString() };
+    if (group) rec.group = String(group).slice(0, 80);   // shown on the student's "Bu sizmi?" screen (2026-11-15)
     if (prev && Array.isArray(prev.codes) && prev.codes.length) rec.prev = JSON.stringify({ skill: prev.skill, stepNo: prev.stepNo, codes: prev.codes.slice(0, 10) });
     await setDoc(ref, rec);
     return true;

@@ -195,8 +195,8 @@ async function skAlreadyDone(name, id) {
     const ask = (field, value) => within(fs.getDocsFromServer(fs.query(col, fs.where('code', '==', SK.code), fs.where(field, '==', value))), 8000);
     // the name as typed, and with capitals ("alice test" → "Alice Test") — the database compares letters exactly
     const title = name.toLowerCase().replace(/(^|[\s'-])(\p{L})/gu, (m, a, c) => a + c.toUpperCase());
-    const names = Array.from(new Set([name, title, name.toLowerCase()]));
-    const snaps = await Promise.all([ask('studentId', id), within(fs.getDocsFromServer(fs.query(col, fs.where('code', '==', SK.code), fs.where('name', 'in', names))), 8000)]);
+    const names = Array.from(new Set([name, title, name.toLowerCase()])).filter(Boolean);
+    const snaps = await Promise.all([ask('studentId', id)].concat(names.length ? [within(fs.getDocsFromServer(fs.query(col, fs.where('code', '==', SK.code), fs.where('name', 'in', names))), 8000)] : []));
     for (const snap of snaps) {
       const doc = (snap.docs || []).map(d => d.data()).find(r => r && (r.skill === SK.skill || /course$/.test(r.type || '')) &&
         skSameStudent(r, name, id) && !skBlankWriting(r));
@@ -207,27 +207,36 @@ async function skAlreadyDone(name, id) {
 }
 window.skAlreadyDone = skAlreadyDone;
 
-/* Only the group's students (teacher, 2026-11-09: "student can only enter exercise with ID, if they wrong ID or name, they
-   cannot enter"): Copy link puts the group's list online as `class-<code>` (IDs scrambled, skClassHash). The typed ID must be
-   on it and the typed name must fit that student's name (skNameFits — first name or surname is enough); the result then
-   carries the name from the list. No list (a link copied before this, or a group without students) or no internet → let in. */
-async function skCheckStudent(name, id) {
-  try {
-    const { fs, db } = await within(loadFirestore(), 8000);
-    const snap = await within(fs.getDocFromServer(fs.doc(db, 'results', 'class-' + SK.code)), 8000);
-    if (!snap.exists()) return {};
-    let list = [];
-    try { list = JSON.parse(snap.data().data || '[]'); } catch (e) { list = []; }
-    if (!Array.isArray(list) || !list.length) return {};
-    const h = await skClassHash(SK.code, id);
-    if (!h) return {};
-    const st = list.find(s => s && s.h === h);
-    if (!st) return { refuse: 'This ID is not on your teacher\'s list. Check your ID and try again.', field: 'id' };
-    if (!skNameFits(name, st.n)) return { refuse: 'This ID belongs to another student. Write your own name and ID.', field: 'name' };
-    let prev = null;
-    try { prev = snap.data().prev ? JSON.parse(snap.data().prev) : null; } catch (e) { prev = null; }
-    return { name: st.n, prev: prev && Array.isArray(prev.codes) && prev.codes.length ? prev : null };
-  } catch (e) { console.warn('Skills course: could not check the class list', e); return {}; }
+/* Only the group's students (teacher, 2026-11-09): Copy link puts the group's list online as `class-<code>` (IDs scrambled,
+   skClassHash) with the group's name (`group`, since 2026-11-15). Since 2026-11-15 the student types only the ID (teacher: "ID only");
+   the page shows "Bu sizmi?" with the listed name, the ID and the group. → { name, group, prev } on the list · { refuse, field } not on it ·
+   { open: true } no list for this link (copied before 2026-11-09) · { offline: true } the list couldn't be read — tried again until
+   the time limit (slow internet: the student waits with a spinner; never let in on a guess). */
+async function skCheckStudent(id) {
+  const until = Date.now() + (window.__skCheckTimeoutMs || 20000);
+  let snap = null;
+  while (!snap) {
+    try {
+      const left = Math.max(1000, until - Date.now());
+      const { fs, db } = await within(loadFirestore(), left);
+      snap = await within(fs.getDocFromServer(fs.doc(db, 'results', 'class-' + SK.code)), Math.max(1000, until - Date.now()));
+    } catch (e) {
+      if (Date.now() >= until) { console.warn('Skills course: could not check the class list', e); return { offline: true }; }
+      await wait(1000);
+    }
+  }
+  if (!snap.exists()) return { open: true };
+  const d = snap.data() || {};
+  let list = [];
+  try { list = JSON.parse(d.data || '[]'); } catch (e) { list = []; }
+  if (!Array.isArray(list) || !list.length) return { open: true };
+  const h = await skClassHash(SK.code, id);
+  if (!h) return { open: true };   // this browser can't scramble the ID (very old)
+  const st = list.find(x => x && x.h === h);
+  if (!st) return { refuse: 'This ID is not on your teacher\'s list. Check your ID and try again.', field: 'id' };
+  let prev = null;
+  try { prev = d.prev ? JSON.parse(d.prev) : null; } catch (e) { prev = null; }
+  return { name: st.n, group: typeof d.group === 'string' ? d.group : '', prev: prev && Array.isArray(prev.codes) && prev.codes.length ? prev : null };
 }
 window.skCheckStudent = skCheckStudent;
 /* One after another (teacher, 2026-11-12): the part the group does before this one (the class list's `prev`) must be done —
@@ -240,7 +249,7 @@ async function skPrevDone(prev, name, id) {
     const snap = await within(fs.getDocsFromServer(fs.query(fs.collection(db, 'results'), fs.where('code', 'in', prev.codes.slice(0, 10)))), 8000);
     const want = taIdKey(id), nm = String(name || '').trim().toLowerCase();
     return (snap.docs || []).map(d => d.data()).some(r => r && (/ course$/.test(r.type || '')) &&
-      ((r.studentId && taIdKey(r.studentId) === want) || String(r.name || '').trim().toLowerCase() === nm));
+      ((r.studentId && taIdKey(r.studentId) === want) || (nm && String(r.name || '').trim().toLowerCase() === nm)));
   } catch (e) { console.warn('Skills course: could not check the part before', e); return null; }
 }
 window.skPrevDone = skPrevDone;
@@ -347,9 +356,7 @@ function showStart(level, content) {
         <h2>${esc(content.title || content.topic)}</h2>
         <div class="ta-login-type">${info.name} · Step ${level.no}</div>
         <div class="ta-underline"></div>
-        <p>${esc(level.emoji)} ${esc(level.theme)}. Write your name and your ID to begin.</p>
-        <label class="sk-label" for="studentNameInput">Your name</label>
-        <input type="text" id="studentNameInput" autocomplete="name" maxlength="80" placeholder="e.g. Anna Smith" value="${esc(saved.name || '')}">
+        <p>${esc(level.emoji)} ${esc(level.theme)}. Write your ID to begin.</p>
         <label class="sk-label" for="skIdInput">Your ID</label>
         <input type="text" id="skIdInput" autocomplete="off" inputmode="numeric" maxlength="30" placeholder="e.g. 10001" value="${esc(saved.id || '')}">
         <div class="sk-start-err" id="skStartErr" role="alert"></div>
@@ -359,45 +366,56 @@ function showStart(level, content) {
   </div>`;
   $('#skStartForm').addEventListener('submit', async e => {
     e.preventDefault();
-    const name = $('#studentNameInput').value.trim().replace(/\s+/g, ' ');
     const id = $('#skIdInput').value.trim();
-    if (!name || !id) {
-      $('#skStartErr').textContent = !name ? 'Write your name to start.' : 'Write your ID to start (your teacher gave it to you).';
-      (!name ? $('#studentNameInput') : $('#skIdInput')).focus();
-      return;
-    }
+    if (!id) { $('#skStartErr').textContent = 'Write your ID to start (your teacher gave it to you).'; $('#skIdInput').focus(); return; }
     const btn = $('#skStartForm .start-btn');
     if (btn.disabled) return;
     btn.disabled = true;
     const label = btn.textContent;
-    btn.textContent = 'Checking…';
-    // only the teacher's students: the ID must be on the group's list and the name must fit it (2026-11-09)
-    const who = await skCheckStudent(name, id);
-    if (who.refuse) {
-      btn.textContent = label; btn.disabled = false;
-      $('#skStartErr').textContent = who.refuse;
-      (who.field === 'name' ? $('#studentNameInput') : $('#skIdInput')).focus();
-      return;
-    }
-    SK.name = who.name || name; SK.studentId = id;
-    try { localStorage.setItem(NAME_KEY, JSON.stringify({ name, id })); } catch (err) { /* private window */ }
-    // answers this phone still holds (a save that failed) go first, so the part before counts (2026-11-13)
-    if (keptSending) await within(keptSending, 15000).catch(() => {});
-    const done = await skAlreadyDone(SK.name, id);   // one try per exercise (2026-11-09)
-    if (done && done.offline) {   // couldn't ask the database: never "already done" from a guess (2026-11-13)
-      btn.textContent = label; btn.disabled = false;
-      $('#skStartErr').textContent = '📶 We couldn\'t check your answers — check the internet and press Start again.';
-      return;
-    }
-    if (done) { showAlreadyDone(level, done); return; }
-    if (who.prev && (await skPrevDone(who.prev, SK.name, id)) === false) {   // the part before isn't done (2026-11-12)
-      btn.textContent = label; btn.disabled = false;
-      $('#skStartErr').textContent = skPrevWarning(who.prev);
-      return;
-    }
+    btn.innerHTML = '<span class="sk-spin" aria-hidden="true"></span> Checking…';
+    $('#skStartErr').textContent = '';
+    const who = await skCheckStudent(id);   // only the teacher's students (2026-11-09); ID only since 2026-11-15
     btn.textContent = label; btn.disabled = false;
-    if (SK.skill === 'writing') showWriting(level); else showExercise(level);
+    if (who.offline) { $('#skStartErr').textContent = '📶 We couldn\'t check your ID — check the internet and press Start again.'; return; }
+    if (who.refuse) { $('#skStartErr').textContent = who.refuse; $('#skIdInput').focus(); return; }
+    try { localStorage.setItem(NAME_KEY, JSON.stringify({ id })); } catch (err) { /* private window */ }
+    if (who.open) { SK.name = ''; SK.studentId = id; skBeginChecks(level, content, who, id); return; }   // no list for this link
+    showConfirm(level, content, who, id);
   });
+}
+/* "Bu sizmi?" (teacher, 2026-11-15, the teacher's Uzbek words): the name on the teacher's list, the ID and the group. Ha → the
+   usual checks, then the exercise; Yo'q → an empty ID box (the remembered ID is forgotten — skNotMe). */
+function showConfirm(level, content, who, id) {
+  root().innerHTML = `${headerHtml(level)}<section class="sk-card sk-center sk-confirm">
+    <div class="sk-big-emoji" aria-hidden="true">👤</div>
+    <p class="sk-confirm-t">Bu sizmi:</p>
+    <p class="sk-confirm-who" translate="no"><b>${esc(who.name)} — ${esc(id)}</b></p>
+    ${who.group ? `<p class="sk-confirm-t">Guruh:</p><p class="sk-confirm-who" translate="no"><b>${esc(who.group)}</b></p>` : ''}
+    <div class="sk-actions sk-confirm-actions">
+      <button type="button" class="sk-btn sk-btn-main" id="skYes">Ha</button>
+      <button type="button" class="sk-btn" id="skNo">Yo'q (boshqa ID kiritish)</button>
+    </div>
+  </section>`;
+  $('#skYes').addEventListener('click', () => {
+    const yes = $('#skYes');
+    if (yes.disabled) return;
+    yes.disabled = true; $('#skNo').disabled = true;
+    yes.innerHTML = '<span class="sk-spin" aria-hidden="true"></span> Ha';
+    SK.name = who.name || ''; SK.studentId = id;
+    skBeginChecks(level, content, who, id);
+  });
+  $('#skNo').addEventListener('click', skNotMe);
+}
+/* The checks before the exercise: answers kept on this phone first (so the part before counts, 2026-11-13), one try per exercise
+   ("already done" only from the database), then the part before (2026-11-12). A problem → back to the start card with the message. */
+async function skBeginChecks(level, content, who, id) {
+  const back = msg => { showStart(level, content); $('#skIdInput').value = id; $('#skStartErr').textContent = msg; };
+  if (keptSending) await within(keptSending, 15000).catch(() => {});
+  const done = await skAlreadyDone(SK.name, id);
+  if (done && done.offline) { back('📶 We couldn\'t check your answers — check the internet and press Start again.'); return; }
+  if (done) { showAlreadyDone(level, done); return; }
+  if (who.prev && (await skPrevDone(who.prev, SK.name, id)) === false) { back(skPrevWarning(who.prev)); return; }
+  if (SK.skill === 'writing') showWriting(level); else showExercise(level);
 }
 
 /* ---------- questions ---------- */

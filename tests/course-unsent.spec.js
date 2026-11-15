@@ -5,7 +5,7 @@
 // phone that says "done" but whose answers never arrived lets the student do it again.
 const { test, expect } = require('@playwright/test');
 const crypto = require('crypto');
-const { prepare, watchErrors } = require('./support/app');
+const { passIdCheck, prepare, watchErrors } = require('./support/app');
 
 const hashFor = (code, id) => crypto.createHash('sha256').update(code + '|' + id).digest('hex').slice(0, 24);
 const classDoc = (code, prev) => Object.assign({ __id: 'class-' + code, v: 1, code: 'TAUSER', type: 'TA_SYNC:CLASS', title: code, name: '',
@@ -14,9 +14,9 @@ const listening = page => page.evaluate(() => window.__fakeDocs.filter(d => d.co
 
 async function start(page, url, name) {
   await page.goto(url);
-  await page.locator('#studentNameInput').fill(name || 'Alice');
   await page.locator('#skIdInput').fill('10001');
   await page.getByRole('button', { name: /Start/ }).click();
+  await passIdCheck(page);
 }
 // a Listening whose save fails (no internet): the score shows, "Not sent yet", and the student closes the page
 async function failedListening(page) {
@@ -100,11 +100,10 @@ test('no internet at Start: the phone\'s own note never says "already done" — 
   await prepare(context, { storage: { ta_skill_done: JSON.stringify({ 'LSN777|id:10001': { at: '2026-11-12T10:00:00.000Z', summary: '8 / 12' } }) } });
   const errors = watchErrors(page);
   await page.goto('/skill.html?s=listening&st=b5&c=LSN777');
-  await page.evaluate(() => { window.__failReads = 100; });   // the database can't be asked
-  await page.locator('#studentNameInput').fill('Alice');
+  await page.evaluate(() => { window.__failReads = 100; window.__skCheckTimeoutMs = 1500; });   // the database can't be asked
   await page.locator('#skIdInput').fill('10001');
   await page.getByRole('button', { name: /Start/ }).click();
-  await expect(page.locator('#skStartErr')).toHaveText('📶 We couldn\'t check your answers — check the internet and press Start again.');
+  await expect(page.locator('#skStartErr')).toContainText('📶 We couldn\'t check', { timeout: 15000 });   // the ID check can't read the list either (2026-11-15)
   await expect(page.locator('body')).not.toContainText('You have already done this');
   await expect(page.locator('#skSubmit')).toHaveCount(0);
   await page.evaluate(() => { window.__failReads = 0; });   // back online: nothing from her in the database → she can do it

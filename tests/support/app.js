@@ -86,4 +86,11 @@ function template(name, fill = {}) {
   return t.replace(/__([A-Z_]+)__/g, (m, k) => k in all ? all[k] : '');
 }
 
-module.exports = { prepare, watchErrors, hideNotices, template, rawTemplate, data, ADMIN_CLOUD };
+
+// Course links (2026-11-15): after Start, a link with the teacher's list shows "Bu sizmi?" — press Ha; without a list the page goes on.
+async function passIdCheck(page) {
+  await page.waitForFunction(() => document.querySelector('#skYes, #skSubmit, #skWriteBox, .sk-done-card, .sk-q') ||
+    ((document.querySelector('#skStartErr') || {}).textContent || '').trim(), null, { timeout: 25000 });
+  if (await page.locator('#skYes').count()) await page.locator('#skYes').click();
+}
+module.exports = { passIdCheck, prepare, watchErrors, hideNotices, template, rawTemplate, data, ADMIN_CLOUD };

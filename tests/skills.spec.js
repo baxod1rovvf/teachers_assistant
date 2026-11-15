@@ -1,6 +1,6 @@
 // The Skills course (2026-11-04): band rules shared by the student page and Loom.
 const { test, expect } = require('@playwright/test');
-const { prepare, watchErrors, hideNotices } = require('./support/app');
+const { passIdCheck, prepare, watchErrors, hideNotices } = require('./support/app');
 
 // Writing words since 2026-11-09 (teacher: "double it — Step 1 60, last step 200"): about 60 + (step − 1) × 140/17 words, ±10,
 // rounded to 5; the minutes at least the old ones and about 7 words a minute.
@@ -184,9 +184,9 @@ const sentRecords = page => page.evaluate(() => window.__writes.map(w => window.
 
 async function start(page, url) {
   await page.goto(url);
-  await page.locator('#studentNameInput').fill('Test Student');
   await page.locator('#skIdInput').fill('10001');
   await page.getByRole('button', { name: /Start/ }).click();
+  await passIdCheck(page);
 }
 
 // answers every question right (or as `given` says: a text, or 'wrong' for a wrong choice / a wrong text), 1-based numbers
@@ -238,7 +238,7 @@ test.describe('student page', () => {
     const recs = await sentRecords(page);
     expect(recs).toHaveLength(1);
     expect(recs[0]).toMatchObject({ v: 1, code: 'ABC123', type: 'Listening course', title: 'Step 11 · Holidays — Listening', step: 'e1', stepNo: 11,
-      skill: 'listening', name: 'Test Student', studentId: '10001', correct: 14, total: 16, score: 88 });
+      skill: 'listening', name: '', studentId: '10001', correct: 14, total: 16, score: 88 });   // no class list: ID only (2026-11-15)
     expect(recs[0].band).toBe(await page.evaluate(() => skBand(14, 16)));
     expect(recs[0].answers).toHaveLength(16);
     expect(recs[0].answers[0]).toEqual({ q: "Tom's surname: _____", given: 'F-I-S-H-E-R', right: true });
@@ -369,7 +369,7 @@ test.describe('student page', () => {
     const docs = await page.evaluate(() => window.__fakeDocs.filter(d => d.code === 'ABC123' && d.type === 'Listening course'));
     expect(docs).toHaveLength(1);
     expect(docs[0].__id).toMatch(/^sk_ABC123_10001_\d+$/);
-    expect(docs[0]).toMatchObject({ correct: 1, total: 16, name: 'Test Student' });
+    expect(docs[0]).toMatchObject({ correct: 1, total: 16, studentId: '10001' });
   });
 
   test('a link without its 6-character code never reaches the start card', async ({ page, context }) => {
@@ -399,7 +399,6 @@ test.describe('student page', () => {
       await page.goto(url);
       await expect(page.locator('.ta-login-type')).toHaveText('Reading · Step 13');
       await expect(page).toHaveTitle('Reading · Step 13 — Loom');
-      await page.locator('#studentNameInput').fill('Test Student');
       await page.locator('#skIdInput').fill('10001');
       await page.getByRole('button', { name: /Start/ }).click();
       await expect(page.locator('.sk-head')).toContainText('Step 13 · Jobs & Careers');

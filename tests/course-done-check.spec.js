@@ -5,7 +5,7 @@
 // - the one-try check also matched by name alone: a student with the same name but another ID was "already done";
 // - a phone remembers the last name + ID: on a shared phone the next student could start as the first one.
 const { test, expect } = require('@playwright/test');
-const { prepare, watchErrors } = require('./support/app');
+const { passIdCheck, prepare, watchErrors } = require('./support/app');
 
 async function mockAi(context) {
   await context.route('https://loom-ai.toxiraxii010.workers.dev/**', route => route.fulfill({ status: 200, contentType: 'application/json',
@@ -13,9 +13,9 @@ async function mockAi(context) {
 }
 async function start(page, url, name, id) {
   await page.goto(url);
-  await page.locator('#studentNameInput').fill(name || 'Alice');
   await page.locator('#skIdInput').fill(id || '10001');
   await page.getByRole('button', { name: /Start/ }).click();
+  await passIdCheck(page);
 }
 const writings = page => page.evaluate(() => window.__fakeDocs.filter(d => d.type === 'Writing course'));
 
@@ -74,7 +74,9 @@ test('another student with the same name but a different ID is not "already done
 test('the same student with no ID on the earlier result is still "already done" by name', async ({ page, context }) => {
   const old = { __id: 'sk_LSN555_x_1', v: 1, code: 'LSN555', type: 'Listening course', skill: 'listening', step: 'b5', name: 'Mubina', studentId: '',
     correct: 9, total: 12, date: new Date().toISOString() };
-  await prepare(context, { docs: [old] });
+  const list = { __id: 'class-LSN555', v: 1, code: 'TAUSER', type: 'TA_SYNC:CLASS', title: 'LSN555', name: '', date: new Date().toISOString(),
+    data: JSON.stringify([{ h: require('crypto').createHash('sha256').update('LSN555|10001').digest('hex').slice(0, 24), n: 'Mubina' }]) };
+  await prepare(context, { docs: [old, list] });   // the name comes from the teacher's list (ID only since 2026-11-15)
   await start(page, '/skill.html?s=listening&st=b5&c=LSN555', 'Mubina', '10001');
   await expect(page.locator('body')).toContainText('You have already done this listening');
 });
@@ -82,15 +84,17 @@ test('the same student with no ID on the earlier result is still "already done" 
 test('"already done" says whose answers they are, and "Not you?" opens an empty start card', async ({ page, context }) => {
   const sent = { __id: 'sk_LSN555_10001_1', v: 1, code: 'LSN555', type: 'Listening course', skill: 'listening', step: 'b5', name: 'Alice Test', studentId: '10001',
     correct: 8, total: 12, date: new Date().toISOString() };
-  await prepare(context, { docs: [sent], storage: { ta_skill_student: JSON.stringify({ name: 'Alice Test', id: '10001' }) } });
+  const list = { __id: 'class-LSN555', v: 1, code: 'TAUSER', type: 'TA_SYNC:CLASS', title: 'LSN555', name: '', date: new Date().toISOString(),
+    data: JSON.stringify([{ h: require('crypto').createHash('sha256').update('LSN555|10001').digest('hex').slice(0, 24), n: 'Alice Test' }]) };
+  await prepare(context, { docs: [sent, list], storage: { ta_skill_student: JSON.stringify({ id: '10001' }) } });
   const errors = watchErrors(page);
   await page.goto('/skill.html?s=listening&st=b5&c=LSN555');
-  await expect(page.locator('#studentNameInput')).toHaveValue('Alice Test');   // the phone remembers the last student
+  await expect(page.locator('#skIdInput')).toHaveValue('10001');   // the phone remembers the last student
   await page.getByRole('button', { name: /Start/ }).click();
+  await passIdCheck(page);
   await expect(page.locator('.sk-done-card')).toContainText('Alice Test');
   await expect(page.locator('.sk-done-card')).toContainText('ID 10001');
   await page.getByRole('button', { name: /Not you/ }).click();
-  await expect(page.locator('#studentNameInput')).toHaveValue('');
   await expect(page.locator('#skIdInput')).toHaveValue('');
   expect(await page.evaluate(() => localStorage.getItem('ta_skill_student'))).toBeNull();
   expect(errors).toEqual([]);

@@ -7,6 +7,9 @@
 #skBody.sk-studio .sk-preview { background: rgba(99,102,241,0.18) !important; }
 #skBody.sk-studio .sk-card { background: #161922 !important; border: 1px solid rgba(255,255,255,0.1) !important; box-shadow: none !important; }
 #skBody.sk-studio .sk-center p { color: #B4B8C7 !important; }
+#skBody.sk-studio .sk-confirm .sk-confirm-t { color: #B4B8C7 !important; }
+@media (prefers-reduced-motion: reduce) {
+}
 #skBody.sk-studio .sk-intro { color: #B4B8C7 !important; }
 #skBody.sk-studio .sk-label { color: #B4B8C7 !important; }
 #skBody.sk-studio  #skIdInput { background: #1C202B !important; border: 1px solid rgba(255,255,255,0.1) !important; color: #F3F4F8 !important; }

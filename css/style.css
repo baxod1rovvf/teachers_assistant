@@ -2895,6 +2895,13 @@ button.sk-dot:hover { transform: scale(1.12); }
 .sk-center { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 8vh; }
 .sk-center p { color: #5A4E72; max-width: 46ch; }
 .sk-big-emoji { font-size: 3rem; line-height: 1; }
+.sk-confirm .sk-confirm-t { margin: 6px 0 0; font-weight: 700; color: #5A4E72; }
+.sk-confirm .sk-confirm-who { margin: 0; font-size: 1.25rem; color: #2A2140; overflow-wrap: anywhere; }
+.sk-confirm-actions { justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+.sk-spin { display: inline-block; width: 1em; height: 1em; vertical-align: -0.15em; border: 3px solid currentColor; border-right-color: transparent;
+  border-radius: 50%; animation: sk-spin .8s linear infinite; }
+@keyframes sk-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .sk-spin { animation-duration: 2.4s; } }
 .sk-intro { color: #5A4E72; line-height: 1.55; margin-bottom: 14px; }
 
 /* start card (the student theme styles the inside) */
