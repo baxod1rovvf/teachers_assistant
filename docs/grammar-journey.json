@@ -8,7 +8,7 @@
           "rule": "Use am, is or are to say who someone is, what something is, how someone feels or where someone is. Use am with I. Use is with he, she, it and one person or thing. Use are with you, we, they and two or more people or things. In speaking we often use short forms: I'm, she's, they're.",
           "table": [["Person","be","Short form"],["I","am","I'm"],["you","are","you're"],["he / she / it","is","he's / she's / it's"],["we","are","we're"],["they","are","they're"]],
           "examples": ["I am a student.","You are my friend.","Tom is ten years old.","It is cold today.","We're in the classroom.","Anna and Sam are at home."],
-          "uz": "I bilan am, he / she / it bilan is, you / we / they bilan are ishlatiladi. Bu o‘zbek tilidagi -man, -san, -dir qo‘shimchalariga o‘xshaydi: I am a student — Men talabaman.",
+          "uz": "I bilan am, he / she / it bilan is, you / we / they bilan are ishlatiladi.",
           "practise": [
             ["choose","I ___ a student.",["am","is","are"],"am","With I, always use am."],
             ["choose","She ___ my sister.",["am","is","are"],"is","With he, she and it, use is."],
@@ -22,7 +22,7 @@
           "rule": "To make a negative, put not after am, is or are: I am not, she is not. Short forms: I'm not, isn't, aren't. To ask a question, put am, is or are before the person: Are you OK? Is he at home? Answer with a short answer: Yes, I am. / No, I'm not.",
           "table": [["Negative","Question","Short answer"],["I am not (I'm not) tired.","Am I late?","Yes, you are. / No, you aren't."],["He is not (He isn't) here.","Is he at home?","Yes, he is. / No, he isn't."],["They are not (They aren't) ready.","Are they at school?","Yes, they are. / No, they aren't."]],
           "examples": ["I am not tired.","Sam isn't at school today.","We aren't hungry.","Are you a teacher? — Yes, I am.","Is it hot today? — No, it isn't.","Where are your books?"],
-          "uz": "Inkor gapda am, is, are dan keyin not qo‘yiladi: I am not tired — Men charchamaganman. So‘roq gapda am, is, are gapning boshiga chiqadi: Are you OK?",
+          "uz": "Inkorda am / is / are dan keyin not keladi (I am not tired — Men charchaganim yo‘q), so‘roqda ular gap boshiga chiqadi.",
           "practise": [
             ["choose","He ___ a doctor. He is a teacher.",["isn't","aren't","am not"],"isn't","With he, use is. The negative is isn't (is not)."],
             ["gap","I ___ not hungry.",["am"],"With I, use am: I am not."],
@@ -36,7 +36,7 @@
           "rule": "Use a or an before one person or thing. Use an before a vowel sound (a, e, i, o, u): an apple, an egg. Use a before other sounds: a cat, a book. Look at the next word: an old car, but a new car. Use a or an with jobs too: She is a doctor.",
           "table": [["a + other sounds","an + a, e, i, o, u sounds"],["a dog","an apple"],["a pen","an egg"],["a big house","an old house"],["a nurse","an engineer"]],
           "examples": ["It is a dog.","This is an orange.","My mum is a nurse.","He is an actor.","It is an old car.","It is a new car."],
-          "uz": "a / an — bitta degan ma’noni beradi. Unli tovush (a, e, i, o, u) oldidan an, boshqa so‘zlar oldidan a qo‘yiladi. Kasb oldidan ham qo‘yiladi: She is a doctor — U shifokor.",
+          "uz": "Unli tovush (a, e, i, o, u) oldidan an, boshqa so‘zlar oldidan a qo‘yiladi: an apple, a dog.",
           "practise": [
             ["choose","This is ___ apple.",["a","an"],"an","Apple starts with a vowel sound (a), so use an."],
             ["choose","It is ___ dog.",["a","an"],"a","Dog starts with d, not a vowel, so use a."],
@@ -77,13 +77,13 @@
           "rule": "A subject pronoun takes the place of a name. It comes before the verb (am, is, are). Use he for a man or a boy, she for a woman or a girl, it for a thing or an animal, and they for two or more people or things.",
           "table": [["One","Two or more"],["I","we"],["you","you"],["he / she / it","they"]],
           "examples": ["Tom is my friend. He is twelve.","Anna is a nurse. She is very kind.","This is my bag. It is new.","Sam and I are in Class 5. We are classmates.","The books are on the table. They are heavy."],
-          "uz": "O‘zbek tilida bitta “u” bor, ingliz tilida esa uchta: he — erkak yoki o‘g‘il bola, she — ayol yoki qiz bola, it — narsa yoki hayvon.",
+          "uz": "O‘zbekchadagi “u” uchun ingliz tilida uchta so‘z bor: he — erkak, she — ayol, it — narsa yoki hayvon.",
           "practise": [
             ["choose","Lucy is my cousin. ___ is ten.",["He","She","It"],"She","Lucy is a girl, so use she."],
             ["choose","My dad is a driver. ___ is at work.",["He","She","They"],"He","Dad is a man, so use he."],
             ["choose","The cat is black. ___ is very small.",["He","She","It"],"It","Use it for an animal or a thing."],
-            ["gap","Ben and Kate are students. ___ are in my class. (Ben and Kate)",["They"],"Two people (not you or me) = they."],
-            ["gap","My friend and I are in the park. ___ are happy. (my friend and I)",["We"],"Another person + I = we."]
+            ["gap","Ben and Kate are students. ___ are in my class. (one word)",["They"],"Two people (not you or me) = they."],
+            ["gap","My friend and I are in the park. ___ are happy. (one word)",["We"],"Another person + I = we."]
           ]
         },
         {
@@ -91,7 +91,7 @@
           "rule": "Possessive adjectives show who something belongs to. They come before a noun: my book, her phone. They are the same for one thing or many things: my book, my books. Be careful: his is for a man or a boy, her is for a woman or a girl.",
           "table": [["Subject pronoun","Possessive adjective","Example"],["I","my","my bag"],["you","your","your bag"],["he","his","his bag"],["she","her","her bag"],["it","its","its bed (a dog's bed)"],["we","our","our bag"],["they","their","their bag"]],
           "examples": ["This is my bag.","What is your name?","Tom is with his mother.","Her cat is white.","We are in our classroom.","Their house is very big."],
-          "uz": "Bu so‘zlar narsa kimniki ekanini bildiradi va otdan oldin keladi: my book — mening kitobim. his — erkak kishiniki, her — ayol kishiniki.",
+          "uz": "Bu so‘zlar narsa kimniki ekanini bildiradi va otdan oldin keladi: my book — mening kitobim.",
           "practise": [
             ["choose","I am Tom. ___ name is Tom.",["My","I","Me"],"My","Before a noun (name), use my."],
             ["choose","Kate is with ___ brother.",["his","her","its"],"her","Kate is a girl, so use her."],
@@ -105,12 +105,12 @@
           "rule": "Before am, is, are (a verb), use I, he, she, we, they. Before a noun, use my, his, her, our, their. Be careful with it's and its: it's = it is. its = belonging to it (no apostrophe).",
           "table": [["Before a verb","Before a noun"],["He is my uncle.","His car is red."],["She is a singer.","Her name is Mia."],["They are twins.","Their names are Jack and Sam."],["It's a dog. (it is)","Its name is Max."]],
           "examples": ["She is a singer. Her name is Mia.","He is my uncle. His car is red.","They are twins. Their names are Jack and Sam.","It's a dog. Its name is Max.","We are in Class 7. Our teacher is Mrs Green."],
-          "uz": "Fe’l (am, is, are) oldidan I, he, she, they, ot oldidan esa my, his, her, their ishlatiladi. it’s = it is, its esa “uning” degani.",
+          "uz": "Fe’ldan oldin he, she, they, otdan oldin his, her, their keladi; its — “uning”, it’s esa it is.",
           "practise": [
             ["choose","___ is my best friend.",["He","His"],"He","Before is (a verb), use he."],
             ["choose","___ name is Lily.",["She","Her"],"Her","Before a noun (name), use her."],
             ["choose","This is a bird. ___ wings are blue.",["It's","Its"],"Its","its = belonging to it. it's = it is."],
-            ["gap","Jack and Mia are my friends. ___ house is near my school. (Jack and Mia)",["Their"],"Before a noun (house), they → their."],
+            ["gap","Jack and Mia are my friends. ___ house is near my school. (they)",["Their"],"Before a noun (house), they → their."],
             ["fix",["Our teacher is from Canada.","We teacher is from Canada.","Us teacher is from Canada."],"Our teacher is from Canada.","Before a noun (teacher), we → our."]
           ]
         }
@@ -118,7 +118,7 @@
       "test": [
         ["choose","My mother is a cook. ___ is at work.",["He","She","It"],"She"],
         ["choose","This is my phone. ___ is new.",["He","It","They"],"It"],
-        ["gap","Tom and Sam are brothers. ___ are tall. (Tom and Sam)",["They"]],
+        ["gap","Tom and Sam are brothers. ___ are tall. (one word)",["They"]],
         ["choose","Emma, is this ___ pen?",["you","your","you're"],"your"],
         {"from":"g1","q":["choose","My sisters ___ at school.",["am","is","are"],"are"]},
         ["choose","Max is with ___ dad.",["his","her","he"],"his"],
@@ -127,13 +127,13 @@
         ["choose","We are in the park with ___ dog.",["our","we","us"],"our"],
         {"from":"g1","q":["choose","This is ___ orange.",["a","an"],"an"]},
         ["choose","Lily and Kate are at home. ___ are sisters.",["They","Their","There"],"They"],
-        ["gap","Anna is a doctor. ___ office is in the city centre. (Anna)",["Her"]],
+        ["gap","Anna is a doctor. ___ office is in the city centre. (she)",["Her","Anna's"]],
         ["order",["is","name","Her","Sophie"],"Her name is Sophie."],
         ["choose","The dog is in ___ bed.",["it's","its","it"],"its"],
         {"from":"g1","q":["gap","I ___ not ready.",["am"]]},
         ["fix",["They are my parents. Their names are Tom and Lucy.","They are my parents. They names are Tom and Lucy."],"They are my parents. Their names are Tom and Lucy."],
         ["order",["our","This","is","classroom"],"This is our classroom."],
-        ["gap","You and I are in the same class. ___ are classmates. (you and I)",["We"]],
+        ["gap","You and I are in the same class. ___ are classmates. (one word)",["We"]],
         ["choose","Mr and Mrs Brown are with ___ children.",["their","they","them"],"their"],
         {"from":"g1","q":["choose","___ he your brother?",["Am","Is","Are"],"Is"]}
       ]
@@ -146,7 +146,7 @@
           "rule": "Singular means one. Plural means two or more. Most nouns add -s: book → books. Nouns that end in -s, -ss, -sh, -ch or -x add -es: bus → buses, box → boxes. Some nouns that end in -o add -es too: tomato → tomatoes. After a number (two, three, ten…) the noun is plural: two books.",
           "table": [["Ending","Rule","Example"],["most nouns","+ s","a cat → two cats"],["-s, -ss, -sh, -ch, -x","+ es","a bus → buses, a dish → dishes, a watch → watches"],["-o (some nouns)","+ es","a tomato → tomatoes, a potato → potatoes"]],
           "examples": ["one pen → three pens","a class → two classes","a brush → brushes","a box → five boxes","My shoes are new.","The buses are full."],
-          "uz": "Ko‘plikda otga -s yoki -es qo‘shiladi (books — kitoblar). Diqqat: o‘zbek tilidan farqli, sondan keyin ham -s qo‘shiladi: two books — ikkita kitob.",
+          "uz": "Ko‘plikda otga -s yoki -es qo‘shiladi, o‘zbek tilidan farqli, sondan keyin ham: two books — ikkita kitob.",
           "practise": [
             ["choose","one apple, two ___",["apple","apples","applees"],"apples","Most nouns just add -s."],
             ["gap","one box, three ___",["boxes"],"Nouns that end in -x add -es."],
@@ -160,7 +160,7 @@
           "rule": "If a noun ends in a consonant + y, change y to i and add -es: baby → babies, city → cities. If it ends in a vowel + y (ay, ey, oy), just add -s: day → days, key → keys, boy → boys. Many nouns that end in -f or -fe change to -ves: leaf → leaves, knife → knives.",
           "table": [["Ending","Rule","Example"],["consonant + y","y → ies","a baby → babies, a city → cities"],["vowel + y (ay, ey, oy)","+ s","a day → days, a key → keys, a boy → boys"],["-f / -fe","→ ves","a leaf → leaves, a knife → knives, a shelf → shelves"]],
           "examples": ["one city → two cities","a lady → three ladies","a day → seven days","a toy → many toys","a shelf → two shelves","The leaves are yellow."],
-          "uz": "Undosh + y bo‘lsa, y → ies bo‘ladi (baby → babies). Unli + y bo‘lsa, faqat -s qo‘shiladi (boy → boys). -f / -fe ko‘pincha -ves ga aylanadi (knife → knives).",
+          "uz": "Undosh + y → ies (babies), unli + y → -s (boys), -f / -fe → -ves (knives).",
           "practise": [
             ["choose","one baby, two ___",["babys","babies","babyes"],"babies","b + y: change y to i and add -es."],
             ["choose","one boy, three ___",["boys","boies"],"boys","o + y (a vowel + y): just add -s."],
@@ -199,7 +199,7 @@
         ["choose","one person, ten ___",["person","people","peoples"],"people"],
         ["order",["are","The","children","happy"],"The children are happy."],
         ["gap","one toy, many ___",["toys"]],
-        {"from":"g2","q":["gap","This is Tom. ___ bag is blue. (Tom)",["His"]]},
+        {"from":"g2","q":["gap","This is Tom. ___ bag is blue. (he)",["His","Tom's"]]},
         ["choose","one mouse, two ___",["mouses","mice","mices"],"mice"],
         ["fix",["The boxes are heavy.","The boxs are heavy.","The boxes is heavy."],"The boxes are heavy."],
         ["gap","one shelf, three ___",["shelves"]],
@@ -229,7 +229,7 @@
           "rule": "Use that for one thing far from you (there). Use those for two or more things far from you. that + a singular noun: that house. those + a plural noun: those houses.",
           "table": [["","One","Two or more"],["Near (here)","this","these"],["Far (there)","that","those"]],
           "examples": ["That is our school.","That man is my uncle.","Those are my parents.","Those birds are very small.","Is that your car over there?"],
-          "uz": "that — u (bitta, uzoqdagi narsa), those — ular (ko‘p, uzoqdagi narsalar).",
+          "uz": "that — ana u / anavi (uzoqdagi bitta narsa), those — ana ular / anavilar (uzoqdagi narsalar).",
           "practise": [
             ["choose","___ is my house over there.",["That","Those"],"That","One thing far away (over there): that."],
             ["choose","___ trees over there are very tall.",["That","Those"],"Those","Two or more things far away: those."],
@@ -243,7 +243,7 @@
           "rule": "When you ask about this or that, answer with it: What's this? — It's a clock. When you ask about these or those, answer with they: What are these? — They're keys. Short answers: Yes, it is. / No, it isn't. Yes, they are. / No, they aren't.",
           "table": [["Question","Answer"],["What's this? / What's that?","It's a pen."],["What are these? / What are those?","They're pens."],["Is this your bag?","Yes, it is. / No, it isn't."],["Are those your shoes?","Yes, they are. / No, they aren't."]],
           "examples": ["What's this? — It's a map.","What are these? — They're grapes.","Who is that? — That's my brother.","Is that your coat? — Yes, it is.","Are these your glasses? — No, they aren't."],
-          "uz": "this / that haqidagi savolga it bilan, these / those haqidagi savolga they bilan javob beriladi: What are these? — They're keys.",
+          "uz": "this / that haqidagi savolga it bilan, these / those haqidagi savolga they bilan javob beriladi.",
           "practise": [
             ["choose","What is this? — ___ a lamp.",["It's","They're"],"It's","this = one thing, so answer with it."],
             ["choose","What are those? — ___ birds.",["It's","They're"],"They're","those = two or more, so answer with they."],
@@ -284,7 +284,7 @@
           "rule": "Use have got / has got to say what someone owns, and to talk about family and how someone looks. Use have got with I, you, we, they. Use has got with he, she, it. Short forms: I've got, you've got, he's got, she's got.",
           "table": [["Person","Full form","Short form"],["I / you / we / they","have got","I've got / you've got / we've got / they've got"],["he / she / it","has got","he's got / she's got / it's got"]],
           "examples": ["I have got a new bike.","We've got two cats.","Anna has got long hair.","Tom's got a brother and a sister.","The car has got four doors."],
-          "uz": "have got / has got — “… bor” degani: I have got a bike — Mening velosipedim bor. he, she, it bilan has got ishlatiladi.",
+          "uz": "have got / has got — “… bor” degani: I have got a bike — Mening velosipedim bor.",
           "practise": [
             ["choose","I ___ got a sister.",["have","has"],"have","With I, use have got."],
             ["choose","Ben ___ got a dog.",["have","has"],"has","Ben = he, so use has got."],
@@ -298,7 +298,7 @@
           "rule": "Negative: haven't got / hasn't got. Question: put have or has first: Have you got a pen? Has she got a car? Short answers: Yes, I have. / No, I haven't. Yes, she has. / No, she hasn't. Don't say got in a short answer.",
           "table": [["Negative","Question","Short answer"],["I haven't got a car.","Have you got a car?","Yes, I have. / No, I haven't."],["She hasn't got a car.","Has she got a car?","Yes, she has. / No, she hasn't."],["They haven't got a car.","Have they got a car?","Yes, they have. / No, they haven't."]],
           "examples": ["I haven't got a pet.","Sam hasn't got a computer.","We haven't got much time.","Have you got a pen? — Yes, I have.","Has your sister got a job? — No, she hasn't.","Have they got a car? — Yes, they have."],
-          "uz": "Inkor: haven't got / hasn't got (… yo‘q). So‘roq gapda have yoki has gap boshiga chiqadi: Have you got a pen? — Ruchkangiz bormi?",
+          "uz": "Inkor: haven't got / hasn't got (… yo‘q); so‘roqda have yoki has gap boshiga chiqadi.",
           "practise": [
             ["choose","I ___ got a car.",["haven't","hasn't"],"haven't","With I, use haven't got."],
             ["choose","Lucy ___ got a brother.",["haven't","hasn't"],"hasn't","Lucy = she, so use hasn't got."],
@@ -312,7 +312,7 @@
           "rule": "'s can mean is or has. If got comes after it, 's means has: She's got a cat (She has got a cat). If there is no got, 's means is: She's tall (She is tall).",
           "table": [["'s = has (got after it)","'s = is (no got)"],["He's got a cold.","He's a doctor."],["It's got two wheels.","It's cold today."],["Mia's got brown eyes.","Mia's eleven."]],
           "examples": ["He's got a cold. (He has got a cold.)","He's a doctor. (He is a doctor.)","It's got two wheels. (It has got two wheels.)","It's cold today. (It is cold today.)","Mia's got brown eyes. (Mia has got brown eyes.)"],
-          "uz": "'s ikki xil ma’noda keladi: undan keyin got kelsa — has, got kelmasa — is: She's got a cat (has), She's tall (is).",
+          "uz": "'s dan keyin got kelsa — has, got kelmasa — is: She's got a cat, She's tall.",
           "practise": [
             ["choose","She's got a new bag. Here 's = ___",["is","has"],"has","got comes after 's, so 's = has."],
             ["choose","She's twelve. Here 's = ___",["is","has"],"is","There is no got, so 's = is."],
@@ -353,7 +353,7 @@
           "rule": "Use there is / there are to say that something is in a place. Use there is with one thing (a singular noun). Use there are with two or more things (a plural noun). Short form: there's.",
           "table": [["","Example"],["There is (There's) + one thing","There is a bed in my room."],["There are + two or more","There are two windows in my room."]],
           "examples": ["There is a cat in the garden.","There's a bank near my house.","There are three bedrooms in our flat.","There are many people in the park.","In my bag there is a book and there are two pens."],
-          "uz": "There is / there are — biror joyda “… bor” degani: There is a bed in my room — Xonamda karavot bor. Bitta narsa — there is, ko‘p narsa — there are.",
+          "uz": "Biror joyda bitta narsa bor bo‘lsa — there is, ko‘p narsa bo‘lsa — there are ishlatiladi.",
           "practise": [
             ["choose","There ___ a table in the kitchen.",["is","are"],"is","One table: there is."],
             ["choose","There ___ four chairs in the room.",["is","are"],"are","Four chairs = more than one: there are."],
@@ -367,7 +367,7 @@
           "rule": "Negative: there isn't / there aren't. Question: Is there…? Are there…? Short answers: Yes, there is. / No, there isn't. Yes, there are. / No, there aren't. To ask about a number, use How many … are there?",
           "table": [["Negative","Question","Short answer"],["There isn't a lift.","Is there a lift?","Yes, there is. / No, there isn't."],["There aren't many trees.","Are there many trees?","Yes, there are. / No, there aren't."]],
           "examples": ["There isn't a TV in my room.","There aren't many students in the classroom.","Is there a park near here? — Yes, there is.","Are there two bathrooms? — No, there aren't.","How many students are there in your class?"],
-          "uz": "Inkorda is / are dan keyin not qo‘yiladi: there isn't, there aren't (… yo‘q). So‘roqda is / are gap boshiga chiqadi: Is there a park? — Park bormi?",
+          "uz": "Inkor: there isn't / there aren't (… yo‘q); so‘roq: Is there…? / Are there…? (… bormi?).",
           "practise": [
             ["choose","There ___ a lift in this building.",["isn't","aren't"],"isn't","One lift: there isn't."],
             ["choose","___ there a bank near here?",["Is","Are"],"Is","One bank: Is there…?"],
@@ -380,7 +380,7 @@
           "title": "There's a dog. It's big.",
           "rule": "Use there is / there are to say something is there for the first time. Then use it (one thing) or they (two or more) to say more about it: There's a dog in the garden. It's very big.",
           "examples": ["There's a new girl in our class. She's from Spain.","There's a box on the table. It's heavy.","There are two cats in the garden. They're hungry.","There's a cafe near my house. It's very nice.","There are three books on my desk. They're new."],
-          "uz": "Biror narsa haqida birinchi marta there is / there are bilan aytiladi, keyin u haqida it yoki they bilan gapiriladi: There's a dog. It's big.",
+          "uz": "Avval there is / there are bilan aytiladi, keyin it yoki they bilan davom etiladi: There's a dog. It's big.",
           "practise": [
             ["choose","There's a cup on the desk. ___ is blue.",["It","There"],"It","We already know about the cup, so use it."],
             ["choose","___ is a museum in our town.",["It","There"],"There","First time we talk about the museum: there is."],
@@ -421,7 +421,7 @@
           "rule": "Use a / an when you talk about one thing for the first time, or about any one of many: There's a cat in the garden. Use the when you and the listener know which thing you mean, for example because you talked about it before: The cat is black.",
           "table": [["First time (any one)","We know which one"],["I've got a cat and a dog.","The cat is black and the dog is white."],["There's a man at the door.","The man is tall."],["She's got an apple.","The apple is red."]],
           "examples": ["I've got a cat and a dog. The cat is black and the dog is white.","There's a man at the door. The man is very tall.","There's a book on the table. The book is new.","Where is the teacher?","The door is open."],
-          "uz": "a / an — har qanday bitta narsa yoki birinchi marta aytilgan narsa, the — ikkalamiz biladigan aniq narsa. O‘zbek tilida artikl yo‘q, shuning uchun uni tushirib qoldirmang.",
+          "uz": "a / an — birinchi marta aytilgan har qanday narsa, the — ikkalamiz biladigan aniq narsa.",
           "practise": [
             ["choose","I've got ___ apple and a banana.",["a","an","the"],"an","First time, and apple starts with a vowel sound: an."],
             ["choose","I've got an apple and a banana. ___ apple is red.",["A","An","The"],"The","We already know which apple, so use the."],
@@ -449,7 +449,7 @@
           "rule": "Don't use a, an or the before names of people, cities and countries: Tom, London, Spain. Don't use them in these phrases: at home, at school, at work. Never use a / an with plural nouns: cats (not a cats).",
           "table": [["No article","Not"],["Tom is my friend.","The Tom is my friend."],["London is a big city.","The London is a big city."],["She is at home.","She is at the home."],["Cats are good pets.","A cats are good pets."]],
           "examples": ["Tom is at school.","My mum is at work.","London is a big city.","Spain is a beautiful country.","Dogs are friendly animals."],
-          "uz": "Ism, shahar va davlat nomlari oldidan hamda at home, at school, at work iboralarida artikl ishlatilmaydi: My mum is at work — Onam ishda.",
+          "uz": "Ism, shahar va davlat nomlari oldidan hamda at home, at school, at work iboralarida artikl yo‘q.",
           "practise": [
             ["choose","My brother is at ___.",["home","the home","a home"],"home","We say at home, with no article."],
             ["choose","___ is a big city.",["London","The London","A London"],"London","No article before the name of a city."],
@@ -490,7 +490,7 @@
           "rule": "Countable nouns are things you can count: one apple, two apples. They have a plural, and you can use a / an with one. Uncountable nouns are things you can't count, like water, milk, rice, bread, money, sugar and music. They have no plural and no a / an, and they go with is: The water is cold.",
           "table": [["Countable","Uncountable"],["an apple, two apples","water"],["a banana, bananas","milk"],["an egg, eggs","bread"],["a bottle, bottles","rice"],["a coin, coins","money"]],
           "examples": ["I've got an apple.","There are three eggs in the fridge.","The milk is in the fridge.","Rice is good for you.","My money is in my bag."],
-          "uz": "Sanaladigan otlar (apple — olma) ko‘plikda -s oladi va a / an bilan keladi. Sanalmaydigan otlar (water — suv, rice — guruch) -s ham, a / an ham olmaydi.",
+          "uz": "Sanaladigan otlar (apple) -s va a / an oladi, sanalmaydigan otlar (water, rice) esa olmaydi.",
           "practise": [
             ["choose","Which word is uncountable?",["apple","milk","egg"],"milk","You can't count milk, so it is uncountable."],
             ["choose","Which word is countable?",["bread","banana","water"],"banana","You can count bananas: one banana, two bananas."],
@@ -504,13 +504,13 @@
           "rule": "To count uncountable things, use a word for a container or an amount: a bottle of water, a cup of tea, a piece of cake, a kilo of rice. For more than one, put -s on the container word: two cups of tea (not two cup of teas).",
           "table": [["Amount","Example"],["a bottle of","a bottle of water"],["a cup of","a cup of tea"],["a glass of","a glass of milk"],["a piece of","a piece of cake / paper"],["a kilo of","a kilo of rice"],["a loaf of","a loaf of bread"]],
           "examples": ["a cup of coffee","two bottles of juice","three pieces of paper","There's a glass of milk on the table.","I've got two kilos of sugar."],
-          "uz": "Sanalmaydigan narsani sanash uchun idish yoki o‘lchov so‘zi ishlatiladi: a cup of tea — bir piyola choy. Ko‘plik -s idish so‘ziga qo‘shiladi: two cups of tea.",
+          "uz": "Sanalmaydigan narsani idish so‘zi bilan sanaymiz, -s idishga qo‘shiladi: two cups of tea — ikki piyola choy.",
           "practise": [
             ["choose","a ___ of water",["bottle","piece"],"bottle","Water is in a bottle: a bottle of water."],
             ["choose","a ___ of cake",["piece","bottle"],"piece","We cut cake into pieces: a piece of cake."],
             ["gap","two ___ of tea (cup)",["cups"],"Put -s on the container word: two cups of tea."],
             ["choose","three ___ of bread",["loaves","loafs"],"loaves","loaf → loaves (like leaf → leaves)."],
-            ["fix",["two glasses of milk","two glass of milks","two glasses of milks"],"two glasses of milk","The -es goes on glass, never on milk."]
+            ["fix",["I've got two glasses of milk.","I've got two glass of milks.","I've got two glasses of milks."],"I've got two glasses of milk.","The -es goes on glass, never on milk."]
           ]
         },
         {
@@ -518,7 +518,7 @@
           "rule": "Ask How many + a plural noun (countable): How many apples? Ask How much + an uncountable noun: How much water? A lot of works with both: a lot of books, a lot of milk.",
           "table": [["Countable","Uncountable"],["How many eggs are there?","How much milk is there?"],["How many brothers have you got?","How much money have you got?"],["There are a lot of books.","There is a lot of snow."]],
           "examples": ["How many brothers have you got?","How much money have you got?","How many students are there in your class?","How much milk is there in the fridge?","There are a lot of books in the library.","There is a lot of snow today."],
-          "uz": "How many — sanaladigan otlar bilan (nechta?), how much — sanalmaydigan otlar bilan (qancha?). A lot of — ikkalasi bilan ham (ko‘p).",
+          "uz": "How many — nechta? (sanaladigan), how much — qancha? (sanalmaydigan), a lot of — ko‘p (ikkalasi bilan).",
           "practise": [
             ["choose","How ___ apples are there?",["much","many"],"many","Apples are countable: how many."],
             ["choose","How ___ sugar is there?",["much","many"],"much","Sugar is uncountable: how much."],
@@ -559,7 +559,7 @@
           "rule": "Use some in positive sentences with plural nouns and uncountable nouns. It means a few or a little — we don't say exactly how many or how much: There are some eggs. There is some milk.",
           "table": [["","Plural (countable)","Uncountable"],["Positive (+)","There are some apples.","There is some milk."]],
           "examples": ["There are some books on the shelf.","I've got some money.","There is some cheese in the fridge.","Some students are in the library.","We've got some new neighbours."],
-          "uz": "some — “bir nechta / biroz” degani. Darak gaplarda ko‘plikdagi va sanalmaydigan otlar bilan ishlatiladi: There is some milk — Biroz sut bor.",
+          "uz": "some — “bir nechta / biroz”, darak gaplarda ishlatiladi: There is some milk — Biroz sut bor.",
           "practise": [
             ["choose","There are ___ pens on the desk.",["some","a"],"some","Pens is plural, so use some (not a)."],
             ["choose","There is ___ water in the glass.",["some","a"],"some","Water is uncountable, so use some (not a)."],
@@ -573,7 +573,7 @@
           "rule": "Use any in negative sentences and in questions, with plural nouns and uncountable nouns: There aren't any eggs. Is there any milk? Have you got any brothers?",
           "table": [["","Plural (countable)","Uncountable"],["Negative (-)","There aren't any eggs.","There isn't any milk."],["Question (?)","Are there any eggs?","Is there any milk?"]],
           "examples": ["I haven't got any money.","There aren't any chairs in the room.","Is there any sugar?","Have you got any pets?","There isn't any juice in the fridge."],
-          "uz": "any — inkor va so‘roq gaplarda ishlatiladi: Is there any milk? — Sut bormi? There isn't any milk — Umuman sut yo‘q.",
+          "uz": "any — inkor va so‘roqda: Is there any milk? — Sut bormi? There isn't any milk — Sut umuman yo‘q.",
           "practise": [
             ["choose","There aren't ___ cars in the street.",["some","any"],"any","A negative sentence (aren't): any."],
             ["choose","Have you got ___ sisters?",["some","any"],"any","A question: any."],
@@ -642,12 +642,12 @@
           "rule": "next to = at the side of. between = in the middle of two things. in front of = before something, at its front. behind = at the back of something. opposite = on the other side, facing it. near = not far from.",
           "table": [["Preposition","Example"],["next to","The bank is next to the cafe."],["between","The cafe is between the bank and the shop."],["in front of","The car is in front of the house."],["behind","The garden is behind the house."],["opposite","The school is opposite the park."],["near","My flat is near the station."]],
           "examples": ["Sam is next to Anna in the photo.","The letter B is between A and C.","There's a tree in front of my window.","The ball is behind the sofa.","The pharmacy is opposite the bank.","Is there a bus stop near here?"],
-          "uz": "next to — yonida, between — o‘rtasida (ikki narsa orasida), in front of — oldida, behind — orqasida, opposite — qarshisida, near — yaqinida.",
+          "uz": "next to — yonida, between — orasida, in front of — oldida, behind — orqasida, opposite — qarshisida, near — yaqinida.",
           "practise": [
             ["choose","The number 5 is ___ 4 and 6.",["between","behind","under"],"between","In the middle of two things: between."],
             ["choose","The garden is ___ the house, at the back.",["behind","in front of","on"],"behind","At the back of something: behind."],
             ["choose","Tom is ___ Ben. They are side by side.",["next to","under","opposite"],"next to","At the side of someone: next to."],
-            ["gap","The cafe is ___ the park. It is on the other side of the street, facing it.",["opposite"],"On the other side, facing it: opposite."],
+            ["gap","The cafe is ___ the park. It is on the other side of the street, facing it.",["opposite","across from"],"On the other side, facing it: opposite."],
             ["gap","The teacher is ___ the class, so everyone can see her. (three words)",["in front of"],"At the front of something: in front of."]
           ]
         },
@@ -656,7 +656,7 @@
           "rule": "Use at for a point or a place where you do something: at the door, at the bus stop, at home, at school, at work. Use in for cities, countries and rooms: in Paris, in Spain, in the bedroom. Use on for floors and for buses and trains: on the second floor, on the bus.",
           "table": [["at","in","on"],["at the door","in London","on the first floor"],["at the bus stop","in Spain","on the bus"],["at school / at home / at work","in the kitchen","on the train"]],
           "examples": ["There's someone at the door.","My sister is at school.","My grandparents are in Spain.","Our flat is on the third floor.","The children are on the bus."],
-          "uz": "at — biror nuqtada yoki joyda (at home — uyda, at school — maktabda), in — shahar, davlat yoki xona ichida (in London), on — qavatda yoki avtobusda (on the bus).",
+          "uz": "at — nuqta yoki joy (at home), in — shahar, davlat, xona ichida (in London), on — qavat, avtobus (on the bus).",
           "practise": [
             ["choose","My mum is ___ work.",["at","in","on"],"at","We say at work."],
             ["choose","They are ___ Paris.",["at","in","on"],"in","A city: in."],
@@ -672,13 +672,13 @@
         ["choose","My slippers are ___ the bed. (below it)",["in","on","under"],"under"],
         {"from":"g9","q":["choose","There aren't ___ eggs in the fridge.",["some","any"],"any"]},
         ["choose","B is ___ A and C.",["between","next","behind"],"between"],
-        ["gap","The bank is ___ the post office. It is on the other side of the road, facing it.",["opposite"]],
+        ["gap","The bank is ___ the post office. It is on the other side of the road, facing it.",["opposite","across from"]],
         ["choose","The garden is ___ the house. You can't see it from the street.",["behind","in front of","between"],"behind"],
-        ["gap","My house is ___ the school. It's only two minutes away. (not far from)",["near","close to"]],
+        ["gap","My house is ___ the school. It's only two minutes away. (= not far from)",["near","close to","not far from"]],
         {"from":"g8","q":["choose","a ___ of bread",["bottle","loaf","glass"],"loaf"]},
         ["choose","My cousins are ___ Italy.",["at","in","on"],"in"],
         ["choose","Our flat is ___ the fifth floor.",["at","in","on"],"on"],
-        ["order",["is","The","under","ball","the","chair"],"The ball is under the chair."],
+        ["order",["are","My","under","shoes","the","bed"],"My shoes are under the bed."],
         ["fix",["The bank is next to the cafe.","The bank is next the cafe.","The bank is next of the cafe."],"The bank is next to the cafe."],
         {"from":"g7","q":["choose","___ sky is grey today.",["A","The"],"The"]},
         ["gap","The car is ___ the house, so we can see it from the window. (three words)",["in front of"]],
@@ -697,7 +697,7 @@
           "rule": "Use the present simple for habits and routines (things you do every day, every week…) and for facts (things that are always true). With I, you, we and they, use the verb as it is: I play, they work.",
           "table": [["Person","Verb","Example"],["I","play","I play football."],["you","play","You play the guitar."],["we","play","We play chess."],["they","play","They play tennis."]],
           "examples": ["I get up at seven o'clock.","We go to school by bus.","You speak English very well.","My parents work in a hospital.","Cows eat grass."],
-          "uz": "Present Simple har kuni, doimo bo‘ladigan ish-harakatlar va haqiqatlar uchun ishlatiladi. I, you, we, they bilan fe’l o‘zgarmaydi: I play — Men o‘ynayman.",
+          "uz": "Present Simple doim bo‘ladigan ishlar uchun; I, you, we, they bilan fe’l o‘zgarmaydi: I play.",
           "practise": [
             ["choose","I ___ tea every morning.",["drink","drinks"],"drink","With I, the verb has no -s."],
             ["choose","We ___ in a small flat.",["live","lives"],"live","With we, the verb has no -s."],
@@ -725,7 +725,7 @@
           "rule": "Verbs that end in -s, -sh, -ch, -x or -o add -es: watch → watches, go → goes, do → does. If a verb ends in a consonant + y, change y to i and add -es: study → studies. If it ends in a vowel + y, just add -s: play → plays. have → has.",
           "table": [["Ending","he / she / it","Example"],["most verbs","+ s","work → works"],["-s, -sh, -ch, -x, -o","+ es","watch → watches, go → goes, do → does"],["consonant + y","y → ies","study → studies, fly → flies"],["have","has","have → has"]],
           "examples": ["He watches TV in the evening.","She goes to bed at ten.","My dad washes the car on Sundays.","Emma studies English.","Sam has breakfast at eight."],
-          "uz": "-s, -sh, -ch, -x, -o bilan tugagan fe’llarga -es qo‘shiladi (goes). Undosh + y bo‘lsa, y → ies (studies). have esa has bo‘ladi.",
+          "uz": "-s, -sh, -ch, -x, -o dan keyin -es (goes), undosh + y → ies (studies), have → has.",
           "practise": [
             ["choose","She ___ to school by bus.",["gos","goes"],"goes","go ends in -o, so add -es: goes."],
             ["choose","He ___ TV every evening.",["watchs","watches"],"watches","watch ends in -ch, so add -es: watches."],
@@ -766,7 +766,7 @@
           "rule": "To make a negative, use don't (do not) with I, you, we, they, and doesn't (does not) with he, she, it. Then use the verb as it is. After doesn't, the verb has no -s: She doesn't like fish (not She doesn't likes).",
           "table": [["Person","Negative","Example"],["I / you / we / they","don't + verb","I don't eat meat."],["he / she / it","doesn't + verb","He doesn't eat meat."]],
           "examples": ["I don't drink coffee.","We don't have lessons on Sunday.","My brother doesn't like fish.","It doesn't snow here in summer.","Anna doesn't work on Fridays."],
-          "uz": "Inkor gap: don't / doesn't + fe’l. doesn't dan keyin fe’lga -s qo‘shilmaydi: She doesn't like fish — U baliqni yoqtirmaydi.",
+          "uz": "Inkor: don't / doesn't + fe’l; doesn't dan keyin fe’lga -s qo‘shilmaydi: She doesn't like fish.",
           "practise": [
             ["choose","I ___ like tea.",["don't","doesn't"],"don't","With I, use don't."],
             ["choose","He ___ play football.",["don't","doesn't"],"doesn't","With he, use doesn't."],
@@ -780,7 +780,7 @@
           "rule": "To ask a question, use Do with I, you, we, they and Does with he, she, it, then the person, then the verb: Do you like music? Does he speak French? After Does, the verb has no -s. Short answers: Yes, I do. / No, I don't. Yes, she does. / No, she doesn't.",
           "table": [["Question","Short answer"],["Do you like music?","Yes, I do. / No, I don't."],["Does he speak French?","Yes, he does. / No, he doesn't."],["Do they live here?","Yes, they do. / No, they don't."]],
           "examples": ["Do you play chess? — Yes, I do.","Does your sister work? — No, she doesn't.","Do they go to school by bus?","Does it rain a lot in your town?","Do we have homework today?"],
-          "uz": "So‘roq gap Do yoki Does bilan boshlanadi: Do you like music? — Siz musiqani yoqtirasizmi? Does dan keyin ham fe’lga -s qo‘shilmaydi.",
+          "uz": "So‘roq Do yoki Does bilan boshlanadi, Does dan keyin fe’lga -s qo‘shilmaydi: Do you like music?",
           "practise": [
             ["choose","___ you like pizza?",["Do","Does"],"Do","With you, start with Do."],
             ["choose","___ she speak English?",["Do","Does"],"Does","With she, start with Does."],
@@ -794,7 +794,7 @@
           "rule": "Question words come first: What, Where, When, What time, Who, How. Then do or does, then the person, then the verb: Where do you live? What time does the film start?",
           "table": [["Question word","do / does","Person","Verb"],["Where","do","you","live?"],["What","does","she","eat for breakfast?"],["What time","do","they","get up?"],["How","does","he","go to school?"]],
           "examples": ["Where do you work?","What does Tom do? — He's a doctor.","When do you play football?","What time does the lesson start?","How do you go to school? — By bus."],
-          "uz": "Savol so‘zi (What, Where, When…) birinchi keladi, keyin do / does, keyin shaxs va fe’l: Where do you live? — Qayerda yashaysiz?",
+          "uz": "Savol so‘zi, keyin do / does, keyin shaxs va fe’l: Where do you live? — Qayerda yashaysiz?",
           "practise": [
             ["choose","Where ___ you live?",["do","does"],"do","With you, use do."],
             ["choose","What time ___ the shop open?",["do","does"],"does","The shop = it, so use does."],
@@ -835,7 +835,7 @@
           "rule": "Adverbs of frequency say how often something happens. always = every time. never = not at any time. The others are in between: usually, often, sometimes, rarely.",
           "table": [["Word","How often"],["always","100% — every time"],["usually","about 90%"],["often","about 70%"],["sometimes","about 50%"],["rarely","about 10%"],["never","0% — not at any time"]],
           "examples": ["I always brush my teeth in the morning.","We usually have dinner at seven.","Tom often plays computer games.","I sometimes walk to school.","My dad rarely watches TV.","Anna never drinks coffee."],
-          "uz": "Bu so‘zlar ish qanchalik tez-tez bo‘lishini bildiradi: always — doim, usually — odatda, often — tez-tez, sometimes — ba’zan, rarely — kamdan-kam, never — hech qachon.",
+          "uz": "always — doim, usually — odatda, often — tez-tez, sometimes — ba’zan, rarely — kamdan-kam, never — hech qachon.",
           "practise": [
             ["choose","I brush my teeth every morning and every evening. I ___ brush my teeth.",["always","never"],"always","Every time = always."],
             ["choose","Sam doesn't like fish. He ___ eats fish.",["always","never"],"never","Not at any time = never."],
@@ -863,7 +863,7 @@
           "rule": "Ask How often…? to find out how many times. Answer with an adverb, or with every day, once a week (one time), twice a week (two times), three times a month. These go at the end of the sentence. Never is already negative, so don't use it with don't: I never eat meat (not I don't never eat meat).",
           "table": [["How many times?","We say"],["1 time","once a day / once a week"],["2 times","twice a week / twice a month"],["3 or more times","three times a week / four times a year"],["each day","every day"]],
           "examples": ["How often do you go to the gym? — Three times a week.","I visit my grandparents every Sunday.","She calls her mum once a day.","We have English twice a week.","I never drink cola."],
-          "uz": "How often…? — Qanchalik tez-tez…? Javob: every day — har kuni, once a week — haftada bir marta, twice a week — haftada ikki marta.",
+          "uz": "How often…? — Qanchalik tez-tez? once a week — haftada bir marta, twice a week — haftada ikki marta.",
           "practise": [
             ["choose","___ often do you play tennis?",["How","What","When"],"How","Ask How often…? to find out how many times."],
             ["choose","once a week = ___",["one time a week","two times a week"],"one time a week","once = one time."],
@@ -879,7 +879,7 @@
         ["choose","Which word means about 50%?",["sometimes","always","never"],"sometimes"],
         {"from":"g12","q":["choose","___ your brother like music?",["Do","Does"],"Does"]},
         ["fix",["He usually has toast for breakfast.","He has usually toast for breakfast.","Usually has he toast for breakfast."],"He usually has toast for breakfast."],
-        ["fix",["We are often tired on Monday.","We are tired on often Monday.","Often are we tired on Monday."],"We are often tired on Monday."],
+        ["fix",["We are often tired on Mondays.","We are tired on often Mondays.","Often are we tired on Mondays."],"We are often tired on Mondays."],
         ["order",["never","I","coffee","drink"],"I never drink coffee."],
         ["gap","I go to the dentist two times a year. = I go to the dentist ___ a year.",["twice"]],
         {"from":"g12","q":["gap","I ___ like milk. (negative)",["don't","do not"]]},
@@ -904,7 +904,7 @@
           "rule": "Object pronouns come after a verb (help, like, see…) or after a preposition (with, for, to, at). I → me, you → you, he → him, she → her, it → it, we → us, they → them.",
           "table": [["Subject (before the verb)","Object (after the verb)"],["I","me"],["you","you"],["he","him"],["she","her"],["it","it"],["we","us"],["they","them"]],
           "examples": ["Can you help me?","Tom is my friend. I play football with him.","This is Anna. I often see her at school.","This song is great. I love it.","Our teacher helps us a lot.","My grandparents are kind. I visit them every week."],
-          "uz": "Bu olmoshlar fe’l yoki predlogdan keyin keladi: help me — menga yordam ber, with him — u bilan, I love it — Men uni yaxshi ko‘raman.",
+          "uz": "Bu olmoshlar fe’l yoki predlogdan keyin keladi: help me — menga yordam ber, with him — u bilan.",
           "practise": [
             ["choose","This is my friend Sam. I like ___.",["he","him","his"],"him","After a verb (like), he → him."],
             ["choose","Lucy is nice. I often talk to ___.",["she","her","hers"],"her","After to, she → her."],
@@ -918,7 +918,7 @@
           "rule": "Possessive pronouns stand alone — no noun comes after them: This book is mine (= my book). Compare: my bag → It's mine. her pen → It's hers. There is no apostrophe in yours, hers, ours or theirs.",
           "table": [["Before a noun","Alone"],["my bag","mine"],["your bag","yours"],["his bag","his"],["her bag","hers"],["our bag","ours"],["their bag","theirs"]],
           "examples": ["This phone is mine.","Is this pen yours?","That isn't my coat. It's hers.","The red car is ours.","These books aren't theirs.","My bike is old, but his is new."],
-          "uz": "mine, yours, hers, ours, theirs — “meniki, seniki, uniki, bizniki, ularniki” degani. Ulardan keyin ot kelmaydi: This is mine — Bu meniki.",
+          "uz": "mine, yours, hers, ours, theirs — meniki, seniki, uniki, bizniki, ularniki; ulardan keyin ot kelmaydi.",
           "practise": [
             ["choose","This is my bag. It's ___.",["my","mine","me"],"mine","No noun after it: my → mine."],
             ["choose","Is this your pen? Is it ___?",["your","yours","you"],"yours","No noun after it: your → yours."],
@@ -955,7 +955,7 @@
         ["gap","This is their car. It's ___. (they)",["theirs"]],
         ["fix",["The black bag is hers.","The black bag is her.","The black bag is her's."],"The black bag is hers."],
         ["choose","___ phone is this? — It's mine.",["Who","Whose","Who's"],"Whose"],
-        ["gap","Whose jacket is this? — It's ___. (Lucy)",["Lucy's"]],
+        ["gap","Whose jacket is this? — It's ___. (Lucy)",["Lucy's","hers"]],
         {"from":"g5","q":["gap","Have you got a bike? — Yes, I ___.",["have"]]},
         ["fix",["My bag is blue and yours is red.","My bag is blue and your is red.","Mine bag is blue and yours is red."],"My bag is blue and yours is red."],
         ["order",["him","I","with","go","school","to"],["I go to school with him.","I go with him to school."]],
@@ -987,7 +987,7 @@
           "rule": "An English sentence usually goes like this: subject (who?) + verb (does what?) + object (what? / who?). I like apples. The verb comes right after the subject, not at the end of the sentence.",
           "table": [["Subject (who?)","Verb (does what?)","Object (what?)"],["I","like","apples."],["My sister","reads","books."],["We","play","football."]],
           "examples": ["Tom eats an apple.","My parents love music.","The children watch cartoons.","She speaks three languages.","We visit our grandparents."],
-          "uz": "Ingliz tilida gap tartibi: ega + fe’l + to‘ldiruvchi (I like apples). O‘zbek tilida fe’l gap oxirida keladi (Men olmani yaxshi ko‘raman), ingliz tilida esa egadan keyin keladi.",
+          "uz": "Ingliz gapida fe’l egadan keyin keladi, oxirida emas: I like apples — Men olmani yaxshi ko‘raman.",
           "practise": [
             ["fix",["I like music.","I music like.","Like I music."],"I like music.","Subject + verb + object: I + like + music."],
             ["fix",["Anna reads books.","Anna books reads.","Reads Anna books."],"Anna reads books.","The verb comes right after the subject: Anna reads."],

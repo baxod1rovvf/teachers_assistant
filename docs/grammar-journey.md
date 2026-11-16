@@ -29,7 +29,7 @@ Examples:
 - We're in the classroom.
 - Anna and Sam are at home.
 
-🇺🇿 I bilan am, he / she / it bilan is, you / we / they bilan are ishlatiladi. Bu o‘zbek tilidagi -man, -san, -dir qo‘shimchalariga o‘xshaydi: I am a student — Men talabaman.
+🇺🇿 I bilan am, he / she / it bilan is, you / we / they bilan are ishlatiladi.
 
 **Practise**
 
@@ -63,7 +63,7 @@ Examples:
 - Is it hot today? — No, it isn't.
 - Where are your books?
 
-🇺🇿 Inkor gapda am, is, are dan keyin not qo‘yiladi: I am not tired — Men charchamaganman. So‘roq gapda am, is, are gapning boshiga chiqadi: Are you OK?
+🇺🇿 Inkorda am / is / are dan keyin not keladi (I am not tired — Men charchaganim yo‘q), so‘roqda ular gap boshiga chiqadi.
 
 **Practise**
 
@@ -98,7 +98,7 @@ Examples:
 - It is an old car.
 - It is a new car.
 
-🇺🇿 a / an — bitta degan ma’noni beradi. Unli tovush (a, e, i, o, u) oldidan an, boshqa so‘zlar oldidan a qo‘yiladi. Kasb oldidan ham qo‘yiladi: She is a doctor — U shifokor.
+🇺🇿 Unli tovush (a, e, i, o, u) oldidan an, boshqa so‘zlar oldidan a qo‘yiladi: an apple, a dog.
 
 **Practise**
 
@@ -158,7 +158,7 @@ Examples:
 - Sam and I are in Class 5. We are classmates.
 - The books are on the table. They are heavy.
 
-🇺🇿 O‘zbek tilida bitta “u” bor, ingliz tilida esa uchta: he — erkak yoki o‘g‘il bola, she — ayol yoki qiz bola, it — narsa yoki hayvon.
+🇺🇿 O‘zbekchadagi “u” uchun ingliz tilida uchta so‘z bor: he — erkak, she — ayol, it — narsa yoki hayvon.
 
 **Practise**
 
@@ -168,9 +168,9 @@ Examples:
    *Hint: Dad is a man, so use he.*
 3. [Choose] The cat is black. ___ is very small. — He / She / **It**  
    *Hint: Use it for an animal or a thing.*
-4. [Write] Ben and Kate are students. ___ are in my class. (Ben and Kate) → **They**  
+4. [Write] Ben and Kate are students. ___ are in my class. (one word) → **They**  
    *Hint: Two people (not you or me) = they.*
-5. [Write] My friend and I are in the park. ___ are happy. (my friend and I) → **We**  
+5. [Write] My friend and I are in the park. ___ are happy. (one word) → **We**  
    *Hint: Another person + I = we.*
 
 ### Part 2: my, your, his, her, its, our, their
@@ -196,7 +196,7 @@ Examples:
 - We are in our classroom.
 - Their house is very big.
 
-🇺🇿 Bu so‘zlar narsa kimniki ekanini bildiradi va otdan oldin keladi: my book — mening kitobim. his — erkak kishiniki, her — ayol kishiniki.
+🇺🇿 Bu so‘zlar narsa kimniki ekanini bildiradi va otdan oldin keladi: my book — mening kitobim.
 
 **Practise**
 
@@ -230,7 +230,7 @@ Examples:
 - It's a dog. Its name is Max.
 - We are in Class 7. Our teacher is Mrs Green.
 
-🇺🇿 Fe’l (am, is, are) oldidan I, he, she, they, ot oldidan esa my, his, her, their ishlatiladi. it’s = it is, its esa “uning” degani.
+🇺🇿 Fe’ldan oldin he, she, they, otdan oldin his, her, their keladi; its — “uning”, it’s esa it is.
 
 **Practise**
 
@@ -240,7 +240,7 @@ Examples:
    *Hint: Before a noun (name), use her.*
 3. [Choose] This is a bird. ___ wings are blue. — It's / **Its**  
    *Hint: its = belonging to it. it's = it is.*
-4. [Write] Jack and Mia are my friends. ___ house is near my school. (Jack and Mia) → **Their**  
+4. [Write] Jack and Mia are my friends. ___ house is near my school. (they) → **Their**  
    *Hint: Before a noun (house), they → their.*
 5. [Correct sentence] **Our teacher is from Canada.** ✓ · We teacher is from Canada. ✗ · Us teacher is from Canada. ✗  
    *Hint: Before a noun (teacher), we → our.*
@@ -249,7 +249,7 @@ Examples:
 
 1. [Choose] My mother is a cook. ___ is at work. — He / **She** / It
 2. [Choose] This is my phone. ___ is new. — He / **It** / They
-3. [Write] Tom and Sam are brothers. ___ are tall. (Tom and Sam) → **They**
+3. [Write] Tom and Sam are brothers. ___ are tall. (one word) → **They**
 4. [Choose] Emma, is this ___ pen? — you / **your** / you're
 5. [Choose] My sisters ___ at school. — am / is / **are** *(from Lesson 1)*
 6. [Choose] Max is with ___ dad. — **his** / her / he
@@ -258,13 +258,13 @@ Examples:
 9. [Choose] We are in the park with ___ dog. — **our** / we / us
 10. [Choose] This is ___ orange. — a / **an** *(from Lesson 1)*
 11. [Choose] Lily and Kate are at home. ___ are sisters. — **They** / Their / There
-12. [Write] Anna is a doctor. ___ office is in the city centre. (Anna) → **Her**
+12. [Write] Anna is a doctor. ___ office is in the city centre. (she) → **Her** / **Anna's**
 13. [Put in order] is / name / Her / Sophie → **Her name is Sophie.**
 14. [Choose] The dog is in ___ bed. — it's / **its** / it
 15. [Write] I ___ not ready. → **am** *(from Lesson 1)*
 16. [Correct sentence] **They are my parents. Their names are Tom and Lucy.** ✓ · They are my parents. They names are Tom and Lucy. ✗
 17. [Put in order] our / This / is / classroom → **This is our classroom.**
-18. [Write] You and I are in the same class. ___ are classmates. (you and I) → **We**
+18. [Write] You and I are in the same class. ___ are classmates. (one word) → **We**
 19. [Choose] Mr and Mrs Brown are with ___ children. — **their** / they / them
 20. [Choose] ___ he your brother? — Am / **Is** / Are *(from Lesson 1)*
 
@@ -291,7 +291,7 @@ Examples:
 - My shoes are new.
 - The buses are full.
 
-🇺🇿 Ko‘plikda otga -s yoki -es qo‘shiladi (books — kitoblar). Diqqat: o‘zbek tilidan farqli, sondan keyin ham -s qo‘shiladi: two books — ikkita kitob.
+🇺🇿 Ko‘plikda otga -s yoki -es qo‘shiladi, o‘zbek tilidan farqli, sondan keyin ham: two books — ikkita kitob.
 
 **Practise**
 
@@ -325,7 +325,7 @@ Examples:
 - a shelf → two shelves
 - The leaves are yellow.
 
-🇺🇿 Undosh + y bo‘lsa, y → ies bo‘ladi (baby → babies). Unli + y bo‘lsa, faqat -s qo‘shiladi (boy → boys). -f / -fe ko‘pincha -ves ga aylanadi (knife → knives).
+🇺🇿 Undosh + y → ies (babies), unli + y → -s (boys), -f / -fe → -ves (knives).
 
 **Practise**
 
@@ -395,7 +395,7 @@ Examples:
 12. [Choose] one person, ten ___ — person / **people** / peoples
 13. [Put in order] are / The / children / happy → **The children are happy.**
 14. [Write] one toy, many ___ → **toys**
-15. [Write] This is Tom. ___ bag is blue. (Tom) → **His** *(from Lesson 2)*
+15. [Write] This is Tom. ___ bag is blue. (he) → **His** / **Tom's** *(from Lesson 2)*
 16. [Choose] one mouse, two ___ — mouses / **mice** / mices
 17. [Correct sentence] **The boxes are heavy.** ✓ · The boxs are heavy. ✗ · The boxes is heavy. ✗
 18. [Write] one shelf, three ___ → **shelves**
@@ -455,7 +455,7 @@ Examples:
 - Those birds are very small.
 - Is that your car over there?
 
-🇺🇿 that — u (bitta, uzoqdagi narsa), those — ular (ko‘p, uzoqdagi narsalar).
+🇺🇿 that — ana u / anavi (uzoqdagi bitta narsa), those — ana ular / anavilar (uzoqdagi narsalar).
 
 **Practise**
 
@@ -489,7 +489,7 @@ Examples:
 - Is that your coat? — Yes, it is.
 - Are these your glasses? — No, they aren't.
 
-🇺🇿 this / that haqidagi savolga it bilan, these / those haqidagi savolga they bilan javob beriladi: What are these? — They're keys.
+🇺🇿 this / that haqidagi savolga it bilan, these / those haqidagi savolga they bilan javob beriladi.
 
 **Practise**
 
@@ -548,7 +548,7 @@ Examples:
 - Tom's got a brother and a sister.
 - The car has got four doors.
 
-🇺🇿 have got / has got — “… bor” degani: I have got a bike — Mening velosipedim bor. he, she, it bilan has got ishlatiladi.
+🇺🇿 have got / has got — “… bor” degani: I have got a bike — Mening velosipedim bor.
 
 **Practise**
 
@@ -582,7 +582,7 @@ Examples:
 - Has your sister got a job? — No, she hasn't.
 - Have they got a car? — Yes, they have.
 
-🇺🇿 Inkor: haven't got / hasn't got (… yo‘q). So‘roq gapda have yoki has gap boshiga chiqadi: Have you got a pen? — Ruchkangiz bormi?
+🇺🇿 Inkor: haven't got / hasn't got (… yo‘q); so‘roqda have yoki has gap boshiga chiqadi.
 
 **Practise**
 
@@ -615,7 +615,7 @@ Examples:
 - It's cold today. (It is cold today.)
 - Mia's got brown eyes. (Mia has got brown eyes.)
 
-🇺🇿 's ikki xil ma’noda keladi: undan keyin got kelsa — has, got kelmasa — is: She's got a cat (has), She's tall (is).
+🇺🇿 's dan keyin got kelsa — has, got kelmasa — is: She's got a cat, She's tall.
 
 **Practise**
 
@@ -674,7 +674,7 @@ Examples:
 - There are many people in the park.
 - In my bag there is a book and there are two pens.
 
-🇺🇿 There is / there are — biror joyda “… bor” degani: There is a bed in my room — Xonamda karavot bor. Bitta narsa — there is, ko‘p narsa — there are.
+🇺🇿 Biror joyda bitta narsa bor bo‘lsa — there is, ko‘p narsa bo‘lsa — there are ishlatiladi.
 
 **Practise**
 
@@ -706,7 +706,7 @@ Examples:
 - Are there two bathrooms? — No, there aren't.
 - How many students are there in your class?
 
-🇺🇿 Inkorda is / are dan keyin not qo‘yiladi: there isn't, there aren't (… yo‘q). So‘roqda is / are gap boshiga chiqadi: Is there a park? — Park bormi?
+🇺🇿 Inkor: there isn't / there aren't (… yo‘q); so‘roq: Is there…? / Are there…? (… bormi?).
 
 **Practise**
 
@@ -733,7 +733,7 @@ Examples:
 - There's a cafe near my house. It's very nice.
 - There are three books on my desk. They're new.
 
-🇺🇿 Biror narsa haqida birinchi marta there is / there are bilan aytiladi, keyin u haqida it yoki they bilan gapiriladi: There's a dog. It's big.
+🇺🇿 Avval there is / there are bilan aytiladi, keyin it yoki they bilan davom etiladi: There's a dog. It's big.
 
 **Practise**
 
@@ -793,7 +793,7 @@ Examples:
 - Where is the teacher?
 - The door is open.
 
-🇺🇿 a / an — har qanday bitta narsa yoki birinchi marta aytilgan narsa, the — ikkalamiz biladigan aniq narsa. O‘zbek tilida artikl yo‘q, shuning uchun uni tushirib qoldirmang.
+🇺🇿 a / an — birinchi marta aytilgan har qanday narsa, the — ikkalamiz biladigan aniq narsa.
 
 **Practise**
 
@@ -861,7 +861,7 @@ Examples:
 - Spain is a beautiful country.
 - Dogs are friendly animals.
 
-🇺🇿 Ism, shahar va davlat nomlari oldidan hamda at home, at school, at work iboralarida artikl ishlatilmaydi: My mum is at work — Onam ishda.
+🇺🇿 Ism, shahar va davlat nomlari oldidan hamda at home, at school, at work iboralarida artikl yo‘q.
 
 **Practise**
 
@@ -923,7 +923,7 @@ Examples:
 - Rice is good for you.
 - My money is in my bag.
 
-🇺🇿 Sanaladigan otlar (apple — olma) ko‘plikda -s oladi va a / an bilan keladi. Sanalmaydigan otlar (water — suv, rice — guruch) -s ham, a / an ham olmaydi.
+🇺🇿 Sanaladigan otlar (apple) -s va a / an oladi, sanalmaydigan otlar (water, rice) esa olmaydi.
 
 **Practise**
 
@@ -959,7 +959,7 @@ Examples:
 - There's a glass of milk on the table.
 - I've got two kilos of sugar.
 
-🇺🇿 Sanalmaydigan narsani sanash uchun idish yoki o‘lchov so‘zi ishlatiladi: a cup of tea — bir piyola choy. Ko‘plik -s idish so‘ziga qo‘shiladi: two cups of tea.
+🇺🇿 Sanalmaydigan narsani idish so‘zi bilan sanaymiz, -s idishga qo‘shiladi: two cups of tea — ikki piyola choy.
 
 **Practise**
 
@@ -971,7 +971,7 @@ Examples:
    *Hint: Put -s on the container word: two cups of tea.*
 4. [Choose] three ___ of bread — **loaves** / loafs  
    *Hint: loaf → loaves (like leaf → leaves).*
-5. [Correct sentence] **two glasses of milk** ✓ · two glass of milks ✗ · two glasses of milks ✗  
+5. [Correct sentence] **I've got two glasses of milk.** ✓ · I've got two glass of milks. ✗ · I've got two glasses of milks. ✗  
    *Hint: The -es goes on glass, never on milk.*
 
 ### Part 3: How many? How much?
@@ -993,7 +993,7 @@ Examples:
 - There are a lot of books in the library.
 - There is a lot of snow today.
 
-🇺🇿 How many — sanaladigan otlar bilan (nechta?), how much — sanalmaydigan otlar bilan (qancha?). A lot of — ikkalasi bilan ham (ko‘p).
+🇺🇿 How many — nechta? (sanaladigan), how much — qancha? (sanalmaydigan), a lot of — ko‘p (ikkalasi bilan).
 
 **Practise**
 
@@ -1051,7 +1051,7 @@ Examples:
 - Some students are in the library.
 - We've got some new neighbours.
 
-🇺🇿 some — “bir nechta / biroz” degani. Darak gaplarda ko‘plikdagi va sanalmaydigan otlar bilan ishlatiladi: There is some milk — Biroz sut bor.
+🇺🇿 some — “bir nechta / biroz”, darak gaplarda ishlatiladi: There is some milk — Biroz sut bor.
 
 **Practise**
 
@@ -1083,7 +1083,7 @@ Examples:
 - Have you got any pets?
 - There isn't any juice in the fridge.
 
-🇺🇿 any — inkor va so‘roq gaplarda ishlatiladi: Is there any milk? — Sut bormi? There isn't any milk — Umuman sut yo‘q.
+🇺🇿 any — inkor va so‘roqda: Is there any milk? — Sut bormi? There isn't any milk — Sut umuman yo‘q.
 
 **Practise**
 
@@ -1211,7 +1211,7 @@ Examples:
 - The pharmacy is opposite the bank.
 - Is there a bus stop near here?
 
-🇺🇿 next to — yonida, between — o‘rtasida (ikki narsa orasida), in front of — oldida, behind — orqasida, opposite — qarshisida, near — yaqinida.
+🇺🇿 next to — yonida, between — orasida, in front of — oldida, behind — orqasida, opposite — qarshisida, near — yaqinida.
 
 **Practise**
 
@@ -1221,7 +1221,7 @@ Examples:
    *Hint: At the back of something: behind.*
 3. [Choose] Tom is ___ Ben. They are side by side. — **next to** / under / opposite  
    *Hint: At the side of someone: next to.*
-4. [Write] The cafe is ___ the park. It is on the other side of the street, facing it. → **opposite**  
+4. [Write] The cafe is ___ the park. It is on the other side of the street, facing it. → **opposite** / **across from**  
    *Hint: On the other side, facing it: opposite.*
 5. [Write] The teacher is ___ the class, so everyone can see her. (three words) → **in front of**  
    *Hint: At the front of something: in front of.*
@@ -1244,7 +1244,7 @@ Examples:
 - Our flat is on the third floor.
 - The children are on the bus.
 
-🇺🇿 at — biror nuqtada yoki joyda (at home — uyda, at school — maktabda), in — shahar, davlat yoki xona ichida (in London), on — qavatda yoki avtobusda (on the bus).
+🇺🇿 at — nuqta yoki joy (at home), in — shahar, davlat, xona ichida (in London), on — qavat, avtobus (on the bus).
 
 **Practise**
 
@@ -1266,13 +1266,13 @@ Examples:
 3. [Choose] My slippers are ___ the bed. (below it) — in / on / **under**
 4. [Choose] There aren't ___ eggs in the fridge. — some / **any** *(from Lesson 9)*
 5. [Choose] B is ___ A and C. — **between** / next / behind
-6. [Write] The bank is ___ the post office. It is on the other side of the road, facing it. → **opposite**
+6. [Write] The bank is ___ the post office. It is on the other side of the road, facing it. → **opposite** / **across from**
 7. [Choose] The garden is ___ the house. You can't see it from the street. — **behind** / in front of / between
-8. [Write] My house is ___ the school. It's only two minutes away. (not far from) → **near** / **close to**
+8. [Write] My house is ___ the school. It's only two minutes away. (= not far from) → **near** / **close to** / **not far from**
 9. [Choose] a ___ of bread — bottle / **loaf** / glass *(from Lesson 8)*
 10. [Choose] My cousins are ___ Italy. — at / **in** / on
 11. [Choose] Our flat is ___ the fifth floor. — at / in / **on**
-12. [Put in order] is / The / under / ball / the / chair → **The ball is under the chair.**
+12. [Put in order] are / My / under / shoes / the / bed → **My shoes are under the bed.**
 13. [Correct sentence] **The bank is next to the cafe.** ✓ · The bank is next the cafe. ✗ · The bank is next of the cafe. ✗
 14. [Choose] ___ sky is grey today. — A / **The** *(from Lesson 7)*
 15. [Write] The car is ___ the house, so we can see it from the window. (three words) → **in front of**
@@ -1305,7 +1305,7 @@ Examples:
 - My parents work in a hospital.
 - Cows eat grass.
 
-🇺🇿 Present Simple har kuni, doimo bo‘ladigan ish-harakatlar va haqiqatlar uchun ishlatiladi. I, you, we, they bilan fe’l o‘zgarmaydi: I play — Men o‘ynayman.
+🇺🇿 Present Simple doim bo‘ladigan ishlar uchun; I, you, we, they bilan fe’l o‘zgarmaydi: I play.
 
 **Practise**
 
@@ -1373,7 +1373,7 @@ Examples:
 - Emma studies English.
 - Sam has breakfast at eight.
 
-🇺🇿 -s, -sh, -ch, -x, -o bilan tugagan fe’llarga -es qo‘shiladi (goes). Undosh + y bo‘lsa, y → ies (studies). have esa has bo‘ladi.
+🇺🇿 -s, -sh, -ch, -x, -o dan keyin -es (goes), undosh + y → ies (studies), have → has.
 
 **Practise**
 
@@ -1432,7 +1432,7 @@ Examples:
 - It doesn't snow here in summer.
 - Anna doesn't work on Fridays.
 
-🇺🇿 Inkor gap: don't / doesn't + fe’l. doesn't dan keyin fe’lga -s qo‘shilmaydi: She doesn't like fish — U baliqni yoqtirmaydi.
+🇺🇿 Inkor: don't / doesn't + fe’l; doesn't dan keyin fe’lga -s qo‘shilmaydi: She doesn't like fish.
 
 **Practise**
 
@@ -1465,7 +1465,7 @@ Examples:
 - Does it rain a lot in your town?
 - Do we have homework today?
 
-🇺🇿 So‘roq gap Do yoki Does bilan boshlanadi: Do you like music? — Siz musiqani yoqtirasizmi? Does dan keyin ham fe’lga -s qo‘shilmaydi.
+🇺🇿 So‘roq Do yoki Does bilan boshlanadi, Does dan keyin fe’lga -s qo‘shilmaydi: Do you like music?
 
 **Practise**
 
@@ -1499,7 +1499,7 @@ Examples:
 - What time does the lesson start?
 - How do you go to school? — By bus.
 
-🇺🇿 Savol so‘zi (What, Where, When…) birinchi keladi, keyin do / does, keyin shaxs va fe’l: Where do you live? — Qayerda yashaysiz?
+🇺🇿 Savol so‘zi, keyin do / does, keyin shaxs va fe’l: Where do you live? — Qayerda yashaysiz?
 
 **Practise**
 
@@ -1563,7 +1563,7 @@ Examples:
 - My dad rarely watches TV.
 - Anna never drinks coffee.
 
-🇺🇿 Bu so‘zlar ish qanchalik tez-tez bo‘lishini bildiradi: always — doim, usually — odatda, often — tez-tez, sometimes — ba’zan, rarely — kamdan-kam, never — hech qachon.
+🇺🇿 always — doim, usually — odatda, often — tez-tez, sometimes — ba’zan, rarely — kamdan-kam, never — hech qachon.
 
 **Practise**
 
@@ -1630,7 +1630,7 @@ Examples:
 - We have English twice a week.
 - I never drink cola.
 
-🇺🇿 How often…? — Qanchalik tez-tez…? Javob: every day — har kuni, once a week — haftada bir marta, twice a week — haftada ikki marta.
+🇺🇿 How often…? — Qanchalik tez-tez? once a week — haftada bir marta, twice a week — haftada ikki marta.
 
 **Practise**
 
@@ -1652,7 +1652,7 @@ Examples:
 3. [Choose] Which word means about 50%? — **sometimes** / always / never
 4. [Choose] ___ your brother like music? — Do / **Does** *(from Lesson 12)*
 5. [Correct sentence] **He usually has toast for breakfast.** ✓ · He has usually toast for breakfast. ✗ · Usually has he toast for breakfast. ✗
-6. [Correct sentence] **We are often tired on Monday.** ✓ · We are tired on often Monday. ✗ · Often are we tired on Monday. ✗
+6. [Correct sentence] **We are often tired on Mondays.** ✓ · We are tired on often Mondays. ✗ · Often are we tired on Mondays. ✗
 7. [Put in order] never / I / coffee / drink → **I never drink coffee.**
 8. [Write] I go to the dentist two times a year. = I go to the dentist ___ a year. → **twice**
 9. [Write] I ___ like milk. (negative) → **don't** / **do not** *(from Lesson 12)*
@@ -1695,7 +1695,7 @@ Examples:
 - Our teacher helps us a lot.
 - My grandparents are kind. I visit them every week.
 
-🇺🇿 Bu olmoshlar fe’l yoki predlogdan keyin keladi: help me — menga yordam ber, with him — u bilan, I love it — Men uni yaxshi ko‘raman.
+🇺🇿 Bu olmoshlar fe’l yoki predlogdan keyin keladi: help me — menga yordam ber, with him — u bilan.
 
 **Practise**
 
@@ -1732,7 +1732,7 @@ Examples:
 - These books aren't theirs.
 - My bike is old, but his is new.
 
-🇺🇿 mine, yours, hers, ours, theirs — “meniki, seniki, uniki, bizniki, ularniki” degani. Ulardan keyin ot kelmaydi: This is mine — Bu meniki.
+🇺🇿 mine, yours, hers, ours, theirs — meniki, seniki, uniki, bizniki, ularniki; ulardan keyin ot kelmaydi.
 
 **Practise**
 
@@ -1794,7 +1794,7 @@ Examples:
 10. [Write] This is their car. It's ___. (they) → **theirs**
 11. [Correct sentence] **The black bag is hers.** ✓ · The black bag is her. ✗ · The black bag is her's. ✗
 12. [Choose] ___ phone is this? — It's mine. — Who / **Whose** / Who's
-13. [Write] Whose jacket is this? — It's ___. (Lucy) → **Lucy's**
+13. [Write] Whose jacket is this? — It's ___. (Lucy) → **Lucy's** / **hers**
 14. [Write] Have you got a bike? — Yes, I ___. → **have** *(from Lesson 5)*
 15. [Correct sentence] **My bag is blue and yours is red.** ✓ · My bag is blue and your is red. ✗ · Mine bag is blue and yours is red. ✗
 16. [Put in order] him / I / with / go / school / to → **I go to school with him.** or **I go with him to school.**
@@ -1859,7 +1859,7 @@ Examples:
 - She speaks three languages.
 - We visit our grandparents.
 
-🇺🇿 Ingliz tilida gap tartibi: ega + fe’l + to‘ldiruvchi (I like apples). O‘zbek tilida fe’l gap oxirida keladi (Men olmani yaxshi ko‘raman), ingliz tilida esa egadan keyin keladi.
+🇺🇿 Ingliz gapida fe’l egadan keyin keladi, oxirida emas: I like apples — Men olmani yaxshi ko‘raman.
 
 **Practise**
 
