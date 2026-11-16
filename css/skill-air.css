@@ -49,3 +49,52 @@ html body#skBody.sk-air .ta-login-card .ta-login-form .start-btn { background: #
 html body#skBody.sk-air .ta-login-card .ta-login-form .start-btn:hover { background: #2A303B !important; }
 /* the results link's hint under the table: on a white pill, so it reads over the picture */
 html body#skBody.sk-air .rl-hint { display: table; margin: 14px auto 0; padding: 6px 14px; border-radius: 999px; background: rgba(255,255,255,0.88); color: #12161D !important; }
+/* Grammar Journey lessons (js/grammar-player.js, 2026-11-16): learn card, practise one question at a time, the 20-question test */
+html body#skBody.sk-air .gr-card .sk-actions { flex-wrap: wrap; gap: 10px; }
+html body#skBody.sk-air .gr-step { margin: 0 0 6px; font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #3D7434 !important; }
+html body#skBody.sk-air .gr-rule { line-height: 1.6; margin: 0 0 14px; }
+html body#skBody.sk-air .gr-table-wrap { overflow-x: auto; margin: 0 0 14px; border-radius: 16px; border: 1px solid rgba(20,26,34,0.1); background: #fff; }
+html body#skBody.sk-air .gr-table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+html body#skBody.sk-air .gr-table :is(th, td) { padding: 8px 12px; text-align: left; border-bottom: 1px solid rgba(20,26,34,0.07); vertical-align: top; }
+html body#skBody.sk-air .gr-table th { background: #F1F4F1; font-weight: 700; }
+html body#skBody.sk-air .gr-table tr:last-child td { border-bottom: 0; }
+html body#skBody.sk-air .gr-examples { margin: 4px 0 14px; padding-left: 1.2em; line-height: 1.7; }
+html body#skBody.sk-air .gr-examples li::marker { color: #3D7434; }
+/* the Uzbek line: a small, friendly note (the teacher's choice for beginners) */
+html body#skBody.sk-air .gr-uz { display: flex; gap: 8px; align-items: flex-start; margin: 0 0 4px; padding: 10px 14px; border-radius: 14px; font-size: .9rem; line-height: 1.5;
+  background: rgba(61,116,52,0.09); border: 1px dashed rgba(61,116,52,0.45); color: #2F5A28 !important; }
+html body#skBody.sk-air .gr-qtext { line-height: 2; font-weight: 600; overflow-wrap: anywhere; }
+html body#skBody.sk-air .gr-pq { padding: 14px; border-radius: 18px; background: rgba(244,246,248,0.85); border: 1px solid rgba(20,26,34,0.07); }
+html body#skBody.sk-air .gr-pq.right { background: rgba(61,116,52,0.1); border-color: #3D7434; }
+html body#skBody.sk-air .gr-gap { width: min(160px, 100%); }
+html body#skBody.sk-air .gr-opts { margin-top: 8px; }
+html body#skBody.sk-air .gr-opts-col { flex-direction: column; align-items: stretch; }
+html body#skBody.sk-air .gr-opts-col .sk-opt { text-align: left; justify-content: flex-start; border-radius: 16px !important; }
+html body#skBody.sk-air .sk-opt.gr-tried { background: rgba(210,65,45,0.1) !important; border-color: #D2412D !important; text-decoration: line-through; }
+html body#skBody.sk-air .sk-opt.is-answer { background: rgba(61,116,52,0.16) !important; border-color: #3D7434 !important; color: #12161D !important; }
+html body#skBody.sk-air .gr-feedback { min-height: 1.5em; margin-top: 10px; font-weight: 700; }
+html body#skBody.sk-air .gr-ok { color: #3D7434; }
+html body#skBody.sk-air .gr-no { color: #B3351F; }
+html body#skBody.sk-air .gr-hint { margin-top: 10px; padding: 12px 14px; border-radius: 16px; background: #FFF8E6; border: 1px solid #F1D48A; line-height: 1.55; }
+html body#skBody.sk-air .gr-hint p { margin: 0 0 6px; }
+html body#skBody.sk-air .gr-hint p:last-child { margin-bottom: 0; }
+html body#skBody.sk-air .gr-hint-t { font-weight: 700; }
+html body#skBody.sk-air .gr-hint-tip { font-weight: 600; }
+/* order questions: tap the words into the sentence, tap again to take one back */
+html body#skBody.sk-air .gr-line { display: flex; flex-wrap: wrap; gap: 8px; min-height: 52px; margin-top: 8px; padding: 8px; border-radius: 14px;
+  background: #fff; border: 1px dashed rgba(20,26,34,0.25); }
+html body#skBody.sk-air .gr-line:empty::before { content: 'Tap the words in order'; align-self: center; padding-left: 6px; color: #7A8290; font-size: .9rem; }
+html body#skBody.sk-air .gr-bank { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+html body#skBody.sk-air .gr-chip { min-height: 44px; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(20,26,34,0.16); background: #fff; color: #12161D;
+  font-size: 1rem; font-weight: 600; cursor: pointer; max-width: 100%; overflow-wrap: anywhere; }
+html body#skBody.sk-air .gr-line .gr-chip { background: #14181F; color: #fff; border-color: #14181F; }
+html body#skBody.sk-air .gr-chip:disabled { cursor: default; }
+html body#skBody.sk-air .gr-chip:focus-visible { outline: 3px solid #3D7434; outline-offset: 2px; }
+html body#skBody.sk-air .gr-tqs { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+html body#skBody.sk-air .gr-warn { width: 100%; margin: 0; text-align: center; font-weight: 700; color: #B3351F; }
+html body#skBody.sk-air .gr-note { margin: 0; color: #4A5260; }
+@media (max-width: 480px) { html body#skBody.sk-air .gr-again .sk-btn { flex: 1 1 100%; } html body#skBody.sk-air .gr-table { font-size: .85rem; } html body#skBody.sk-air .gr-table :is(th, td) { padding: 7px 8px; } }
+html body#skBody.sk-air .gr-card .sk-btn:disabled { opacity: .4; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+html body#skBody.sk-air #grSend { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; padding: 8px 16px; border-radius: 999px;
+  background: rgba(255,255,255,0.92) !important; color: #12161D !important; border: 1px solid rgba(20,26,34,0.12) !important; box-shadow: none !important; }
+html body#skBody.sk-air #grSend.bad { border-radius: 18px; }

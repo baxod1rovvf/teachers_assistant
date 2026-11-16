@@ -493,6 +493,11 @@ function taSkillLink(skill, step, code) {
   const base = window.skAppUrl || (/^https:/.test(TA_APP_URL) ? TA_APP_URL : '');
   return base + 'skill.html?s=' + encodeURIComponent(skill) + '&st=' + encodeURIComponent(taSkillStepId(step)) + (code ? '&c=' + encodeURIComponent(code) : '');
 }
+/* A Grammar Journey lesson's link (2026-11-16): one per lesson, the same for every group. */
+function taGrammarLink(lessonId, code) {
+  const base = window.skAppUrl || (/^https:/.test(TA_APP_URL) ? TA_APP_URL : '');
+  return base + 'skill.html?s=grammar&gl=' + encodeURIComponent(lessonId) + (code ? '&c=' + encodeURIComponent(code) : '');
+}
 function taSkillLinkKey(groupId, skill, step) { return groupId + '|' + skill + '|' + taSkillStepId(step); }
 /* The kept links with every key in the new form (an old numeric key → e<N>; when both exist, the new one wins). */
 function taSkillsLinksFix(v) {
@@ -749,6 +754,7 @@ function getPointsRoster() {
 }
 function savePointsRoster(list) {
   try { localStorage.setItem(LS_POINTS_ROSTER, JSON.stringify(list)); } catch (e) { /* ignore */ }
+  if (typeof window.grRefreshLists === 'function') window.grRefreshLists();   // the Grammar class lists follow the roster
 }
 function rosterNameFor(id) {
   const r = getPointsRoster().find(s => s.id === id);
@@ -772,6 +778,7 @@ function getStudentGroups() {
 }
 function saveStudentGroups(list) {
   try { localStorage.setItem(LS_STUDENT_GROUPS, JSON.stringify(list)); } catch (e) { /* ignore */ }
+  if (typeof window.grRefreshLists === 'function') window.grRefreshLists();   // the Grammar class lists follow the roster
 }
 function groupNameFor(groupId) {
   const g = getStudentGroups().find(x => x.id === groupId);
@@ -1797,7 +1804,10 @@ function skAiSave(add) {
   skAiMemo = store;
   return true;
 }
-window.taStoreChanged = function (key) { if (key === LS_SKILLS_AI) skAiForget(); };
+window.taStoreChanged = function (key) {
+  if (key === LS_SKILLS_AI) skAiForget();
+  if (/(^|::)(ta_points_roster|ta_student_groups)$/.test(String(key || '')) && typeof window.grRefreshLists === 'function') window.grRefreshLists();   // the Grammar class lists follow the roster
+};
 window.addEventListener('storage', e => { if (!e.key || /(^|::)ta_skills_ai$/.test(e.key)) skAiForget(); });
 /* the feedback of a writing: its own (old results), else kept by the result's database id, else under the old "<code>|<id>" key */
 function skAiFor(r) {

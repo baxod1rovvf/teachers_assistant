@@ -115,7 +115,7 @@ window.taPublishClassList = async function (code, students, prev, group) {
     const list = [];
     for (const st of students) {
       const h = await skClassHash(code, st.id);
-      if (h) list.push({ h: h, n: String(st.name || '').slice(0, 80) });
+      if (h) { const e = { h: h, n: String(st.name || '').slice(0, 80) }; if (st.groupName) e.g = String(st.groupName).slice(0, 80); list.push(e); }   // g: the student's own group, for a link sent to several groups (2026-11-16)
     }
     if (students.length && !list.length) return false;   // this browser can't scramble the IDs
     const ref = doc(db, 'results', 'class-' + code);
@@ -456,6 +456,11 @@ window.startPlainCompletionsSync = function () {
       const v = o[k];
       if (v && typeof v === 'object') [v.code].concat(Array.isArray(v.alsoCodes) ? v.alsoCodes : []).forEach(c => { if (c) codes.push(c); });
     }));
+  } catch (e) { /* ignore */ }
+  // Grammar Journey (2026-11-16): one code per lesson, kept in ta_grammar_links
+  try {
+    const gl = JSON.parse(localStorage.getItem('ta_grammar_links') || 'null');
+    if (gl && typeof gl === 'object') Object.keys(gl).forEach(k => { const v = gl[k]; if (v && typeof v === 'object' && v.code) codes.push(String(v.code)); });
   } catch (e) { /* ignore */ }
   plainCodes = new Set(codes);
   rsEnsureCodes(codes).then(rsDerivePlain);

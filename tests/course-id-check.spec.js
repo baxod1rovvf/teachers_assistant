@@ -110,3 +110,23 @@ test('Copy link puts the group\'s name on the list', async ({ page, context }) =
   await page.locator('.sk-part').first().getByRole('button', { name: /Copy link/ }).click();
   await expect.poll(() => page.evaluate(() => (window.__fakeDocs.find(d => d.type === 'TA_SYNC:CLASS') || {}).group)).toBe('Target');
 });
+
+test('a list whose entries carry their own group → Bu sizmi shows that student\'s group', async ({ page, context }) => {
+  await prepare(context, { docs: [classDoc('LSN777', { group: undefined, data: JSON.stringify([
+    { h: hashFor('LSN777', '10001'), n: 'Alice Test', g: 'Apex' }, { h: hashFor('LSN777', '10002'), n: 'Bobur Test', g: 'Target' }]) })] });
+  await start(page, URL_L, '10002');
+  await expect(page.locator('.sk-confirm')).toContainText('Bobur Test — 10002');
+  await expect(page.locator('.sk-confirm')).toContainText('Guruh:');
+  await expect(page.locator('.sk-confirm')).toContainText('Target');
+  await expect(page.locator('.sk-confirm')).not.toContainText('Apex');
+});
+
+test('taPublishClassList stores each student\'s group as g', async ({ page, context }) => {
+  await prepare(context);
+  await page.goto('/course.html');
+  await page.waitForFunction(() => typeof window.taPublishClassList === 'function');
+  const ok = await page.evaluate(() => window.taPublishClassList('LSN778', [{ id: '10001', name: 'Alice', groupName: 'Apex' }, { id: '10002', name: 'Bobur' }]));
+  expect(ok).toBe(true);
+  const data = await page.evaluate(() => JSON.parse(window.__fakeDocs.find(d => d.type === 'TA_SYNC:CLASS' && d.title === 'LSN778').data));
+  expect(data.map(x => x.g)).toEqual(['Apex', undefined]);
+});

@@ -778,6 +778,19 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
 - **Step names (teacher, 2026-11-10: "rename them")**: each step's `theme` + `emoji` = its Speaking Journey topic (1 Daily Routine ⏰ …
   20 Weather & Seasons ☀️), so the map matches the four parts; older names in the notes above ("Hello!", "Meeting people"…) are gone.
   Results sent before keep the old name in their `title`.
+- **Grammar Journey (teacher, 2026-11-16)**: a fifth part of the Course, under the group cards on the Course page (`js/pages/grammar.js`; 7 levels, only Beginner's 15
+  lessons g1–g15 are written). Source `docs/grammar-journey.json` → `node tools/build-grammar.js` → `js/grammar-data.js` (`TA_GRAMMAR`) + `docs/grammar-journey.md` —
+  edit the JSON and run the tool, never edit grammar-data.js by hand. A lesson = 3 chunks (learn cards with the Uzbek line, then practise questions with a hint after a wrong
+  answer) and a 20-question test (g2–g15: 4 questions from earlier lessons). Student page: `skill.html?s=grammar&gl=<gN>&c=<code>` (`js/grammar-player.js`, `window.GR`,
+  branches in js/skill-player.js; same ID check + "Bu sizmi"). **Only the first test Submit is sent** (`type: 'Grammar course'`, `code, name, studentId, skill 'grammar',
+  lesson, lessonNo, level, title, correct, total 20, score, timeSeconds, timeDisplay, answers[{given,right,ok}], date, builtAt`); retakes send nothing. Progress is kept on
+  the phone in `ta_grammar_draft|<code>` = `{ v, lesson, studentId, chunk, stage, q, answers, activeMs, at }`; **time counts only while the page is visible and touched in
+  the last 5 minutes** (`activeMs`). Teacher: one permanent link per lesson, `ta_grammar_links = { <lessonId>: { code, sentAt, rosterSig } }` (synced, in the backup;
+  firebase.js loads its codes); the lesson page has a group filter, a results table (first try, current group), "🚫 Not finished" + "📋 Copy list", "❓ Not on your Students
+  list". Class list entries are `{h, n, g}` (`g` = group name, shown as "Guruh"); `grRefreshLists()` publishes the lists again when the roster changes (Course draw,
+  savePointsRoster/saveStudentGroups, `taStoreChanged`, `storage`; 5 s debounce; retry after 30 s, 3 times). Tests: `tests/grammar-content.spec.js`,
+  `grammar-player.spec.js`, `grammar-teacher.spec.js`.
+  Raise a lesson's `v` in docs/grammar-journey.json whenever its questions change after links were sent (old drafts then start again). Grammar CSS for the teacher's side is scoped under `#courseWrap` (skill.html also loads css/style.css).
 - **Speaking Journey (teacher, 2026-11-09)**: **Speaking** follows the teacher's "Speaking Journey" (20 topics: 1 Daily Routine,
   2 Family, 3 Home & Living, 4 Food & Meals, 5 Free Time, 6 Friends, 7 School & Education, 8 Hobbies & Sports, 9 Shopping, 10 Your City,
   11 Holidays, 12 Future Plans, 13 Jobs & Careers, 14 Clothes & Fashion, 15 Transport, 16 Animals & Pets, 17 Health & Lifestyle,

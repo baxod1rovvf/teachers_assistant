@@ -23,7 +23,8 @@ const SKILL_INFO = {
   listening: { name: 'Listening', emoji: '🎧', type: 'Listening course' },
   reading: { name: 'Reading', emoji: '📖', type: 'Reading course' },
   writing: { name: 'Writing', emoji: '✍️', type: 'Writing course' },
-  speaking: { name: 'Speaking', emoji: '🗣️', type: 'Speaking course' }
+  speaking: { name: 'Speaking', emoji: '🗣️', type: 'Speaking course' },
+  grammar: { name: 'Grammar', emoji: '📘', type: 'Grammar course' }   // Grammar Journey (2026-11-16): skill.html?s=grammar&gl=<lesson id>&c=<code>
 };
 const NAME_KEY = 'ta_skill_student';   // the student's name + ID on this device (not one of the app's keys)
 // A writing in progress: { text, startedAt, id } under ta_skill_draft|<code>|<step id> (this page's own key, like NAME_KEY).
@@ -42,6 +43,7 @@ function stepIdFrom(p) {
 const SK = window.SK = {
   skill: (params.get('s') || '').toLowerCase(),
   step: stepIdFrom(params),
+  lesson: String(params.get('gl') || '').trim().toLowerCase(),   // a Grammar Journey lesson (g1…)
   code: (params.get('c') || '').trim(),
   preview: params.get('preview') === '1',
   name: '',
@@ -77,6 +79,7 @@ function skMark(answer, accepted) {
   });
 }
 window.skMark = skMark;
+window.skNorm = skNorm;
 
 /* ---------- sending ---------- */
 let fsReady = null;
@@ -187,7 +190,7 @@ async function skAlreadyDone(name, id) {
   if (kept) {
     const state = await skSendResult(kept);
     if (state === 'ok') forgetUnsent(kept.__id);
-    return { at: kept.date, summary: doneSummary(kept), unsent: state === 'ok' ? undefined : kept };
+    return { at: kept.date, summary: doneSummary(kept), correct: kept.correct, total: kept.total, unsent: state === 'ok' ? undefined : kept };
   }
   try {
     const { fs, db } = await within(loadFirestore(), 8000);
@@ -200,7 +203,7 @@ async function skAlreadyDone(name, id) {
     for (const snap of snaps) {
       const doc = (snap.docs || []).map(d => d.data()).find(r => r && (r.skill === SK.skill || /course$/.test(r.type || '')) &&
         skSameStudent(r, name, id) && !skBlankWriting(r));
-      if (doc) return { at: doc.date, summary: doneSummary(doc) };
+      if (doc) return { at: doc.date, summary: doneSummary(doc), correct: doc.correct, total: doc.total };
     }
     return null;   // nothing from this student: free to do it
   } catch (e) { console.warn('Skills course: could not check for an earlier try', e); return { offline: true }; }
@@ -238,7 +241,7 @@ async function skCheckStudent(id) {
   try { prev = d.prev ? JSON.parse(d.prev) : null; } catch (e) { prev = null; }
   // only the same skill in an earlier step waits (2026-11-16); lists put online before then may name another skill — that is ignored
   if (prev && prev.skill && SK.skill && prev.skill !== SK.skill) prev = null;
-  return { name: st.n, group: typeof d.group === 'string' ? d.group : '', prev: prev && Array.isArray(prev.codes) && prev.codes.length ? prev : null };
+  return { name: st.n, group: (typeof st.g === 'string' && st.g) ? st.g : (typeof d.group === 'string' ? d.group : ''), prev: prev && Array.isArray(prev.codes) && prev.codes.length ? prev : null };
 }
 window.skCheckStudent = skCheckStudent;
 /* One after another (teacher, 2026-11-12): the part the group does before this one (the class list's `prev`) must be done —
@@ -262,6 +265,7 @@ function skPrevWarning(prev) {
 }
 function showAlreadyDone(level, done) {
   const info = SKILL_INFO[SK.skill];
+  if (SK.skill === 'grammar' && !done.unsent) { startGrammar(level, { done }); return; }   // "You've done this lesson" + try again / read again
   const score = done.summary ? `<p class="sk-done-score">Your result: <b>${esc(done.summary)}</b></p>` : '';
   if (!done.unsent) {
     root().innerHTML = `${headerHtml(level)}<section class="sk-card sk-center sk-done-card">
@@ -286,7 +290,7 @@ function showAlreadyDone(level, done) {
   const sendKept = async () => {
     const box = $('#skSend');
     box.innerHTML = '<span class="sk-send-note">📤 Sending your answers to your teacher…</span>';
-    if ((await skSendResult(done.unsent)) === 'ok') { forgetUnsent(done.unsent.__id); showAlreadyDone(level, { at: done.at, summary: done.summary }); return; }
+    if ((await skSendResult(done.unsent)) === 'ok') { forgetUnsent(done.unsent.__id); showAlreadyDone(level, { at: done.at, summary: done.summary, correct: done.correct, total: done.total }); return; }
     box.innerHTML = '<span class="sk-send-bad">Not sent yet — check the internet</span> <button type="button" class="sk-btn sk-btn-small" id="skSendKept">📤 Send my answers</button>';
     $('#skSendKept').addEventListener('click', sendKept);
   };
@@ -297,8 +301,28 @@ function showAlreadyDone(level, done) {
 const root = () => $('#skApp');
 
 function stepData() {
+  if (SK.skill === 'grammar') return grammarLesson();
   const steps = (window.TA_SKILLS && TA_SKILLS.steps) || [];
   return SK.step ? steps.find(l => l.id === SK.step) || null : null;
+}
+
+/* A Grammar Journey lesson, dressed as a step for the shared screens: { id, no, emoji, theme, unit: 'Lesson', lesson, levelId }. */
+function grammarLesson() {
+  for (const lv of ((window.TA_GRAMMAR && TA_GRAMMAR.levels) || [])) {
+    const l = (lv.lessons || []).find(x => x.id === SK.lesson);
+    if (l) return { id: l.id, no: l.no, emoji: '📘', theme: l.title, unit: 'Lesson', lesson: l, levelId: lv.id };
+  }
+  return null;
+}
+/* The lesson itself lives in js/grammar-player.js (window.GR); this page gives it the sending and the "kept on the phone" parts. */
+function startGrammar(level, extra) {
+  const withId = p => { p.__id = p.__id || skResultId(p); return p; };
+  window.GR.start(level.lesson, root(), Object.assign({
+    preview: SK.preview, code: SK.code, name: SK.name, studentId: SK.studentId, levelId: level.levelId, header: headerHtml(level),
+    keep: p => keepUnsent(withId(p)),
+    send: async p => { const state = await skSendResult(withId(p)); if (state === 'ok') forgetUnsent(p.__id); return state; },
+    notMe: SK.preview ? null : skNotMe
+  }, extra || {}));
 }
 
 function headerHtml(level) {
@@ -306,16 +330,17 @@ function headerHtml(level) {
   return `<header class="sk-head">
     <span class="sk-brand">🧶 loom</span>
     <span class="sk-chip sk-chip-skill">${info.emoji} ${info.name}</span>
-    <span class="sk-chip">${esc(level.emoji)} Step ${level.no} · ${esc(level.theme)}</span>
+    <span class="sk-chip">${esc(level.emoji)} ${level.unit || 'Step'} ${level.no} · ${esc(level.theme)}</span>
     ${SK.preview ? '<span class="sk-chip sk-preview" title="Nothing is sent from a preview">👀 Preview</span>' : ''}
   </header>`;
 }
 
 function showMissing() {
-  document.title = 'Step not found — Loom';
+  const what = SK.skill === 'grammar' ? 'lesson' : 'step';
+  document.title = (SK.skill === 'grammar' ? 'Lesson' : 'Step') + ' not found — Loom';
   root().innerHTML = `<div class="sk-card sk-center sk-missing">
     <div class="sk-big-emoji" aria-hidden="true">🧭</div>
-    <h1>This step doesn't exist</h1>
+    <h1>This ${what} doesn't exist</h1>
     <p>The link may be cut short or mistyped. Ask your teacher to send it again.</p>
     <a class="sk-btn sk-btn-ghost" href="index.html">🏠 Go to Loom's home page</a>
   </div>`;
@@ -356,9 +381,9 @@ function showStart(level, content) {
       <div class="ta-login-anim" aria-hidden="true">${info.emoji}</div>
       <form class="ta-login-form" id="skStartForm" novalidate>
         <h2>${esc(content.title || content.topic)}</h2>
-        <div class="ta-login-type">${info.name} · Step ${level.no}</div>
+        <div class="ta-login-type">${info.name} · ${level.unit || 'Step'} ${level.no}</div>
         <div class="ta-underline"></div>
-        <p>${esc(level.emoji)} ${esc(level.theme)}. Write your ID to begin.</p>
+        <p>${SK.skill === 'grammar' ? 'Learn the rule, practise it, then take a short test.' : `${esc(level.emoji)} ${esc(level.theme)}.`} Write your ID to begin.</p>
         <label class="sk-label" for="skIdInput">Your ID</label>
         <input type="text" id="skIdInput" autocomplete="off" inputmode="numeric" maxlength="30" placeholder="e.g. 10001" value="${esc(saved.id || '')}">
         <div class="sk-start-err" id="skStartErr" role="alert"></div>
@@ -416,6 +441,7 @@ async function skBeginChecks(level, content, who, id) {
   const done = await skAlreadyDone(SK.name, id);
   if (done && done.offline) { back('📶 We couldn\'t check your answers — check the internet and press Start again.'); return; }
   if (done) { showAlreadyDone(level, done); return; }
+  if (SK.skill === 'grammar') { startGrammar(level); return; }   // a lesson has no "part before"
   if (who.prev && (await skPrevDone(who.prev, SK.name, id)) === false) { back(skPrevWarning(who.prev)); return; }
   if (SK.skill === 'writing') showWriting(level); else showExercise(level);
 }
@@ -899,13 +925,18 @@ function boot() {
   const level = stepData();
   const info = SKILL_INFO[SK.skill];
   if (!level || !info) { showMissing(); return; }
-  document.title = `${info.name} · Step ${level.no} — Loom`;
+  document.title = `${info.name} · ${level.unit || 'Step'} ${level.no} — Loom`;
   if (!SK.preview && SK.skill !== 'speaking' && SK.code.length !== 6) { showNoCode(); return; }
   // any course link: answers this phone still holds (a save that failed) are sent again (2026-11-13)
   if (!SK.preview && Object.keys(keptAll()).length) keptSending = skSendKept();
   if (SK.skill === 'speaking') {
     if (level.speaking) showSpeaking(level);
     else showComingSoon(level, `Step ${level.no} (${level.theme}) is still being made. Ask your teacher which step to do now.`);
+    return;
+  }
+  if (SK.skill === 'grammar') {
+    if (SK.preview) { SK.name = 'Preview'; SK.studentId = ''; startGrammar(level); return; }
+    showStart(level, level.lesson);
     return;
   }
   const content = level[SK.skill];
