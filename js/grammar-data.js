@@ -1835,7 +1835,1034 @@ window.TA_GRAMMAR = {
     ]
     },
     {
-      id: "preintermediate", name: "Pre-Intermediate", lessons: []
+      id: "preintermediate", name: "Pre-Intermediate", lessons: [
+      {
+        id: "g33", no: 33, title: "Present Continuous for Future Arrangements", v: 1,
+        chunks: [
+          {
+            learn: {"title":"I'm meeting Tom on Friday — fixed plans","rule":"We can use the present continuous (am / is / are + -ing) to talk about the future when a plan is already fixed — we have arranged a time, a place or other people, and it is often in our diary or calendar: I'm meeting Tom at six. We're flying to Rome on Monday. Always say when: tonight, tomorrow, on Friday, next week, at seven o'clock.","table":[["Person","be + -ing","Future time"],["I","am ('m) meeting","my friends tonight."],["he / she / it","is ('s) playing","tennis on Saturday."],["you / we / they","are ('re) flying","to Rome next week."]],"examples":["I'm meeting my friends tonight.","She's playing tennis with Anna on Saturday.","We're flying to Rome next Monday.","My parents are coming to dinner tomorrow.","I'm seeing the dentist at four o'clock this afternoon.","Tom is starting his new job on the first of June."],"uz":"Oldindan kelishilgan reja uchun Present Continuous ishlatiladi: I'm meeting Tom tomorrow — Ertaga Tom bilan uchrashaman."},
+            practise: [
+              {"type":"choose","q":"I ___ my grandparents next Sunday. It's in my diary.","options":["am visiting","visiting","visited"],"a":["am visiting"],"hint":"A fixed plan for the future → am + -ing: I am visiting."},
+              {"type":"choose","q":"We ___ to Paris on Friday. We have the tickets.","options":["are flying","flying","flew"],"a":["are flying"],"hint":"A fixed plan → are + -ing: We are flying."},
+              {"type":"gap","q":"She ___ her friends at the cinema at eight tonight. (meet — a fixed plan)","a":["is meeting","'s meeting","is going to meet","'s going to meet"],"hint":"A fixed plan → is + -ing: She is meeting."},
+              {"type":"gap","q":"My brother ___ married in June. (get — a fixed plan)","a":["is getting","'s getting","is going to get","'s going to get"],"hint":"A fixed plan → is + -ing: is getting."},
+              {"type":"fix","q":"Which sentence is correct?","options":["We're having a party on Saturday.","We having a party on Saturday.","We're have a party on Saturday."],"a":["We're having a party on Saturday."],"hint":"be + -ing: We're (We are) having."}
+            ]
+          },
+          {
+            learn: {"title":"Are you doing anything tonight? — negatives and questions","rule":"Negative: am not / isn't / aren't + -ing: I'm not working tomorrow. Question: Am / Is / Are + person + -ing: Are you doing anything this weekend? With a question word: What are you doing tonight? Where is she going on holiday? This is a very common way to ask about someone's plans.","table":[["Negative","Question"],["I'm not working on Saturday.","Are you working on Saturday?"],["She isn't coming to the party.","Is she coming to the party?"],["They aren't leaving until Monday.","When are they leaving?"]],"examples":["I'm not going to school tomorrow. It's a holiday.","Are you doing anything this evening?","What are you doing at the weekend?","Sam isn't coming to the meeting on Friday.","When are your cousins arriving?","Where are you going on holiday this summer?"],"uz":"Rejani so‘rash: What are you doing tonight? — Bugun kechqurun nima qilmoqchisiz?"},
+            practise: [
+              {"type":"choose","q":"___ you doing anything on Saturday evening?","options":["Are","Do","Is"],"a":["Are"],"hint":"Question: Are + you + -ing?"},
+              {"type":"choose","q":"She ___ to the party tomorrow. She's ill.","options":["isn't coming","doesn't coming","not coming"],"a":["isn't coming"],"hint":"Negative: isn't + -ing."},
+              {"type":"gap","q":"What ___ you doing this weekend? (be)","a":["are"],"hint":"Question: What + are + you + doing?"},
+              {"type":"gap","q":"I ___ tomorrow. I have a day off. (not / work — a fixed plan)","a":["'m not working","am not working","'m not going to work","am not going to work"],"hint":"Negative with I: I'm not (I am not) + working."},
+              {"type":"order","q":"Put the words in order.","words":["are","When","leaving","you"],"a":["When are you leaving?"],"hint":"When + are + you + leaving?"}
+            ]
+          },
+          {
+            learn: {"title":"Now or in the future? — the time word tells you","rule":"The same form, am / is / are + -ing, can be about now or about a future plan. The time words show which one: I'm working now (at this moment). I'm working tomorrow (a plan). Words for now: now, at the moment, Look!, Listen! Words for the future: tonight, tomorrow, this weekend, next week, on Monday, in July.","table":[["Now","A future plan"],["I'm cooking dinner now.","I'm cooking dinner for my friends on Saturday."],["Look! Anna is leaving.","Anna is leaving for Canada next month."],["We're watching a film at the moment.","We're watching a film tonight."]],"examples":["I'm reading a good book at the moment.","I'm meeting Kate for lunch tomorrow.","Listen! Someone is playing the piano.","We're playing in a concert next Friday.","She's working from home today.","He's travelling to China next month."],"uz":"Bir xil shakl hozirgi ishni ham, kelajakdagi rejani ham bildiradi — buni vaqt so‘zi (now, tomorrow) ko‘rsatadi."},
+            practise: [
+              {"type":"choose","q":"Which sentence is about a future plan?","options":["I'm meeting Kate tomorrow.","I'm meeting Kate now.","I met Kate yesterday."],"a":["I'm meeting Kate tomorrow."],"hint":"tomorrow = the future → a plan."},
+              {"type":"choose","q":"We're having dinner with our neighbours ___.","options":["next Saturday","last Saturday","yesterday"],"a":["next Saturday"],"hint":"be + -ing with a future time = a plan."},
+              {"type":"gap","q":"They ___ to London next week. (move — a fixed plan)","a":["are moving","'re moving","are going to move","'re going to move"],"hint":"A fixed plan → are + -ing: They are moving."},
+              {"type":"gap","q":"Shh! The baby ___ at the moment. (sleep)","a":["is sleeping","'s sleeping"],"hint":"at the moment = now → is + -ing."},
+              {"type":"fix","q":"Which sentence is correct?","options":["I'm seeing the doctor on Monday.","I seeing the doctor on Monday.","I'm see the doctor on Monday."],"a":["I'm seeing the doctor on Monday."],"hint":"I'm (I am) + seeing."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"We ___ to the cinema tonight. We have the tickets.","options":["are going","going","went"],"a":["are going"]},
+          {"type":"gap","q":"My sister ___ married next month. (get — a fixed plan)","a":["is getting","'s getting","is going to get","'s going to get"]},
+          {"type":"choose","q":"___ you doing anything tomorrow evening?","options":["Are","Do","Will"],"a":["Are"]},
+          {"type":"choose","q":"I'm hungry. I think I ___ make a sandwich. (a decision now)","options":["will","am going to"],"a":["will"],"from":"g32"},
+          {"type":"gap","q":"I ___ to the party on Saturday. I'm going to my cousin's wedding. (not / go — a fixed plan)","a":["'m not going","am not going","'m not going to go","am not going to go"]},
+          {"type":"choose","q":"What ___ you doing this weekend?","options":["are","do","is"],"a":["are"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["She's flying to New York on Monday.","She flying to New York on Monday.","She's fly to New York on Monday."],"a":["She's flying to New York on Monday."]},
+          {"type":"order","q":"Put the words in order.","words":["are","They","tomorrow","coming"],"a":["They are coming tomorrow.","Are they coming tomorrow?"]},
+          {"type":"choose","q":"Be quiet! The baby ___.","options":["is sleeping","sleeps","sleep"],"a":["is sleeping"],"from":"g16"},
+          {"type":"gap","q":"Where ___ you going on holiday this summer? (be)","a":["are"]},
+          {"type":"choose","q":"Which sentence is about a future plan?","options":["We're playing tennis on Sunday.","We're playing tennis now.","We played tennis on Sunday."],"a":["We're playing tennis on Sunday."]},
+          {"type":"gap","q":"He ___ his grandparents tomorrow. (visit — a fixed plan)","a":["is visiting","'s visiting","is going to visit","'s going to visit"]},
+          {"type":"gap","q":"___ you see the match last night?","a":["Did"],"from":"g31"},
+          {"type":"fix","q":"Which sentence is correct?","options":["Are you coming to my party?","Do you coming to my party?","Are you come to my party?"],"a":["Are you coming to my party?"]},
+          {"type":"order","q":"Put the words in order.","words":["meeting","I'm","Kate","at","six"],"a":["I'm meeting Kate at six.","At six I'm meeting Kate."]},
+          {"type":"choose","q":"My parents ___ home until late tonight.","options":["aren't coming","don't coming","not coming"],"a":["aren't coming"]},
+          {"type":"choose","q":"I ___ at home yesterday evening.","options":["was","were","am"],"a":["was"],"from":"g29"},
+          {"type":"gap","q":"We ___ dinner with Sam tonight. We booked a table. (have — a fixed plan)","a":["are having","'re having","are going to have","'re going to have"]},
+          {"type":"choose","q":"When ___ your brother leaving for university?","options":["is","does","are"],"a":["is"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["I'm not working tomorrow.","I'm not work tomorrow.","I don't working tomorrow."],"a":["I'm not working tomorrow."]}
+        ]
+      },
+      {
+        id: "g34", no: 34, title: "Will vs Going To vs Present Continuous", v: 1,
+        chunks: [
+          {
+            learn: {"title":"Three ways to talk about the future","rule":"will → a decision you make now, an offer or a promise: I'm cold. I'll close the window. be going to → a plan or intention you decided before: I'm going to learn Spanish this year. Present continuous → a fixed arrangement, with a time, a place or other people already arranged: I'm meeting Sam at the café at six.","table":[["Form","Use","Example"],["will","a decision now, an offer, a promise","I'm cold. I'll close the window."],["be going to","a plan or intention","I'm going to learn to drive this year."],["present continuous","a fixed arrangement (time, place, people)","I'm meeting Sam at the café at six."]],"examples":["A: The phone's ringing. B: I'll answer it.","I'll help you with those bags.","I'm going to save money for a new laptop.","We're going to paint the kitchen this summer.","I'm having lunch with my boss on Friday.","They're getting married on the 3rd of May."],"uz":"will — hozir qilingan qaror, going to — niyat, Present Continuous — aniq kelishilgan reja."},
+            practise: [
+              {"type":"choose","q":"A: The phone is ringing. B: I ___ answer it. (a decision now)","options":["will","am going to","am answering"],"a":["will"],"hint":"A decision at the moment of speaking → will."},
+              {"type":"choose","q":"I ___ my cousins at the airport at six tomorrow. We arranged it last week.","options":["am meeting","meet","met"],"a":["am meeting"],"hint":"A fixed arrangement with a time and place → present continuous."},
+              {"type":"gap","q":"I've decided. I ___ going to study medicine. (be)","a":["am","'m"],"hint":"A plan or intention → I am going to…"},
+              {"type":"gap","q":"A: I'm thirsty. B: Wait, I ___ get you some water. (an offer)","a":["will","'ll"],"hint":"An offer → will ('ll)."},
+              {"type":"fix","q":"Which sentence is correct?","options":["I'll carry your bag for you.","I'll carrying your bag for you.","I'll to carry your bag for you."],"a":["I'll carry your bag for you."],"hint":"An offer → I'll + verb (no to)."}
+            ]
+          },
+          {
+            learn: {"title":"Predictions: I think it will… / It's going to…","rule":"Both will and be going to can say what we expect to happen. Use will for what you think or believe — often after I think, I'm sure, maybe, probably: I'm sure you'll pass the exam. Use be going to when you can see something now that shows what will happen: Look at those clouds — it's going to rain. She's running very fast — she's going to win.","table":[["A prediction from…","Use","Example"],["what I think or believe","will","I'm sure you'll like the film."],["something I can see now","be going to","Watch out! That glass is going to fall."]],"examples":["I think it will be sunny tomorrow.","Maybe people will live on Mars one day.","I'm sure you'll pass the test.","Look at that man on the ladder! He's going to fall.","The sky is very dark. It's going to rain.","She's very tired. She's going to fall asleep."],"uz":"Fikrga asoslangan bashorat — will (I think…), ko‘rinib turgan belgiga asoslangan bashorat — going to."},
+            practise: [
+              {"type":"choose","q":"Look at those black clouds! It ___ rain. (I can see it now)","options":["is going to","will"],"a":["is going to"],"hint":"A prediction from what you can see now → going to."},
+              {"type":"choose","q":"I'm sure you ___ enjoy the concert.","options":["will","are","wills"],"a":["will"],"hint":"I'm sure + will + verb (no -s)."},
+              {"type":"gap","q":"Be careful! You ___ going to drop those plates! (be)","a":["are","'re"],"hint":"You can see it now → You are going to drop them."},
+              {"type":"gap","q":"Don't worry about the test. I'm sure it ___ be difficult. (will — negative)","a":["won't","will not"],"hint":"Negative of will → won't (will not)."},
+              {"type":"fix","q":"Which sentence is correct?","options":["He's running too fast. He's going to fall.","He's running too fast. He's going fall.","He's running too fast. He going to fall."],"a":["He's running too fast. He's going to fall."],"hint":"He's (He is) + going to + fall."}
+            ]
+          },
+          {
+            learn: {"title":"Plan, arrangement or decision now?","rule":"Ask yourself two questions. Did I decide before now? If not — it's a decision now, an offer or a promise → will. If yes — is it only an intention (I have decided, but no details yet) → be going to; or is it arranged with a time, a place or other people → present continuous. For an arrangement, be going to is usually correct too.","table":[["Situation","Example"],["an intention (decided, no details yet)","I'm going to learn to swim this summer."],["a fixed arrangement (time, place, people)","I'm having lunch with Kate on Friday at one."],["a decision now (not a plan)","There's no milk. I'll get some."]],"examples":["A: We've got no bread. B: I'll go to the shop.","I'm going to start running in the mornings.","We're visiting my uncle in Leeds next weekend.","A: Are you free tomorrow? B: No, I'm working all day.","I'm going to tidy my room after dinner."],"uz":"Niyat — going to; vaqti va joyi kelishilgan reja — Present Continuous; hozir qilingan qaror — will."},
+            practise: [
+              {"type":"choose","q":"A: Are you free on Friday? B: No, I ___ my aunt. We arranged it last week.","options":["'m visiting","'ll visit","visit"],"a":["'m visiting"],"hint":"Arranged before, with a day → present continuous."},
+              {"type":"choose","q":"A: I can't do this homework. B: Don't worry. I ___ help you. (an offer)","options":["'ll","'m going to","'m helping"],"a":["'ll"],"hint":"An offer → will ('ll)."},
+              {"type":"gap","q":"We ___ going to paint the kitchen this weekend. We bought the paint yesterday. (be)","a":["are","'re"],"hint":"A plan made before → We are going to…"},
+              {"type":"gap","q":"A: What are your plans for tomorrow? B: I ___ football with Ben at ten. (play — arranged)","a":["'m playing","am playing","'m going to play","am going to play"],"hint":"Arranged with Ben at ten → I'm (I am) playing."},
+              {"type":"order","q":"Put the words in order.","words":["is","Anna","going","to","learn","Japanese"],"a":["Anna is going to learn Japanese.","Is Anna going to learn Japanese?"],"hint":"Anna + is going to + learn + Japanese."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"A: It's very hot in here. B: I ___ open the window. (a decision now)","options":["will","am going to","am opening"],"a":["will"]},
+          {"type":"choose","q":"Look out! That box ___ fall on your head! (I can see it now)","options":["is going to","will","falls"],"a":["is going to"]},
+          {"type":"gap","q":"I ___ my best friend at the café at four tomorrow. (meet — arranged)","a":["'m meeting","am meeting","'m going to meet","am going to meet"]},
+          {"type":"gap","q":"I promise I ___ tell anyone. (negative of will)","a":["won't","will not"],"from":"g32"},
+          {"type":"choose","q":"I'm sure you ___ love this book.","options":["will","are loving","wills"],"a":["will"]},
+          {"type":"gap","q":"She has decided: she ___ going to study law. (be)","a":["is","'s"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["I think it will snow tomorrow.","I think it snows tomorrow.","I think it will snows tomorrow."],"a":["I think it will snow tomorrow."]},
+          {"type":"order","q":"Put the words in order.","words":["going","We're","to","a","house","buy"],"a":["We're going to buy a house."]},
+          {"type":"choose","q":"A: We haven't got any bread. B: OK, I ___ some on my way home. (a decision now)","options":["'ll buy","'m buying","bought"],"a":["'ll buy"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["Where did you go yesterday?","Where did you went yesterday?","Where you went yesterday?"],"a":["Where did you go yesterday?"],"from":"g31"},
+          {"type":"gap","q":"Watch out! You ___ going to hit that tree! (be)","a":["are","'re"]},
+          {"type":"choose","q":"My brother ___ his driving test next Tuesday at nine. It's booked.","options":["is taking","take","taking"],"a":["is taking"]},
+          {"type":"choose","q":"She usually walks to school, but today she ___ the bus.","options":["is taking","takes","take"],"a":["is taking"],"from":"g16"},
+          {"type":"fix","q":"Which sentence is correct?","options":["Are you going to watch the match tonight?","Are you going watch the match tonight?","Do you going to watch the match tonight?"],"a":["Are you going to watch the match tonight?"]},
+          {"type":"order","q":"Put the words in order.","words":["will","Maybe","be","it","sunny","tomorrow"],"a":["Maybe it will be sunny tomorrow.","Maybe tomorrow it will be sunny."]},
+          {"type":"gap","q":"A: Somebody is at the door. B: I ___ go. (a decision now)","a":["will","'ll"]},
+          {"type":"gap","q":"My parents ___ a new car last month. (buy)","a":["bought"],"from":"g30"},
+          {"type":"choose","q":"It's 8:55 and the lesson starts at nine. Hurry! We ___ be late!","options":["are going to","are being","be"],"a":["are going to"]},
+          {"type":"gap","q":"I've got the tickets. We ___ to Rome on Friday morning. (fly — arranged)","a":["'re flying","are flying","'re going to fly","are going to fly"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["Don't worry, I'll help you.","Don't worry, I'll helping you.","Don't worry, I'll to help you."],"a":["Don't worry, I'll help you."]}
+        ]
+      },
+      {
+        id: "g35", no: 35, title: "Past Continuous", v: 1,
+        chunks: [
+          {
+            learn: {"title":"I was reading, they were playing","rule":"The past continuous = was / were + -ing. Use it for an action that was in progress (happening) at a time in the past: At eight o'clock last night I was watching TV (I started before eight and finished after eight). Use was with I, he, she, it and were with you, we, they.","table":[["Person","was / were + -ing","Example"],["I / he / she / it","was working","At ten she was working."],["you / we / they","were working","At ten we were working."]],"examples":["At eight o'clock last night I was watching TV.","She was reading a book at ten.","We were having dinner at seven.","It was raining all morning.","The children were playing in the garden.","This time yesterday I was sitting on a plane."],"uz":"Past Continuous — o‘tmishda ma’lum bir paytda davom etayotgan ish: At nine I was reading — Soat to‘qqizda kitob o‘qiyotgan edim."},
+            practise: [
+              {"type":"choose","q":"At nine o'clock last night I ___ TV.","options":["was watching","were watching","am watching"],"a":["was watching"],"hint":"Past, in progress, with I → was + -ing."},
+              {"type":"choose","q":"They ___ football at four yesterday afternoon.","options":["were playing","was playing","are playing"],"a":["were playing"],"hint":"With they → were + -ing."},
+              {"type":"gap","q":"At ten o'clock last night she ___ a book. (read — was/were + -ing)","a":["was reading"],"hint":"With she → was + reading."},
+              {"type":"gap","q":"At seven yesterday evening we ___ dinner. (have — was/were + -ing)","a":["were having"],"hint":"With we → were + having."},
+              {"type":"fix","q":"Which sentence is correct?","options":["It was raining all day yesterday.","It were raining all day yesterday.","It was rain all day yesterday."],"a":["It was raining all day yesterday."],"hint":"With it → was + -ing: was raining."}
+            ]
+          },
+          {
+            learn: {"title":"What were you doing? — negatives and questions","rule":"Negative: wasn't (was not) / weren't (were not) + -ing: I wasn't sleeping. Question: Was / Were + person + -ing: Were you sleeping? With a question word: What were you doing at eight? Short answers: Yes, I was. / No, I wasn't. Yes, they were. / No, they weren't.","table":[["Negative","Question","Short answer"],["I wasn't sleeping.","Were you sleeping?","Yes, I was. / No, I wasn't."],["She wasn't listening.","Was she listening?","Yes, she was. / No, she wasn't."],["They weren't working.","Were they working?","Yes, they were. / No, they weren't."]],"examples":["I wasn't sleeping at eleven. I was reading.","Sorry, I wasn't listening. Can you say that again?","Were you working at six yesterday? — Yes, I was.","What were you doing at midnight?","Was it snowing this morning? — No, it wasn't.","Why were they laughing?"],"uz":"So‘roq: Was / Were + shaxs + -ing: What were you doing? — Nima qilayotgan edingiz?"},
+            practise: [
+              {"type":"choose","q":"___ you sleeping at eleven last night?","options":["Were","Was","Did"],"a":["Were"],"hint":"Question with you → Were + you + -ing?"},
+              {"type":"choose","q":"Sorry, I ___ listening. Can you say that again?","options":["wasn't","weren't","didn't"],"a":["wasn't"],"hint":"Negative with I → wasn't + -ing."},
+              {"type":"gap","q":"What ___ you doing at eight o'clock yesterday evening?","a":["were"],"hint":"Question with you → What + were + you + doing?"},
+              {"type":"gap","q":"They ___ at three yesterday. They were at the beach. (not / work — was/were + -ing)","a":["weren't working","were not working"],"hint":"Negative with they → weren't (were not) + working."},
+              {"type":"order","q":"Put the words in order.","words":["was","What","doing","she"],"a":["What was she doing?"],"hint":"What + was + she + doing?"}
+            ]
+          },
+          {
+            learn: {"title":"The sun was shining… — setting the scene","rule":"We often begin a story with the past continuous to describe the scene — what was happening around us: It was a cold evening. Snow was falling and people were hurrying home. We also use it for two longer actions that were happening at the same time: Mum was cooking and Dad was reading. Don't use it with state verbs like know, like, want, need: I knew the answer (not I was knowing).","table":[["Use","Example"],["the scene of a story","The sun was shining and the birds were singing."],["two actions at the same time","Mum was cooking and Dad was reading the paper."],["state verbs → past simple","I wanted a drink. (not I was wanting)"]],"examples":["It was a beautiful morning. The sun was shining.","People were sitting in the park and children were playing.","I was doing my homework and my brother was playing games.","Everybody was talking and laughing.","I didn't know the answer. (not wasn't knowing)"],"uz":"Hikoyada vaziyatni tasvirlash uchun Past Continuous ishlatiladi; know, like, want kabi fe’llar -ing olmaydi."},
+            practise: [
+              {"type":"choose","q":"It was a lovely day. The sun ___ and the birds were singing.","options":["was shining","were shining","shining"],"a":["was shining"],"hint":"The sun = it → was + -ing."},
+              {"type":"choose","q":"I ___ the answer to the last question.","options":["knew","was knowing","were knowing"],"a":["knew"],"hint":"know is a state verb → no -ing: knew."},
+              {"type":"gap","q":"Mum was cooking and Dad ___ the newspaper. (read — was/were + -ing)","a":["was reading"],"hint":"Two actions at the same time → was reading."},
+              {"type":"gap","q":"At midnight we ___ to music and dancing. (listen — was/were + -ing)","a":["were listening"],"hint":"With we → were + listening."},
+              {"type":"fix","q":"Which sentence is correct?","options":["She wanted a glass of water.","She was wanting a glass of water.","She were wanting a glass of water."],"a":["She wanted a glass of water."],"hint":"want is a state verb → past simple: wanted."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"At six o'clock yesterday we ___ dinner.","options":["were having","was having","are having"],"a":["were having"]},
+          {"type":"gap","q":"At ten last night I ___ a film. (watch — was/were + -ing)","a":["was watching"]},
+          {"type":"choose","q":"___ it raining when you left home?","options":["Was","Were","Did"],"a":["Was"]},
+          {"type":"choose","q":"She didn't ___ me an email yesterday.","options":["send","sent","sends"],"a":["send"],"from":"g31"},
+          {"type":"gap","q":"They ___ at four yesterday. They were at the cinema. (not / study — was/were + -ing)","a":["weren't studying","were not studying"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["The children were playing in the garden.","The children was playing in the garden.","The children were play in the garden."],"a":["The children were playing in the garden."]},
+          {"type":"choose","q":"What ___ you doing at midnight?","options":["were","was","did"],"a":["were"]},
+          {"type":"order","q":"Put the words in order.","words":["was","He","a","shower","having"],"a":["He was having a shower.","Was he having a shower?"]},
+          {"type":"choose","q":"We ___ a great film last weekend.","options":["saw","seed","see"],"a":["saw"],"from":"g30"},
+          {"type":"gap","q":"It ___ all morning, so we stayed at home. (snow — was/were + -ing)","a":["was snowing"]},
+          {"type":"choose","q":"I ___ his name, but I forgot it.","options":["knew","was knowing","were knowing"],"a":["knew"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["Were you sleeping at eleven?","Was you sleeping at eleven?","Did you sleeping at eleven?"],"a":["Were you sleeping at eleven?"]},
+          {"type":"gap","q":"Was Tom working yesterday afternoon? — No, he ___.","a":["wasn't","was not"]},
+          {"type":"choose","q":"My parents ___ going to buy a new car next year.","options":["are","is","will"],"a":["are"],"from":"g32"},
+          {"type":"order","q":"Put the words in order.","words":["were","What","doing","they"],"a":["What were they doing?"]},
+          {"type":"choose","q":"This time yesterday I ___ on the beach.","options":["was lying","were lying","am lying"],"a":["was lying"]},
+          {"type":"choose","q":"This test is ___ than the last one.","options":["easier","easyer","more easy"],"a":["easier"],"from":"g26"},
+          {"type":"gap","q":"My brother was playing games and my sister ___ to music. (listen — was/were + -ing)","a":["was listening"]},
+          {"type":"choose","q":"Sorry, we ___ attention. Can you explain it again?","options":["weren't paying","wasn't paying","didn't paying"],"a":["weren't paying"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["I wasn't working at five.","I weren't working at five.","I wasn't work at five."],"a":["I wasn't working at five."]}
+        ]
+      },
+      {
+        id: "g36", no: 36, title: "Past Simple vs Past Continuous", v: 1,
+        chunks: [
+          {
+            learn: {"title":"I was walking home when it started to rain","rule":"Use the two tenses together when a short action happens in the middle of a longer one. The longer action (it was already happening) → past continuous. The short action (it interrupted the longer one) → past simple, often after when: I was having a shower when the phone rang.","table":[["Longer action (past continuous)","Short action (past simple)"],["I was having a shower","when the phone rang."],["We were watching TV","when the lights went out."],["She was walking home","when it started to rain."]],"examples":["I was having a shower when the phone rang.","We were watching TV when the lights went out.","She was walking home when it started to rain.","Tom was cooking when he cut his finger.","When I arrived, they were having dinner.","What were you doing when I called you?"],"uz":"Uzoq davom etgan ish — Past Continuous, uni bo‘lgan qisqa ish — Past Simple: I was reading when he came — U kelganda kitob o‘qiyotgan edim."},
+            practise: [
+              {"type":"choose","q":"I ___ a bath when the phone rang. (the longer action)","options":["was having","had","have"],"a":["was having"],"hint":"The longer action → past continuous: was having."},
+              {"type":"choose","q":"We were watching TV when the lights ___ out. (the short action)","options":["went","were going","go"],"a":["went"],"hint":"The short action → past simple: went."},
+              {"type":"gap","q":"She ___ home when she saw the accident. (walk — the longer action)","a":["was walking"],"hint":"The longer action → was + walking."},
+              {"type":"gap","q":"Tom was cooking when he ___ his finger. (cut — the short action)","a":["cut"],"hint":"The short action → past simple: cut (cut – cut – cut)."},
+              {"type":"fix","q":"Which sentence is correct?","options":["When I arrived, they were having dinner.","When I arrived, they was having dinner.","When I arrived, they having dinner."],"a":["When I arrived, they were having dinner."],"hint":"they → were + having."}
+            ]
+          },
+          {
+            learn: {"title":"while and when","rule":"Use while before the longer action — it means 'during the time that': While I was walking to school, I met an old friend. Use when before the short action: I was walking to school when I met an old friend. Two longer actions at the same time: While I was cooking, my sister was setting the table.","table":[["","Example"],["while + the longer action","While I was walking to school, I met an old friend."],["when + the short action","I was walking to school when I met an old friend."],["while + two longer actions","While I was cooking, my sister was setting the table."]],"examples":["While I was waiting for the bus, it started to rain.","The phone rang while we were having dinner.","I was walking home when I saw a fox.","While Dad was washing the car, Mum was watering the garden.","She fell asleep while she was watching the film."],"uz":"while dan keyin davom etayotgan ish (Past Continuous), when dan keyin ko‘pincha qisqa ish (Past Simple) keladi."},
+            practise: [
+              {"type":"choose","q":"___ I was waiting for the bus, it started to rain.","options":["While","During","Then"],"a":["While"],"hint":"while + the longer action (was waiting)."},
+              {"type":"choose","q":"I was walking home ___ I saw a fox.","options":["when","while","during"],"a":["when"],"hint":"when + the short action (saw)."},
+              {"type":"gap","q":"While we ___ dinner, the lights went out. (have — the longer action)","a":["were having"],"hint":"while + the longer action → were having."},
+              {"type":"gap","q":"While Dad was washing the car, Mum ___ the garden. (water — was/were + -ing)","a":["was watering"],"hint":"Two longer actions at the same time → was watering."},
+              {"type":"order","q":"Put the words in order.","words":["was","She","sleeping","when","her","brother","arrived"],"a":["She was sleeping when her brother arrived.","Her brother arrived when she was sleeping."],"hint":"She was sleeping (longer) + when + her brother arrived (short)."}
+            ]
+          },
+          {
+            learn: {"title":"When she arrived, we had dinner / we were having dinner","rule":"Past simple + when + past simple = one action after the other: When Kate arrived, we had dinner (first Kate arrived, then we ate). Past continuous + when + past simple = the first action had already started: When Kate arrived, we were having dinner (we were in the middle of dinner). For a list of actions in a story, one after another, use the past simple: I got up, had a shower and went out.","table":[["Sentence","Meaning"],["When Kate arrived, we had dinner.","First Kate arrived, then we ate."],["When Kate arrived, we were having dinner.","We were already eating when she came."],["I opened the door and saw a cat.","Two actions, one after the other."]],"examples":["When the film ended, we went home.","When I got to the station, my train was leaving.","She opened the box and found a ring.","When the teacher came in, the students were talking.","When the teacher came in, the students stood up."],"uz":"When she came, we had lunch — u kelgach, tushlik qildik; we were having lunch — u kelganda tushlik qilayotgan edik."},
+            practise: [
+              {"type":"choose","q":"Which sentence means 'we started eating before Kate came'?","options":["When Kate arrived, we were having dinner.","When Kate arrived, we had dinner."],"a":["When Kate arrived, we were having dinner."],"hint":"were having = we were already in the middle of dinner."},
+              {"type":"choose","q":"First the alarm rang, then I got up. → When the alarm rang, I ___ up.","options":["got","was getting"],"a":["got"],"hint":"One action after the other → past simple: got."},
+              {"type":"gap","q":"I opened the door and ___ a big dog. (see)","a":["saw"],"hint":"Actions one after the other → past simple: saw."},
+              {"type":"gap","q":"When we got to the station, the train ___. We had to run! (leave — was/were + -ing)","a":["was leaving"],"hint":"The train had already started to leave → was leaving."},
+              {"type":"fix","q":"Which sentence is correct?","options":["The phone rang while I was having a shower.","The phone rang while I was have a shower.","The phone rang while I were having a shower."],"a":["The phone rang while I was having a shower."],"hint":"I → was + having."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"I ___ dinner when my friend called. (the longer action)","options":["was cooking","cooked","cook"],"a":["was cooking"]},
+          {"type":"choose","q":"We were sitting in the garden when it ___ to rain. (the short action)","options":["started","was starting","starts"],"a":["started"]},
+          {"type":"gap","q":"She ___ to music when the teacher came in. (listen — the longer action)","a":["was listening"]},
+          {"type":"gap","q":"What time ___ you get up yesterday?","a":["did"],"from":"g31"},
+          {"type":"choose","q":"___ I was cleaning my room, I found an old photo.","options":["While","During","Then"],"a":["While"]},
+          {"type":"gap","q":"While the children were playing, their parents ___ coffee. (drink — was/were + -ing)","a":["were drinking"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["He broke his leg while he was skiing.","He broke his leg while he skiing.","He broke his leg while he were skiing."],"a":["He broke his leg while he was skiing."]},
+          {"type":"order","q":"Put the words in order.","words":["was","It","when","raining","we","left"],"a":["It was raining when we left.","We left when it was raining."]},
+          {"type":"choose","q":"When the film ended, we ___ home. (first the film ended, then we left)","options":["went","were going"],"a":["went"]},
+          {"type":"choose","q":"My dad ___ dinner for us last night.","options":["made","maked","make"],"a":["made"],"from":"g30"},
+          {"type":"gap","q":"I ___ a shower when the doorbell rang. (have — the longer action)","a":["was having"]},
+          {"type":"choose","q":"What were you doing when the accident ___?","options":["happened","was happening","happens"],"a":["happened"]},
+          {"type":"choose","q":"The weather ___ terrible last weekend.","options":["was","were","is"],"a":["was"],"from":"g29"},
+          {"type":"fix","q":"Which sentence is correct?","options":["When I got home, my sister was watching TV.","When I got home, my sister watching TV.","When I was get home, my sister was watching TV."],"a":["When I got home, my sister was watching TV."]},
+          {"type":"gap","q":"We were walking in the park when we ___ an old friend. (meet — the short action)","a":["met"]},
+          {"type":"order","q":"Put the words in order.","words":["were","We","dinner","having","when","the","lights","went","out"],"a":["We were having dinner when the lights went out.","The lights went out when we were having dinner."]},
+          {"type":"choose","q":"A: I don't understand this word. B: I ___ explain it. (an offer)","options":["will","am going to"],"a":["will"],"from":"g32"},
+          {"type":"gap","q":"When I arrived at the party, everybody ___. The music was very loud. (dance — was/were + -ing)","a":["was dancing"]},
+          {"type":"choose","q":"Which sentence means 'first she came, then we ate'?","options":["When she came, we had lunch.","When she came, we were having lunch."],"a":["When she came, we had lunch."]},
+          {"type":"fix","q":"Which sentence is correct?","options":["They were playing tennis when it started to rain.","They was playing tennis when it started to rain.","They were playing tennis when it was start to rain."],"a":["They were playing tennis when it started to rain."]}
+        ]
+      },
+      {
+        id: "g37", no: 37, title: "Used To (Past Habits and States)", v: 1,
+        chunks: [
+          {
+            learn: {"title":"I used to play football — past habits","rule":"Use used to + verb for things you did often or regularly in the past but don't do now: I used to play football every day (now I don't). It's the same for every person: I used to, she used to, they used to. After used to, use the verb as it is: used to go (not used to went).","table":[["Then (a past habit)","Now"],["I used to walk to school.","Now I go by bus."],["She used to play the piano.","She doesn't play now."],["We used to go to the beach every summer.","Now we go to the mountains."]],"examples":["I used to play football every day after school.","My grandad used to work on a farm.","We used to go to the beach every summer.","She used to eat a lot of sweets, but now she doesn't.","My dad used to smoke, but he stopped ten years ago."],"uz":"used to + fe’l — o‘tmishda odat bo‘lgan, hozir esa yo‘q ish: I used to play football — Oldin futbol o‘ynardim."},
+            practise: [
+              {"type":"choose","q":"When I was a child, I ___ play in the park every day.","options":["used to","was used","using to"],"a":["used to"],"hint":"A past habit → used to + verb."},
+              {"type":"choose","q":"My dad used to ___ to work by bike.","options":["go","went","going"],"a":["go"],"hint":"After used to, the verb as it is: go."},
+              {"type":"gap","q":"She ___ a lot of chocolate, but now she eats fruit. (eat — used to)","a":["used to eat"],"hint":"A past habit → used to + eat."},
+              {"type":"gap","q":"We ___ to the beach every summer when I was young. (go — used to)","a":["used to go"],"hint":"A past habit → used to + go."},
+              {"type":"fix","q":"Which sentence is correct?","options":["They used to visit us every summer.","They used to visited us every summer.","They were used to visit us every summer."],"a":["They used to visit us every summer."],"hint":"used to + the verb as it is: visit."}
+            ]
+          },
+          {
+            learn: {"title":"I used to have long hair — past states","rule":"used to is also for situations that were true for a long time in the past but aren't true now: I used to have long hair (now it's short). There used to be a cinema here (now there isn't). Don't use used to for one action at one time — use the past simple: I visited Rome last year (not I used to visit Rome last year).","table":[["","Example"],["a past state","I used to have long hair. (Now it's short.)"],["there used to be","There used to be a shop here. (Now it's gone.)"],["one action, one time → past simple","I visited Rome in 2019."]],"examples":["My mum used to have long hair.","There used to be a cinema in our town.","This town used to be very quiet.","We used to live in London.","I used to be afraid of dogs, but now I love them."],"uz":"used to o‘tmishdagi holatni ham bildiradi: There used to be a cinema here — Bu yerda oldin kinoteatr bor edi."},
+            practise: [
+              {"type":"choose","q":"There ___ a cinema in our street, but now it's a supermarket.","options":["used to be","used to is","used be"],"a":["used to be"],"hint":"A past situation → used to be."},
+              {"type":"choose","q":"I ___ to Spain last summer. (one time)","options":["went","used to go"],"a":["went"],"hint":"One action at one time → past simple."},
+              {"type":"gap","q":"My mum ___ long hair, but now it's short. (have — used to)","a":["used to have"],"hint":"A past state → used to + have."},
+              {"type":"gap","q":"This town ___ very quiet, but now it's busy. (be — used to)","a":["used to be"],"hint":"A past state → used to + be."},
+              {"type":"fix","q":"Which sentence is correct?","options":["I bought this jacket last week.","I used to buy this jacket last week.","I used buy this jacket last week."],"a":["I bought this jacket last week."],"hint":"One action at one time (last week) → past simple."}
+            ]
+          },
+          {
+            learn: {"title":"Did you use to…? — negatives and questions","rule":"Negative: didn't (did not) + use to + verb: I didn't use to like coffee (but now I do). Question: Did + person + use to + verb? Did you use to play football? After did and didn't, write use to (without d) — just like didn't go, didn't play. Short answers: Yes, I did. / No, I didn't.","table":[["Negative","Question","Short answer"],["I didn't use to like vegetables.","Did you use to like vegetables?","Yes, I did. / No, I didn't."],["She didn't use to wear glasses.","Did she use to wear glasses?","Yes, she did. / No, she didn't."]],"examples":["I didn't use to like coffee, but now I drink it every day.","He didn't use to wear glasses.","Did you use to walk to school?","Did your parents use to live here? — Yes, they did.","Where did you use to go on holiday?"],"uz":"Inkor va so‘roqda did dan keyin use to yoziladi: Did you use to swim? — Oldin suzarmidingiz?"},
+            practise: [
+              {"type":"choose","q":"I ___ like vegetables, but now I love them.","options":["didn't use to","not used to","don't used to"],"a":["didn't use to"],"hint":"Negative → didn't use to + verb."},
+              {"type":"choose","q":"___ you use to live in a flat?","options":["Did","Do","Were"],"a":["Did"],"hint":"Question → Did + you + use to + verb?"},
+              {"type":"gap","q":"Did you use to play tennis? — Yes, I ___.","a":["did"],"hint":"Did you…? — Yes, I did."},
+              {"type":"gap","q":"She ___ wear glasses, but now she does. (not / use to)","a":["didn't use to","did not use to"],"hint":"Negative → didn't (did not) use to."},
+              {"type":"order","q":"Put the words in order.","words":["use","Did","to","you","swim"],"a":["Did you use to swim?"],"hint":"Did + you + use to + swim?"}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"When I was young, I ___ climb trees.","options":["used to","use","was"],"a":["used to"]},
+          {"type":"gap","q":"My grandparents ___ on a farm. Now they live in a flat. (live — used to)","a":["used to live"]},
+          {"type":"choose","q":"There ___ a park here, but now there are houses.","options":["used to be","used to is","used be"],"a":["used to be"]},
+          {"type":"choose","q":"___ your sister call you last night?","options":["Did","Was","Does"],"a":["Did"],"from":"g31"},
+          {"type":"gap","q":"Did you use to have a pet? — No, I ___.","a":["didn't","did not"]},
+          {"type":"choose","q":"We ___ to the cinema last Saturday. (one time)","options":["went","used to go"],"a":["went"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["He used to be very shy.","He used to was very shy.","He used be very shy."],"a":["He used to be very shy."]},
+          {"type":"order","q":"Put the words in order.","words":["used","We","to","live","here"],"a":["We used to live here."]},
+          {"type":"gap","q":"I ___ my keys yesterday, but I found them later. (lose)","a":["lost"],"from":"g30"},
+          {"type":"gap","q":"I ___ like fish, but now I love it. (not / use to)","a":["didn't use to","did not use to"]},
+          {"type":"choose","q":"Where ___ you use to go on holiday when you were a child?","options":["did","were","do"],"a":["did"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["My sister didn't use to like cats.","My sister didn't used to liked cats.","My sister doesn't use to like cats."],"a":["My sister didn't use to like cats."]},
+          {"type":"gap","q":"Look at the sky! It's ___ to rain.","a":["going"],"from":"g32"},
+          {"type":"gap","q":"This street ___ very busy, but now it's quiet. (be — used to)","a":["used to be"]},
+          {"type":"order","q":"Put the words in order.","words":["you","Did","use","to","glasses","wear"],"a":["Did you use to wear glasses?"]},
+          {"type":"choose","q":"I ___ my leg in 2020. (one time)","options":["broke","used to break"],"a":["broke"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["Were you at the party?","Was you at the party?","Did you at the party?"],"a":["Were you at the party?"],"from":"g29"},
+          {"type":"gap","q":"She ___ a lot of sweets when she was a child. (eat — used to)","a":["used to eat"]},
+          {"type":"choose","q":"My brother used to ___ a bike to school.","options":["ride","rode","riding"],"a":["ride"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["They used to walk to school.","They used to walked to school.","They used walk to school."],"a":["They used to walk to school."]}
+        ]
+      },
+      {
+        id: "g38", no: 38, title: "Present Perfect (Introduction)", v: 1,
+        chunks: [
+          {
+            learn: {"title":"I have finished — have / has + past participle","rule":"The present perfect = have / has + past participle (the third form of the verb). Use have with I, you, we, they and has with he, she, it. Short forms: I've, you've, we've, they've, he's, she's, it's. For regular verbs the past participle ends in -ed, like the past simple: work → worked, finish → finished.","table":[["Person","have / has","Past participle","Short form"],["I / you / we / they","have","finished","I've finished"],["he / she / it","has","finished","She's finished"]],"examples":["I have finished my homework.","She has cleaned her room.","We've painted the kitchen.","He's started a new job.","They have opened a new shop in our street.","My parents have travelled to many countries."],"uz":"Present Perfect = have / has + fe’lning 3-shakli: I have finished — Men tugatdim."},
+            practise: [
+              {"type":"choose","q":"I ___ finished my homework.","options":["have","has","am"],"a":["have"],"hint":"With I → have + past participle."},
+              {"type":"choose","q":"She has ___ her room.","options":["cleaned","clean","cleaning"],"a":["cleaned"],"hint":"has + past participle: cleaned."},
+              {"type":"gap","q":"We ___ painted the living room. (have / has)","a":["have","'ve"],"hint":"With we → have."},
+              {"type":"gap","q":"He has ___ a new job. (start)","a":["started"],"hint":"Regular verb → past participle with -ed: started."},
+              {"type":"fix","q":"Which sentence is correct?","options":["They have opened a new shop.","They has opened a new shop.","They have open a new shop."],"a":["They have opened a new shop."],"hint":"they → have + opened."}
+            ]
+          },
+          {
+            learn: {"title":"seen, gone, done — irregular past participles","rule":"Many common verbs have an irregular past participle. Sometimes it is the same as the past simple (buy – bought – bought), sometimes it is different (see – saw – seen). Learn them in threes: verb – past simple – past participle.","table":[["Verb","Past simple","Past participle"],["be","was / were","been"],["go","went","gone"],["see","saw","seen"],["do","did","done"],["eat","ate","eaten"],["write","wrote","written"],["break","broke","broken"],["buy","bought","bought"],["lose","lost","lost"]],"examples":["I've seen this film.","She has lost her keys.","We've bought a new car.","He's broken his arm.","They have eaten all the cake.","I've written three emails this morning."],"uz":"Noto‘g‘ri fe’llarning 3-shaklini yodlang: go – went – gone, see – saw – seen, write – wrote – written."},
+            practise: [
+              {"type":"choose","q":"I have ___ this film before.","options":["seen","saw","see"],"a":["seen"],"hint":"see – saw – seen: have + seen."},
+              {"type":"choose","q":"Oh no! I've ___ my phone.","options":["lost","lose","losed"],"a":["lost"],"hint":"lose – lost – lost: have + lost."},
+              {"type":"gap","q":"She has ___ a letter to her grandma. (write)","a":["written"],"hint":"write – wrote – written."},
+              {"type":"gap","q":"They have ___ all the pizza. (eat)","a":["eaten"],"hint":"eat – ate – eaten."},
+              {"type":"fix","q":"Which sentence is correct?","options":["He has broken his arm.","He has broke his arm.","He has breaked his arm."],"a":["He has broken his arm."],"hint":"break – broke – broken."}
+            ]
+          },
+          {
+            learn: {"title":"I've lost my keys! — news and results","rule":"Use the present perfect for something that happened in the past when we don't say when, and it is important now: I've lost my keys (I can't open the door now). It is also used to give news: Tom has passed his exam! Negative: haven't / hasn't + past participle. Question: Have / Has + person + past participle? Short answers: Yes, I have. / No, she hasn't.","table":[["Negative","Question","Short answer"],["I haven't finished.","Have you finished?","Yes, I have. / No, I haven't."],["She hasn't called.","Has she called?","Yes, she has. / No, she hasn't."]],"examples":["I've lost my keys. I can't get into the house.","Good news! Anna has passed her driving test.","I haven't finished my homework, so I can't go out.","Has Tom called you? — No, he hasn't.","Have you cleaned your room? — Yes, I have."],"uz":"Natijasi hozir muhim bo‘lgan ish: I've lost my keys — Kalitlarimni yo‘qotib qo‘ydim (hozir eshikni ocha olmayman)."},
+            practise: [
+              {"type":"choose","q":"___ you cleaned your room?","options":["Have","Has","Are"],"a":["Have"],"hint":"Question with you → Have + you + past participle?"},
+              {"type":"choose","q":"She ___ called me. I'm still waiting.","options":["hasn't","haven't","isn't"],"a":["hasn't"],"hint":"Negative with she → hasn't + past participle."},
+              {"type":"gap","q":"Has Tom finished his homework? — No, he ___.","a":["hasn't","has not"],"hint":"Has he…? — No, he hasn't."},
+              {"type":"gap","q":"I can't go out. I ___ my homework. (not / finish — present perfect)","a":["haven't finished","have not finished"],"hint":"Negative with I → haven't (have not) + finished."},
+              {"type":"order","q":"Put the words in order.","words":["has","She","her","lost","bag"],"a":["She has lost her bag.","Has she lost her bag?"],"hint":"She + has + lost + her bag."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"We ___ bought a new car.","options":["have","has","are"],"a":["have"]},
+          {"type":"gap","q":"He has ___ his leg. (break)","a":["broken"]},
+          {"type":"choose","q":"I have ___ to London three times.","options":["been","be","was"],"a":["been"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["I didn't see him yesterday.","I didn't saw him yesterday.","I not saw him yesterday."],"a":["I didn't see him yesterday."],"from":"g31"},
+          {"type":"gap","q":"Great news! My brother ___ passed his driving test! (have / has)","a":["has","'s"]},
+          {"type":"choose","q":"Oh no! Someone has ___ my bike!","options":["taken","took","take"],"a":["taken"]},
+          {"type":"gap","q":"They have ___ a cake for your birthday. (make)","a":["made"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["Have you seen my keys?","Have you saw my keys?","Has you seen my keys?"],"a":["Have you seen my keys?"]},
+          {"type":"choose","q":"She ___ to the shops an hour ago.","options":["went","gone","goed"],"a":["went"],"from":"g30"},
+          {"type":"gap","q":"Have you eaten? — Yes, I ___.","a":["have"]},
+          {"type":"order","q":"Put the words in order.","words":["you","Have","the","film","seen"],"a":["Have you seen the film?","You have seen the film."]},
+          {"type":"choose","q":"Tom ___ his homework, so he can't play now.","options":["hasn't done","haven't done","hasn't did"],"a":["hasn't done"]},
+          {"type":"choose","q":"At seven this morning I ___ breakfast.","options":["was having","were having","am having"],"a":["was having"],"from":"g35"},
+          {"type":"gap","q":"I ___ my phone. Can I use yours? (lose — present perfect)","a":["have lost","'ve lost"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["She has written a book.","She has wrote a book.","She has writed a book."],"a":["She has written a book."]},
+          {"type":"choose","q":"Good news! We ___ the match!","options":["have won","has won","have win"],"a":["have won"]},
+          {"type":"gap","q":"I ___ the guitar, but I stopped. (play — used to)","a":["used to play"],"from":"g37"},
+          {"type":"gap","q":"___ she called you? (have / has)","a":["Has"]},
+          {"type":"order","q":"Put the words in order.","words":["haven't","I","the","finished","book"],"a":["I haven't finished the book.","Haven't I finished the book?"]},
+          {"type":"choose","q":"They ___ seen the new film. They want to see it on Saturday.","options":["haven't","hasn't","isn't"],"a":["haven't"]}
+        ]
+      },
+      {
+        id: "g39", no: 39, title: "Present Perfect with Ever, Never, Just, Already, Yet", v: 1,
+        chunks: [
+          {
+            learn: {"title":"Have you ever…? I've never… — experiences","rule":"Use the present perfect for experiences — things that happened (or didn't happen) at any time in your life up to now. Ask with ever (= at any time): Have you ever been to London? Answer with never (= not at any time): I've never been there. ever and never go between have / has and the past participle. been to = visited a place and came back.","table":[["","Example"],["ever (in questions)","Have you ever eaten sushi?"],["never (= not ever)","I've never been to Japan."],["short answers","Yes, I have. / No, I haven't. / No, never."]],"examples":["Have you ever been to London?","I've never eaten sushi.","Has she ever ridden a horse?","My grandma has never used a computer.","Have you ever met a famous person? — No, never."],"uz":"ever so‘roqda ishlatiladi: Have you ever been to Japan? — Hech Yaponiyada bo‘lganmisiz? never — hech qachon."},
+            practise: [
+              {"type":"choose","q":"Have you ___ been to Italy?","options":["ever","since","yet"],"a":["ever"],"hint":"A question about any time in your life → ever."},
+              {"type":"choose","q":"I've ___ seen snow. I'd love to see it.","options":["never","ever","yet"],"a":["never"],"hint":"Not at any time → never."},
+              {"type":"gap","q":"___ you ever ridden a horse? (have / has)","a":["Have"],"hint":"Question with you → Have + you + ever + past participle?"},
+              {"type":"gap","q":"She has ___ eaten Indian food. She doesn't know what it tastes like. (never / ever)","a":["never"],"hint":"Not at any time → never."},
+              {"type":"order","q":"Put the words in order.","words":["ever","Have","you","Paris","been","to"],"a":["Have you ever been to Paris?"],"hint":"Have + you + ever + been to + Paris?"}
+            ]
+          },
+          {
+            learn: {"title":"just and already","rule":"just = a very short time ago: I've just had lunch (a few minutes ago). already = before now, often earlier than someone expected: She's already finished her homework (and it's only five o'clock!). just and already usually go between have / has and the past participle. already can also go at the end: She's finished already.","table":[["Word","Meaning","Example"],["just","a very short time ago","I've just had lunch."],["already","before now, earlier than expected","She's already left. / She's left already."]],"examples":["I've just seen Tom. He's in the library.","The film has just started.","We've already eaten, thanks.","She's already left. You missed her.","Have you finished already? That was quick!"],"uz":"just — hozirgina: I've just eaten — Hozirgina ovqatlandim; already — allaqachon: She's already left — U allaqachon ketdi."},
+            practise: [
+              {"type":"choose","q":"I'm not hungry. I've ___ had lunch. (a few minutes ago)","options":["just","yet","ever"],"a":["just"],"hint":"A very short time ago → just."},
+              {"type":"choose","q":"She has ___ finished her homework — before dinner! (earlier than expected)","options":["already","yet","ever"],"a":["already"],"hint":"Earlier than expected → already."},
+              {"type":"gap","q":"The bus has ___ left. We missed it by one minute. (a very short time ago)","a":["just"],"hint":"A very short time ago → just."},
+              {"type":"gap","q":"Don't buy milk. I ___ already bought some. (have / has)","a":["have","'ve"],"hint":"With I → have + already + past participle."},
+              {"type":"fix","q":"Which sentence is correct?","options":["I've just seen your brother.","I've just saw your brother.","Just I've seen your brother."],"a":["I've just seen your brother."],"hint":"have + just + past participle (seen)."}
+            ]
+          },
+          {
+            learn: {"title":"Have you finished yet? — yet","rule":"Use yet in questions and negatives. It means 'until now' and goes at the end of the sentence: Have you finished yet? I haven't finished yet. In positive sentences use already, not yet: I've already finished.","table":[["","Example"],["question","Have you done your homework yet?"],["negative","I haven't done it yet."],["positive → already","I've already done it."]],"examples":["Have you finished yet?","I haven't read the book yet.","Has the film started yet? — No, not yet.","They haven't arrived yet.","I've already seen it, but Sam hasn't seen it yet."],"uz":"yet so‘roq va inkorda, gap oxirida keladi: I haven't finished yet — Hali tugatmadim."},
+            practise: [
+              {"type":"choose","q":"Have you done your homework ___?","options":["yet","never","just"],"a":["yet"],"hint":"A question about 'until now' → yet, at the end."},
+              {"type":"choose","q":"I haven't seen the new film ___.","options":["yet","already","just"],"a":["yet"],"hint":"A negative about 'until now' → yet, at the end."},
+              {"type":"gap","q":"The shop hasn't opened ___. It opens at ten. (yet / already)","a":["yet"],"hint":"A negative → yet, at the end."},
+              {"type":"gap","q":"Have they arrived yet? — No, they ___.","a":["haven't","have not"],"hint":"Have they…? — No, they haven't."},
+              {"type":"fix","q":"Which sentence is correct?","options":["I haven't finished yet.","I haven't finished already.","I have finished yet."],"a":["I haven't finished yet."],"hint":"Negative → yet at the end."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"Have you ___ eaten Thai food?","options":["ever","yet","since"],"a":["ever"]},
+          {"type":"gap","q":"I've ___ been on a plane. I'm a bit scared. (never / ever)","a":["never"]},
+          {"type":"choose","q":"Is Tom here? — No, he's ___ gone home. You missed him by a minute.","options":["just","yet","ever"],"a":["just"]},
+          {"type":"gap","q":"She has ___ her keys. (lose)","a":["lost"],"from":"g38"},
+          {"type":"gap","q":"I haven't cleaned my room ___. I'll do it later. (yet / already)","a":["yet"]},
+          {"type":"choose","q":"We've ___ seen this film. Let's watch something else.","options":["already","yet","ever"],"a":["already"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["Has she ever been to Spain?","Has she ever went to Spain?","Has she been ever to Spain?"],"a":["Has she ever been to Spain?"]},
+          {"type":"order","q":"Put the words in order.","words":["just","I've","lunch","had"],"a":["I've just had lunch."]},
+          {"type":"choose","q":"I ___ a letter to my aunt last week.","options":["wrote","writed","written"],"a":["wrote"],"from":"g30"},
+          {"type":"gap","q":"My grandad has ___ used a smartphone. He doesn't want one. (never / ever)","a":["never"]},
+          {"type":"choose","q":"The train hasn't arrived ___.","options":["yet","already","just"],"a":["yet"]},
+          {"type":"gap","q":"Has the film started yet? — No, it ___.","a":["hasn't","has not"]},
+          {"type":"gap","q":"Did you enjoy the concert? — Yes, I ___.","a":["did"],"from":"g31"},
+          {"type":"fix","q":"Which sentence is correct?","options":["I've already done it.","I've yet done it.","I've done already it."],"a":["I've already done it."]},
+          {"type":"order","q":"Put the words in order.","words":["yet","haven't","They","arrived"],"a":["They haven't arrived yet.","Haven't they arrived yet?"]},
+          {"type":"choose","q":"My mum has ___ cooked dinner. It's on the table.","options":["already","yet","ever"],"a":["already"]},
+          {"type":"choose","q":"I was having a shower when the phone ___. (the short action)","options":["rang","was ringing","rings"],"a":["rang"],"from":"g36"},
+          {"type":"gap","q":"I'm not hungry. I've ___ eaten. (a very short time ago)","a":["just"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["Have you ever tried Mexican food?","Did you ever tried Mexican food?","Have you ever try Mexican food?"],"a":["Have you ever tried Mexican food?"]},
+          {"type":"choose","q":"She hasn't called me ___.","options":["yet","already","just"],"a":["yet"]}
+        ]
+      },
+      {
+        id: "g40", no: 40, title: "Present Perfect with For and Since", v: 1,
+        chunks: [
+          {
+            learn: {"title":"How long have you lived here?","rule":"Use the present perfect to say how long something has continued from the past until now: I've lived here for ten years (I started ten years ago, and I still live here). Ask with How long: How long have you known Sam? Don't use the present simple for this: I've lived here for ten years (not I live here for ten years).","table":[["Question","Answer"],["How long have you lived here?","I've lived here for ten years."],["How long has she had her car?","She's had it since 2020."],["How long have they known each other?","They've known each other for a long time."]],"examples":["I've lived in this town for ten years.","How long have you known your best friend?","She's had her dog for three years.","We've known them for a long time.","How long has your dad worked at the bank?"],"uz":"Hozirgacha davom etayotgan holat: I've lived here for five years — Besh yildan beri shu yerda yashayman."},
+            practise: [
+              {"type":"choose","q":"I ___ in this town for ten years. I still live here.","options":["have lived","live","lived"],"a":["have lived"],"hint":"From the past until now → present perfect: have lived."},
+              {"type":"choose","q":"How long ___ you known your best friend?","options":["have","do","did"],"a":["have"],"hint":"How long + have + you + past participle?"},
+              {"type":"gap","q":"She ___ her car for three years. (have — present perfect)","a":["has had","'s had"],"hint":"have – had – had: she has had."},
+              {"type":"gap","q":"How long ___ Tom worked here? (have / has)","a":["has"],"hint":"Tom = he → has."},
+              {"type":"fix","q":"Which sentence is correct?","options":["We've known them for a long time.","We know them for a long time.","We've knew them for a long time."],"a":["We've known them for a long time."],"hint":"From the past until now → have + known."}
+            ]
+          },
+          {
+            learn: {"title":"for or since?","rule":"Use for with a period of time — how long: for two hours, for three days, for ten years, for a long time. Use since with a point in time — when it started: since ten o'clock, since Monday, since 2015, since I was a child.","table":[["for + a period of time","since + a point in time"],["for two hours","since ten o'clock"],["for three days","since Monday"],["for six months","since January"],["for ten years","since 2015"],["for a long time","since I was a child"]],"examples":["I've been here for two hours.","I've been here since ten o'clock.","She's lived in Paris for five years.","She's lived in Paris since 2020.","I've known him since we were children."],"uz":"for — qancha vaqt (for two years — ikki yildan beri), since — qachondan (since 2020 — 2020-yildan beri)."},
+            practise: [
+              {"type":"choose","q":"I've been here ___ two hours.","options":["for","since"],"a":["for"],"hint":"two hours = a period of time → for."},
+              {"type":"choose","q":"She's lived in Paris ___ 2018.","options":["since","for"],"a":["since"],"hint":"2018 = a point in time → since."},
+              {"type":"gap","q":"We've had this dog ___ six years. (for / since)","a":["for"],"hint":"six years = a period → for."},
+              {"type":"gap","q":"He has worked at the bank ___ last summer. (for / since)","a":["since"],"hint":"last summer = when it started → since."},
+              {"type":"fix","q":"Which sentence is correct?","options":["I've known him since we were children.","I've known him for we were children.","I know him since we were children."],"a":["I've known him since we were children."],"hint":"when it started → since; until now → have known."}
+            ]
+          },
+          {
+            learn: {"title":"I haven't seen her for ages","rule":"With negatives, for and since say how long something hasn't happened: I haven't seen Tom for a month. She hasn't eaten since breakfast. With be, use have been / has been: I've been ill since Friday. How long have you been a teacher?","table":[["","Example"],["negative + for","I haven't seen my cousin for two years."],["negative + since","It hasn't rained since March."],["be → have / has been","She's been at this school since September."]],"examples":["I haven't seen my cousin for two years.","It hasn't rained since March.","We haven't eaten since breakfast.","I've been ill since Friday.","How long have you been a teacher? — For six years."],"uz":"Inkorda: I haven't seen her for a month — Uni bir oydan beri ko‘rmadim."},
+            practise: [
+              {"type":"choose","q":"I ___ my cousin since Christmas.","options":["haven't seen","didn't see","don't see"],"a":["haven't seen"],"hint":"since → present perfect: haven't seen."},
+              {"type":"choose","q":"She ___ ill since Monday.","options":["has been","is","was"],"a":["has been"],"hint":"since → present perfect of be: has been."},
+              {"type":"gap","q":"It ___ for weeks. The garden is very dry. (not / rain — present perfect)","a":["hasn't rained","has not rained"],"hint":"it → hasn't (has not) + rained."},
+              {"type":"gap","q":"How long have you ___ a teacher? (be)","a":["been"],"hint":"be – was – been: have + been."},
+              {"type":"order","q":"Put the words in order.","words":["for","haven't","I","him","seen","months"],"a":["I haven't seen him for months.","For months I haven't seen him.","Haven't I seen him for months?"],"hint":"I + haven't seen + him + for months."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"We've lived in this flat ___ 2019.","options":["since","for"],"a":["since"]},
+          {"type":"gap","q":"I've known Anna ___ ten years. (for / since)","a":["for"]},
+          {"type":"choose","q":"How long ___ she worked at the hospital?","options":["has","does","is"],"a":["has"]},
+          {"type":"gap","q":"I ___ like coffee, but now I love it. (not / use to)","a":["didn't use to","did not use to"],"from":"g37"},
+          {"type":"gap","q":"He ___ in London since 2015. (live — present perfect)","a":["has lived","'s lived"]},
+          {"type":"choose","q":"I haven't eaten anything ___ seven o'clock this morning.","options":["since","for"],"a":["since"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["She has had her phone for two years.","She has her phone for two years.","She has had her phone since two years."],"a":["She has had her phone for two years."]},
+          {"type":"order","q":"Put the words in order.","words":["since","here","has","He","Monday","been"],"a":["He has been here since Monday.","Has he been here since Monday?","Since Monday he has been here."]},
+          {"type":"gap","q":"We ___ a lot of photos on holiday last summer. (take)","a":["took"],"from":"g30"},
+          {"type":"choose","q":"They've been friends ___ a long time.","options":["for","since"],"a":["for"]},
+          {"type":"gap","q":"How long ___ you had this bike? (have / has)","a":["have"]},
+          {"type":"choose","q":"Where ___ you buy those shoes?","options":["did","were","have"],"a":["did"],"from":"g31"},
+          {"type":"fix","q":"Which sentence is correct?","options":["I haven't seen her since June.","I didn't see her since June.","I haven't seen her for June."],"a":["I haven't seen her since June."]},
+          {"type":"gap","q":"It ___ cold since Monday. (be — present perfect)","a":["has been","'s been"]},
+          {"type":"choose","q":"My parents ___ married for twenty years.","options":["have been","are","has been"],"a":["have been"]},
+          {"type":"gap","q":"At five o'clock yesterday they ___ in the park. (walk — was/were + -ing)","a":["were walking"],"from":"g35"},
+          {"type":"order","q":"Put the words in order.","words":["have","How","long","you","here","lived"],"a":["How long have you lived here?"]},
+          {"type":"gap","q":"I haven't been to the cinema ___ months. (for / since)","a":["for"]},
+          {"type":"choose","q":"She has been at this school ___ she was eleven.","options":["since","for"],"a":["since"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["How long have you known Ben?","How long do you know Ben?","How long have you knew Ben?"],"a":["How long have you known Ben?"]}
+        ]
+      },
+      {
+        id: "g41", no: 41, title: "Present Perfect vs Past Simple", v: 1,
+        chunks: [
+          {
+            learn: {"title":"I've been to Rome / I went to Rome in 2019","rule":"Use the past simple when you say or ask when something happened — a finished time: yesterday, last week, in 2010, two days ago, when I was a child. Use the present perfect when you don't say when — for life experiences or a past action that matters now: I've been to Rome (in my life). Never use the present perfect with a finished time: I saw him yesterday (not I've seen him yesterday).","table":[["Present perfect (no finished time)","Past simple (a finished time)"],["I've been to Rome.","I went to Rome in 2019."],["She's lost her keys.","She lost her keys yesterday."],["Have you ever met a pop star?","When did you meet him?"]],"examples":["I've been to Rome twice.","I went to Rome in 2019 and in 2022.","She's lost her keys. She can't get in.","She lost her keys yesterday, but she found them today.","I saw Tom an hour ago."],"uz":"Aniq o‘tgan vaqt (yesterday, in 2010, ago) aytilsa — Past Simple, vaqt aytilmasa — Present Perfect."},
+            practise: [
+              {"type":"choose","q":"I ___ Tom yesterday.","options":["saw","have seen"],"a":["saw"],"hint":"yesterday = a finished time → past simple."},
+              {"type":"choose","q":"She ___ to the USA three times so far.","options":["has been","went"],"a":["has been"],"hint":"so far = until now → present perfect."},
+              {"type":"gap","q":"We ___ to the beach last Sunday. (go — one word)","a":["went"],"hint":"last Sunday = a finished time → past simple: went."},
+              {"type":"gap","q":"___ you ever eaten sushi? (have / did)","a":["Have"],"hint":"ever = in your life until now → Have you ever…?"},
+              {"type":"fix","q":"Which sentence is correct?","options":["I lost my phone two days ago.","I've lost my phone two days ago.","I have lose my phone two days ago."],"a":["I lost my phone two days ago."],"hint":"two days ago = a finished time → past simple: lost."}
+            ]
+          },
+          {
+            learn: {"title":"Look for the time word","rule":"The time word often tells you which tense to use. Present perfect: ever, never, just, already, yet, so far, for and since (until now), How long…? Past simple: yesterday, last week / month / year, … ago, in 2015, on Monday, when I was ten, When…?","table":[["Present perfect","Past simple"],["ever, never","yesterday"],["just, already, yet","last week / month / year"],["for, since (until now)","… ago"],["so far, How long…?","in 2015, on Monday, when I was ten"]],"examples":["I've just seen Kate. / I saw Kate an hour ago.","Have you finished yet? / Did you finish at six?","She's lived here since 2020. / She moved here in 2020.","I've never been to Africa. / I went to Egypt when I was ten."],"uz":"Vaqt so‘ziga qarang: ago, yesterday, last … — Past Simple; ever, never, just, yet, since — Present Perfect."},
+            practise: [
+              {"type":"choose","q":"They ___ married in 2015.","options":["got","have got"],"a":["got"],"hint":"in 2015 = a finished time → past simple: got."},
+              {"type":"choose","q":"We ___ in this house since 2015.","options":["have lived","lived"],"a":["have lived"],"hint":"since = until now → present perfect."},
+              {"type":"gap","q":"I ___ the new film yet. (not / see)","a":["haven't seen","have not seen"],"hint":"yet → present perfect: haven't seen."},
+              {"type":"gap","q":"He ___ his arm two weeks ago. (break — one word)","a":["broke"],"hint":"ago → past simple: broke."},
+              {"type":"order","q":"Put the words in order.","words":["ago","left","She","an","hour"],"a":["She left an hour ago.","An hour ago she left."],"hint":"ago → past simple: She left + an hour ago."}
+            ]
+          },
+          {
+            learn: {"title":"Have you ever…? — Yes, I went there last year","rule":"In a conversation we often start with the present perfect (an experience or some news) and then use the past simple for the details — when, where, how: A: Have you ever been to London? B: Yes, I have. I went there last summer. Questions with When…? and What time…? always take the past simple: When did you arrive? (not When have you arrived?).","table":[["Present perfect (the news / experience)","Past simple (the details)"],["Have you ever been to London?","Yes. I went there last summer."],["I've broken my arm!","How did it happen? — I fell off my bike."],["Kate has passed her exam!","When did she get the results?"]],"examples":["A: Have you ever been to London? B: Yes, I went there last summer.","A: I've broken my arm! B: Oh no! How did it happen?","Kate has passed her exam. She got the results this morning.","A: Have you seen Sam? B: Yes, I saw him at lunch.","When did you arrive?"],"uz":"Avval yangilik Present Perfect bilan aytiladi, keyin tafsilotlar Past Simple bilan: When did you go? — Qachon bordingiz?"},
+            practise: [
+              {"type":"choose","q":"A: Have you ever been to Italy? B: Yes, I ___ there two years ago.","options":["went","have gone","have been"],"a":["went"],"hint":"two years ago → past simple: went."},
+              {"type":"choose","q":"When ___ you arrive?","options":["did","have"],"a":["did"],"hint":"When…? → past simple: When did you…?"},
+              {"type":"gap","q":"A: I've lost my wallet! B: Oh no! Where ___ you lose it? (did / have)","a":["did"],"hint":"A detail (where?) → past simple: Where did you…?"},
+              {"type":"gap","q":"A: ___ you ever met a famous person? (have / did) B: Yes, I met a singer last year.","a":["Have"],"hint":"ever = in your life → Have you ever…?"},
+              {"type":"fix","q":"Which sentence is correct?","options":["What time did you get up?","What time have you got up?","What time did you got up?"],"a":["What time did you get up?"],"hint":"What time…? → past simple: did + get."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"I ___ my grandparents last weekend.","options":["visited","have visited"],"a":["visited"]},
+          {"type":"choose","q":"___ you ever been to Spain?","options":["Have","Did"],"a":["Have"]},
+          {"type":"gap","q":"She ___ to Paris in 2019. (move — one word)","a":["moved"]},
+          {"type":"choose","q":"I haven't finished my homework ___.","options":["yet","already","just"],"a":["yet"],"from":"g39"},
+          {"type":"gap","q":"We ___ lunch an hour ago. (have — one word)","a":["had"]},
+          {"type":"choose","q":"They ___ here since 2010.","options":["have worked","worked"],"a":["have worked"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["I saw a good film last night.","I've seen a good film last night.","I have saw a good film last night."],"a":["I saw a good film last night."]},
+          {"type":"order","q":"Put the words in order.","words":["did","When","arrive","you"],"a":["When did you arrive?"]},
+          {"type":"gap","q":"I've lived here ___ 2018. (for / since)","a":["since"],"from":"g40"},
+          {"type":"gap","q":"A: I've passed my driving test! B: Great! When ___ you take it? (did / have)","a":["did"]},
+          {"type":"choose","q":"I ___ five emails so far today.","options":["have written","wrote"],"a":["have written"]},
+          {"type":"gap","q":"We ___ TV when the lights went out. (watch — the longer action)","a":["were watching"],"from":"g36"},
+          {"type":"choose","q":"When I was a child, I ___ in a village.","options":["lived","have lived"],"a":["lived"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["Have you finished your homework yet?","Did you finished your homework yet?","Have you finish your homework yet?"],"a":["Have you finished your homework yet?"]},
+          {"type":"gap","q":"They ___ to Rome two years ago. (go — one word)","a":["went"]},
+          {"type":"order","q":"Put the words in order.","words":["ever","Have","ridden","you","a","horse"],"a":["Have you ever ridden a horse?"]},
+          {"type":"choose","q":"What ___ you do last weekend?","options":["did","have","were"],"a":["did"],"from":"g31"},
+          {"type":"gap","q":"I ___ this film before. Let's watch something else. (see — present perfect)","a":["have seen","'ve seen"]},
+          {"type":"choose","q":"We ___ each other since we were five.","options":["have known","knew"],"a":["have known"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["She went to Italy last summer.","She has gone to Italy last summer.","She has went to Italy last summer."],"a":["She went to Italy last summer."]}
+        ]
+      },
+      {
+        id: "g42", no: 42, title: "Modal Verbs: Must, Have To, Should", v: 1,
+        chunks: [
+          {
+            learn: {"title":"must and have to — it's necessary","rule":"Use must or have to + verb to say that something is necessary. They often mean the same: I must go now. / I have to go now. must is the same for every person and has no to after it: She must go (not she musts go, not must to go). have to changes: I have to, she has to; questions with do / does: Do you have to…? For the past, use had to: I had to work yesterday (must has no past form).","table":[["must","have to"],["I must go.","I have to go."],["She must study.","She has to study."],["—","Do you have to work on Saturdays?"],["—","Past: We had to wait."]],"examples":["I must call my mum tonight.","You must wear a seatbelt in the car.","She has to get up at six every day.","We have to wear a uniform at school.","Do you have to work on Saturdays?","I had to wait for an hour yesterday."],"uz":"must va have to — majburiyat: I have to go — Ketishim kerak. O‘tgan zamonda: had to."},
+            practise: [
+              {"type":"choose","q":"She ___ get up early for work.","options":["has to","have to","must to"],"a":["has to"],"hint":"she → has to (or must, with no to)."},
+              {"type":"choose","q":"You must ___ your passport at the airport.","options":["show","to show","showing"],"a":["show"],"hint":"must + the verb as it is, no to."},
+              {"type":"gap","q":"Yesterday I ___ stay at school until five. (have to — past)","a":["had to"],"hint":"The past of must / have to → had to."},
+              {"type":"gap","q":"___ you have to wear a uniform at school? (do / does)","a":["Do"],"hint":"Question with you → Do you have to…?"},
+              {"type":"fix","q":"Which sentence is correct?","options":["He has to work on Saturdays.","He have to work on Saturdays.","He musts work on Saturdays."],"a":["He has to work on Saturdays."],"hint":"he → has to; must never takes -s."}
+            ]
+          },
+          {
+            learn: {"title":"should — advice","rule":"Use should + verb to give advice or to say what is a good idea: You should see a doctor. Negative: shouldn't (should not) = it's a bad idea: You shouldn't eat so much sugar. Question: Should I…? Like must, should is the same for every person and has no to after it.","table":[["","Example"],["advice","You should drink more water."],["negative","You shouldn't stay up so late."],["question","What should I do?"]],"examples":["You look tired. You should go to bed.","You shouldn't drive so fast.","He should study more for the test.","Should I bring anything to the party?","What should I wear to the interview?"],"uz":"should — maslahat: You should see a doctor — Shifokorga borganingiz ma’qul."},
+            practise: [
+              {"type":"choose","q":"You have a bad cold. You ___ stay in bed.","options":["should","shouldn't"],"a":["should"],"hint":"A good idea → should."},
+              {"type":"choose","q":"You ___ eat so many sweets. They're bad for your teeth.","options":["shouldn't","should"],"a":["shouldn't"],"hint":"A bad idea → shouldn't."},
+              {"type":"gap","q":"He should ___ more water. (drink)","a":["drink"],"hint":"should + the verb as it is."},
+              {"type":"gap","q":"It's very late. You ___ go to bed now. (advice — should / shouldn't)","a":["should"],"hint":"A good idea → should."},
+              {"type":"order","q":"Put the words in order.","words":["I","should","What","do"],"a":["What should I do?"],"hint":"What + should + I + do?"}
+            ]
+          },
+          {
+            learn: {"title":"necessary or a good idea?","rule":"must and have to = it's necessary (strong). should = it's a good idea (advice, not so strong). For things that are necessary, must and have to are usually both correct: You must / have to show your ticket. Use should when it's only advice: You should try this cake — it's delicious!","table":[["How strong?","Example"],["necessary (must / have to)","All passengers must / have to wear a seatbelt."],["a good idea (should)","You should take an umbrella. It looks cloudy."]],"examples":["You must / have to have a ticket to get on the train.","Drivers must / have to stop at a red light.","You should try this cake. It's delicious!","You should read this book. You'll love it.","You should visit Paris one day."],"uz":"must / have to — majburiyat (shart), should — maslahat (shunday qilish yaxshi)."},
+            practise: [
+              {"type":"choose","q":"This cake is delicious. You ___ try it! (a good idea, not necessary)","options":["should","has to","must to"],"a":["should"],"hint":"A good idea → should."},
+              {"type":"gap","q":"Students ___ wear a uniform at our school. It's a rule. (necessary — must / have to)","a":["must","have to"],"hint":"Necessary → must or have to."},
+              {"type":"gap","q":"You look ill. You ___ see a doctor. (advice)","a":["should"],"hint":"Advice → should."},
+              {"type":"choose","q":"Which word means 'it's a good idea'?","options":["should","must","have to"],"a":["should"],"hint":"should = advice, a good idea."},
+              {"type":"fix","q":"Which sentence is correct?","options":["You should take an umbrella.","You should to take an umbrella.","You should taking an umbrella."],"a":["You should take an umbrella."],"hint":"should + the verb as it is."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"I ___ go now. My bus leaves in five minutes.","options":["have to","has to","having to"],"a":["have to"]},
+          {"type":"gap","q":"She ___ wear glasses for reading now. (have to)","a":["has to"]},
+          {"type":"choose","q":"You ___ eat so much fast food. It's not healthy.","options":["shouldn't","should","must"],"a":["shouldn't"]},
+          {"type":"choose","q":"I've had this phone ___ two years.","options":["for","since"],"a":["for"],"from":"g40"},
+          {"type":"gap","q":"We ___ wait for the bus for forty minutes yesterday. (have to — past)","a":["had to"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["You must be quiet in the library.","You must to be quiet in the library.","You musts be quiet in the library."],"a":["You must be quiet in the library."]},
+          {"type":"choose","q":"___ I wear a jacket? It's a bit cold.","options":["Should","Must to","Have"],"a":["Should"]},
+          {"type":"order","q":"Put the words in order.","words":["should","You","a","doctor","see"],"a":["You should see a doctor.","Should you see a doctor?"]},
+          {"type":"choose","q":"I ___ walk to school, but now I take the bus.","options":["used to","use","was"],"a":["used to"],"from":"g37"},
+          {"type":"gap","q":"Does he ___ work at weekends? (have to)","a":["have to"]},
+          {"type":"choose","q":"In many countries, you ___ have a licence to drive a car.","options":["have to","having to","has to"],"a":["have to"]},
+          {"type":"gap","q":"Don't touch that! You ___ play with fire. (should — negative)","a":["shouldn't","should not"]},
+          {"type":"choose","q":"While I ___ to school, I met an old friend.","options":["was walking","were walking","walk"],"a":["was walking"],"from":"g36"},
+          {"type":"fix","q":"Which sentence is correct?","options":["She has to study for her exams.","She have to study for her exams.","She has study for her exams."],"a":["She has to study for her exams."]},
+          {"type":"gap","q":"Visitors ___ show their ticket at the door. It's a rule. (necessary — must / have to)","a":["must","have to"]},
+          {"type":"order","q":"Put the words in order.","words":["have","Do","to","we","early","leave"],"a":["Do we have to leave early?"]},
+          {"type":"gap","q":"Have you ___ been to Canada? (ever / never)","a":["ever"],"from":"g39"},
+          {"type":"choose","q":"It's a great book. You ___ read it. (advice)","options":["should","should to","shoulds"],"a":["should"]},
+          {"type":"choose","q":"My mum ___ work last Saturday.","options":["had to","must","has to"],"a":["had to"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["Did you have to work yesterday?","Did you had to work yesterday?","Did you must work yesterday?"],"a":["Did you have to work yesterday?"]}
+        ]
+      },
+      {
+        id: "g43", no: 43, title: "Mustn't vs Don't Have To", v: 1,
+        chunks: [
+          {
+            learn: {"title":"mustn't — don't do it!","rule":"mustn't (must not) + verb = don't do it — it's not allowed, or it's very important not to do it: You mustn't smoke here. You mustn't tell anyone — it's a secret. mustn't is the same for every person and has no to after it.","table":[["","Example"],["not allowed","You mustn't use your phone in the exam."],["very important not to","You mustn't forget your passport."]],"examples":["You mustn't park here.","Students mustn't use phones in class.","You mustn't touch the cooker. It's hot.","We mustn't be late for the exam.","You mustn't tell anyone. It's a secret."],"uz":"mustn't — taqiq: You mustn't smoke here — Bu yerda chekish mumkin emas."},
+            practise: [
+              {"type":"choose","q":"You ___ use your phone during the exam. It's not allowed.","options":["mustn't","don't have to"],"a":["mustn't"],"hint":"Not allowed → mustn't."},
+              {"type":"choose","q":"You mustn't ___ in the library.","options":["shout","to shout","shouting"],"a":["shout"],"hint":"mustn't + the verb as it is."},
+              {"type":"gap","q":"You ___ swim here. It's dangerous. (must — negative)","a":["mustn't","must not"],"hint":"Don't do it → mustn't (must not)."},
+              {"type":"gap","q":"Children ___ play with matches. (must — negative)","a":["mustn't","must not"],"hint":"Don't do it → mustn't (must not)."},
+              {"type":"fix","q":"Which sentence is correct?","options":["You mustn't be late.","You mustn't to be late.","You don't must be late."],"a":["You mustn't be late."],"hint":"mustn't + the verb as it is, no to."}
+            ]
+          },
+          {
+            learn: {"title":"don't have to — it isn't necessary","rule":"don't / doesn't have to + verb = it isn't necessary, but you can if you want: You don't have to come (but you can). She doesn't have to work on Sundays. Past: didn't have to: I didn't have to wait.","table":[["Person","Not necessary"],["I / you / we / they","don't have to"],["he / she / it","doesn't have to"],["the past (everyone)","didn't have to"]],"examples":["You don't have to bring food. There's lots here.","She doesn't have to wear a uniform at her new school.","We don't have to get up early tomorrow. It's Saturday!","He doesn't have to pay. It's free.","I didn't have to wait. The doctor saw me at once."],"uz":"don't have to — majbur emassiz: You don't have to come — Kelishingiz shart emas."},
+            practise: [
+              {"type":"choose","q":"It's Sunday. I ___ go to school.","options":["don't have to","doesn't have to","mustn't"],"a":["don't have to"],"hint":"Not necessary, with I → don't have to."},
+              {"type":"choose","q":"She ___ cook tonight. We're going to a restaurant.","options":["doesn't have to","don't have to","doesn't has to"],"a":["doesn't have to"],"hint":"she → doesn't have to."},
+              {"type":"gap","q":"You ___ pay. The museum is free. (have to — negative)","a":["don't have to","do not have to"],"hint":"Not necessary → don't (do not) have to."},
+              {"type":"gap","q":"He ___ wear a suit at work. (have to — negative)","a":["doesn't have to","does not have to"],"hint":"he → doesn't (does not) have to."},
+              {"type":"order","q":"Put the words in order.","words":["have","You","don't","to","come"],"a":["You don't have to come.","Don't you have to come?"],"hint":"You + don't have to + come."}
+            ]
+          },
+          {
+            learn: {"title":"mustn't or don't have to?","rule":"They are very different! mustn't = don't do it (it isn't allowed). don't have to = you can do it or not — it isn't necessary. You mustn't eat in class (it's against the rules). You don't have to eat now (you can eat later if you like).","table":[["mustn't (Don't!)","don't have to (not necessary)"],["You mustn't run near the pool.","You don't have to swim. You can sit and watch."],["You mustn't open this door.","You don't have to close the door."]],"examples":["You mustn't cross the road on red.","You don't have to wear a tie. It's a party.","Students mustn't cheat in exams.","You don't have to answer every question.","We mustn't make a noise. The baby is sleeping."],"uz":"mustn't — qilmang, mumkin emas; don't have to — shart emas, xohlasangiz qilasiz."},
+            practise: [
+              {"type":"choose","q":"You ___ drive faster than 50 km/h here. It's the law.","options":["mustn't","don't have to"],"a":["mustn't"],"hint":"It's not allowed → mustn't."},
+              {"type":"choose","q":"You ___ bring a towel. The hotel gives you one.","options":["don't have to","mustn't"],"a":["don't have to"],"hint":"Not necessary → don't have to."},
+              {"type":"choose","q":"Which sentence means 'it isn't necessary'?","options":["You don't have to come.","You mustn't come."],"a":["You don't have to come."],"hint":"don't have to = not necessary."},
+              {"type":"gap","q":"Students ___ cheat in exams. (must — negative)","a":["mustn't","must not"],"hint":"Not allowed → mustn't (must not)."},
+              {"type":"fix","q":"Which sentence is correct?","options":["You don't have to help me. I can do it.","You doesn't have to help me. I can do it.","You don't have help me. I can do it."],"a":["You don't have to help me. I can do it."],"hint":"you → don't + have to + verb."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"You ___ smoke in the hospital. It's not allowed.","options":["mustn't","don't have to"],"a":["mustn't"]},
+          {"type":"choose","q":"We ___ hurry. The film starts in two hours.","options":["don't have to","mustn't"],"a":["don't have to"]},
+          {"type":"gap","q":"You ___ tell anyone. It's a secret! (must — negative)","a":["mustn't","must not"]},
+          {"type":"gap","q":"You look tired. You ___ go to bed early. (advice)","a":["should"],"from":"g42"},
+          {"type":"gap","q":"She ___ get up early on Sundays. (have to — negative)","a":["doesn't have to","does not have to"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["He doesn't have to work tomorrow.","He don't have to work tomorrow.","He doesn't has to work tomorrow."],"a":["He doesn't have to work tomorrow."]},
+          {"type":"choose","q":"You ___ take photos in the museum. Photos are not allowed.","options":["mustn't","don't have to"],"a":["mustn't"]},
+          {"type":"order","q":"Put the words in order.","words":["mustn't","You","late","be"],"a":["You mustn't be late.","Mustn't you be late?"]},
+          {"type":"choose","q":"I ___ my wallet yesterday.","options":["lost","have lost"],"a":["lost"],"from":"g41"},
+          {"type":"gap","q":"I ___ cook dinner last night. My dad cooked. (have to — negative, past)","a":["didn't have to","did not have to"]},
+          {"type":"choose","q":"The test is easy. You ___ study all night.","options":["don't have to","mustn't"],"a":["don't have to"]},
+          {"type":"gap","q":"She has worked here ___ 2020. (for / since)","a":["since"],"from":"g40"},
+          {"type":"fix","q":"Which sentence is correct?","options":["You mustn't touch the paintings.","You mustn't to touch the paintings.","You don't must touch the paintings."],"a":["You mustn't touch the paintings."]},
+          {"type":"gap","q":"Passengers ___ open the doors while the train is moving. (must — negative)","a":["mustn't","must not"]},
+          {"type":"choose","q":"Which sentence means 'Don't do it!'?","options":["You mustn't eat here.","You don't have to eat here."],"a":["You mustn't eat here."]},
+          {"type":"choose","q":"___ your parents coming to the concert tomorrow?","options":["Are","Do","Is"],"a":["Are"],"from":"g33"},
+          {"type":"order","q":"Put the words in order.","words":["have","doesn't","He","to","pay"],"a":["He doesn't have to pay.","Doesn't he have to pay?"]},
+          {"type":"gap","q":"You ___ come to the meeting if you're busy. (have to — negative)","a":["don't have to","do not have to"]},
+          {"type":"choose","q":"You ___ forget your passport. You can't fly without it.","options":["mustn't","don't have to"],"a":["mustn't"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["We didn't have to pay for the tickets.","We didn't had to pay for the tickets.","We don't had to pay for the tickets."],"a":["We didn't have to pay for the tickets."]}
+        ]
+      },
+      {
+        id: "g44", no: 44, title: "Could, May, Might", v: 1,
+        chunks: [
+          {
+            learn: {"title":"I could swim when I was six — could for the past","rule":"could is the past of can: I could swim when I was six (I was able to swim). Negative: couldn't (could not): I couldn't open the door. Question: Could you see the stage? Like can, could is the same for every person and is followed by the verb as it is, with no to.","table":[["Present","Past"],["I can swim.","I could swim when I was six."],["She can't come today.","She couldn't come yesterday."],["Can you see it?","Could you see it?"]],"examples":["I could read when I was four.","My grandad could run very fast when he was young.","I couldn't sleep last night. It was too hot.","We couldn't find the hotel, so we asked a policeman.","Could you hear the music from your room?"],"uz":"could — can ning o‘tgan zamoni: I could swim when I was six — Olti yoshimda suza olardim."},
+            practise: [
+              {"type":"choose","q":"When I was five, I ___ read.","options":["could","can","could to"],"a":["could"],"hint":"The past of can → could."},
+              {"type":"choose","q":"I ___ sleep last night. It was very hot.","options":["couldn't","can't","couldn't to"],"a":["couldn't"],"hint":"The past of can't → couldn't."},
+              {"type":"gap","q":"She ___ speak French when she was ten, but she forgot it. (can — past)","a":["could"],"hint":"The past of can → could."},
+              {"type":"gap","q":"We ___ find the hotel last night, so we asked a policeman. (can — past, negative)","a":["couldn't","could not"],"hint":"The past of can't → couldn't (could not)."},
+              {"type":"fix","q":"Which sentence is correct?","options":["My grandad could run very fast.","My grandad could ran very fast.","My grandad could to run very fast."],"a":["My grandad could run very fast."],"hint":"could + the verb as it is."}
+            ]
+          },
+          {
+            learn: {"title":"It might rain — might, may and could for maybe","rule":"Use might, may or could + verb to say that something is possible — maybe it will happen, maybe not: It might rain later. = Maybe it will rain. All three are correct here: It might / may / could rain. Negative: might not / may not: I might not come. = Maybe I won't come. (couldn't is different — it means impossible.)","table":[["","Example"],["might","I might go to the party. (maybe)"],["may","She may be at home. (maybe)"],["could","It could snow tonight. (maybe)"],["might not / may not","We might not have time. (maybe not)"]],"examples":["Take an umbrella. It might rain later.","I'm not sure where Tom is. He may be at the gym.","Be careful! That dog could bite.","I might not come to the party. I'm very tired.","We may go to the beach on Sunday."],"uz":"might / may / could — ehtimol: It might rain — Yomg‘ir yog‘ishi mumkin."},
+            practise: [
+              {"type":"choose","q":"Take an umbrella. It ___ rain later.","options":["might","might to","mights"],"a":["might"],"hint":"might + the verb as it is, no -s, no to."},
+              {"type":"choose","q":"I'm not sure, but Tom ___ be at home.","options":["may","is may","mays"],"a":["may"],"hint":"may + the verb as it is."},
+              {"type":"gap","q":"I'm not sure. I ___ go to the party. (maybe — one word)","a":["might","may","could"],"hint":"Maybe → might, may or could."},
+              {"type":"gap","q":"We ___ have time to see the museum. We'll see. (maybe not — two words)","a":["might not","may not","mightn't"],"hint":"Maybe not → might not or may not."},
+              {"type":"fix","q":"Which sentence is correct?","options":["She might be late.","She might is late.","She might to be late."],"a":["She might be late."],"hint":"might + be (the verb as it is)."}
+            ]
+          },
+          {
+            learn: {"title":"will or might? — sure or not sure","rule":"Use will when you are sure: I'll be at home tonight. Use might, may or could when you are not sure: I might be at home tonight — I don't know yet. Use won't when you are sure something will not happen: She won't come. She's in Spain.","table":[["How sure?","Example"],["sure — yes","She'll be here at six. She always comes at six."],["not sure","She might / may / could be here at six. I don't know."],["sure — no","She won't be here. She's in Spain."]],"examples":["I'll see you tomorrow at school.","I might see you tomorrow. I'm not sure.","Tom won't be at the party. He's ill.","It may snow this weekend.","Don't worry. I'll definitely call you."],"uz":"Ishonchingiz komil bo‘lsa — will, ishonchingiz komil bo‘lmasa — might / may / could."},
+            practise: [
+              {"type":"choose","q":"I'm not sure what to do on Saturday. I ___ go shopping.","options":["might","will","mights"],"a":["might"],"hint":"Not sure → might."},
+              {"type":"choose","q":"Don't worry, I ___ definitely call you tonight. I promise.","options":["will","might"],"a":["will"],"hint":"Sure (definitely, I promise) → will."},
+              {"type":"gap","q":"She isn't sure about the job. She ___ say no. (not sure — might / may)","a":["might","may","could"],"hint":"Not sure → might or may."},
+              {"type":"gap","q":"He's in Paris this week, so he ___ come to the meeting. (sure — will, negative)","a":["won't","will not"],"hint":"Sure it will not happen → won't (will not)."},
+              {"type":"order","q":"Put the words in order.","words":["might","It","snow","tonight"],"a":["It might snow tonight.","Might it snow tonight?","Tonight it might snow."],"hint":"It + might + snow + tonight."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"When she was four, she ___ ride a bike.","options":["could","can","could to"],"a":["could"]},
+          {"type":"gap","q":"I ___ find my keys this morning. (can — past, negative)","a":["couldn't","could not"]},
+          {"type":"choose","q":"Take a coat. It ___ be cold this evening.","options":["might","might to","mights"],"a":["might"]},
+          {"type":"choose","q":"You ___ wear a suit. It's an informal party.","options":["don't have to","mustn't"],"a":["don't have to"],"from":"g43"},
+          {"type":"gap","q":"I'm not sure, but we ___ go to the beach tomorrow. (maybe — one word)","a":["might","may","could"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["They might be at home.","They might are at home.","They mights be at home."],"a":["They might be at home."]},
+          {"type":"choose","q":"I'm sure he ___ pass the exam. He studied very hard.","options":["will","might"],"a":["will"]},
+          {"type":"order","q":"Put the words in order.","words":["couldn't","She","door","the","open"],"a":["She couldn't open the door.","Couldn't she open the door?"]},
+          {"type":"gap","q":"I ___ to the cinema yesterday. (go — one word)","a":["went"],"from":"g41"},
+          {"type":"gap","q":"We ___ have enough money for the trip. We'll see. (maybe not — two words)","a":["might not","may not","mightn't"]},
+          {"type":"choose","q":"Last year I ___ speak any English. Now I can!","options":["couldn't","can't","mightn't"],"a":["couldn't"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["He has to wear a uniform.","He have to wear a uniform.","He has to wears a uniform."],"a":["He has to wear a uniform."],"from":"g42"},
+          {"type":"gap","q":"Ask Sam. He ___ know the answer. (maybe — one word)","a":["might","may","could"]},
+          {"type":"choose","q":"Which sentence means 'Maybe it will rain'?","options":["It might rain.","It will rain.","It rained."],"a":["It might rain."]},
+          {"type":"fix","q":"Which sentence is correct?","options":["I could play chess when I was seven.","I could played chess when I was seven.","I can play chess when I was seven."],"a":["I could play chess when I was seven."]},
+          {"type":"choose","q":"I've ___ finished my homework. Can I go out now?","options":["just","yet","ever"],"a":["just"],"from":"g39"},
+          {"type":"order","q":"Put the words in order.","words":["may","She","late","be"],"a":["She may be late.","May she be late?"]},
+          {"type":"gap","q":"I'm sure the shop ___ be open tomorrow. It's a holiday. (sure — will, negative)","a":["won't","will not"]},
+          {"type":"choose","q":"My grandma ___ dance very well when she was young.","options":["could","might","may"],"a":["could"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["You might need a jacket tonight.","You might needing a jacket tonight.","You might to need a jacket tonight."],"a":["You might need a jacket tonight."]}
+        ]
+      },
+      {
+        id: "g45", no: 45, title: "Zero Conditional", v: 1,
+        chunks: [
+          {
+            learn: {"title":"If you heat ice, it melts — facts","rule":"Use the zero conditional for facts and things that are always true: If you heat ice, it melts. Both parts use the present simple: If + present simple, present simple. When the if part comes first, put a comma after it.","table":[["If + present simple,","present simple"],["If you heat ice,","it melts."],["If it rains,","the grass gets wet."],["If you mix red and white,","you get pink."]],"examples":["If you heat water to 100°C, it boils.","If you mix blue and yellow, you get green.","If plants don't get water, they die.","If it rains, the ground gets wet.","If you press this button, the machine starts."],"uz":"Zero Conditional — doim to‘g‘ri bo‘ladigan narsalar: If you heat ice, it melts — Muzni isitsangiz, u eriydi."},
+            practise: [
+              {"type":"choose","q":"If you heat ice, it ___.","options":["melts","melted","melting"],"a":["melts"],"hint":"A fact → present simple in both parts: it melts."},
+              {"type":"choose","q":"If you ___ blue and yellow, you get green.","options":["mix","mixed","mixing"],"a":["mix"],"hint":"If + present simple: you mix."},
+              {"type":"gap","q":"If plants ___ get water, they die. (not)","a":["don't","do not"],"hint":"Present simple negative with plants (they) → don't."},
+              {"type":"gap","q":"If you heat water to 100°C, it ___. (boil — present simple)","a":["boils"],"hint":"A fact → present simple: it boils."},
+              {"type":"fix","q":"Which sentence is correct?","options":["If you drop glass, it breaks.","If you drop glass, it break.","If you dropped glass, it breaks."],"a":["If you drop glass, it breaks."],"hint":"Present simple in both parts: drop … breaks."}
+            ]
+          },
+          {
+            learn: {"title":"If I'm tired, I go to bed early — habits","rule":"We also use the zero conditional for things that always happen in our lives. Here if means the same as when: If / When I'm tired, I go to bed early. The if part can come first or second. If it comes first, use a comma. If it comes second, don't use a comma: I go to bed early if I'm tired.","table":[["if first (comma)","if second (no comma)"],["If I'm late, my teacher gets angry.","My teacher gets angry if I'm late."],["When it's sunny, we eat outside.","We eat outside when it's sunny."]],"examples":["If I drink coffee in the evening, I can't sleep.","My dog barks if someone knocks on the door.","When it's sunny, we eat in the garden.","If my sister is sad, she listens to music.","I walk to school if it isn't raining."],"uz":"If gap boshida kelsa, undan keyin vergul qo‘yiladi; gap oxirida kelsa, vergul kerak emas."},
+            practise: [
+              {"type":"choose","q":"My dog barks ___ someone knocks on the door.","options":["if","what","who"],"a":["if"],"hint":"if (= when) joins the two parts."},
+              {"type":"choose","q":"If I ___ coffee in the evening, I can't sleep.","options":["drink","drank","drinking"],"a":["drink"],"hint":"If + present simple: I drink."},
+              {"type":"gap","q":"My mum gets angry if I ___ late. (be)","a":["am","'m"],"hint":"Present simple of be with I → am."},
+              {"type":"gap","q":"When it's sunny, we ___ outside. (eat)","a":["eat"],"hint":"Present simple with we → eat."},
+              {"type":"order","q":"Put the words in order.","words":["If","it","rains,","the","grass","gets","wet"],"a":["If it rains, the grass gets wet."],"hint":"If + it rains, + the grass gets wet."}
+            ]
+          },
+          {
+            learn: {"title":"What happens if…? — questions and negatives","rule":"Ask about facts with What happens if…? or What do you do if…?: What happens if you put ice in the sun? Use don't / doesn't in either part: If you don't sleep, you feel tired. If it's cold, my car doesn't start.","table":[["","Example"],["question","What happens if you mix red and blue?"],["negative in the if part","If you don't eat, you get hungry."],["negative in the result","If it rains, we don't play football."]],"examples":["What happens if you mix red and blue? — You get purple.","What do you do if you feel ill at school?","If you don't sleep, you feel tired.","If it's cold, my car doesn't start.","If my brother doesn't eat breakfast, he gets angry."],"uz":"So‘roq: What happens if…? — Agar … bo‘lsa, nima bo‘ladi?"},
+            practise: [
+              {"type":"choose","q":"What ___ if you mix red and blue?","options":["happens","happen","happened"],"a":["happens"],"hint":"What + happens + if…? (present simple)"},
+              {"type":"choose","q":"If it's cold, my car ___ start.","options":["doesn't","don't","isn't"],"a":["doesn't"],"hint":"my car = it → doesn't."},
+              {"type":"gap","q":"If you ___ sleep enough, you feel tired. (not)","a":["don't","do not"],"hint":"Present simple negative with you → don't."},
+              {"type":"gap","q":"What ___ you do if you feel ill at school? (do / does)","a":["do"],"hint":"Question with you → What do you do…?"},
+              {"type":"fix","q":"Which sentence is correct?","options":["If you don't water plants, they die.","If you don't water plants, they dies.","If you doesn't water plants, they die."],"a":["If you don't water plants, they die."],"hint":"you → don't; they → die."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"If you heat chocolate, it ___.","options":["melts","melt","melting"],"a":["melts"]},
+          {"type":"gap","q":"If you mix red and white, you ___ pink. (get — present simple)","a":["get"]},
+          {"type":"choose","q":"If it ___, the streets get wet.","options":["rains","rain","rained"],"a":["rains"]},
+          {"type":"gap","q":"I'm not sure. I ___ stay at home tonight. (maybe — one word)","a":["might","may","could"],"from":"g44"},
+          {"type":"gap","q":"If babies are hungry, they ___. (cry — present simple)","a":["cry"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["If you press this button, the door opens.","If you press this button, the door open.","If you pressed this button, the door opens."],"a":["If you press this button, the door opens."]},
+          {"type":"choose","q":"My sister gets angry if I ___ her clothes.","options":["borrow","borrows","borrowed"],"a":["borrow"]},
+          {"type":"order","q":"Put the words in order.","words":["If","you","heat","ice,","it","melts"],"a":["If you heat ice, it melts."]},
+          {"type":"choose","q":"You ___ eat more vegetables. They're good for you. (advice)","options":["should","should to","shoulds"],"a":["should"],"from":"g42"},
+          {"type":"gap","q":"If you ___ eat, you get hungry. (not)","a":["don't","do not"]},
+          {"type":"choose","q":"What happens if you ___ water to 0°C?","options":["cool","cools","cooled"],"a":["cool"]},
+          {"type":"choose","q":"___ you ever been to London?","options":["Have","Did","Were"],"a":["Have"],"from":"g41"},
+          {"type":"fix","q":"Which sentence is correct?","options":["If it's sunny, we eat outside.","If it's sunny, we eats outside.","If it's sunny, we ate outside."],"a":["If it's sunny, we eat outside."]},
+          {"type":"gap","q":"When I'm tired, I ___ to bed early. (go)","a":["go"]},
+          {"type":"choose","q":"If you don't water plants, they ___.","options":["die","dies","died"],"a":["die"]},
+          {"type":"gap","q":"She has ___ a new car. (buy)","a":["bought"],"from":"g38"},
+          {"type":"order","q":"Put the words in order.","words":["happens","What","if","you","press","button","this"],"a":["What happens if you press this button?"]},
+          {"type":"gap","q":"Our dog ___ if someone rings the doorbell. (bark — present simple)","a":["barks"]},
+          {"type":"choose","q":"If you ___ in the sun for too long, you get burnt.","options":["stay","stays","stayed"],"a":["stay"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["Ice melts if you heat it.","Ice melt if you heat it.","Ice melts if you heats it."],"a":["Ice melts if you heat it."]}
+        ]
+      },
+      {
+        id: "g46", no: 46, title: "First Conditional", v: 1,
+        chunks: [
+          {
+            learn: {"title":"If it rains, I'll stay at home","rule":"Use the first conditional for something that is possible in the future, and its result: If it rains tomorrow, I'll stay at home. The if part: present simple (not will!). The result: will / 'll + verb. If you study, you'll pass (not If you will study).","table":[["If + present simple,","will + verb"],["If it rains tomorrow,","I'll (I will) stay at home."],["If you study hard,","you'll pass the exam."],["If she doesn't hurry,","she'll miss the bus."]],"examples":["If it rains tomorrow, I'll stay at home.","If you study hard, you'll pass the exam.","If I see Tom, I'll tell him.","If we leave now, we'll catch the train.","You'll feel better if you take this medicine."],"uz":"First Conditional — kelajakda bo‘lishi mumkin bo‘lgan holat: If it rains, I'll stay at home — Yomg‘ir yog‘sa, uyda qolaman."},
+            practise: [
+              {"type":"choose","q":"If it ___ tomorrow, we'll go to the beach.","options":["is sunny","will be sunny","sunny"],"a":["is sunny"],"hint":"The if part → present simple (not will): is sunny."},
+              {"type":"choose","q":"If you study hard, you ___ the exam.","options":["will pass","passed","passing"],"a":["will pass"],"hint":"The result → will + verb."},
+              {"type":"gap","q":"If I see Tom, I ___ tell him. (will)","a":["will","'ll"],"hint":"The result → will ('ll) + verb."},
+              {"type":"gap","q":"If you ___ now, you'll catch the bus. (leave)","a":["leave"],"hint":"The if part → present simple: leave."},
+              {"type":"fix","q":"Which sentence is correct?","options":["If it rains, we'll stay at home.","If it will rain, we'll stay at home.","If it rains, we'll staying at home."],"a":["If it rains, we'll stay at home."],"hint":"If + present simple (rains), will + verb (stay)."}
+            ]
+          },
+          {
+            learn: {"title":"If you don't hurry, you'll be late","rule":"Use don't / doesn't in the if part and won't (will not) in the result: If you don't hurry, you'll be late. If it rains, we won't go out. Questions: What will you do if…? Will you come if…?","table":[["","Example"],["negative in the if part","If you don't hurry, you'll miss the bus."],["negative result","If it's cold, we won't go swimming."],["question","What will you do if you fail the test?"]],"examples":["If you don't hurry, you'll be late.","If it's cold tomorrow, we won't go swimming.","If she doesn't call, I'll be worried.","What will you do if it rains?","Will you come to the party if I invite you?"],"uz":"Inkor: If you don't hurry, you'll be late — Shoshilmasangiz, kechikasiz."},
+            practise: [
+              {"type":"choose","q":"If you don't hurry, you ___ the train.","options":["'ll miss","missed","'ll missed"],"a":["'ll miss"],"hint":"The result → 'll (will) + verb: 'll miss."},
+              {"type":"choose","q":"If it's cold tomorrow, we ___ swimming.","options":["won't go","don't will go","not go"],"a":["won't go"],"hint":"A negative result → won't + verb."},
+              {"type":"gap","q":"What ___ you do if you lose your phone? (will)","a":["will"],"hint":"Question → What will you do if…?"},
+              {"type":"gap","q":"If she ___ the bus, she'll be late. (not / catch)","a":["doesn't catch","does not catch"],"hint":"The if part, she → doesn't (does not) + catch."},
+              {"type":"order","q":"Put the words in order.","words":["will","you","What","do","if","it","rains"],"a":["What will you do if it rains?"],"hint":"What + will + you + do + if it rains?"}
+            ]
+          },
+          {
+            learn: {"title":"if or when? — maybe or sure","rule":"Use if for something that may or may not happen: If I see Anna, I'll tell her (maybe I'll see her). Use when for something you are sure will happen: When I get home, I'll call you (I will get home). After if and when, use the present simple for the future: When I finish (not When I will finish).","table":[["","Example"],["if = maybe","If I find your book, I'll give it to you."],["when = sure","When I finish work, I'll call you."]],"examples":["If I have time, I'll help you.","When I get home, I'll have a shower.","If it's sunny tomorrow, we'll have a picnic.","When the film ends, we'll go for a pizza.","I'll text you when I arrive."],"uz":"if — ehtimol (bo‘lishi ham, bo‘lmasligi ham mumkin), when — albatta bo‘ladigan ish; ikkalasidan keyin Present Simple keladi."},
+            practise: [
+              {"type":"choose","q":"___ I get home, I'll have a shower. (I'm sure I'll get home)","options":["When","If"],"a":["When"],"hint":"Sure → when."},
+              {"type":"choose","q":"___ I have time, I'll help you. (maybe I'll have time)","options":["If","When"],"a":["If"],"hint":"Maybe → if."},
+              {"type":"gap","q":"When I ___ my homework, I'll call you. (finish)","a":["finish","have finished","'ve finished"],"hint":"After when → present simple (not will): finish."},
+              {"type":"gap","q":"If you ___ my keys, please tell me. (find)","a":["find","have found","'ve found"],"hint":"After if → present simple (not will): find."},
+              {"type":"fix","q":"Which sentence is correct?","options":["I'll text you when I arrive.","I'll text you when I will arrive.","I text you when I will arrive."],"a":["I'll text you when I arrive."],"hint":"After when → present simple: arrive."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"If it ___ this weekend, we'll stay at home.","options":["rains","will rain","rained"],"a":["rains"]},
+          {"type":"gap","q":"If you eat all that cake, you ___ feel sick. (will)","a":["will","'ll"]},
+          {"type":"choose","q":"If you don't hurry, you ___ late.","options":["'ll be","be","are being"],"a":["'ll be"]},
+          {"type":"gap","q":"If you heat ice, it ___. (melt — present simple)","a":["melts"],"from":"g45"},
+          {"type":"gap","q":"If she ___ hard, she'll pass. (study)","a":["studies","has studied","'s studied"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["If I see Ben, I'll give him the book.","If I will see Ben, I'll give him the book.","If I see Ben, I'll gives him the book."],"a":["If I see Ben, I'll give him the book."]},
+          {"type":"choose","q":"What will you do if you ___ the bus?","options":["miss","will miss","missed"],"a":["miss"]},
+          {"type":"order","q":"Put the words in order.","words":["will","you","What","do","if","you","fail"],"a":["What will you do if you fail?"]},
+          {"type":"choose","q":"You ___ be late for the exam. The doors close at nine.","options":["mustn't","don't have to"],"a":["mustn't"],"from":"g43"},
+          {"type":"gap","q":"If it's cold tomorrow, we ___ go to the park. (will — negative)","a":["won't","will not"]},
+          {"type":"choose","q":"___ I finish work, I'll call you. (I'm sure I'll finish)","options":["When","If"],"a":["When"]},
+          {"type":"gap","q":"I ___ open the window. It was stuck. (can — past, negative)","a":["couldn't","could not"],"from":"g44"},
+          {"type":"fix","q":"Which sentence is correct?","options":["If you don't water the plant, it will die.","If you not water the plant, it will die.","If you don't water the plant, it will dies."],"a":["If you don't water the plant, it will die."]},
+          {"type":"gap","q":"I'll call you when I ___ home. (get)","a":["get","have got","'ve got"]},
+          {"type":"choose","q":"If we ___ the train, we'll get a taxi.","options":["miss","will miss","missing"],"a":["miss"]},
+          {"type":"choose","q":"I've lived here ___ ten years.","options":["for","since"],"a":["for"],"from":"g40"},
+          {"type":"order","q":"Put the words in order.","words":["If","you","hurry,","you'll","catch","the","bus"],"a":["If you hurry, you'll catch the bus."]},
+          {"type":"gap","q":"If he ___ come, we'll start without him. (not)","a":["doesn't","does not"]},
+          {"type":"choose","q":"She'll be angry if you ___ her.","options":["don't call","not call","doesn't call"],"a":["don't call"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["Will you come if I invite you?","Will you come if I will invite you?","Do you will come if I invite you?"],"a":["Will you come if I invite you?"]}
+        ]
+      },
+      {
+        id: "g47", no: 47, title: "When, While, Before, After, As Soon As", v: 1,
+        chunks: [
+          {
+            learn: {"title":"before and after","rule":"before and after show the order of two actions. I brush my teeth before I go to bed (first teeth, then bed). After I finish school, I go home (first school, then home). They can join two parts of a sentence, or come before a noun: before dinner, after the lesson.","table":[["","Example","Order"],["before","I wash my hands before I eat.","1 wash → 2 eat"],["after","I eat after I wash my hands.","1 wash → 2 eat"],["+ a noun","We go for a walk after dinner.","1 dinner → 2 walk"]],"examples":["I always brush my teeth before I go to bed.","After I finish school, I go to the gym.","We went for a walk after dinner.","Before you leave, close the windows.","She did her homework after the lesson."],"uz":"before — …dan oldin, after — …dan keyin: I wash my hands before I eat — Ovqatlanishdan oldin qo‘limni yuvaman."},
+            practise: [
+              {"type":"choose","q":"I always brush my teeth ___ I go to bed. (first teeth, then bed)","options":["before","after"],"a":["before"],"hint":"First teeth, then bed → before."},
+              {"type":"choose","q":"We go for a walk ___ dinner. (first dinner, then the walk)","options":["after","before"],"a":["after"],"hint":"First dinner, then the walk → after."},
+              {"type":"gap","q":"Wash your hands ___ you eat. (first wash, then eat — before / after)","a":["before"],"hint":"First wash, then eat → before."},
+              {"type":"gap","q":"___ the film ended, we went for a pizza. (first the film, then pizza — before / after)","a":["After","When","Once","As soon as"],"hint":"First the film, then pizza → after."},
+              {"type":"fix","q":"Which sentence is correct?","options":["I'll call you after I finish work.","I'll call you after I will finish work.","I call you after I will finish work."],"a":["I'll call you after I finish work."],"hint":"After after → present simple for the future: finish."}
+            ]
+          },
+          {
+            learn: {"title":"when and while","rule":"when = at the time that. Use it with a short action or with a time of your life: When the phone rang, I answered it. When I was ten, I lived in Rome. while = during the time that. Use it with a longer action: While I was waiting, I read a magazine. Use when (not while) with ages and times of life: when I was a child.","table":[["","Example"],["when + a short action","When the bell rang, the students left."],["when + an age / a time of life","When I was five, I learned to swim."],["while + a longer action","While I was waiting, I read a magazine."]],"examples":["When the bell rang, everyone stood up.","When I was a child, I was afraid of the dark.","While I was waiting for the bus, I read a magazine.","My phone rang while I was having a shower.","When she was young, she lived in Paris."],"uz":"when — qisqa ish yoki hayot davri bilan (when I was ten — o‘n yoshimda), while — davom etayotgan ish paytida."},
+            practise: [
+              {"type":"choose","q":"___ I was ten, I moved to London.","options":["When","During"],"a":["When"],"hint":"An age → when."},
+              {"type":"choose","q":"I read a magazine ___ I was waiting for the bus.","options":["while","during"],"a":["while"],"hint":"A longer action (was waiting) → while."},
+              {"type":"gap","q":"My phone rang ___ I was having a shower. (while / during)","a":["while","when","as"],"hint":"A longer action (was having) → while."},
+              {"type":"gap","q":"___ the bell rang, everyone stood up. (when / while)","a":["When","As","As soon as","Once","After"],"hint":"A short action (rang) → when."},
+              {"type":"order","q":"Put the words in order.","words":["When","she","was","young,","she","lived","in","Paris"],"a":["When she was young, she lived in Paris."],"hint":"When + she was young, + she lived in Paris."}
+            ]
+          },
+          {
+            learn: {"title":"as soon as — and no will after time words","rule":"as soon as = immediately when: I'll call you as soon as I arrive (the moment I arrive). After when, before, after and as soon as, use the present simple to talk about the future — not will: I'll phone you when I get home (not when I will get home).","table":[["","Example"],["as soon as (past)","As soon as I saw her, I knew something was wrong."],["as soon as (future)","I'll text you as soon as I land."],["time word + present for the future","We'll have dinner after Dad gets home."]],"examples":["I'll call you as soon as I arrive.","As soon as I saw the dog, I ran.","We'll have dinner after Dad gets home.","Before you go out, close the windows.","She'll be happy when she sees you."],"uz":"as soon as — …bilanoq: I'll call you as soon as I arrive — Yetib borishim bilanoq qo‘ng‘iroq qilaman."},
+            practise: [
+              {"type":"choose","q":"I'll call you as soon as I ___ home.","options":["get","will get","got"],"a":["get"],"hint":"After as soon as → present simple for the future: get."},
+              {"type":"choose","q":"We'll have lunch after Dad ___ back.","options":["comes","will come","come"],"a":["comes"],"hint":"After after → present simple for the future: Dad comes."},
+              {"type":"gap","q":"I'll text you as soon ___ I land. (one word)","a":["as"],"hint":"as soon as — three words: as + soon + as."},
+              {"type":"gap","q":"Before you ___ out, close the windows. (go)","a":["go"],"hint":"After before → present simple: you go."},
+              {"type":"fix","q":"Which sentence is correct?","options":["As soon as I finish, I'll help you.","As soon as I will finish, I'll help you.","As soon as I finished, I'll help you."],"a":["As soon as I finish, I'll help you."],"hint":"After as soon as → present simple for the future: finish."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"I always have a shower ___ I go to bed.","options":["before","during"],"a":["before"]},
+          {"type":"gap","q":"We'll go to the park after it ___ raining. (stop)","a":["stops","has stopped","'s stopped"]},
+          {"type":"choose","q":"___ I was a child, I was afraid of the dark.","options":["When","During","Then"],"a":["When"]},
+          {"type":"gap","q":"If you leave now, you ___ catch the train. (will)","a":["will","'ll"],"from":"g46"},
+          {"type":"gap","q":"I'll call you as soon as I ___ the results. (get)","a":["get","have got","'ve got"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["She'll be happy when she sees you.","She'll be happy when she will see you.","She is happy when she will see you."],"a":["She'll be happy when she sees you."]},
+          {"type":"choose","q":"I fell asleep ___ I was watching the film.","options":["while","during"],"a":["while"]},
+          {"type":"order","q":"Put the words in order.","words":["As","soon","as","I","arrive,","I'll","call","you"],"a":["As soon as I arrive, I'll call you."]},
+          {"type":"choose","q":"If you mix blue and yellow, you ___ green.","options":["get","got","getting"],"a":["get"],"from":"g45"},
+          {"type":"gap","q":"Wash the fruit ___ you eat it. (first wash, then eat — before / after)","a":["before"]},
+          {"type":"choose","q":"We'll start the lesson as soon as everyone ___ here.","options":["is","will be","be"],"a":["is"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["I was reading when the lights went out.","I was reading when the lights were go out.","I were reading when the lights went out."],"a":["I was reading when the lights went out."],"from":"g36"},
+          {"type":"gap","q":"___ I was waiting for the train, I called my mum. (when / while — a longer action)","a":["While","When","As"]},
+          {"type":"choose","q":"Let's go for a walk ___ lunch. (first lunch, then the walk)","options":["after","before"],"a":["after"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["I'll tell you after I talk to him.","I'll tell you after I will talk to him.","I tell you after I will talk to him."],"a":["I'll tell you after I talk to him."]},
+          {"type":"choose","q":"When I was six, I ___ ride a bike.","options":["could","can","could to"],"a":["could"],"from":"g44"},
+          {"type":"order","q":"Put the words in order.","words":["When","she","got","home,","she","made","dinner"],"a":["When she got home, she made dinner."]},
+          {"type":"gap","q":"Please turn off the lights ___ you leave the room. (before / after)","a":["before","when","as"]},
+          {"type":"choose","q":"As soon as I ___ the news, I called my sister.","options":["heard","hear","was hearing"],"a":["heard"]},
+          {"type":"gap","q":"I'll do my homework after I ___ dinner. (have)","a":["have","have had","'ve had"]}
+        ]
+      },
+      {
+        id: "g48", no: 48, title: "Relative Clauses (Who, Which, That, Where)", v: 1,
+        chunks: [
+          {
+            learn: {"title":"the man who lives next door — who / that for people","rule":"Use who or that to say which person you mean or to give more information about a person: A dentist is a person who looks after your teeth. That's the girl who won the race. For people, who and that are both correct. Don't add he / she after who: the man who lives next door (not the man who he lives next door).","table":[["Person","who / that","More information"],["the woman","who / that","lives next door"],["a teacher","who / that","helps students"],["the boy","who / that","broke the window"]],"examples":["A pilot is a person who flies planes.","That's the man who sold me my car.","I have a friend that speaks five languages.","The girl who won the race is my cousin.","Do you know the woman who lives next door?"],"uz":"Odamlar uchun who yoki that: the man who lives next door — qo‘shnida yashaydigan odam."},
+            practise: [
+              {"type":"choose","q":"A nurse is a person ___ looks after sick people.","options":["who","which","where"],"a":["who"],"hint":"A person → who (or that)."},
+              {"type":"choose","q":"That's the boy ___ broke my window.","options":["that","which","where"],"a":["that"],"hint":"A person → that (or who)."},
+              {"type":"gap","q":"I know a woman ___ speaks Chinese. (who / which)","a":["who","that"],"hint":"A person → who (or that)."},
+              {"type":"gap","q":"The man ___ lives next door is a doctor. (who / where)","a":["who","that"],"hint":"A person → who (or that)."},
+              {"type":"fix","q":"Which sentence is correct?","options":["The girl who sits next to me is very funny.","The girl who she sits next to me is very funny.","The girl which sits next to me is very funny."],"a":["The girl who sits next to me is very funny."],"hint":"A person → who; no she after who."}
+            ]
+          },
+          {
+            learn: {"title":"the bus which goes to the station — which / that for things","rule":"Use which or that for things and animals: This is the bus which goes to the station. I've lost the book that you gave me. Both are correct. Don't add it: the phone which I bought (not the phone which I bought it).","table":[["Thing","which / that","More information"],["the bus","which / that","goes to the centre"],["a machine","which / that","washes clothes"],["the cake","which / that","my mum made"]],"examples":["A fridge is a machine which keeps food cold.","This is the bus that goes to the airport.","I loved the film which we saw last night.","Where's the cake that I bought?","We have a dog which loves swimming."],"uz":"Narsa va hayvonlar uchun which yoki that: the book which I read — men o‘qigan kitob."},
+            practise: [
+              {"type":"choose","q":"A fridge is a machine ___ keeps food cold.","options":["which","who","where"],"a":["which"],"hint":"A thing → which (or that)."},
+              {"type":"choose","q":"I liked the film ___ we watched yesterday.","options":["that","who","where"],"a":["that"],"hint":"A thing → that (or which)."},
+              {"type":"gap","q":"This is the bus ___ goes to the station. (which / who)","a":["which","that"],"hint":"A thing → which (or that)."},
+              {"type":"gap","q":"Where's the cake ___ I bought this morning? (which / who)","a":["which","that"],"hint":"A thing → which (or that)."},
+              {"type":"fix","q":"Which sentence is correct?","options":["This is the phone which I bought last week.","This is the phone which I bought it last week.","This is the phone who I bought last week."],"a":["This is the phone which I bought last week."],"hint":"A thing → which; no it at the end."}
+            ]
+          },
+          {
+            learn: {"title":"the house where I was born — where for places","rule":"Use where for places. It means 'in that place' or 'at that place': This is the house where I was born. A library is a place where you can borrow books. After where comes a full sentence with its own person: where I was born, where we had lunch.","table":[["Place","where","More information"],["the house","where","I grew up"],["a library","where","you borrow books"],["the café","where","we first met"]],"examples":["This is the town where my mum grew up.","A bakery is a shop where you can buy bread.","That's the restaurant where we had my birthday dinner.","Do you remember the hotel where we stayed?","I want to live in a city where there are lots of parks."],"uz":"Joy uchun where: the house where I was born — men tug‘ilgan uy."},
+            practise: [
+              {"type":"choose","q":"This is the school ___ I studied.","options":["where","who","which"],"a":["where"],"hint":"A place → where."},
+              {"type":"choose","q":"A bakery is a shop ___ you can buy bread.","options":["where","who","what"],"a":["where"],"hint":"A place → where."},
+              {"type":"gap","q":"That's the café ___ we first met. (who / where)","a":["where"],"hint":"A place → where."},
+              {"type":"gap","q":"A hospital is a place ___ doctors and nurses work. (who / where)","a":["where"],"hint":"A place → where."},
+              {"type":"order","q":"Put the words in order.","words":["where","This","I","the","is","house","live"],"a":["This is the house where I live.","Is this the house where I live?","The house where I live is this."],"hint":"This is + the house + where I live."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"A teacher is a person ___ helps students learn.","options":["who","which","where"],"a":["who"]},
+          {"type":"gap","q":"I've got a friend ___ plays the guitar. (who / which)","a":["who","that"]},
+          {"type":"choose","q":"This is the train ___ goes to Oxford.","options":["which","who","where"],"a":["which"]},
+          {"type":"gap","q":"I'll phone you when I ___ to London. (get)","a":["get","have got","'ve got"],"from":"g47"},
+          {"type":"gap","q":"That's the hotel ___ we stayed last summer. (who / where)","a":["where"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["The man who lives next door is a pilot.","The man which lives next door is a pilot.","The man who he lives next door is a pilot."],"a":["The man who lives next door is a pilot."]},
+          {"type":"choose","q":"I've lost the book ___ you gave me.","options":["that","who","where"],"a":["that"]},
+          {"type":"order","q":"Put the words in order.","words":["who","the","That's","girl","won","race","the"],"a":["That's the girl who won the race."]},
+          {"type":"fix","q":"Which sentence is correct?","options":["If you call me, I'll come.","If you will call me, I'll come.","If you call me, I'll coming."],"a":["If you call me, I'll come."],"from":"g46"},
+          {"type":"gap","q":"A camera is a thing ___ takes photos. (which / who)","a":["which","that"]},
+          {"type":"choose","q":"A museum is a place ___ you can see old and famous things.","options":["where","who","which"],"a":["where"]},
+          {"type":"gap","q":"If you mix red and yellow, you ___ orange. (get — present simple)","a":["get"],"from":"g45"},
+          {"type":"gap","q":"Do you know the woman ___ is talking to Tom? (who / which)","a":["who","that"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["This is the cake which my mum made.","This is the cake who my mum made.","This is the cake which my mum made it."],"a":["This is the cake which my mum made."]},
+          {"type":"choose","q":"Is this the street ___ you live?","options":["where","which","who"],"a":["where"]},
+          {"type":"choose","q":"You ___ come tomorrow. The lesson is cancelled.","options":["don't have to","mustn't"],"a":["don't have to"],"from":"g43"},
+          {"type":"order","q":"Put the words in order.","words":["is","A","pilot","a","person","who","flies","planes"],"a":["A pilot is a person who flies planes.","Is a pilot a person who flies planes?","A person who flies planes is a pilot."]},
+          {"type":"gap","q":"I like films ___ make me laugh. (which / who)","a":["which","that"]},
+          {"type":"choose","q":"The students ___ passed the test got a prize.","options":["who","which","where"],"a":["who"]},
+          {"type":"gap","q":"That's the park ___ I learned to ride a bike. (which / where)","a":["where"]}
+        ]
+      },
+      {
+        id: "g49", no: 49, title: "Gerund vs Infinitive", v: 1,
+        chunks: [
+          {
+            learn: {"title":"I enjoy swimming — verb + -ing","rule":"Some verbs are followed by the -ing form of another verb (a gerund): enjoy, finish, avoid, mind, practise, keep. I enjoy swimming. She finished writing her essay. Do you mind waiting? Don't use to after these verbs: I enjoy reading (not enjoy to read).","table":[["Verb","+ -ing","Example"],["enjoy","+ -ing","I enjoy cooking."],["finish","+ -ing","Have you finished eating?"],["avoid","+ -ing","She avoids eating sugar."],["mind","+ -ing","Do you mind opening the window?"],["practise","+ -ing","I practise speaking English every day."],["keep","+ -ing","He keeps forgetting my name."]],"examples":["I enjoy swimming in the sea.","She finished writing her essay at midnight.","Do you mind waiting for a few minutes?","He avoids driving in the city.","I practise playing the piano every day.","My little brother keeps asking questions."],"uz":"enjoy, finish, avoid, mind, practise, keep fe’llaridan keyin -ing shakl keladi: I enjoy reading — Men kitob o‘qishni yoqtiraman."},
+            practise: [
+              {"type":"choose","q":"I enjoy ___ in the sea.","options":["swimming","to swim","swim"],"a":["swimming"],"hint":"enjoy + -ing."},
+              {"type":"choose","q":"Have you finished ___ your homework?","options":["doing","to do","do"],"a":["doing"],"hint":"finish + -ing."},
+              {"type":"gap","q":"Do you mind ___ the door, please? (close)","a":["closing"],"hint":"mind + -ing: closing."},
+              {"type":"gap","q":"She avoids ___ fast food. (eat)","a":["eating"],"hint":"avoid + -ing: eating."},
+              {"type":"fix","q":"Which sentence is correct?","options":["He keeps losing his keys.","He keeps to lose his keys.","He keeps lose his keys."],"a":["He keeps losing his keys."],"hint":"keep + -ing: losing."}
+            ]
+          },
+          {
+            learn: {"title":"I want to travel — verb + to + verb","rule":"Other verbs are followed by to + verb (an infinitive): want, decide, hope, plan, agree, refuse, promise, would like ('d like). I want to travel. We decided to stay at home. She refused to answer. Don't use -ing after these verbs: I want to go (not want going).","table":[["Verb","+ to + verb","Example"],["want","to","I want to learn Spanish."],["decide","to","We decided to leave early."],["hope","to","She hopes to become a doctor."],["plan","to","They're planning to move."],["agree / refuse","to","He agreed to help. / He refused to help."],["promise","to","I promise to call you."]],"examples":["I want to travel around the world.","We decided to stay at home.","She hopes to become a doctor.","They're planning to buy a house.","He refused to answer my question.","I'd like to order a pizza, please."],"uz":"want, decide, hope, plan, agree, refuse, promise dan keyin to + fe’l keladi: I want to travel — Men sayohat qilishni xohlayman."},
+            practise: [
+              {"type":"choose","q":"I want ___ a new phone.","options":["to buy","buying","buy"],"a":["to buy"],"hint":"want + to + verb."},
+              {"type":"choose","q":"We decided ___ at home.","options":["to stay","staying","stay"],"a":["to stay"],"hint":"decide + to + verb."},
+              {"type":"gap","q":"She hopes ___ a doctor one day. (become — to + verb)","a":["to become"],"hint":"hope + to + verb: to become."},
+              {"type":"gap","q":"He refused ___ my question. (answer — to + verb)","a":["to answer"],"hint":"refuse + to + verb: to answer."},
+              {"type":"order","q":"Put the words in order.","words":["to","I'd","travel","like"],"a":["I'd like to travel."],"hint":"I'd like + to + travel."}
+            ]
+          },
+          {
+            learn: {"title":"good at drawing — -ing after prepositions","rule":"After a preposition (at, in, of, about, for, without…), always use the -ing form: I'm good at drawing. Thanks for helping me. She left without saying goodbye. The -ing form can also be the subject of a sentence: Swimming is good for you. Remember: like, love, hate and start can take both forms: I like reading. / I like to read.","table":[["","Example"],["preposition + -ing","I'm interested in learning Japanese."],["preposition + -ing","Thank you for coming."],["-ing as the subject","Reading is my favourite hobby."],["like / love / hate + both","I love dancing. / I love to dance."]],"examples":["I'm good at drawing.","Thank you for helping me.","She left without saying goodbye.","I'm thinking about buying a new bike.","Swimming is good exercise.","Reading is my favourite hobby."],"uz":"Predlogdan keyin (at, in, for, without) doim -ing keladi: I'm good at drawing — Men rasm chizishni yaxshi bilaman."},
+            practise: [
+              {"type":"choose","q":"I'm good at ___ pictures.","options":["drawing","to draw","draw"],"a":["drawing"],"hint":"at (a preposition) + -ing."},
+              {"type":"choose","q":"Thank you for ___ me.","options":["helping","to help","help"],"a":["helping"],"hint":"for (a preposition) + -ing."},
+              {"type":"gap","q":"She's interested in ___ Japanese. (learn)","a":["learning"],"hint":"in (a preposition) + -ing: learning."},
+              {"type":"gap","q":"___ is good exercise. (swim — the subject of the sentence)","a":["Swimming"],"hint":"-ing as the subject: Swimming."},
+              {"type":"fix","q":"Which sentence is correct?","options":["He left without saying goodbye.","He left without to say goodbye.","He left without say goodbye."],"a":["He left without saying goodbye."],"hint":"without (a preposition) + -ing."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"I really enjoy ___ cakes.","options":["baking","to bake","bake"],"a":["baking"]},
+          {"type":"gap","q":"We plan ___ to Spain next summer. (travel — to + verb)","a":["to travel"]},
+          {"type":"choose","q":"She agreed ___ me with my project.","options":["to help","helping","help"],"a":["to help"]},
+          {"type":"gap","q":"A dentist is a person ___ looks after your teeth. (who / which)","a":["who","that"],"from":"g48"},
+          {"type":"gap","q":"Have you finished ___ the book? (read)","a":["reading"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["I want to learn French.","I want learning French.","I want learn French."],"a":["I want to learn French."]},
+          {"type":"choose","q":"Do you mind ___ a little?","options":["waiting","to wait","wait"],"a":["waiting"]},
+          {"type":"order","q":"Put the words in order.","words":["decided","She","to","stay","home","at"],"a":["She decided to stay at home."]},
+          {"type":"choose","q":"I'll call you as soon as I ___ the results.","options":["get","will get","got"],"a":["get"],"from":"g47"},
+          {"type":"gap","q":"I'm tired of ___ for the bus. (wait)","a":["waiting"]},
+          {"type":"choose","q":"He promised ___ late again.","options":["not to be","not being","not be"],"a":["not to be"]},
+          {"type":"choose","q":"If you ___ hard, you'll pass the exam.","options":["study","will study","studied"],"a":["study"],"from":"g46"},
+          {"type":"gap","q":"My brother is very good at ___ football. (play)","a":["playing"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["She avoids driving at night.","She avoids to drive at night.","She avoids drive at night."],"a":["She avoids driving at night."]},
+          {"type":"choose","q":"I hope ___ you again soon.","options":["to see","seeing","see"],"a":["to see"]},
+          {"type":"gap","q":"It ___ snow tomorrow. I'm not sure. (maybe — one word)","a":["might","may","could"],"from":"g44"},
+          {"type":"order","q":"Put the words in order.","words":["is","Reading","my","hobby","favourite"],"a":["Reading is my favourite hobby.","My favourite hobby is reading.","Is reading my favourite hobby?"]},
+          {"type":"gap","q":"They refused ___ for the broken window. (pay — to + verb)","a":["to pay"]},
+          {"type":"choose","q":"Thanks for ___ me to your party.","options":["inviting","to invite","invite"],"a":["inviting"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["I'm thinking about buying a new bike.","I'm thinking about to buy a new bike.","I'm thinking about buy a new bike."],"a":["I'm thinking about buying a new bike."]}
+        ]
+      },
+      {
+        id: "g50", no: 50, title: "Too and Enough", v: 1,
+        chunks: [
+          {
+            learn: {"title":"too hot, too small — too + adjective","rule":"too + adjective = more than is good or possible — it's a problem: This coffee is too hot (I can't drink it). These shoes are too small. Add to + verb to say what you can't do: The box is too heavy to carry. Don't mix up too and very: very hot = hot, but OK; too hot = a problem.","table":[["too + adjective","Result"],["This tea is too hot.","I can't drink it."],["The bag is too heavy to carry.","I can't carry it."],["He is too young to drive.","He can't drive."]],"examples":["This coffee is too hot. I'll wait a minute.","These shoes are too small for me.","The box is too heavy to carry.","He's too young to drive.","It's too cold to swim today."],"uz":"too + sifat — haddan tashqari (muammo): This tea is too hot — Bu choy juda issiq (ichib bo‘lmaydi)."},
+            practise: [
+              {"type":"choose","q":"I can't drink this tea. It's ___ hot.","options":["too","enough","many"],"a":["too"],"hint":"A problem (I can't drink it) → too + adjective."},
+              {"type":"choose","q":"These jeans are ___ small. I need a bigger size.","options":["too","enough","much"],"a":["too"],"hint":"A problem → too + adjective."},
+              {"type":"gap","q":"He's ___ young to drive a car. He's only twelve. (too / enough)","a":["too"],"hint":"A problem (he can't drive) → too + young."},
+              {"type":"gap","q":"This box is too heavy ___ carry. (one word)","a":["to"],"hint":"too + adjective + to + verb."},
+              {"type":"fix","q":"Which sentence is correct?","options":["It's too cold to swim today.","It's too much cold to swim today.","It's cold too to swim today."],"a":["It's too cold to swim today."],"hint":"too + adjective: too cold."}
+            ]
+          },
+          {
+            learn: {"title":"old enough, not big enough — adjective + enough","rule":"adjective + enough = as much as you need: She's old enough to drive. Look at the word order: enough comes after the adjective — old enough (not enough old). Negative: not + adjective + enough = less than you need: The water isn't warm enough for swimming.","table":[["adjective + enough","Example"],["old enough","She's old enough to vote."],["big enough","Is the room big enough for ten people?"],["not warm enough","It isn't warm enough to sit outside."]],"examples":["She's eighteen. She's old enough to vote.","Is your room big enough for a desk?","The water isn't warm enough for swimming.","I'm not tall enough to reach the top shelf.","He didn't run fast enough to win."],"uz":"sifat + enough — yetarlicha: She's old enough to drive — Uning mashina haydashga yoshi yetadi."},
+            practise: [
+              {"type":"choose","q":"She's eighteen. She's ___ to vote.","options":["old enough","enough old","old too"],"a":["old enough"],"hint":"adjective + enough: old enough."},
+              {"type":"choose","q":"The room isn't ___ for all of us.","options":["big enough","enough big","big too"],"a":["big enough"],"hint":"not + adjective + enough."},
+              {"type":"gap","q":"Are you tall ___ to reach the top shelf? (too / enough)","a":["enough"],"hint":"As tall as you need → tall enough."},
+              {"type":"gap","q":"It isn't warm ___ to swim. (too / enough)","a":["enough"],"hint":"not + warm + enough."},
+              {"type":"order","q":"Put the words in order.","words":["isn't","He","enough","strong"],"a":["He isn't strong enough.","Isn't he strong enough?"],"hint":"He isn't + strong + enough."}
+            ]
+          },
+          {
+            learn: {"title":"enough time, too many people — with nouns","rule":"enough goes before a noun: We have enough chairs. I don't have enough time. With nouns, use too many + plural nouns and too much + uncountable nouns: There are too many people here. I drank too much coffee.","table":[["","Example"],["enough + noun","Have we got enough eggs for the cake?"],["not enough + noun","There isn't enough milk."],["too many + plural noun","There are too many cars in the city."],["too much + uncountable noun","You put too much salt in the soup."]],"examples":["We have enough chairs for everyone.","I don't have enough time to finish.","There are too many people on this bus.","I drank too much coffee today.","Is there enough milk for two cups?"],"uz":"enough otdan oldin keladi: enough money — yetarli pul; too many / too much — haddan ortiq ko‘p."},
+            practise: [
+              {"type":"choose","q":"We don't have ___ for everyone.","options":["enough chairs","too chairs","chairs too"],"a":["enough chairs"],"hint":"enough + noun: enough chairs."},
+              {"type":"choose","q":"There are ___ people on this bus. I can't move!","options":["too many","too much","much"],"a":["too many"],"hint":"people = plural → too many."},
+              {"type":"gap","q":"I can't buy it. I haven't got ___ money. (too / enough)","a":["enough"],"hint":"enough + noun: enough money."},
+              {"type":"gap","q":"You put too ___ sugar in my tea. (much / many)","a":["much"],"hint":"sugar = uncountable → too much."},
+              {"type":"fix","q":"Which sentence is correct?","options":["I don't have enough time.","I don't have enough of time.","I don't have too time."],"a":["I don't have enough time."],"hint":"enough + noun: enough time."}
+            ]
+          }
+        ],
+        test: [
+          {"type":"choose","q":"This soup is ___ hot. I'll wait a few minutes.","options":["too","enough","many"],"a":["too"]},
+          {"type":"gap","q":"Is the water warm ___ for a swim? (too / enough)","a":["enough"]},
+          {"type":"choose","q":"He's sixteen. He isn't ___ to drive.","options":["old enough","enough old","old too"],"a":["old enough"]},
+          {"type":"choose","q":"I enjoy ___ to music.","options":["listening","to listen","listen"],"a":["listening"],"from":"g49"},
+          {"type":"gap","q":"These shoes are ___ big. I need a smaller size. (too / enough)","a":["too"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["We haven't got enough eggs.","We haven't got enough of eggs.","We haven't got too eggs."],"a":["We haven't got enough eggs."]},
+          {"type":"choose","q":"There's ___ traffic in the city centre.","options":["too much","too many","enough of"],"a":["too much"]},
+          {"type":"order","q":"Put the words in order.","words":["too","is","It","to","cold","swim"],"a":["It is too cold to swim.","Is it too cold to swim?"]},
+          {"type":"choose","q":"This is the café ___ we first met.","options":["where","which","who"],"a":["where"],"from":"g48"},
+          {"type":"gap","q":"I can't reach it. I'm not tall ___. (too / enough)","a":["enough"]},
+          {"type":"choose","q":"I ate ___ cakes at the party. Now I feel sick.","options":["too many","too much","much"],"a":["too many"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["If you heat butter, it melts.","If you heat butter, it melt.","If you heats butter, it melts."],"a":["If you heat butter, it melts."],"from":"g45"},
+          {"type":"gap","q":"This bag is too heavy ___ carry. (one word)","a":["to"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["She isn't old enough to watch this film.","She isn't enough old to watch this film.","She isn't old too to watch this film."],"a":["She isn't old enough to watch this film."]},
+          {"type":"choose","q":"Have we got ___ for a cake?","options":["enough flour","too flour","flour too"],"a":["enough flour"]},
+          {"type":"gap","q":"Yesterday we ___ walk home because there were no buses. (have to — past)","a":["had to"],"from":"g42"},
+          {"type":"order","q":"Put the words in order.","words":["enough","have","We","time","don't"],"a":["We don't have enough time.","Don't we have enough time?"]},
+          {"type":"gap","q":"There are too ___ cars on the road today. (much / many)","a":["many"]},
+          {"type":"choose","q":"The film was ___ boring. I fell asleep.","options":["too","enough","many"],"a":["too"]},
+          {"type":"fix","q":"Which sentence is correct?","options":["You drink too much coffee.","You drink too many coffee.","You drink coffee too many."],"a":["You drink too much coffee."]}
+        ]
+      }
+    ]
     },
     {
       id: "intermediate", name: "Intermediate", lessons: []

@@ -779,7 +779,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   20 Weather & Seasons ☀️), so the map matches the four parts; older names in the notes above ("Hello!", "Meeting people"…) are gone.
   Results sent before keep the old name in their `title`.
 - **Grammar Journey (teacher, 2026-11-16)**: a fifth part of the Course, under the group cards on the Course page (`js/pages/grammar.js`; 7 levels; Beginner's 15
-  lessons g1–g15 and Elementary's 17 lessons g16–g32 (2026-11-16) are written). Source `docs/grammar-journey.json` → `node tools/build-grammar.js` → `js/grammar-data.js` (`TA_GRAMMAR`) + `docs/grammar-journey.md` —
+  lessons g1–g15, Elementary's 17 lessons g16–g32 and Pre-Intermediate's 18 lessons g33–g50 (2026-11-16) are written). Source `docs/grammar-journey.json` → `node tools/build-grammar.js` → `js/grammar-data.js` (`TA_GRAMMAR`) + `docs/grammar-journey.md` —
   edit the JSON and run the tool, never edit grammar-data.js by hand. A lesson = 3 chunks (learn cards with the Uzbek line, then practise questions with a hint after a wrong
   answer) and a 20-question test (g2–g15: 4 questions from earlier lessons). Student page: `skill.html?s=grammar&gl=<gN>&c=<code>` (`js/grammar-player.js`, `window.GR`,
   branches in js/skill-player.js; same ID check + "Bu sizmi"). **Only the first test Submit is sent** (`type: 'Grammar course'`, `code, name, studentId, skill 'grammar',

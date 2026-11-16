@@ -1,4 +1,4 @@
-// The Grammar Journey's content (teacher, 2026-11-16): 7 levels, Beginner Lessons 1–15, Elementary 16–32. Each lesson is 2–4 learn → practise
+// The Grammar Journey's content (teacher, 2026-11-16): 7 levels, Beginner Lessons 1–15, Elementary 16–32, Pre-Intermediate 33–50. Each lesson is 2–4 learn → practise
 // chunks (5 practise questions each) and a 20-question revision test; from Lesson 2 on, exactly 4 test questions come from
 // earlier lessons. The source is docs/grammar-journey.json; `node tools/build-grammar.js` writes js/grammar-data.js and the
 // teacher's readable copy docs/grammar-journey.md. These checks read the generated file the way the student page does.
@@ -18,6 +18,11 @@ const ELEMENTARY = ['Present Continuous', 'Present Simple vs Present Continuous'
   'Possessive \'s and Whose', 'Much, Many, A Lot Of', 'Few, A Few, Little, A Little', 'Comparative Adjectives',
   'Superlative Adjectives', 'Adjective Order', 'Was / Were', 'Past Simple (Regular and Irregular Verbs)',
   'Past Simple (Negative and Questions)', 'Future with Will and Be Going To'];
+const PREINTERMEDIATE = ['Present Continuous for Future Arrangements', 'Will vs Going To vs Present Continuous', 'Past Continuous',
+  'Past Simple vs Past Continuous', 'Used To (Past Habits and States)', 'Present Perfect (Introduction)',
+  'Present Perfect with Ever, Never, Just, Already, Yet', 'Present Perfect with For and Since', 'Present Perfect vs Past Simple',
+  'Modal Verbs: Must, Have To, Should', 'Mustn\'t vs Don\'t Have To', 'Could, May, Might', 'Zero Conditional', 'First Conditional',
+  'When, While, Before, After, As Soon As', 'Relative Clauses (Who, Which, That, Where)', 'Gerund vs Infinitive', 'Too and Enough'];
 // the same list as the skills course's "only English" check (tests/skills.spec.js), plus the Uzbek apostrophe letters
 const UZBEK = /Uzbek|Tashkent|Samarkand|Bukhara|Kamila|Jasur|Bobur|Nodira|Karimov|Aziz|Lola\b|Malika|Rustam|Laylo|Jamol|Bekzod|Sardor|Nilufar|Madina|Timur|Dilnoza|Karim\b|\bAli\b|harf|raqam|unli tovush|telefon|ikki marta|[ʻʼ‘’]/;
 const CYRILLIC = /[Ѐ-ӿ]/;
@@ -48,11 +53,11 @@ function checkQuestion(q, where) {
   }
 }
 
-test('the Grammar Journey: 7 levels, 15 Beginner + 17 Elementary lessons, 2–4 chunks of 5 practise questions, 20-question tests', async () => {
+test('the Grammar Journey: 7 levels, 15 Beginner + 17 Elementary + 18 Pre-Intermediate lessons, 2–4 chunks of 5 practise questions, 20-question tests', async () => {
   const G = loadGrammar();
   expect(G.v).toBe(1);
   expect(G.levels.map(l => [l.id, l.name])).toEqual(LEVELS);
-  G.levels.slice(2).forEach(l => expect(l.lessons, l.id).toEqual([]));
+  G.levels.slice(3).forEach(l => expect(l.lessons, l.id).toEqual([]));
   const beginner = G.levels[0].lessons;
   expect(beginner.map(l => l.id)).toEqual(TITLES.map((t, i) => 'g' + (i + 1)));
   expect(beginner.map(l => l.no)).toEqual(TITLES.map((t, i) => i + 1));
@@ -61,7 +66,11 @@ test('the Grammar Journey: 7 levels, 15 Beginner + 17 Elementary lessons, 2–4 
   expect(elementary.map(l => l.id)).toEqual(ELEMENTARY.map((t, i) => 'g' + (i + 16)));
   expect(elementary.map(l => l.no)).toEqual(ELEMENTARY.map((t, i) => i + 16));
   expect(elementary.map(l => l.title)).toEqual(ELEMENTARY);
-  for (const L of beginner.concat(elementary)) {
+  const preint = G.levels[2].lessons;
+  expect(preint.map(l => l.id)).toEqual(PREINTERMEDIATE.map((t, i) => 'g' + (i + 33)));
+  expect(preint.map(l => l.no)).toEqual(PREINTERMEDIATE.map((t, i) => i + 33));
+  expect(preint.map(l => l.title)).toEqual(PREINTERMEDIATE);
+  for (const L of beginner.concat(elementary, preint)) {
     expect(Number.isInteger(L.v) && L.v >= 1, L.id + ' content version').toBe(true);
     expect(L.chunks.length, L.id + ' chunks').toBeGreaterThanOrEqual(2);
     expect(L.chunks.length, L.id + ' chunks').toBeLessThanOrEqual(4);

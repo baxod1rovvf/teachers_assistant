@@ -3,7 +3,7 @@
 // docs/grammar-journey.md. Run `node tools/build-grammar.js` after editing the JSON; never edit grammar-data.js by hand.
 // It checks every rule first and stops (exit code 1, nothing written) when one is broken.
 //
-// The JSON: { "<level id>": [lesson, …] } — "beginner" (Lessons 1–15) and "elementary" (16–32) have lessons for now. A lesson:
+// The JSON: { "<level id>": [lesson, …] } — "beginner" (Lessons 1–15), "elementary" (16–32) and "preintermediate" (33–50) have lessons for now. A lesson:
 //   { no, title, v (content version: raise it when questions change, so old drafts on students' phones start again),
 //     chunks: [{ title, rule, table? [[header…], [row…]…], examples [4–6], uz (one Uzbek line), practise [5 questions] }] (2–4),
 //     test: [20 questions] — from Lesson 2 on, exactly 4 of them are { "from": "g<N>", "q": question } (an earlier lesson) }
