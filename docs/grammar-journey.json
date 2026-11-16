@@ -1034,5 +1034,1180 @@
         ["fix",["Close your books, please.","Closes your books, please.","You closes your books, please."],"Close your books, please."]
       ]
     }
+  ],
+  "elementary": [
+    {
+      "no": 16, "title": "Present Continuous", "v": 1,
+      "chunks": [
+        {
+          "title": "I am working, she is reading",
+          "rule": "Use the present continuous for an action that is happening now, at the moment of speaking. Make it with am / is / are + verb-ing: I am reading. She is cooking. They are playing. Time words: now, right now, at the moment, and Look! / Listen! at the start.",
+          "table": [["Person","be","Example"],["I","am ('m) + verb-ing","I'm working now."],["he / she / it","is ('s) + verb-ing","She's reading a book."],["you / we / they","are ('re) + verb-ing","They're playing football."]],
+          "examples": ["I'm doing my homework now.","Listen! The baby is crying.","Tom is talking to his friend at the moment.","We are waiting for the bus right now.","Look! It's snowing.","My parents are watching a film in the living room now."],
+          "uz": "Present Continuous hozir bo‘layotgan ish uchun: am / is / are + fe’l-ing. I am reading — Men hozir o‘qiyapman.",
+          "practise": [
+            ["choose","I ___ my homework now.",["am doing","is doing","are doing"],"am doing","With I, use am + verb-ing: am doing."],
+            ["choose","Look! The children ___ in the garden.",["are playing","is playing","play"],"are playing","The children = they: are + playing. Look! shows it is happening now."],
+            ["gap","She ___ a book at the moment. (read)",["is reading","'s reading"],"With she, use is + verb-ing: is reading."],
+            ["gap","We ___ for the bus right now. (wait)",["are waiting","'re waiting"],"With we, use are + verb-ing: are waiting."],
+            ["order",["is","He","TV","watching"],"He is watching TV.","He + is + watching + TV."]
+          ]
+        },
+        {
+          "title": "I'm not working. Are you working?",
+          "rule": "Negative: put not after am / is / are: I'm not sleeping. She isn't (is not) working. They aren't (are not) listening. Question: put am / is / are before the person: Are you listening? Is he sleeping? Short answers: Yes, I am. / No, I'm not. Yes, she is. / No, she isn't. With a question word: What are you doing?",
+          "table": [["","Example"],["Negative","I'm not cooking. / He isn't working. / We aren't playing."],["Question","Is she sleeping? / Are they coming?"],["Short answer","Yes, she is. / No, she isn't."],["Question word","What are you doing? / Where is he going?"]],
+          "examples": ["I'm not watching TV now. I'm reading.","Anna isn't working today. She's at home.","Are you listening to me? — Yes, I am.","Is it raining now? — No, it isn't.","What are you doing at the moment?","Where are they going?"],
+          "uz": "Inkor: am / is / are + not + fe’l-ing. So‘roq: Are you listening? — Tinglayapsizmi?",
+          "practise": [
+            ["choose","He ___ sleeping now. He's reading.",["isn't","aren't","doesn't"],"isn't","With he, the negative is isn't (is not) + verb-ing."],
+            ["choose","___ they playing football now?",["Are","Is","Do"],"Are","Question: Are + they + verb-ing."],
+            ["gap","Is your sister cooking now? — No, she ___.",["isn't","is not"],"Is she…? — No, she isn't."],
+            ["gap","What ___ you doing at the moment? (be)",["are"],"Question word + are + you + verb-ing."],
+            ["fix",["Are you watching TV now?","Are you watch TV now?","Do you watching TV now?"],"Are you watching TV now?","Question: Are + you + verb-ing (watching)."]
+          ]
+        },
+        {
+          "title": "making, swimming, lying",
+          "rule": "Most verbs just add -ing: read → reading, play → playing. If a verb ends in -e, drop the e: make → making, write → writing. If a short verb ends in one vowel + one consonant, double the last letter: sit → sitting, run → running, swim → swimming (but not w, x or y: play → playing). ie → y: lie → lying.",
+          "table": [["Verb ends in","Rule","Examples"],["most verbs","+ ing","read → reading, play → playing"],["-e","drop e + ing","make → making, write → writing"],["one vowel + one consonant","double + ing","sit → sitting, run → running, swim → swimming"],["-ie","ie → y + ing","lie → lying, tie → tying"]],
+          "examples": ["She is making a cake.","The children are swimming in the lake.","Why are you running?","Dad is sitting in the garden.","I'm writing an email to my friend."],
+          "uz": "-e bilan tugasa, e tushib qoladi (make → making); qisqa fe’lda oxirgi undosh ikkilanadi (run → running).",
+          "practise": [
+            ["choose","She is ___ a cake now.",["making","makeing","makking"],"making","make ends in -e: drop the e and add -ing."],
+            ["choose","They are ___ in the sea now.",["swimming","swiming","swimeing"],"swimming","swim: one vowel + one consonant, so double the m."],
+            ["gap","Why are you ___? (run)",["running"],"run: double the n → running."],
+            ["gap","I'm ___ an email now. (write)",["writing"],"write ends in -e: drop the e → writing."],
+            ["fix",["He is sitting on the sofa.","He is siting on the sofa.","He is sit on the sofa."],"He is sitting on the sofa.","sit → sitting (double the t)."]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","Look! It ___.",["is raining","rains","are raining"],"is raining"],
+        ["choose","I ___ to music right now.",["am listening","is listening","listen"],"am listening"],
+        ["gap","They ___ dinner at the moment. (have)",["are having","'re having"]],
+        {"from":"g11","q":["choose","My brother ___ in a bank.",["work","works"],"works"]},
+        ["gap","Listen! Somebody ___ the piano. (play)",["is playing","'s playing"]],
+        ["choose","We ___ watching TV now. We're doing our homework.",["aren't","isn't","don't"],"aren't"],
+        ["gap","Is Tom sleeping now? — Yes, he ___.",["is"]],
+        ["choose","___ you waiting for the bus now?",["Are","Is","Do"],"Are"],
+        {"from":"g12","q":["gap","Does your mum drive? — No, she ___.",["doesn't","does not"]]},
+        ["gap","The children are ___ in the pool now. (swim)",["swimming"]],
+        ["fix",["She is making a sandwich now.","She is makeing a sandwich now.","She making a sandwich now."],"She is making a sandwich now."],
+        ["order",["are","What","doing","you"],"What are you doing?"],
+        ["choose","Be quiet! The baby ___ now.",["is sleeping","sleeps","are sleeping"],"is sleeping"],
+        {"from":"g13","q":["fix",["I am never late for school.","I never am late for school.","Never I am late for school."],"I am never late for school."]},
+        ["gap","I ___ working today. I'm at home. (negative)",["'m not","am not"]],
+        ["fix",["Where are you going now?","Where you are going now?","Where are you go now?"],"Where are you going now?"],
+        ["order",["sitting","is","My","garden","dad","the","in"],"My dad is sitting in the garden."],
+        ["choose","The dog is ___ on the floor now.",["lying","lieing","lyeing"],"lying"],
+        {"from":"g14","q":["choose","This bag isn't mine. It's ___.",["hers","her","she"],"hers"]},
+        ["fix",["Are they playing tennis now?","Are they play tennis now?","Do they playing tennis now?"],"Are they playing tennis now?"]
+      ]
+    },
+    {
+      "no": 17, "title": "Present Simple vs Present Continuous", "v": 1,
+      "chunks": [
+        {
+          "title": "Every day or now?",
+          "rule": "Present simple = habits, routines and facts. Time words: every day, usually, often, never, on Mondays. I walk to school every day. Present continuous = an action happening now. Time words: now, right now, at the moment, Look!, Listen! I'm walking to school now. Look at the time words to choose.",
+          "table": [["","Present simple","Present continuous"],["Use","habits and facts","happening now"],["Time words","every day, usually, often, on Fridays","now, right now, at the moment, Look!"],["Example","She drinks tea every morning.","She is drinking tea now."],["Example","They play football on Sundays.","They are playing football at the moment."]],
+          "examples": ["I usually walk to school, but today I'm going by bus.","Tom plays tennis every Saturday.","Look! Tom is playing tennis right now.","It often rains in April.","Listen! It's raining now."],
+          "uz": "Har kuni bo‘ladigan ish — Present Simple (I walk); hozir bo‘layotgan ish — Present Continuous (I'm walking).",
+          "practise": [
+            ["choose","I ___ to school every day.",["walk","am walking"],"walk","every day = a habit → present simple."],
+            ["choose","Look! The dog ___ the ball.",["is catching","catches"],"is catching","Look! = it is happening now → present continuous."],
+            ["choose","We usually ___ dinner at seven.",["have","are having"],"have","usually = a habit → present simple."],
+            ["gap","Be quiet! The baby ___ now. (sleep)",["is sleeping","'s sleeping"],"now → present continuous: is + sleeping."],
+            ["gap","My dad ___ coffee every morning. (drink)",["drinks"],"every morning → present simple. My dad = he, so add -s."]
+          ]
+        },
+        {
+          "title": "do / does or am / is / are?",
+          "rule": "Present simple negatives and questions use do / does: Do you play chess? He doesn't work here. Present continuous uses am / is / are: Are you playing chess now? He isn't working today. Don't mix them: not Do you playing, not Are you play.",
+          "table": [["","Present simple","Present continuous"],["Negative","She doesn't play.","She isn't playing."],["Question","Do you play?","Are you playing?"],["Question word","What do you do?","What are you doing?"]],
+          "examples": ["Do you watch TV every evening? — Yes, I do.","Are you watching TV now? — No, I'm not.","She doesn't eat meat.","She isn't eating at the moment.","What do you do? — I'm a teacher.","What are you doing? — I'm cooking."],
+          "uz": "What do you do? — Kasbingiz nima? What are you doing? — Hozir nima qilyapsiz?",
+          "practise": [
+            ["choose","___ you play the guitar every evening?",["Do","Are"],"Do","every evening = a habit → Do you play…?"],
+            ["choose","___ she reading now?",["Is","Does"],"Is","now + reading → Is she reading?"],
+            ["choose","He ___ work on Sundays.",["doesn't","isn't"],"doesn't","on Sundays = a habit → doesn't + verb."],
+            ["gap","What ___ you doing right now? (do / are)",["are"],"doing + right now → are."],
+            ["fix",["Are you listening to me now?","Do you listening to me now?","Are you listen to me now?"],"Are you listening to me now?","now → Are + you + listening."]
+          ]
+        },
+        {
+          "title": "want, like, know — no -ing",
+          "rule": "Some verbs are about feelings, thoughts and having, not actions: like, love, hate, want, need, know, understand, remember, have (= own). We use them in the present simple, even with now: I want a drink now (not I'm wanting). I know the answer (not I'm knowing). But have lunch, have a shower are actions, so they can take -ing: I'm having lunch now.",
+          "table": [["Verb","Right","Wrong"],["want","I want an apple now.","I'm wanting an apple now."],["know","She knows the answer.","She is knowing the answer."],["like","We like this song.","We are liking this song."],["need","I need help right now.","I'm needing help right now."],["understand","Do you understand me?","Are you understanding me?"]],
+          "examples": ["I'm hungry. I want a sandwich now.","Do you know the answer?","He doesn't understand the question.","We need some milk right now.","Tom is having lunch now. (have lunch = eat)"],
+          "uz": "want, like, know, need kabi fe’llar odatda -ing olmaydi: I want water now — Hozir suv xohlayman.",
+          "practise": [
+            ["choose","I ___ a glass of water now.",["want","am wanting"],"want","want is a feeling, not an action: no -ing, even with now."],
+            ["choose","She ___ the answer.",["knows","is knowing"],"knows","know is a thought, not an action: present simple."],
+            ["choose","Listen! Anna ___ a song.",["is singing","sings"],"is singing","sing is an action, and Listen! = now → is singing."],
+            ["gap","I ___ this film. It's great! (like)",["like"],"like is a feeling: present simple, no -ing."],
+            ["fix",["Do you understand the question?","Are you understanding the question?","Does you understand the question?"],"Do you understand the question?","understand: present simple → Do you understand…?"]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","My sister ___ to music every evening.",["listens","is listening"],"listens"],
+        ["choose","Shh! I ___ to the news now.",["am listening","listen"],"am listening"],
+        ["gap","They ___ football at the moment. (play)",["are playing","'re playing"]],
+        {"from":"g11","q":["gap","She ___ English every day. (study)",["studies"]]},
+        ["choose","We ___ to the cinema on Fridays.",["go","are going"],"go"],
+        ["choose","Now I ___ what you mean.",["understand","am understanding"],"understand"],
+        ["gap","Look! The bus ___. (come)",["is coming","'s coming"]],
+        ["fix",["What are you doing now?","What do you doing now?","What are you do now?"],"What are you doing now?"],
+        {"from":"g12","q":["choose","___ your brother live in London?",["Does","Do","Is"],"Does"]},
+        ["choose","He usually ___ tea, but today he ___ coffee.",["drinks / is drinking","is drinking / drinks","drink / drinking"],"drinks / is drinking"],
+        ["gap","My dad ___ work on Sundays. (negative)",["doesn't","does not"]],
+        ["gap","Tom isn't at home. He ___ in the park right now. (run)",["is running","'s running"]],
+        ["order",["playing","Are","chess","you"],"Are you playing chess?"],
+        {"from":"g13","q":["order",["usually","I","at","get","up","seven"],["I usually get up at seven.","I get up at seven usually."]]},
+        ["choose","I ___ a new bike now. It's red.",["have","am having"],"have"],
+        ["fix",["She doesn't like coffee.","She isn't liking coffee.","She don't like coffee."],"She doesn't like coffee."],
+        {"from":"g16","q":["gap","The children are ___ in the lake now. (swim)",["swimming"]]},
+        ["choose","What ___ your mum do? — She's a doctor.",["does","is"],"does"],
+        ["fix",["Listen! The birds are singing.","Listen! The birds sing.","Listen! The birds is singing."],"Listen! The birds are singing."],
+        ["gap","I ___ some help right now. (need)",["need"]]
+      ]
+    },
+    {
+      "no": 18, "title": "Can and Cannot (Ability)", "v": 1,
+      "chunks": [
+        {
+          "title": "I can swim",
+          "rule": "Use can + verb to say that someone is able to do something. Can is the same for every person — it never takes -s: I can swim. She can swim (not she cans). After can, use the verb as it is, with no to and no -s: He can speak French (not can to speak, not can speaks).",
+          "table": [["Person","can + verb","Example"],["I / you / we / they","can swim","We can swim."],["he / she / it","can play","She can play the piano."]],
+          "examples": ["I can ride a bike.","My little brother can count to a hundred.","Birds can fly.","Anna can speak three languages.","We can run very fast.","My grandma can make great cakes."],
+          "uz": "can — qila olmoq. can hamma shaxs bilan bir xil, undan keyin fe’l to va -s siz keladi: She can swim.",
+          "practise": [
+            ["choose","She ___ play the guitar.",["can","cans","can to"],"can","can is the same for every person: She can."],
+            ["choose","Tom can ___ very fast.",["run","runs","to run"],"run","After can, the verb as it is: run."],
+            ["gap","My dad can ___ three languages. (speak)",["speak"],"After can, the verb as it is: speak."],
+            ["fix",["He can play chess.","He cans play chess.","He can plays chess."],"He can play chess.","can + verb as it is, no -s anywhere."],
+            ["order",["can","I","a","ride","horse"],"I can ride a horse.","I + can + ride + a horse."]
+          ]
+        },
+        {
+          "title": "can't — Can you…?",
+          "rule": "Negative: cannot or can't (short form) + verb: I can't swim. Cats can't fly. Question: put can before the person: Can you swim? Can she cook? Short answers: Yes, I can. / No, I can't. With a question word: What can you cook? How many languages can you speak?",
+          "table": [["","Example"],["Negative","I can't (cannot) drive."],["Question","Can you drive?"],["Short answers","Yes, I can. / No, I can't."],["Question word","What can you cook?"]],
+          "examples": ["Penguins can't fly.","I can't hear you. Please speak louder.","Can you play tennis? — Yes, I can.","Can your sister drive? — No, she can't.","What languages can you speak?"],
+          "uz": "Inkor: can't (cannot) + fe’l. So‘roq: Can you swim? — Suza olasizmi?",
+          "practise": [
+            ["choose","I ___ swim. I'm afraid of water.",["can't","can"],"can't","Not able → can't."],
+            ["choose","___ you speak German?",["Can","Are","Does can"],"Can","Question: Can + person + verb."],
+            ["gap","Can your brother cook? — No, he ___.",["can't","cannot","can not"],"Can he…? — No, he can't."],
+            ["gap","Can you see the sea from your window? — Yes, I ___.",["can"],"Can you…? — Yes, I can."],
+            ["fix",["Can she drive a car?","Does she can drive a car?","Can she drives a car?"],"Can she drive a car?","Can + she + drive (no do / does, no -s)."]
+          ]
+        },
+        {
+          "title": "could, couldn't — in the past",
+          "rule": "For ability in the past, use could / couldn't + verb as it is: When I was six, I could read. Last year I couldn't swim, but now I can. Question: Could you swim when you were five? Short answers: Yes, I could. / No, I couldn't.",
+          "table": [["Now","Past"],["I can swim.","I could swim when I was five."],["She can't drive.","She couldn't drive last year."],["Can you read?","Could you read when you were four?"]],
+          "examples": ["I couldn't swim last year, but now I can.","My grandfather could run very fast when he was young.","We couldn't open the door yesterday.","Could you speak English when you were ten?","My sister could read when she was four."],
+          "uz": "O‘tgan zamonda can o‘rniga could ishlatiladi: I could swim when I was five — Besh yoshimda suza olardim.",
+          "practise": [
+            ["choose","When I was four, I ___ read.",["could","can"],"could","In the past, use could."],
+            ["choose","Last year she ___ ride a bike, but now she can.",["couldn't","can't"],"couldn't","Last year = the past → couldn't."],
+            ["gap","I ___ open the window yesterday. It was broken. (negative)",["couldn't","could not"],"Past + negative → couldn't (could not)."],
+            ["choose","Now I ___ speak English well.",["can","could"],"can","Now → can."],
+            ["fix",["Could you swim when you were five?","Could you swam when you were five?","Did you could swim when you were five?"],"Could you swim when you were five?","Could + person + verb as it is."]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","My cat ___ climb trees.",["can","cans","can to"],"can"],
+        ["gap","I can ___ the piano. (play)",["play"]],
+        ["choose","Fish ___ walk.",["can't","can"],"can't"],
+        {"from":"g16","q":["choose","Look! The boys ___ football.",["are playing","play","is playing"],"are playing"]},
+        ["gap","Can you ride a horse? — No, I ___.",["can't","cannot","can not"]],
+        ["choose","___ your dad speak English?",["Can","Is","Are"],"Can"],
+        ["fix",["She can sing very well.","She can sings very well.","She cans sing very well."],"She can sing very well."],
+        ["order",["you","Can","swim"],"Can you swim?"],
+        {"from":"g17","q":["choose","I ___ my homework now.",["am doing","do"],"am doing"]},
+        ["gap","When I was five, I ___ ride a bike. (can, past)",["could"]],
+        ["choose","Last year I ___ swim, but now I can.",["couldn't","can't","could"],"couldn't"],
+        ["gap","What languages ___ you speak? (can)",["can"]],
+        ["fix",["Can he drive a car?","Does he can drive a car?","Can he drives a car?"],"Can he drive a car?"],
+        {"from":"g12","q":["gap","___ you like chocolate? (do / does)",["Do"]]},
+        ["order",["can't","My","swim","sister"],"My sister can't swim."],
+        ["choose","Penguins can't ___.",["fly","flies","to fly"],"fly"],
+        {"from":"g11","q":["choose","My uncle ___ in a big hotel.",["works","work"],"works"]},
+        ["gap","Can you hear me? — Yes, I ___.",["can"]],
+        ["fix",["I couldn't open the door yesterday.","I can't open the door yesterday.","I couldn't opened the door yesterday."],"I couldn't open the door yesterday."],
+        ["choose","___ you read when you were four?",["Could","Can","Were"],"Could"]
+      ]
+    },
+    {
+      "no": 19, "title": "Can (Permission and Requests)", "v": 1,
+      "chunks": [
+        {
+          "title": "Can I…? — asking if it's OK",
+          "rule": "Use Can I…? to ask if it is OK to do something (to ask for permission): Can I open the window? Can I use your pen? Answers: Yes, you can. / Yes, of course. / Sure. / Sorry, you can't. / No, you can't.",
+          "table": [["Ask","Yes","No"],["Can I open the window?","Yes, of course.","Sorry, you can't. It's cold."],["Can I sit here?","Sure.","No, sorry. It's my friend's seat."],["Can we go home now?","Yes, you can.","No, you can't. The lesson isn't over."]],
+          "examples": ["Can I ask a question?","Can I borrow your pen? — Sure, here you are.","Can we watch TV now? — Yes, you can.","Can I go to the toilet, please?","Mum, can I go to Sam's house after school?"],
+          "uz": "Can I…? — ruxsat so‘rash: Can I open the window? — Derazani ochsam maylimi?",
+          "practise": [
+            ["choose","___ I use your computer, please?",["Can","Am","Does"],"Can","To ask for permission: Can I…?"],
+            ["choose","Can I sit here? — Yes, of ___.",["course","sure","can"],"course","A polite yes: Yes, of course."],
+            ["gap","Can I open the window? — Yes, you ___.",["can"],"Can I…? — Yes, you can."],
+            ["gap","Can we play outside now? — Sorry, you ___. It's raining.",["can't","cannot","can not"],"Can we…? — Sorry, you can't."],
+            ["order",["I","Can","a","ask","question"],"Can I ask a question?","Can + I + ask + a question."]
+          ]
+        },
+        {
+          "title": "Can you…? Could you…? — asking for help",
+          "rule": "Use Can you…? to ask someone to do something for you: Can you help me? Could you…? is more polite — use it with teachers, older people and people you don't know: Could you open the door, please? Answers: Sure. / Of course. / Yes, no problem. / Sorry, I can't.",
+          "table": [["Request","How polite?","Answer"],["Can you help me?","friendly","Sure!"],["Could you help me, please?","more polite","Of course."],["Could you close the window, please?","more polite","Sorry, I can't. I'm busy."]],
+          "examples": ["Can you pass the salt, please?","Could you speak more slowly, please?","Can you help me with my homework? — Sure!","Could you tell me the time, please? — It's half past four.","Could you open the door for me? — Of course."],
+          "uz": "Can you…? — iltimos; Could you…, please? — yanada xushmuomala: Could you help me, please? — Menga yordam bera olasizmi?",
+          "practise": [
+            ["choose","___ you help me, please? — Sure.",["Can","Do","Are"],"Can","To ask someone to do something: Can you…?"],
+            ["choose","You want to ask your teacher to say it again. Which is the most polite?",["Could you repeat that, please?","Repeat that.","You repeat that."],"Could you repeat that, please?","Could you…, please? is the most polite."],
+            ["choose","Could you close the door, please? — ___",["Of course.","Yes, I could.","Yes, I close."],"Of course.","Answer a request with Sure. / Of course. — not Yes, I could."],
+            ["gap","___ you tell me the way to the station, please? (could / can — the more polite one)",["Could"],"Could is more polite than Can."],
+            ["fix",["Could you open the window, please?","Could you to open the window, please?","Could you opening the window, please?"],"Could you open the window, please?","Could you + verb as it is (no to, no -ing)."]
+          ]
+        },
+        {
+          "title": "Can I…? or Can you…? And May I…?",
+          "rule": "Be careful who does it. Can I…? = I want to do it: Can I use your phone? Can you…? = I want you to do it: Can you call me? May I…? means the same as Can I…?, but it is very polite — use it with teachers and in shops: May I come in? Also remember: borrow = take something for a short time (Can I borrow…?), lend = give something for a short time (Can you lend me…?).",
+          "table": [["Who does it?","Question"],["I do it (permission)","Can I / May I borrow your book?"],["you do it (request)","Can you / Could you lend me your book?"]],
+          "examples": ["May I come in? — Yes, come in.","Can I borrow your book? — Yes, here you are.","Can you lend me your book? — Sure.","May I have a glass of water, please?","Can you call me tonight? — Of course."],
+          "uz": "Can I…? — o‘zim qilsam maylimi? Can you…? — siz qilib bera olasizmi? May I…? — juda xushmuomala.",
+          "practise": [
+            ["choose","You want to use your friend's bike. You say: ___",["Can I use your bike?","Can you use your bike?"],"Can I use your bike?","You want to do it → Can I…?"],
+            ["choose","You want your friend to carry your bag. You say: ___",["Can you carry my bag?","Can I carry my bag?"],"Can you carry my bag?","You want your friend to do it → Can you…?"],
+            ["choose","In a shop: ___ have a bag, please?",["May I","May you","Do I"],"May I","Very polite permission: May I…?"],
+            ["gap","___ I come in? (very polite)",["May","Could"],"Very polite: May I…? (Could I…? is polite too.)"],
+            ["fix",["Can I borrow your pencil?","Can I lend your pencil?","Can you borrow your pencil?"],"Can I borrow your pencil?","borrow = take for a short time: Can I borrow…?"]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","___ I open the window? It's hot.",["Can","Do","Am"],"Can"],
+        ["gap","Can I use your pen? — Yes, of ___.",["course"]],
+        ["choose","___ you pass me the salt, please?",["Could","May","Do"],"Could"],
+        {"from":"g18","q":["choose","My little sister ___ read yet. She's only three.",["can't","can","couldn't"],"can't"]},
+        ["gap","Can I watch TV now? — No, you ___. Do your homework first.",["can't","cannot","can not"]],
+        ["choose","In class: ___ I go to the toilet, please?",["May","Am","Do"],"May"],
+        ["fix",["Could you help me, please?","Could you helping me, please?","Could you to help me, please?"],"Could you help me, please?"],
+        ["order",["borrow","Can","your","I","book"],"Can I borrow your book?"],
+        {"from":"g15","q":["gap","___ run in the classroom! (negative)",["Don't","Do not"]]},
+        ["choose","You want your friend to close the door. You say: ___",["Can you close the door?","Can I close the door?"],"Can you close the door?"],
+        ["gap","___ you help me with my homework? — Sure. (can)",["Can","Could"]],
+        ["choose","Can I sit here? — ___ The seat is free.",["Sure.","Yes, I can.","No, you can't."],"Sure."],
+        {"from":"g16","q":["gap","Shh! The baby ___ now. (sleep)",["is sleeping","'s sleeping"]]},
+        ["fix",["May I have some water, please?","May I to have some water, please?","May I having some water, please?"],"May I have some water, please?"],
+        ["order",["you","Could","the","open","door"],"Could you open the door?"],
+        ["choose","Can you lend me your bike? means: ___",["Please give me your bike for a short time.","I want to give you my bike."],"Please give me your bike for a short time."],
+        {"from":"g14","q":["choose","Can you help ___? I can't open this box.",["me","my","I"],"me"]},
+        ["gap","Can we go out to play? — Yes, you ___.",["can"]],
+        ["fix",["Can I borrow your ruler?","Can I lend your ruler?","Can I borrowing your ruler?"],"Can I borrow your ruler?"],
+        ["order",["I","May","in","come"],"May I come in?"]
+      ]
+    },
+    {
+      "no": 20, "title": "Like, Love, Hate + Gerund", "v": 1,
+      "chunks": [
+        {
+          "title": "I like swimming",
+          "rule": "After like, love, enjoy, don't like and hate, use verb + -ing: I like swimming. She loves dancing. We hate getting up early. The -ing spelling is the same as in the present continuous: dance → dancing, swim → swimming. After like, love and hate you can also use to + verb (I like to swim) — both are right. After enjoy, only -ing: I enjoy reading.",
+          "table": [["Verb","+ verb-ing","Example"],["love","reading","I love reading."],["like","cooking","She likes cooking."],["enjoy","playing","We enjoy playing chess."],["don't like","waiting","I don't like waiting."],["hate","washing","He hates washing the dishes."]],
+          "examples": ["I love reading comics.","My dad likes cooking on Sundays.","We enjoy playing chess together.","Anna doesn't like flying.","Tom hates getting up early.","Do you like dancing?"],
+          "uz": "like, love, enjoy, hate dan keyin fe’l -ing bilan keladi: I like swimming — Men suzishni yaxshi ko‘raman.",
+          "practise": [
+            ["choose","I love ___ books.",["reading","read","reads"],"reading","love + verb-ing: reading."],
+            ["choose","She enjoys ___ to music.",["listening","listen","to listen"],"listening","After enjoy, only verb-ing: listening."],
+            ["gap","We like ___ in the sea. (swim)",["swimming","to swim"],"like + verb-ing: swim → swimming (double the m)."],
+            ["gap","Tom hates ___ the dishes. (wash)",["washing","to wash"],"hate + verb-ing: washing."],
+            ["fix",["He likes playing football.","He likes play football.","He like playing football."],"He likes playing football.","He likes (with -s) + playing."]
+          ]
+        },
+        {
+          "title": "Do you like…? I don't like…",
+          "rule": "Negatives and questions are made like the present simple, with do / does: I don't like running. She doesn't enjoy cooking. Do you like dancing? Does he love singing? The -ing verb stays the same.",
+          "table": [["","Example"],["Negative","I don't like cooking. / He doesn't like shopping."],["Question","Do you like dancing? / Does she enjoy swimming?"],["Short answer","Yes, I do. / No, she doesn't."],["Question word","What do you like doing?"]],
+          "examples": ["I don't like getting up early.","My brother doesn't enjoy doing homework.","Do you like drawing? — Yes, I do.","Does your mum like driving? — No, she doesn't.","What do you like doing at the weekend?"],
+          "uz": "Inkor va so‘roq Present Simple kabi: Do you like dancing? — Raqs tushishni yoqtirasizmi?",
+          "practise": [
+            ["choose","She ___ like cooking.",["doesn't","don't","isn't"],"doesn't","With she, use doesn't + like."],
+            ["choose","___ you enjoy playing tennis?",["Do","Are","Does"],"Do","With you, start with Do."],
+            ["gap","Does Sam like drawing? — No, he ___.",["doesn't","does not"],"Does he…? — No, he doesn't."],
+            ["order",["like","Do","dancing","you"],"Do you like dancing?","Do + you + like + dancing."],
+            ["fix",["What do you like doing?","What do you like do?","What are you like doing?"],"What do you like doing?","What + do + you + like + verb-ing."]
+          ]
+        },
+        {
+          "title": "Swimming is fun. Good at drawing.",
+          "rule": "A verb + -ing can be the subject of a sentence, like a noun: Swimming is good for you. Reading is my hobby. After good at, bad at and interested in, use verb + -ing too: She is good at drawing. I'm bad at singing. He's interested in cooking.",
+          "table": [["Pattern","Example"],["verb-ing as the subject","Running is fun."],["good at + verb-ing","She's good at drawing."],["bad at + verb-ing","I'm bad at singing."],["interested in + verb-ing","He's interested in cooking."]],
+          "examples": ["Swimming is good for your health.","Reading is my favourite hobby.","My sister is good at drawing.","I'm bad at remembering names.","Tom is interested in taking photos."],
+          "uz": "Fe’l + -ing ega bo‘la oladi: Swimming is fun — Suzish qiziqarli. good at dan keyin ham -ing: good at drawing.",
+          "practise": [
+            ["choose","___ is good for you.",["Swimming","Swim","Swims"],"Swimming","The subject is an -ing word: Swimming."],
+            ["choose","She is good at ___.",["drawing","draw","draws"],"drawing","good at + verb-ing."],
+            ["gap","I'm bad at ___. (sing)",["singing"],"bad at + verb-ing: singing."],
+            ["gap","He is interested in ___ photos. (take)",["taking"],"interested in + verb-ing: take → taking."],
+            ["fix",["Reading is my hobby.","Read is my hobby.","Reads is my hobby."],"Reading is my hobby.","The subject is an -ing word: Reading."]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","I love ___ to music.",["listening","listen","listens"],"listening"],
+        ["gap","My brother enjoys ___ football. (play)",["playing"]],
+        ["choose","She hates ___ up early.",["getting","get","gets"],"getting"],
+        {"from":"g19","q":["choose","___ I borrow your pen, please?",["Can","Do","Am"],"Can"]},
+        ["gap","We like ___ in the lake. (swim)",["swimming","to swim"]],
+        ["choose","___ you like cooking?",["Do","Are","Does"],"Do"],
+        ["gap","Does your sister like dancing? — Yes, she ___.",["does"]],
+        ["fix",["My dad doesn't like driving.","My dad doesn't likes driving.","My dad don't like driving."],"My dad doesn't like driving."],
+        {"from":"g18","q":["gap","Can you swim? — No, I ___.",["can't","cannot","can not"]]},
+        ["choose","___ is my favourite sport.",["Running","Run","Runs"],"Running"],
+        ["gap","He is good at ___ pictures. (draw)",["drawing"]],
+        ["order",["enjoy","I","books","reading"],"I enjoy reading books."],
+        {"from":"g17","q":["choose","Look! Tom ___ his bike.",["is riding","rides"],"is riding"]},
+        ["fix",["She is bad at cooking.","She is bad at cook.","She is bad in cooking."],"She is bad at cooking."],
+        ["choose","Anna doesn't enjoy ___.",["shopping","shop","to shop"],"shopping"],
+        ["order",["like","doing","What","you","do"],"What do you like doing?"],
+        {"from":"g12","q":["choose","Where ___ your parents live?",["do","does"],"do"]},
+        ["gap","My brother is interested in ___ old cars. (collect)",["collecting"]],
+        ["fix",["Do you like watching cartoons?","Do you like watch cartoons?","Are you like watching cartoons?"],"Do you like watching cartoons?"],
+        ["gap","Tom loves ___ cakes. (make)",["making","to make"]]
+      ]
+    },
+    {
+      "no": 21, "title": "Infinitive with To", "v": 1,
+      "chunks": [
+        {
+          "title": "I want to go",
+          "rule": "After want, need, would like, hope and learn, use to + verb: I want to go home. She needs to study. We would like to visit Rome. The verb after to stays as it is — no -s, no -ing: He wants to play (not to plays, not to playing).",
+          "table": [["Verb","+ to + verb","Example"],["want","to eat","I want to eat pizza."],["need","to study","She needs to study."],["would like","to visit","We would like to visit London."],["hope","to see","I hope to see you soon."],["learn","to swim","He is learning to swim."]],
+          "examples": ["I want to be a doctor.","She needs to buy some bread.","We would like to visit Paris.","My brother is learning to drive.","I hope to see you soon.","Tom wants to play, but he needs to finish his homework first."],
+          "uz": "want, need, would like, hope, learn dan keyin to + fe’l keladi: I want to go home — Men uyga ketmoqchiman.",
+          "practise": [
+            ["choose","I want ___ a new bike.",["to buy","buy","buying"],"to buy","want + to + verb: to buy."],
+            ["choose","She needs ___ her homework.",["to do","do","to does"],"to do","need + to + verb as it is: to do."],
+            ["gap","We would like ___ the museum. (visit)",["to visit"],"would like + to + verb: to visit."],
+            ["gap","He is learning ___ the guitar. (play)",["to play"],"learn + to + verb: to play."],
+            ["fix",["Anna wants to be a teacher.","Anna wants be a teacher.","Anna wants to is a teacher."],"Anna wants to be a teacher.","want + to + verb as it is: to be."]
+          ]
+        },
+        {
+          "title": "don't want to, Would you like to…?",
+          "rule": "Negative: don't / doesn't + want / need + to + verb: I don't want to go. He doesn't need to wear a uniform. Question: Do you want to…? Does she need to…? Would you like to…? is a polite invitation: Would you like to come to my party? — Yes, I'd love to. / Sorry, I can't.",
+          "table": [["","Example"],["Negative","I don't want to sleep. / She doesn't need to come."],["Question","Do you want to play? / Does he need to leave?"],["Invitation","Would you like to come? — Yes, I'd love to."]],
+          "examples": ["I don't want to watch this film.","You don't need to bring anything.","Do you want to play chess? — Yes, sure.","Does Tom need to get up early tomorrow?","Would you like to come to the cinema with us? — Yes, I'd love to."],
+          "uz": "Would you like to…? — xushmuomala taklif: Would you like to come? — Kelishni xohlaysizmi?",
+          "practise": [
+            ["choose","I ___ want to go to bed.",["don't","doesn't","not"],"don't","With I, use don't + want to."],
+            ["choose","___ you like to come to my party?",["Would","Are","Does"],"Would","A polite invitation: Would you like to…?"],
+            ["gap","Does she need ___ a dress for the party? (buy)",["to buy"],"need + to + verb: to buy."],
+            ["gap","Would you like to come with us? — Yes, I'd love ___.",["to"],"The short answer: Yes, I'd love to."],
+            ["order",["want","Do","to","play","you"],"Do you want to play?","Do + you + want + to + play."]
+          ]
+        },
+        {
+          "title": "Why? — to + verb",
+          "rule": "Use to + verb to say why someone does something (the reason): I go to the gym to get fit. She is saving money to buy a bike. Don't use for + verb for a reason: I go to the gym to get fit (not for get fit).",
+          "table": [["Action","Why? (to + verb)"],["I go to the gym","to get fit."],["She is saving money","to buy a bike."],["We use a dictionary","to check new words."],["He's going to the shop","to buy bread."]],
+          "examples": ["I go to the library to study.","She is saving money to buy a bike.","We use the internet to find information.","My dad gets up at six to catch the bus.","I'm learning English to get a good job."],
+          "uz": "Sababni aytish uchun to + fe’l: I go to the gym to get fit — Sog‘lom bo‘lish uchun sport zaliga boraman.",
+          "practise": [
+            ["choose","I go to the shop ___ bread.",["to buy","for buy","for buying"],"to buy","Why? → to + verb: to buy."],
+            ["choose","She studies hard ___ the exam.",["to pass","for pass","passing"],"to pass","Why? → to + verb: to pass."],
+            ["gap","My dad gets up early ___ the bus. (catch)",["to catch"],"Why? → to + verb: to catch."],
+            ["gap","We use a dictionary ___ new words. (check)",["to check"],"Why? → to + verb: to check."],
+            ["fix",["I'm learning English to get a good job.","I'm learning English for get a good job.","I'm learning English to getting a good job."],"I'm learning English to get a good job.","Why? → to + verb as it is: to get."]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","I want ___ a doctor.",["to be","be","being"],"to be"],
+        ["gap","She needs ___ more water. (drink)",["to drink"]],
+        ["choose","We would like ___ Rome.",["to visit","visit","visiting"],"to visit"],
+        {"from":"g20","q":["choose","My sister enjoys ___.",["dancing","to dance","dance"],"dancing"]},
+        ["gap","I don't ___ to go out tonight. I'm tired. (want)",["want"]],
+        ["choose","___ you like a cup of tea?",["Would","Are","Does"],"Would"],
+        ["fix",["He wants to play outside.","He wants play outside.","He wants to plays outside."],"He wants to play outside."],
+        ["order",["to","I","learn","want","Spanish"],"I want to learn Spanish."],
+        {"from":"g18","q":["choose","My grandma can ___ very well.",["cook","cooks","to cook"],"cook"]},
+        ["gap","I go to the park ___ football. (play)",["to play"]],
+        ["choose","Does Tom need ___ early tomorrow?",["to get up","get up","getting up"],"to get up"],
+        ["gap","Would you like to come to the cinema? — Yes, I'd love ___.",["to"]],
+        {"from":"g16","q":["gap","We ___ for the bus right now. (wait)",["are waiting","'re waiting"]]},
+        ["fix",["She is saving money to buy a car.","She is saving money for buy a car.","She is saving money to buying a car."],"She is saving money to buy a car."],
+        ["order",["to","you","Do","want","dance"],"Do you want to dance?"],
+        ["choose","He is learning ___ a car.",["to drive","drive","drives"],"to drive"],
+        {"from":"g14","q":["choose","This is my bag. It's ___.",["mine","my","me"],"mine"]},
+        ["gap","You don't ___ to bring food. We have a lot. (need)",["need"]],
+        ["fix",["I hope to see you soon.","I hope see you soon.","I hope seeing you soon."],"I hope to see you soon."],
+        ["choose","I'm going to the library ___.",["to study","for study","studying"],"to study"]
+      ]
+    },
+    {
+      "no": 22, "title": "Prepositions of Time (In, On, At)", "v": 1,
+      "chunks": [
+        {
+          "title": "at seven o'clock, at night",
+          "rule": "Use at with clock times: at 7 o'clock, at half past three, at 6:30. Also with meal times and some special times: at breakfast, at lunchtime, at night, at noon, at midnight.",
+          "table": [["at","Examples"],["clock times","at 8 o'clock, at half past six, at 7:15"],["meal times","at breakfast, at lunchtime, at dinner"],["special times","at night, at noon, at midnight"]],
+          "examples": ["The lesson starts at nine o'clock.","I go to bed at ten.","We have a break at half past eleven.","Owls hunt at night.","Let's meet at lunchtime.","The shop closes at 8:30."],
+          "uz": "Soat va night bilan at: at seven o'clock — soat yettida, at night — kechasi.",
+          "practise": [
+            ["choose","School starts ___ eight o'clock.",["at","on","in"],"at","Clock time → at."],
+            ["choose","I sleep ___ night.",["at","in","on"],"at","We say at night."],
+            ["gap","The film starts ___ half past seven. (in / on / at)",["at"],"Clock time → at."],
+            ["gap","We have lunch ___ one o'clock. (in / on / at)",["at"],"Clock time → at."],
+            ["fix",["The bus leaves at 6:15.","The bus leaves on 6:15.","The bus leaves in 6:15."],"The bus leaves at 6:15.","Clock time → at."]
+          ]
+        },
+        {
+          "title": "on Monday, on 5 May",
+          "rule": "Use on with days and dates: on Monday, on Fridays, on 5 May, on my birthday, on New Year's Day. Also with a day + part of the day: on Monday morning, on Saturday night.",
+          "table": [["on","Examples"],["days","on Monday, on Sundays"],["dates","on 5 May, on 21 June"],["special days","on my birthday, on New Year's Day"],["day + part of the day","on Friday evening, on Sunday morning"]],
+          "examples": ["I play football on Saturdays.","My birthday is on 14 March.","We don't go to school on Sunday.","See you on Monday!","What do you do on Friday evenings?"],
+          "uz": "Hafta kunlari va sanalar bilan on: on Monday — dushanba kuni, on 5 May — 5-mayda.",
+          "practise": [
+            ["choose","I have English ___ Tuesday.",["on","in","at"],"on","Day → on."],
+            ["choose","My birthday is ___ 3 April.",["on","in","at"],"on","Date → on."],
+            ["gap","We go swimming ___ Sundays. (in / on / at)",["on"],"Days → on."],
+            ["gap","Let's meet ___ Friday evening. (in / on / at)",["on"],"Day + part of the day → on."],
+            ["fix",["See you on Monday morning!","See you in Monday morning!","See you at Monday morning!"],"See you on Monday morning!","Day + part of the day → on."]
+          ]
+        },
+        {
+          "title": "in May, in 2020, in the morning",
+          "rule": "Use in with longer times: months (in May), years (in 2026), seasons (in summer) and parts of the day (in the morning, in the afternoon, in the evening — but at night). Don't use in, on or at before every, next, last, this, today, tomorrow and yesterday: See you tomorrow (not on tomorrow). I go there every Friday.",
+          "table": [["Preposition","Use it with","Examples"],["in","months, years, seasons","in July, in 2010, in winter"],["in","parts of the day","in the morning, in the evening"],["at","clock times, night","at 5 o'clock, at night"],["on","days and dates","on Monday, on 1 May"],["no preposition","every, next, last, this, tomorrow","every day, next week, tomorrow"]],
+          "examples": ["It's very hot here in summer.","My sister was born in 2015.","I do my homework in the evening.","We have a test next Monday.","I go to the gym every day."],
+          "uz": "Oy, yil, fasl va kun qismlari bilan in: in May, in the morning. every, next, tomorrow dan oldin predlog qo‘yilmaydi.",
+          "practise": [
+            ["choose","It often snows ___ January.",["in","on","at"],"in","Month → in."],
+            ["choose","I get up early ___ the morning.",["in","on","at"],"in","Part of the day → in the morning."],
+            ["gap","Many people go to the beach ___ summer. (in / on / at)",["in"],"Season → in."],
+            ["choose","We have a test ___.",["next Friday","on next Friday","in next Friday"],"next Friday","No preposition before next."],
+            ["fix",["I study in the evening and sleep at night.","I study at the evening and sleep at night.","I study on the evening and sleep at night."],"I study in the evening and sleep at night.","in the evening, but at night."]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","The train leaves ___ 10:45.",["at","on","in"],"at"],
+        ["choose","We don't have school ___ Sunday.",["on","in","at"],"on"],
+        ["gap","My grandparents visit us ___ winter. (in / on / at)",["in"]],
+        {"from":"g21","q":["choose","I need ___ some milk.",["to buy","buy","buying"],"to buy"]},
+        ["gap","I always feel tired ___ the afternoon. (in / on / at)",["in"]],
+        ["choose","My birthday is ___ 2 July.",["on","in","at"],"on"],
+        ["choose","Bats sleep in the day and fly ___ night.",["at","in","on"],"at"],
+        ["fix",["The concert is on Saturday evening.","The concert is in Saturday evening.","The concert is at Saturday evening."],"The concert is on Saturday evening."],
+        {"from":"g20","q":["gap","Do you enjoy ___ in the rain? (walk)",["walking"]]},
+        ["choose","Shakespeare was born ___ 1564.",["in","on","at"],"in"],
+        ["choose","See you ___!",["tomorrow","on tomorrow","at tomorrow"],"tomorrow"],
+        ["gap","We have dinner ___ seven o'clock. (in / on / at)",["at"]],
+        ["order",["at","I","up","get","six"],"I get up at six."],
+        {"from":"g17","q":["choose","My mum ___ dinner now.",["is cooking","cooks"],"is cooking"]},
+        ["fix",["I go swimming every Friday.","I go swimming on every Friday.","I go swimming at every Friday."],"I go swimming every Friday."],
+        ["gap","The shops are closed ___ New Year's Day. (in / on / at)",["on"]],
+        ["order",["in","born","was","She","May"],"She was born in May."],
+        {"from":"g10","q":["choose","The cat is sleeping ___ the bed. (below it)",["under","on","in"],"under"]},
+        ["choose","I do my homework ___ the evening.",["in","on","at"],"in"],
+        ["fix",["We have a holiday in August.","We have a holiday on August.","We have a holiday at August."],"We have a holiday in August."]
+      ]
+    },
+    {
+      "no": 23, "title": "Possessive 's and Whose", "v": 1,
+      "chunks": [
+        {
+          "title": "Tom's bike",
+          "rule": "Use a name or a noun + 's to say who something belongs to: Tom's bike = the bike of Tom. my sister's room, the teacher's desk, the cat's food. The thing comes after 's: Anna's bag (not the bag Anna's).",
+          "table": [["Person","+ 's","Example"],["Tom","Tom's","Tom's bike"],["my mum","my mum's","my mum's car"],["the teacher","the teacher's","the teacher's desk"],["James","James's","James's hat"]],
+          "examples": ["This is Sam's bag.","My brother's name is Ben.","The dog's bed is in the kitchen.","Is that your dad's car?","I'm at my grandmother's house."],
+          "uz": "Egalik 's bilan bildiriladi: Tom's bike — Tomning velosipedi.",
+          "practise": [
+            ["choose","This is ___.",["Anna's book","the book Anna's","Anna book"],"Anna's book","Person + 's + thing: Anna's book."],
+            ["choose","___ car is red.",["My dad's","My dads","My dad"],"My dad's","Person + 's: my dad's car."],
+            ["gap","My sister has a cat. It's my ___ cat.",["sister's"],"The cat belongs to my sister: my sister's cat."],
+            ["gap","The bike belongs to my brother. It's my ___ bike.",["brother's"],"The bike belongs to my brother: my brother's bike."],
+            ["fix",["Is this Mark's pen?","Is this Marks pen?","Is this pen Mark?"],"Is this Mark's pen?","Person + 's + thing: Mark's pen."]
+          ]
+        },
+        {
+          "title": "my parents' house, the children's toys",
+          "rule": "Plural nouns that end in -s add only an apostrophe ('): my parents' house, the girls' room, the students' books. Plurals that don't end in -s add 's: the children's toys, the men's shoes, people's names. Be careful: 's can also mean is: Tom's tall = Tom is tall.",
+          "table": [["Noun","Possessive","Example"],["one boy","boy's","the boy's ball (one boy)"],["two boys","boys'","the boys' ball (two or more boys)"],["children","children's","the children's toys"],["people","people's","people's names"]],
+          "examples": ["My parents' house is near the park.","The students' books are on the desk.","The children's toys are everywhere.","The boys' bedroom is upstairs.","Tom's tall (= Tom is tall), and Tom's sister (= the sister of Tom) is tall too."],
+          "uz": "-s bilan tugagan ko‘plikka faqat ' qo‘shiladi: my parents' house — ota-onamning uyi; children's toys — bolalarning o‘yinchoqlari.",
+          "practise": [
+            ["choose","My ___ car is new. (I have one brother.)",["brother's","brothers'"],"brother's","One brother → brother's."],
+            ["choose","The ___ room is big. (two girls)",["girls'","girl's","girls's"],"girls'","Plural with -s → add only ': girls'."],
+            ["choose","The ___ toys are in the box.",["children's","childrens'","childs'"],"children's","children has no -s → add 's: children's."],
+            ["gap","This is the house of my parents. It's my ___ house.",["parents'"],"parents ends in -s → add only ': parents'."],
+            ["choose","Tom's tired. Here 's means ___.",["is","of Tom"],"is","Tom's tired = Tom is tired."]
+          ]
+        },
+        {
+          "title": "Whose…?",
+          "rule": "Ask Whose…? to find out who something belongs to: Whose bag is this? — It's Anna's. Whose shoes are these? — They're my brother's. You can answer with 's or with mine, yours, his, hers, ours, theirs. Don't mix up whose and who's: who's = who is.",
+          "table": [["Question","Answer"],["Whose pen is this?","It's Tom's. / It's mine."],["Whose shoes are these?","They're my sister's. / They're hers."],["Whose is this coat?","It's my dad's. / It's his."]],
+          "examples": ["Whose phone is this? — It's Sam's.","Whose keys are these? — They're mine.","Whose is that red car? — It's my aunt's.","Who's that boy? — He's my cousin. (Who's = Who is)","Whose dog is that?"],
+          "uz": "Whose…? — Kimning…? Whose bag is this? — Bu kimning sumkasi? Who's = Who is.",
+          "practise": [
+            ["choose","___ pen is this? — It's mine.",["Whose","Who's","Who"],"Whose","To ask who it belongs to: Whose…?"],
+            ["choose","___ that girl? — She's my sister.",["Who's","Whose","Who"],"Who's","Who's = Who is: Who is that girl?"],
+            ["gap","___ shoes are these? — They're Tom's. (Who's / Whose)",["Whose"],"To ask who they belong to: Whose…?"],
+            ["choose","Whose bag is this? — It's ___.",["Anna's","Anna","to Anna"],"Anna's","Answer with 's: It's Anna's."],
+            ["order",["is","Whose","this","coat"],["Whose coat is this?","Whose is this coat?"],"Whose coat is this? (or Whose is this coat?)"]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","This is ___.",["my sister's room","my sister room","the room my sister's"],"my sister's room"],
+        ["gap","This car belongs to my uncle. It's my ___ car.",["uncle's"]],
+        ["choose","___ bag is this? — It's Lucy's.",["Whose","Who's","Who"],"Whose"],
+        {"from":"g22","q":["choose","My lesson is ___ Monday.",["on","in","at"],"on"]},
+        ["choose","The ___ classroom is on the first floor. (a lot of students)",["students'","student's","students's"],"students'"],
+        ["gap","The toys belong to the children. They're the ___ toys.",["children's"]],
+        ["fix",["Is that your dad's car?","Is that your dads car?","Is that your car dad's?"],"Is that your dad's car?"],
+        ["order",["is","Whose","this","umbrella"],["Whose umbrella is this?","Whose is this umbrella?"]],
+        {"from":"g14","q":["choose","Whose book is this? — It's ___.",["mine","my","me"],"mine"]},
+        ["gap","___ that man? — He's our new teacher.",["Who's","Who is"]],
+        ["choose","This is my ___ house. They live in the village.",["grandparents'","grandparent's","grandparents's"],"grandparents'"],
+        {"from":"g21","q":["gap","I want ___ a new phone. (buy)",["to buy"]]},
+        ["fix",["The men's shoes are black.","The mens' shoes are black.","The mans' shoes are black."],"The men's shoes are black."],
+        ["choose","Whose shoes are these? — They're ___.",["my brother's","my brother","to my brother"],"my brother's"],
+        ["order",["bedroom","My","is","sister's","small"],"My sister's bedroom is small."],
+        ["gap","These are the books of the students. They're the ___ books.",["students'"]],
+        ["choose","___ is that dog? — It's my neighbour's.",["Whose","Who's","Who"],"Whose"],
+        ["choose","Tom's hungry. Here 's means ___.",["is","of Tom"],"is"],
+        ["fix",["Whose keys are these?","Who's keys are these?","Whose are keys these?"],"Whose keys are these?"],
+        {"from":"g3","q":["choose","There are three ___ in the garden.",["children","childs","childrens"],"children"]}
+      ]
+    },
+    {
+      "no": 24, "title": "Much, Many, A Lot Of", "v": 1,
+      "chunks": [
+        {
+          "title": "many books, much water",
+          "rule": "Use many with plural countable nouns (things you can count: books, friends, apples). Use much with uncountable nouns (things you can't count: water, money, time, milk). We use much and many mostly in questions and negatives: How many friends have you got? I haven't got much time.",
+          "table": [["","Countable (books)","Uncountable (water)"],["Question","How many books?","How much water?"],["Negative","not many books","not much water"]],
+          "examples": ["How many brothers have you got?","I don't have many friends here.","How much water do you drink?","We haven't got much time.","There aren't many people in the park.","Is there much milk in the fridge?"],
+          "uz": "many — sanaladigan otlar bilan (many books), much — sanalmaydigan otlar bilan (much water).",
+          "practise": [
+            ["choose","How ___ apples do you want?",["many","much"],"many","apples can be counted → many."],
+            ["choose","I haven't got ___ money.",["much","many"],"much","money can't be counted → much."],
+            ["gap","There aren't ___ students in the class today. (much / many)",["many"],"students can be counted → many."],
+            ["gap","How ___ sugar do you take in your tea? (much / many)",["much"],"sugar can't be counted → much."],
+            ["fix",["How many sisters have you got?","How much sisters have you got?","How many sister have you got?"],"How many sisters have you got?","sisters can be counted → How many + plural."]
+          ]
+        },
+        {
+          "title": "a lot of, lots of",
+          "rule": "Use a lot of (or lots of) with both countable and uncountable nouns: a lot of books, a lot of water. In positive sentences, a lot of is more natural than much or many: I have a lot of homework (not I have much homework). You can use a lot of in questions and negatives too.",
+          "table": [["","Countable (books)","Uncountable (water)"],["Positive","a lot of books","a lot of water"],["Negative","not many books / not a lot of books","not much water / not a lot of water"],["Question","How many books?","How much water?"]],
+          "examples": ["I have a lot of homework today.","There are lots of shops in this street.","She drinks a lot of water.","We don't have a lot of time.","My grandma has a lot of photos."],
+          "uz": "a lot of — ko‘p; ikkala turdagi otlar bilan ishlatiladi: a lot of books, a lot of water.",
+          "practise": [
+            ["choose","There are ___ people at the party.",["a lot of","much","a lot"],"a lot of","Positive + countable or uncountable → a lot of."],
+            ["choose","I drink ___ milk every day.",["a lot of","many","a lot"],"a lot of","Positive sentence → a lot of milk."],
+            ["choose","She has a lot ___ friends.",["of","the","from"],"of","Don't forget of: a lot of friends."],
+            ["gap","There are ___ trees in the park. (a lot of / much)",["a lot of","lots of","many"],"Positive sentence, trees can be counted → a lot of trees."],
+            ["fix",["I have a lot of books.","I have a lot books.","I have much books."],"I have a lot of books.","Don't forget of: a lot of books."]
+          ]
+        },
+        {
+          "title": "How much? How many? A lot.",
+          "rule": "How many + plural noun asks about a number: How many pens have you got? How much + uncountable noun asks about an amount: How much juice is there? How much is it? / How much are they? asks about a price. At the end of a sentence, with no noun after it, say a lot (not a lot of): I like it a lot. He reads a lot.",
+          "table": [["Question","Answer"],["How many eggs do we need?","Six. / Not many."],["How much flour do we need?","500 grams. / Not much."],["How much is this T-shirt?","It's 10 dollars."],["Do you read a lot?","Yes, I read a lot."]],
+          "examples": ["How many eggs do we need? — Six.","How much flour do we need? — Not much.","How much is this T-shirt? — It's 10 dollars.","How much are these shoes?","My brother reads a lot."],
+          "uz": "How many…? — Nechta? How much…? — Qancha? How much is it? — Bu necha pul?",
+          "practise": [
+            ["choose","How ___ is this bag? — It's 20 dollars.",["much","many"],"much","A price → How much is it?"],
+            ["choose","How ___ eggs do we need?",["many","much"],"many","eggs can be counted → How many."],
+            ["choose","My brother eats ___.",["a lot","a lot of","many"],"a lot","At the end, with no noun after it → a lot."],
+            ["gap","How ___ cheese is there in the fridge? (much / many)",["much"],"cheese can't be counted → How much."],
+            ["order",["many","How","you","have","cousins","got"],"How many cousins have you got?","How many + cousins + have + you + got?"]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","How ___ books have you got?",["many","much"],"many"],
+        ["choose","There isn't ___ juice in the bottle.",["much","many"],"much"],
+        ["gap","I don't have ___ friends in this town. (much / many)",["many"]],
+        {"from":"g8","q":["choose","Which word is uncountable?",["money","coin","bag"],"money"]},
+        ["choose","She has ___ toys.",["a lot of","much","a lot"],"a lot of"],
+        ["gap","How ___ milk do you drink a day? (much / many)",["much"]],
+        ["gap","There are ___ cars in the street. (a lot of / much)",["a lot of","lots of","many"]],
+        ["fix",["We don't have much time.","We don't have many time.","We don't have much times."],"We don't have much time."],
+        {"from":"g23","q":["choose","This is my ___ room.",["brother's","brothers","brother"],"brother's"]},
+        ["choose","How ___ is that jacket? — It's 50 dollars.",["much","many"],"much"],
+        ["order",["a","I","coffee","lot","drink","of"],"I drink a lot of coffee."],
+        ["gap","How ___ people are there in your family? (much / many)",["many"]],
+        {"from":"g9","q":["gap","There aren't ___ eggs in the fridge. (some / any)",["any"]]},
+        ["fix",["My dad works a lot.","My dad works a lot of.","My dad works much of."],"My dad works a lot."],
+        ["choose","There aren't ___ trees in the city centre.",["many","much"],"many"],
+        ["gap","We haven't got ___ time. Hurry up! (much / many)",["much"]],
+        {"from":"g22","q":["choose","The shop opens ___ nine o'clock.",["at","on","in"],"at"]},
+        ["order",["much","How","you","money","have","do"],"How much money do you have?"],
+        ["fix",["There are a lot of people here.","There are a lot people here.","There are much people here."],"There are a lot of people here."],
+        ["choose","Do you have ___ homework today?",["much","many"],"much"]
+      ]
+    },
+    {
+      "no": 25, "title": "Few, A Few, Little, A Little", "v": 1,
+      "chunks": [
+        {
+          "title": "a few apples, a little milk",
+          "rule": "a few = some, a small number. Use it with plural countable nouns: a few friends, a few apples. a little = some, a small amount. Use it with uncountable nouns: a little milk, a little time. Both are positive: not many / not much, but enough.",
+          "table": [["","Countable (apples)","Uncountable (milk)"],["a small number / amount","a few apples","a little milk"],["Example","I have a few friends here.","There's a little milk in the fridge."]],
+          "examples": ["I have a few friends in this city.","Can I have a little sugar, please?","We need a few eggs for the cake.","There's a little milk in the fridge.","She speaks a little English."],
+          "uz": "a few — bir nechta (sanaladigan otlar), a little — ozgina (sanalmaydigan otlar): a few apples, a little milk.",
+          "practise": [
+            ["choose","I have ___ questions.",["a few","a little"],"a few","questions can be counted → a few."],
+            ["choose","Put ___ salt in the soup.",["a little","a few"],"a little","salt can't be counted → a little."],
+            ["gap","There are a ___ cars in the street. (few / little)",["few"],"cars can be counted → a few."],
+            ["gap","Can I have a ___ water, please? (few / little)",["little"],"water can't be counted → a little."],
+            ["fix",["We need a few tomatoes.","We need a little tomatoes.","We need a few tomato."],"We need a few tomatoes.","tomatoes can be counted → a few + plural."]
+          ]
+        },
+        {
+          "title": "few and little — almost none",
+          "rule": "Without a, few and little sound negative: almost none, not enough. few friends = almost no friends (sad). little time = almost no time (a problem). Compare: I have a few friends (good — I have some). I have few friends (sad — almost none). We often say very few / very little.",
+          "table": [["","Some, enough (positive)","Almost none (negative)"],["Countable","a few friends","few friends"],["Uncountable","a little money","little money"]],
+          "examples": ["He's lonely. He has very few friends.","Hurry up! We have very little time.","Few people know about this place.","I have a few friends, so I'm happy.","There's very little water in the desert."],
+          "uz": "a siz few / little — juda kam, yetarli emas: He has few friends — Uning do‘stlari juda kam.",
+          "practise": [
+            ["choose","Which means 'almost no friends'?",["few friends","a few friends"],"few friends","Without a, few means almost none."],
+            ["choose","Which means 'some money — enough'?",["a little money","little money"],"a little money","With a, a little means some, enough."],
+            ["choose","I can't buy the bike. I have very ___ money.",["little","a little","few"],"little","money can't be counted, and almost none → very little."],
+            ["gap","Don't worry, we have a ___ minutes before the train leaves. (few / little)",["few"],"minutes can be counted, and it's enough → a few."],
+            ["fix",["There is little milk, so we can't make a cake.","There are little milk, so we can't make a cake.","There is few milk, so we can't make a cake."],"There is little milk, so we can't make a cake.","milk can't be counted → There is little milk."]
+          ]
+        },
+        {
+          "title": "Short answers: a lot, a few, not much, none",
+          "rule": "To answer How many…? or How much…?, you can use these words alone: How many cousins have you got? — A lot. / A few. / Not many. / None. How much tea do you want? — A little, please. / Not much. Remember: few / many for things you can count, little / much for things you can't count.",
+          "table": [["","Countable (How many?)","Uncountable (How much?)"],["a big number / amount","a lot","a lot"],["small, but some","a few","a little"],["small","not many","not much"],["zero","none","none"]],
+          "examples": ["How many photos have you got? — A lot!","How much milk do you want? — Just a little, please.","How many tickets are left? — Only a few.","How much homework do you have? — Not much.","How many sweets are in the box? — None. It's empty."],
+          "uz": "Qisqa javoblar: a lot — ko‘p, a few / a little — ozgina, none — hech qancha.",
+          "practise": [
+            ["choose","How much sugar do you want? — Just ___, please.",["a little","a few"],"a little","sugar can't be counted → a little."],
+            ["choose","How many tickets are left? — Only ___.",["a few","a little"],"a few","tickets can be counted → a few."],
+            ["choose","How many apples are in the bag? — ___. The bag is empty.",["None","A few","A lot"],"None","Zero → None."],
+            ["gap","How much money have you got? — Not ___. (much / many)",["much"],"money can't be counted → not much."],
+            ["gap","How many friends have you got in this school? — Not ___. (much / many)",["many"],"friends can be counted → not many."]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","I have ___ friends in London.",["a few","a little"],"a few"],
+        ["choose","Can I have ___ juice, please?",["a little","a few"],"a little"],
+        ["gap","We need a ___ potatoes for the soup. (few / little)",["few"]],
+        {"from":"g24","q":["choose","How ___ brothers have you got?",["many","much"],"many"]},
+        ["choose","Which means 'not enough time'?",["little time","a little time"],"little time"],
+        ["gap","She speaks a ___ French. (few / little)",["little"]],
+        ["fix",["I have a few questions.","I have a little questions.","I have a few question."],"I have a few questions."],
+        ["order",["a","I","need","help","little"],"I need a little help."],
+        {"from":"g23","q":["gap","___ pencil is this? — It's mine. (Who's / Whose)",["Whose"]]},
+        ["choose","How many people are in the room? — ___. It's empty.",["None","A few","A little"],"None"],
+        ["choose","Hurry! There's very ___ time.",["little","few","a few"],"little"],
+        ["gap","How much bread do we have? — Not ___. (much / many)",["much"]],
+        {"from":"g20","q":["choose","My mum loves ___ in the garden.",["working","work","works"],"working"]},
+        ["fix",["There are a few shops near my house.","There is a few shops near my house.","There are a little shops near my house."],"There are a few shops near my house."],
+        ["order",["a","few","There","are","eggs","left"],"There are a few eggs left."],
+        ["choose","Put ___ oil in the pan.",["a little","a few"],"a little"],
+        {"from":"g8","q":["choose","a ___ of bread",["piece","glass"],"piece"]},
+        ["gap","How many cousins have you got? — Not ___. (much / many)",["many"]],
+        ["fix",["We have little money, so we can't go on holiday.","We have few money, so we can't go on holiday.","We have a few money, so we can't go on holiday."],"We have little money, so we can't go on holiday."],
+        ["choose","He's sad because he has ___ friends — almost none.",["few","a few","a little"],"few"]
+      ]
+    },
+    {
+      "no": 26, "title": "Comparative Adjectives", "v": 1,
+      "chunks": [
+        {
+          "title": "taller, bigger, easier",
+          "rule": "Use a comparative + than to compare two people or things: Tom is taller than Sam. Short adjectives (one syllable) add -er: tall → taller, old → older. Ending in -e: add -r: nice → nicer. One vowel + one consonant: double the last letter: big → bigger, hot → hotter. Ending in consonant + y: y → ier: easy → easier, happy → happier.",
+          "table": [["Adjective","Rule","Comparative"],["tall, old, cheap","+ er","taller, older, cheaper"],["nice, large","+ r","nicer, larger"],["big, hot, thin","double + er","bigger, hotter, thinner"],["easy, happy, busy","y → ier","easier, happier, busier"]],
+          "examples": ["My brother is taller than me.","Cats are smaller than dogs.","July is hotter than May.","This bag is cheaper than that one.","For me, English is easier than Chinese.","My new school is bigger than my old school."],
+          "uz": "Ikki narsani solishtirish: qisqa sifat + -er + than: Tom is taller than Sam — Tom Samdan baland.",
+          "practise": [
+            ["choose","An elephant is ___ than a horse.",["bigger","biger","more big"],"bigger","big: one vowel + one consonant → double the g: bigger."],
+            ["choose","Today is ___ than yesterday.",["hotter","hoter","more hot"],"hotter","hot → hotter (double the t)."],
+            ["gap","Maths is ___ than history for me. (easy)",["easier"],"easy: y → ier: easier."],
+            ["gap","My dad is ___ than my mum. (old)",["older"],"Short adjective + er: older."],
+            ["fix",["My sister is happier than me.","My sister is happyer than me.","My sister is more happy than me."],"My sister is happier than me.","happy: y → ier: happier."]
+          ]
+        },
+        {
+          "title": "more expensive, more interesting",
+          "rule": "Long adjectives (two or more syllables, not ending in -y) use more + adjective + than: expensive → more expensive, interesting → more interesting, beautiful → more beautiful. Don't use more and -er together: bigger (not more bigger).",
+          "table": [["Adjective","Comparative"],["expensive","more expensive"],["interesting","more interesting"],["beautiful","more beautiful"],["dangerous","more dangerous"],["comfortable","more comfortable"]],
+          "examples": ["A car is more expensive than a bike.","This book is more interesting than the film.","Tigers are more dangerous than cats.","My new chair is more comfortable than my old one.","Is Paris more beautiful than London?"],
+          "uz": "Uzun sifatlar bilan more + sifat + than: more expensive than — …dan qimmatroq.",
+          "practise": [
+            ["choose","A plane is ___ than a train.",["faster","more fast"],"faster","fast is short → faster."],
+            ["choose","Gold is ___ than silver.",["more expensive","expensiver","more expensiver"],"more expensive","expensive is long → more expensive."],
+            ["gap","This film is ___ than that one. (interesting)",["more interesting"],"interesting is long → more interesting."],
+            ["gap","Lions are ___ than cats. (dangerous)",["more dangerous"],"dangerous is long → more dangerous."],
+            ["fix",["This sofa is more comfortable than that chair.","This sofa is comfortabler than that chair.","This sofa is more comfortabler than that chair."],"This sofa is more comfortable than that chair.","comfortable is long → more comfortable (no -er)."]
+          ]
+        },
+        {
+          "title": "better, worse, further; than me",
+          "rule": "Some adjectives are irregular: good → better, bad → worse, far → further (or farther). After than, use me, him, her, us, them, or a name or a noun: She is older than me. To ask, use Which…? for things and Who…? for people: Which is bigger, the sun or the moon? Who is taller, you or your brother?",
+          "table": [["Adjective","Comparative"],["good","better"],["bad","worse"],["far","further / farther"]],
+          "examples": ["My English is better now than last year.","The weather today is worse than yesterday.","The station is further than the shop.","Is your bag heavier than mine?","Who is older, you or your sister? — I am."],
+          "uz": "good → better, bad → worse, far → further: This film is better — Bu film yaxshiroq.",
+          "practise": [
+            ["choose","This cake is ___ than that one. It's delicious!",["better","gooder","more good"],"better","good → better."],
+            ["choose","My cold is ___ today than yesterday. I feel terrible.",["worse","badder","more bad"],"worse","bad → worse."],
+            ["gap","The library is ___ than the park. (far)",["further","farther"],"far → further (or farther)."],
+            ["choose","Anna is taller than ___.",["me","my"],"me","After than, use me, him, her, us, them."],
+            ["fix",["Which is bigger, a cat or a mouse?","Which is more big, a cat or a mouse?","Which is biger, a cat or a mouse?"],"Which is bigger, a cat or a mouse?","big → bigger (double the g)."]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","A giraffe is ___ than a zebra.",["taller","more tall","tallest"],"taller"],
+        ["gap","My room is ___ than my sister's room. (big)",["bigger"]],
+        ["choose","A sports car is ___ than a small family car.",["more expensive","expensiver","most expensive"],"more expensive"],
+        {"from":"g25","q":["choose","Can I have ___ sugar in my tea?",["a little","a few"],"a little"]},
+        ["gap","Today is ___ than yesterday. (cold)",["colder"]],
+        ["choose","I got 9 and you got 6. My result is ___ than yours.",["better","gooder","worse"],"better"],
+        ["gap","This exercise is ___ than the first one. (easy)",["easier"]],
+        ["fix",["Russia is bigger than France.","Russia is more big than France.","Russia is bigger that France."],"Russia is bigger than France."],
+        {"from":"g24","q":["gap","How ___ water do you drink a day? (much / many)",["much"]]},
+        ["order",["than","My","brother","me","is","older"],"My brother is older than me."],
+        ["choose","The weather is ___ today than yesterday. It's raining and cold.",["worse","badder","more bad"],"worse"],
+        ["gap","This book is ___ than that one. (interesting)",["more interesting"]],
+        {"from":"g22","q":["choose","We usually go to the beach ___ July.",["in","on","at"],"in"]},
+        ["fix",["My new bag is more expensive than my old one.","My new bag is expensiver than my old one.","My new bag is more expensive then my old one."],"My new bag is more expensive than my old one."],
+        ["choose","Who is ___, you or your brother?",["younger","more young","youngest"],"younger"],
+        ["order",["than","Cats","smaller","dogs","are"],"Cats are smaller than dogs."],
+        ["gap","My new house is ___ from school than my old house. (far)",["further","farther"]],
+        {"from":"g20","q":["gap","My brother is good at ___. (swim)",["swimming"]]},
+        ["fix",["Lucy is happier than her sister.","Lucy is happyer than her sister.","Lucy is more happier than her sister."],"Lucy is happier than her sister."],
+        ["choose","Is a lion ___ than a dog?",["more dangerous","dangerouser","more dangerouser"],"more dangerous"]
+      ]
+    },
+    {
+      "no": 27, "title": "Superlative Adjectives", "v": 1,
+      "chunks": [
+        {
+          "title": "the tallest, the biggest, the happiest",
+          "rule": "Use the superlative to compare one person or thing with all the others in a group: Tom is the tallest boy in our class. Short adjectives: the + adjective + -est: tall → the tallest. The spelling rules are the same as for -er: nice → the nicest, big → the biggest, happy → the happiest. Use in with places and groups: the tallest in the class, the biggest city in the world.",
+          "table": [["Adjective","Comparative","Superlative"],["tall","taller","the tallest"],["nice","nicer","the nicest"],["big","bigger","the biggest"],["happy","happier","the happiest"]],
+          "examples": ["Tom is the tallest boy in our class.","The blue whale is the biggest animal in the world.","This is the nicest cafe in town.","Friday is the happiest day of the week for me.","Who is the oldest person in your family?"],
+          "uz": "Eng … ma’nosi: the + sifat + -est: the tallest — eng baland, the biggest — eng katta.",
+          "practise": [
+            ["choose","Mount Everest is ___ mountain in the world.",["the highest","the higher","highest"],"the highest","The whole group → the + -est: the highest."],
+            ["choose","It's ___ day of the year.",["the hottest","the hotest","the most hot"],"the hottest","hot → the hottest (double the t)."],
+            ["gap","This is the ___ room in the house. (small)",["smallest"],"Short adjective → the + -est: the smallest."],
+            ["gap","She is the ___ girl I know. (funny)",["funniest"],"funny: y → iest: the funniest."],
+            ["fix",["He is the tallest student in the class.","He is the taller student in the class.","He is tallest student of the class."],"He is the tallest student in the class.","the + -est + in the class."]
+          ]
+        },
+        {
+          "title": "the most beautiful, the best, the worst",
+          "rule": "Long adjectives use the most + adjective: the most beautiful, the most expensive, the most interesting. Irregular: good → better → the best, bad → worse → the worst, far → further → the furthest.",
+          "table": [["Adjective","Comparative","Superlative"],["beautiful","more beautiful","the most beautiful"],["expensive","more expensive","the most expensive"],["good","better","the best"],["bad","worse","the worst"],["far","further","the furthest"]],
+          "examples": ["This is the most beautiful beach in the country.","It's the most expensive car in the shop.","Who is the best player in your team?","This is the worst film I know.","For me, maths is the most difficult subject."],
+          "uz": "Uzun sifatlar: the most + sifat (the most beautiful — eng chiroyli); good → the best, bad → the worst.",
+          "practise": [
+            ["choose","This is ___ book in the library.",["the most interesting","the interestingest","the more interesting"],"the most interesting","interesting is long → the most interesting."],
+            ["choose","She is ___ singer in our school.",["the best","the goodest","the better"],"the best","good → the best."],
+            ["gap","This is the ___ hotel in the city. (expensive)",["most expensive"],"expensive is long → the most expensive."],
+            ["gap","Today is the ___ day of my life! Everything is going wrong. (bad)",["worst"],"bad → the worst."],
+            ["fix",["It's the most dangerous animal in Africa.","It's the dangerousest animal in Africa.","It's the most dangerousest animal in Africa."],"It's the most dangerous animal in Africa.","dangerous is long → the most dangerous."]
+          ]
+        },
+        {
+          "title": "Two things or the whole group?",
+          "rule": "Two things → comparative + than: My bag is bigger than yours. Three or more (the whole group) → the + superlative: My bag is the biggest in the class. Don't use than after a superlative, and don't forget the before it.",
+          "table": [["How many?","Form","Example"],["two","-er / more + than","A car is faster than a bike."],["the whole group","the -est / the most","A plane is the fastest of the three."]],
+          "examples": ["Anna is older than Lucy, but Kate is the oldest.","A bus is bigger than a car. A plane is the biggest.","Tea is cheaper than coffee here.","This is the cheapest cafe in the street.","Maths is more difficult than art, but physics is the most difficult."],
+          "uz": "Ikki narsa — -er / more + than; guruhdagi eng … — the -est / the most.",
+          "practise": [
+            ["choose","Sam is 10, Ben is 12 and Tom is 14. Tom is ___ of the three.",["the oldest","older","the older"],"the oldest","Three people → the + -est: the oldest."],
+            ["choose","My phone is ___ than yours.",["newer","the newest","newest"],"newer","Two things + than → newer."],
+            ["gap","Russia is the ___ country in the world. (big)",["biggest"],"The whole world → the biggest."],
+            ["gap","A mouse is ___ than a cat. (small)",["smaller"],"Two things + than → smaller."],
+            ["fix",["She is the best student in the class.","She is the best student than the class.","She is best student in the class."],"She is the best student in the class.","the + superlative + in the class (no than)."]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","The cheetah is ___ animal on land.",["the fastest","the faster","fastest"],"the fastest"],
+        ["gap","This is the ___ day of the year. (cold)",["coldest"]],
+        ["choose","This is ___ film I know.",["the funniest","the funnyest","the funnier"],"the funniest"],
+        {"from":"g26","q":["gap","My sister is ___ than me. (young)",["younger"]]},
+        ["choose","Who is ___ player in your team?",["the best","the goodest","the better"],"the best"],
+        ["gap","It's the ___ shop in town. (expensive)",["most expensive"]],
+        ["fix",["This is the biggest room in the house.","This is the bigest room in the house.","This is the most big room in the house."],"This is the biggest room in the house."],
+        ["order",["the","is","She","girl","tallest","class","the","in"],"She is the tallest girl in the class."],
+        {"from":"g24","q":["choose","There are ___ people in the park today.",["a lot of","much","a lot"],"a lot of"]},
+        ["choose","A dog is ___ than a mouse.",["bigger","the biggest","biggest"],"bigger"],
+        ["gap","That's the ___ idea ever! Nobody likes it. (bad)",["worst"]],
+        ["choose","Kate is 15, Lucy is 13 and Emma is 11. Emma is ___ of the three.",["the youngest","younger","the younger"],"the youngest"],
+        {"from":"g20","q":["choose","I hate ___ the dishes.",["washing","wash","washes"],"washing"]},
+        ["fix",["Who is the oldest person in your family?","Who is the older person in your family?","Who is oldest person in your family?"],"Who is the oldest person in your family?"],
+        ["order",["most","the","This","beautiful","is","park"],["This is the most beautiful park.","This park is the most beautiful."]],
+        ["gap","Summer is the ___ season of the year. (hot)",["hottest"]],
+        {"from":"g11","q":["gap","The sun ___ in the east. (rise)",["rises"]]},
+        ["choose","Which is ___, Jupiter or the Earth?",["bigger","the biggest","biggest"],"bigger"],
+        ["fix",["Gold is the most expensive of the three metals.","Gold is the expensivest of the three metals.","Gold is most expensive than the three metals."],"Gold is the most expensive of the three metals."],
+        ["gap","Who is the ___ student in your class? (good)",["best"]]
+      ]
+    },
+    {
+      "no": 28, "title": "Adjective Order", "v": 1,
+      "chunks": [
+        {
+          "title": "A red car — the adjective comes first",
+          "rule": "In English, an adjective goes before the noun: a red car (not a car red). Adjectives never take -s: two red cars (not reds cars). After be, the adjective comes alone: The car is red.",
+          "table": [["Right","Wrong"],["a big house","a house big"],["blue eyes","eyes blue"],["three old books","three olds books"],["The house is big.","The house is bigs."]],
+          "examples": ["She has a red bike.","We live in a small flat.","I have two little sisters.","My dad drives a fast car.","These shoes are new."],
+          "uz": "Sifat otdan oldin keladi va -s olmaydi: a red car — qizil mashina, red cars — qizil mashinalar.",
+          "practise": [
+            ["choose","I have a ___.",["black cat","cat black"],"black cat","The adjective goes before the noun: a black cat."],
+            ["choose","They have two ___ cars.",["new","news"],"new","Adjectives never take -s: two new cars."],
+            ["order",["has","She","hair","long"],"She has long hair.","The adjective goes before the noun: long hair."],
+            ["fix",["We live in a big house.","We live in a house big.","We live in a bigs house."],"We live in a big house.","Adjective before the noun, no -s: a big house."],
+            ["gap","My grandma has two ___ dogs. (little)",["little"],"Adjectives never take -s: two little dogs."]
+          ]
+        },
+        {
+          "title": "Opinion first: a beautiful old house",
+          "rule": "When there are two adjectives, the opinion (what you think: nice, beautiful, lovely, boring, ugly, funny) comes first. Then the fact (size, age, colour…): a beautiful old house, a nice big garden, a lovely red dress.",
+          "table": [["Opinion","Fact","Noun"],["a beautiful","old","house"],["a nice","big","garden"],["a lovely","red","dress"],["an ugly","green","sofa"]],
+          "examples": ["She has a lovely red dress.","We have a nice big garden.","It's a boring old film.","It's a funny little dog.","They live in a beautiful old house."],
+          "uz": "Avval fikr (nice, beautiful), keyin fakt (big, old, red): a beautiful old house — chiroyli eski uy.",
+          "practise": [
+            ["choose","It's a ___ house.",["beautiful old","old beautiful"],"beautiful old","Opinion (beautiful) before fact (old)."],
+            ["choose","She's wearing a ___ dress.",["lovely blue","blue lovely"],"lovely blue","Opinion (lovely) before fact (blue)."],
+            ["order",["a","nice","big","It's","garden"],"It's a nice big garden.","Opinion (nice) + fact (big) + garden."],
+            ["fix",["He has a funny little dog.","He has a little funny dog.","He has a dog funny little."],"He has a funny little dog.","Opinion (funny) before fact (little)."],
+            ["choose","That's an ___ chair.",["ugly old","old ugly"],"ugly old","Opinion (ugly) before fact (old)."]
+          ]
+        },
+        {
+          "title": "Size, age, colour, material",
+          "rule": "Fact adjectives usually go in this order: size (big, small) → age (old, new, young) → colour (red, black) → where it is from (Italian, Chinese) → what it is made of (wooden, plastic, cotton) → the noun. The whole order: opinion – size – age – colour – origin – material. We rarely use more than three adjectives together.",
+          "table": [["Order","Examples"],["1 opinion","nice, beautiful, ugly"],["2 size","big, small, long"],["3 age","old, new, young"],["4 colour","red, black, white"],["5 origin","Italian, Chinese, French"],["6 material","wooden, plastic, cotton"]],
+          "examples": ["She has a big black dog.","He lives in a big old house.","It's a new red bike.","My mum has a beautiful Italian leather bag.","I have a small wooden box."],
+          "uz": "Tartib: fikr – o‘lcham – yosh – rang – kelib chiqish – material: a big old house — katta eski uy.",
+          "practise": [
+            ["choose","a ___ car",["small red","red small"],"small red","Size (small) before colour (red)."],
+            ["choose","a ___ table",["big wooden","wooden big"],"big wooden","Size (big) before material (wooden)."],
+            ["order",["a","black","big","has","He","dog"],"He has a big black dog.","Size (big) before colour (black)."],
+            ["choose","She has ___ cat.",["a little black","a black little"],"a little black","Size (little) before colour (black)."],
+            ["fix",["I have a new blue bike.","I have a blue new bike.","I have a bike new blue."],"I have a new blue bike.","Age (new) before colour (blue)."]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","I live in a ___.",["small flat","flat small"],"small flat"],
+        ["choose","She has two ___ brothers.",["young","youngs"],"young"],
+        ["order",["has","My","a","car","fast","dad"],"My dad has a fast car."],
+        {"from":"g27","q":["choose","It's ___ day of the year.",["the shortest","the shorter","shortest"],"the shortest"]},
+        ["choose","We have a ___ garden.",["lovely big","big lovely"],"lovely big"],
+        ["choose","It's a ___ bag.",["beautiful Italian","Italian beautiful"],"beautiful Italian"],
+        ["fix",["She has long black hair.","She has black long hair.","She has hair long black."],"She has long black hair."],
+        ["gap","I have two ___ cats. (white)",["white"]],
+        {"from":"g26","q":["gap","A plane is ___ than a car. (fast)",["faster"]]},
+        ["choose","a ___ box",["small wooden","wooden small"],"small wooden"],
+        ["order",["an","It's","old","ugly","sofa"],"It's an ugly old sofa."],
+        ["fix",["He's wearing a nice white shirt.","He's wearing a white nice shirt.","He's wearing a nice whites shirt."],"He's wearing a nice white shirt."],
+        {"from":"g23","q":["choose","The ___ bedroom is upstairs. (two girls)",["girls'","girl's"],"girls'"]},
+        ["choose","She has ___ eyes.",["big blue","blue big"],"big blue"],
+        ["order",["new","a","red","I","want","bike"],"I want a new red bike."],
+        ["fix",["They live in a big old house.","They live in an old big house.","They live in a house big old."],"They live in a big old house."],
+        {"from":"g5","q":["gap","My sister ___ got long hair. (have / has)",["has"]]},
+        ["choose","a ___ T-shirt",["cheap cotton","cotton cheap"],"cheap cotton"],
+        ["choose","It's a ___ town.",["lovely little","little lovely"],"lovely little"],
+        ["fix",["My grandma has a beautiful old clock.","My grandma has an old beautiful clock.","My grandma has a beautifuls old clock."],"My grandma has a beautiful old clock."]
+      ]
+    },
+    {
+      "no": 29, "title": "Was / Were", "v": 1,
+      "chunks": [
+        {
+          "title": "I was, you were",
+          "rule": "Was and were are the past of am, is and are. Use was with I, he, she, it (and one person or thing). Use were with you, we, they (and two or more). Past time words: yesterday, last night, last week, in 2020, two days ago.",
+          "table": [["Present","Past","Example"],["I am","I was","I was at home yesterday."],["he / she / it is","he / she / it was","She was ill last week."],["you / we / they are","you / we / they were","We were at school."]],
+          "examples": ["I was at the cinema last night.","My grandfather was a teacher.","It was cold yesterday.","We were in London in 2022.","The children were very tired after the trip."],
+          "uz": "was / were — am, is, are ning o‘tgan zamoni: I was at home yesterday — Kecha uyda edim.",
+          "practise": [
+            ["choose","I ___ at home yesterday.",["was","were"],"was","With I, use was."],
+            ["choose","They ___ in the park last Sunday.",["were","was"],"were","With they, use were."],
+            ["gap","It ___ very hot last summer. (be)",["was"],"With it, use was."],
+            ["gap","My friends ___ at my party last night. (be)",["were"],"My friends = they → were."],
+            ["fix",["We were tired last night.","We was tired last night.","We are tired last night."],"We were tired last night.","last night = the past; with we, use were."]
+          ]
+        },
+        {
+          "title": "wasn't, weren't — Were you…?",
+          "rule": "Negative: wasn't (was not), weren't (were not): I wasn't at school. They weren't hungry. Question: put was / were before the person: Were you at home? Was it expensive? Short answers: Yes, I was. / No, I wasn't. Yes, they were. / No, they weren't.",
+          "table": [["","Example"],["Negative","I wasn't at home. / They weren't hungry."],["Question","Was it expensive? / Were you at school?"],["Short answer","Yes, it was. / No, they weren't."],["Question word","Where were you yesterday?"]],
+          "examples": ["I wasn't at school yesterday. I was ill.","The shops weren't open on Sunday.","Were you at the party? — Yes, I was.","Was the film good? — No, it wasn't.","Where were you last night?"],
+          "uz": "Inkor: wasn't / weren't. So‘roq: Were you at home? — Uyda edingizmi?",
+          "practise": [
+            ["choose","She ___ at work yesterday. She was at home.",["wasn't","weren't"],"wasn't","With she, the negative is wasn't."],
+            ["choose","___ you at school last Monday?",["Were","Was","Did"],"Were","With you, use Were…?"],
+            ["gap","Was the test difficult? — No, it ___.",["wasn't","was not"],"Was it…? — No, it wasn't."],
+            ["gap","Were your parents at home? — Yes, they ___.",["were"],"Were they…? — Yes, they were."],
+            ["order",["were","Where","you","yesterday"],"Where were you yesterday?","Where + were + you + yesterday?"]
+          ]
+        },
+        {
+          "title": "There was, there were; I was born",
+          "rule": "Use there was with one thing or an uncountable noun, and there were with plural nouns: There was a cat in the garden. There were a lot of people. Negative: there wasn't / there weren't. To say when or where someone was born, use was / were born: I was born in 2010. Where were you born?",
+          "table": [["","Example"],["There was + one / uncountable","There was a big tree here. / There was some milk."],["There were + plural","There were two cats."],["Negative","There wasn't any bread. / There weren't many people."],["born","I was born in May. / They were born in Paris."]],
+          "examples": ["There was a party at school yesterday.","There were twenty students in the class.","There wasn't any milk in the fridge.","I was born on 3 June.","Where were your parents born?"],
+          "uz": "There was / were — …bor edi: There were two cats — Ikkita mushuk bor edi. I was born — tug‘ilganman.",
+          "practise": [
+            ["choose","There ___ a big tree in our garden last year.",["was","were"],"was","One tree → There was."],
+            ["choose","There ___ a lot of people at the concert yesterday.",["were","was"],"were","people is plural → There were."],
+            ["gap","There ___ any bread in the kitchen this morning. (negative)",["wasn't","was not"],"bread, negative → There wasn't."],
+            ["choose","I ___ born in 2011.",["was","were","am"],"was","I was born…"],
+            ["fix",["Where were you born?","Where was you born?","Where did you born?"],"Where were you born?","With you: Where were you born?"]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","My dad ___ a footballer when he was young.",["was","were"],"was"],
+        ["gap","We ___ at the beach yesterday. (be)",["were"]],
+        ["choose","The weather ___ terrible last weekend.",["was","were"],"was"],
+        {"from":"g27","q":["choose","This is ___ cake in the shop.",["the most delicious","the deliciousest","more delicious"],"the most delicious"]},
+        ["gap","I ___ at school yesterday. I was ill. (negative)",["wasn't","was not"]],
+        ["choose","___ the shops open last Sunday?",["Were","Was","Did"],"Were"],
+        ["gap","Was your teacher angry? — Yes, she ___.",["was"]],
+        ["fix",["They weren't at home last night.","They wasn't at home last night.","They aren't at home last night."],"They weren't at home last night."],
+        {"from":"g22","q":["choose","I was born ___ 2012.",["in","on","at"],"in"]},
+        ["choose","There ___ three bananas on the table this morning.",["were","was"],"were"],
+        ["gap","There ___ a cat in the garden this morning. (be)",["was"]],
+        ["order",["were","Where","born","you"],"Where were you born?"],
+        {"from":"g28","q":["choose","She has a ___ bag.",["beautiful red","red beautiful"],"beautiful red"]},
+        ["fix",["Was the film good?","Were the film good?","Did the film good?"],"Was the film good?"],
+        ["order",["wasn't","It","yesterday","cold"],"It wasn't cold yesterday."],
+        ["choose","Where ___ you last night?",["were","was","did"],"were"],
+        {"from":"g6","q":["choose","There ___ a park near my house.",["is","are"],"is"]},
+        ["gap","Were you tired after the game? — No, I ___.",["wasn't","was not"]],
+        ["fix",["There were a lot of people at the party.","There was a lot of people at the party.","There were a lot of people at the party tomorrow."],"There were a lot of people at the party."],
+        ["choose","My grandparents ___ born in a small village.",["were","was","are"],"were"]
+      ]
+    },
+    {
+      "no": 30, "title": "Past Simple (Regular and Irregular Verbs)", "v": 1,
+      "chunks": [
+        {
+          "title": "worked, played — regular verbs",
+          "rule": "Use the past simple for finished actions in the past: yesterday, last week, in 2019, two days ago. Regular verbs add -ed: work → worked, play → played. The past simple is the same for every person: I worked, she worked, they worked.",
+          "table": [["Present","Past"],["I work","I worked"],["She plays","She played"],["We watch","We watched"],["They visit","They visited"]],
+          "examples": ["I watched a film last night.","We played football yesterday.","My mum cooked dinner yesterday.","They visited their grandma last Sunday.","She worked in a bank in 2015."],
+          "uz": "Past Simple — tugagan ish; to‘g‘ri fe’llarga -ed qo‘shiladi: I watched TV yesterday — Kecha televizor ko‘rdim.",
+          "practise": [
+            ["choose","I ___ TV last night.",["watched","watch","watching"],"watched","last night = the past → watched."],
+            ["choose","She ___ tennis yesterday.",["played","plays","playes"],"played","yesterday = the past → played."],
+            ["gap","We ___ our cousins last weekend. (visit)",["visited"],"Regular verb + ed: visited."],
+            ["gap","My dad ___ in an office ten years ago. (work)",["worked"],"Regular verb + ed: worked."],
+            ["fix",["They cleaned the house yesterday.","They clean the house yesterday.","They cleaneds the house yesterday."],"They cleaned the house yesterday.","yesterday = the past → cleaned."]
+          ]
+        },
+        {
+          "title": "lived, stopped, studied — spelling",
+          "rule": "Verbs ending in -e add only -d: live → lived, like → liked. A short verb with one vowel + one consonant doubles the last letter: stop → stopped, plan → planned. Consonant + y: y → ied: study → studied, cry → cried. Vowel + y: just add -ed: play → played, stay → stayed.",
+          "table": [["Verb ends in","Rule","Examples"],["-e","+ d","live → lived, dance → danced"],["one vowel + one consonant","double + ed","stop → stopped, plan → planned"],["consonant + y","y → ied","study → studied, carry → carried"],["vowel + y","+ ed","play → played, enjoy → enjoyed"]],
+          "examples": ["We lived in Paris for two years.","The bus stopped near the school.","I studied for the test all evening yesterday.","The baby cried all night.","We enjoyed the party last night."],
+          "uz": "-e dan keyin faqat -d (lived), undosh + y → ied (studied), qisqa fe’lda oxirgi undosh ikkilanadi (stopped).",
+          "practise": [
+            ["choose","The car ___ at the traffic lights a minute ago.",["stopped","stoped","stopt"],"stopped","stop: one vowel + one consonant → double the p: stopped."],
+            ["choose","I ___ English last night.",["studied","studyed","studed"],"studied","study: consonant + y → ied: studied."],
+            ["gap","We ___ the film very much last night. (enjoy)",["enjoyed"],"enjoy: vowel + y → just add -ed: enjoyed."],
+            ["gap","My grandparents ___ in a small village in 1990. (live)",["lived"],"live ends in -e → add only -d: lived."],
+            ["fix",["The baby cried a lot yesterday.","The baby cryed a lot yesterday.","The baby crys a lot yesterday."],"The baby cried a lot yesterday.","cry: consonant + y → ied: cried."]
+          ]
+        },
+        {
+          "title": "went, had, saw — irregular verbs",
+          "rule": "Many common verbs are irregular — they don't add -ed. You need to learn them: go → went, have → had, see → saw, eat → ate, buy → bought, get → got, make → made, take → took, come → came, do → did.",
+          "table": [["Verb","Past","Verb","Past"],["go","went","eat","ate"],["have","had","buy","bought"],["see","saw","get","got"],["make","made","take","took"],["come","came","do","did"]],
+          "examples": ["I went to the cinema yesterday.","We had pizza for dinner last night.","She saw a famous actor in the street.","My dad bought a new car last month.","They came home at ten.","I got up at seven this morning."],
+          "uz": "Noto‘g‘ri fe’llar -ed olmaydi, ularni yodlash kerak: go → went, see → saw, buy → bought.",
+          "practise": [
+            ["choose","I ___ to the park yesterday.",["went","goed","go"],"went","go → went."],
+            ["choose","We ___ a great film last night.",["saw","seed","see"],"saw","see → saw."],
+            ["gap","She ___ a new dress last week. (buy)",["bought"],"buy → bought."],
+            ["gap","They ___ pasta for lunch yesterday. (eat)",["ate"],"eat → ate."],
+            ["fix",["I had a shower this morning.","I haved a shower this morning.","I has a shower this morning."],"I had a shower this morning.","have → had."]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","We ___ football after school yesterday.",["played","play","plaied"],"played"],
+        ["gap","I ___ my grandma last Sunday. (visit)",["visited"]],
+        ["choose","She ___ to London in 2019.",["went","goed","goes"],"went"],
+        {"from":"g29","q":["choose","They ___ at home last night.",["were","was"],"were"]},
+        ["gap","We ___ the dishes after dinner last night. (wash)",["washed"]],
+        ["choose","The bus ___ in front of the school five minutes ago.",["stopped","stoped","stops"],"stopped"],
+        ["gap","My brother ___ for his exam last weekend. (study)",["studied"]],
+        ["fix",["I saw Tom at the shop yesterday.","I seed Tom at the shop yesterday.","I see Tom at the shop yesterday."],"I saw Tom at the shop yesterday."],
+        {"from":"g26","q":["choose","My bag is ___ than yours.",["heavier","heavyer","more heavy"],"heavier"]},
+        ["choose","We ___ a lot of photos on holiday last year.",["took","taked","take"],"took"],
+        ["gap","I ___ up late this morning. (get)",["got"]],
+        ["order",["went","We","yesterday","the","to","zoo"],"We went to the zoo yesterday."],
+        {"from":"g22","q":["choose","The party started ___ eight o'clock.",["at","on","in"],"at"]},
+        ["fix",["She bought a new bike last month.","She buyed a new bike last month.","She buys a new bike last month."],"She bought a new bike last month."],
+        ["choose","My parents ___ in Canada for five years. Now they live in the USA.",["lived","liveed","live"],"lived"],
+        ["gap","We ___ a cake for Mum's birthday last week. (make)",["made"]],
+        {"from":"g13","q":["fix",["He is always happy.","He always is happy.","Always he is happy."],"He is always happy."]},
+        ["order",["had","I","breakfast","at","seven"],"I had breakfast at seven."],
+        ["choose","Tom ___ home at ten last night.",["came","comed","comes"],"came"],
+        ["gap","I ___ my homework before dinner yesterday. (do)",["did"]]
+      ]
+    },
+    {
+      "no": 31, "title": "Past Simple (Negative and Questions)", "v": 1,
+      "chunks": [
+        {
+          "title": "didn't + verb",
+          "rule": "Negative: didn't (did not) + the verb as it is. It's the same for every person and for regular and irregular verbs: I didn't go. She didn't watch TV. After didn't, never use the past form: He didn't see me (not didn't saw).",
+          "table": [["Positive","Negative"],["I worked.","I didn't work."],["She went.","She didn't go."],["They saw it.","They didn't see it."],["He had lunch.","He didn't have lunch."]],
+          "examples": ["I didn't go to school yesterday.","She didn't like the film.","We didn't have breakfast this morning.","My dad didn't buy the car. It was too expensive.","They didn't see us."],
+          "uz": "Inkor: didn't + fe’lning oddiy shakli: I didn't go — Men bormadim. didn't dan keyin went emas, go.",
+          "practise": [
+            ["choose","I ___ my homework yesterday.",["didn't do","didn't did","don't did"],"didn't do","didn't + verb as it is: didn't do."],
+            ["choose","She didn't ___ the bus this morning.",["catch","caught","catches"],"catch","After didn't, the verb as it is: catch."],
+            ["gap","We ___ TV last night. (not / watch)",["didn't watch","did not watch"],"didn't + watch."],
+            ["gap","He didn't ___ to the party yesterday. (go)",["go"],"After didn't, the verb as it is: go (not went)."],
+            ["fix",["They didn't see the film.","They didn't saw the film.","They don't saw the film."],"They didn't see the film.","didn't + see (not saw)."]
+          ]
+        },
+        {
+          "title": "Did you…? — Yes, I did.",
+          "rule": "Question: Did + person + verb as it is: Did you go? Did she like it? Short answers: Yes, I did. / No, I didn't. Be careful with be: Were you tired? (not Did you be tired?).",
+          "table": [["Question","Short answer"],["Did you see the match?","Yes, I did. / No, I didn't."],["Did she call you?","Yes, she did. / No, she didn't."],["Did they win?","Yes, they did. / No, they didn't."]],
+          "examples": ["Did you have a good weekend? — Yes, I did.","Did Tom call you? — No, he didn't.","Did they win the match yesterday?","Did your mum make this cake? — Yes, she did.","Were you at home? — No, I wasn't."],
+          "uz": "So‘roq: Did + shaxs + fe’l: Did you go? — Bordingizmi? Javob: Yes, I did. / No, I didn't.",
+          "practise": [
+            ["choose","___ you see Sam yesterday?",["Did","Do","Were"],"Did","Past question: Did + you + verb."],
+            ["choose","Did she ___ the test last week?",["pass","passed","passes"],"pass","After Did, the verb as it is: pass."],
+            ["gap","Did you enjoy the film? — Yes, I ___.",["did"],"Did you…? — Yes, I did."],
+            ["gap","Did they win the game? — No, they ___.",["didn't","did not"],"Did they…? — No, they didn't."],
+            ["order",["you","Did","breakfast","have"],"Did you have breakfast?","Did + you + have + breakfast?"]
+          ]
+        },
+        {
+          "title": "What did you do? Where did you go?",
+          "rule": "With a question word: question word + did + person + verb as it is: What did you do? Where did she go? When did they arrive? What time did you get up? did already shows the past, so the verb doesn't change: Where did you go? (not Where did you went?).",
+          "table": [["Question word","did","Person","Verb"],["What","did","you","do?"],["Where","did","she","go?"],["What time","did","they","get up?"],["Why","did","he","leave?"]],
+          "examples": ["What did you do at the weekend? — I visited my friends.","Where did you go on holiday? — We went to Spain.","What time did you get up? — At eight.","Why did he leave early? — He was tired.","How did you get there? — By train."],
+          "uz": "Savol so‘zi + did + shaxs + fe’l: Where did you go? — Qayerga bordingiz?",
+          "practise": [
+            ["choose","Where ___ you go last summer?",["did","were","do"],"did","Past question: Where + did + you + go?"],
+            ["choose","What did you ___ yesterday?",["do","did","done"],"do","After did, the verb as it is: do."],
+            ["gap","What time ___ you go to bed last night?",["did"],"Past question: What time + did + you + go?"],
+            ["order",["did","What","eat","you"],"What did you eat?","What + did + you + eat?"],
+            ["fix",["Why did she cry?","Why did she cried?","Why she did cry?"],"Why did she cry?","Why + did + she + cry (not cried)."]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","I ___ to the party last night.",["didn't go","didn't went","don't went"],"didn't go"],
+        ["gap","She didn't ___ the answer yesterday. (know)",["know"]],
+        ["choose","___ you finish your homework yesterday?",["Did","Do","Were"],"Did"],
+        {"from":"g30","q":["gap","We ___ to the beach last weekend. (go)",["went"]]},
+        ["gap","Did your brother call you? — Yes, he ___.",["did"]],
+        ["choose","Where ___ they go on holiday last year?",["did","were","do"],"did"],
+        ["fix",["We didn't have lunch today.","We didn't had lunch today.","We not had lunch today."],"We didn't have lunch today."],
+        ["order",["you","Did","the","film","like"],"Did you like the film?"],
+        {"from":"g29","q":["choose","___ you at school yesterday?",["Were","Did","Was"],"Were"]},
+        ["gap","Did you see the match? — No, I ___.",["didn't","did not"]],
+        ["choose","What time did the train ___ yesterday?",["leave","left","leaves"],"leave"],
+        ["gap","I ___ breakfast this morning. I wasn't hungry. (not / have)",["didn't have","did not have"]],
+        {"from":"g24","q":["choose","How ___ money did you spend?",["much","many"],"much"]},
+        ["fix",["What did you buy?","What did you bought?","What you did buy?"],"What did you buy?"],
+        ["order",["did","Where","you","go","yesterday"],"Where did you go yesterday?"],
+        ["choose","Did Anna ___ to you last week?",["write","wrote","writes"],"write"],
+        {"from":"g21","q":["choose","I need ___ to the bank today.",["to go","go","going"],"to go"]},
+        ["gap","Why ___ he leave so early yesterday?",["did"]],
+        ["fix",["Did they win the game?","Did they won the game?","Do they won the game?"],"Did they win the game?"],
+        ["choose","They didn't ___ us at the station.",["see","saw","seen"],"see"]
+      ]
+    },
+    {
+      "no": 32, "title": "Future with Will and Be Going To", "v": 1,
+      "chunks": [
+        {
+          "title": "I'll help you — will",
+          "rule": "Use will + verb (short form 'll) for a decision you make at the moment of speaking: It's cold. I'll close the window. Use it for offers and promises: I'll help you. I'll call you tonight. And for predictions (what you think will happen): I think it will rain tomorrow. Negative: won't (will not).",
+          "table": [["Use","Example"],["a decision now","The phone is ringing. I'll answer it."],["an offer","That bag looks heavy. I'll carry it."],["a promise","I'll call you tonight."],["a prediction","I think you'll like this film."],["negative","I won't (will not) be late."]],
+          "examples": ["I'm thirsty. I think I'll have some water.","Don't worry, I'll help you with your homework.","I promise I won't tell anyone.","I think Anna will win the race.","Will you be at home tomorrow?"],
+          "uz": "will — hozir qaror qilganda, taklif yoki va’da berganda: I'll help you — Men sizga yordam beraman.",
+          "practise": [
+            ["choose","The phone is ringing. I ___ answer it. (a decision now)",["will","am going to"],"will","A decision at the moment of speaking → will."],
+            ["choose","I think it ___ rain tomorrow.",["will","wills","is"],"will","A prediction → will + verb (no -s)."],
+            ["gap","I promise I ___ be late again. (negative)",["won't","will not"],"A promise, negative → won't (will not)."],
+            ["gap","That box looks heavy. I ___ carry it for you. (will — an offer)",["will","'ll"],"An offer → will ('ll)."],
+            ["fix",["She will call you tonight.","She will calls you tonight.","She wills call you tonight."],"She will call you tonight.","will + verb as it is, no -s."]
+          ]
+        },
+        {
+          "title": "I'm going to visit my aunt — going to",
+          "rule": "Use am / is / are + going to + verb for plans — things you decided before now: I'm going to visit my aunt next week. We're going to buy a new car. Also use it when you can see that something is going to happen soon: Look at those clouds! It's going to rain.",
+          "table": [["Person","be + going to + verb","Example"],["I","am ('m) going to","I'm going to study tonight."],["he / she / it","is ('s) going to","She's going to travel next week."],["you / we / they","are ('re) going to","They're going to move house."]],
+          "examples": ["I'm going to study medicine at university.","My sister is going to get married in June.","We're going to watch a film tonight. We already have the tickets.","Look at the sky! It's going to rain.","Are you going to play football after school?","He isn't going to come to the party."],
+          "uz": "be going to — oldindan qilingan reja: I'm going to visit my aunt next week — Kelasi hafta xolamnikiga boraman.",
+          "practise": [
+            ["choose","I ___ going to visit my grandma on Sunday.",["am","is","are"],"am","With I, use am going to."],
+            ["choose","Look at those black clouds! It ___ rain.",["is going to","will to","going to"],"is going to","We can see it now → It is going to rain."],
+            ["gap","We ___ going to watch a film tonight. (be)",["are","'re"],"With we, use are going to."],
+            ["gap","She ___ going to come to the party. She's ill. (negative)",["isn't","is not","'s not"],"With she, the negative is isn't (is not) going to."],
+            ["order",["going","I'm","to","football","play"],"I'm going to play football.","I'm + going to + play + football."]
+          ]
+        },
+        {
+          "title": "will or going to?",
+          "rule": "Ask yourself: when did I decide? A plan made before now → going to: I'm going to see the dentist tomorrow (I have an appointment). A decision at the moment of speaking, an offer or a promise → will: Oh no, I forgot my pen! — Don't worry, I'll lend you mine.",
+          "table": [["Situation","Use","Example"],["a plan made before","going to","We're going to fly to Rome in May. We have the tickets."],["a decision now","will","I'm hungry. I'll make a sandwich."],["an offer","will","You look tired. I'll cook dinner."],["something we can see now","going to","Watch out! You're going to fall!"]],
+          "examples": ["A: We need milk. B: OK, I'll buy some.","I bought paint yesterday. I'm going to paint my room this weekend.","A: Somebody's at the door. B: I'll open it.","We're going to have a party on Saturday. We sent the invitations last week.","Look! That boy is going to fall off his bike!"],
+          "uz": "Oldindan rejalashtirilgan ish — going to; hozir qaror qilingan ish, taklif yoki va’da — will.",
+          "practise": [
+            ["choose","A: There's no bread. B: Oh, I ___ go and buy some. (decided just now)",["will","am going to"],"will","A decision at the moment of speaking → will."],
+            ["choose","I ___ visit Paris next month. I already have my tickets. (a plan)",["am going to","will"],"am going to","A plan made before → going to."],
+            ["choose","A: I can't open this jar. B: Give it to me. I ___ open it for you. (an offer)",["will","am going to"],"will","An offer → will."],
+            ["gap","We ___ going to move to a new flat next year. We bought it last month. (be)",["are","'re"],"A plan made before → We are going to…"],
+            ["fix",["Look at the clouds! It's going to rain.","Look at the clouds! It's going rain.","Look at the clouds! It going to rain."],"Look at the clouds! It's going to rain.","It's (It is) + going to + rain."]
+          ]
+        }
+      ],
+      "test": [
+        ["choose","Someone is at the door. I ___ open it. (a decision now)",["will","am going to"],"will"],
+        ["choose","We ___ going to visit our cousins next weekend.",["are","is","will"],"are"],
+        ["gap","I promise I ___ forget your birthday. (negative of will)",["won't","will not"]],
+        {"from":"g31","q":["choose","___ you go out last night?",["Did","Were","Do"],"Did"]},
+        ["gap","Look at that ball! It's going ___ hit the window.",["to"]],
+        ["choose","I think you ___ love this book.",["will","are going","wills"],"will"],
+        ["fix",["She is going to study medicine.","She going to study medicine.","She is going to studies medicine."],"She is going to study medicine."],
+        ["order",["going","We're","to","new","buy","a","car"],"We're going to buy a new car."],
+        {"from":"g30","q":["gap","We ___ a great time at the party last night. (have)",["had"]]},
+        ["choose","A: I'm cold. B: I ___ close the window for you. (an offer)",["will","am going to"],"will"],
+        ["gap","My sister ___ going to get married in June. (be)",["is","'s"]],
+        ["choose","I ___ start a new job on Monday. I signed the contract last week. (a plan)",["am going to","will"],"am going to"],
+        {"from":"g29","q":["gap","Where ___ you yesterday? (be)",["were"]]},
+        ["fix",["Will you help me, please?","Will you helping me, please?","Will you to help me, please?"],"Will you help me, please?"],
+        ["order",["you","Are","going","to","tonight","study"],"Are you going to study tonight?"],
+        ["choose","It's late. I think I ___ go to bed now. (a decision now)",["will","am going to"],"will"],
+        {"from":"g16","q":["choose","Listen! Someone ___ at the door.",["is knocking","knocks","knock"],"is knocking"]},
+        ["gap","I ___ going to watch TV tonight. I have a lot of homework. (negative)",["'m not","am not"]],
+        ["fix",["I think it will be sunny tomorrow.","I think it wills be sunny tomorrow.","I think it will is sunny tomorrow."],"I think it will be sunny tomorrow."],
+        ["choose","We ___ fly to Rome in May. We have the tickets. (a plan)",["are going to","will"],"are going to"]
+      ]
+    }
   ]
 }

@@ -18,8 +18,8 @@ async function setup(context, extra) {
   await prepare(context, Object.assign({ docs: [classDoc(CODE)] }, extra || {}));
   await context.addInitScript(() => { window.__grFast = true; window.__skSendTimeoutMs = 2000; });
 }
-async function start(page) {
-  await page.goto(URL_G);
+async function start(page, url) {
+  await page.goto(url || URL_G);
   await page.locator('#skIdInput').fill('10001');
   await page.getByRole('button', { name: /Start/ }).click();
   await passIdCheck(page);
@@ -27,7 +27,8 @@ async function start(page) {
 // answers the question on screen (practise: one `.gr-pq`; test: every `.gr-tq`) right — or wrong
 async function answer(page, sel, wrong) {
   await page.evaluate(([sel, wrong]) => {
-    const lesson = window.TA_GRAMMAR.levels[0].lessons.find(l => l.id === 'g1');
+    const id = new URLSearchParams(location.search).get('gl') || 'g1';   // the lesson the page is on
+    const lesson = window.TA_GRAMMAR.levels.flatMap(l => l.lessons).find(l => l.id === id);
     document.querySelectorAll(sel).forEach(li => {
       const q = li.dataset.chunk != null ? lesson.chunks[+li.dataset.chunk].practise[+li.dataset.q] : lesson.test[+li.dataset.q];
       if (q.type === 'choose' || q.type === 'fix') {
@@ -125,6 +126,26 @@ test('the test sends one result with 20 answers and the listed name', async ({ p
   expect(docs[0].answers[0]).toMatchObject({ right: 'am', ok: true });
   expect(await page.evaluate(c => localStorage.getItem('ta_grammar_draft|' + c), CODE)).toBeNull();
   expect(await kept(page)).toEqual([]);
+  expect(errors).toEqual([]);
+});
+
+test('an Elementary lesson (16): the first Submit sends one result with its level, lesson and number', async ({ page, context }) => {
+  test.setTimeout(60000);
+  await setup(context);
+  const errors = watchErrors(page);
+  await start(page, '/skill.html?s=grammar&gl=g16&c=' + CODE);
+  await expect(page.locator('.sk-head')).toContainText('Lesson 16');
+  await expect(page.locator('.gr-learn h2')).toHaveText('I am working, she is reading');
+  await toTest(page);
+  await answer(page, '.gr-tq');
+  await page.locator('#grSubmit').click();
+  await expect(page.locator('.gr-score')).toContainText('20/20');
+  await expect(page.locator('#grSend')).toContainText('Saved ✅');
+  const docs = await grammarDocs(page);
+  expect(docs).toHaveLength(1);
+  expect(docs[0]).toMatchObject({ type: 'Grammar course', skill: 'grammar', level: 'elementary', lesson: 'g16', lessonNo: 16, total: 20,
+    correct: 20, name: 'Alice Test', studentId: '10001' });
+  expect(docs[0].answers).toHaveLength(20);
   expect(errors).toEqual([]);
 });
 

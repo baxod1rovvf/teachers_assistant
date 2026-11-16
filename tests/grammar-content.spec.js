@@ -1,4 +1,4 @@
-// The Grammar Journey's content (teacher, 2026-11-16): 7 levels, Beginner Lessons 1–15. Each lesson is 2–4 learn → practise
+// The Grammar Journey's content (teacher, 2026-11-16): 7 levels, Beginner Lessons 1–15, Elementary 16–32. Each lesson is 2–4 learn → practise
 // chunks (5 practise questions each) and a 20-question revision test; from Lesson 2 on, exactly 4 test questions come from
 // earlier lessons. The source is docs/grammar-journey.json; `node tools/build-grammar.js` writes js/grammar-data.js and the
 // teacher's readable copy docs/grammar-journey.md. These checks read the generated file the way the student page does.
@@ -13,6 +13,11 @@ const TITLES = ['To Be (am/is/are) + A/An', 'Subject Pronouns + Possessive Adjec
   'Countable and Uncountable Nouns', 'Some and Any', 'Prepositions of Place', 'Present Simple (Affirmative)',
   'Present Simple (Negative and Questions)', 'Adverbs of Frequency', 'Object Pronouns + Possessive Pronouns',
   'Imperatives and Basic Sentence Structure'];
+const ELEMENTARY = ['Present Continuous', 'Present Simple vs Present Continuous', 'Can and Cannot (Ability)',
+  'Can (Permission and Requests)', 'Like, Love, Hate + Gerund', 'Infinitive with To', 'Prepositions of Time (In, On, At)',
+  'Possessive \'s and Whose', 'Much, Many, A Lot Of', 'Few, A Few, Little, A Little', 'Comparative Adjectives',
+  'Superlative Adjectives', 'Adjective Order', 'Was / Were', 'Past Simple (Regular and Irregular Verbs)',
+  'Past Simple (Negative and Questions)', 'Future with Will and Be Going To'];
 // the same list as the skills course's "only English" check (tests/skills.spec.js), plus the Uzbek apostrophe letters
 const UZBEK = /Uzbek|Tashkent|Samarkand|Bukhara|Kamila|Jasur|Bobur|Nodira|Karimov|Aziz|Lola\b|Malika|Rustam|Laylo|Jamol|Bekzod|Sardor|Nilufar|Madina|Timur|Dilnoza|Karim\b|\bAli\b|harf|raqam|unli tovush|telefon|ikki marta|[ʻʼ‘’]/;
 const CYRILLIC = /[Ѐ-ӿ]/;
@@ -43,16 +48,20 @@ function checkQuestion(q, where) {
   }
 }
 
-test('the Grammar Journey: 7 levels, 15 Beginner lessons, 2–4 chunks of 5 practise questions, 20-question tests', async () => {
+test('the Grammar Journey: 7 levels, 15 Beginner + 17 Elementary lessons, 2–4 chunks of 5 practise questions, 20-question tests', async () => {
   const G = loadGrammar();
   expect(G.v).toBe(1);
   expect(G.levels.map(l => [l.id, l.name])).toEqual(LEVELS);
-  G.levels.slice(1).forEach(l => expect(l.lessons, l.id).toEqual([]));
-  const lessons = G.levels[0].lessons;
-  expect(lessons.map(l => l.id)).toEqual(TITLES.map((t, i) => 'g' + (i + 1)));
-  expect(lessons.map(l => l.no)).toEqual(TITLES.map((t, i) => i + 1));
-  expect(lessons.map(l => l.title)).toEqual(TITLES);
-  for (const L of lessons) {
+  G.levels.slice(2).forEach(l => expect(l.lessons, l.id).toEqual([]));
+  const beginner = G.levels[0].lessons;
+  expect(beginner.map(l => l.id)).toEqual(TITLES.map((t, i) => 'g' + (i + 1)));
+  expect(beginner.map(l => l.no)).toEqual(TITLES.map((t, i) => i + 1));
+  expect(beginner.map(l => l.title)).toEqual(TITLES);
+  const elementary = G.levels[1].lessons;
+  expect(elementary.map(l => l.id)).toEqual(ELEMENTARY.map((t, i) => 'g' + (i + 16)));
+  expect(elementary.map(l => l.no)).toEqual(ELEMENTARY.map((t, i) => i + 16));
+  expect(elementary.map(l => l.title)).toEqual(ELEMENTARY);
+  for (const L of beginner.concat(elementary)) {
     expect(Number.isInteger(L.v) && L.v >= 1, L.id + ' content version').toBe(true);
     expect(L.chunks.length, L.id + ' chunks').toBeGreaterThanOrEqual(2);
     expect(L.chunks.length, L.id + ' chunks').toBeLessThanOrEqual(4);
