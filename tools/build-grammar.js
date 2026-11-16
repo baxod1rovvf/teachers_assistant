@@ -3,7 +3,7 @@
 // docs/grammar-journey.md. Run `node tools/build-grammar.js` after editing the JSON; never edit grammar-data.js by hand.
 // It checks every rule first and stops (exit code 1, nothing written) when one is broken.
 //
-// The JSON: { "<level id>": [lesson, …] } — only "beginner" has lessons for now. A lesson:
+// The JSON: { "<level id>": [lesson, …] } — "beginner" (Lessons 1–15) and "elementary" (16–32) have lessons for now. A lesson:
 //   { no, title, v (content version: raise it when questions change, so old drafts on students' phones start again),
 //     chunks: [{ title, rule, table? [[header…], [row…]…], examples [4–6], uz (one Uzbek line), practise [5 questions] }] (2–4),
 //     test: [20 questions] — from Lesson 2 on, exactly 4 of them are { "from": "g<N>", "q": question } (an earlier lesson) }
@@ -25,7 +25,7 @@ const LEVELS = [['beginner', 'Beginner'], ['elementary', 'Elementary'], ['preint
 const KIND = { choose: 'Choose', gap: 'Write', order: 'Put in order', fix: 'Correct sentence' };
 const UZBEK = /Uzbek|Tashkent|Samarkand|Bukhara|Kamila|Jasur|Bobur|Nodira|Karimov|Aziz|Lola\b|Malika|Rustam|Laylo|Jamol|Bekzod|Sardor|Nilufar|Madina|Timur|Dilnoza|Karim\b|\bAli\b|harf|raqam|unli tovush|telefon|ikki marta|[ʻʼ‘’]/;
 const CYRILLIC = /[Ѐ-ӿ]/;
-const orderWords = s => s.replace(/[.?!]$/, '').split(' ').sort();
+const orderWords = s => s.replace(/[.?!]$/, '').toLowerCase().split(' ').sort();   // a fronted word may be capitalised
 
 function question(t, where, errors) {
   if (!Array.isArray(t)) { errors.push(where + ': a question must be a list'); return null; }
@@ -52,7 +52,7 @@ function question(t, where, errors) {
   if (type === 'order') {
     if (!Array.isArray(Q.words) || Q.words.length < 2) bad('needs at least 2 words');
     else Q.a.forEach(a => {
-      if (JSON.stringify(orderWords(a)) !== JSON.stringify([...Q.words].sort())) bad('"' + a + '" does not use exactly its words');
+      if (JSON.stringify(orderWords(a)) !== JSON.stringify(orderWords(Q.words.join(' ')))) bad('"' + a + '" does not use exactly its words');
     });
   }
   return Q;
@@ -131,7 +131,9 @@ function toJs(data) {
 }
 
 function toMd(data) {
-  const out = ['# Grammar Journey — Beginner (Lessons 1–15)', '',
+  const filled = data.levels.filter(l => l.lessons.length);
+  const range = l => l.lessons[0].no + '–' + l.lessons[l.lessons.length - 1].no;
+  const out = ['# Grammar Journey — ' + filled.map(l => l.name + ' (Lessons ' + range(l) + ')').join(', '), '',
     'Made by `tools/build-grammar.js` from `docs/grammar-journey.json` — please read and approve. Each lesson: learn → practise',
     'for every part, then a 20-question revision test. Right answers are in **bold**; questions from an earlier lesson are',
     'marked *(from Lesson N)*. When a gap accepts more than one answer, all of them are listed.', ''];
@@ -146,23 +148,27 @@ function toMd(data) {
     if (Q.hint) line += '  \n   *Hint: ' + Q.hint + '*';
     return line + from;
   };
-  for (const level of data.levels) for (const L of level.lessons) {
-    out.push('---', '', '## Lesson ' + L.no + ' — ' + L.title, '');
-    L.chunks.forEach((c, ci) => {
-      const k = c.learn;
-      out.push('### Part ' + (ci + 1) + ': ' + k.title, '', k.rule, '');
-      if (k.table) {
-        out.push('| ' + k.table[0].map(cell).join(' | ') + ' |', '|' + k.table[0].map(() => '---').join('|') + '|');
-        k.table.slice(1).forEach(r => out.push('| ' + r.map(cell).join(' | ') + ' |'));
+  for (const level of filled) {
+    out.push('---', '', '## ' + level.name + ' (Lessons ' + range(level) + ')', '');
+    level.lessons.forEach((L, li) => {
+      if (li) out.push('---', '');
+      out.push('### Lesson ' + L.no + ' — ' + L.title, '');
+      L.chunks.forEach((c, ci) => {
+        const k = c.learn;
+        out.push('#### Part ' + (ci + 1) + ': ' + k.title, '', k.rule, '');
+        if (k.table) {
+          out.push('| ' + k.table[0].map(cell).join(' | ') + ' |', '|' + k.table[0].map(() => '---').join('|') + '|');
+          k.table.slice(1).forEach(r => out.push('| ' + r.map(cell).join(' | ') + ' |'));
+          out.push('');
+        }
+        out.push('Examples:', '', ...k.examples.map(e => '- ' + e), '', '🇺🇿 ' + k.uz, '', '**Practise**', '');
+        c.practise.forEach((Q, i) => out.push(qLine(Q, i)));
         out.push('');
-      }
-      out.push('Examples:', '', ...k.examples.map(e => '- ' + e), '', '🇺🇿 ' + k.uz, '', '**Practise**', '');
-      c.practise.forEach((Q, i) => out.push(qLine(Q, i)));
+      });
+      out.push('#### Revision test (20 questions)', '');
+      L.test.forEach((Q, i) => out.push(qLine(Q, i)));
       out.push('');
     });
-    out.push('### Revision test (20 questions)', '');
-    L.test.forEach((Q, i) => out.push(qLine(Q, i)));
-    out.push('');
   }
   return out.join('\n');
 }

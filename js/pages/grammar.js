@@ -1,6 +1,6 @@
 /* ================= GRAMMAR JOURNEY — the teacher's side (2026-11-16) =================
-   A section on the Course page, under the group cards: 7 levels (TA_GRAMMAR, js/grammar-data.js — only Beginner has lessons
-   now, the others say "Coming soon"). A level opens its lessons; a lesson opens its page: ▶️ Try, 🔗 Copy link, a group
+   A section on the Course page, under the group cards: 7 levels (TA_GRAMMAR, js/grammar-data.js — Beginner and Elementary have
+   lessons now, the others say "Coming soon"). A level opens its lessons; a lesson opens its page: ▶️ Try, 🔗 Copy link, a group
    filter (All · each group), the results table and "🚫 Not finished".
    - One link per lesson for every group: skill.html?s=grammar&gl=<lesson id>&c=<code> (taGrammarLink in common.js).
    - ta_grammar_links { <lesson id>: { code, sentAt, rosterSig } } (synced, in the backup): the code is made at the first
