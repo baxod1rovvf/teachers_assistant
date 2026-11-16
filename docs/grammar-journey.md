@@ -8,8 +8,6 @@ marked *(from Lesson N)*. When a gap accepts more than one answer, all of them a
 
 ## Beginner (Lessons 1–15)
 
----
-
 ### Lesson 1 — To Be (am/is/are) + A/An
 
 #### Part 1: I am, you are, she is
@@ -138,7 +136,7 @@ Examples:
 17. [Write] Is it your bag? — No, it ___. → **isn't** / **is not**
 18. [Choose] It is ___ interesting book. — a / **an**
 19. [Write] You ___ in my class. (am / is / are) → **are**
-20. [Put in order] not / am / I / a / teacher → **I am not a teacher.**
+20. [Put in order] not / am / I / a / teacher → **I am not a teacher.** or **Am I not a teacher?**
 
 ---
 
@@ -1147,7 +1145,7 @@ Examples:
 10. [Choose] There ___ some milk in the jug. — **is** / are
 11. [Choose] There ___ some eggs in the box. — is / **are**
 12. [Write] Can I have ___ water, please? (some / any) → **some**
-13. [Put in order] any / I / haven't / got / money → **I haven't got any money.**
+13. [Put in order] any / I / haven't / got / money → **I haven't got any money.** or **Haven't I got any money?**
 14. [Write] There ___ a computer in the classroom. (is / are) → **is** *(from Lesson 6)*
 15. [Correct sentence] **There are some apples on the table.** ✓ · There are any apples on the table. ✗ · There is any apples on the table. ✗
 16. [Choose] Sorry, there isn't ___ sugar. — some / **any**
@@ -1411,7 +1409,7 @@ Examples:
 15. [Choose] The sun ___ in the east. — rise / **rises**
 16. [Write] My cat ___ on my bed. (sleep) → **sleeps**
 17. [Correct sentence] **She does her homework.** ✓ · She dos her homework. ✗ · She do her homework. ✗
-18. [Put in order] at / I / get / seven / up → **I get up at seven.**
+18. [Put in order] at / I / get / seven / up → **I get up at seven.** or **At seven I get up.**
 19. [Choose] My parents ___ at home. — is / am / **are** *(from Lesson 1)*
 20. [Choose] Emma and Lily ___ to music. — **listen** / listens
 
@@ -1667,7 +1665,7 @@ Examples:
 14. [Write] My mum ___ to work at eight. (go) → **goes** *(from Lesson 11)*
 15. [Choose] Tom plays football on most days. He ___ plays football. — **usually** / never / rarely
 16. [Write] Lucy watches TV once or twice a year. She ___ watches TV. (rarely / often) → **rarely**
-17. [Put in order] sometimes / I / to / walk / school → **I sometimes walk to school.** or **I walk to school sometimes.**
+17. [Put in order] sometimes / I / to / walk / school → **I sometimes walk to school.** or **I walk to school sometimes.** or **Sometimes I walk to school.**
 18. [Correct sentence] **How often do you visit your aunt?** ✓ · How often you visit your aunt? ✗ · How often does you visit your aunt? ✗
 19. [Choose] Would you like ___ cake? — **some** / any *(from Lesson 9)*
 20. [Choose] I see my best friend ___ day. — **every** / many / once
@@ -1904,7 +1902,7 @@ Examples:
    *Hint: The time (every day) goes at the end.*
 2. [Correct sentence] **We eat lunch at school every day.** ✓ · We every day eat lunch at school. ✗ · We eat at school every day lunch. ✗  
    *Hint: Subject + verb + object + where + when.*
-3. [Put in order] in / I / play / the / park / football → **I play football in the park.**  
+3. [Put in order] in / I / play / the / park / football → **I play football in the park.** or **In the park I play football.**  
    *Hint: I + play + football + in the park (where).*
 4. [Put in order] on / Sundays / They / their / grandmother / visit → **They visit their grandmother on Sundays.**  
    *Hint: They + visit + their grandmother + on Sundays (when).*
@@ -1930,15 +1928,13 @@ Examples:
 15. [Correct sentence] **I visit my aunt on Sundays.** ✓ · I my aunt visit on Sundays. ✗ · Visit I my aunt on Sundays. ✗
 16. [Put in order] English / speaks / Lucy / well → **Lucy speaks English well.**
 17. [Write] Please ___ the window. It's hot in here. (open) → **open**
-18. [Put in order] after / school / I / homework / my / do → **I do my homework after school.**
+18. [Put in order] after / school / I / homework / my / do → **I do my homework after school.** or **After school I do my homework.**
 19. [Choose] There ___ two bathrooms in our flat. — is / **are** *(from Lesson 6)*
 20. [Correct sentence] **Close your books, please.** ✓ · Closes your books, please. ✗ · You closes your books, please. ✗
 
 ---
 
 ## Elementary (Lessons 16–32)
-
----
 
 ### Lesson 16 — Present Continuous
 
@@ -2190,7 +2186,7 @@ Examples:
 11. [Write] My dad ___ work on Sundays. (negative) → **doesn't** / **does not**
 12. [Write] Tom isn't at home. He ___ in the park right now. (run) → **is running** / **'s running**
 13. [Put in order] playing / Are / chess / you → **Are you playing chess?**
-14. [Put in order] usually / I / at / get / up / seven → **I usually get up at seven.** or **I get up at seven usually.** *(from Lesson 13)*
+14. [Put in order] usually / I / at / get / up / seven → **I usually get up at seven.** or **I get up at seven usually.** or **Usually I get up at seven.** or **At seven I usually get up.** *(from Lesson 13)*
 15. [Choose] I ___ a new bike now. It's red. — **have** / am having
 16. [Correct sentence] **She doesn't like coffee.** ✓ · She isn't liking coffee. ✗ · She don't like coffee. ✗
 17. [Write] The children are ___ in the lake now. (swim) → **swimming** *(from Lesson 16)*
@@ -2220,7 +2216,7 @@ Examples:
 - We can run very fast.
 - My grandma can make great cakes.
 
-🇺🇿 can — qila olmoq. can hamma shaxs bilan bir xil, undan keyin fe’l to va -s siz keladi: She can swim.
+🇺🇿 can — qila olmoq. can hamma shaxs bilan bir xil, undan keyin fe’l to va -s qo‘shimchasisiz keladi: She can swim.
 
 **Practise**
 
@@ -2232,8 +2228,8 @@ Examples:
    *Hint: After can, the verb as it is: speak.*
 4. [Correct sentence] **He can play chess.** ✓ · He cans play chess. ✗ · He can plays chess. ✗  
    *Hint: can + verb as it is, no -s anywhere.*
-5. [Put in order] can / I / a / ride / horse → **I can ride a horse.**  
-   *Hint: I + can + ride + a horse.*
+5. [Put in order] can / She / a / ride / horse → **She can ride a horse.**  
+   *Hint: She + can + ride + a horse.*
 
 #### Part 2: can't — Can you…?
 
@@ -2359,7 +2355,7 @@ Examples:
    *Hint: Can I…? — Yes, you can.*
 4. [Write] Can we play outside now? — Sorry, you ___. It's raining. → **can't** / **cannot** / **can not**  
    *Hint: Can we…? — Sorry, you can't.*
-5. [Put in order] I / Can / a / ask / question → **Can I ask a question?**  
+5. [Put in order] I / Can / a / ask / question → **Can I ask a question?** or **I can ask a question.**  
    *Hint: Can + I + ask + a question.*
 
 #### Part 2: Can you…? Could you…? — asking for help
@@ -2436,7 +2432,7 @@ Examples:
 5. [Write] Can I watch TV now? — No, you ___. Do your homework first. → **can't** / **cannot** / **can not**
 6. [Choose] In class: ___ I go to the toilet, please? — **May** / Am / Do
 7. [Correct sentence] **Could you help me, please?** ✓ · Could you helping me, please? ✗ · Could you to help me, please? ✗
-8. [Put in order] borrow / Can / your / I / book → **Can I borrow your book?**
+8. [Put in order] borrow / Can / your / I / book → **Can I borrow your book?** or **I can borrow your book.**
 9. [Write] ___ run in the classroom! (negative) → **Don't** / **Do not** *(from Lesson 15)*
 10. [Choose] You want your friend to close the door. You say: ___ — **Can you close the door?** / Can I close the door?
 11. [Write] ___ you help me with my homework? — Sure. (can) → **Can** / **Could**
@@ -2448,7 +2444,7 @@ Examples:
 17. [Choose] Can you help ___? I can't open this box. — **me** / my / I *(from Lesson 14)*
 18. [Write] Can we go out to play? — Yes, you ___. → **can**
 19. [Correct sentence] **Can I borrow your ruler?** ✓ · Can I lend your ruler? ✗ · Can I borrowing your ruler? ✗
-20. [Put in order] I / May / in / come → **May I come in?**
+20. [Put in order] I / May / in / come → **May I come in?** or **I may come in.**
 
 ---
 
@@ -2826,13 +2822,13 @@ Examples:
 4. [Choose] I need ___ some milk. — **to buy** / buy / buying *(from Lesson 21)*
 5. [Write] I always feel tired ___ the afternoon. (in / on / at) → **in**
 6. [Choose] My birthday is ___ 2 July. — **on** / in / at
-7. [Choose] Bats sleep in the day and fly ___ night. — **at** / in / on
+7. [Choose] I usually go to bed ___ midnight. — **at** / in / on
 8. [Correct sentence] **The concert is on Saturday evening.** ✓ · The concert is in Saturday evening. ✗ · The concert is at Saturday evening. ✗
 9. [Write] Do you enjoy ___ in the rain? (walk) → **walking** *(from Lesson 20)*
 10. [Choose] Shakespeare was born ___ 1564. — **in** / on / at
 11. [Choose] See you ___! — **tomorrow** / on tomorrow / at tomorrow
 12. [Write] We have dinner ___ seven o'clock. (in / on / at) → **at**
-13. [Put in order] at / I / up / get / six → **I get up at six.**
+13. [Put in order] at / I / up / get / six → **I get up at six.** or **At six I get up.**
 14. [Choose] My mum ___ dinner now. — **is cooking** / cooks *(from Lesson 17)*
 15. [Correct sentence] **I go swimming every Friday.** ✓ · I go swimming on every Friday. ✗ · I go swimming at every Friday. ✗
 16. [Write] The shops are closed ___ New Year's Day. (in / on / at) → **on**
@@ -3149,7 +3145,7 @@ Examples:
 - I have a few friends, so I'm happy.
 - There's very little water in the desert.
 
-🇺🇿 a siz few / little — juda kam, yetarli emas: He has few friends — Uning do‘stlari juda kam.
+🇺🇿 a artiklisiz few / little — juda kam, yetarli emas: He has few friends — Uning do‘stlari juda kam.
 
 **Practise**
 
@@ -3183,7 +3179,7 @@ Examples:
 - How much homework do you have? — Not much.
 - How many sweets are in the box? — None. It's empty.
 
-🇺🇿 Qisqa javoblar: a lot — ko‘p, a few / a little — ozgina, none — hech qancha.
+🇺🇿 Qisqa javoblar: a lot — ko‘p, a few / a little — ozgina, none — hech biri / umuman yo‘q.
 
 **Practise**
 
@@ -3209,7 +3205,7 @@ Examples:
 7. [Correct sentence] **I have a few questions.** ✓ · I have a little questions. ✗ · I have a few question. ✗
 8. [Put in order] a / I / need / help / little → **I need a little help.**
 9. [Write] ___ pencil is this? — It's mine. (Who's / Whose) → **Whose** *(from Lesson 23)*
-10. [Choose] How many people are in the room? — ___. It's empty. — **None** / A few / A little
+10. [Choose] How many chairs are in the room? — ___. It's empty. — **None** / A few / A little
 11. [Choose] Hurry! There's very ___ time. — **little** / few / a few
 12. [Write] How much bread do we have? — Not ___. (much / many) → **much**
 13. [Choose] My mum loves ___ in the garden. — **working** / work / works *(from Lesson 20)*
@@ -3245,7 +3241,7 @@ Examples:
 - For me, English is easier than Chinese.
 - My new school is bigger than my old school.
 
-🇺🇿 Ikki narsani solishtirish: qisqa sifat + -er + than: Tom is taller than Sam — Tom Samdan baland.
+🇺🇿 Ikki narsani solishtirish: qisqa sifat + -er + than: Tom is taller than Sam — Tom Samdan balandroq.
 
 **Practise**
 
@@ -3374,7 +3370,7 @@ Examples:
 - Friday is the happiest day of the week for me.
 - Who is the oldest person in your family?
 
-🇺🇿 Eng … ma’nosi: the + sifat + -est: the tallest — eng baland, the biggest — eng katta.
+🇺🇿 “Eng …” ma’nosida: the + sifat + -est: the tallest — eng baland, the biggest — eng katta.
 
 **Practise**
 
@@ -3514,7 +3510,7 @@ Examples:
    *Hint: The adjective goes before the noun: long hair.*
 4. [Correct sentence] **We live in a big house.** ✓ · We live in a house big. ✗ · We live in a bigs house. ✗  
    *Hint: Adjective before the noun, no -s: a big house.*
-5. [Write] My grandma has two ___ dogs. (little) → **little**  
+5. [Choose] My grandma has two ___ dogs. — **little** / littles  
    *Hint: Adjectives never take -s: two little dogs.*
 
 #### Part 2: Opinion first: a beautiful old house
@@ -3596,7 +3592,7 @@ Examples:
 5. [Choose] We have a ___ garden. — **lovely big** / big lovely
 6. [Choose] It's a ___ bag. — **beautiful Italian** / Italian beautiful
 7. [Correct sentence] **She has long black hair.** ✓ · She has black long hair. ✗ · She has hair long black. ✗
-8. [Write] I have two ___ cats. (white) → **white**
+8. [Choose] I have two ___ cats. — **white** / whites
 9. [Write] A plane is ___ than a car. (fast) → **faster** *(from Lesson 26)*
 10. [Choose] a ___ box — **small wooden** / wooden small
 11. [Put in order] an / It's / old / ugly / sofa → **It's an ugly old sofa.**
@@ -3708,7 +3704,7 @@ Examples:
    *Hint: One tree → There was.*
 2. [Choose] There ___ a lot of people at the concert yesterday. — **were** / was  
    *Hint: people is plural → There were.*
-3. [Write] There ___ any bread in the kitchen this morning. (negative) → **wasn't** / **was not**  
+3. [Write] There ___ any bread in the kitchen yesterday morning. (negative) → **wasn't** / **was not**  
    *Hint: bread, negative → There wasn't.*
 4. [Choose] I ___ born in 2011. — **was** / were / am  
    *Hint: I was born…*
@@ -3726,8 +3722,8 @@ Examples:
 7. [Write] Was your teacher angry? — Yes, she ___. → **was**
 8. [Correct sentence] **They weren't at home last night.** ✓ · They wasn't at home last night. ✗ · They aren't at home last night. ✗
 9. [Choose] I was born ___ 2012. — **in** / on / at *(from Lesson 22)*
-10. [Choose] There ___ three bananas on the table this morning. — **were** / was
-11. [Write] There ___ a cat in the garden this morning. (be) → **was**
+10. [Choose] There ___ three bananas on the table yesterday morning. — **were** / was
+11. [Write] There ___ a cat in the garden yesterday morning. (be) → **was**
 12. [Put in order] were / Where / born / you → **Where were you born?**
 13. [Choose] She has a ___ bag. — **beautiful red** / red beautiful *(from Lesson 28)*
 14. [Correct sentence] **Was the film good?** ✓ · Were the film good? ✗ · Did the film good? ✗
@@ -3865,7 +3861,7 @@ Examples:
 15. [Choose] My parents ___ in Canada for five years. Now they live in the USA. — **lived** / liveed / live
 16. [Write] We ___ a cake for Mum's birthday last week. (make) → **made**
 17. [Correct sentence] **He is always happy.** ✓ · He always is happy. ✗ · Always he is happy. ✗ *(from Lesson 13)*
-18. [Put in order] had / I / breakfast / at / seven → **I had breakfast at seven.**
+18. [Put in order] had / I / breakfast / at / seven → **I had breakfast at seven.** or **At seven I had breakfast.**
 19. [Choose] Tom ___ home at ten last night. — **came** / comed / comes
 20. [Write] I ___ my homework before dinner yesterday. (do) → **did**
 
@@ -4055,7 +4051,7 @@ Examples:
 - Are you going to play football after school?
 - He isn't going to come to the party.
 
-🇺🇿 be going to — oldindan qilingan reja: I'm going to visit my aunt next week — Kelasi hafta xolamnikiga boraman.
+🇺🇿 be going to — oldindan qilingan reja: I'm going to visit my aunt next week — Kelasi hafta xolamnikiga bormoqchiman.
 
 **Practise**
 

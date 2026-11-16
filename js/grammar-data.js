@@ -58,7 +58,7 @@ window.TA_GRAMMAR = {
           {"type":"gap","q":"Is it your bag? — No, it ___.","a":["isn't","is not"]},
           {"type":"choose","q":"It is ___ interesting book.","options":["a","an"],"a":["an"]},
           {"type":"gap","q":"You ___ in my class. (am / is / are)","a":["are"]},
-          {"type":"order","q":"Put the words in order.","words":["not","am","I","a","teacher"],"a":["I am not a teacher."]}
+          {"type":"order","q":"Put the words in order.","words":["not","am","I","a","teacher"],"a":["I am not a teacher.","Am I not a teacher?"]}
         ]
       },
       {
@@ -507,7 +507,7 @@ window.TA_GRAMMAR = {
           {"type":"choose","q":"There ___ some milk in the jug.","options":["is","are"],"a":["is"]},
           {"type":"choose","q":"There ___ some eggs in the box.","options":["is","are"],"a":["are"]},
           {"type":"gap","q":"Can I have ___ water, please? (some / any)","a":["some"]},
-          {"type":"order","q":"Put the words in order.","words":["any","I","haven't","got","money"],"a":["I haven't got any money."]},
+          {"type":"order","q":"Put the words in order.","words":["any","I","haven't","got","money"],"a":["I haven't got any money.","Haven't I got any money?"]},
           {"type":"gap","q":"There ___ a computer in the classroom. (is / are)","a":["is"],"from":"g6"},
           {"type":"fix","q":"Which sentence is correct?","options":["There are some apples on the table.","There are any apples on the table.","There is any apples on the table."],"a":["There are some apples on the table."]},
           {"type":"choose","q":"Sorry, there isn't ___ sugar.","options":["some","any"],"a":["any"]},
@@ -626,7 +626,7 @@ window.TA_GRAMMAR = {
           {"type":"choose","q":"The sun ___ in the east.","options":["rise","rises"],"a":["rises"]},
           {"type":"gap","q":"My cat ___ on my bed. (sleep)","a":["sleeps"]},
           {"type":"fix","q":"Which sentence is correct?","options":["She does her homework.","She dos her homework.","She do her homework."],"a":["She does her homework."]},
-          {"type":"order","q":"Put the words in order.","words":["at","I","get","seven","up"],"a":["I get up at seven."]},
+          {"type":"order","q":"Put the words in order.","words":["at","I","get","seven","up"],"a":["I get up at seven.","At seven I get up."]},
           {"type":"choose","q":"My parents ___ at home.","options":["is","am","are"],"a":["are"],"from":"g1"},
           {"type":"choose","q":"Emma and Lily ___ to music.","options":["listen","listens"],"a":["listen"]}
         ]
@@ -739,7 +739,7 @@ window.TA_GRAMMAR = {
           {"type":"gap","q":"My mum ___ to work at eight. (go)","a":["goes"],"from":"g11"},
           {"type":"choose","q":"Tom plays football on most days. He ___ plays football.","options":["usually","never","rarely"],"a":["usually"]},
           {"type":"gap","q":"Lucy watches TV once or twice a year. She ___ watches TV. (rarely / often)","a":["rarely"]},
-          {"type":"order","q":"Put the words in order.","words":["sometimes","I","to","walk","school"],"a":["I sometimes walk to school.","I walk to school sometimes."]},
+          {"type":"order","q":"Put the words in order.","words":["sometimes","I","to","walk","school"],"a":["I sometimes walk to school.","I walk to school sometimes.","Sometimes I walk to school."]},
           {"type":"fix","q":"Which sentence is correct?","options":["How often do you visit your aunt?","How often you visit your aunt?","How often does you visit your aunt?"],"a":["How often do you visit your aunt?"]},
           {"type":"choose","q":"Would you like ___ cake?","options":["some","any"],"a":["some"],"from":"g9"},
           {"type":"choose","q":"I see my best friend ___ day.","options":["every","many","once"],"a":["every"]}
@@ -830,7 +830,7 @@ window.TA_GRAMMAR = {
             practise: [
               {"type":"fix","q":"Which sentence is correct?","options":["I go to the gym every day.","I every day go to the gym.","Go I to the gym every day."],"a":["I go to the gym every day."],"hint":"The time (every day) goes at the end."},
               {"type":"fix","q":"Which sentence is correct?","options":["We eat lunch at school every day.","We every day eat lunch at school.","We eat at school every day lunch."],"a":["We eat lunch at school every day."],"hint":"Subject + verb + object + where + when."},
-              {"type":"order","q":"Put the words in order.","words":["in","I","play","the","park","football"],"a":["I play football in the park."],"hint":"I + play + football + in the park (where)."},
+              {"type":"order","q":"Put the words in order.","words":["in","I","play","the","park","football"],"a":["I play football in the park.","In the park I play football."],"hint":"I + play + football + in the park (where)."},
               {"type":"order","q":"Put the words in order.","words":["on","Sundays","They","their","grandmother","visit"],"a":["They visit their grandmother on Sundays."],"hint":"They + visit + their grandmother + on Sundays (when)."},
               {"type":"fix","q":"Which sentence is correct?","options":["My brother works in a bank.","My brother in a bank works.","In a bank works my brother."],"a":["My brother works in a bank."],"hint":"Subject + verb, then the place: My brother works in a bank."}
             ]
@@ -854,7 +854,7 @@ window.TA_GRAMMAR = {
           {"type":"fix","q":"Which sentence is correct?","options":["I visit my aunt on Sundays.","I my aunt visit on Sundays.","Visit I my aunt on Sundays."],"a":["I visit my aunt on Sundays."]},
           {"type":"order","q":"Put the words in order.","words":["English","speaks","Lucy","well"],"a":["Lucy speaks English well."]},
           {"type":"gap","q":"Please ___ the window. It's hot in here. (open)","a":["open"]},
-          {"type":"order","q":"Put the words in order.","words":["after","school","I","homework","my","do"],"a":["I do my homework after school."]},
+          {"type":"order","q":"Put the words in order.","words":["after","school","I","homework","my","do"],"a":["I do my homework after school.","After school I do my homework."]},
           {"type":"choose","q":"There ___ two bathrooms in our flat.","options":["is","are"],"a":["are"],"from":"g6"},
           {"type":"fix","q":"Which sentence is correct?","options":["Close your books, please.","Closes your books, please.","You closes your books, please."],"a":["Close your books, please."]}
         ]
@@ -968,7 +968,7 @@ window.TA_GRAMMAR = {
           {"type":"gap","q":"My dad ___ work on Sundays. (negative)","a":["doesn't","does not"]},
           {"type":"gap","q":"Tom isn't at home. He ___ in the park right now. (run)","a":["is running","'s running"]},
           {"type":"order","q":"Put the words in order.","words":["playing","Are","chess","you"],"a":["Are you playing chess?"]},
-          {"type":"order","q":"Put the words in order.","words":["usually","I","at","get","up","seven"],"a":["I usually get up at seven.","I get up at seven usually."],"from":"g13"},
+          {"type":"order","q":"Put the words in order.","words":["usually","I","at","get","up","seven"],"a":["I usually get up at seven.","I get up at seven usually.","Usually I get up at seven.","At seven I usually get up."],"from":"g13"},
           {"type":"choose","q":"I ___ a new bike now. It's red.","options":["have","am having"],"a":["have"]},
           {"type":"fix","q":"Which sentence is correct?","options":["She doesn't like coffee.","She isn't liking coffee.","She don't like coffee."],"a":["She doesn't like coffee."]},
           {"type":"gap","q":"The children are ___ in the lake now. (swim)","a":["swimming"],"from":"g16"},
@@ -981,13 +981,13 @@ window.TA_GRAMMAR = {
         id: "g18", no: 18, title: "Can and Cannot (Ability)", v: 1,
         chunks: [
           {
-            learn: {"title":"I can swim","rule":"Use can + verb to say that someone is able to do something. Can is the same for every person — it never takes -s: I can swim. She can swim (not she cans). After can, use the verb as it is, with no to and no -s: He can speak French (not can to speak, not can speaks).","table":[["Person","can + verb","Example"],["I / you / we / they","can swim","We can swim."],["he / she / it","can play","She can play the piano."]],"examples":["I can ride a bike.","My little brother can count to a hundred.","Birds can fly.","Anna can speak three languages.","We can run very fast.","My grandma can make great cakes."],"uz":"can — qila olmoq. can hamma shaxs bilan bir xil, undan keyin fe’l to va -s siz keladi: She can swim."},
+            learn: {"title":"I can swim","rule":"Use can + verb to say that someone is able to do something. Can is the same for every person — it never takes -s: I can swim. She can swim (not she cans). After can, use the verb as it is, with no to and no -s: He can speak French (not can to speak, not can speaks).","table":[["Person","can + verb","Example"],["I / you / we / they","can swim","We can swim."],["he / she / it","can play","She can play the piano."]],"examples":["I can ride a bike.","My little brother can count to a hundred.","Birds can fly.","Anna can speak three languages.","We can run very fast.","My grandma can make great cakes."],"uz":"can — qila olmoq. can hamma shaxs bilan bir xil, undan keyin fe’l to va -s qo‘shimchasisiz keladi: She can swim."},
             practise: [
               {"type":"choose","q":"She ___ play the guitar.","options":["can","cans","can to"],"a":["can"],"hint":"can is the same for every person: She can."},
               {"type":"choose","q":"Tom can ___ very fast.","options":["run","runs","to run"],"a":["run"],"hint":"After can, the verb as it is: run."},
               {"type":"gap","q":"My dad can ___ three languages. (speak)","a":["speak"],"hint":"After can, the verb as it is: speak."},
               {"type":"fix","q":"Which sentence is correct?","options":["He can play chess.","He cans play chess.","He can plays chess."],"a":["He can play chess."],"hint":"can + verb as it is, no -s anywhere."},
-              {"type":"order","q":"Put the words in order.","words":["can","I","a","ride","horse"],"a":["I can ride a horse."],"hint":"I + can + ride + a horse."}
+              {"type":"order","q":"Put the words in order.","words":["can","She","a","ride","horse"],"a":["She can ride a horse."],"hint":"She + can + ride + a horse."}
             ]
           },
           {
@@ -1044,7 +1044,7 @@ window.TA_GRAMMAR = {
               {"type":"choose","q":"Can I sit here? — Yes, of ___.","options":["course","sure","can"],"a":["course"],"hint":"A polite yes: Yes, of course."},
               {"type":"gap","q":"Can I open the window? — Yes, you ___.","a":["can"],"hint":"Can I…? — Yes, you can."},
               {"type":"gap","q":"Can we play outside now? — Sorry, you ___. It's raining.","a":["can't","cannot","can not"],"hint":"Can we…? — Sorry, you can't."},
-              {"type":"order","q":"Put the words in order.","words":["I","Can","a","ask","question"],"a":["Can I ask a question?"],"hint":"Can + I + ask + a question."}
+              {"type":"order","q":"Put the words in order.","words":["I","Can","a","ask","question"],"a":["Can I ask a question?","I can ask a question."],"hint":"Can + I + ask + a question."}
             ]
           },
           {
@@ -1076,7 +1076,7 @@ window.TA_GRAMMAR = {
           {"type":"gap","q":"Can I watch TV now? — No, you ___. Do your homework first.","a":["can't","cannot","can not"]},
           {"type":"choose","q":"In class: ___ I go to the toilet, please?","options":["May","Am","Do"],"a":["May"]},
           {"type":"fix","q":"Which sentence is correct?","options":["Could you help me, please?","Could you helping me, please?","Could you to help me, please?"],"a":["Could you help me, please?"]},
-          {"type":"order","q":"Put the words in order.","words":["borrow","Can","your","I","book"],"a":["Can I borrow your book?"]},
+          {"type":"order","q":"Put the words in order.","words":["borrow","Can","your","I","book"],"a":["Can I borrow your book?","I can borrow your book."]},
           {"type":"gap","q":"___ run in the classroom! (negative)","a":["Don't","Do not"],"from":"g15"},
           {"type":"choose","q":"You want your friend to close the door. You say: ___","options":["Can you close the door?","Can I close the door?"],"a":["Can you close the door?"]},
           {"type":"gap","q":"___ you help me with my homework? — Sure. (can)","a":["Can","Could"]},
@@ -1088,7 +1088,7 @@ window.TA_GRAMMAR = {
           {"type":"choose","q":"Can you help ___? I can't open this box.","options":["me","my","I"],"a":["me"],"from":"g14"},
           {"type":"gap","q":"Can we go out to play? — Yes, you ___.","a":["can"]},
           {"type":"fix","q":"Which sentence is correct?","options":["Can I borrow your ruler?","Can I lend your ruler?","Can I borrowing your ruler?"],"a":["Can I borrow your ruler?"]},
-          {"type":"order","q":"Put the words in order.","words":["I","May","in","come"],"a":["May I come in?"]}
+          {"type":"order","q":"Put the words in order.","words":["I","May","in","come"],"a":["May I come in?","I may come in."]}
         ]
       },
       {
@@ -1246,13 +1246,13 @@ window.TA_GRAMMAR = {
           {"type":"choose","q":"I need ___ some milk.","options":["to buy","buy","buying"],"a":["to buy"],"from":"g21"},
           {"type":"gap","q":"I always feel tired ___ the afternoon. (in / on / at)","a":["in"]},
           {"type":"choose","q":"My birthday is ___ 2 July.","options":["on","in","at"],"a":["on"]},
-          {"type":"choose","q":"Bats sleep in the day and fly ___ night.","options":["at","in","on"],"a":["at"]},
+          {"type":"choose","q":"I usually go to bed ___ midnight.","options":["at","in","on"],"a":["at"]},
           {"type":"fix","q":"Which sentence is correct?","options":["The concert is on Saturday evening.","The concert is in Saturday evening.","The concert is at Saturday evening."],"a":["The concert is on Saturday evening."]},
           {"type":"gap","q":"Do you enjoy ___ in the rain? (walk)","a":["walking"],"from":"g20"},
           {"type":"choose","q":"Shakespeare was born ___ 1564.","options":["in","on","at"],"a":["in"]},
           {"type":"choose","q":"See you ___!","options":["tomorrow","on tomorrow","at tomorrow"],"a":["tomorrow"]},
           {"type":"gap","q":"We have dinner ___ seven o'clock. (in / on / at)","a":["at"]},
-          {"type":"order","q":"Put the words in order.","words":["at","I","up","get","six"],"a":["I get up at six."]},
+          {"type":"order","q":"Put the words in order.","words":["at","I","up","get","six"],"a":["I get up at six.","At six I get up."]},
           {"type":"choose","q":"My mum ___ dinner now.","options":["is cooking","cooks"],"a":["is cooking"],"from":"g17"},
           {"type":"fix","q":"Which sentence is correct?","options":["I go swimming every Friday.","I go swimming on every Friday.","I go swimming at every Friday."],"a":["I go swimming every Friday."]},
           {"type":"gap","q":"The shops are closed ___ New Year's Day. (in / on / at)","a":["on"]},
@@ -1390,7 +1390,7 @@ window.TA_GRAMMAR = {
             ]
           },
           {
-            learn: {"title":"few and little — almost none","rule":"Without a, few and little sound negative: almost none, not enough. few friends = almost no friends (sad). little time = almost no time (a problem). Compare: I have a few friends (good — I have some). I have few friends (sad — almost none). We often say very few / very little.","table":[["","Some, enough (positive)","Almost none (negative)"],["Countable","a few friends","few friends"],["Uncountable","a little money","little money"]],"examples":["He's lonely. He has very few friends.","Hurry up! We have very little time.","Few people know about this place.","I have a few friends, so I'm happy.","There's very little water in the desert."],"uz":"a siz few / little — juda kam, yetarli emas: He has few friends — Uning do‘stlari juda kam."},
+            learn: {"title":"few and little — almost none","rule":"Without a, few and little sound negative: almost none, not enough. few friends = almost no friends (sad). little time = almost no time (a problem). Compare: I have a few friends (good — I have some). I have few friends (sad — almost none). We often say very few / very little.","table":[["","Some, enough (positive)","Almost none (negative)"],["Countable","a few friends","few friends"],["Uncountable","a little money","little money"]],"examples":["He's lonely. He has very few friends.","Hurry up! We have very little time.","Few people know about this place.","I have a few friends, so I'm happy.","There's very little water in the desert."],"uz":"a artiklisiz few / little — juda kam, yetarli emas: He has few friends — Uning do‘stlari juda kam."},
             practise: [
               {"type":"choose","q":"Which means 'almost no friends'?","options":["few friends","a few friends"],"a":["few friends"],"hint":"Without a, few means almost none."},
               {"type":"choose","q":"Which means 'some money — enough'?","options":["a little money","little money"],"a":["a little money"],"hint":"With a, a little means some, enough."},
@@ -1400,7 +1400,7 @@ window.TA_GRAMMAR = {
             ]
           },
           {
-            learn: {"title":"Short answers: a lot, a few, not much, none","rule":"To answer How many…? or How much…?, you can use these words alone: How many cousins have you got? — A lot. / A few. / Not many. / None. How much tea do you want? — A little, please. / Not much. Remember: few / many for things you can count, little / much for things you can't count.","table":[["","Countable (How many?)","Uncountable (How much?)"],["a big number / amount","a lot","a lot"],["small, but some","a few","a little"],["small","not many","not much"],["zero","none","none"]],"examples":["How many photos have you got? — A lot!","How much milk do you want? — Just a little, please.","How many tickets are left? — Only a few.","How much homework do you have? — Not much.","How many sweets are in the box? — None. It's empty."],"uz":"Qisqa javoblar: a lot — ko‘p, a few / a little — ozgina, none — hech qancha."},
+            learn: {"title":"Short answers: a lot, a few, not much, none","rule":"To answer How many…? or How much…?, you can use these words alone: How many cousins have you got? — A lot. / A few. / Not many. / None. How much tea do you want? — A little, please. / Not much. Remember: few / many for things you can count, little / much for things you can't count.","table":[["","Countable (How many?)","Uncountable (How much?)"],["a big number / amount","a lot","a lot"],["small, but some","a few","a little"],["small","not many","not much"],["zero","none","none"]],"examples":["How many photos have you got? — A lot!","How much milk do you want? — Just a little, please.","How many tickets are left? — Only a few.","How much homework do you have? — Not much.","How many sweets are in the box? — None. It's empty."],"uz":"Qisqa javoblar: a lot — ko‘p, a few / a little — ozgina, none — hech biri / umuman yo‘q."},
             practise: [
               {"type":"choose","q":"How much sugar do you want? — Just ___, please.","options":["a little","a few"],"a":["a little"],"hint":"sugar can't be counted → a little."},
               {"type":"choose","q":"How many tickets are left? — Only ___.","options":["a few","a little"],"a":["a few"],"hint":"tickets can be counted → a few."},
@@ -1420,7 +1420,7 @@ window.TA_GRAMMAR = {
           {"type":"fix","q":"Which sentence is correct?","options":["I have a few questions.","I have a little questions.","I have a few question."],"a":["I have a few questions."]},
           {"type":"order","q":"Put the words in order.","words":["a","I","need","help","little"],"a":["I need a little help."]},
           {"type":"gap","q":"___ pencil is this? — It's mine. (Who's / Whose)","a":["Whose"],"from":"g23"},
-          {"type":"choose","q":"How many people are in the room? — ___. It's empty.","options":["None","A few","A little"],"a":["None"]},
+          {"type":"choose","q":"How many chairs are in the room? — ___. It's empty.","options":["None","A few","A little"],"a":["None"]},
           {"type":"choose","q":"Hurry! There's very ___ time.","options":["little","few","a few"],"a":["little"]},
           {"type":"gap","q":"How much bread do we have? — Not ___. (much / many)","a":["much"]},
           {"type":"choose","q":"My mum loves ___ in the garden.","options":["working","work","works"],"a":["working"],"from":"g20"},
@@ -1437,7 +1437,7 @@ window.TA_GRAMMAR = {
         id: "g26", no: 26, title: "Comparative Adjectives", v: 1,
         chunks: [
           {
-            learn: {"title":"taller, bigger, easier","rule":"Use a comparative + than to compare two people or things: Tom is taller than Sam. Short adjectives (one syllable) add -er: tall → taller, old → older. Ending in -e: add -r: nice → nicer. One vowel + one consonant: double the last letter: big → bigger, hot → hotter. Ending in consonant + y: y → ier: easy → easier, happy → happier.","table":[["Adjective","Rule","Comparative"],["tall, old, cheap","+ er","taller, older, cheaper"],["nice, large","+ r","nicer, larger"],["big, hot, thin","double + er","bigger, hotter, thinner"],["easy, happy, busy","y → ier","easier, happier, busier"]],"examples":["My brother is taller than me.","Cats are smaller than dogs.","July is hotter than May.","This bag is cheaper than that one.","For me, English is easier than Chinese.","My new school is bigger than my old school."],"uz":"Ikki narsani solishtirish: qisqa sifat + -er + than: Tom is taller than Sam — Tom Samdan baland."},
+            learn: {"title":"taller, bigger, easier","rule":"Use a comparative + than to compare two people or things: Tom is taller than Sam. Short adjectives (one syllable) add -er: tall → taller, old → older. Ending in -e: add -r: nice → nicer. One vowel + one consonant: double the last letter: big → bigger, hot → hotter. Ending in consonant + y: y → ier: easy → easier, happy → happier.","table":[["Adjective","Rule","Comparative"],["tall, old, cheap","+ er","taller, older, cheaper"],["nice, large","+ r","nicer, larger"],["big, hot, thin","double + er","bigger, hotter, thinner"],["easy, happy, busy","y → ier","easier, happier, busier"]],"examples":["My brother is taller than me.","Cats are smaller than dogs.","July is hotter than May.","This bag is cheaper than that one.","For me, English is easier than Chinese.","My new school is bigger than my old school."],"uz":"Ikki narsani solishtirish: qisqa sifat + -er + than: Tom is taller than Sam — Tom Samdan balandroq."},
             practise: [
               {"type":"choose","q":"An elephant is ___ than a horse.","options":["bigger","biger","more big"],"a":["bigger"],"hint":"big: one vowel + one consonant → double the g: bigger."},
               {"type":"choose","q":"Today is ___ than yesterday.","options":["hotter","hoter","more hot"],"a":["hotter"],"hint":"hot → hotter (double the t)."},
@@ -1494,7 +1494,7 @@ window.TA_GRAMMAR = {
         id: "g27", no: 27, title: "Superlative Adjectives", v: 1,
         chunks: [
           {
-            learn: {"title":"the tallest, the biggest, the happiest","rule":"Use the superlative to compare one person or thing with all the others in a group: Tom is the tallest boy in our class. Short adjectives: the + adjective + -est: tall → the tallest. The spelling rules are the same as for -er: nice → the nicest, big → the biggest, happy → the happiest. Use in with places and groups: the tallest in the class, the biggest city in the world.","table":[["Adjective","Comparative","Superlative"],["tall","taller","the tallest"],["nice","nicer","the nicest"],["big","bigger","the biggest"],["happy","happier","the happiest"]],"examples":["Tom is the tallest boy in our class.","The blue whale is the biggest animal in the world.","This is the nicest cafe in town.","Friday is the happiest day of the week for me.","Who is the oldest person in your family?"],"uz":"Eng … ma’nosi: the + sifat + -est: the tallest — eng baland, the biggest — eng katta."},
+            learn: {"title":"the tallest, the biggest, the happiest","rule":"Use the superlative to compare one person or thing with all the others in a group: Tom is the tallest boy in our class. Short adjectives: the + adjective + -est: tall → the tallest. The spelling rules are the same as for -er: nice → the nicest, big → the biggest, happy → the happiest. Use in with places and groups: the tallest in the class, the biggest city in the world.","table":[["Adjective","Comparative","Superlative"],["tall","taller","the tallest"],["nice","nicer","the nicest"],["big","bigger","the biggest"],["happy","happier","the happiest"]],"examples":["Tom is the tallest boy in our class.","The blue whale is the biggest animal in the world.","This is the nicest cafe in town.","Friday is the happiest day of the week for me.","Who is the oldest person in your family?"],"uz":"“Eng …” ma’nosida: the + sifat + -est: the tallest — eng baland, the biggest — eng katta."},
             practise: [
               {"type":"choose","q":"Mount Everest is ___ mountain in the world.","options":["the highest","the higher","highest"],"a":["the highest"],"hint":"The whole group → the + -est: the highest."},
               {"type":"choose","q":"It's ___ day of the year.","options":["the hottest","the hotest","the most hot"],"a":["the hottest"],"hint":"hot → the hottest (double the t)."},
@@ -1557,7 +1557,7 @@ window.TA_GRAMMAR = {
               {"type":"choose","q":"They have two ___ cars.","options":["new","news"],"a":["new"],"hint":"Adjectives never take -s: two new cars."},
               {"type":"order","q":"Put the words in order.","words":["has","She","hair","long"],"a":["She has long hair."],"hint":"The adjective goes before the noun: long hair."},
               {"type":"fix","q":"Which sentence is correct?","options":["We live in a big house.","We live in a house big.","We live in a bigs house."],"a":["We live in a big house."],"hint":"Adjective before the noun, no -s: a big house."},
-              {"type":"gap","q":"My grandma has two ___ dogs. (little)","a":["little"],"hint":"Adjectives never take -s: two little dogs."}
+              {"type":"choose","q":"My grandma has two ___ dogs.","options":["little","littles"],"a":["little"],"hint":"Adjectives never take -s: two little dogs."}
             ]
           },
           {
@@ -1589,7 +1589,7 @@ window.TA_GRAMMAR = {
           {"type":"choose","q":"We have a ___ garden.","options":["lovely big","big lovely"],"a":["lovely big"]},
           {"type":"choose","q":"It's a ___ bag.","options":["beautiful Italian","Italian beautiful"],"a":["beautiful Italian"]},
           {"type":"fix","q":"Which sentence is correct?","options":["She has long black hair.","She has black long hair.","She has hair long black."],"a":["She has long black hair."]},
-          {"type":"gap","q":"I have two ___ cats. (white)","a":["white"]},
+          {"type":"choose","q":"I have two ___ cats.","options":["white","whites"],"a":["white"]},
           {"type":"gap","q":"A plane is ___ than a car. (fast)","a":["faster"],"from":"g26"},
           {"type":"choose","q":"a ___ box","options":["small wooden","wooden small"],"a":["small wooden"]},
           {"type":"order","q":"Put the words in order.","words":["an","It's","old","ugly","sofa"],"a":["It's an ugly old sofa."]},
@@ -1632,7 +1632,7 @@ window.TA_GRAMMAR = {
             practise: [
               {"type":"choose","q":"There ___ a big tree in our garden last year.","options":["was","were"],"a":["was"],"hint":"One tree → There was."},
               {"type":"choose","q":"There ___ a lot of people at the concert yesterday.","options":["were","was"],"a":["were"],"hint":"people is plural → There were."},
-              {"type":"gap","q":"There ___ any bread in the kitchen this morning. (negative)","a":["wasn't","was not"],"hint":"bread, negative → There wasn't."},
+              {"type":"gap","q":"There ___ any bread in the kitchen yesterday morning. (negative)","a":["wasn't","was not"],"hint":"bread, negative → There wasn't."},
               {"type":"choose","q":"I ___ born in 2011.","options":["was","were","am"],"a":["was"],"hint":"I was born…"},
               {"type":"fix","q":"Which sentence is correct?","options":["Where were you born?","Where was you born?","Where did you born?"],"a":["Where were you born?"],"hint":"With you: Where were you born?"}
             ]
@@ -1648,8 +1648,8 @@ window.TA_GRAMMAR = {
           {"type":"gap","q":"Was your teacher angry? — Yes, she ___.","a":["was"]},
           {"type":"fix","q":"Which sentence is correct?","options":["They weren't at home last night.","They wasn't at home last night.","They aren't at home last night."],"a":["They weren't at home last night."]},
           {"type":"choose","q":"I was born ___ 2012.","options":["in","on","at"],"a":["in"],"from":"g22"},
-          {"type":"choose","q":"There ___ three bananas on the table this morning.","options":["were","was"],"a":["were"]},
-          {"type":"gap","q":"There ___ a cat in the garden this morning. (be)","a":["was"]},
+          {"type":"choose","q":"There ___ three bananas on the table yesterday morning.","options":["were","was"],"a":["were"]},
+          {"type":"gap","q":"There ___ a cat in the garden yesterday morning. (be)","a":["was"]},
           {"type":"order","q":"Put the words in order.","words":["were","Where","born","you"],"a":["Where were you born?"]},
           {"type":"choose","q":"She has a ___ bag.","options":["beautiful red","red beautiful"],"a":["beautiful red"],"from":"g28"},
           {"type":"fix","q":"Which sentence is correct?","options":["Was the film good?","Were the film good?","Did the film good?"],"a":["Was the film good?"]},
@@ -1713,7 +1713,7 @@ window.TA_GRAMMAR = {
           {"type":"choose","q":"My parents ___ in Canada for five years. Now they live in the USA.","options":["lived","liveed","live"],"a":["lived"]},
           {"type":"gap","q":"We ___ a cake for Mum's birthday last week. (make)","a":["made"]},
           {"type":"fix","q":"Which sentence is correct?","options":["He is always happy.","He always is happy.","Always he is happy."],"a":["He is always happy."],"from":"g13"},
-          {"type":"order","q":"Put the words in order.","words":["had","I","breakfast","at","seven"],"a":["I had breakfast at seven."]},
+          {"type":"order","q":"Put the words in order.","words":["had","I","breakfast","at","seven"],"a":["I had breakfast at seven.","At seven I had breakfast."]},
           {"type":"choose","q":"Tom ___ home at ten last night.","options":["came","comed","comes"],"a":["came"]},
           {"type":"gap","q":"I ___ my homework before dinner yesterday. (do)","a":["did"]}
         ]
@@ -1789,7 +1789,7 @@ window.TA_GRAMMAR = {
             ]
           },
           {
-            learn: {"title":"I'm going to visit my aunt — going to","rule":"Use am / is / are + going to + verb for plans — things you decided before now: I'm going to visit my aunt next week. We're going to buy a new car. Also use it when you can see that something is going to happen soon: Look at those clouds! It's going to rain.","table":[["Person","be + going to + verb","Example"],["I","am ('m) going to","I'm going to study tonight."],["he / she / it","is ('s) going to","She's going to travel next week."],["you / we / they","are ('re) going to","They're going to move house."]],"examples":["I'm going to study medicine at university.","My sister is going to get married in June.","We're going to watch a film tonight. We already have the tickets.","Look at the sky! It's going to rain.","Are you going to play football after school?","He isn't going to come to the party."],"uz":"be going to — oldindan qilingan reja: I'm going to visit my aunt next week — Kelasi hafta xolamnikiga boraman."},
+            learn: {"title":"I'm going to visit my aunt — going to","rule":"Use am / is / are + going to + verb for plans — things you decided before now: I'm going to visit my aunt next week. We're going to buy a new car. Also use it when you can see that something is going to happen soon: Look at those clouds! It's going to rain.","table":[["Person","be + going to + verb","Example"],["I","am ('m) going to","I'm going to study tonight."],["he / she / it","is ('s) going to","She's going to travel next week."],["you / we / they","are ('re) going to","They're going to move house."]],"examples":["I'm going to study medicine at university.","My sister is going to get married in June.","We're going to watch a film tonight. We already have the tickets.","Look at the sky! It's going to rain.","Are you going to play football after school?","He isn't going to come to the party."],"uz":"be going to — oldindan qilingan reja: I'm going to visit my aunt next week — Kelasi hafta xolamnikiga bormoqchiman."},
             practise: [
               {"type":"choose","q":"I ___ going to visit my grandma on Sunday.","options":["am","is","are"],"a":["am"],"hint":"With I, use am going to."},
               {"type":"choose","q":"Look at those black clouds! It ___ rain.","options":["is going to","will to","going to"],"a":["is going to"],"hint":"We can see it now → It is going to rain."},

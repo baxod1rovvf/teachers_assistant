@@ -25,7 +25,7 @@ const LEVELS = [['beginner', 'Beginner'], ['elementary', 'Elementary'], ['preint
 const KIND = { choose: 'Choose', gap: 'Write', order: 'Put in order', fix: 'Correct sentence' };
 const UZBEK = /Uzbek|Tashkent|Samarkand|Bukhara|Kamila|Jasur|Bobur|Nodira|Karimov|Aziz|Lola\b|Malika|Rustam|Laylo|Jamol|Bekzod|Sardor|Nilufar|Madina|Timur|Dilnoza|Karim\b|\bAli\b|harf|raqam|unli tovush|telefon|ikki marta|[ʻʼ‘’]/;
 const CYRILLIC = /[Ѐ-ӿ]/;
-const orderWords = s => s.replace(/[.?!]$/, '').split(' ').sort();
+const orderWords = s => s.replace(/[.?!]$/, '').toLowerCase().split(' ').sort();   // a fronted word may be capitalised
 
 function question(t, where, errors) {
   if (!Array.isArray(t)) { errors.push(where + ': a question must be a list'); return null; }
@@ -52,7 +52,7 @@ function question(t, where, errors) {
   if (type === 'order') {
     if (!Array.isArray(Q.words) || Q.words.length < 2) bad('needs at least 2 words');
     else Q.a.forEach(a => {
-      if (JSON.stringify(orderWords(a)) !== JSON.stringify([...Q.words].sort())) bad('"' + a + '" does not use exactly its words');
+      if (JSON.stringify(orderWords(a)) !== JSON.stringify(orderWords(Q.words.join(' ')))) bad('"' + a + '" does not use exactly its words');
     });
   }
   return Q;
@@ -150,8 +150,9 @@ function toMd(data) {
   };
   for (const level of filled) {
     out.push('---', '', '## ' + level.name + ' (Lessons ' + range(level) + ')', '');
-    for (const L of level.lessons) {
-      out.push('---', '', '### Lesson ' + L.no + ' — ' + L.title, '');
+    level.lessons.forEach((L, li) => {
+      if (li) out.push('---', '');
+      out.push('### Lesson ' + L.no + ' — ' + L.title, '');
       L.chunks.forEach((c, ci) => {
         const k = c.learn;
         out.push('#### Part ' + (ci + 1) + ': ' + k.title, '', k.rule, '');
@@ -167,7 +168,7 @@ function toMd(data) {
       out.push('#### Revision test (20 questions)', '');
       L.test.forEach((Q, i) => out.push(qLine(Q, i)));
       out.push('');
-    }
+    });
   }
   return out.join('\n');
 }

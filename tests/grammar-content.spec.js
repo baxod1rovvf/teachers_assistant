@@ -28,7 +28,7 @@ function loadGrammar() {
   return sandbox.window.TA_GRAMMAR;
 }
 // the words of an order answer, without its final full stop / question mark / exclamation mark
-const orderWords = s => s.replace(/[.?!]$/, '').split(' ').sort();
+const orderWords = s => s.replace(/[.?!]$/, '').toLowerCase().split(' ').sort();   // a fronted word may be capitalised
 
 function checkQuestion(q, where) {
   expect(['choose', 'gap', 'order', 'fix'], where + ' type').toContain(q.type);
@@ -44,7 +44,7 @@ function checkQuestion(q, where) {
   if (q.type === 'gap') expect(q.q, where + ' has a gap').toContain('___');
   if (q.type === 'order') {
     expect(q.words.length, where + ' words').toBeGreaterThanOrEqual(2);
-    q.a.forEach(a => expect(orderWords(a), where + ' "' + a + '" uses exactly its words').toEqual([...q.words].sort()));
+    q.a.forEach(a => expect(orderWords(a), where + ' "' + a + '" uses exactly its words').toEqual(orderWords(q.words.join(' '))));
   }
 }
 
