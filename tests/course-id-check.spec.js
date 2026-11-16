@@ -91,11 +91,11 @@ test('the list can\'t be read → a spinner, then "check the internet", and no e
 test('Ha when already done → "already done"; Ha when the part before isn\'t done → "Oldingi"', async ({ page, context }) => {
   const done = { __id: 'sk_LSN777_10001_1', v: 1, code: 'LSN777', type: 'Listening course', skill: 'listening', step: 'b5', name: 'Alice Test',
     studentId: '10001', correct: 8, total: 12, date: new Date().toISOString() };
-  await prepare(context, { docs: [classDoc('LSN777'), done, classDoc('RDG777', { prev: JSON.stringify({ skill: 'listening', stepNo: 5, codes: ['LSN999'] }) })] });
+  await prepare(context, { docs: [classDoc('LSN777'), done, classDoc('LSN778', { prev: JSON.stringify({ skill: 'listening', stepNo: 5, codes: ['LSN999'] }) })] });
   await start(page, URL_L);
   await page.getByRole('button', { name: 'Ha', exact: true }).click();
   await expect(page.locator('.sk-done-card')).toContainText('You have already done this listening');
-  await start(page, '/skill.html?s=reading&st=b5&c=RDG777');
+  await start(page, '/skill.html?s=listening&st=b6&c=LSN778');
   await page.getByRole('button', { name: 'Ha', exact: true }).click();
   await expect(page.locator('#skStartErr')).toContainText('Oldingi');
 });

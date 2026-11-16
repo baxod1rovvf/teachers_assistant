@@ -500,9 +500,13 @@ function skPartsInOrder(g) {
   skSteps().forEach(st => { if (st.no >= start) SK_ORDER.forEach(k => { if (st[k]) seq.push({ skill: k, step: st }); }); });
   return seq;
 }
+/* Only steps come one after another (teacher, 2026-11-16: "they can do writing before reading — the warning works only for steps"):
+   a part waits for the same skill in the group's nearest earlier step whose link was sent (Step 6 Writing → Step 5 Writing);
+   inside a step the parts can be done in any order. */
+function skSameSkillSeq(skill, g) { return skPartsInOrder(g).filter(x => x.skill === skill); }
 function skPrevPart(skill, stepId, g, links) {
-  const seq = skPartsInOrder(g), st = skStep(stepId);
-  const i = st ? seq.findIndex(x => x.skill === skill && x.step.id === st.id) : -1;
+  const seq = skSameSkillSeq(skill, g), st = skStep(stepId);
+  const i = st ? seq.findIndex(x => x.step.id === st.id) : -1;
   for (let j = i - 1; j >= 0; j--) {
     const codes = skCodesFor(seq[j].skill, seq[j].step.id, g, links);
     if (codes.length) return { skill: seq[j].skill, stepNo: seq[j].step.no, codes: codes };
@@ -510,8 +514,8 @@ function skPrevPart(skill, stepId, g, links) {
   return null;
 }
 function skNextPart(skill, stepId, g, links) {
-  const seq = skPartsInOrder(g), st = skStep(stepId);
-  const i = st ? seq.findIndex(x => x.skill === skill && x.step.id === st.id) : -1;
+  const seq = skSameSkillSeq(skill, g), st = skStep(stepId);
+  const i = st ? seq.findIndex(x => x.step.id === st.id) : -1;
   if (i < 0) return null;
   for (let j = i + 1; j < seq.length; j++) {
     const e = skLinkEntry(seq[j].skill, seq[j].step.id, g, links);
