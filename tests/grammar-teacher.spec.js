@@ -139,3 +139,38 @@ test('a result\'s group is the student\'s group now; ▶️ Try opens the previe
   await popup.close();
   expect(errors).toEqual([]);
 });
+
+test('a student added after Copy link can start: the Course page puts the class list online again', async ({ page, context }) => {
+  const errors = await openCourse(page, context, { links: LINKS, roster: ROSTER.concat([{ name: 'Eshmat Test', id: '10004', group: 'gt' }]) });
+  await expect.poll(() => page.evaluate(() => { const d = window.__fakeDocs.find(x => x.__id === 'class-GRM111'); return d ? JSON.parse(d.data).length : null; })).toBe(4);
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toContain('10004|Eshmat Test|Target');
+  expect(errors).toEqual([]);
+});
+
+test('no change, no write: a list that is up to date is not put online again', async ({ page, context }) => {
+  const sig = ROSTER.map(s => s.id + '|' + s.name + '|' + (s.group === 'ga' ? 'Apex' : 'Target')).sort().join('\n');
+  await openCourse(page, context, { links: { g1: { code: 'GRM111', sentAt: iso(60), rosterSig: sig } } });
+  expect(await page.evaluate(() => window.grRosterSig())).toBe(sig);
+  await page.evaluate(() => { window.__grRefreshMs = 0; window.grRefreshLists(); });
+  await page.waitForTimeout(800);
+  expect(await page.evaluate(() => window.__writes.filter(w => /^class-/.test(w.id)).length)).toBe(0);
+  expect(await page.evaluate(() => window.__deletes.filter(i => /^class-/.test(i)).length)).toBe(0);
+});
+
+test('a roster change from sync (a storage event) refreshes the list; a failed publish is tried again', async ({ page, context }) => {
+  await openCourse(page, context, { links: LINKS });
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toContain('10003|Dilnoza Test|Target');
+  await page.evaluate(() => {
+    window.__grRefreshMs = 0;
+    const r = JSON.parse(localStorage.getItem('ta_points_roster')); r.push({ name: 'Farhod Test', id: '10005', group: 'ga' });
+    localStorage.setItem('ta_points_roster', JSON.stringify(r));
+    window.__failWrites = 1;                       // the first publish can't reach the database
+    window.dispatchEvent(new StorageEvent('storage', { key: 'ta_points_roster' }));
+    window.__grRefreshMs = 60000;                  // the retry after the failure must wait (debounce)
+  });
+  await page.waitForTimeout(500);
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).not.toContain('10005');
+  await page.evaluate(() => { window.__grRefreshMs = 0; window.dispatchEvent(new StorageEvent('storage', { key: 'ta_student_groups' })); });
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toContain('10005|Farhod Test|Apex');
+  await expect.poll(() => page.evaluate(() => { const d = window.__fakeDocs.find(x => x.__id === 'class-GRM111'); return d ? JSON.parse(d.data).length : null; })).toBe(4);
+});

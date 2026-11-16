@@ -68,6 +68,36 @@ function grRosterSig() {
   return grClassStudents().map(s => taIdKey(s.id) + '|' + String(s.name || '').trim() + '|' + s.groupName).sort().join('\n');
 }
 
+/* ---- the class lists follow the Students list (2026-11-16): a student added (or renamed, or moved) after Copy link can start
+   without pressing Copy link again. Runs when the Course page draws and when sync/another tab changes the roster or groups.
+   At most one run per 5 s (window.__grRefreshMs in tests), never two at once; a failed publish keeps the old rosterSig, so the next run retries. ---- */
+let grRefreshBusy = false, grRefreshAgain = false, grRefreshLast = 0, grRefreshTimer = 0;
+function grRefreshLists() {
+  if (typeof window.taPublishClassList !== 'function') return;   // Firebase is still loading — the next draw tries again
+  if (grRefreshBusy) { grRefreshAgain = true; return; }
+  const wait = (window.__grRefreshMs !== undefined ? window.__grRefreshMs : 5000) - (Date.now() - grRefreshLast);
+  if (wait > 0) { if (!grRefreshTimer) grRefreshTimer = setTimeout(() => { grRefreshTimer = 0; grRefreshLists(); }, wait); return; }
+  const sig = grRosterSig();
+  const stale = Object.keys(grLinks()).filter(id => { const e = grLinks()[id]; return e && typeof e === 'object' && e.code && e.rosterSig !== sig; });
+  if (!stale.length) return;
+  grRefreshBusy = true; grRefreshLast = Date.now();
+  const students = grClassStudents();
+  (async () => {
+    for (const id of stale) {
+      const code = grCode(id);
+      let ok = false;
+      try { ok = await window.taPublishClassList(code, students); } catch (e) { ok = false; }
+      if (!ok) continue;
+      const links = grLinks();   // read again: sync may have changed it while we waited
+      if (links[id] && links[id].code === code) { links[id].rosterSig = sig; grSaveLinks(links); }
+    }
+  })().catch(() => {}).then(() => {
+    grRefreshBusy = false;
+    if (grRefreshAgain) { grRefreshAgain = false; grRefreshLists(); }
+  });
+}
+window.addEventListener('storage', e => { if (e.key && /ta_points_roster|ta_student_groups/.test(e.key)) grRefreshLists(); });
+
 /* ---- results ---- */
 function grResults(lessonId, links, map) {
   const code = grCode(lessonId, links);
@@ -293,4 +323,4 @@ function grSetFilter(id) {
   renderCourse();
 }
 Object.assign(window, { grLinks, grSaveLinks, grRosterSig, grClassStudents, grCopyLink, grOpenLevel, grOpenLesson, grSetFilter,
-  grTableRows, grMissingRows, grUnlistedRows, grCopyMissing, grTry, grJourneyHtml, grEnsureCode });
+  grTableRows, grMissingRows, grUnlistedRows, grCopyMissing, grTry, grJourneyHtml, grEnsureCode, grRefreshLists });

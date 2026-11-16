@@ -240,6 +240,7 @@ function renderCourse() {
     if (gr) { wrap.innerHTML = gr; return; }
     if (skView.grammar) skView.grammar = null;
     wrap.innerHTML = skCardsHtml(groups) + (typeof grJourneyHtml === 'function' ? grJourneyHtml() : '');
+    if (typeof grRefreshLists === 'function') grRefreshLists();   // the class lists follow the Students list
     return;
   }
   const g = skGroup(skView.group);
