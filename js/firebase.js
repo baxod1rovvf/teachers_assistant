@@ -115,7 +115,7 @@ window.taPublishClassList = async function (code, students, prev, group) {
     const list = [];
     for (const st of students) {
       const h = await skClassHash(code, st.id);
-      if (h) list.push({ h: h, n: String(st.name || '').slice(0, 80) });
+      if (h) { const e = { h: h, n: String(st.name || '').slice(0, 80) }; if (st.groupName) e.g = String(st.groupName).slice(0, 80); list.push(e); }   // g: the student's own group, for a link sent to several groups (2026-11-16)
     }
     if (students.length && !list.length) return false;   // this browser can't scramble the IDs
     const ref = doc(db, 'results', 'class-' + code);

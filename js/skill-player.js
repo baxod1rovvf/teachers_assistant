@@ -236,7 +236,7 @@ async function skCheckStudent(id) {
   if (!st) return { refuse: 'This ID is not on your teacher\'s list. Check your ID and try again.', field: 'id' };
   let prev = null;
   try { prev = d.prev ? JSON.parse(d.prev) : null; } catch (e) { prev = null; }
-  return { name: st.n, group: typeof d.group === 'string' ? d.group : '', prev: prev && Array.isArray(prev.codes) && prev.codes.length ? prev : null };
+  return { name: st.n, group: (typeof st.g === 'string' && st.g) ? st.g : (typeof d.group === 'string' ? d.group : ''), prev: prev && Array.isArray(prev.codes) && prev.codes.length ? prev : null };
 }
 window.skCheckStudent = skCheckStudent;
 /* One after another (teacher, 2026-11-12): the part the group does before this one (the class list's `prev`) must be done —
