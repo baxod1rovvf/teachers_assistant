@@ -754,6 +754,7 @@ function getPointsRoster() {
 }
 function savePointsRoster(list) {
   try { localStorage.setItem(LS_POINTS_ROSTER, JSON.stringify(list)); } catch (e) { /* ignore */ }
+  if (typeof window.grRefreshLists === 'function') window.grRefreshLists();   // the Grammar class lists follow the roster
 }
 function rosterNameFor(id) {
   const r = getPointsRoster().find(s => s.id === id);
@@ -777,6 +778,7 @@ function getStudentGroups() {
 }
 function saveStudentGroups(list) {
   try { localStorage.setItem(LS_STUDENT_GROUPS, JSON.stringify(list)); } catch (e) { /* ignore */ }
+  if (typeof window.grRefreshLists === 'function') window.grRefreshLists();   // the Grammar class lists follow the roster
 }
 function groupNameFor(groupId) {
   const g = getStudentGroups().find(x => x.id === groupId);
@@ -1802,7 +1804,10 @@ function skAiSave(add) {
   skAiMemo = store;
   return true;
 }
-window.taStoreChanged = function (key) { if (key === LS_SKILLS_AI) skAiForget(); };
+window.taStoreChanged = function (key) {
+  if (key === LS_SKILLS_AI) skAiForget();
+  if (/(^|::)(ta_points_roster|ta_student_groups)$/.test(String(key || '')) && typeof window.grRefreshLists === 'function') window.grRefreshLists();   // the Grammar class lists follow the roster
+};
 window.addEventListener('storage', e => { if (!e.key || /(^|::)ta_skills_ai$/.test(e.key)) skAiForget(); });
 /* the feedback of a writing: its own (old results), else kept by the result's database id, else under the old "<code>|<id>" key */
 function skAiFor(r) {

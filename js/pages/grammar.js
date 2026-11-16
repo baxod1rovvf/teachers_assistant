@@ -71,7 +71,7 @@ function grRosterSig() {
 /* ---- the class lists follow the Students list (2026-11-16): a student added (or renamed, or moved) after Copy link can start
    without pressing Copy link again. Runs when the Course page draws and when sync/another tab changes the roster or groups.
    At most one run per 5 s (window.__grRefreshMs in tests), never two at once; a failed publish keeps the old rosterSig, so the next run retries. ---- */
-let grRefreshBusy = false, grRefreshAgain = false, grRefreshLast = 0, grRefreshTimer = 0;
+let grRefreshBusy = false, grRefreshAgain = false, grRefreshLast = 0, grRefreshTimer = 0, grRetryTimer = 0, grFailStreak = 0;
 function grRefreshLists() {
   if (typeof window.taPublishClassList !== 'function') return;   // Firebase is still loading — the next draw tries again
   if (grRefreshBusy) { grRefreshAgain = true; return; }
@@ -82,17 +82,22 @@ function grRefreshLists() {
   if (!stale.length) return;
   grRefreshBusy = true; grRefreshLast = Date.now();
   const students = grClassStudents();
+  let failed = false;
   (async () => {
     for (const id of stale) {
       const code = grCode(id);
       let ok = false;
       try { ok = await window.taPublishClassList(code, students); } catch (e) { ok = false; }
-      if (!ok) continue;
+      if (!ok) { failed = true; continue; }
       const links = grLinks();   // read again: sync may have changed it while we waited
       if (links[id] && links[id].code === code) { links[id].rosterSig = sig; grSaveLinks(links); }
     }
   })().catch(() => {}).then(() => {
     grRefreshBusy = false;
+    if (!failed) grFailStreak = 0;
+    else if (++grFailStreak <= 3 && !grRetryTimer) {   // one delayed retry per failure, 3 attempts at most
+      grRetryTimer = setTimeout(() => { grRetryTimer = 0; grRefreshLists(); }, window.__grRetryMs !== undefined ? window.__grRetryMs : 30000);
+    }
     if (grRefreshAgain) { grRefreshAgain = false; grRefreshLists(); }
   });
 }

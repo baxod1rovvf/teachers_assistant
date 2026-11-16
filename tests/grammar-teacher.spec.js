@@ -165,12 +165,44 @@ test('a roster change from sync (a storage event) refreshes the list; a failed p
     const r = JSON.parse(localStorage.getItem('ta_points_roster')); r.push({ name: 'Farhod Test', id: '10005', group: 'ga' });
     localStorage.setItem('ta_points_roster', JSON.stringify(r));
     window.__failWrites = 1;                       // the first publish can't reach the database
-    window.dispatchEvent(new StorageEvent('storage', { key: 'ta_points_roster' }));
-    window.__grRefreshMs = 60000;                  // the retry after the failure must wait (debounce)
+    window.taStoreChanged('ta_points_roster');   // the real path: js/sync.js setLocal
+    window.__grRefreshMs = 60000; window.__grRetryMs = 60000;                  // the retry after the failure must wait (debounce)
   });
   await page.waitForTimeout(500);
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).not.toContain('10005');
-  await page.evaluate(() => { window.__grRefreshMs = 0; window.dispatchEvent(new StorageEvent('storage', { key: 'ta_student_groups' })); });
+  await page.evaluate(() => { window.__grRefreshMs = 0; window.taStoreChanged('ta_student_groups'); });
   await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toContain('10005|Farhod Test|Apex');
   await expect.poll(() => page.evaluate(() => { const d = window.__fakeDocs.find(x => x.__id === 'class-GRM111'); return d ? JSON.parse(d.data).length : null; })).toBe(4);
+});
+
+test('with a lesson page open, a student added to the roster still gets the list refreshed', async ({ page, context }) => {
+  await openCourse(page, context, { links: LINKS });
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toContain('10003|');
+  await page.locator('.gr-level[data-level="beginner"] .gr-level-open').click();
+  await page.locator('.gr-lesson[data-lesson="g1"] .gr-lesson-open').click();
+  await expect(page.locator('.gr-lesson-page')).toBeVisible();
+  await page.evaluate(() => {
+    window.__grRefreshMs = 0;
+    const r = JSON.parse(localStorage.getItem('ta_points_roster')); r.push({ name: 'Gulnora Test', id: '10006', group: 'gt' });
+    localStorage.setItem('ta_points_roster', JSON.stringify(r));
+    window.renderCourse();
+  });
+  await expect.poll(() => page.evaluate(() => { const d = window.__fakeDocs.find(x => x.__id === 'class-GRM111'); return d ? JSON.parse(d.data).length : null; })).toBe(4);
+});
+
+test('adding a student on the Students page refreshes the list without visiting Course', async ({ page, context }) => {
+  await openCourse(page, context, { links: LINKS });
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toContain('10003|');
+  await page.evaluate(() => { window.__grRefreshMs = 0; savePointsRoster(getPointsRoster().concat([{ name: 'Hamid Test', id: '10007', group: 'ga' }])); });
+  await expect.poll(() => page.evaluate(() => { const d = window.__fakeDocs.find(x => x.__id === 'class-GRM111'); return d ? JSON.parse(d.data).length : null; })).toBe(4);
+});
+
+test('a failed publish gets a delayed retry by itself (3 attempts at most)', async ({ page, context }) => {
+  await openCourse(page, context, { links: LINKS });
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toContain('10003|');
+  await page.evaluate(() => {
+    window.__grRefreshMs = 0; window.__grRetryMs = 300; window.__failWrites = 1;
+    savePointsRoster(getPointsRoster().concat([{ name: 'Ibrohim Test', id: '10008', group: 'ga' }]));
+  });
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toContain('10008|Ibrohim Test|Apex');
 });

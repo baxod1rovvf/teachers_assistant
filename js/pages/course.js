@@ -232,6 +232,7 @@ function skCourseShownScroll(sel) {
 function renderCourse() {
   const wrap = document.getElementById('courseWrap');
   if (!wrap) return;
+  if (typeof grRefreshLists === 'function') grRefreshLists();   // the class lists follow the Students list (whatever page is open)
   const groups = getStudentGroups();
   if (skView.group && !groups.some(g => g.id === skView.group)) skView = { group: '', tab: 'journey', step: '' };
   if (!skView.group) {
@@ -240,7 +241,6 @@ function renderCourse() {
     if (gr) { wrap.innerHTML = gr; return; }
     if (skView.grammar) skView.grammar = null;
     wrap.innerHTML = skCardsHtml(groups) + (typeof grJourneyHtml === 'function' ? grJourneyHtml() : '');
-    if (typeof grRefreshLists === 'function') grRefreshLists();   // the class lists follow the Students list
     return;
   }
   const g = skGroup(skView.group);
