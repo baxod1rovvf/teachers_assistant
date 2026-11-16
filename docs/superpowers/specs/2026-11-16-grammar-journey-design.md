@@ -66,7 +66,7 @@ to teach without the teacher in the room. The source syllabus is the teacher's
    the score.
 4. The **first** Submit sends one result. "🔁 Try the test again" shuffles the questions and their options, shows the score,
    and sends **nothing**.
-5. **Progress is kept on the phone** (`ta_grammar_draft|<code>`: chunk reached, test answers, time so far), so a reload
+5. **Progress is kept on the phone** (`ta_grammar_draft|<code>`: chunk reached, test answers, active time so far), so a reload
    continues where the student was. It's cleared once the first result is sent.
 6. **Opening the link again after the first result is in the database**: "You've done this lesson — <score>/20" with
    "🔁 Try the test again" (sends nothing) and "📘 Read the lessons again". This uses the same database check as the course
@@ -113,7 +113,9 @@ The exact look of the cards and table (in the Mountain Air style, like the cours
 build tool validates content, and how the code is split between skill-player.js and a small `js/grammar-player.js` if the
 player gets too long.
 
-## Open (teacher)
+## Total time (teacher, 2026-11-16: "b")
 
-- **Total time**: count everything from Start to the test (a student who stops for the night shows 14 hours), or only time
-  with the page open and in use?
+Only **active time** counts: the page is open and visible, and the student has touched it (tap, key or scroll) in the last
+5 minutes. Time with the page hidden or closed, or with nobody touching it, isn't counted. The phone keeps it with the
+progress (`ta_grammar_draft`), so a reload or the next day carries on from the same number. It's shown as "26 min" (or
+"1 h 05 min").
