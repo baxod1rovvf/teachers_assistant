@@ -493,6 +493,11 @@ function taSkillLink(skill, step, code) {
   const base = window.skAppUrl || (/^https:/.test(TA_APP_URL) ? TA_APP_URL : '');
   return base + 'skill.html?s=' + encodeURIComponent(skill) + '&st=' + encodeURIComponent(taSkillStepId(step)) + (code ? '&c=' + encodeURIComponent(code) : '');
 }
+/* A Grammar Journey lesson's link (2026-11-16): one per lesson, the same for every group. */
+function taGrammarLink(lessonId, code) {
+  const base = window.skAppUrl || (/^https:/.test(TA_APP_URL) ? TA_APP_URL : '');
+  return base + 'skill.html?s=grammar&gl=' + encodeURIComponent(lessonId) + (code ? '&c=' + encodeURIComponent(code) : '');
+}
 function taSkillLinkKey(groupId, skill, step) { return groupId + '|' + skill + '|' + taSkillStepId(step); }
 /* The kept links with every key in the new form (an old numeric key → e<N>; when both exist, the new one wins). */
 function taSkillsLinksFix(v) {

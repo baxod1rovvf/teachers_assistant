@@ -103,7 +103,7 @@ window.skEnsureCode = skEnsureCode;
      sentAt — entries without one were sent long ago), or an average band below 5.
    Where a group starts: level Beginner (or none) → Step 1; any other level → Step 11; steps before that are skipped
    (grey, still open). A step opens the step page: its parts (Try, Copy link), then its results table. */
-let skView = { group: '', tab: 'journey', step: '' };   // not remembered (only the group: ta_course_group)
+let skView = { group: '', tab: 'journey', step: '', grammar: null };   // not remembered (only the group: ta_course_group); grammar = the open Grammar Journey level/lesson (grammar.js)
 const SK_MISSED_AFTER_DAYS = 2;   // a part sent to the group counts as missed only this many days after its link was first copied
 function skReady(st) { return !!st && SK_SKILLS.some(s => st[s.key]); }
 function skGroupRoster(g) { return g ? getPointsRoster().filter(s => s.group === g.id) : []; }
@@ -234,7 +234,14 @@ function renderCourse() {
   if (!wrap) return;
   const groups = getStudentGroups();
   if (skView.group && !groups.some(g => g.id === skView.group)) skView = { group: '', tab: 'journey', step: '' };
-  if (!skView.group) { wrap.innerHTML = skCardsHtml(groups); return; }
+  if (!skView.group) {
+    // the Grammar Journey (js/pages/grammar.js): an open level / lesson instead of the cards, else its section under them
+    const gr = skView.grammar && typeof grPageHtml === 'function' ? grPageHtml() : '';
+    if (gr) { wrap.innerHTML = gr; return; }
+    if (skView.grammar) skView.grammar = null;
+    wrap.innerHTML = skCardsHtml(groups) + (typeof grJourneyHtml === 'function' ? grJourneyHtml() : '');
+    return;
+  }
   const g = skGroup(skView.group);
   const st = skView.step ? skStep(skView.step) : null;
   if (skView.step && !skReady(st)) skView.step = '';
@@ -842,6 +849,6 @@ function skCourseShown() {
 window.taCourseResultsChanged = function () { if (skCourseShown()) renderCourse(); };
 
 /* ================= PAGE START ================= */
-window.addEventListener('storage', e => { if (e.key && /ta_skills_links|ta_student_groups|ta_points_roster|ta_recent_exercises/.test(e.key) && skCourseShown()) renderCourse(); });
+window.addEventListener('storage', e => { if (e.key && /ta_skills_links|ta_grammar_links|ta_student_groups|ta_points_roster|ta_recent_exercises/.test(e.key) && skCourseShown()) renderCourse(); });
 taOnTab('course', renderCourse);
 taStartPage('course');

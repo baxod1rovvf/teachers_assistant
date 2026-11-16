@@ -457,6 +457,11 @@ window.startPlainCompletionsSync = function () {
       if (v && typeof v === 'object') [v.code].concat(Array.isArray(v.alsoCodes) ? v.alsoCodes : []).forEach(c => { if (c) codes.push(c); });
     }));
   } catch (e) { /* ignore */ }
+  // Grammar Journey (2026-11-16): one code per lesson, kept in ta_grammar_links
+  try {
+    const gl = JSON.parse(localStorage.getItem('ta_grammar_links') || 'null');
+    if (gl && typeof gl === 'object') Object.keys(gl).forEach(k => { const v = gl[k]; if (v && typeof v === 'object' && v.code) codes.push(String(v.code)); });
+  } catch (e) { /* ignore */ }
   plainCodes = new Set(codes);
   rsEnsureCodes(codes).then(rsDerivePlain);
 };
