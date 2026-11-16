@@ -1,5 +1,6 @@
 // The teacher's notes of 2026-11-12: the "students finished exercises" note shouldn't list course exercises; a student who
-// opens a course exercise before finishing the one before it is stopped ("Oldingi Listening mashq tugatilmagan"); and the
+// opens a course exercise before finishing the same skill in the step before is stopped ("Oldingi Reading mashq tugatilmagan");
+// inside a step the parts can be done in any order (teacher, 2026-11-16); and the
 // writing check let "I playing volleybal" through.
 const { test, expect } = require('@playwright/test');
 const crypto = require('crypto');
@@ -9,29 +10,60 @@ const hashFor = (code, id) => crypto.createHash('sha256').update(code + '|' + id
 const classDoc = (code, prev) => Object.assign({ __id: 'class-' + code, v: 1, code: 'TAUSER', type: 'TA_SYNC:CLASS', title: code, name: '',
   data: JSON.stringify([{ h: hashFor(code, '10001'), n: 'Alice Test' }]), date: new Date().toISOString() }, prev ? { prev: JSON.stringify(prev) } : {});
 
-test('a course exercise opens only after the part before it is done — else the Uzbek warning', async ({ page, context }) => {
-  await prepare(context, { docs: [classDoc('RDG901', { skill: 'listening', stepNo: 5, codes: ['LSN901'] })] });
+test('a course exercise opens only after the same skill in the step before is done — else the Uzbek warning', async ({ page, context }) => {
+  await prepare(context, { docs: [classDoc('RDG901', { skill: 'reading', stepNo: 5, codes: ['RDG800'] })] });
   const errors = watchErrors(page);
   const kept = [];   // results put into the stand-in database (it starts empty on every page load)
   const begin = async () => {
-    await page.goto('/skill.html?s=reading&st=b5&c=RDG901');
+    await page.goto('/skill.html?s=reading&st=b6&c=RDG901');
     await page.evaluate(async docs => { await window.skPrevDone({ codes: ['XXXXXX'] }, 'x', 'x'); docs.forEach(d => window.__fakeDocs.push(d)); }, kept);
     await page.locator('#skIdInput').fill('10001');
     await page.getByRole('button', { name: /Start/ }).click();
     await passIdCheck(page);
   };
   await begin();
-  await expect(page.locator('#skStartErr')).toHaveText('⚠️ Oldingi Listening mashq tugatilmagan. Avval Step 5 · Listening mashqini tugating.');
+  await expect(page.locator('#skStartErr')).toHaveText('⚠️ Oldingi Reading mashq tugatilmagan. Avval Step 5 · Reading mashqini tugating.');
   await expect(page.locator('#skSubmit')).toHaveCount(0);
-  // another student's Listening doesn't count; hers (the ID typed a little differently) does
-  const base = { v: 1, code: 'LSN901', type: 'Listening course', skill: 'listening', step: 'b5', correct: 8, total: 12, date: new Date().toISOString() };
+  // another student's Reading doesn't count; hers (the ID typed a little differently) does
+  const base = { v: 1, code: 'RDG800', type: 'Reading course', skill: 'reading', step: 'b5', correct: 8, total: 10, date: new Date().toISOString() };
   kept.push(Object.assign({ __id: 'sk_other', name: 'Bobur Test', studentId: '10002' }, base));
   await begin();
-  await expect(page.locator('#skStartErr')).toContainText('Oldingi Listening mashq tugatilmagan');
+  await expect(page.locator('#skStartErr')).toContainText('Oldingi Reading mashq tugatilmagan');
   kept.push(Object.assign({ __id: 'sk_alice', name: 'Alice Test', studentId: '010001' }, base));
   await begin();
   await expect(page.locator('#skSubmit')).toBeVisible();
   expect(errors).toEqual([]);
+});
+
+test('inside a step the parts can be done in any order: a list from before 2026-11-16 that names another skill doesn\'t stop Writing', async ({ page, context }) => {
+  // put online before the change: Step 5 Writing "after" Step 5 Reading, which Alice hasn't done
+  await prepare(context, { docs: [classDoc('WRT902', { skill: 'reading', stepNo: 5, codes: ['RDG902'] })] });
+  const errors = watchErrors(page);
+  await page.goto('/skill.html?s=writing&st=b5&c=WRT902');
+  await page.locator('#skIdInput').fill('10001');
+  await page.getByRole('button', { name: /Start/ }).click();
+  await passIdCheck(page);
+  await expect(page.locator('#skWriting, .sk-write-card').first()).toBeVisible();
+  await expect(page.locator('body')).not.toContainText('Oldingi');
+  expect(errors).toEqual([]);
+});
+
+test('teacher: the part before is the same skill in the nearest earlier step whose link was sent', async ({ page, context }) => {
+  const links = { 'g1|reading|b6': { code: 'RDG006' }, 'g1|writing|b5': { code: 'WRT005' }, 'g1|writing|b6': { code: 'WRT006' }, 'g1|listening|b4': { code: 'LSN004' } };
+  await prepare(context, { storage: { ta_skills_links: JSON.stringify(links), ta_course_group: 'g1' } });
+  await page.goto('/course.html');
+  await page.waitForFunction(() => typeof skPrevPart === 'function');
+  const r = await page.evaluate(() => {
+    const g = getStudentGroups().find(x => x.id === 'g1'), l = taSkillsLinks();
+    const p = (skill, st) => { const x = skPrevPart(skill, st, g, l); return x && [x.skill, x.stepNo, x.codes]; };
+    return { w6: p('writing', 'b6'), r6: p('reading', 'b6'), l6: p('listening', 'b6'), w5: p('writing', 'b5'),
+      next: skNextPart('writing', 'b5', g, l) };
+  });
+  expect(r.w6).toEqual(['writing', 5, ['WRT005']]);   // not Step 6 Reading
+  expect(r.r6).toBeNull();                            // no Reading was sent before Step 6
+  expect(r.l6).toEqual(['listening', 4, ['LSN004']]); // a step without a sent link is skipped
+  expect(r.w5).toBeNull();
+  expect(r.next).toEqual({ skill: 'writing', step: 'b6', code: 'WRT006' });
 });
 
 test('the "students finished exercises" note leaves the course exercises out', async ({ page, context }) => {

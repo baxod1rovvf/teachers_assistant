@@ -236,6 +236,8 @@ async function skCheckStudent(id) {
   if (!st) return { refuse: 'This ID is not on your teacher\'s list. Check your ID and try again.', field: 'id' };
   let prev = null;
   try { prev = d.prev ? JSON.parse(d.prev) : null; } catch (e) { prev = null; }
+  // only the same skill in an earlier step waits (2026-11-16); lists put online before then may name another skill — that is ignored
+  if (prev && prev.skill && SK.skill && prev.skill !== SK.skill) prev = null;
   return { name: st.n, group: typeof d.group === 'string' ? d.group : '', prev: prev && Array.isArray(prev.codes) && prev.codes.length ? prev : null };
 }
 window.skCheckStudent = skCheckStudent;

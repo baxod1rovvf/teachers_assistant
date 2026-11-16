@@ -667,8 +667,10 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   where notes below mention them, read `listening-journey-scripts.json` / `listen-step-<N>.mp3`. `tests/listening-journey.spec.js`.
 - **Course fixes (teacher, 2026-11-12)**: (1) the "✅ N students finished exercises" note (`getUncheckedCompletions`) leaves out
   results of type "… course". (2) **One after another**: Copy link also writes `prev` = JSON `{ skill, stepNo, codes }` on the link's
-  `class-<code>` record (`skPrevPart` in course.js: the group's parts in order from its start step, Listening → Reading → Writing;
-  the nearest earlier one whose link was copied; the next part already sent is put online again so it learns this one). On Start
+  `class-<code>` record (`skPrevPart` in course.js). **Since 2026-11-16 (teacher: "they can do writing before reading — the warning
+  works only for steps") only the same skill in the nearest earlier step whose link was copied** (Step 6 Writing waits for Step 5
+  Writing; inside a step any order; `skSameSkillSeq`); the next step's same part, already sent, is put online again so it learns this one.
+  Lists put online before then may name another skill — `skCheckStudent` ignores a `prev` whose skill isn't the page's own. On Start
   (after the class list and "already done" checks), `skPrevDone` (skill-player.js) reads that part's results and looks for this
   student (by `taIdKey`, else the listed name); none → `#skStartErr` "⚠️ Oldingi Listening mashq tugatilmagan. Avval Step 5 ·
   Listening mashqini tugating." (Uzbek, the teacher's words); no internet → let in. Links copied before 2026-11-12 have no `prev`

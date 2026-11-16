@@ -44,12 +44,12 @@ test('answers that didn\'t reach the teacher are kept on the phone and sent when
   expect(errors).toEqual([]);
 });
 
-test('the next part on the same phone: kept Listening answers are sent first, so Reading opens', async ({ page, context }) => {
+test('the next step on the same phone: kept Step 5 Listening answers are sent first, so Step 6 Listening opens', async ({ page, context }) => {
   test.setTimeout(60000);
-  await prepare(context, { docs: [classDoc('RDG777', { skill: 'listening', stepNo: 5, codes: ['LSN777'] })] });
+  await prepare(context, { docs: [classDoc('LSN888', { skill: 'listening', stepNo: 5, codes: ['LSN777'] })] });
   const errors = watchErrors(page);
   await failedListening(page);
-  await start(page, '/skill.html?s=reading&st=b5&c=RDG777', 'Alice');
+  await start(page, '/skill.html?s=listening&st=b6&c=LSN888', 'Alice');
   await expect(page.locator('#skSubmit')).toBeVisible({ timeout: 15000 });
   await expect(page.locator('body')).not.toContainText('Oldingi');
   expect(await listening(page)).toHaveLength(1);

@@ -737,12 +737,13 @@ test.describe('course page', () => {
     expect(list.w).toMatchObject({ code: 'TAUSER', title: code });
     expect(list.hash).toMatch(/^[0-9a-f]{24}$/);
     expect(list.w.prev).toBeUndefined();   // nothing was sent before it
-    // the next part (Reading) knows Listening comes before it (2026-11-12: one after another)
+    // Reading copied after Listening of the same step
     await page.locator('.sk-part[data-skill="reading"]').getByRole('button', { name: /Copy link for/ }).click();
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(/s=reading&st=e1&c=/);
     const rcode = (await page.evaluate(() => navigator.clipboard.readText())).split('&c=')[1];
-    await expect.poll(() => page.evaluate(c => { const d = (window.__fakeDocs || []).find(x => x.__id === 'class-' + c); return d && d.prev; }, rcode))
-      .toBe(JSON.stringify({ skill: 'listening', stepNo: 11, codes: [code] }));
+    // inside a step any order (2026-11-16): Step 11 Reading's list goes online without a "part before" (Listening is another skill)
+    await expect.poll(() => page.evaluate(c => { const d = (window.__fakeDocs || []).find(x => x.__id === 'class-' + c); return d ? (d.prev || 'none') : null; }, rcode))
+      .toBe('none');
     await page.evaluate(() => navigator.clipboard.writeText(''));
     // a copied link alone doesn't make Listening done (nobody has done it)
     await expect(part.locator('.sk-part-state')).toHaveText('⏳ 0 of 3 students done');
