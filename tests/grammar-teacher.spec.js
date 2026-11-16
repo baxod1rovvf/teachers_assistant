@@ -206,3 +206,13 @@ test('a failed publish gets a delayed retry by itself (3 attempts at most)', asy
   });
   await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toContain('10008|Ibrohim Test|Apex');
 });
+
+test('an empty Students list on this device doesn\'t wipe a class list that was published before', async ({ page, context }) => {
+  const sig = ROSTER.map(s => s.id + '|' + s.name + '|' + (s.group === 'ga' ? 'Apex' : 'Target')).sort().join('\n');
+  await openCourse(page, context, { roster: [], links: { g1: { code: 'GRM111', sentAt: iso(60), rosterSig: sig } } });
+  await page.evaluate(() => { window.__grRefreshMs = 0; window.grRefreshLists(); });
+  await page.waitForTimeout(800);
+  expect(await page.evaluate(() => window.__writes.filter(w => /^class-/.test(w.id)).length)).toBe(0);
+  expect(await page.evaluate(() => window.__deletes.filter(i => /^class-/.test(i)).length)).toBe(0);
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toBe(sig);
+});

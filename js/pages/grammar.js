@@ -71,17 +71,22 @@ function grRosterSig() {
 /* ---- the class lists follow the Students list (2026-11-16): a student added (or renamed, or moved) after Copy link can start
    without pressing Copy link again. Runs when the Course page draws and when sync/another tab changes the roster or groups.
    At most one run per 5 s (window.__grRefreshMs in tests), never two at once; a failed publish keeps the old rosterSig, so the next run retries. ---- */
-let grRefreshBusy = false, grRefreshAgain = false, grRefreshLast = 0, grRefreshTimer = 0, grRetryTimer = 0, grFailStreak = 0;
+let grRefreshBusy = false, grRefreshAgain = false, grRefreshLast = 0, grRefreshTimer = 0, grRetryTimer = 0, grFailStreak = 0, grSigBusy = false;
 function grRefreshLists() {
+  if (grSigBusy) return;
   if (typeof window.taPublishClassList !== 'function') return;   // Firebase is still loading — the next draw tries again
   if (grRefreshBusy) { grRefreshAgain = true; return; }
   const wait = (window.__grRefreshMs !== undefined ? window.__grRefreshMs : 5000) - (Date.now() - grRefreshLast);
   if (wait > 0) { if (!grRefreshTimer) grRefreshTimer = setTimeout(() => { grRefreshTimer = 0; grRefreshLists(); }, wait); return; }
-  const sig = grRosterSig();
+  grSigBusy = true;   // getStudentGroups can save (and so call us again) while we work out the signature
+  let sig, students;
+  try { students = grClassStudents(); sig = grRosterSig(); } finally { grSigBusy = false; }
   const stale = Object.keys(grLinks()).filter(id => { const e = grLinks()[id]; return e && typeof e === 'object' && e.code && e.rosterSig !== sig; });
   if (!stale.length) return;
+  /* an empty roster while a list was published before = most likely a device whose Students list hasn't synced yet:
+     an empty list would delete the class list and let any ID in — wait instead */
+  if (!students.length && stale.some(id => grLinks()[id].rosterSig)) return;
   grRefreshBusy = true; grRefreshLast = Date.now();
-  const students = grClassStudents();
   let failed = false;
   (async () => {
     for (const id of stale) {

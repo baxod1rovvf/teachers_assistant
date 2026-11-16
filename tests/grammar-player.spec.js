@@ -273,3 +273,21 @@ test('a missing lesson → "This lesson doesn\'t exist"; fits a phone with no si
   for (let i = 0; i < 4; i++) { await answer(page, '.gr-pq'); if (await page.locator('#grCheck').isVisible()) await page.locator('#grCheck').click(); await page.locator('#grNext').click(); }
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375);
 });
+
+test('the teacher\'s grammar CSS doesn\'t leak into the student page: the "done" card fits 375 px', async ({ page, context }) => {
+  test.setTimeout(60000);
+  const done = { __id: 'sk_GRM111_10001_1', v: 1, type: 'Grammar course', code: CODE, skill: 'grammar', lesson: 'g1', lessonNo: 1, name: 'Alice Test',
+    studentId: '10001', correct: 17, total: 20, score: 85, date: '2026-11-16T09:00:00.000Z' };
+  await page.setViewportSize({ width: 375, height: 700 });
+  await setup(context, { docs: [classDoc(CODE), done] });
+  await start(page);
+  await expect(page.locator('.gr-done')).toContainText('You\'ve done this lesson');
+  const r = await page.evaluate(() => {
+    const card = document.querySelector('.gr-done');
+    return { ws: getComputedStyle(card).whiteSpace, shadow: getComputedStyle(card).boxShadow,
+      over: [card, ...card.querySelectorAll('*')].filter(e => e.scrollWidth > e.clientWidth + 1 && e.clientWidth > 0).map(e => e.tagName + '.' + e.className) };
+  });
+  expect(r.ws).not.toBe('nowrap');
+  expect(r.over).toEqual([]);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375);
+});

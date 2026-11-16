@@ -788,6 +788,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   list". Class list entries are `{h, n, g}` (`g` = group name, shown as "Guruh"); `grRefreshLists()` publishes the lists again when the roster changes (Course draw,
   savePointsRoster/saveStudentGroups, `taStoreChanged`, `storage`; 5 s debounce; retry after 30 s, 3 times). Tests: `tests/grammar-content.spec.js`,
   `grammar-player.spec.js`, `grammar-teacher.spec.js`.
+  Raise a lesson's `v` in docs/grammar-journey.json whenever its questions change after links were sent (old drafts then start again). Grammar CSS for the teacher's side is scoped under `#courseWrap` (skill.html also loads css/style.css).
 - **Speaking Journey (teacher, 2026-11-09)**: **Speaking** follows the teacher's "Speaking Journey" (20 topics: 1 Daily Routine,
   2 Family, 3 Home & Living, 4 Food & Meals, 5 Free Time, 6 Friends, 7 School & Education, 8 Hobbies & Sports, 9 Shopping, 10 Your City,
   11 Holidays, 12 Future Plans, 13 Jobs & Careers, 14 Clothes & Fashion, 15 Transport, 16 Animals & Pets, 17 Health & Lifestyle,
