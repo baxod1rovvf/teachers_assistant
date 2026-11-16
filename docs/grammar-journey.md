@@ -2228,7 +2228,7 @@ Examples:
    *Hint: After can, the verb as it is: speak.*
 4. [Correct sentence] **He can play chess.** ✓ · He cans play chess. ✗ · He can plays chess. ✗  
    *Hint: can + verb as it is, no -s anywhere.*
-5. [Put in order] can / She / a / ride / horse → **She can ride a horse.**  
+5. [Put in order] can / She / a / ride / horse → **She can ride a horse.** or **Can she ride a horse?**  
    *Hint: She + can + ride + a horse.*
 
 #### Part 2: can't — Can you…?

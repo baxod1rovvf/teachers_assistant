@@ -987,7 +987,7 @@ window.TA_GRAMMAR = {
               {"type":"choose","q":"Tom can ___ very fast.","options":["run","runs","to run"],"a":["run"],"hint":"After can, the verb as it is: run."},
               {"type":"gap","q":"My dad can ___ three languages. (speak)","a":["speak"],"hint":"After can, the verb as it is: speak."},
               {"type":"fix","q":"Which sentence is correct?","options":["He can play chess.","He cans play chess.","He can plays chess."],"a":["He can play chess."],"hint":"can + verb as it is, no -s anywhere."},
-              {"type":"order","q":"Put the words in order.","words":["can","She","a","ride","horse"],"a":["She can ride a horse."],"hint":"She + can + ride + a horse."}
+              {"type":"order","q":"Put the words in order.","words":["can","She","a","ride","horse"],"a":["She can ride a horse.","Can she ride a horse?"],"hint":"She + can + ride + a horse."}
             ]
           },
           {

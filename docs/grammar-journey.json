@@ -1188,7 +1188,7 @@
             ["choose","Tom can ___ very fast.",["run","runs","to run"],"run","After can, the verb as it is: run."],
             ["gap","My dad can ___ three languages. (speak)",["speak"],"After can, the verb as it is: speak."],
             ["fix",["He can play chess.","He cans play chess.","He can plays chess."],"He can play chess.","can + verb as it is, no -s anywhere."],
-            ["order",["can","She","a","ride","horse"],"She can ride a horse.","She + can + ride + a horse."]
+            ["order",["can","She","a","ride","horse"],["She can ride a horse.","Can she ride a horse?"],"She + can + ride + a horse."]
           ]
         },
         {
