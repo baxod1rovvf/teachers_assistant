@@ -1,5 +1,5 @@
 // The teacher's Grammar Journey (2026-11-16): a section under the group cards on the Course page — 7 levels (Beginner and
-// Elementary have lessons), one link per lesson for every group, a results table with a group filter, Not finished per group.
+// Elementary and Pre-Intermediate have lessons), one link per lesson for every group, a results table with a group filter, Not finished per group.
 const { test, expect } = require('@playwright/test');
 const { prepare, watchErrors, hideNotices } = require('./support/app');
 
@@ -36,7 +36,7 @@ async function openLesson(page) {
   await expect(page.locator('.gr-lesson-page')).toBeVisible();
 }
 
-test('Grammar Journey sits under the group cards: 7 levels, 5 coming soon; Beginner lists 15 lessons', async ({ page, context }) => {
+test('Grammar Journey sits under the group cards: 7 levels, 4 coming soon; Beginner lists 15 lessons', async ({ page, context }) => {
   const errors = await openCourse(page, context);
   const order = await page.evaluate(() => {
     const cards = document.querySelector('#courseWrap .sk-cards'), gj = document.querySelector('#courseWrap .gr-journey');
@@ -45,7 +45,7 @@ test('Grammar Journey sits under the group cards: 7 levels, 5 coming soon; Begin
   expect(order).toBe(true);
   await expect(page.locator('.gr-journey h3').first()).toContainText('Grammar Journey');
   await expect(page.locator('.gr-level')).toHaveCount(7);
-  await expect(page.locator('.gr-level.soon')).toHaveCount(5);
+  await expect(page.locator('.gr-level.soon')).toHaveCount(4);
   await expect(page.locator('.gr-level.soon').first()).toContainText('Coming soon');
   await expect(page.locator('.gr-level[data-level="beginner"]')).toContainText('15 lessons');
   await page.locator('.gr-level[data-level="beginner"] .gr-level-open').click();
@@ -70,6 +70,19 @@ test('Elementary is open: 17 lessons (16–32), and Copy link on Lesson 16 gives
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(/skill\.html\?s=grammar&gl=g16&c=[0-9A-Za-z]{6}$/);
   const code = (await page.evaluate(() => navigator.clipboard.readText())).split('&c=')[1];
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g16.code)).toBe(code);
+  expect(errors).toEqual([]);
+});
+
+test('Pre-Intermediate is open: 18 lessons (33–50)', async ({ page, context }) => {
+  const errors = await openCourse(page, context);
+  await expect(page.locator('.gr-level[data-level="preintermediate"]')).not.toHaveClass(/soon/);
+  await expect(page.locator('.gr-level[data-level="preintermediate"] .gr-level-sub')).toHaveText('18 lessons · 0 sent');
+  await page.locator('.gr-level[data-level="preintermediate"] .gr-level-open').click();
+  await expect(page.locator('.gr-lesson')).toHaveCount(18);
+  expect(await page.locator('.gr-lesson').evaluateAll(els => els.map(e => e.dataset.lesson)))
+    .toEqual(Array.from({ length: 18 }, (_, i) => 'g' + (i + 33)));
+  await expect(page.locator('.gr-lesson[data-lesson="g33"]')).toContainText('Present Continuous for Future Arrangements');
+  await expect(page.locator('.gr-lesson[data-lesson="g50"]')).toContainText('Too and Enough');
   expect(errors).toEqual([]);
 });
 

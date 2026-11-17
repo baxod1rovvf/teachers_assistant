@@ -1,4 +1,4 @@
-# Grammar Journey — Beginner (Lessons 1–15), Elementary (Lessons 16–32)
+# Grammar Journey — Beginner (Lessons 1–15), Elementary (Lessons 16–32), Pre-Intermediate (Lessons 33–50)
 
 Made by `tools/build-grammar.js` from `docs/grammar-journey.json` — please read and approve. Each lesson: learn → practise
 for every part, then a 20-question revision test. Right answers are in **bold**; questions from an earlier lesson are
@@ -4122,3 +4122,2294 @@ Examples:
 18. [Write] I ___ going to watch TV tonight. I have a lot of homework. (negative) → **'m not** / **am not**
 19. [Correct sentence] **I think it will be sunny tomorrow.** ✓ · I think it wills be sunny tomorrow. ✗ · I think it will is sunny tomorrow. ✗
 20. [Choose] We ___ fly to Rome in May. We have the tickets. (a plan) — **are going to** / will
+
+---
+
+## Pre-Intermediate (Lessons 33–50)
+
+### Lesson 33 — Present Continuous for Future Arrangements
+
+#### Part 1: I'm meeting Tom on Friday — fixed plans
+
+We can use the present continuous (am / is / are + -ing) to talk about the future when a plan is already fixed — we have arranged a time, a place or other people, and it is often in our diary or calendar: I'm meeting Tom at six. We're flying to Rome on Monday. Always say when: tonight, tomorrow, on Friday, next week, at seven o'clock.
+
+| Person | be + -ing | Future time |
+|---|---|---|
+| I | am ('m) meeting | my friends tonight. |
+| he / she / it | is ('s) playing | tennis on Saturday. |
+| you / we / they | are ('re) flying | to Rome next week. |
+
+Examples:
+
+- I'm meeting my friends tonight.
+- She's playing tennis with Anna on Saturday.
+- We're flying to Rome next Monday.
+- My parents are coming to dinner tomorrow.
+- I'm seeing the dentist at four o'clock this afternoon.
+- Tom is starting his new job on the first of June.
+
+🇺🇿 Oldindan kelishilgan reja uchun Present Continuous ishlatiladi: I'm meeting Tom tomorrow — Ertaga Tom bilan uchrashaman.
+
+**Practise**
+
+1. [Choose] I ___ my grandparents next Sunday. It's in my diary. — **am visiting** / visiting / visited  
+   *Hint: A fixed plan for the future → am + -ing: I am visiting.*
+2. [Choose] We ___ to Paris on Friday. We have the tickets. — **are flying** / flying / flew  
+   *Hint: A fixed plan → are + -ing: We are flying.*
+3. [Write] She ___ her friends at the cinema at eight tonight. (meet — a fixed plan) → **is meeting** / **'s meeting** / **is going to meet** / **'s going to meet**  
+   *Hint: A fixed plan → is + -ing: She is meeting.*
+4. [Write] My brother ___ married in June. (get — a fixed plan) → **is getting** / **'s getting** / **is going to get** / **'s going to get**  
+   *Hint: A fixed plan → is + -ing: is getting.*
+5. [Correct sentence] **We're having a party on Saturday.** ✓ · We having a party on Saturday. ✗ · We're have a party on Saturday. ✗  
+   *Hint: be + -ing: We're (We are) having.*
+
+#### Part 2: Are you doing anything tonight? — negatives and questions
+
+Negative: am not / isn't / aren't + -ing: I'm not working tomorrow. Question: Am / Is / Are + person + -ing: Are you doing anything this weekend? With a question word: What are you doing tonight? Where is she going on holiday? This is a very common way to ask about someone's plans.
+
+| Negative | Question |
+|---|---|
+| I'm not working on Saturday. | Are you working on Saturday? |
+| She isn't coming to the party. | Is she coming to the party? |
+| They aren't leaving until Monday. | When are they leaving? |
+
+Examples:
+
+- I'm not going to school tomorrow. It's a holiday.
+- Are you doing anything this evening?
+- What are you doing at the weekend?
+- Sam isn't coming to the meeting on Friday.
+- When are your cousins arriving?
+- Where are you going on holiday this summer?
+
+🇺🇿 Rejani so‘rash: What are you doing tonight? — Bugun kechqurun nima qilmoqchisiz?
+
+**Practise**
+
+1. [Choose] ___ you doing anything on Saturday evening? — **Are** / Do / Is  
+   *Hint: Question: Are + you + -ing?*
+2. [Choose] She ___ to the party tomorrow. She's ill. — **isn't coming** / doesn't coming / not coming  
+   *Hint: Negative: isn't + -ing.*
+3. [Write] What ___ you doing this weekend? (be) → **are**  
+   *Hint: Question: What + are + you + doing?*
+4. [Write] I ___ tomorrow. I have a day off. (not / work — a fixed plan) → **'m not working** / **am not working** / **'m not going to work** / **am not going to work**  
+   *Hint: Negative with I: I'm not (I am not) + working.*
+5. [Put in order] are / When / leaving / you → **When are you leaving?**  
+   *Hint: When + are + you + leaving?*
+
+#### Part 3: Now or in the future? — the time word tells you
+
+The same form, am / is / are + -ing, can be about now or about a future plan. The time words show which one: I'm working now (at this moment). I'm working tomorrow (a plan). Words for now: now, at the moment, Look!, Listen! Words for the future: tonight, tomorrow, this weekend, next week, on Monday, in July.
+
+| Now | A future plan |
+|---|---|
+| I'm cooking dinner now. | I'm cooking dinner for my friends on Saturday. |
+| Look! Anna is leaving. | Anna is leaving for Canada next month. |
+| We're watching a film at the moment. | We're watching a film tonight. |
+
+Examples:
+
+- I'm reading a good book at the moment.
+- I'm meeting Kate for lunch tomorrow.
+- Listen! Someone is playing the piano.
+- We're playing in a concert next Friday.
+- She's working from home today.
+- He's travelling to China next month.
+
+🇺🇿 Bir xil shakl hozirgi ishni ham, kelajakdagi rejani ham bildiradi — buni vaqt so‘zi (now, tomorrow) ko‘rsatadi.
+
+**Practise**
+
+1. [Choose] Which sentence is about a future plan? — **I'm meeting Kate tomorrow.** / I'm meeting Kate now. / I met Kate yesterday.  
+   *Hint: tomorrow = the future → a plan.*
+2. [Choose] We're having dinner with our neighbours ___. — **next Saturday** / last Saturday / yesterday  
+   *Hint: be + -ing with a future time = a plan.*
+3. [Write] They ___ to London next week. (move — a fixed plan) → **are moving** / **'re moving** / **are going to move** / **'re going to move**  
+   *Hint: A fixed plan → are + -ing: They are moving.*
+4. [Write] Shh! The baby ___ at the moment. (sleep) → **is sleeping** / **'s sleeping**  
+   *Hint: at the moment = now → is + -ing.*
+5. [Correct sentence] **I'm seeing the doctor on Monday.** ✓ · I seeing the doctor on Monday. ✗ · I'm see the doctor on Monday. ✗  
+   *Hint: I'm (I am) + seeing.*
+
+#### Revision test (20 questions)
+
+1. [Choose] We ___ to the cinema tonight. We have the tickets. — **are going** / going / went
+2. [Write] My sister ___ married next month. (get — a fixed plan) → **is getting** / **'s getting** / **is going to get** / **'s going to get**
+3. [Choose] ___ you doing anything tomorrow evening? — **Are** / Do / Will
+4. [Choose] I'm hungry. I think I ___ make a sandwich. (a decision now) — **will** / am going to *(from Lesson 32)*
+5. [Write] I ___ to the party on Saturday. I'm going to my cousin's wedding. (not / go — a fixed plan) → **'m not going** / **am not going** / **'m not going to go** / **am not going to go**
+6. [Choose] What ___ you doing this weekend? — **are** / do / is
+7. [Correct sentence] **She's flying to New York on Monday.** ✓ · She flying to New York on Monday. ✗ · She's fly to New York on Monday. ✗
+8. [Put in order] are / They / tomorrow / coming → **They are coming tomorrow.** or **Are they coming tomorrow?** or **Tomorrow they are coming.**
+9. [Choose] Be quiet! The baby ___. — **is sleeping** / sleeps / sleep *(from Lesson 16)*
+10. [Write] Where ___ you going on holiday this summer? (be) → **are**
+11. [Choose] Which sentence is about a future plan? — **We're playing tennis on Sunday.** / We're playing tennis now. / We played tennis on Sunday.
+12. [Write] He ___ his grandparents tomorrow. (visit — a fixed plan) → **is visiting** / **'s visiting** / **is going to visit** / **'s going to visit**
+13. [Write] ___ you see the match last night? → **Did** *(from Lesson 31)*
+14. [Correct sentence] **Are you coming to my party?** ✓ · Do you coming to my party? ✗ · Are you come to my party? ✗
+15. [Put in order] meeting / I'm / Kate / at / six → **I'm meeting Kate at six.** or **At six I'm meeting Kate.**
+16. [Choose] My parents ___ home until late tonight. — **aren't coming** / don't coming / not coming
+17. [Choose] I ___ at home yesterday evening. — **was** / were / am *(from Lesson 29)*
+18. [Write] We ___ dinner with Sam tonight. We booked a table. (have — a fixed plan) → **are having** / **'re having** / **are going to have** / **'re going to have**
+19. [Choose] When ___ your brother leaving for university? — **is** / does / are
+20. [Correct sentence] **I'm not working tomorrow.** ✓ · I'm not work tomorrow. ✗ · I don't working tomorrow. ✗
+
+---
+
+### Lesson 34 — Will vs Going To vs Present Continuous
+
+#### Part 1: Three ways to talk about the future
+
+will → a decision you make now, an offer or a promise: I'm cold. I'll close the window. be going to → a plan or intention you decided before: I'm going to learn Spanish this year. Present continuous → a fixed arrangement, with a time, a place or other people already arranged: I'm meeting Sam at the café at six.
+
+| Form | Use | Example |
+|---|---|---|
+| will | a decision now, an offer, a promise | I'm cold. I'll close the window. |
+| be going to | a plan or intention | I'm going to learn to drive this year. |
+| present continuous | a fixed arrangement (time, place, people) | I'm meeting Sam at the café at six. |
+
+Examples:
+
+- A: The phone's ringing. B: I'll answer it.
+- I'll help you with those bags.
+- I'm going to save money for a new laptop.
+- We're going to paint the kitchen this summer.
+- I'm having lunch with my boss on Friday.
+- They're getting married on the 3rd of May.
+
+🇺🇿 will — hozir qilingan qaror, going to — niyat, Present Continuous — aniq kelishilgan reja.
+
+**Practise**
+
+1. [Choose] A: The phone is ringing. B: I ___ answer it. (a decision now) — **will** / am going to / am answering  
+   *Hint: A decision at the moment of speaking → will.*
+2. [Choose] I ___ my cousins at the airport at six tomorrow. We arranged it last week. — **am meeting** / meet / met  
+   *Hint: A fixed arrangement with a time and place → present continuous.*
+3. [Write] I've decided. I ___ going to study medicine. (be) → **am** / **'m**  
+   *Hint: A plan or intention → I am going to…*
+4. [Write] A: I'm thirsty. B: Wait, I ___ get you some water. (an offer) → **will** / **'ll**  
+   *Hint: An offer → will ('ll).*
+5. [Correct sentence] **I'll carry your bag for you.** ✓ · I'll carrying your bag for you. ✗ · I'll to carry your bag for you. ✗  
+   *Hint: An offer → I'll + verb (no to).*
+
+#### Part 2: Predictions: I think it will… / It's going to…
+
+Both will and be going to can say what we expect to happen. Use will for what you think or believe — often after I think, I'm sure, maybe, probably: I'm sure you'll pass the exam. Use be going to when you can see something now that shows what will happen: Look at those clouds — it's going to rain. She's running very fast — she's going to win.
+
+| A prediction from… | Use | Example |
+|---|---|---|
+| what I think or believe | will | I'm sure you'll like the film. |
+| something I can see now | be going to | Watch out! That glass is going to fall. |
+
+Examples:
+
+- I think it will be sunny tomorrow.
+- Maybe people will live on Mars one day.
+- I'm sure you'll pass the test.
+- Look at that man on the ladder! He's going to fall.
+- The sky is very dark. It's going to rain.
+- She's very tired. She's going to fall asleep.
+
+🇺🇿 Fikrga asoslangan bashorat — will (I think…), ko‘rinib turgan belgiga asoslangan bashorat — going to.
+
+**Practise**
+
+1. [Choose] Look at those black clouds! It ___ rain. (I can see it now) — **is going to** / will  
+   *Hint: A prediction from what you can see now → going to.*
+2. [Choose] I'm sure you ___ enjoy the concert. — **will** / are / wills  
+   *Hint: I'm sure + will + verb (no -s).*
+3. [Write] Be careful! You ___ going to drop those plates! (be) → **are** / **'re**  
+   *Hint: You can see it now → You are going to drop them.*
+4. [Write] Don't worry about the test. I'm sure it ___ be difficult. (will — negative) → **won't** / **will not**  
+   *Hint: Negative of will → won't (will not).*
+5. [Correct sentence] **He's running too fast. He's going to fall.** ✓ · He's running too fast. He's going fall. ✗ · He's running too fast. He going to fall. ✗  
+   *Hint: He's (He is) + going to + fall.*
+
+#### Part 3: Plan, arrangement or decision now?
+
+Ask yourself two questions. Did I decide before now? If not — it's a decision now, an offer or a promise → will. If yes — is it only an intention (I have decided, but no details yet) → be going to; or is it arranged with a time, a place or other people → present continuous. For an arrangement, be going to is usually correct too.
+
+| Situation | Example |
+|---|---|
+| an intention (decided, no details yet) | I'm going to learn to swim this summer. |
+| a fixed arrangement (time, place, people) | I'm having lunch with Kate on Friday at one. |
+| a decision now (not a plan) | There's no milk. I'll get some. |
+
+Examples:
+
+- A: We've got no bread. B: I'll go to the shop.
+- I'm going to start running in the mornings.
+- We're visiting my uncle in Leeds next weekend.
+- A: Are you free tomorrow? B: No, I'm working all day.
+- I'm going to tidy my room after dinner.
+
+🇺🇿 Niyat — going to; vaqti va joyi kelishilgan reja — Present Continuous; hozir qilingan qaror — will.
+
+**Practise**
+
+1. [Choose] A: Are you free on Friday? B: No, I ___ my aunt. We arranged it last week. — **'m visiting** / 'll visit / visit  
+   *Hint: Arranged before, with a day → present continuous.*
+2. [Choose] A: I can't do this homework. B: Don't worry. I ___ help you. (an offer) — **'ll** / 'm going to / 'm helping  
+   *Hint: An offer → will ('ll).*
+3. [Write] We ___ going to paint the kitchen this weekend. We bought the paint yesterday. (be) → **are** / **'re**  
+   *Hint: A plan made before → We are going to…*
+4. [Write] A: What are your plans for tomorrow? B: I ___ football with Ben at ten. (play — arranged) → **'m playing** / **am playing** / **'m going to play** / **am going to play**  
+   *Hint: Arranged with Ben at ten → I'm (I am) playing.*
+5. [Put in order] is / Anna / going / to / learn / Japanese → **Anna is going to learn Japanese.** or **Is Anna going to learn Japanese?**  
+   *Hint: Anna + is going to + learn + Japanese.*
+
+#### Revision test (20 questions)
+
+1. [Choose] A: It's very hot in here. B: I ___ open the window. (a decision now) — **will** / am going to / am opening
+2. [Choose] Look out! That box ___ fall on your head! (I can see it now) — **is going to** / will / falls
+3. [Write] I ___ my best friend at the café at four tomorrow. (meet — arranged) → **'m meeting** / **am meeting** / **'m going to meet** / **am going to meet**
+4. [Write] I promise I ___ tell anyone. (negative of will) → **won't** / **will not** *(from Lesson 32)*
+5. [Choose] I'm sure you ___ love this book. — **will** / are loving / wills
+6. [Write] She has decided: she ___ going to study law. (be) → **is** / **'s**
+7. [Correct sentence] **I think it will snow tomorrow.** ✓ · I think it snows tomorrow. ✗ · I think it will snows tomorrow. ✗
+8. [Put in order] going / We're / to / a / house / buy → **We're going to buy a house.**
+9. [Choose] A: We haven't got any bread. B: OK, I ___ some on my way home. (a decision now) — **'ll buy** / 'm buying / bought
+10. [Correct sentence] **Where did you go yesterday?** ✓ · Where did you went yesterday? ✗ · Where you went yesterday? ✗ *(from Lesson 31)*
+11. [Write] Watch out! You ___ going to hit that tree! (be) → **are** / **'re**
+12. [Choose] My brother ___ his driving test next Tuesday at nine. It's booked. — **is taking** / take / taking
+13. [Choose] She usually walks to school, but today she ___ the bus. — **is taking** / takes / take *(from Lesson 16)*
+14. [Correct sentence] **Are you going to watch the match tonight?** ✓ · Are you going watch the match tonight? ✗ · Do you going to watch the match tonight? ✗
+15. [Put in order] will / Maybe / be / it / sunny / tomorrow → **Maybe it will be sunny tomorrow.** or **Maybe tomorrow it will be sunny.**
+16. [Write] A: Somebody is at the door. B: I ___ go. (a decision now) → **will** / **'ll**
+17. [Write] My parents ___ a new car last month. (buy) → **bought** *(from Lesson 30)*
+18. [Choose] It's 8:55 and the lesson starts at nine. Hurry! We ___ be late! — **are going to** / are being / be
+19. [Write] I've got the tickets. We ___ to Rome on Friday morning. (fly — arranged) → **'re flying** / **are flying** / **'re going to fly** / **are going to fly**
+20. [Correct sentence] **Don't worry, I'll help you.** ✓ · Don't worry, I'll helping you. ✗ · Don't worry, I'll to help you. ✗
+
+---
+
+### Lesson 35 — Past Continuous
+
+#### Part 1: I was reading, they were playing
+
+The past continuous = was / were + -ing. Use it for an action that was in progress (happening) at a time in the past: At eight o'clock last night I was watching TV (I started before eight and finished after eight). Use was with I, he, she, it and were with you, we, they.
+
+| Person | was / were + -ing | Example |
+|---|---|---|
+| I / he / she / it | was working | At ten she was working. |
+| you / we / they | were working | At ten we were working. |
+
+Examples:
+
+- At eight o'clock last night I was watching TV.
+- She was reading a book at ten.
+- We were having dinner at seven.
+- It was raining all morning.
+- The children were playing in the garden.
+- This time yesterday I was sitting on a plane.
+
+🇺🇿 Past Continuous — o‘tmishda ma’lum bir paytda davom etayotgan ish: At nine I was reading — Soat to‘qqizda kitob o‘qiyotgan edim.
+
+**Practise**
+
+1. [Choose] At nine o'clock last night I ___ TV. — **was watching** / were watching / am watching  
+   *Hint: Past, in progress, with I → was + -ing.*
+2. [Choose] They ___ football at four yesterday afternoon. — **were playing** / was playing / are playing  
+   *Hint: With they → were + -ing.*
+3. [Write] At ten o'clock last night she ___ a book. (read — was/were + -ing) → **was reading**  
+   *Hint: With she → was + reading.*
+4. [Write] At seven yesterday evening we ___ dinner. (have — was/were + -ing) → **were having**  
+   *Hint: With we → were + having.*
+5. [Correct sentence] **It was raining all day yesterday.** ✓ · It were raining all day yesterday. ✗ · It was rain all day yesterday. ✗  
+   *Hint: With it → was + -ing: was raining.*
+
+#### Part 2: What were you doing? — negatives and questions
+
+Negative: wasn't (was not) / weren't (were not) + -ing: I wasn't sleeping. Question: Was / Were + person + -ing: Were you sleeping? With a question word: What were you doing at eight? Short answers: Yes, I was. / No, I wasn't. Yes, they were. / No, they weren't.
+
+| Negative | Question | Short answer |
+|---|---|---|
+| I wasn't sleeping. | Were you sleeping? | Yes, I was. / No, I wasn't. |
+| She wasn't listening. | Was she listening? | Yes, she was. / No, she wasn't. |
+| They weren't working. | Were they working? | Yes, they were. / No, they weren't. |
+
+Examples:
+
+- I wasn't sleeping at eleven. I was reading.
+- Sorry, I wasn't listening. Can you say that again?
+- Were you working at six yesterday? — Yes, I was.
+- What were you doing at midnight?
+- Was it snowing this morning? — No, it wasn't.
+- Why were they laughing?
+
+🇺🇿 So‘roq: Was / Were + shaxs + -ing: What were you doing? — Nima qilayotgan edingiz?
+
+**Practise**
+
+1. [Choose] ___ you sleeping at eleven last night? — **Were** / Was / Did  
+   *Hint: Question with you → Were + you + -ing?*
+2. [Choose] Sorry, I ___ listening. Can you say that again? — **wasn't** / weren't / didn't  
+   *Hint: Negative with I → wasn't + -ing.*
+3. [Write] What ___ you doing at eight o'clock yesterday evening? → **were**  
+   *Hint: Question with you → What + were + you + doing?*
+4. [Write] They ___ at three yesterday. They were at the beach. (not / work — was/were + -ing) → **weren't working** / **were not working**  
+   *Hint: Negative with they → weren't (were not) + working.*
+5. [Put in order] was / What / doing / she → **What was she doing?**  
+   *Hint: What + was + she + doing?*
+
+#### Part 3: The sun was shining… — setting the scene
+
+We often begin a story with the past continuous to describe the scene — what was happening around us: It was a cold evening. Snow was falling and people were hurrying home. We also use it for two longer actions that were happening at the same time: Mum was cooking and Dad was reading. Don't use it with state verbs like know, like, want, need: I knew the answer (not I was knowing).
+
+| Use | Example |
+|---|---|
+| the scene of a story | The sun was shining and the birds were singing. |
+| two actions at the same time | Mum was cooking and Dad was reading the paper. |
+| state verbs → past simple | I wanted a drink. (not I was wanting) |
+
+Examples:
+
+- It was a beautiful morning. The sun was shining.
+- People were sitting in the park and children were playing.
+- I was doing my homework and my brother was playing games.
+- Everybody was talking and laughing.
+- I didn't know the answer. (not wasn't knowing)
+
+🇺🇿 Hikoyada vaziyatni tasvirlash uchun Past Continuous ishlatiladi; know, like, want kabi fe’llar -ing olmaydi.
+
+**Practise**
+
+1. [Choose] It was a lovely day. The sun ___ and the birds were singing. — **was shining** / were shining / shining  
+   *Hint: The sun = it → was + -ing.*
+2. [Choose] I ___ the answer to the last question. — **knew** / was knowing / were knowing  
+   *Hint: know is a state verb → no -ing: knew.*
+3. [Write] Mum was cooking and Dad ___ the newspaper. (read — was/were + -ing) → **was reading**  
+   *Hint: Two actions at the same time → was reading.*
+4. [Write] At midnight we ___ to music and dancing. (listen — was/were + -ing) → **were listening**  
+   *Hint: With we → were + listening.*
+5. [Correct sentence] **She wanted a glass of water.** ✓ · She was wanting a glass of water. ✗ · She were wanting a glass of water. ✗  
+   *Hint: want is a state verb → past simple: wanted.*
+
+#### Revision test (20 questions)
+
+1. [Choose] At six o'clock yesterday we ___ dinner. — **were having** / was having / are having
+2. [Write] At ten last night I ___ a film. (watch — was/were + -ing) → **was watching**
+3. [Choose] ___ it raining when you left home? — **Was** / Were / Did
+4. [Choose] She didn't ___ me an email yesterday. — **send** / sent / sends *(from Lesson 31)*
+5. [Write] They ___ at four yesterday. They were at the cinema. (not / study — was/were + -ing) → **weren't studying** / **were not studying**
+6. [Correct sentence] **The children were playing in the garden.** ✓ · The children was playing in the garden. ✗ · The children were play in the garden. ✗
+7. [Choose] What ___ you doing at midnight? — **were** / was / did
+8. [Put in order] was / He / a / shower / having → **He was having a shower.** or **Was he having a shower?**
+9. [Choose] We ___ a great film last weekend. — **saw** / seed / see *(from Lesson 30)*
+10. [Write] It ___ all morning, so we stayed at home. (snow — was/were + -ing) → **was snowing**
+11. [Choose] I ___ his name, but I forgot it. — **knew** / was knowing / were knowing
+12. [Correct sentence] **Were you sleeping at eleven?** ✓ · Was you sleeping at eleven? ✗ · Did you sleeping at eleven? ✗
+13. [Write] Was Tom working yesterday afternoon? — No, he ___. → **wasn't** / **was not**
+14. [Choose] My parents ___ going to buy a new car next year. — **are** / is / will *(from Lesson 32)*
+15. [Put in order] were / What / doing / they → **What were they doing?**
+16. [Choose] This time yesterday I ___ on the beach. — **was lying** / were lying / am lying
+17. [Choose] This test is ___ than the last one. — **easier** / easyer / more easy *(from Lesson 26)*
+18. [Write] My brother was playing games and my sister ___ to music. (listen — was/were + -ing) → **was listening**
+19. [Choose] Sorry, we ___ attention. Can you explain it again? — **weren't paying** / wasn't paying / didn't paying
+20. [Correct sentence] **I wasn't working at five.** ✓ · I weren't working at five. ✗ · I wasn't work at five. ✗
+
+---
+
+### Lesson 36 — Past Simple vs Past Continuous
+
+#### Part 1: I was walking home when it started to rain
+
+Use the two tenses together when a short action happens in the middle of a longer one. The longer action (it was already happening) → past continuous. The short action (it interrupted the longer one) → past simple, often after when: I was having a shower when the phone rang.
+
+| Longer action (past continuous) | Short action (past simple) |
+|---|---|
+| I was having a shower | when the phone rang. |
+| We were watching TV | when the lights went out. |
+| She was walking home | when it started to rain. |
+
+Examples:
+
+- I was having a shower when the phone rang.
+- We were watching TV when the lights went out.
+- She was walking home when it started to rain.
+- Tom was cooking when he cut his finger.
+- When I arrived, they were having dinner.
+- What were you doing when I called you?
+
+🇺🇿 Uzoq davom etgan ish — Past Continuous, uni bo‘lgan qisqa ish — Past Simple: I was reading when he came — U kelganda kitob o‘qiyotgan edim.
+
+**Practise**
+
+1. [Choose] I ___ a bath when the phone rang. (the longer action) — **was having** / had / have  
+   *Hint: The longer action → past continuous: was having.*
+2. [Choose] We were watching TV when the lights ___ out. (the short action) — **went** / were going / go  
+   *Hint: The short action → past simple: went.*
+3. [Write] She ___ home when she saw the accident. (walk — the longer action) → **was walking**  
+   *Hint: The longer action → was + walking.*
+4. [Write] Tom was cooking when he ___ his finger. (cut — the short action) → **cut**  
+   *Hint: The short action → past simple: cut (cut – cut – cut).*
+5. [Correct sentence] **When I arrived, they were having dinner.** ✓ · When I arrived, they was having dinner. ✗ · When I arrived, they having dinner. ✗  
+   *Hint: they → were + having.*
+
+#### Part 2: while and when
+
+Use while before the longer action — it means 'during the time that': While I was walking to school, I met an old friend. Use when before the short action: I was walking to school when I met an old friend. Two longer actions at the same time: While I was cooking, my sister was setting the table.
+
+|  | Example |
+|---|---|
+| while + the longer action | While I was walking to school, I met an old friend. |
+| when + the short action | I was walking to school when I met an old friend. |
+| while + two longer actions | While I was cooking, my sister was setting the table. |
+
+Examples:
+
+- While I was waiting for the bus, it started to rain.
+- The phone rang while we were having dinner.
+- I was walking home when I saw a fox.
+- While Dad was washing the car, Mum was watering the garden.
+- She fell asleep while she was watching the film.
+
+🇺🇿 while dan keyin davom etayotgan ish (Past Continuous), when dan keyin ko‘pincha qisqa ish (Past Simple) keladi.
+
+**Practise**
+
+1. [Choose] ___ I was waiting for the bus, it started to rain. — **While** / During / Then  
+   *Hint: while + the longer action (was waiting).*
+2. [Choose] I was walking home ___ I saw a fox. — **when** / while / during  
+   *Hint: when + the short action (saw).*
+3. [Write] While we ___ dinner, the lights went out. (have — the longer action) → **were having**  
+   *Hint: while + the longer action → were having.*
+4. [Write] While Dad was washing the car, Mum ___ the garden. (water — was/were + -ing) → **was watering**  
+   *Hint: Two longer actions at the same time → was watering.*
+5. [Put in order] was / She / sleeping / when / her / brother / arrived → **She was sleeping when her brother arrived.** or **Her brother arrived when she was sleeping.** or **When her brother arrived she was sleeping.** or **When she was sleeping her brother arrived.**  
+   *Hint: She was sleeping (longer) + when + her brother arrived (short).*
+
+#### Part 3: When she arrived, we had dinner / we were having dinner
+
+Past simple + when + past simple = one action after the other: When Kate arrived, we had dinner (first Kate arrived, then we ate). Past continuous + when + past simple = the first action had already started: When Kate arrived, we were having dinner (we were in the middle of dinner). For a list of actions in a story, one after another, use the past simple: I got up, had a shower and went out.
+
+| Sentence | Meaning |
+|---|---|
+| When Kate arrived, we had dinner. | First Kate arrived, then we ate. |
+| When Kate arrived, we were having dinner. | We were already eating when she came. |
+| I opened the door and saw a cat. | Two actions, one after the other. |
+
+Examples:
+
+- When the film ended, we went home.
+- When I got to the station, my train was leaving.
+- She opened the box and found a ring.
+- When the teacher came in, the students were talking.
+- When the teacher came in, the students stood up.
+
+🇺🇿 When she came, we had lunch — u kelgach, tushlik qildik; we were having lunch — u kelganda tushlik qilayotgan edik.
+
+**Practise**
+
+1. [Choose] Which sentence means 'we started eating before Kate came'? — **When Kate arrived, we were having dinner.** / When Kate arrived, we had dinner.  
+   *Hint: were having = we were already in the middle of dinner.*
+2. [Choose] First the alarm rang, then I got up. → When the alarm rang, I ___ up. — **got** / was getting  
+   *Hint: One action after the other → past simple: got.*
+3. [Write] I opened the door and ___ a big dog. (see) → **saw**  
+   *Hint: Actions one after the other → past simple: saw.*
+4. [Write] When we got to the station, the train ___. We had to run! (leave — was/were + -ing) → **was leaving**  
+   *Hint: The train had already started to leave → was leaving.*
+5. [Correct sentence] **The phone rang while I was having a shower.** ✓ · The phone rang while I was have a shower. ✗ · The phone rang while I were having a shower. ✗  
+   *Hint: I → was + having.*
+
+#### Revision test (20 questions)
+
+1. [Choose] I ___ dinner when my friend called. (the longer action) — **was cooking** / cooked / cook
+2. [Choose] We were sitting in the garden when it ___ to rain. (the short action) — **started** / was starting / starts
+3. [Write] She ___ to music when the teacher came in. (listen — the longer action) → **was listening**
+4. [Write] What time ___ you get up yesterday? → **did** *(from Lesson 31)*
+5. [Choose] ___ I was cleaning my room, I found an old photo. — **While** / During / Then
+6. [Write] While the children were playing, their parents ___ coffee. (drink — was/were + -ing) → **were drinking**
+7. [Correct sentence] **He broke his leg while he was skiing.** ✓ · He broke his leg while he skiing. ✗ · He broke his leg while he were skiing. ✗
+8. [Put in order] was / It / when / raining / we / left → **It was raining when we left.** or **We left when it was raining.** or **When we left it was raining.** or **When it was raining we left.**
+9. [Choose] When the film ended, we ___ home. (first the film ended, then we left) — **went** / were going
+10. [Choose] My dad ___ dinner for us last night. — **made** / maked / make *(from Lesson 30)*
+11. [Write] I ___ a shower when the doorbell rang. (have — the longer action) → **was having**
+12. [Choose] What were you doing when the accident ___? — **happened** / was happening / happens
+13. [Choose] The weather ___ terrible last weekend. — **was** / were / is *(from Lesson 29)*
+14. [Correct sentence] **When I got home, my sister was watching TV.** ✓ · When I got home, my sister watching TV. ✗ · When I was get home, my sister was watching TV. ✗
+15. [Write] We were walking in the park when we ___ an old friend. (meet — the short action) → **met**
+16. [Put in order] were / We / dinner / having / when / the / lights / went / out → **We were having dinner when the lights went out.** or **The lights went out when we were having dinner.** or **When the lights went out we were having dinner.** or **When we were having dinner the lights went out.**
+17. [Choose] A: I don't understand this word. B: I ___ explain it. (an offer) — **will** / am going to *(from Lesson 32)*
+18. [Write] When I arrived at the party, everybody ___. The music was very loud. (dance — was/were + -ing) → **was dancing**
+19. [Choose] Which sentence means 'first she came, then we ate'? — **When she came, we had lunch.** / When she came, we were having lunch.
+20. [Correct sentence] **They were playing tennis when it started to rain.** ✓ · They was playing tennis when it started to rain. ✗ · They were playing tennis when it was start to rain. ✗
+
+---
+
+### Lesson 37 — Used To (Past Habits and States)
+
+#### Part 1: I used to play football — past habits
+
+Use used to + verb for things you did often or regularly in the past but don't do now: I used to play football every day (now I don't). It's the same for every person: I used to, she used to, they used to. After used to, use the verb as it is: used to go (not used to went).
+
+| Then (a past habit) | Now |
+|---|---|
+| I used to walk to school. | Now I go by bus. |
+| She used to play the piano. | She doesn't play now. |
+| We used to go to the beach every summer. | Now we go to the mountains. |
+
+Examples:
+
+- I used to play football every day after school.
+- My grandad used to work on a farm.
+- We used to go to the beach every summer.
+- She used to eat a lot of sweets, but now she doesn't.
+- My dad used to smoke, but he stopped ten years ago.
+
+🇺🇿 used to + fe’l — o‘tmishda odat bo‘lgan, hozir esa yo‘q ish: I used to play football — Oldin futbol o‘ynardim.
+
+**Practise**
+
+1. [Choose] When I was a child, I ___ play in the park every day. — **used to** / was used / using to  
+   *Hint: A past habit → used to + verb.*
+2. [Choose] My dad used to ___ to work by bike. — **go** / went / going  
+   *Hint: After used to, the verb as it is: go.*
+3. [Write] She ___ a lot of chocolate, but now she eats fruit. (eat — used to) → **used to eat**  
+   *Hint: A past habit → used to + eat.*
+4. [Write] We ___ to the beach every summer when I was young. (go — used to) → **used to go**  
+   *Hint: A past habit → used to + go.*
+5. [Correct sentence] **They used to visit us every summer.** ✓ · They used to visited us every summer. ✗ · They were used to visit us every summer. ✗  
+   *Hint: used to + the verb as it is: visit.*
+
+#### Part 2: I used to have long hair — past states
+
+used to is also for situations that were true for a long time in the past but aren't true now: I used to have long hair (now it's short). There used to be a cinema here (now there isn't). Don't use used to for one action at one time — use the past simple: I visited Rome last year (not I used to visit Rome last year).
+
+|  | Example |
+|---|---|
+| a past state | I used to have long hair. (Now it's short.) |
+| there used to be | There used to be a shop here. (Now it's gone.) |
+| one action, one time → past simple | I visited Rome in 2019. |
+
+Examples:
+
+- My mum used to have long hair.
+- There used to be a cinema in our town.
+- This town used to be very quiet.
+- We used to live in London.
+- I used to be afraid of dogs, but now I love them.
+
+🇺🇿 used to o‘tmishdagi holatni ham bildiradi: There used to be a cinema here — Bu yerda oldin kinoteatr bor edi.
+
+**Practise**
+
+1. [Choose] There ___ a cinema in our street, but now it's a supermarket. — **used to be** / used to is / used be  
+   *Hint: A past situation → used to be.*
+2. [Choose] I ___ to Spain last summer. (one time) — **went** / used to go  
+   *Hint: One action at one time → past simple.*
+3. [Write] My mum ___ long hair, but now it's short. (have — used to) → **used to have**  
+   *Hint: A past state → used to + have.*
+4. [Write] This town ___ very quiet, but now it's busy. (be — used to) → **used to be**  
+   *Hint: A past state → used to + be.*
+5. [Correct sentence] **I bought this jacket last week.** ✓ · I used to buy this jacket last week. ✗ · I used buy this jacket last week. ✗  
+   *Hint: One action at one time (last week) → past simple.*
+
+#### Part 3: Did you use to…? — negatives and questions
+
+Negative: didn't (did not) + use to + verb: I didn't use to like coffee (but now I do). Question: Did + person + use to + verb? Did you use to play football? After did and didn't, write use to (without d) — just like didn't go, didn't play. Short answers: Yes, I did. / No, I didn't.
+
+| Negative | Question | Short answer |
+|---|---|---|
+| I didn't use to like vegetables. | Did you use to like vegetables? | Yes, I did. / No, I didn't. |
+| She didn't use to wear glasses. | Did she use to wear glasses? | Yes, she did. / No, she didn't. |
+
+Examples:
+
+- I didn't use to like coffee, but now I drink it every day.
+- He didn't use to wear glasses.
+- Did you use to walk to school?
+- Did your parents use to live here? — Yes, they did.
+- Where did you use to go on holiday?
+
+🇺🇿 Inkor va so‘roqda did dan keyin use to yoziladi: Did you use to swim? — Oldin suzarmidingiz?
+
+**Practise**
+
+1. [Choose] I ___ like vegetables, but now I love them. — **didn't use to** / not used to / don't used to  
+   *Hint: Negative → didn't use to + verb.*
+2. [Choose] ___ you use to live in a flat? — **Did** / Do / Were  
+   *Hint: Question → Did + you + use to + verb?*
+3. [Write] Did you use to play tennis? — Yes, I ___. → **did**  
+   *Hint: Did you…? — Yes, I did.*
+4. [Write] She ___ wear glasses, but now she does. (not / use to) → **didn't use to** / **did not use to**  
+   *Hint: Negative → didn't (did not) use to.*
+5. [Put in order] use / Did / to / you / swim → **Did you use to swim?**  
+   *Hint: Did + you + use to + swim?*
+
+#### Revision test (20 questions)
+
+1. [Choose] When I was young, I ___ climb trees. — **used to** / use / was
+2. [Write] My grandparents ___ on a farm. Now they live in a flat. (live — used to) → **used to live**
+3. [Choose] There ___ a park here, but now there are houses. — **used to be** / used to is / used be
+4. [Choose] ___ your sister call you last night? — **Did** / Was / Does *(from Lesson 31)*
+5. [Write] Did you use to have a pet? — No, I ___. → **didn't** / **did not**
+6. [Choose] We ___ to the cinema last Saturday. (one time) — **went** / used to go
+7. [Correct sentence] **He used to be very shy.** ✓ · He used to was very shy. ✗ · He used be very shy. ✗
+8. [Put in order] used / We / to / live / here → **We used to live here.**
+9. [Write] I ___ my keys yesterday, but I found them later. (lose) → **lost** *(from Lesson 30)*
+10. [Write] I ___ like fish, but now I love it. (not / use to) → **didn't use to** / **did not use to**
+11. [Choose] Where ___ you use to go on holiday when you were a child? — **did** / were / do
+12. [Correct sentence] **My sister didn't use to like cats.** ✓ · My sister didn't used to liked cats. ✗ · My sister doesn't use to like cats. ✗
+13. [Write] Look at the sky! It's ___ to rain. → **going** *(from Lesson 32)*
+14. [Write] This street ___ very busy, but now it's quiet. (be — used to) → **used to be**
+15. [Put in order] you / Did / use / to / glasses / wear → **Did you use to wear glasses?**
+16. [Choose] I ___ my leg in 2020. (one time) — **broke** / used to break
+17. [Correct sentence] **Were you at the party?** ✓ · Was you at the party? ✗ · Did you at the party? ✗ *(from Lesson 29)*
+18. [Write] She ___ a lot of sweets when she was a child. (eat — used to) → **used to eat**
+19. [Choose] My brother used to ___ a bike to school. — **ride** / rode / riding
+20. [Correct sentence] **They used to walk to school.** ✓ · They used to walked to school. ✗ · They used walk to school. ✗
+
+---
+
+### Lesson 38 — Present Perfect (Introduction)
+
+#### Part 1: I have finished — have / has + past participle
+
+The present perfect = have / has + past participle (the third form of the verb). Use have with I, you, we, they and has with he, she, it. Short forms: I've, you've, we've, they've, he's, she's, it's. For regular verbs the past participle ends in -ed, like the past simple: work → worked, finish → finished.
+
+| Person | have / has | Past participle | Short form |
+|---|---|---|---|
+| I / you / we / they | have | finished | I've finished |
+| he / she / it | has | finished | She's finished |
+
+Examples:
+
+- I have finished my homework.
+- She has cleaned her room.
+- We've painted the kitchen.
+- He's started a new job.
+- They have opened a new shop in our street.
+- My parents have travelled to many countries.
+
+🇺🇿 Present Perfect = have / has + fe’lning 3-shakli: I have finished — Men tugatdim.
+
+**Practise**
+
+1. [Choose] I ___ finished my homework. — **have** / has / am  
+   *Hint: With I → have + past participle.*
+2. [Choose] She has ___ her room. — **cleaned** / clean / cleaning  
+   *Hint: has + past participle: cleaned.*
+3. [Write] We ___ painted the living room. (have / has) → **have** / **'ve**  
+   *Hint: With we → have.*
+4. [Write] He has ___ a new job. (start) → **started**  
+   *Hint: Regular verb → past participle with -ed: started.*
+5. [Correct sentence] **They have opened a new shop.** ✓ · They has opened a new shop. ✗ · They have open a new shop. ✗  
+   *Hint: they → have + opened.*
+
+#### Part 2: seen, gone, done — irregular past participles
+
+Many common verbs have an irregular past participle. Sometimes it is the same as the past simple (buy – bought – bought), sometimes it is different (see – saw – seen). Learn them in threes: verb – past simple – past participle.
+
+| Verb | Past simple | Past participle |
+|---|---|---|
+| be | was / were | been |
+| go | went | gone |
+| see | saw | seen |
+| do | did | done |
+| eat | ate | eaten |
+| write | wrote | written |
+| break | broke | broken |
+| buy | bought | bought |
+| lose | lost | lost |
+
+Examples:
+
+- I've seen this film.
+- She has lost her keys.
+- We've bought a new car.
+- He's broken his arm.
+- They have eaten all the cake.
+- I've written three emails this morning.
+
+🇺🇿 Noto‘g‘ri fe’llarning 3-shaklini yodlang: go – went – gone, see – saw – seen, write – wrote – written.
+
+**Practise**
+
+1. [Choose] I have ___ this film before. — **seen** / saw / see  
+   *Hint: see – saw – seen: have + seen.*
+2. [Choose] Oh no! I've ___ my phone. — **lost** / lose / losed  
+   *Hint: lose – lost – lost: have + lost.*
+3. [Write] She has ___ a letter to her grandma. (write) → **written**  
+   *Hint: write – wrote – written.*
+4. [Write] They have ___ all the pizza. (eat) → **eaten**  
+   *Hint: eat – ate – eaten.*
+5. [Correct sentence] **He has broken his arm.** ✓ · He has broke his arm. ✗ · He has breaked his arm. ✗  
+   *Hint: break – broke – broken.*
+
+#### Part 3: I've lost my keys! — news and results
+
+Use the present perfect for something that happened in the past when we don't say when, and it is important now: I've lost my keys (I can't open the door now). It is also used to give news: Tom has passed his exam! Negative: haven't / hasn't + past participle. Question: Have / Has + person + past participle? Short answers: Yes, I have. / No, she hasn't.
+
+| Negative | Question | Short answer |
+|---|---|---|
+| I haven't finished. | Have you finished? | Yes, I have. / No, I haven't. |
+| She hasn't called. | Has she called? | Yes, she has. / No, she hasn't. |
+
+Examples:
+
+- I've lost my keys. I can't get into the house.
+- Good news! Anna has passed her driving test.
+- I haven't finished my homework, so I can't go out.
+- Has Tom called you? — No, he hasn't.
+- Have you cleaned your room? — Yes, I have.
+
+🇺🇿 Natijasi hozir muhim bo‘lgan ish: I've lost my keys — Kalitlarimni yo‘qotib qo‘ydim (hozir eshikni ocha olmayman).
+
+**Practise**
+
+1. [Choose] ___ you cleaned your room? — **Have** / Has / Are  
+   *Hint: Question with you → Have + you + past participle?*
+2. [Choose] She ___ called me. I'm still waiting. — **hasn't** / haven't / isn't  
+   *Hint: Negative with she → hasn't + past participle.*
+3. [Write] Has Tom finished his homework? — No, he ___. → **hasn't** / **has not**  
+   *Hint: Has he…? — No, he hasn't.*
+4. [Write] I can't go out. I ___ my homework. (not / finish — present perfect) → **haven't finished** / **have not finished**  
+   *Hint: Negative with I → haven't (have not) + finished.*
+5. [Put in order] has / She / her / lost / bag → **She has lost her bag.** or **Has she lost her bag?**  
+   *Hint: She + has + lost + her bag.*
+
+#### Revision test (20 questions)
+
+1. [Choose] We ___ bought a new car. — **have** / has / are
+2. [Write] He has ___ his leg. (break) → **broken**
+3. [Choose] I have ___ to London three times. — **been** / be / was
+4. [Correct sentence] **I didn't see him yesterday.** ✓ · I didn't saw him yesterday. ✗ · I not saw him yesterday. ✗ *(from Lesson 31)*
+5. [Write] Great news! My brother ___ passed his driving test! (have / has) → **has** / **'s**
+6. [Choose] Oh no! Someone has ___ my bike! — **taken** / took / take
+7. [Write] They have ___ a cake for your birthday. (make) → **made**
+8. [Correct sentence] **Have you seen my keys?** ✓ · Have you saw my keys? ✗ · Has you seen my keys? ✗
+9. [Choose] She ___ to the shops an hour ago. — **went** / gone / goed *(from Lesson 30)*
+10. [Write] Have you eaten? — Yes, I ___. → **have**
+11. [Put in order] you / Have / the / film / seen → **Have you seen the film?** or **You have seen the film.**
+12. [Choose] Tom ___ his homework, so he can't play now. — **hasn't done** / haven't done / hasn't did
+13. [Choose] At seven this morning I ___ breakfast. — **was having** / were having / am having *(from Lesson 35)*
+14. [Write] I ___ my phone. Can I use yours? (lose — present perfect) → **have lost** / **'ve lost**
+15. [Correct sentence] **She has written a book.** ✓ · She has wrote a book. ✗ · She has writed a book. ✗
+16. [Choose] Good news! We ___ the match! — **have won** / has won / have win
+17. [Write] I ___ the guitar, but I stopped. (play — used to) → **used to play** *(from Lesson 37)*
+18. [Write] ___ she called you? (have / has) → **Has**
+19. [Put in order] haven't / I / the / finished / book → **I haven't finished the book.** or **Haven't I finished the book?**
+20. [Choose] They ___ seen the new film. They want to see it on Saturday. — **haven't** / hasn't / isn't
+
+---
+
+### Lesson 39 — Present Perfect with Ever, Never, Just, Already, Yet
+
+#### Part 1: Have you ever…? I've never… — experiences
+
+Use the present perfect for experiences — things that happened (or didn't happen) at any time in your life up to now. Ask with ever (= at any time): Have you ever been to London? Answer with never (= not at any time): I've never been there. ever and never go between have / has and the past participle. been to = visited a place and came back.
+
+|  | Example |
+|---|---|
+| ever (in questions) | Have you ever eaten sushi? |
+| never (= not ever) | I've never been to Japan. |
+| short answers | Yes, I have. / No, I haven't. / No, never. |
+
+Examples:
+
+- Have you ever been to London?
+- I've never eaten sushi.
+- Has she ever ridden a horse?
+- My grandma has never used a computer.
+- Have you ever met a famous person? — No, never.
+
+🇺🇿 ever so‘roqda ishlatiladi: Have you ever been to Japan? — Hech qachon Yaponiyada bo‘lganmisiz? never — hech qachon.
+
+**Practise**
+
+1. [Choose] Have you ___ been to Italy? — **ever** / since / yet  
+   *Hint: A question about any time in your life → ever.*
+2. [Choose] I've ___ seen snow. I'd love to see it. — **never** / ever / yet  
+   *Hint: Not at any time → never.*
+3. [Write] ___ you ever ridden a horse? (have / has) → **Have**  
+   *Hint: Question with you → Have + you + ever + past participle?*
+4. [Write] She has ___ eaten Indian food. She doesn't know what it tastes like. (never / ever) → **never**  
+   *Hint: Not at any time → never.*
+5. [Put in order] ever / Have / you / Paris / been / to → **Have you ever been to Paris?**  
+   *Hint: Have + you + ever + been to + Paris?*
+
+#### Part 2: just and already
+
+just = a very short time ago: I've just had lunch (a few minutes ago). already = before now, often earlier than someone expected: She's already finished her homework (and it's only five o'clock!). just and already usually go between have / has and the past participle. already can also go at the end: She's finished already.
+
+| Word | Meaning | Example |
+|---|---|---|
+| just | a very short time ago | I've just had lunch. |
+| already | before now, earlier than expected | She's already left. / She's left already. |
+
+Examples:
+
+- I've just seen Tom. He's in the library.
+- The film has just started.
+- We've already eaten, thanks.
+- She's already left. You missed her.
+- Have you finished already? That was quick!
+
+🇺🇿 just — hozirgina: I've just eaten — Hozirgina ovqatlandim; already — allaqachon: She's already left — U allaqachon ketdi.
+
+**Practise**
+
+1. [Choose] I'm not hungry. I've ___ had lunch. (a few minutes ago) — **just** / yet / ever  
+   *Hint: A very short time ago → just.*
+2. [Choose] She has ___ finished her homework — before dinner! (earlier than expected) — **already** / yet / ever  
+   *Hint: Earlier than expected → already.*
+3. [Write] The bus has ___ left. We missed it by one minute. (a very short time ago) → **just**  
+   *Hint: A very short time ago → just.*
+4. [Write] Don't buy milk. I ___ already bought some. (have / has) → **have** / **'ve**  
+   *Hint: With I → have + already + past participle.*
+5. [Correct sentence] **I've just seen your brother.** ✓ · I've just saw your brother. ✗ · Just I've seen your brother. ✗  
+   *Hint: have + just + past participle (seen).*
+
+#### Part 3: Have you finished yet? — yet
+
+Use yet in questions and negatives. It means 'until now' and goes at the end of the sentence: Have you finished yet? I haven't finished yet. In positive sentences use already, not yet: I've already finished.
+
+|  | Example |
+|---|---|
+| question | Have you done your homework yet? |
+| negative | I haven't done it yet. |
+| positive → already | I've already done it. |
+
+Examples:
+
+- Have you finished yet?
+- I haven't read the book yet.
+- Has the film started yet? — No, not yet.
+- They haven't arrived yet.
+- I've already seen it, but Sam hasn't seen it yet.
+
+🇺🇿 yet so‘roq va inkorda, gap oxirida keladi: I haven't finished yet — Hali tugatmadim.
+
+**Practise**
+
+1. [Choose] Have you done your homework ___? — **yet** / never / just  
+   *Hint: A question about 'until now' → yet, at the end.*
+2. [Choose] I haven't seen the new film ___. — **yet** / already / just  
+   *Hint: A negative about 'until now' → yet, at the end.*
+3. [Write] The shop hasn't opened ___. It opens at ten. (yet / already) → **yet**  
+   *Hint: A negative → yet, at the end.*
+4. [Write] Have they arrived yet? — No, they ___. → **haven't** / **have not**  
+   *Hint: Have they…? — No, they haven't.*
+5. [Correct sentence] **I haven't finished yet.** ✓ · I haven't finished already. ✗ · I have finished yet. ✗  
+   *Hint: Negative → yet at the end.*
+
+#### Revision test (20 questions)
+
+1. [Choose] Have you ___ eaten Thai food? — **ever** / yet / since
+2. [Write] I've ___ been on a plane. I'm a bit scared. (never / ever) → **never**
+3. [Choose] Is Tom here? — No, he's ___ gone home. You missed him by a minute. — **just** / yet / ever
+4. [Write] She has ___ her keys. (lose) → **lost** *(from Lesson 38)*
+5. [Write] I haven't cleaned my room ___. I'll do it later. (yet / already) → **yet**
+6. [Choose] We've ___ seen this film. Let's watch something else. — **already** / yet / ever
+7. [Correct sentence] **Has she ever been to Spain?** ✓ · Has she ever went to Spain? ✗ · Has she been ever to Spain? ✗
+8. [Put in order] just / I've / lunch / had → **I've just had lunch.**
+9. [Choose] I ___ a letter to my aunt last week. — **wrote** / writed / written *(from Lesson 30)*
+10. [Write] My grandad has ___ used a smartphone. He doesn't want one. (never / ever) → **never**
+11. [Choose] The train hasn't arrived ___. — **yet** / already / just
+12. [Write] Has the film started yet? — No, it ___. → **hasn't** / **has not**
+13. [Write] Did you enjoy the concert? — Yes, I ___. → **did** *(from Lesson 31)*
+14. [Correct sentence] **I've already done it.** ✓ · I've yet done it. ✗ · I've done already it. ✗
+15. [Put in order] yet / haven't / They / arrived → **They haven't arrived yet.** or **Haven't they arrived yet?**
+16. [Choose] My mum has ___ cooked dinner. It's on the table. — **already** / yet / ever
+17. [Choose] I was having a shower when the phone ___. (the short action) — **rang** / was ringing / rings *(from Lesson 36)*
+18. [Write] I'm not hungry. I've ___ eaten. (a very short time ago) → **just**
+19. [Correct sentence] **Have you ever tried Mexican food?** ✓ · Did you ever tried Mexican food? ✗ · Have you ever try Mexican food? ✗
+20. [Choose] She hasn't called me ___. — **yet** / already / just
+
+---
+
+### Lesson 40 — Present Perfect with For and Since
+
+#### Part 1: How long have you lived here?
+
+Use the present perfect to say how long something has continued from the past until now: I've lived here for ten years (I started ten years ago, and I still live here). Ask with How long: How long have you known Sam? Don't use the present simple for this: I've lived here for ten years (not I live here for ten years).
+
+| Question | Answer |
+|---|---|
+| How long have you lived here? | I've lived here for ten years. |
+| How long has she had her car? | She's had it since 2020. |
+| How long have they known each other? | They've known each other for a long time. |
+
+Examples:
+
+- I've lived in this town for ten years.
+- How long have you known your best friend?
+- She's had her dog for three years.
+- We've known them for a long time.
+- How long has your dad worked at the bank?
+
+🇺🇿 Hozirgacha davom etayotgan holat: I've lived here for five years — Besh yildan beri shu yerda yashayman.
+
+**Practise**
+
+1. [Choose] I ___ in this town for ten years. I still live here. — **have lived** / live / lived  
+   *Hint: From the past until now → present perfect: have lived.*
+2. [Choose] How long ___ you known your best friend? — **have** / do / did  
+   *Hint: How long + have + you + past participle?*
+3. [Write] She ___ her car for three years. (have — present perfect) → **has had** / **'s had**  
+   *Hint: have – had – had: she has had.*
+4. [Write] How long ___ Tom worked here? (have / has) → **has**  
+   *Hint: Tom = he → has.*
+5. [Correct sentence] **We've known them for a long time.** ✓ · We know them for a long time. ✗ · We've knew them for a long time. ✗  
+   *Hint: From the past until now → have + known.*
+
+#### Part 2: for or since?
+
+Use for with a period of time — how long: for two hours, for three days, for ten years, for a long time. Use since with a point in time — when it started: since ten o'clock, since Monday, since 2015, since I was a child.
+
+| for + a period of time | since + a point in time |
+|---|---|
+| for two hours | since ten o'clock |
+| for three days | since Monday |
+| for six months | since January |
+| for ten years | since 2015 |
+| for a long time | since I was a child |
+
+Examples:
+
+- I've been here for two hours.
+- I've been here since ten o'clock.
+- She's lived in Paris for five years.
+- She's lived in Paris since 2020.
+- I've known him since we were children.
+
+🇺🇿 for — qancha vaqt (for two years — ikki yildan beri), since — qachondan (since 2020 — 2020-yildan beri).
+
+**Practise**
+
+1. [Choose] I've been here ___ two hours. — **for** / since  
+   *Hint: two hours = a period of time → for.*
+2. [Choose] She's lived in Paris ___ 2018. — **since** / for  
+   *Hint: 2018 = a point in time → since.*
+3. [Write] We've had this dog ___ six years. (for / since) → **for**  
+   *Hint: six years = a period → for.*
+4. [Write] He has worked at the bank ___ last summer. (for / since) → **since**  
+   *Hint: last summer = when it started → since.*
+5. [Correct sentence] **I've known him since we were children.** ✓ · I've known him for we were children. ✗ · I know him since we were children. ✗  
+   *Hint: when it started → since; until now → have known.*
+
+#### Part 3: I haven't seen her for ages
+
+With negatives, for and since say how long something hasn't happened: I haven't seen Tom for a month. She hasn't eaten since breakfast. With be, use have been / has been: I've been ill since Friday. How long have you been a teacher?
+
+|  | Example |
+|---|---|
+| negative + for | I haven't seen my cousin for two years. |
+| negative + since | It hasn't rained since March. |
+| be → have / has been | She's been at this school since September. |
+
+Examples:
+
+- I haven't seen my cousin for two years.
+- It hasn't rained since March.
+- We haven't eaten since breakfast.
+- I've been ill since Friday.
+- How long have you been a teacher? — For six years.
+
+🇺🇿 Inkorda: I haven't seen her for a month — Uni bir oydan beri ko‘rganim yo‘q.
+
+**Practise**
+
+1. [Choose] I ___ my cousin since Christmas. — **haven't seen** / didn't see / don't see  
+   *Hint: since → present perfect: haven't seen.*
+2. [Choose] She ___ ill since Monday. — **has been** / is / was  
+   *Hint: since → present perfect of be: has been.*
+3. [Write] It ___ for weeks. The garden is very dry. (not / rain — present perfect) → **hasn't rained** / **has not rained**  
+   *Hint: it → hasn't (has not) + rained.*
+4. [Write] How long have you ___ a teacher? (be) → **been**  
+   *Hint: be – was – been: have + been.*
+5. [Put in order] for / haven't / I / him / seen / months → **I haven't seen him for months.** or **For months I haven't seen him.** or **Haven't I seen him for months?**  
+   *Hint: I + haven't seen + him + for months.*
+
+#### Revision test (20 questions)
+
+1. [Choose] We've lived in this flat ___ 2019. — **since** / for
+2. [Write] I've known Anna ___ ten years. (for / since) → **for**
+3. [Choose] How long ___ she worked at the hospital? — **has** / does / is
+4. [Write] I ___ like coffee, but now I love it. (not / use to) → **didn't use to** / **did not use to** *(from Lesson 37)*
+5. [Write] He ___ in London since 2015. (live — present perfect) → **has lived** / **'s lived**
+6. [Choose] I haven't eaten anything ___ seven o'clock this morning. — **since** / for
+7. [Correct sentence] **She has had her phone for two years.** ✓ · She has her phone for two years. ✗ · She has had her phone since two years. ✗
+8. [Put in order] since / here / has / He / Monday / been → **He has been here since Monday.** or **Has he been here since Monday?** or **Since Monday he has been here.**
+9. [Write] We ___ a lot of photos on holiday last summer. (take) → **took** *(from Lesson 30)*
+10. [Choose] They've been friends ___ a long time. — **for** / since
+11. [Write] How long ___ you had this bike? (have / has) → **have**
+12. [Choose] Where ___ you buy those shoes? — **did** / were / have *(from Lesson 31)*
+13. [Correct sentence] **I haven't seen her since June.** ✓ · I didn't see her since June. ✗ · I haven't seen her for June. ✗
+14. [Write] It ___ cold since Monday. (be — present perfect) → **has been** / **'s been**
+15. [Choose] My parents ___ married for twenty years. — **have been** / are / has been
+16. [Write] At five o'clock yesterday they ___ in the park. (walk — was/were + -ing) → **were walking** *(from Lesson 35)*
+17. [Put in order] have / How / long / you / here / lived → **How long have you lived here?**
+18. [Write] I haven't been to the cinema ___ months. (for / since) → **for**
+19. [Choose] She has been at this school ___ she was eleven. — **since** / for
+20. [Correct sentence] **How long have you known Ben?** ✓ · How long do you know Ben? ✗ · How long have you knew Ben? ✗
+
+---
+
+### Lesson 41 — Present Perfect vs Past Simple
+
+#### Part 1: I've been to Rome / I went to Rome in 2019
+
+Use the past simple when you say or ask when something happened — a finished time: yesterday, last week, in 2010, two days ago, when I was a child. Use the present perfect when you don't say when — for life experiences or a past action that matters now: I've been to Rome (in my life). Never use the present perfect with a finished time: I saw him yesterday (not I've seen him yesterday).
+
+| Present perfect (no finished time) | Past simple (a finished time) |
+|---|---|
+| I've been to Rome. | I went to Rome in 2019. |
+| She's lost her keys. | She lost her keys yesterday. |
+| Have you ever met a pop star? | When did you meet him? |
+
+Examples:
+
+- I've been to Rome twice.
+- I went to Rome in 2019 and in 2022.
+- She's lost her keys. She can't get in.
+- She lost her keys yesterday, but she found them today.
+- I saw Tom an hour ago.
+
+🇺🇿 Aniq o‘tgan vaqt (yesterday, in 2010, ago) aytilsa — Past Simple, vaqt aytilmasa — Present Perfect.
+
+**Practise**
+
+1. [Choose] I ___ Tom yesterday. — **saw** / have seen  
+   *Hint: yesterday = a finished time → past simple.*
+2. [Choose] She ___ to the USA three times so far. — **has been** / went  
+   *Hint: so far = until now → present perfect.*
+3. [Write] We ___ to the beach last Sunday. (go — one word) → **went**  
+   *Hint: last Sunday = a finished time → past simple: went.*
+4. [Write] ___ you ever eaten sushi? (have / did) → **Have**  
+   *Hint: ever = in your life until now → Have you ever…?*
+5. [Correct sentence] **I lost my phone two days ago.** ✓ · I've lost my phone two days ago. ✗ · I have lose my phone two days ago. ✗  
+   *Hint: two days ago = a finished time → past simple: lost.*
+
+#### Part 2: Look for the time word
+
+The time word often tells you which tense to use. Present perfect: ever, never, just, already, yet, so far, for and since (until now), How long…? Past simple: yesterday, last week / month / year, … ago, in 2015, on Monday, when I was ten, When…?
+
+| Present perfect | Past simple |
+|---|---|
+| ever, never | yesterday |
+| just, already, yet | last week / month / year |
+| for, since (until now) | … ago |
+| so far, How long…? | in 2015, on Monday, when I was ten |
+
+Examples:
+
+- I've just seen Kate. / I saw Kate an hour ago.
+- Have you finished yet? / Did you finish at six?
+- She's lived here since 2020. / She moved here in 2020.
+- I've never been to Africa. / I went to Egypt when I was ten.
+
+🇺🇿 Vaqt so‘ziga qarang: ago, yesterday, last … — Past Simple; ever, never, just, yet, since — Present Perfect.
+
+**Practise**
+
+1. [Choose] They ___ married in 2015. — **got** / have got  
+   *Hint: in 2015 = a finished time → past simple: got.*
+2. [Choose] We ___ in this house since 2015. — **have lived** / lived  
+   *Hint: since = until now → present perfect.*
+3. [Write] I ___ the new film yet. (not / see) → **haven't seen** / **have not seen**  
+   *Hint: yet → present perfect: haven't seen.*
+4. [Write] He ___ his arm two weeks ago. (break — one word) → **broke**  
+   *Hint: ago → past simple: broke.*
+5. [Put in order] ago / left / She / an / hour → **She left an hour ago.** or **An hour ago she left.**  
+   *Hint: ago → past simple: She left + an hour ago.*
+
+#### Part 3: Have you ever…? — Yes, I went there last year
+
+In a conversation we often start with the present perfect (an experience or some news) and then use the past simple for the details — when, where, how: A: Have you ever been to London? B: Yes, I have. I went there last summer. Questions with When…? and What time…? always take the past simple: When did you arrive? (not When have you arrived?).
+
+| Present perfect (the news / experience) | Past simple (the details) |
+|---|---|
+| Have you ever been to London? | Yes. I went there last summer. |
+| I've broken my arm! | How did it happen? — I fell off my bike. |
+| Kate has passed her exam! | When did she get the results? |
+
+Examples:
+
+- A: Have you ever been to London? B: Yes, I went there last summer.
+- A: I've broken my arm! B: Oh no! How did it happen?
+- Kate has passed her exam. She got the results this morning.
+- A: Have you seen Sam? B: Yes, I saw him at lunch.
+- When did you arrive?
+
+🇺🇿 Avval yangilik Present Perfect bilan aytiladi, keyin tafsilotlar Past Simple bilan: When did you go? — Qachon bordingiz?
+
+**Practise**
+
+1. [Choose] A: Have you ever been to Italy? B: Yes, I ___ there two years ago. — **went** / have gone / have been  
+   *Hint: two years ago → past simple: went.*
+2. [Choose] When ___ you arrive? — **did** / have  
+   *Hint: When…? → past simple: When did you…?*
+3. [Write] A: I've lost my wallet! B: Oh no! Where ___ you lose it? (did / have) → **did**  
+   *Hint: A detail (where?) → past simple: Where did you…?*
+4. [Write] A: ___ you ever met a famous person? (have / did) B: Yes, I met a singer last year. → **Have**  
+   *Hint: ever = in your life → Have you ever…?*
+5. [Correct sentence] **What time did you get up?** ✓ · What time have you got up? ✗ · What time did you got up? ✗  
+   *Hint: What time…? → past simple: did + get.*
+
+#### Revision test (20 questions)
+
+1. [Choose] I ___ my grandparents last weekend. — **visited** / have visited
+2. [Choose] ___ you ever been to Spain? — **Have** / Did
+3. [Write] She ___ to Paris in 2019. (move — one word) → **moved**
+4. [Choose] I haven't finished my homework ___. — **yet** / already / just *(from Lesson 39)*
+5. [Write] We ___ lunch an hour ago. (have — one word) → **had**
+6. [Choose] They ___ here since 2010. — **have worked** / worked
+7. [Correct sentence] **I saw a good film last night.** ✓ · I've seen a good film last night. ✗ · I have saw a good film last night. ✗
+8. [Put in order] did / When / arrive / you → **When did you arrive?**
+9. [Write] I've lived here ___ 2018. (for / since) → **since** *(from Lesson 40)*
+10. [Write] A: I've passed my driving test! B: Great! When ___ you take it? (did / have) → **did**
+11. [Choose] I ___ five emails so far today. — **have written** / wrote
+12. [Write] We ___ TV when the lights went out. (watch — the longer action) → **were watching** *(from Lesson 36)*
+13. [Choose] When I was a child, I ___ in a village. — **lived** / have lived
+14. [Correct sentence] **Have you finished your homework yet?** ✓ · Did you finished your homework yet? ✗ · Have you finish your homework yet? ✗
+15. [Write] They ___ to Rome two years ago. (go — one word) → **went**
+16. [Put in order] ever / Have / ridden / you / a / horse → **Have you ever ridden a horse?**
+17. [Choose] What ___ you do last weekend? — **did** / have / were *(from Lesson 31)*
+18. [Write] I ___ this film before. Let's watch something else. (see — present perfect) → **have seen** / **'ve seen**
+19. [Choose] We ___ each other since we were five. — **have known** / knew
+20. [Correct sentence] **She went to Italy last summer.** ✓ · She has gone to Italy last summer. ✗ · She has went to Italy last summer. ✗
+
+---
+
+### Lesson 42 — Modal Verbs: Must, Have To, Should
+
+#### Part 1: must and have to — it's necessary
+
+Use must or have to + verb to say that something is necessary. They often mean the same: I must go now. / I have to go now. must is the same for every person and has no to after it: She must go (not she musts go, not must to go). have to changes: I have to, she has to; questions with do / does: Do you have to…? For the past, use had to: I had to work yesterday (must has no past form).
+
+| must | have to |
+|---|---|
+| I must go. | I have to go. |
+| She must study. | She has to study. |
+| — | Do you have to work on Saturdays? |
+| — | Past: We had to wait. |
+
+Examples:
+
+- I must call my mum tonight.
+- You must wear a seatbelt in the car.
+- She has to get up at six every day.
+- We have to wear a uniform at school.
+- Do you have to work on Saturdays?
+- I had to wait for an hour yesterday.
+
+🇺🇿 must va have to — majburiyat: I have to go — Ketishim kerak. O‘tgan zamonda: had to.
+
+**Practise**
+
+1. [Choose] She ___ get up early for work. — **has to** / have to / must to  
+   *Hint: she → has to (or must, with no to).*
+2. [Choose] You must ___ your passport at the airport. — **show** / to show / showing  
+   *Hint: must + the verb as it is, no to.*
+3. [Write] Yesterday I ___ stay at school until five. (have to — past) → **had to**  
+   *Hint: The past of must / have to → had to.*
+4. [Write] ___ you have to wear a uniform at school? (do / does) → **Do**  
+   *Hint: Question with you → Do you have to…?*
+5. [Correct sentence] **He has to work on Saturdays.** ✓ · He have to work on Saturdays. ✗ · He musts work on Saturdays. ✗  
+   *Hint: he → has to; must never takes -s.*
+
+#### Part 2: should — advice
+
+Use should + verb to give advice or to say what is a good idea: You should see a doctor. Negative: shouldn't (should not) = it's a bad idea: You shouldn't eat so much sugar. Question: Should I…? Like must, should is the same for every person and has no to after it.
+
+|  | Example |
+|---|---|
+| advice | You should drink more water. |
+| negative | You shouldn't stay up so late. |
+| question | What should I do? |
+
+Examples:
+
+- You look tired. You should go to bed.
+- You shouldn't drive so fast.
+- He should study more for the test.
+- Should I bring anything to the party?
+- What should I wear to the interview?
+
+🇺🇿 should — maslahat: You should see a doctor — Shifokorga borganingiz ma’qul.
+
+**Practise**
+
+1. [Choose] You have a bad cold. You ___ stay in bed. — **should** / shouldn't  
+   *Hint: A good idea → should.*
+2. [Choose] You ___ eat so many sweets. They're bad for your teeth. — **shouldn't** / should  
+   *Hint: A bad idea → shouldn't.*
+3. [Write] He should ___ more water. (drink) → **drink**  
+   *Hint: should + the verb as it is.*
+4. [Write] It's very late. You ___ go to bed now. (advice — should / shouldn't) → **should**  
+   *Hint: A good idea → should.*
+5. [Put in order] I / should / What / do → **What should I do?**  
+   *Hint: What + should + I + do?*
+
+#### Part 3: necessary or a good idea?
+
+must and have to = it's necessary (strong). should = it's a good idea (advice, not so strong). For things that are necessary, must and have to are usually both correct: You must / have to show your ticket. Use should when it's only advice: You should try this cake — it's delicious!
+
+| How strong? | Example |
+|---|---|
+| necessary (must / have to) | All passengers must / have to wear a seatbelt. |
+| a good idea (should) | You should take an umbrella. It looks cloudy. |
+
+Examples:
+
+- You must / have to have a ticket to get on the train.
+- Drivers must / have to stop at a red light.
+- You should try this cake. It's delicious!
+- You should read this book. You'll love it.
+- You should visit Paris one day.
+
+🇺🇿 must / have to — majburiyat (shart), should — maslahat (shunday qilish yaxshi).
+
+**Practise**
+
+1. [Choose] This cake is delicious. You ___ try it! (a good idea, not necessary) — **should** / has to / must to  
+   *Hint: A good idea → should.*
+2. [Write] Students ___ wear a uniform at our school. It's a rule. (necessary — must / have to) → **must** / **have to**  
+   *Hint: Necessary → must or have to.*
+3. [Write] You look ill. You ___ see a doctor. (advice) → **should**  
+   *Hint: Advice → should.*
+4. [Choose] Which word means 'it's a good idea'? — **should** / must / have to  
+   *Hint: should = advice, a good idea.*
+5. [Correct sentence] **You should take an umbrella.** ✓ · You should to take an umbrella. ✗ · You should taking an umbrella. ✗  
+   *Hint: should + the verb as it is.*
+
+#### Revision test (20 questions)
+
+1. [Choose] I ___ go now. My bus leaves in five minutes. — **have to** / has to / having to
+2. [Write] She ___ wear glasses for reading now. (have to) → **has to**
+3. [Choose] You ___ eat so much fast food. It's not healthy. — **shouldn't** / should / must
+4. [Choose] I've had this phone ___ two years. — **for** / since *(from Lesson 40)*
+5. [Write] We ___ wait for the bus for forty minutes yesterday. (have to — past) → **had to**
+6. [Correct sentence] **You must be quiet in the library.** ✓ · You must to be quiet in the library. ✗ · You musts be quiet in the library. ✗
+7. [Choose] ___ I wear a jacket? It's a bit cold. — **Should** / Must to / Have
+8. [Put in order] should / You / a / doctor / see → **You should see a doctor.** or **Should you see a doctor?**
+9. [Choose] I ___ walk to school, but now I take the bus. — **used to** / use / was *(from Lesson 37)*
+10. [Write] Does he ___ work at weekends? (have to) → **have to**
+11. [Choose] In many countries, you ___ have a licence to drive a car. — **have to** / having to / has to
+12. [Write] Don't touch that! You ___ play with fire. (should — negative) → **shouldn't** / **should not**
+13. [Choose] While I ___ to school, I met an old friend. — **was walking** / were walking / walk *(from Lesson 36)*
+14. [Correct sentence] **She has to study for her exams.** ✓ · She have to study for her exams. ✗ · She has study for her exams. ✗
+15. [Write] Visitors ___ show their ticket at the door. It's a rule. (necessary — must / have to) → **must** / **have to**
+16. [Put in order] have / Do / to / we / early / leave → **Do we have to leave early?**
+17. [Write] Have you ___ been to Canada? (ever / never) → **ever** *(from Lesson 39)*
+18. [Choose] It's a great book. You ___ read it. (advice) — **should** / should to / shoulds
+19. [Choose] My mum ___ work last Saturday. — **had to** / must / has to
+20. [Correct sentence] **Did you have to work yesterday?** ✓ · Did you had to work yesterday? ✗ · Did you must work yesterday? ✗
+
+---
+
+### Lesson 43 — Mustn't vs Don't Have To
+
+#### Part 1: mustn't — don't do it!
+
+mustn't (must not) + verb = don't do it — it's not allowed, or it's very important not to do it: You mustn't smoke here. You mustn't tell anyone — it's a secret. mustn't is the same for every person and has no to after it.
+
+|  | Example |
+|---|---|
+| not allowed | You mustn't use your phone in the exam. |
+| very important not to | You mustn't forget your passport. |
+
+Examples:
+
+- You mustn't park here.
+- Students mustn't use phones in class.
+- You mustn't touch the cooker. It's hot.
+- We mustn't be late for the exam.
+- You mustn't tell anyone. It's a secret.
+
+🇺🇿 mustn't — taqiq: You mustn't smoke here — Bu yerda chekish mumkin emas.
+
+**Practise**
+
+1. [Choose] You ___ use your phone during the exam. It's not allowed. — **mustn't** / don't have to  
+   *Hint: Not allowed → mustn't.*
+2. [Choose] You mustn't ___ in the library. — **shout** / to shout / shouting  
+   *Hint: mustn't + the verb as it is.*
+3. [Write] You ___ swim here. It's dangerous. (must — negative) → **mustn't** / **must not**  
+   *Hint: Don't do it → mustn't (must not).*
+4. [Write] Children ___ play with matches. (must — negative) → **mustn't** / **must not**  
+   *Hint: Don't do it → mustn't (must not).*
+5. [Correct sentence] **You mustn't be late.** ✓ · You mustn't to be late. ✗ · You don't must be late. ✗  
+   *Hint: mustn't + the verb as it is, no to.*
+
+#### Part 2: don't have to — it isn't necessary
+
+don't / doesn't have to + verb = it isn't necessary, but you can if you want: You don't have to come (but you can). She doesn't have to work on Sundays. Past: didn't have to: I didn't have to wait.
+
+| Person | Not necessary |
+|---|---|
+| I / you / we / they | don't have to |
+| he / she / it | doesn't have to |
+| the past (everyone) | didn't have to |
+
+Examples:
+
+- You don't have to bring food. There's lots here.
+- She doesn't have to wear a uniform at her new school.
+- We don't have to get up early tomorrow. It's Saturday!
+- He doesn't have to pay. It's free.
+- I didn't have to wait. The doctor saw me at once.
+
+🇺🇿 don't have to — majbur emassiz: You don't have to come — Kelishingiz shart emas.
+
+**Practise**
+
+1. [Choose] It's Sunday. I ___ go to school. — **don't have to** / doesn't have to / mustn't  
+   *Hint: Not necessary, with I → don't have to.*
+2. [Choose] She ___ cook tonight. We're going to a restaurant. — **doesn't have to** / don't have to / doesn't has to  
+   *Hint: she → doesn't have to.*
+3. [Write] You ___ pay. The museum is free. (have to — negative) → **don't have to** / **do not have to**  
+   *Hint: Not necessary → don't (do not) have to.*
+4. [Write] He ___ wear a suit at work. (have to — negative) → **doesn't have to** / **does not have to**  
+   *Hint: he → doesn't (does not) have to.*
+5. [Put in order] have / You / don't / to / come → **You don't have to come.** or **Don't you have to come?**  
+   *Hint: You + don't have to + come.*
+
+#### Part 3: mustn't or don't have to?
+
+They are very different! mustn't = don't do it (it isn't allowed). don't have to = you can do it or not — it isn't necessary. You mustn't eat in class (it's against the rules). You don't have to eat now (you can eat later if you like).
+
+| mustn't (Don't!) | don't have to (not necessary) |
+|---|---|
+| You mustn't run near the pool. | You don't have to swim. You can sit and watch. |
+| You mustn't open this door. | You don't have to close the door. |
+
+Examples:
+
+- You mustn't cross the road on red.
+- You don't have to wear a tie. It's a party.
+- Students mustn't cheat in exams.
+- You don't have to answer every question.
+- We mustn't make a noise. The baby is sleeping.
+
+🇺🇿 mustn't — qilmang, mumkin emas; don't have to — shart emas, xohlasangiz qilasiz.
+
+**Practise**
+
+1. [Choose] You ___ drive faster than 50 km/h here. It's the law. — **mustn't** / don't have to  
+   *Hint: It's not allowed → mustn't.*
+2. [Choose] You ___ bring a towel. The hotel gives you one. — **don't have to** / mustn't  
+   *Hint: Not necessary → don't have to.*
+3. [Choose] Which sentence means 'it isn't necessary'? — **You don't have to come.** / You mustn't come.  
+   *Hint: don't have to = not necessary.*
+4. [Write] Students ___ cheat in exams. (must — negative) → **mustn't** / **must not**  
+   *Hint: Not allowed → mustn't (must not).*
+5. [Correct sentence] **You don't have to help me. I can do it.** ✓ · You doesn't have to help me. I can do it. ✗ · You don't have help me. I can do it. ✗  
+   *Hint: you → don't + have to + verb.*
+
+#### Revision test (20 questions)
+
+1. [Choose] You ___ smoke in the hospital. It's not allowed. — **mustn't** / don't have to
+2. [Choose] We ___ hurry. The film starts in two hours. — **don't have to** / mustn't
+3. [Write] You ___ tell anyone. It's a secret! (must — negative) → **mustn't** / **must not**
+4. [Write] You look tired. You ___ go to bed early. (advice) → **should** *(from Lesson 42)*
+5. [Write] She ___ get up early on Sundays. (have to — negative) → **doesn't have to** / **does not have to**
+6. [Correct sentence] **He doesn't have to work tomorrow.** ✓ · He don't have to work tomorrow. ✗ · He doesn't has to work tomorrow. ✗
+7. [Choose] You ___ take photos in the museum. Photos are not allowed. — **mustn't** / don't have to
+8. [Put in order] mustn't / You / late / be → **You mustn't be late.** or **Mustn't you be late?**
+9. [Choose] I ___ my wallet yesterday. — **lost** / have lost *(from Lesson 41)*
+10. [Write] I ___ cook dinner last night. My dad cooked. (have to — negative, past) → **didn't have to** / **did not have to**
+11. [Choose] The test is easy. You ___ study all night. — **don't have to** / mustn't
+12. [Write] She has worked here ___ 2020. (for / since) → **since** *(from Lesson 40)*
+13. [Correct sentence] **You mustn't touch the paintings.** ✓ · You mustn't to touch the paintings. ✗ · You don't must touch the paintings. ✗
+14. [Write] Passengers ___ open the doors while the train is moving. (must — negative) → **mustn't** / **must not**
+15. [Choose] Which sentence means 'Don't do it!'? — **You mustn't eat here.** / You don't have to eat here.
+16. [Choose] ___ your parents coming to the concert tomorrow? — **Are** / Do / Is *(from Lesson 33)*
+17. [Put in order] have / doesn't / He / to / pay → **He doesn't have to pay.** or **Doesn't he have to pay?**
+18. [Write] You ___ come to the meeting if you're busy. (have to — negative) → **don't have to** / **do not have to**
+19. [Choose] You ___ forget your passport. You can't fly without it. — **mustn't** / don't have to
+20. [Correct sentence] **We didn't have to pay for the tickets.** ✓ · We didn't had to pay for the tickets. ✗ · We don't had to pay for the tickets. ✗
+
+---
+
+### Lesson 44 — Could, May, Might
+
+#### Part 1: I could swim when I was six — could for the past
+
+could is the past of can: I could swim when I was six (I was able to swim). Negative: couldn't (could not): I couldn't open the door. Question: Could you see the stage? Like can, could is the same for every person and is followed by the verb as it is, with no to.
+
+| Present | Past |
+|---|---|
+| I can swim. | I could swim when I was six. |
+| She can't come today. | She couldn't come yesterday. |
+| Can you see it? | Could you see it? |
+
+Examples:
+
+- I could read when I was four.
+- My grandad could run very fast when he was young.
+- I couldn't sleep last night. It was too hot.
+- We couldn't find the hotel, so we asked a policeman.
+- Could you hear the music from your room?
+
+🇺🇿 could — can ning o‘tgan zamoni: I could swim when I was six — Olti yoshimda suza olardim.
+
+**Practise**
+
+1. [Choose] When I was five, I ___ read. — **could** / can / could to  
+   *Hint: The past of can → could.*
+2. [Choose] I ___ sleep last night. It was very hot. — **couldn't** / can't / couldn't to  
+   *Hint: The past of can't → couldn't.*
+3. [Write] She ___ speak French when she was ten, but she forgot it. (can — past) → **could**  
+   *Hint: The past of can → could.*
+4. [Write] We ___ find the hotel last night, so we asked a policeman. (can — past, negative) → **couldn't** / **could not**  
+   *Hint: The past of can't → couldn't (could not).*
+5. [Correct sentence] **My grandad could run very fast.** ✓ · My grandad could ran very fast. ✗ · My grandad could to run very fast. ✗  
+   *Hint: could + the verb as it is.*
+
+#### Part 2: It might rain — might, may and could for maybe
+
+Use might, may or could + verb to say that something is possible — maybe it will happen, maybe not: It might rain later. = Maybe it will rain. All three are correct here: It might / may / could rain. Negative: might not / may not: I might not come. = Maybe I won't come. (couldn't is different — it means impossible.)
+
+|  | Example |
+|---|---|
+| might | I might go to the party. (maybe) |
+| may | She may be at home. (maybe) |
+| could | It could snow tonight. (maybe) |
+| might not / may not | We might not have time. (maybe not) |
+
+Examples:
+
+- Take an umbrella. It might rain later.
+- I'm not sure where Tom is. He may be at the gym.
+- Be careful! That dog could bite.
+- I might not come to the party. I'm very tired.
+- We may go to the beach on Sunday.
+
+🇺🇿 might / may / could — ehtimol: It might rain — Yomg‘ir yog‘ishi mumkin.
+
+**Practise**
+
+1. [Choose] Take an umbrella. It ___ rain later. — **might** / might to / mights  
+   *Hint: might + the verb as it is, no -s, no to.*
+2. [Choose] I'm not sure, but Tom ___ be at home. — **may** / is may / mays  
+   *Hint: may + the verb as it is.*
+3. [Write] I'm not sure. I ___ go to the party. (maybe — one word) → **might** / **may** / **could**  
+   *Hint: Maybe → might, may or could.*
+4. [Write] We ___ have time to see the museum. We'll see. (maybe not — two words) → **might not** / **may not** / **mightn't**  
+   *Hint: Maybe not → might not or may not.*
+5. [Correct sentence] **She might be late.** ✓ · She might is late. ✗ · She might to be late. ✗  
+   *Hint: might + be (the verb as it is).*
+
+#### Part 3: will or might? — sure or not sure
+
+Use will when you are sure: I'll be at home tonight. Use might, may or could when you are not sure: I might be at home tonight — I don't know yet. Use won't when you are sure something will not happen: She won't come. She's in Spain.
+
+| How sure? | Example |
+|---|---|
+| sure — yes | She'll be here at six. She always comes at six. |
+| not sure | She might / may / could be here at six. I don't know. |
+| sure — no | She won't be here. She's in Spain. |
+
+Examples:
+
+- I'll see you tomorrow at school.
+- I might see you tomorrow. I'm not sure.
+- Tom won't be at the party. He's ill.
+- It may snow this weekend.
+- Don't worry. I'll definitely call you.
+
+🇺🇿 Ishonchingiz komil bo‘lsa — will, ishonchingiz komil bo‘lmasa — might / may / could.
+
+**Practise**
+
+1. [Choose] I'm not sure what to do on Saturday. I ___ go shopping. — **might** / will / mights  
+   *Hint: Not sure → might.*
+2. [Choose] Don't worry, I ___ definitely call you tonight. I promise. — **will** / might  
+   *Hint: Sure (definitely, I promise) → will.*
+3. [Write] She isn't sure about the job. She ___ say no. (not sure — might / may) → **might** / **may** / **could**  
+   *Hint: Not sure → might or may.*
+4. [Write] He's in Paris this week, so he ___ come to the meeting. (sure — will, negative) → **won't** / **will not**  
+   *Hint: Sure it will not happen → won't (will not).*
+5. [Put in order] might / It / snow / tonight → **It might snow tonight.** or **Might it snow tonight?** or **Tonight it might snow.**  
+   *Hint: It + might + snow + tonight.*
+
+#### Revision test (20 questions)
+
+1. [Choose] When she was four, she ___ ride a bike. — **could** / can / could to
+2. [Write] I ___ find my keys this morning. (can — past, negative) → **couldn't** / **could not**
+3. [Choose] Take a coat. It ___ be cold this evening. — **might** / might to / mights
+4. [Choose] You ___ wear a suit. It's an informal party. — **don't have to** / mustn't *(from Lesson 43)*
+5. [Write] I'm not sure, but we ___ go to the beach tomorrow. (maybe — one word) → **might** / **may** / **could**
+6. [Correct sentence] **They might be at home.** ✓ · They might are at home. ✗ · They mights be at home. ✗
+7. [Choose] I'm sure he ___ pass the exam. He studied very hard. — **will** / might
+8. [Put in order] couldn't / She / door / the / open → **She couldn't open the door.** or **Couldn't she open the door?**
+9. [Write] I ___ to the cinema yesterday. (go — one word) → **went** *(from Lesson 41)*
+10. [Write] We ___ have enough money for the trip. We'll see. (maybe not — two words) → **might not** / **may not** / **mightn't**
+11. [Choose] Last year I ___ speak any English. Now I can! — **couldn't** / can't / mightn't
+12. [Correct sentence] **He has to wear a uniform.** ✓ · He have to wear a uniform. ✗ · He has to wears a uniform. ✗ *(from Lesson 42)*
+13. [Write] Ask Sam. He ___ know the answer. (maybe — one word) → **might** / **may** / **could**
+14. [Choose] Which sentence means 'Maybe it will rain'? — **It might rain.** / It will rain. / It rained.
+15. [Correct sentence] **I could play chess when I was seven.** ✓ · I could played chess when I was seven. ✗ · I can play chess when I was seven. ✗
+16. [Choose] I've ___ finished my homework. Can I go out now? — **just** / yet / ever *(from Lesson 39)*
+17. [Put in order] may / She / late / be → **She may be late.** or **May she be late?**
+18. [Write] I'm sure the shop ___ be open tomorrow. It's a holiday. (sure — will, negative) → **won't** / **will not**
+19. [Choose] My grandma ___ dance very well when she was young. — **could** / might / may
+20. [Correct sentence] **You might need a jacket tonight.** ✓ · You might needing a jacket tonight. ✗ · You might to need a jacket tonight. ✗
+
+---
+
+### Lesson 45 — Zero Conditional
+
+#### Part 1: If you heat ice, it melts — facts
+
+Use the zero conditional for facts and things that are always true: If you heat ice, it melts. Both parts use the present simple: If + present simple, present simple. When the if part comes first, put a comma after it.
+
+| If + present simple, | present simple |
+|---|---|
+| If you heat ice, | it melts. |
+| If it rains, | the grass gets wet. |
+| If you mix red and white, | you get pink. |
+
+Examples:
+
+- If you heat water to 100°C, it boils.
+- If you mix blue and yellow, you get green.
+- If plants don't get water, they die.
+- If it rains, the ground gets wet.
+- If you press this button, the machine starts.
+
+🇺🇿 Zero Conditional — doim to‘g‘ri bo‘ladigan narsalar: If you heat ice, it melts — Muzni isitsangiz, u eriydi.
+
+**Practise**
+
+1. [Choose] If you heat ice, it ___. — **melts** / melted / melting  
+   *Hint: A fact → present simple in both parts: it melts.*
+2. [Choose] If you ___ blue and yellow, you get green. — **mix** / mixed / mixing  
+   *Hint: If + present simple: you mix.*
+3. [Write] If plants ___ get water, they die. (not) → **don't** / **do not**  
+   *Hint: Present simple negative with plants (they) → don't.*
+4. [Write] If you heat water to 100°C, it ___. (boil — present simple) → **boils**  
+   *Hint: A fact → present simple: it boils.*
+5. [Correct sentence] **If you drop glass, it breaks.** ✓ · If you drop glass, it break. ✗ · If you dropped glass, it breaks. ✗  
+   *Hint: Present simple in both parts: drop … breaks.*
+
+#### Part 2: If I'm tired, I go to bed early — habits
+
+We also use the zero conditional for things that always happen in our lives. Here if means the same as when: If / When I'm tired, I go to bed early. The if part can come first or second. If it comes first, use a comma. If it comes second, don't use a comma: I go to bed early if I'm tired.
+
+| if first (comma) | if second (no comma) |
+|---|---|
+| If I'm late, my teacher gets angry. | My teacher gets angry if I'm late. |
+| When it's sunny, we eat outside. | We eat outside when it's sunny. |
+
+Examples:
+
+- If I drink coffee in the evening, I can't sleep.
+- My dog barks if someone knocks on the door.
+- When it's sunny, we eat in the garden.
+- If my sister is sad, she listens to music.
+- I walk to school if it isn't raining.
+
+🇺🇿 If gap boshida kelsa, undan keyin vergul qo‘yiladi; gap oxirida kelsa, vergul kerak emas.
+
+**Practise**
+
+1. [Choose] My dog barks ___ someone knocks on the door. — **if** / what / who  
+   *Hint: if (= when) joins the two parts.*
+2. [Choose] If I ___ coffee in the evening, I can't sleep. — **drink** / drank / drinking  
+   *Hint: If + present simple: I drink.*
+3. [Write] My mum gets angry if I ___ late. (be) → **am** / **'m**  
+   *Hint: Present simple of be with I → am.*
+4. [Write] When it's sunny, we ___ outside. (eat) → **eat**  
+   *Hint: Present simple with we → eat.*
+5. [Put in order] If / it / rains, / the / grass / gets / wet → **If it rains, the grass gets wet.**  
+   *Hint: If + it rains, + the grass gets wet.*
+
+#### Part 3: What happens if…? — questions and negatives
+
+Ask about facts with What happens if…? or What do you do if…?: What happens if you put ice in the sun? Use don't / doesn't in either part: If you don't sleep, you feel tired. If it's cold, my car doesn't start.
+
+|  | Example |
+|---|---|
+| question | What happens if you mix red and blue? |
+| negative in the if part | If you don't eat, you get hungry. |
+| negative in the result | If it rains, we don't play football. |
+
+Examples:
+
+- What happens if you mix red and blue? — You get purple.
+- What do you do if you feel ill at school?
+- If you don't sleep, you feel tired.
+- If it's cold, my car doesn't start.
+- If my brother doesn't eat breakfast, he gets angry.
+
+🇺🇿 So‘roq: What happens if…? — Agar … bo‘lsa, nima bo‘ladi?
+
+**Practise**
+
+1. [Choose] What ___ if you mix red and blue? — **happens** / happen / happened  
+   *Hint: What + happens + if…? (present simple)*
+2. [Choose] If it's cold, my car ___ start. — **doesn't** / don't / isn't  
+   *Hint: my car = it → doesn't.*
+3. [Write] If you ___ sleep enough, you feel tired. (not) → **don't** / **do not**  
+   *Hint: Present simple negative with you → don't.*
+4. [Write] What ___ you do if you feel ill at school? (do / does) → **do**  
+   *Hint: Question with you → What do you do…?*
+5. [Correct sentence] **If you don't water plants, they die.** ✓ · If you don't water plants, they dies. ✗ · If you doesn't water plants, they die. ✗  
+   *Hint: you → don't; they → die.*
+
+#### Revision test (20 questions)
+
+1. [Choose] If you heat chocolate, it ___. — **melts** / melt / melting
+2. [Write] If you mix red and white, you ___ pink. (get — present simple) → **get**
+3. [Choose] If it ___, the streets get wet. — **rains** / rain / rained
+4. [Write] I'm not sure. I ___ stay at home tonight. (maybe — one word) → **might** / **may** / **could** *(from Lesson 44)*
+5. [Write] If babies are hungry, they ___. (cry — present simple) → **cry**
+6. [Correct sentence] **If you press this button, the door opens.** ✓ · If you press this button, the door open. ✗ · If you pressed this button, the door opens. ✗
+7. [Choose] My sister gets angry if I ___ her clothes. — **borrow** / borrows / borrowed
+8. [Put in order] If / you / heat / ice, / it / melts → **If you heat ice, it melts.**
+9. [Choose] You ___ eat more vegetables. They're good for you. (advice) — **should** / should to / shoulds *(from Lesson 42)*
+10. [Write] If you ___ eat, you get hungry. (not) → **don't** / **do not**
+11. [Choose] What happens if you ___ water to 0°C? — **cool** / cools / cooled
+12. [Choose] ___ you ever been to London? — **Have** / Did / Were *(from Lesson 41)*
+13. [Correct sentence] **If it's sunny, we eat outside.** ✓ · If it's sunny, we eats outside. ✗ · If it's sunny, we ate outside. ✗
+14. [Write] When I'm tired, I ___ to bed early. (go) → **go**
+15. [Choose] If you don't water plants, they ___. — **die** / dies / died
+16. [Write] She has ___ a new car. (buy) → **bought** *(from Lesson 38)*
+17. [Put in order] happens / What / if / you / press / button / this → **What happens if you press this button?** or **If you press this button what happens?**
+18. [Write] Our dog ___ if someone rings the doorbell. (bark — present simple) → **barks**
+19. [Choose] If you ___ in the sun for too long, you get burnt. — **stay** / stays / stayed
+20. [Correct sentence] **Ice melts if you heat it.** ✓ · Ice melt if you heat it. ✗ · Ice melts if you heats it. ✗
+
+---
+
+### Lesson 46 — First Conditional
+
+#### Part 1: If it rains, I'll stay at home
+
+Use the first conditional for something that is possible in the future, and its result: If it rains tomorrow, I'll stay at home. The if part: present simple (not will!). The result: will / 'll + verb. If you study, you'll pass (not If you will study).
+
+| If + present simple, | will + verb |
+|---|---|
+| If it rains tomorrow, | I'll (I will) stay at home. |
+| If you study hard, | you'll pass the exam. |
+| If she doesn't hurry, | she'll miss the bus. |
+
+Examples:
+
+- If it rains tomorrow, I'll stay at home.
+- If you study hard, you'll pass the exam.
+- If I see Tom, I'll tell him.
+- If we leave now, we'll catch the train.
+- You'll feel better if you take this medicine.
+
+🇺🇿 First Conditional — kelajakda bo‘lishi mumkin bo‘lgan holat: If it rains, I'll stay at home — Yomg‘ir yog‘sa, uyda qolaman.
+
+**Practise**
+
+1. [Choose] If it ___ tomorrow, we'll go to the beach. — **is sunny** / will be sunny / sunny  
+   *Hint: The if part → present simple (not will): is sunny.*
+2. [Choose] If you study hard, you ___ the exam. — **will pass** / passed / passing  
+   *Hint: The result → will + verb.*
+3. [Write] If I see Tom, I ___ tell him. (will) → **will** / **'ll**  
+   *Hint: The result → will ('ll) + verb.*
+4. [Write] If you ___ now, you'll catch the bus. (leave) → **leave**  
+   *Hint: The if part → present simple: leave.*
+5. [Correct sentence] **If it rains, we'll stay at home.** ✓ · If it will rain, we'll stay at home. ✗ · If it rains, we'll staying at home. ✗  
+   *Hint: If + present simple (rains), will + verb (stay).*
+
+#### Part 2: If you don't hurry, you'll be late
+
+Use don't / doesn't in the if part and won't (will not) in the result: If you don't hurry, you'll be late. If it rains, we won't go out. Questions: What will you do if…? Will you come if…?
+
+|  | Example |
+|---|---|
+| negative in the if part | If you don't hurry, you'll miss the bus. |
+| negative result | If it's cold, we won't go swimming. |
+| question | What will you do if you fail the test? |
+
+Examples:
+
+- If you don't hurry, you'll be late.
+- If it's cold tomorrow, we won't go swimming.
+- If she doesn't call, I'll be worried.
+- What will you do if it rains?
+- Will you come to the party if I invite you?
+
+🇺🇿 Inkor: If you don't hurry, you'll be late — Shoshilmasangiz, kechikasiz.
+
+**Practise**
+
+1. [Choose] If you don't hurry, you ___ the train. — **'ll miss** / missed / 'll missed  
+   *Hint: The result → 'll (will) + verb: 'll miss.*
+2. [Choose] If it's cold tomorrow, we ___ swimming. — **won't go** / don't will go / not go  
+   *Hint: A negative result → won't + verb.*
+3. [Write] What ___ you do if you lose your phone? (will) → **will**  
+   *Hint: Question → What will you do if…?*
+4. [Write] If she ___ the bus, she'll be late. (not / catch) → **doesn't catch** / **does not catch**  
+   *Hint: The if part, she → doesn't (does not) + catch.*
+5. [Put in order] will / you / What / do / if / it / rains → **What will you do if it rains?** or **If it rains what will you do?**  
+   *Hint: What + will + you + do + if it rains?*
+
+#### Part 3: if or when? — maybe or sure
+
+Use if for something that may or may not happen: If I see Anna, I'll tell her (maybe I'll see her). Use when for something you are sure will happen: When I get home, I'll call you (I will get home). After if and when, use the present simple for the future: When I finish (not When I will finish).
+
+|  | Example |
+|---|---|
+| if = maybe | If I find your book, I'll give it to you. |
+| when = sure | When I finish work, I'll call you. |
+
+Examples:
+
+- If I have time, I'll help you.
+- When I get home, I'll have a shower.
+- If it's sunny tomorrow, we'll have a picnic.
+- When the film ends, we'll go for a pizza.
+- I'll text you when I arrive.
+
+🇺🇿 if — ehtimol (bo‘lishi ham, bo‘lmasligi ham mumkin), when — albatta bo‘ladigan ish; ikkalasidan keyin Present Simple keladi.
+
+**Practise**
+
+1. [Choose] ___ I get home, I'll have a shower. (I'm sure I'll get home) — **When** / If  
+   *Hint: Sure → when.*
+2. [Choose] ___ I have time, I'll help you. (maybe I'll have time) — **If** / When  
+   *Hint: Maybe → if.*
+3. [Write] When I ___ my homework, I'll call you. (finish) → **finish** / **have finished** / **'ve finished**  
+   *Hint: After when → present simple (not will): finish.*
+4. [Write] If you ___ my keys, please tell me. (find) → **find** / **have found** / **'ve found**  
+   *Hint: After if → present simple (not will): find.*
+5. [Correct sentence] **I'll text you when I arrive.** ✓ · I'll text you when I will arrive. ✗ · I text you when I will arrive. ✗  
+   *Hint: After when → present simple: arrive.*
+
+#### Revision test (20 questions)
+
+1. [Choose] If it ___ this weekend, we'll stay at home. — **rains** / will rain / rained
+2. [Write] If you eat all that cake, you ___ feel sick. (will) → **will** / **'ll**
+3. [Choose] If you don't hurry, you ___ late. — **'ll be** / be / are being
+4. [Write] If you heat ice, it ___. (melt — present simple) → **melts** *(from Lesson 45)*
+5. [Write] If she ___ hard, she'll pass. (study) → **studies** / **has studied** / **'s studied**
+6. [Correct sentence] **If I see Ben, I'll give him the book.** ✓ · If I will see Ben, I'll give him the book. ✗ · If I see Ben, I'll gives him the book. ✗
+7. [Choose] What will you do if you ___ the bus? — **miss** / will miss / missed
+8. [Put in order] will / you / What / do / if / you / fail → **What will you do if you fail?** or **If you fail what will you do?**
+9. [Choose] You ___ be late for the exam. The doors close at nine. — **mustn't** / don't have to *(from Lesson 43)*
+10. [Write] If it's cold tomorrow, we ___ go to the park. (will — negative) → **won't** / **will not**
+11. [Choose] ___ I finish work, I'll call you. (I'm sure I'll finish) — **When** / If
+12. [Write] I ___ open the window. It was stuck. (can — past, negative) → **couldn't** / **could not** *(from Lesson 44)*
+13. [Correct sentence] **If you don't water the plant, it will die.** ✓ · If you not water the plant, it will die. ✗ · If you don't water the plant, it will dies. ✗
+14. [Write] I'll call you when I ___ home. (get) → **get** / **have got** / **'ve got**
+15. [Choose] If we ___ the train, we'll get a taxi. — **miss** / will miss / missing
+16. [Choose] I've lived here ___ ten years. — **for** / since *(from Lesson 40)*
+17. [Put in order] If / you / hurry, / you'll / catch / the / bus → **If you hurry, you'll catch the bus.**
+18. [Write] If he ___ come, we'll start without him. (not) → **doesn't** / **does not**
+19. [Choose] She'll be angry if you ___ her. — **don't call** / not call / doesn't call
+20. [Correct sentence] **Will you come if I invite you?** ✓ · Will you come if I will invite you? ✗ · Do you will come if I invite you? ✗
+
+---
+
+### Lesson 47 — When, While, Before, After, As Soon As
+
+#### Part 1: before and after
+
+before and after show the order of two actions. I brush my teeth before I go to bed (first teeth, then bed). After I finish school, I go home (first school, then home). They can join two parts of a sentence, or come before a noun: before dinner, after the lesson.
+
+|  | Example | Order |
+|---|---|---|
+| before | I wash my hands before I eat. | 1 wash → 2 eat |
+| after | I eat after I wash my hands. | 1 wash → 2 eat |
+| + a noun | We go for a walk after dinner. | 1 dinner → 2 walk |
+
+Examples:
+
+- I always brush my teeth before I go to bed.
+- After I finish school, I go to the gym.
+- We went for a walk after dinner.
+- Before you leave, close the windows.
+- She did her homework after the lesson.
+
+🇺🇿 before — …dan oldin, after — …dan keyin: I wash my hands before I eat — Ovqatlanishdan oldin qo‘limni yuvaman.
+
+**Practise**
+
+1. [Choose] I always brush my teeth ___ I go to bed. (first teeth, then bed) — **before** / after  
+   *Hint: First teeth, then bed → before.*
+2. [Choose] We go for a walk ___ dinner. (first dinner, then the walk) — **after** / before  
+   *Hint: First dinner, then the walk → after.*
+3. [Write] Wash your hands ___ you eat. (first wash, then eat — before / after) → **before**  
+   *Hint: First wash, then eat → before.*
+4. [Write] ___ the film ended, we went for a pizza. (first the film, then pizza — before / after) → **After** / **When** / **Once** / **As soon as**  
+   *Hint: First the film, then pizza → after.*
+5. [Correct sentence] **I'll call you after I finish work.** ✓ · I'll call you after I will finish work. ✗ · I call you after I will finish work. ✗  
+   *Hint: After the word 'after' → present simple for the future: finish.*
+
+#### Part 2: when and while
+
+when = at the time that. Use it with a short action or with a time of your life: When the phone rang, I answered it. When I was ten, I lived in Rome. while = during the time that. Use it with a longer action: While I was waiting, I read a magazine. Use when (not while) with ages and times of life: when I was a child.
+
+|  | Example |
+|---|---|
+| when + a short action | When the bell rang, the students left. |
+| when + an age / a time of life | When I was five, I learned to swim. |
+| while + a longer action | While I was waiting, I read a magazine. |
+
+Examples:
+
+- When the bell rang, everyone stood up.
+- When I was a child, I was afraid of the dark.
+- While I was waiting for the bus, I read a magazine.
+- My phone rang while I was having a shower.
+- When she was young, she lived in Paris.
+
+🇺🇿 when — qisqa ish yoki hayot davri bilan (when I was ten — o‘n yoshimda), while — davom etayotgan ish paytida.
+
+**Practise**
+
+1. [Choose] ___ I was ten, I moved to London. — **When** / During  
+   *Hint: An age → when.*
+2. [Choose] I read a magazine ___ I was waiting for the bus. — **while** / during  
+   *Hint: A longer action (was waiting) → while.*
+3. [Write] My phone rang ___ I was having a shower. (while / during) → **while** / **when** / **as**  
+   *Hint: A longer action (was having) → while.*
+4. [Write] ___ the bell rang, everyone stood up. (when / while) → **When** / **As** / **As soon as** / **Once** / **After**  
+   *Hint: A short action (rang) → when.*
+5. [Put in order] When / she / was / young, / she / lived / in / Paris → **When she was young, she lived in Paris.**  
+   *Hint: When + she was young, + she lived in Paris.*
+
+#### Part 3: as soon as — and no will after time words
+
+as soon as = immediately when: I'll call you as soon as I arrive (the moment I arrive). After when, before, after and as soon as, use the present simple to talk about the future — not will: I'll phone you when I get home (not when I will get home).
+
+|  | Example |
+|---|---|
+| as soon as (past) | As soon as I saw her, I knew something was wrong. |
+| as soon as (future) | I'll text you as soon as I land. |
+| time word + present for the future | We'll have dinner after Dad gets home. |
+
+Examples:
+
+- I'll call you as soon as I arrive.
+- As soon as I saw the dog, I ran.
+- We'll have dinner after Dad gets home.
+- Before you go out, close the windows.
+- She'll be happy when she sees you.
+
+🇺🇿 as soon as — …bilanoq: I'll call you as soon as I arrive — Yetib borishim bilanoq qo‘ng‘iroq qilaman.
+
+**Practise**
+
+1. [Choose] I'll call you as soon as I ___ home. — **get** / will get / got  
+   *Hint: After as soon as → present simple for the future: get.*
+2. [Choose] We'll have lunch after Dad ___ back. — **comes** / will come / come  
+   *Hint: After the word 'after' → present simple for the future: Dad comes.*
+3. [Write] I'll text you as soon ___ I land. (one word) → **as**  
+   *Hint: as soon as — three words: as + soon + as.*
+4. [Write] Before you ___ out, close the windows. (go) → **go**  
+   *Hint: After before → present simple: you go.*
+5. [Correct sentence] **As soon as I finish, I'll help you.** ✓ · As soon as I will finish, I'll help you. ✗ · As soon as I finished, I'll help you. ✗  
+   *Hint: After as soon as → present simple for the future: finish.*
+
+#### Revision test (20 questions)
+
+1. [Choose] I always have a shower ___ I go to bed. — **before** / during
+2. [Write] We'll go to the park after it ___ raining. (stop) → **stops** / **has stopped** / **'s stopped**
+3. [Choose] ___ I was a child, I was afraid of the dark. — **When** / During / Then
+4. [Write] If you leave now, you ___ catch the train. (will) → **will** / **'ll** *(from Lesson 46)*
+5. [Write] I'll call you as soon as I ___ the results. (get) → **get** / **have got** / **'ve got**
+6. [Correct sentence] **She'll be happy when she sees you.** ✓ · She'll be happy when she will see you. ✗ · She is happy when she will see you. ✗
+7. [Choose] I fell asleep ___ I was watching the film. — **while** / during
+8. [Put in order] As / soon / as / I / arrive, / I'll / call / you → **As soon as I arrive, I'll call you.**
+9. [Choose] If you mix blue and yellow, you ___ green. — **get** / got / getting *(from Lesson 45)*
+10. [Write] Wash the fruit ___ you eat it. (first wash, then eat — before / after) → **before**
+11. [Choose] We'll start the lesson as soon as everyone ___ here. — **is** / will be / be
+12. [Correct sentence] **I was reading when the lights went out.** ✓ · I was reading when the lights were go out. ✗ · I were reading when the lights went out. ✗ *(from Lesson 36)*
+13. [Write] ___ I was waiting for the train, I called my mum. (when / while — a longer action) → **While** / **When** / **As**
+14. [Choose] Let's go for a walk ___ lunch. (first lunch, then the walk) — **after** / before
+15. [Correct sentence] **I'll tell you after I talk to him.** ✓ · I'll tell you after I will talk to him. ✗ · I tell you after I will talk to him. ✗
+16. [Choose] When I was six, I ___ ride a bike. — **could** / can / could to *(from Lesson 44)*
+17. [Put in order] When / she / got / home, / she / made / dinner → **When she got home, she made dinner.**
+18. [Write] Please turn off the lights ___ you leave the room. (before / after) → **before** / **when** / **as**
+19. [Choose] As soon as I ___ the news, I called my sister. — **heard** / hear / was hearing
+20. [Write] I'll do my homework after I ___ dinner. (have) → **have** / **have had** / **'ve had**
+
+---
+
+### Lesson 48 — Relative Clauses (Who, Which, That, Where)
+
+#### Part 1: the man who lives next door — who / that for people
+
+Use who or that to say which person you mean or to give more information about a person: A dentist is a person who looks after your teeth. That's the girl who won the race. For people, who and that are both correct. Don't add he / she after who: the man who lives next door (not the man who he lives next door).
+
+| Person | who / that | More information |
+|---|---|---|
+| the woman | who / that | lives next door |
+| a teacher | who / that | helps students |
+| the boy | who / that | broke the window |
+
+Examples:
+
+- A pilot is a person who flies planes.
+- That's the man who sold me my car.
+- I have a friend that speaks five languages.
+- The girl who won the race is my cousin.
+- Do you know the woman who lives next door?
+
+🇺🇿 Odamlar uchun who yoki that: the man who lives next door — qo‘shni uyda yashaydigan odam.
+
+**Practise**
+
+1. [Choose] A nurse is a person ___ looks after sick people. — **who** / which / where  
+   *Hint: A person → who (or that).*
+2. [Choose] That's the boy ___ broke my window. — **that** / which / where  
+   *Hint: A person → that (or who).*
+3. [Write] I know a woman ___ speaks Chinese. (who / which) → **who** / **that**  
+   *Hint: A person → who (or that).*
+4. [Write] The man ___ lives next door is a doctor. (who / where) → **who** / **that**  
+   *Hint: A person → who (or that).*
+5. [Correct sentence] **The girl who sits next to me is very funny.** ✓ · The girl who she sits next to me is very funny. ✗ · The girl which sits next to me is very funny. ✗  
+   *Hint: A person → who; no she after who.*
+
+#### Part 2: the bus which goes to the station — which / that for things
+
+Use which or that for things and animals: This is the bus which goes to the station. I've lost the book that you gave me. Both are correct. Don't add it: the phone which I bought (not the phone which I bought it).
+
+| Thing | which / that | More information |
+|---|---|---|
+| the bus | which / that | goes to the centre |
+| a machine | which / that | washes clothes |
+| the cake | which / that | my mum made |
+
+Examples:
+
+- A fridge is a machine which keeps food cold.
+- This is the bus that goes to the airport.
+- I loved the film which we saw last night.
+- Where's the cake that I bought?
+- We have a dog which loves swimming.
+
+🇺🇿 Narsa va hayvonlar uchun which yoki that: the book which I read — men o‘qigan kitob.
+
+**Practise**
+
+1. [Choose] A fridge is a machine ___ keeps food cold. — **which** / who / where  
+   *Hint: A thing → which (or that).*
+2. [Choose] I liked the film ___ we watched yesterday. — **that** / who / where  
+   *Hint: A thing → that (or which).*
+3. [Write] This is the bus ___ goes to the station. (which / who) → **which** / **that**  
+   *Hint: A thing → which (or that).*
+4. [Write] Where's the cake ___ I bought this morning? (which / who) → **which** / **that**  
+   *Hint: A thing → which (or that).*
+5. [Correct sentence] **This is the phone which I bought last week.** ✓ · This is the phone which I bought it last week. ✗ · This is the phone who I bought last week. ✗  
+   *Hint: A thing → which; no it at the end.*
+
+#### Part 3: the house where I was born — where for places
+
+Use where for places. It means 'in that place' or 'at that place': This is the house where I was born. A library is a place where you can borrow books. After where comes a full sentence with its own person: where I was born, where we had lunch.
+
+| Place | where | More information |
+|---|---|---|
+| the house | where | I grew up |
+| a library | where | you borrow books |
+| the café | where | we first met |
+
+Examples:
+
+- This is the town where my mum grew up.
+- A bakery is a shop where you can buy bread.
+- That's the restaurant where we had my birthday dinner.
+- Do you remember the hotel where we stayed?
+- I want to live in a city where there are lots of parks.
+
+🇺🇿 Joy uchun where: the house where I was born — men tug‘ilgan uy.
+
+**Practise**
+
+1. [Choose] This is the school ___ I studied. — **where** / who / which  
+   *Hint: A place → where.*
+2. [Choose] A bakery is a shop ___ you can buy bread. — **where** / who / what  
+   *Hint: A place → where.*
+3. [Write] That's the café ___ we first met. (who / where) → **where**  
+   *Hint: A place → where.*
+4. [Write] A hospital is a place ___ doctors and nurses work. (who / where) → **where**  
+   *Hint: A place → where.*
+5. [Put in order] where / This / I / the / is / house / live → **This is the house where I live.** or **Is this the house where I live?** or **The house where I live is this.**  
+   *Hint: This is + the house + where I live.*
+
+#### Revision test (20 questions)
+
+1. [Choose] A teacher is a person ___ helps students learn. — **who** / which / where
+2. [Write] I've got a friend ___ plays the guitar. (who / which) → **who** / **that**
+3. [Choose] This is the train ___ goes to Oxford. — **which** / who / where
+4. [Write] I'll phone you when I ___ to London. (get) → **get** / **have got** / **'ve got** *(from Lesson 47)*
+5. [Write] That's the hotel ___ we stayed last summer. (who / where) → **where**
+6. [Correct sentence] **The man who lives next door is a pilot.** ✓ · The man which lives next door is a pilot. ✗ · The man who he lives next door is a pilot. ✗
+7. [Choose] I've lost the book ___ you gave me. — **that** / who / where
+8. [Put in order] who / the / That's / girl / won / race / the → **That's the girl who won the race.**
+9. [Correct sentence] **If you call me, I'll come.** ✓ · If you will call me, I'll come. ✗ · If you call me, I'll coming. ✗ *(from Lesson 46)*
+10. [Write] A camera is a thing ___ takes photos. (which / who) → **which** / **that**
+11. [Choose] A museum is a place ___ you can see old and famous things. — **where** / who / which
+12. [Write] If you mix red and yellow, you ___ orange. (get — present simple) → **get** *(from Lesson 45)*
+13. [Write] Do you know the woman ___ is talking to Tom? (who / which) → **who** / **that**
+14. [Correct sentence] **This is the cake which my mum made.** ✓ · This is the cake who my mum made. ✗ · This is the cake which my mum made it. ✗
+15. [Choose] Is this the street ___ you live? — **where** / which / who
+16. [Choose] You ___ come tomorrow. The lesson is cancelled. — **don't have to** / mustn't *(from Lesson 43)*
+17. [Put in order] is / A / pilot / a / person / who / flies / planes → **A pilot is a person who flies planes.** or **Is a pilot a person who flies planes?** or **A person who flies planes is a pilot.**
+18. [Write] I like films ___ make me laugh. (which / who) → **which** / **that**
+19. [Choose] The students ___ passed the test got a prize. — **who** / which / where
+20. [Write] That's the park ___ I learned to ride a bike. (which / where) → **where**
+
+---
+
+### Lesson 49 — Gerund vs Infinitive
+
+#### Part 1: I enjoy swimming — verb + -ing
+
+Some verbs are followed by the -ing form of another verb (a gerund): enjoy, finish, avoid, mind, practise, keep. I enjoy swimming. She finished writing her essay. Do you mind waiting? Don't use to after these verbs: I enjoy reading (not enjoy to read).
+
+| Verb | + -ing | Example |
+|---|---|---|
+| enjoy | + -ing | I enjoy cooking. |
+| finish | + -ing | Have you finished eating? |
+| avoid | + -ing | She avoids eating sugar. |
+| mind | + -ing | Do you mind opening the window? |
+| practise | + -ing | I practise speaking English every day. |
+| keep | + -ing | He keeps forgetting my name. |
+
+Examples:
+
+- I enjoy swimming in the sea.
+- She finished writing her essay at midnight.
+- Do you mind waiting for a few minutes?
+- He avoids driving in the city.
+- I practise playing the piano every day.
+- My little brother keeps asking questions.
+
+🇺🇿 enjoy, finish, avoid, mind, practise, keep fe’llaridan keyin -ing shakl keladi: I enjoy reading — Men kitob o‘qishni yoqtiraman.
+
+**Practise**
+
+1. [Choose] I enjoy ___ in the sea. — **swimming** / to swim / swim  
+   *Hint: enjoy + -ing.*
+2. [Choose] Have you finished ___ your homework? — **doing** / to do / do  
+   *Hint: finish + -ing.*
+3. [Write] Do you mind ___ the door, please? (close) → **closing**  
+   *Hint: mind + -ing: closing.*
+4. [Write] She avoids ___ fast food. (eat) → **eating**  
+   *Hint: avoid + -ing: eating.*
+5. [Correct sentence] **He keeps losing his keys.** ✓ · He keeps to lose his keys. ✗ · He keeps lose his keys. ✗  
+   *Hint: keep + -ing: losing.*
+
+#### Part 2: I want to travel — verb + to + verb
+
+Other verbs are followed by to + verb (an infinitive): want, decide, hope, plan, agree, refuse, promise, would like ('d like). I want to travel. We decided to stay at home. She refused to answer. Don't use -ing after these verbs: I want to go (not want going). Negative: put not before to: I promise not to be late.
+
+| Verb | + to + verb | Example |
+|---|---|---|
+| want | to | I want to learn Spanish. |
+| decide | to | We decided to leave early. |
+| hope | to | She hopes to become a doctor. |
+| plan | to | They're planning to move. |
+| agree / refuse | to | He agreed to help. / He refused to help. |
+| promise | to | I promise to call you. |
+
+Examples:
+
+- I want to travel around the world.
+- We decided to stay at home.
+- She hopes to become a doctor.
+- They're planning to buy a house.
+- He refused to answer my question.
+- I promise not to be late.
+
+🇺🇿 want, decide, hope, plan, agree, refuse, promise dan keyin to + fe’l keladi: I want to travel — Men sayohat qilishni xohlayman.
+
+**Practise**
+
+1. [Choose] I want ___ a new phone. — **to buy** / buying / buy  
+   *Hint: want + to + verb.*
+2. [Choose] We decided ___ at home. — **to stay** / staying / stay  
+   *Hint: decide + to + verb.*
+3. [Write] She hopes ___ a doctor one day. (become — to + verb) → **to become**  
+   *Hint: hope + to + verb: to become.*
+4. [Write] He refused ___ my question. (answer — to + verb) → **to answer**  
+   *Hint: refuse + to + verb: to answer.*
+5. [Put in order] to / I'd / travel / like → **I'd like to travel.**  
+   *Hint: I'd like + to + travel.*
+
+#### Part 3: good at drawing — -ing after prepositions
+
+After a preposition (at, in, of, about, for, without…), always use the -ing form: I'm good at drawing. Thanks for helping me. She left without saying goodbye. The -ing form can also be the subject of a sentence: Swimming is good for you. Remember: like, love, hate and start can take both forms: I like reading. / I like to read.
+
+|  | Example |
+|---|---|
+| preposition + -ing | I'm interested in learning Japanese. |
+| preposition + -ing | Thank you for coming. |
+| -ing as the subject | Reading is my favourite hobby. |
+| like / love / hate + both | I love dancing. / I love to dance. |
+
+Examples:
+
+- I'm good at drawing.
+- Thank you for helping me.
+- She left without saying goodbye.
+- I'm thinking about buying a new bike.
+- Swimming is good exercise.
+- Reading is my favourite hobby.
+
+🇺🇿 Predlogdan keyin (at, in, for, without) doim -ing keladi: I'm good at drawing — Men rasm chizishni yaxshi bilaman.
+
+**Practise**
+
+1. [Choose] I'm good at ___ pictures. — **drawing** / to draw / draw  
+   *Hint: at (a preposition) + -ing.*
+2. [Choose] Thank you for ___ me. — **helping** / to help / help  
+   *Hint: for (a preposition) + -ing.*
+3. [Write] She's interested in ___ Japanese. (learn) → **learning**  
+   *Hint: in (a preposition) + -ing: learning.*
+4. [Write] ___ is good exercise. (swim — the subject of the sentence) → **Swimming**  
+   *Hint: -ing as the subject: Swimming.*
+5. [Correct sentence] **He left without saying goodbye.** ✓ · He left without to say goodbye. ✗ · He left without say goodbye. ✗  
+   *Hint: without (a preposition) + -ing.*
+
+#### Revision test (20 questions)
+
+1. [Choose] I really enjoy ___ cakes. — **baking** / to bake / bake
+2. [Write] We plan ___ to Spain next summer. (travel — to + verb) → **to travel**
+3. [Choose] She agreed ___ me with my project. — **to help** / helping / help
+4. [Write] A dentist is a person ___ looks after your teeth. (who / which) → **who** / **that** *(from Lesson 48)*
+5. [Write] Have you finished ___ the book? (read) → **reading**
+6. [Correct sentence] **I want to learn French.** ✓ · I want learning French. ✗ · I want learn French. ✗
+7. [Choose] Do you mind ___ a little? — **waiting** / to wait / wait
+8. [Put in order] decided / She / to / stay / home / at → **She decided to stay at home.**
+9. [Choose] I'll call you as soon as I ___ the results. — **get** / will get / got *(from Lesson 47)*
+10. [Write] I'm tired of ___ for the bus. (wait) → **waiting**
+11. [Choose] He promised ___ late again. — **not to be** / not being / not be
+12. [Choose] If you ___ hard, you'll pass the exam. — **study** / will study / studied *(from Lesson 46)*
+13. [Write] My brother is very good at ___ football. (play) → **playing**
+14. [Correct sentence] **She avoids driving at night.** ✓ · She avoids to drive at night. ✗ · She avoids drive at night. ✗
+15. [Choose] I hope ___ you again soon. — **to see** / seeing / see
+16. [Write] It ___ snow tomorrow. I'm not sure. (maybe — one word) → **might** / **may** / **could** *(from Lesson 44)*
+17. [Put in order] is / Reading / my / hobby / favourite → **Reading is my favourite hobby.** or **My favourite hobby is reading.** or **Is reading my favourite hobby?**
+18. [Write] They refused ___ for the broken window. (pay — to + verb) → **to pay**
+19. [Choose] Thanks for ___ me to your party. — **inviting** / to invite / invite
+20. [Correct sentence] **I'm thinking about buying a new bike.** ✓ · I'm thinking about to buy a new bike. ✗ · I'm thinking about buy a new bike. ✗
+
+---
+
+### Lesson 50 — Too and Enough
+
+#### Part 1: too hot, too small — too + adjective
+
+too + adjective = more than is good or possible — it's a problem: This coffee is too hot (I can't drink it). These shoes are too small. Add to + verb to say what you can't do: The box is too heavy to carry. Don't mix up too and very: very hot = hot, but OK; too hot = a problem.
+
+| too + adjective | Result |
+|---|---|
+| This tea is too hot. | I can't drink it. |
+| The bag is too heavy to carry. | I can't carry it. |
+| He is too young to drive. | He can't drive. |
+
+Examples:
+
+- This coffee is too hot. I'll wait a minute.
+- These shoes are too small for me.
+- The box is too heavy to carry.
+- He's too young to drive.
+- It's too cold to swim today.
+
+🇺🇿 too + sifat — haddan tashqari (muammo): This tea is too hot — Bu choy haddan tashqari issiq (ichib bo‘lmaydi).
+
+**Practise**
+
+1. [Choose] I can't drink this tea. It's ___ hot. — **too** / enough / many  
+   *Hint: A problem (I can't drink it) → too + adjective.*
+2. [Choose] These jeans are ___ small. I need a bigger size. — **too** / enough / much  
+   *Hint: A problem → too + adjective.*
+3. [Write] He's ___ young to drive a car. He's only twelve. (too / enough) → **too**  
+   *Hint: A problem (he can't drive) → too + young.*
+4. [Write] This box is too heavy ___ carry. (one word) → **to**  
+   *Hint: too + adjective + to + verb.*
+5. [Correct sentence] **It's too cold to swim today.** ✓ · It's too much cold to swim today. ✗ · It's cold too to swim today. ✗  
+   *Hint: too + adjective: too cold.*
+
+#### Part 2: old enough, not big enough — adjective + enough
+
+adjective + enough = as much as you need: She's old enough to drive. Look at the word order: enough comes after the adjective — old enough (not enough old). Negative: not + adjective + enough = less than you need: The water isn't warm enough for swimming.
+
+| adjective + enough | Example |
+|---|---|
+| old enough | She's old enough to vote. |
+| big enough | Is the room big enough for ten people? |
+| not warm enough | It isn't warm enough to sit outside. |
+
+Examples:
+
+- She's eighteen. She's old enough to vote.
+- Is your room big enough for a desk?
+- The water isn't warm enough for swimming.
+- I'm not tall enough to reach the top shelf.
+- He didn't run fast enough to win.
+
+🇺🇿 sifat + enough — yetarlicha: She's old enough to drive — Uning mashina haydashga yoshi yetadi.
+
+**Practise**
+
+1. [Choose] She's eighteen. She's ___ to vote. — **old enough** / enough old / old too  
+   *Hint: adjective + enough: old enough.*
+2. [Choose] The room isn't ___ for all of us. — **big enough** / enough big / big too  
+   *Hint: not + adjective + enough.*
+3. [Write] Are you tall ___ to reach the top shelf? (too / enough) → **enough**  
+   *Hint: As tall as you need → tall enough.*
+4. [Write] It isn't warm ___ to swim. (too / enough) → **enough**  
+   *Hint: not + warm + enough.*
+5. [Put in order] isn't / He / enough / strong → **He isn't strong enough.** or **Isn't he strong enough?**  
+   *Hint: He isn't + strong + enough.*
+
+#### Part 3: enough time, too many people — with nouns
+
+enough goes before a noun: We have enough chairs. I don't have enough time. With nouns, use too many + plural nouns and too much + uncountable nouns: There are too many people here. I drank too much coffee.
+
+|  | Example |
+|---|---|
+| enough + noun | Have we got enough eggs for the cake? |
+| not enough + noun | There isn't enough milk. |
+| too many + plural noun | There are too many cars in the city. |
+| too much + uncountable noun | You put too much salt in the soup. |
+
+Examples:
+
+- We have enough chairs for everyone.
+- I don't have enough time to finish.
+- There are too many people on this bus.
+- I drank too much coffee today.
+- Is there enough milk for two cups?
+
+🇺🇿 enough otdan oldin keladi: enough money — yetarli pul; too many / too much — haddan ortiq ko‘p.
+
+**Practise**
+
+1. [Choose] We don't have ___ for everyone. — **enough chairs** / too chairs / chairs too  
+   *Hint: enough + noun: enough chairs.*
+2. [Choose] There are ___ people on this bus. I can't move! — **too many** / too much / much  
+   *Hint: people = plural → too many.*
+3. [Write] I can't buy it. I haven't got ___ money. (too / enough) → **enough**  
+   *Hint: enough + noun: enough money.*
+4. [Write] You put too ___ sugar in my tea. (much / many) → **much**  
+   *Hint: sugar = uncountable → too much.*
+5. [Correct sentence] **I don't have enough time.** ✓ · I don't have enough of time. ✗ · I don't have too time. ✗  
+   *Hint: enough + noun: enough time.*
+
+#### Revision test (20 questions)
+
+1. [Choose] This soup is ___ hot. I'll wait a few minutes. — **too** / enough / many
+2. [Write] Is the water warm ___ for a swim? (too / enough) → **enough**
+3. [Choose] He's sixteen. He isn't ___ to drive. — **old enough** / enough old / old too
+4. [Choose] I enjoy ___ to music. — **listening** / to listen / listen *(from Lesson 49)*
+5. [Write] These shoes are ___ big. I need a smaller size. (too / enough) → **too**
+6. [Correct sentence] **We haven't got enough eggs.** ✓ · We haven't got enough of eggs. ✗ · We haven't got too eggs. ✗
+7. [Choose] There's ___ traffic in the city centre. — **too much** / too many / enough of
+8. [Put in order] too / is / It / to / cold / swim → **It is too cold to swim.** or **Is it too cold to swim?**
+9. [Choose] This is the café ___ we first met. — **where** / which / who *(from Lesson 48)*
+10. [Write] I can't reach it. I'm not tall ___. (too / enough) → **enough**
+11. [Choose] I ate ___ cakes at the party. Now I feel sick. — **too many** / too much / much
+12. [Correct sentence] **If you heat butter, it melts.** ✓ · If you heat butter, it melt. ✗ · If you heats butter, it melts. ✗ *(from Lesson 45)*
+13. [Write] This bag is too heavy ___ carry. (one word) → **to**
+14. [Correct sentence] **She isn't old enough to watch this film.** ✓ · She isn't enough old to watch this film. ✗ · She isn't old too to watch this film. ✗
+15. [Choose] Have we got ___ for a cake? — **enough flour** / too flour / flour too
+16. [Write] Yesterday we ___ walk home because there were no buses. (have to — past) → **had to** *(from Lesson 42)*
+17. [Put in order] enough / have / We / time / don't → **We don't have enough time.** or **Don't we have enough time?**
+18. [Write] There are too ___ cars on the road today. (much / many) → **many**
+19. [Choose] The film was ___ boring. I fell asleep. — **too** / enough / many
+20. [Correct sentence] **You drink too much coffee.** ✓ · You drink too many coffee. ✗ · You drink coffee too many. ✗

@@ -149,6 +149,26 @@ test('an Elementary lesson (16): the first Submit sends one result with its leve
   expect(errors).toEqual([]);
 });
 
+test('a Pre-Intermediate lesson (33): the first Submit sends one result with its level, lesson and number', async ({ page, context }) => {
+  test.setTimeout(60000);
+  await setup(context);
+  const errors = watchErrors(page);
+  await start(page, '/skill.html?s=grammar&gl=g33&c=' + CODE);
+  await expect(page.locator('.sk-head')).toContainText('Lesson 33');
+  await expect(page.locator('.gr-learn h2')).toHaveText('I\'m meeting Tom on Friday — fixed plans');
+  await toTest(page);
+  await answer(page, '.gr-tq');
+  await page.locator('#grSubmit').click();
+  await expect(page.locator('.gr-score')).toContainText('20/20');
+  await expect(page.locator('#grSend')).toContainText('Saved ✅');
+  const docs = await grammarDocs(page);
+  expect(docs).toHaveLength(1);
+  expect(docs[0]).toMatchObject({ type: 'Grammar course', skill: 'grammar', level: 'preintermediate', lesson: 'g33', lessonNo: 33, total: 20,
+    correct: 20, name: 'Alice Test', studentId: '10001' });
+  expect(docs[0].answers).toHaveLength(20);
+  expect(errors).toEqual([]);
+});
+
 test('a retake shows a score and sends nothing; its questions are shuffled', async ({ page, context }) => {
   test.setTimeout(60000);
   await setup(context);
