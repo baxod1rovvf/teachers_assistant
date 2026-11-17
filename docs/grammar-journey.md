@@ -4240,7 +4240,7 @@ Examples:
 5. [Write] I ___ to the party on Saturday. I'm going to my cousin's wedding. (not / go — a fixed plan) → **'m not going** / **am not going** / **'m not going to go** / **am not going to go**
 6. [Choose] What ___ you doing this weekend? — **are** / do / is
 7. [Correct sentence] **She's flying to New York on Monday.** ✓ · She flying to New York on Monday. ✗ · She's fly to New York on Monday. ✗
-8. [Put in order] are / They / tomorrow / coming → **They are coming tomorrow.** or **Are they coming tomorrow?**
+8. [Put in order] are / They / tomorrow / coming → **They are coming tomorrow.** or **Are they coming tomorrow?** or **Tomorrow they are coming.**
 9. [Choose] Be quiet! The baby ___. — **is sleeping** / sleeps / sleep *(from Lesson 16)*
 10. [Write] Where ___ you going on holiday this summer? (be) → **are**
 11. [Choose] Which sentence is about a future plan? — **We're playing tennis on Sunday.** / We're playing tennis now. / We played tennis on Sunday.
@@ -4576,7 +4576,7 @@ Examples:
    *Hint: while + the longer action → were having.*
 4. [Write] While Dad was washing the car, Mum ___ the garden. (water — was/were + -ing) → **was watering**  
    *Hint: Two longer actions at the same time → was watering.*
-5. [Put in order] was / She / sleeping / when / her / brother / arrived → **She was sleeping when her brother arrived.** or **Her brother arrived when she was sleeping.**  
+5. [Put in order] was / She / sleeping / when / her / brother / arrived → **She was sleeping when her brother arrived.** or **Her brother arrived when she was sleeping.** or **When her brother arrived she was sleeping.** or **When she was sleeping her brother arrived.**  
    *Hint: She was sleeping (longer) + when + her brother arrived (short).*
 
 #### Part 3: When she arrived, we had dinner / we were having dinner
@@ -4621,7 +4621,7 @@ Examples:
 5. [Choose] ___ I was cleaning my room, I found an old photo. — **While** / During / Then
 6. [Write] While the children were playing, their parents ___ coffee. (drink — was/were + -ing) → **were drinking**
 7. [Correct sentence] **He broke his leg while he was skiing.** ✓ · He broke his leg while he skiing. ✗ · He broke his leg while he were skiing. ✗
-8. [Put in order] was / It / when / raining / we / left → **It was raining when we left.** or **We left when it was raining.**
+8. [Put in order] was / It / when / raining / we / left → **It was raining when we left.** or **We left when it was raining.** or **When we left it was raining.** or **When it was raining we left.**
 9. [Choose] When the film ended, we ___ home. (first the film ended, then we left) — **went** / were going
 10. [Choose] My dad ___ dinner for us last night. — **made** / maked / make *(from Lesson 30)*
 11. [Write] I ___ a shower when the doorbell rang. (have — the longer action) → **was having**
@@ -4629,7 +4629,7 @@ Examples:
 13. [Choose] The weather ___ terrible last weekend. — **was** / were / is *(from Lesson 29)*
 14. [Correct sentence] **When I got home, my sister was watching TV.** ✓ · When I got home, my sister watching TV. ✗ · When I was get home, my sister was watching TV. ✗
 15. [Write] We were walking in the park when we ___ an old friend. (meet — the short action) → **met**
-16. [Put in order] were / We / dinner / having / when / the / lights / went / out → **We were having dinner when the lights went out.** or **The lights went out when we were having dinner.**
+16. [Put in order] were / We / dinner / having / when / the / lights / went / out → **We were having dinner when the lights went out.** or **The lights went out when we were having dinner.** or **When the lights went out we were having dinner.** or **When we were having dinner the lights went out.**
 17. [Choose] A: I don't understand this word. B: I ___ explain it. (an offer) — **will** / am going to *(from Lesson 32)*
 18. [Write] When I arrived at the party, everybody ___. The music was very loud. (dance — was/were + -ing) → **was dancing**
 19. [Choose] Which sentence means 'first she came, then we ate'? — **When she came, we had lunch.** / When she came, we were having lunch.
@@ -4914,7 +4914,7 @@ Examples:
 - My grandma has never used a computer.
 - Have you ever met a famous person? — No, never.
 
-🇺🇿 ever so‘roqda ishlatiladi: Have you ever been to Japan? — Hech Yaponiyada bo‘lganmisiz? never — hech qachon.
+🇺🇿 ever so‘roqda ishlatiladi: Have you ever been to Japan? — Hech qachon Yaponiyada bo‘lganmisiz? never — hech qachon.
 
 **Practise**
 
@@ -5107,7 +5107,7 @@ Examples:
 - I've been ill since Friday.
 - How long have you been a teacher? — For six years.
 
-🇺🇿 Inkorda: I haven't seen her for a month — Uni bir oydan beri ko‘rmadim.
+🇺🇿 Inkorda: I haven't seen her for a month — Uni bir oydan beri ko‘rganim yo‘q.
 
 **Practise**
 
@@ -5769,7 +5769,7 @@ Examples:
 14. [Write] When I'm tired, I ___ to bed early. (go) → **go**
 15. [Choose] If you don't water plants, they ___. — **die** / dies / died
 16. [Write] She has ___ a new car. (buy) → **bought** *(from Lesson 38)*
-17. [Put in order] happens / What / if / you / press / button / this → **What happens if you press this button?**
+17. [Put in order] happens / What / if / you / press / button / this → **What happens if you press this button?** or **If you press this button what happens?**
 18. [Write] Our dog ___ if someone rings the doorbell. (bark — present simple) → **barks**
 19. [Choose] If you ___ in the sun for too long, you get burnt. — **stay** / stays / stayed
 20. [Correct sentence] **Ice melts if you heat it.** ✓ · Ice melt if you heat it. ✗ · Ice melts if you heats it. ✗
@@ -5841,7 +5841,7 @@ Examples:
    *Hint: Question → What will you do if…?*
 4. [Write] If she ___ the bus, she'll be late. (not / catch) → **doesn't catch** / **does not catch**  
    *Hint: The if part, she → doesn't (does not) + catch.*
-5. [Put in order] will / you / What / do / if / it / rains → **What will you do if it rains?**  
+5. [Put in order] will / you / What / do / if / it / rains → **What will you do if it rains?** or **If it rains what will you do?**  
    *Hint: What + will + you + do + if it rains?*
 
 #### Part 3: if or when? — maybe or sure
@@ -5885,7 +5885,7 @@ Examples:
 5. [Write] If she ___ hard, she'll pass. (study) → **studies** / **has studied** / **'s studied**
 6. [Correct sentence] **If I see Ben, I'll give him the book.** ✓ · If I will see Ben, I'll give him the book. ✗ · If I see Ben, I'll gives him the book. ✗
 7. [Choose] What will you do if you ___ the bus? — **miss** / will miss / missed
-8. [Put in order] will / you / What / do / if / you / fail → **What will you do if you fail?**
+8. [Put in order] will / you / What / do / if / you / fail → **What will you do if you fail?** or **If you fail what will you do?**
 9. [Choose] You ___ be late for the exam. The doors close at nine. — **mustn't** / don't have to *(from Lesson 43)*
 10. [Write] If it's cold tomorrow, we ___ go to the park. (will — negative) → **won't** / **will not**
 11. [Choose] ___ I finish work, I'll call you. (I'm sure I'll finish) — **When** / If
@@ -5934,7 +5934,7 @@ Examples:
 4. [Write] ___ the film ended, we went for a pizza. (first the film, then pizza — before / after) → **After** / **When** / **Once** / **As soon as**  
    *Hint: First the film, then pizza → after.*
 5. [Correct sentence] **I'll call you after I finish work.** ✓ · I'll call you after I will finish work. ✗ · I call you after I will finish work. ✗  
-   *Hint: After after → present simple for the future: finish.*
+   *Hint: After the word 'after' → present simple for the future: finish.*
 
 #### Part 2: when and while
 
@@ -5994,7 +5994,7 @@ Examples:
 1. [Choose] I'll call you as soon as I ___ home. — **get** / will get / got  
    *Hint: After as soon as → present simple for the future: get.*
 2. [Choose] We'll have lunch after Dad ___ back. — **comes** / will come / come  
-   *Hint: After after → present simple for the future: Dad comes.*
+   *Hint: After the word 'after' → present simple for the future: Dad comes.*
 3. [Write] I'll text you as soon ___ I land. (one word) → **as**  
    *Hint: as soon as — three words: as + soon + as.*
 4. [Write] Before you ___ out, close the windows. (go) → **go**  
@@ -6047,7 +6047,7 @@ Examples:
 - The girl who won the race is my cousin.
 - Do you know the woman who lives next door?
 
-🇺🇿 Odamlar uchun who yoki that: the man who lives next door — qo‘shnida yashaydigan odam.
+🇺🇿 Odamlar uchun who yoki that: the man who lives next door — qo‘shni uyda yashaydigan odam.
 
 **Practise**
 
@@ -6194,7 +6194,7 @@ Examples:
 
 #### Part 2: I want to travel — verb + to + verb
 
-Other verbs are followed by to + verb (an infinitive): want, decide, hope, plan, agree, refuse, promise, would like ('d like). I want to travel. We decided to stay at home. She refused to answer. Don't use -ing after these verbs: I want to go (not want going).
+Other verbs are followed by to + verb (an infinitive): want, decide, hope, plan, agree, refuse, promise, would like ('d like). I want to travel. We decided to stay at home. She refused to answer. Don't use -ing after these verbs: I want to go (not want going). Negative: put not before to: I promise not to be late.
 
 | Verb | + to + verb | Example |
 |---|---|---|
@@ -6212,7 +6212,7 @@ Examples:
 - She hopes to become a doctor.
 - They're planning to buy a house.
 - He refused to answer my question.
-- I'd like to order a pizza, please.
+- I promise not to be late.
 
 🇺🇿 want, decide, hope, plan, agree, refuse, promise dan keyin to + fe’l keladi: I want to travel — Men sayohat qilishni xohlayman.
 
@@ -6309,7 +6309,7 @@ Examples:
 - He's too young to drive.
 - It's too cold to swim today.
 
-🇺🇿 too + sifat — haddan tashqari (muammo): This tea is too hot — Bu choy juda issiq (ichib bo‘lmaydi).
+🇺🇿 too + sifat — haddan tashqari (muammo): This tea is too hot — Bu choy haddan tashqari issiq (ichib bo‘lmaydi).
 
 **Practise**
 
