@@ -559,11 +559,16 @@ function rsDeriveHwc() {
   if (!hwcCode) return;
   const records = rsByCode(hwcCode).filter(v => v && v.type === 'HWC_PROGRESS');
   const byStudent = {};
+  // a student whose ID was changed (✎ on the Students page) is one row: their records under an old ID count too
+  const idx = typeof window.taRosterIndex === 'function' ? window.taRosterIndex() : null;
+  const rosterOf = id => (idx && window.rosterStudentForId ? window.rosterStudentForId(id, idx) : null);
   records.forEach(r => {
-    const key = r.studentId;
+    const st = rosterOf(r.studentId);
+    const key = st ? 'roster:' + String(st.id) : r.studentId;
     if (!byStudent[key]) {
       byStudent[key] = {
-        studentId: r.studentId, studentName: r.name, totalCount: r.totalCount,
+        studentId: st ? st.id : r.studentId, studentName: r.name, totalCount: r.totalCount,
+        ids: st && window.taStudentIds ? new Set(window.taStudentIds(st).map(x => x.toLowerCase())) : null,
         completedFlags: new Array(r.totalCount).fill(false),
         roundLabels: new Array(r.totalCount).fill(''),
         roundCodes: new Array(r.totalCount).fill(''),
@@ -592,7 +597,7 @@ function rsDeriveHwc() {
     for (let i = 0; i < entry.totalCount; i++) {
       if (entry.completedFlags[i] || !codeAt[i]) continue;
       const answer = rsByCode(codeAt[i]).find(v => v && typeof v.type === 'string' && v.type !== 'HWC_PROGRESS' && v.type.indexOf('POINTS:') !== 0 &&
-        ((entry.studentId && norm(v.studentId) === norm(entry.studentId)) || (!v.studentId && norm(v.name) === norm(entry.studentName))));
+        ((entry.studentId && (norm(v.studentId) === norm(entry.studentId) || (entry.ids && entry.ids.has(norm(v.studentId))))) || (!v.studentId && norm(v.name) === norm(entry.studentName))));
       if (!answer) continue;
       entry.completedFlags[i] = true;
       entry.roundCodes[i] = codeAt[i];
@@ -642,7 +647,10 @@ window.taFindResultByCodeAndName = async function (code, studentName, studentId)
     await rsEnsureCodes([code]);
     const docs = rsByCode(code).filter(v => v && typeof v.type === 'string' && v.type.indexOf('POINTS:') !== 0);
     const norm = x => String(x || '').trim().toLowerCase();
+    // the student's old IDs too (✎ on the Students page can change an ID)
+    const ids = studentId && typeof window.taSameStudentIds === 'function' ? window.taSameStudentIds(studentId) : new Set([norm(studentId)]);
     let matches = studentId ? docs.filter(v => norm(v.studentId) === norm(studentId)) : [];
+    if (!matches.length && studentId) matches = docs.filter(v => v.studentId && ids.has(norm(v.studentId)));
     if (!matches.length) matches = docs.filter(v => norm(v.name) === norm(studentName));
     if (!matches.length && studentId) matches = docs.filter(v => norm(v.name) === norm(studentId));
     if (!matches.length) return null;

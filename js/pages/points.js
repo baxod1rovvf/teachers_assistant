@@ -147,8 +147,8 @@ function openStudentPoints(id) {
   const totalEl = document.getElementById('pointsModalTotal');
   const bodyEl = document.getElementById('pointsModalBody');
   if (!backdrop || !titleEl || !totalEl || !bodyEl) return;
-  const key = String(st.id).trim().toLowerCase();
-  const items = (window.__pointsLedger || []).filter(e => e && e.studentId && String(e.studentId).trim().toLowerCase() === key)
+  // under their ID now and every ID they had before (✎ on the Students page can change it)
+  const items = taPointsEntriesFor(st.id)
     .sort((a, c) => new Date(a.date || 0) - new Date(c.date || 0));
   backdrop.dataset.student = st.id;
   titleEl.textContent = st.name + ' — ID ' + st.id;

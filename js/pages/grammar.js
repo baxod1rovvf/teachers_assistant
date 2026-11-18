@@ -60,8 +60,9 @@ function grEnsureCode(lessonId) {
 function grClassStudents() {
   const names = {};
   getStudentGroups().forEach(g => { names[g.id] = g.name; });
-  return getPointsRoster().filter(s => s && names[s.group] !== undefined)
-    .map(s => ({ id: s.id, name: s.name, groupName: names[s.group] }));
+  // one entry per ID: a student whose ID was changed (✎ on the Students page) can start with the old one too
+  return taClassListEntries(getPointsRoster().filter(s => s && names[s.group] !== undefined)
+    .map(s => ({ id: s.id, oldIds: s.oldIds, name: s.name, groupName: names[s.group] })));
 }
 /* the Students list as it goes online (IDs, names, groups) — when it changes, the lists must be put online again */
 function grRosterSig() {
@@ -163,7 +164,12 @@ function grUnlistedRows(lessonId) {
 /* how many students have done it (anyone with a result, on the list or not) */
 function grDoneCount(lessonId, links, map) {
   const seen = new Set();
-  grResults(lessonId, links, map).forEach(r => { const k = taIdKey(r.studentId) || String(r.name || '').trim().toLowerCase(); if (k) seen.add(k); });
+  const idx = taRosterIndex();
+  grResults(lessonId, links, map).forEach(r => {
+    const st = rosterStudentForResult(r, idx);   // one student, whichever of their IDs (now or before) they typed
+    const k = st ? 'roster:' + grStudentKey(st) : (taIdKey(r.studentId) || String(r.name || '').trim().toLowerCase());
+    if (k) seen.add(k);
+  });
   return seen.size;
 }
 function grTimeText(seconds) {

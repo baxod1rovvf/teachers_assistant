@@ -50,6 +50,7 @@ window.TA_I18N_ROWS = [
   ['Change', 'Oʻzgartirish', 'Изменить'],
   ['Change name or lesson times', 'Nomi yoki dars vaqtlarini oʻzgartirish', 'Изменить название или время уроков'],
   ['Change name or group', 'Ismi yoki guruhini oʻzgartirish', 'Изменить имя или группу'],
+  ['Change name, ID or group', 'Ismi, IDsi yoki guruhini oʻzgartirish', 'Изменить имя, ID или группу'],
   ['Delete student', 'Oʻquvchini oʻchirish', 'Удалить ученика'],
   ['Take points', 'Ball olish', 'Снять баллы'],
   ['See their points', 'Ballarini koʻrish', 'Посмотреть баллы'],
@@ -57,7 +58,6 @@ window.TA_I18N_ROWS = [
   ['Your name and language', 'Ismingiz va til', 'Ваше имя и язык'],
   ['Add a group with its lesson days', 'Dars kunlari bilan guruh qoʻshing', 'Добавьте группу с днями уроков'],
   ['No groups yet. Add a group with its lesson days, then open it to add your students.', 'Hali guruh yoʻq. Dars kunlari bilan guruh qoʻshing, soʻng oʻquvchilarni qoʻshish uchun uni oching.', 'Групп пока нет. Добавьте группу с днями уроков, затем откройте её, чтобы добавить учеников.'],
-  ['stays the same, and so do the points.', 'oʻzgarmaydi, ballar ham.', 'не меняется, баллы тоже.'],
   ['Lesson plan', 'Dars rejasi', 'План урока'],
   ['Install on this device, backup and status.', 'Ushbu qurilmaga oʻrnatish, zaxira nusxa va holat.', 'Установка на это устройство, резервная копия и состояние.'],
   ['Results', 'Natijalar', 'Результаты'],
@@ -544,6 +544,7 @@ window.TA_I18N_ROWS = [
   ['Rename group', 'Guruh nomini oʻzgartirish', 'Переименовать группу'],
   ['Group name can\'t be empty', 'Guruh nomi boʻsh boʻlishi mumkin emas', 'Название группы не может быть пустым'],
   ['Name can\'t be empty', 'Ism boʻsh boʻlishi mumkin emas', 'Имя не может быть пустым'],
+  ['ID can\'t be empty', 'ID boʻsh boʻlishi mumkin emas', 'ID не может быть пустым'],
   ['Please enter a group name', 'Guruh nomini kiriting', 'Введите название группы'],
 
   /* ---------- Results ---------- */

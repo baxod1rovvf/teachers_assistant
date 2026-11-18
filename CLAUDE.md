@@ -147,7 +147,8 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
 15. **Very long audio in the Dictation builder** (e.g. 30+ min) is shrunk in the teacher's
     browser; on a weak phone this can take long or crash the tab — suggest a computer.
 16. **Student ID typos / shared IDs**: results then don't match the Students list and are
-    left out of Statistics and "Didn't do it".
+    left out of Statistics and "Didn't do it". Since 2026-11-18 a wrong ID can be corrected with ✎ on the Students page
+    without losing anything: results, points and links sent with the old ID still count for the student (`oldIds`).
 17. **Reminders and notifications only work while the app is open** (no server to push them).
 22. **Listening voices for Steps 9–20 come from OmniVoice, whose model weights are licensed for non-commercial use only (CC-BY-NC).**
     If the course is sold or used commercially, check the licence — the recordings can be remade with Kokoro (Apache-2.0) instead.
@@ -386,6 +387,19 @@ real students' names or results into the repository (it is public).
   Beginner … Advanced, IELTS; an old typed level like "A2" stays as a choice).
   New points only update the numbers (`renderPointsBoard` → `[data-pts-for]`/`[data-group-pts]`),
   so the add-student form isn't wiped. `tests/students-points.spec.js`.
+- **Changing a student's ID (teacher, 2026-11-18)**: ✎ has Name, **ID**, Group. A changed ID is refused when empty or when it is any
+  student's ID now or before (`taRosterIdOwner`, `taIdKey`); saved as `{ ...st, id: new, oldIds: [...old ones, previous id] }` (going back
+  to an old ID takes it out of `oldIds`; `studentIdChange` in students.js; "⚠️ Will be punished" marks are copied to the new ID). **Old IDs
+  mean the same student everywhere**: `taRosterIndex` also indexes `oldIds` (never over another student's current ID), so
+  `rosterStudentForId`/`rosterStudentForResult` match old results (Results, Statistics, Didn't do it, Course and Grammar tables, Not
+  finished, Not on your Students list); points add every ID's records (`taPointsEntriesFor`/`pointsTotalFor`; new points go under the
+  current ID; Reset zeroes each ID); a set's progress merges the IDs (`rsDeriveHwc`). Helpers in common.js: `taStudentIds(st)` (current
+  first), `taStudentHasId`, `taSameStudentIds(id)`, `taClassListEntries` (one class-list entry per ID — Grammar and Skills Course lists
+  let a student in with an old ID too). Add student and "Add many" refuse old IDs as well. **Skills Course class lists follow the roster
+  by themselves** (`skRefreshLists` in course.js, like `grRefreshLists`: per link `rosterSig` = the group's IDs incl. old ones, names, group
+  name; only changed groups' links are published again, with `skPrevPart` and the group's name; links copied before (no `rosterSig`) are
+  published once; empty groups never; Copy link saves `rosterSig` too). Not covered: a Course/Grammar one-try check doesn't know that a
+  result under the old ID is the same student's, and exercise files' points check (`taCheckAward`) is per ID.
 - **Top 5 Active Students and Quick actions were removed from the Dashboard (teacher, 2026-11-15: "they hide our image")** —
   with `getTopActiveStudents`, `taAssignedCodesByGroup` and their tests; robot answers no longer mention Top 5. "Students' overall results"
   (`renderDashboardStats`, now also redrawn when results/roster/ratings change) is what's left of it; Sentences stars count there.

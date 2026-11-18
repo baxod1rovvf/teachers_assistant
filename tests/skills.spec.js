@@ -723,7 +723,7 @@ test.describe('course page', () => {
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(/^https:\/\/example\.github\.io\/teachers_assistant\/skill\.html\?s=listening&st=e1&c=[A-Z0-9]{6}$/);
     const first = await page.evaluate(() => navigator.clipboard.readText());
     const code = first.split('&c=')[1];
-    expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skills_links')))).toEqual({ [group.id + '|listening|e1']: { code, sentAt: expect.any(String) } });
+    expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skills_links'), (k, v) => k === 'rosterSig' ? undefined : v))).toEqual({ [group.id + '|listening|e1']: { code, sentAt: expect.any(String) } });   // rosterSig (the class list's roster) left out
     expect(await page.evaluate(() => JSON.stringify(getRecentExercises()))).toBe(before);
     await page.evaluate(() => navigator.clipboard.writeText(''));
     await part.getByRole('button', { name: /Copy link for/ }).click();
@@ -793,7 +793,7 @@ test.describe('course page', () => {
     await page.locator('.sk-node[data-step="e1"]').click();
     await page.locator('.sk-part[data-skill="reading"]').getByRole('button', { name: /Copy link for/ }).click();
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe('https://example.github.io/teachers_assistant/skill.html?s=reading&st=e1&c=RDG777');
-    const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skills_links')));
+    const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skills_links'), (k, v) => k === 'rosterSig' ? undefined : v));   // rosterSig (the class list's roster) left out
     expect(stored).toEqual({ 'g1|reading|e1': { uid: 'skold', code: 'RDG777' }, 'g1|speaking|e1': { sentAt: '2026-11-04T10:00:00.000Z' }, 'g1|writing|e2': 'gone-uid' });
     expect(await page.evaluate(() => getRecentExercises().filter(e => / course$/.test(e.typeLabel)).length)).toBe(0);
     expect(errors).toEqual([]);
@@ -1007,7 +1007,7 @@ test.describe('course page', () => {
     const errors = watchErrors(page);
     await page.goto('/course.html');
     await page.waitForFunction(() => (window.__allResults || []).some(r => r.code === 'LSOLD1'), null, { timeout: 10000 });
-    expect(await page.evaluate(() => taSkillsLinks()['g2|listening|e1'])).toEqual({ code: 'LSE001', alsoCodes: ['LSOLD1'] });
+    expect(await page.evaluate(() => { const e = Object.assign({}, taSkillsLinks()['g2|listening|e1']); delete e.rosterSig; return e; })).toEqual({ code: 'LSE001', alsoCodes: ['LSOLD1'] });
     const r = await page.evaluate(() => {
       const g = skGroup('g2'), s = skGroupStats(g, skPathCtx(g, skSteps().filter(skReady)));
       return { gulya: s.students.find(x => x.name === 'Gulya Test').steps.e1, dot: s.steps.find(x => x.st.id === 'e1').dots.find(d => d.skill.key === 'listening').text,
@@ -1018,7 +1018,7 @@ test.describe('course page', () => {
     expect(r.table).toContainEqual(['Gulya Test', true]);
     // saved in the new form, the old code stays with the entry
     await page.evaluate(() => taSaveSkillsLinks(JSON.parse(localStorage.getItem('ta_skills_links'))));
-    expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skills_links'))['g2|listening|e1'])).toEqual({ code: 'LSE001', alsoCodes: ['LSOLD1'] });
+    expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skills_links'), (k, v) => k === 'rosterSig' ? undefined : v)['g2|listening|e1'])).toEqual({ code: 'LSE001', alsoCodes: ['LSOLD1'] });
     expect(errors).toEqual([]);
   });
 
