@@ -534,41 +534,54 @@ function skPutClassOnline(url, g, skill, step) {
   const students = taClassListEntries(skGroupRoster(g));   // one entry per ID — a student's old IDs too (2026-11-18)
   if (!code || typeof window.taPublishClassList !== 'function') return;
   const links = taSkillsLinks(), sig = skRosterSig(g);
-  skPublishList(skLinkKey(skill, step, g), code, students, skPrevPart(skill, step, g, links), g.name, sig).then(ok => {
+  const prevJson = p => (typeof window.taClassPrevJson === 'function' ? window.taClassPrevJson(p) : '');
+  skPublishList(skLinkKey(skill, step, g), code, students, prevJson(skPrevPart(skill, step, g, links)), g.name, sig).then(ok => {
     if (!ok) showToast('⚠️ The class list couldn\'t go online — students can still start without an ID check. Press Copy link again later.');
   });
   const next = skNextPart(skill, step, g, links);
-  if (next) skPublishList(skLinkKey(next.skill, next.step, g), next.code, students, skPrevPart(next.skill, next.step, g, links), g.name, sig);
+  if (next) skPublishList(skLinkKey(next.skill, next.step, g), next.code, students, prevJson(skPrevPart(next.skill, next.step, g, links)), g.name, sig);
 }
-/* One class list goes online; on success the roster it was made from is kept on the link (rosterSig), so skRefreshLists knows
-   it is up to date. A code being published is never published a second time at once (the rules refuse a change). */
-const skPublishing = new Set();
-function skPublishList(key, code, students, prev, groupName, sig) {
-  skPublishing.add(code);
-  return Promise.resolve().then(() => window.taPublishClassList(code, students, prev, groupName)).catch(() => false).then(ok => {
-    skPublishing.delete(code);
+/* One class list goes online with `prev` as a JSON string ('' = none) and the group's name. On success what was put online is kept on
+   the link — the roster it was made from (rosterSig), `prevJson`, `groupOnline` — so skRefreshLists knows it is up to date and can put it
+   online again unchanged apart from the students. A second publish of the same code waits for the first (the rules refuse a change). */
+const skPublishing = new Map();   // code → the publish under way
+function skPublishList(key, code, students, prevJson, groupName, sig) {
+  const before = skPublishing.get(code) || Promise.resolve();
+  const run = before.catch(() => {}).then(() => window.taPublishClassList(code, students, prevJson || '', groupName)).catch(() => false).then(ok => {
     if (ok) {
       const links = taSkillsLinks();   // read again: sync may have changed it while we waited
-      if (links[key] && typeof links[key] === 'object' && links[key].code === code && links[key].rosterSig !== sig) { links[key].rosterSig = sig; taSaveSkillsLinks(links); }
+      const e = links[key];
+      if (e && typeof e === 'object' && e.code === code) {
+        e.rosterSig = sig; e.prevJson = prevJson || ''; e.groupOnline = groupName || '';
+        taSaveSkillsLinks(links);
+      }
     }
     return ok;
   });
+  skPublishing.set(code, run);
+  run.then(() => { if (skPublishing.get(code) === run) skPublishing.delete(code); });
+  return run;
 }
 /* the group's list as it goes online (IDs — old ones too —, names, the group's name): when it changes, its links' lists must go online again */
 function skRosterSig(g) {
   return taClassListEntries(skGroupRoster(g)).map(s => taIdKey(s.id) + '|' + String(s.name || '').trim()).sort().join('\n') + '\n@' + String(g.name || '');
 }
+/* sync hasn't brought this device's Students list yet: a list made now could be an old one, and it would never be corrected */
+function skSyncNotReady() { return !!(window.taSync && typeof window.taSync.ready === 'function' && !window.taSync.ready()); }
 
 /* ---- the Skills Course class lists follow the Students list (2026-11-18, like grRefreshLists): a student added, renamed, moved, or
    whose ID was changed after Copy link can start without the teacher pressing Copy link again. Only the links of groups whose list
-   changed are put online again (2 writes each), with what Copy link puts there (the group's students, the part before, the group's
-   name). Links copied before have no rosterSig: they are put online once. At most one run per 5 s (window.__skRefreshMs in tests),
-   never two at once; a failed publish keeps the old rosterSig and is tried again after 30 s (3 times at most). An empty group is
-   never published here (that would open the link to anyone — or wipe a list on a device whose Students list hasn't synced). ---- */
+   changed are put online again (2 writes each). **Only the students change**: the link's `prev` ("do the earlier part first") and
+   group name are put back exactly as they are online — kept on the link by Copy link (prevJson, groupOnline); a link without them
+   (copied before) has its record read once (taReadClassList; can't read → tried later). Links copied before have no rosterSig: they
+   are put online once. Waits until sync has brought the Students list (taSync.ready). At most one run per 5 s (window.__skRefreshMs in
+   tests), never two at once; a failed publish keeps the old rosterSig and is tried again after 30 s (3 times at most). An empty group
+   is never published here (that would open the link to anyone — or wipe a list on a device whose Students list hasn't synced). ---- */
 let skRefreshBusy = false, skRefreshAgain = false, skRefreshLast = 0, skRefreshTimer = 0, skRetryTimer = 0, skFailStreak = 0, skSigBusy = false;
 function skRefreshLists() {
   if (skSigBusy) return;
-  if (typeof window.taPublishClassList !== 'function') return;   // Firebase is still loading — the next draw tries again
+  if (skSyncNotReady()) return;   // sync calls us again once it is ready
+  if (typeof window.taPublishClassList !== 'function' || typeof window.taReadClassList !== 'function') return;   // Firebase is still loading — the next draw tries again
   if (skRefreshBusy) { skRefreshAgain = true; return; }
   const wait = (window.__skRefreshMs !== undefined ? window.__skRefreshMs : 5000) - (Date.now() - skRefreshLast);
   if (wait > 0) { if (!skRefreshTimer) skRefreshTimer = setTimeout(() => { skRefreshTimer = 0; skRefreshLists(); }, wait); return; }
@@ -579,11 +592,12 @@ function skRefreshLists() {
     Object.keys(links).forEach(key => {
       const m = /^(.*)\|(listening|reading|writing)\|([^|]+)$/.exec(key), e = links[key];
       if (!m || !e || typeof e !== 'object' || !e.code || skPublishing.has(e.code)) return;
-      const g = groups.find(x => x.id === m[1]), st = g && skStep(m[3]);
-      if (!st) return;
+      const g = groups.find(x => x.id === m[1]);
+      if (!g || !skStep(m[3])) return;
       if (!(g.id in sigs)) { sigs[g.id] = skRosterSig(g); lists[g.id] = taClassListEntries(skGroupRoster(g)); }
       if (e.rosterSig === sigs[g.id] || !lists[g.id].length) return;
-      jobs.push({ key: key, code: e.code, g: g, skill: m[2], step: st.id, students: lists[g.id], sig: sigs[g.id] });
+      jobs.push({ key: key, code: e.code, g: g, students: lists[g.id], sig: sigs[g.id],
+        prevJson: typeof e.prevJson === 'string' ? e.prevJson : null, groupOnline: typeof e.groupOnline === 'string' ? e.groupOnline : null });
     });
   } finally { skSigBusy = false; }
   if (!jobs.length) return;
@@ -591,7 +605,14 @@ function skRefreshLists() {
   let failed = false;
   (async () => {
     for (const j of jobs) {
-      const ok = await skPublishList(j.key, j.code, j.students, skPrevPart(j.skill, j.step, j.g, taSkillsLinks()), j.g.name, j.sig);
+      let prevJson = j.prevJson, group = j.groupOnline;
+      if (prevJson === null || group === null) {   // copied before these were kept: what is online now, as it is
+        const now = await window.taReadClassList(j.code);
+        if (!now) { failed = true; continue; }
+        if (prevJson === null) prevJson = now.prev;
+        if (group === null) group = now.exists ? now.group : j.g.name;
+      }
+      const ok = await skPublishList(j.key, j.code, j.students, prevJson, group, j.sig);
       if (!ok) failed = true;
     }
   })().catch(() => { failed = true; }).then(() => {

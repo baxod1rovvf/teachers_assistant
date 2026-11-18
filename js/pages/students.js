@@ -164,7 +164,7 @@ function moveStudentToGroup(studentId, groupId) {
   refreshRosterViews();
 }
 
-// ✎ next to a student: their name and group (the ID stays the same).
+// ✎ next to a student: their name, ID and group (a changed ID is kept in oldIds — studentIdChange).
 function renameRosterStudent(studentId) {
   const st = getPointsRoster().find(s => s.id === studentId);
   if (!st) return;

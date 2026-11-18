@@ -878,7 +878,14 @@ function removePointsStudent(id) {
   showUndoToast('Removed ' + st.name + ' (ID ' + st.id + ').', function () {
     const now = getPointsRoster();
     if (now.some(s => s.id === st.id)) return;
-    now.splice(Math.min(at, now.length), 0, st);
+    // an old ID given to someone else meanwhile is theirs now (else both students' points would add it up)
+    let back = st;
+    if (Array.isArray(st.oldIds)) {
+      const keep = st.oldIds.filter(o => !taRosterIdOwner(o, st, now));
+      back = Object.assign({}, st);
+      if (keep.length) back.oldIds = keep; else delete back.oldIds;
+    }
+    now.splice(Math.min(at, now.length), 0, back);
     savePointsRoster(now);
     refreshRosterViews();
     showToast(st.name + ' is back.', 'ok');
@@ -1867,11 +1874,16 @@ function skAiSave(add) {
   skAiMemo = store;
   return true;
 }
+let taStoreRefreshTimer = 0;
 window.taStoreChanged = function (key) {
   if (key === LS_SKILLS_AI) skAiForget();
   if (/(^|::)(ta_points_roster|ta_student_groups)$/.test(String(key || ''))) {   // the class lists (Grammar, Skills Course) follow the roster
-    if (typeof window.grRefreshLists === 'function') window.grRefreshLists();
-    if (typeof window.skRefreshLists === 'function') window.skRefreshLists();
+    // a little later, so the rest of a sync merge (ta_skills_links, ta_grammar_links) lands first — one timer
+    clearTimeout(taStoreRefreshTimer);
+    taStoreRefreshTimer = setTimeout(() => {
+      if (typeof window.grRefreshLists === 'function') window.grRefreshLists();
+      if (typeof window.skRefreshLists === 'function') window.skRefreshLists();
+    }, window.__taStoreRefreshMs !== undefined ? window.__taStoreRefreshMs : 3000);
   }
 };
 window.addEventListener('storage', e => { if (!e.key || /(^|::)ta_skills_ai$/.test(e.key)) skAiForget(); });

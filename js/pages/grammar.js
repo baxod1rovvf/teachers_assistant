@@ -75,6 +75,7 @@ function grRosterSig() {
 let grRefreshBusy = false, grRefreshAgain = false, grRefreshLast = 0, grRefreshTimer = 0, grRetryTimer = 0, grFailStreak = 0, grSigBusy = false;
 function grRefreshLists() {
   if (grSigBusy) return;
+  if (window.taSync && typeof window.taSync.ready === 'function' && !window.taSync.ready()) return;   // sync hasn't brought the Students list yet — it calls us once ready
   if (typeof window.taPublishClassList !== 'function') return;   // Firebase is still loading — the next draw tries again
   if (grRefreshBusy) { grRefreshAgain = true; return; }
   const wait = (window.__grRefreshMs !== undefined ? window.__grRefreshMs : 5000) - (Date.now() - grRefreshLast);

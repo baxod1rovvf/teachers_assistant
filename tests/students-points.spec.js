@@ -171,6 +171,10 @@ test('in a group, every student\'s ✎, 🗑 and ID stand in straight columns', 
 const data = require('./support/data');
 const nowIso = () => new Date().toISOString();
 // Cora (Target) had ID 30003 before the teacher changed it to 10003
+// a class list as Copy link put it online (the students' hashes don't matter here)
+const classRec = (code, extra) => Object.assign({ __id: 'class-' + code, v: 1, code: 'TAUSER', builtAt: '', type: 'TA_SYNC:CLASS', title: code, name: '',
+  data: '[]', score: 0, warnings: 0, timeSeconds: 0, timeDisplay: '00:00', date: nowIso() }, extra || {});
+const classList = (page, code) => page.evaluate(c => { const d = window.__fakeDocs.find(x => x.__id === 'class-' + c); return d ? { h: JSON.parse(d.data).map(e => e.h), prev: d.prev, group: d.group } : null; }, code);
 const CORA_MOVED = data.roster.map(s => s.id === '10003' ? Object.assign({}, s, { oldIds: ['30003'] }) : s);
 
 test('✎ changes a student\'s ID: the old one is kept; empty, taken (now or before) are refused; going back works', async ({ page, context }) => {
@@ -276,7 +280,9 @@ test('points: the total adds the old ID\'s records and the new ID\'s; new points
 
 test('the class lists follow an ID change by themselves: Grammar and a Skills Course link copied before, both IDs, same prev and group', async ({ page, context }) => {
   const links = { 'g1|listening|b1': { code: 'LST101', sentAt: nowIso() }, 'g1|listening|b2': { code: 'LST102', sentAt: nowIso() } };
-  await prepare(context, { storage: { ta_skills_links: JSON.stringify(links), ta_grammar_links: JSON.stringify({ g1: { code: 'GRM111', sentAt: nowIso() } }) } });
+  // Step 2's list is online already (Copy link made it, with the part before); Step 1's never went online
+  const docs = data.results(Date.now()).concat([classRec('LST102', { prev: '{"skill":"listening","stepNo":1,"codes":["LST101"]}', group: 'Target' })]);
+  await prepare(context, { docs, storage: { ta_skills_links: JSON.stringify(links), ta_grammar_links: JSON.stringify({ g1: { code: 'GRM111', sentAt: nowIso() } }) } });
   const errors = watchErrors(page);
   await open(page, 'course.html');
   const list = code => page.evaluate(c => { const d = window.__fakeDocs.find(x => x.__id === 'class-' + c); return d ? { h: JSON.parse(d.data).map(e => e.h), n: JSON.parse(d.data).map(e => e.n), prev: d.prev ? JSON.parse(d.prev) : null, group: d.group || '' } : null; }, code);
@@ -316,4 +322,70 @@ test('the class lists follow an ID change by themselves: Grammar and a Skills Co
   await page.waitForTimeout(800);
   expect(await classWrites()).toBe(n1);
   expect(errors).toEqual([]);
+});
+
+test('the lists wait until sync has brought the Students list: nothing is published before, it is once sync is ready', async ({ page, context }) => {
+  const links = { 'g1|listening|b1': { code: 'LST101', sentAt: nowIso() } };
+  await prepare(context, { storage: { ta_skills_links: JSON.stringify(links), ta_grammar_links: JSON.stringify({ g1: { code: 'GRM111', sentAt: nowIso() } }) } });
+  await open(page, 'course.html');
+  await expect.poll(() => page.evaluate(() => !!JSON.parse(localStorage.getItem('ta_skills_links'))['g1|listening|b1'].rosterSig), { timeout: 10000 }).toBe(true);
+  await expect.poll(() => page.evaluate(() => !!JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toBe(true);
+  const classWrites = () => page.evaluate(() => window.__writes.filter(w => /^class-/.test(w.id)).length);
+  const n0 = await classWrites();
+  // sync is on but hasn't finished its first check: this device's Students list may be an old one
+  await page.evaluate(() => {
+    window.__skRefreshMs = 0; window.__grRefreshMs = 0; window.__taStoreRefreshMs = 0;
+    window.__notReady = true;
+    window.taSync = Object.assign({}, window.taSync || {}, { ready: () => !window.__notReady });
+    savePointsRoster(getPointsRoster().concat([{ name: 'Hamid Test', id: '10007', group: 'g1' }]));
+    taStoreChanged('ta_points_roster');
+    renderCourse();
+  });
+  await page.waitForTimeout(1000);
+  expect(await classWrites()).toBe(n0);
+  // sync is ready (js/sync.js setReady calls both)
+  await page.evaluate(() => { window.__notReady = false; skRefreshLists(); grRefreshLists(); });
+  await expect.poll(async () => (await classList(page, 'LST101')).h.length).toBe(4);
+  await expect.poll(async () => (await classList(page, 'GRM111')).h.length).toBe(7);
+});
+
+test('putting a list online again changes only the students: a link with no "earlier part" stays without one, a cross-skill one keeps its own', async ({ page, context }) => {
+  const cross = '{"skill":"listening","stepNo":2,"codes":["LST102"]}';   // copied 2026-11-12…16: Reading waited for Listening
+  const links = { 'g1|listening|b3': { code: 'LST103', sentAt: nowIso() }, 'g1|reading|b2': { code: 'RDG102', sentAt: nowIso() },
+    'g1|listening|b2': { code: 'LST102', sentAt: nowIso() } };
+  const docs = data.results(Date.now()).concat([classRec('LST103', { group: 'Old name' }), classRec('RDG102', { prev: cross, group: 'Target' }), classRec('LST102')]);
+  await prepare(context, { docs, storage: { ta_skills_links: JSON.stringify(links) } });
+  const errors = watchErrors(page);
+  await open(page, 'course.html');
+  // put online once (no rosterSig yet), with what was online
+  await expect.poll(() => page.evaluate(() => Object.values(JSON.parse(localStorage.getItem('ta_skills_links'))).every(e => e.rosterSig)), { timeout: 10000 }).toBe(true);
+  const check = async n => {
+    const lst = await classList(page, 'LST103'), rdg = await classList(page, 'RDG102'), l2 = await classList(page, 'LST102');
+    expect(lst.h).toHaveLength(n); expect(lst.prev).toBeUndefined(); expect(lst.group).toBe('Old name');
+    expect(rdg.h).toHaveLength(n); expect(rdg.prev).toBe(cross); expect(rdg.group).toBe('Target');
+    expect(l2.prev).toBeUndefined(); expect(l2.group).toBeUndefined();
+  };
+  await check(3);
+  expect(await page.evaluate(() => { const l = JSON.parse(localStorage.getItem('ta_skills_links')); return [l['g1|listening|b3'].prevJson, l['g1|reading|b2'].prevJson]; })).toEqual(['', cross]);
+  // a roster change: the same prev and group again
+  const reads = await page.evaluate(() => window.__reads);
+  await page.evaluate(() => { window.__skRefreshMs = 0; savePointsRoster(getPointsRoster().map(s => s.id === '10001' ? Object.assign({}, s, { id: 'A-77', oldIds: ['10001'] }) : s)); });
+  await expect.poll(async () => (await classList(page, 'RDG102')).h.length).toBe(4);
+  await expect.poll(async () => (await classList(page, 'LST103')).h.length).toBe(4);
+  await check(4);
+  expect(await page.evaluate(() => window.__reads)).toBe(reads);   // kept on the link: the records aren't read again
+  expect(errors).toEqual([]);
+});
+
+test('Undo of a deleted student: an old ID given to someone else meanwhile stays theirs', async ({ page, context }) => {
+  const roster = data.roster.map(s => s.id === '10001' ? Object.assign({}, s, { id: 'A-77', oldIds: ['10001', 'X-1'] }) : s);
+  await prepare(context, { storage: { ta_points_roster: JSON.stringify(roster) } });
+  await open(page, 'students.html');
+  await page.locator('.group-block', { hasText: 'Target' }).click();
+  await page.locator('.sp-row', { hasText: 'Alice Test' }).locator('.sp-icon-btn.danger').click();
+  await page.evaluate(() => savePointsRoster(getPointsRoster().concat([{ name: 'Nodir Test', id: '10001', group: 'g1' }])));
+  await page.locator('.toast-undo').click();
+  await expect(page.locator('.sp-row', { hasText: 'Alice Test' })).toHaveCount(1);
+  expect(await page.evaluate(() => getPointsRoster().find(s => s.name === 'Alice Test'))).toEqual({ name: 'Alice Test', id: 'A-77', group: 'g1', oldIds: ['X-1'] });
+  expect(await page.evaluate(() => rosterStudentForId('10001').name)).toBe('Nodir Test');
 });

@@ -398,7 +398,13 @@ real students' names or results into the repository (it is public).
   let a student in with an old ID too). Add student and "Add many" refuse old IDs as well. **Skills Course class lists follow the roster
   by themselves** (`skRefreshLists` in course.js, like `grRefreshLists`: per link `rosterSig` = the group's IDs incl. old ones, names, group
   name; only changed groups' links are published again, with `skPrevPart` and the group's name; links copied before (no `rosterSig`) are
-  published once; empty groups never; Copy link saves `rosterSig` too). Not covered: a Course/Grammar one-try check doesn't know that a
+  published once; empty groups never; Copy link saves `rosterSig` too). **Both refreshers wait for sync** (`taSync.ready()` in js/sync.js —
+  true once the first cloud check is merged, or when sync isn't running; `setReady` calls both refreshers; `taStoreChanged` runs them 3 s
+  later, one timer) — a device with an old Students list must never publish it. **A refresh only changes the students**: each link keeps
+  the `prev` and group name that are online (`prevJson`/`groupOnline` on the link, saved by Copy link; links without them have their
+  `class-<code>` record read once, `taReadClassList`), so a link sent without "do the earlier part first" never gains it. A second publish
+  of a code waits for the first (`skPublishing` Map). **Old IDs stay reserved**: a typo ID can't be given to another student, and two
+  students' swapped IDs can't be swapped back. Undo of a deleted student drops old IDs someone else has meanwhile. Not covered: a Course/Grammar one-try check doesn't know that a
   result under the old ID is the same student's, and exercise files' points check (`taCheckAward`) is per ID.
 - **Top 5 Active Students and Quick actions were removed from the Dashboard (teacher, 2026-11-15: "they hide our image")** —
   with `getTopActiveStudents`, `taAssignedCodesByGroup` and their tests; robot answers no longer mention Top 5. "Students' overall results"
