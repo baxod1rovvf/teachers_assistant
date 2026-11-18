@@ -190,19 +190,28 @@ test('no change, no write: a list that is up to date is not put online again', a
 test('a roster change from sync (a storage event) refreshes the list; a failed publish is tried again', async ({ page, context }) => {
   await openCourse(page, context, { links: LINKS });
   await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toContain('10003|Dilnoza Test|Target');
+  // sync puts a new Students list: taStoreChanged (js/sync.js setLocal) refreshes a moment later
   await page.evaluate(() => {
-    window.__grRefreshMs = 0;
+    window.__grRefreshMs = 0; window.__taStoreRefreshMs = 0;   // it waits 3 s for the rest of a sync merge; not here
     const r = JSON.parse(localStorage.getItem('ta_points_roster')); r.push({ name: 'Farhod Test', id: '10005', group: 'ga' });
     localStorage.setItem('ta_points_roster', JSON.stringify(r));
-    window.__failWrites = 1;                       // the first publish can't reach the database
-    window.taStoreChanged('ta_points_roster');   // the real path: js/sync.js setLocal
-    window.__grRefreshMs = 60000; window.__grRetryMs = 60000;                  // the retry after the failure must wait (debounce)
+    window.taStoreChanged('ta_points_roster');
   });
-  await page.waitForTimeout(500);
-  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).not.toContain('10005');
-  await page.evaluate(() => { window.__grRefreshMs = 0; window.taStoreChanged('ta_student_groups'); });
   await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toContain('10005|Farhod Test|Apex');
-  await expect.poll(() => page.evaluate(() => { const d = window.__fakeDocs.find(x => x.__id === 'class-GRM111'); return d ? JSON.parse(d.data).length : null; })).toBe(4);
+  // a publish that can't reach the database keeps the old rosterSig, so the next change tries again
+  await page.evaluate(() => {
+    const r = JSON.parse(localStorage.getItem('ta_points_roster')); r.push({ name: 'Gayrat Test', id: '10006', group: 'ga' });
+    localStorage.setItem('ta_points_roster', JSON.stringify(r));
+    window.__failWrites = 1; window.__grRetryMs = 60000;
+    window.grRefreshLists();
+    window.__grRefreshMs = 60000;                  // another refresh now must wait (debounce)
+  });
+  await expect.poll(() => page.evaluate(() => window.__failWrites)).toBe(0);
+  await page.waitForTimeout(500);
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).not.toContain('10006');
+  await page.evaluate(() => { window.__grRefreshMs = 0; window.taStoreChanged('ta_student_groups'); });
+  await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toContain('10006|Gayrat Test|Apex');
+  await expect.poll(() => page.evaluate(() => { const d = window.__fakeDocs.find(x => x.__id === 'class-GRM111'); return d ? JSON.parse(d.data).length : null; })).toBe(5);
 });
 
 test('with a lesson page open, a student added to the roster still gets the list refreshed', async ({ page, context }) => {

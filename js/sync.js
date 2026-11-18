@@ -81,9 +81,10 @@
   var key = null;
   var keyReady = null, started = false;
   function useKey(sk) {
+    syncing = true;
     keyReady = crypto.subtle.importKey('raw', b64decode(sk), 'AES-GCM', false, ['encrypt', 'decrypt'])
       .then(function (k) { key = k; })
-      .catch(function (e) { console.error('Sync key failed:', e); setStatus('☁️ Sync is off — tap to turn it on', 'off'); });
+      .catch(function (e) { syncing = false; console.error('Sync key failed:', e); setStatus('☁️ Sync is off — tap to turn it on', 'off'); });
     keyReady.then(function () { if (key && !started) { started = true; start(); } });
   }
 
@@ -161,6 +162,15 @@
 
   /* ---------- local changes: stamp them and upload shortly after ---------- */
   var ready = false;     // true once the first cloud check has been merged (or we're offline)
+  var syncing = false;   // sync is running on this device (a key) — while it isn't, nothing waits for it
+  /* sync is ready: the class lists (Skills Course, Grammar) may follow the Students list now — before, it could be an old copy */
+  function setReady(later) {
+    ready = true;
+    if (!later) runRefreshers();
+  }
+  function runRefreshers() {
+    try { if (window.skRefreshLists) window.skRefreshLists(); if (window.grRefreshLists) window.grRefreshLists(); } catch (e) { /* ignore */ }
+  }
   var dirty = {};
   var uploadTimer = null;
   // Writes the page makes by itself while it starts up aren't the teacher's edits, but
@@ -423,7 +433,7 @@
   async function lightStart() {
     var docs = await lightRead();
     var changed = await merge(docs, true);
-    ready = true;
+    setReady(true);   // the class lists follow after the reload decision (a page about to reload publishes nothing)
     await flush();
     var guard = Number(raw.sessionGet('ta_sync_reloaded_at')) || 0;
     if (changed && Date.now() - guard > 30000) {
@@ -431,6 +441,7 @@
       location.reload();
       return;
     }
+    runRefreshers();
     if (changed) refreshScreen();
     if (Object.keys(dirty).length) { if (!failures) flush(); } else if (!failures) setStatus('☁️ Synced', 'ok');
     var firstSig = true;
@@ -450,7 +461,7 @@
   async function start() {
     setStatus('☁️ Syncing…', 'busy');
     backend = await waitBackend();
-    if (!backend) { ready = true; setStatus('☁️ Offline — will sync when connected', 'bad'); return; }
+    if (!backend) { setReady(); setStatus('☁️ Offline — will sync when connected', 'bad'); return; }
     if (backend.listTitles && backend.getByIds && backend.listenSig) {
       try { await lightStart(); return; }
       catch (e) { console.warn('Light sync didn\'t work — reading everything instead:', e); }
@@ -460,7 +471,7 @@
       var wasFirst = first; first = false;
       var changed = await merge(docs, wasFirst);
       if (wasFirst) {
-        ready = true;
+        setReady(true);
         await flush();
         var guard = Number(raw.sessionGet('ta_sync_reloaded_at')) || 0;
         if (changed && Date.now() - guard > 30000) {
@@ -469,6 +480,7 @@
           location.reload();
           return;
         }
+        runRefreshers();
         if (changed) refreshScreen();
       } else if (changed) {
         refreshScreen();
@@ -477,12 +489,12 @@
       if (Object.keys(dirty).length) { if (!failures) flush(); } else if (!failures) setStatus('☁️ Synced', 'ok');
     }, function (err) {
       console.error('Sync listen failed:', err);
-      ready = true;
+      setReady();
       setStatus('⚠️ Not synced — tap to retry', 'bad');
     });
   }
   function syncNow() { failures = 0; clearTimeout(retryTimer); setStatus('☁️ Syncing…', 'busy'); SYNC_KEYS.forEach(function (k) { if (getLocal(k) !== null) dirty[k] = true; }); flush(); }
 
-  window.taSync = { flush: flush, now: syncNow, turnOn: askPasswordAndStart, status: function () { return status; }, light: function () { return lastLight; } };
+  window.taSync = { ready: function () { return ready || !syncing; }, flush: flush, now: syncNow, turnOn: askPasswordAndStart, status: function () { return status; }, light: function () { return lastLight; } };
   if (user.sk) useKey(user.sk);
 })();

@@ -124,10 +124,26 @@ window.taPublishClassList = async function (code, students, prev, group) {
     const rec = { v: 1, code: 'TAUSER', builtAt: '', type: 'TA_SYNC:CLASS', title: code, name: '', data: JSON.stringify(list),
       score: list.length, warnings: 0, timeSeconds: 0, timeDisplay: '00:00', date: new Date().toISOString() };
     if (group) rec.group = String(group).slice(0, 80);   // shown on the student's "Bu sizmi?" screen (2026-11-15)
-    if (prev && Array.isArray(prev.codes) && prev.codes.length) rec.prev = JSON.stringify({ skill: prev.skill, stepNo: prev.stepNo, codes: prev.codes.slice(0, 10) });
+    if (typeof prev === 'string') { if (prev) rec.prev = prev; }   // a list put online again keeps its `prev` exactly as it was (skRefreshLists)
+    else if (prev && Array.isArray(prev.codes) && prev.codes.length) rec.prev = taClassPrevJson(prev);
     await setDoc(ref, rec);
     return true;
   } catch (e) { taReportDbError(e); console.error('Putting the class list online failed:', e); return false; }
+};
+// `prev` as it is written on the record ('' = none) — Copy link keeps it on the link, so a list put online again keeps it unchanged
+function taClassPrevJson(prev) {
+  return prev && Array.isArray(prev.codes) && prev.codes.length ? JSON.stringify({ skill: prev.skill, stepNo: prev.stepNo, codes: prev.codes.slice(0, 10) }) : '';
+}
+window.taClassPrevJson = taClassPrevJson;
+// What a link's class list online says now: { exists, prev: '' or the JSON as stored, group: '' or the name }; null = couldn't ask.
+window.taReadClassList = async function (code) {
+  if (!db || !code) return null;
+  try {
+    const snap = await getDocFromServer(doc(db, 'results', 'class-' + code));
+    if (!snap.exists()) return { exists: false, prev: '', group: '' };
+    const v = snap.data() || {};
+    return { exists: true, prev: typeof v.prev === 'string' ? v.prev : '', group: typeof v.group === 'string' ? v.group : '' };
+  } catch (e) { taReportDbError(e); return null; }
 };
 // A step's results as a link (teacher, 2026-11-12): record `share-<token>` = the step's table for one group (names, bands, the
 // writings with their text) — results-link.html?r=<token> reads it, so students see the table and tap a writing band for its AI
@@ -559,11 +575,16 @@ function rsDeriveHwc() {
   if (!hwcCode) return;
   const records = rsByCode(hwcCode).filter(v => v && v.type === 'HWC_PROGRESS');
   const byStudent = {};
+  // a student whose ID was changed (✎ on the Students page) is one row: their records under an old ID count too
+  const idx = typeof window.taRosterIndex === 'function' ? window.taRosterIndex() : null;
+  const rosterOf = id => (idx && window.rosterStudentForId ? window.rosterStudentForId(id, idx) : null);
   records.forEach(r => {
-    const key = r.studentId;
+    const st = rosterOf(r.studentId);
+    const key = st ? 'roster:' + String(st.id) : r.studentId;
     if (!byStudent[key]) {
       byStudent[key] = {
-        studentId: r.studentId, studentName: r.name, totalCount: r.totalCount,
+        studentId: st ? st.id : r.studentId, studentName: r.name, totalCount: r.totalCount,
+        ids: st && window.taStudentIds ? new Set(window.taStudentIds(st).map(x => x.toLowerCase())) : null,
         completedFlags: new Array(r.totalCount).fill(false),
         roundLabels: new Array(r.totalCount).fill(''),
         roundCodes: new Array(r.totalCount).fill(''),
@@ -592,7 +613,7 @@ function rsDeriveHwc() {
     for (let i = 0; i < entry.totalCount; i++) {
       if (entry.completedFlags[i] || !codeAt[i]) continue;
       const answer = rsByCode(codeAt[i]).find(v => v && typeof v.type === 'string' && v.type !== 'HWC_PROGRESS' && v.type.indexOf('POINTS:') !== 0 &&
-        ((entry.studentId && norm(v.studentId) === norm(entry.studentId)) || (!v.studentId && norm(v.name) === norm(entry.studentName))));
+        ((entry.studentId && (norm(v.studentId) === norm(entry.studentId) || (entry.ids && entry.ids.has(norm(v.studentId))))) || (!v.studentId && norm(v.name) === norm(entry.studentName))));
       if (!answer) continue;
       entry.completedFlags[i] = true;
       entry.roundCodes[i] = codeAt[i];
@@ -642,7 +663,10 @@ window.taFindResultByCodeAndName = async function (code, studentName, studentId)
     await rsEnsureCodes([code]);
     const docs = rsByCode(code).filter(v => v && typeof v.type === 'string' && v.type.indexOf('POINTS:') !== 0);
     const norm = x => String(x || '').trim().toLowerCase();
+    // the student's old IDs too (✎ on the Students page can change an ID)
+    const ids = studentId && typeof window.taSameStudentIds === 'function' ? window.taSameStudentIds(studentId) : new Set([norm(studentId)]);
     let matches = studentId ? docs.filter(v => norm(v.studentId) === norm(studentId)) : [];
+    if (!matches.length && studentId) matches = docs.filter(v => v.studentId && ids.has(norm(v.studentId)));
     if (!matches.length) matches = docs.filter(v => norm(v.name) === norm(studentName));
     if (!matches.length && studentId) matches = docs.filter(v => norm(v.name) === norm(studentId));
     if (!matches.length) return null;
@@ -696,7 +720,9 @@ window.deleteAllPointsForBoard = async function (boardCode) {
 
     if (window.renderPointsBoard) window.renderPointsBoard();
     if (window.renderDashboard) window.renderDashboard();
-    return { ok: true, count: toReset.length };
+    // the students set to 0 (a student whose ID was changed has records under each of their IDs)
+    const who = new Set(toReset.map(id => { const st = window.rosterStudentForId ? window.rosterStudentForId(id) : null; return st ? 'roster:' + st.id : 'id:' + id; }));
+    return { ok: true, count: who.size };
   } catch (e) {
     console.error('Failed resetting points for board', boardCode, e);
     return { ok: false, count: 0 };

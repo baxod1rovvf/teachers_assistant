@@ -164,33 +164,67 @@ function moveStudentToGroup(studentId, groupId) {
   refreshRosterViews();
 }
 
-// ✎ next to a student: their name and group (the ID stays the same).
+// ✎ next to a student: their name, ID and group (a changed ID is kept in oldIds — studentIdChange).
 function renameRosterStudent(studentId) {
   const st = getPointsRoster().find(s => s.id === studentId);
   if (!st) return;
   const groups = getStudentGroups();
   const m = taModal('✎ ' + st.name,
     '<label class="field-label">Name</label><input type="text" class="stu-edit-name">' +
+    '<label class="field-label" style="margin-top:14px;">ID</label><input type="text" class="stu-edit-id" autocomplete="off">' +
     '<label class="field-label" style="margin-top:14px;">Group</label>' +
     '<select class="stu-edit-group">' + groups.map(g => '<option value="' + escapeForHtml(g.id) + '">' + escapeForHtml(g.name) + '</option>').join('') +
       (groups.some(g => g.id === st.group) ? '' : '<option value="">Not in a group</option>') + '</select>' +
-    '<p class="ta-modal-text" style="margin-top:12px;">ID <b>' + escapeForHtml(st.id) + '</b> stays the same, and so do the points.</p>' +
     '<div class="ta-modal-btns"><button type="button" class="mini-btn" data-act="cancel">Cancel</button><button type="button" class="mini-btn solid" data-act="ok">Save</button></div>');
-  const nameEl = m.body.querySelector('.stu-edit-name'), groupEl = m.body.querySelector('.stu-edit-group');
+  const nameEl = m.body.querySelector('.stu-edit-name'), groupEl = m.body.querySelector('.stu-edit-group'), idEl = m.body.querySelector('.stu-edit-id');
   nameEl.value = st.name;
+  idEl.value = st.id;
   groupEl.value = groups.some(g => g.id === st.group) ? st.group : '';
   const save = () => {
     const clean = nameEl.value.trim();
     if (!clean) { showToast('Name can\'t be empty.'); nameEl.focus(); return; }
-    savePointsRoster(getPointsRoster().map(s => s.id === studentId ? Object.assign({}, s, { name: clean, group: groupEl.value }) : s));
+    const roster = getPointsRoster(), cur = roster.find(s => s.id === studentId);
+    if (!cur) { m.close(); return; }
+    const newId = idEl.value.trim();
+    if (!newId) { showToast('ID can\'t be empty.'); idEl.focus(); return; }
+    const idChanged = newId !== String(cur.id);
+    if (idChanged) {
+      // another student's ID — now or before — would mix up whose results and points they are
+      const clash = taRosterIdOwner(newId, cur, roster);
+      if (clash) { showToast('That ID is already used by ' + clash.name + '. Each student needs a unique ID.'); idEl.focus(); return; }
+    }
+    savePointsRoster(roster.map(s => {
+      if (s.id !== studentId) return s;
+      const next = Object.assign({}, s, { name: clean, group: groupEl.value });
+      if (idChanged) Object.assign(next, studentIdChange(s, newId));
+      return next;
+    }));
+    if (idChanged) studentMovePunishMarks(cur.id, newId);
     m.close();
     refreshRosterViews();
   };
   nameEl.addEventListener('keydown', e => { if (e.key === 'Enter') save(); });
+  idEl.addEventListener('keydown', e => { if (e.key === 'Enter') save(); });
   m.body.querySelector('[data-act="cancel"]').onclick = m.close;
   m.body.querySelector('[data-act="ok"]').onclick = save;
   setTimeout(() => { nameEl.focus(); nameEl.select(); }, 30);
   return m;
+}
+/* A changed ID (2026-11-18): the old one is kept in `oldIds`, so results, points and links sent with it still belong to the
+   student (taRosterIndex, pointsTotalFor, the class lists). Going back to an old ID takes it out of oldIds. */
+function studentIdChange(st, newId) {
+  const oldId = String(st.id);
+  const same = (a, b) => String(a).trim().toLowerCase() === String(b).trim().toLowerCase();
+  const kept = (Array.isArray(st.oldIds) ? st.oldIds : []).concat([oldId])
+    .filter((x, i, all) => String(x).trim() && !same(x, newId) && all.findIndex(y => same(x, y)) === i);
+  return { id: newId, oldIds: kept };
+}
+/* "⚠️ Will be punished" marks are kept as "<code>|<id>": the student's marks follow the new ID */
+function studentMovePunishMarks(oldId, newId) {
+  if (typeof taGetPunished !== 'function') return;
+  const tail = '|' + String(oldId).trim().toLowerCase(), list = taGetPunished();
+  const add = list.filter(k => k.slice(-tail.length) === tail).map(k => taPunishKey(k.slice(0, -tail.length), newId)).filter(k => list.indexOf(k) === -1);
+  if (add.length) try { localStorage.setItem(LS_PUNISHED, JSON.stringify(list.concat(add).slice(-3000))); } catch (e) { /* ignore */ }
 }
 function addPointsStudent() {
   const nameEl = document.getElementById('pt-student-name');
@@ -201,7 +235,7 @@ function addPointsStudent() {
   const group = studentsOpenGroup || (groupEl ? groupEl.value : '') || ((getStudentGroups()[0] || {}).id || '');
   if (!name || !id) { showToast('Enter both a name and an ID.'); return; }
   const roster = getPointsRoster();
-  const clash = roster.find(s => String(s.id).trim().toLowerCase() === id.toLowerCase());
+  const clash = taRosterIdOwner(id, null, roster);   // a student's ID now, or one they had before
   if (clash) { showToast('That ID is already used by ' + clash.name + '. Each student needs a unique ID.'); return; }
   roster.push({ name, id, group });
   savePointsRoster(roster);
@@ -325,7 +359,7 @@ function renderStudentsList() {
         b.students.map(s =>
           '<div class="roster-row sp-row" data-student-id="' + escapeForHtml(String(s.id)) + '">' +
             '<span class="sp-name"><strong translate="no">' + escapeForHtml(s.name) + '</strong>' +
-              '<button class="sp-icon-btn" type="button" title="Change name or group" aria-label="Change name or group" onclick="renameRosterStudent(' + jsAttr(s.id) + ')">✎</button>' +
+              '<button class="sp-icon-btn" type="button" title="Change name, ID or group" aria-label="Change name, ID or group" onclick="renameRosterStudent(' + jsAttr(s.id) + ')">✎</button>' +
               '<button class="sp-icon-btn danger" type="button" title="Delete student" aria-label="Delete student" onclick="removePointsStudent(' + jsAttr(s.id) + ')">🗑</button>' +
               '<span class="sp-id" title="ID">' + escapeForHtml(s.id) + '</span></span>' +
             '<span class="points-cell">' +
@@ -419,7 +453,7 @@ function parseStudentLines(text) {
 // Works out what adding these lines would do, without adding anything.
 function planBulkStudents(lines) {
   const roster = getPointsRoster();
-  const taken = new Set(roster.map(s => String(s.id).trim().toLowerCase()));
+  const taken = new Set([].concat(...roster.map(s => taStudentIds(s).map(x => x.toLowerCase()))));   // old IDs too (✎ can change one)
   let next = 101;
   roster.forEach(s => { const n = parseInt(s.id, 10); if (String(n) === String(s.id).trim() && n >= next) next = n + 1; });
   lines.forEach(l => { const n = parseInt(l.id, 10); if (String(n) === l.id && n >= next) next = n + 1; });
@@ -427,7 +461,7 @@ function planBulkStudents(lines) {
     if (l.id) {
       const key = l.id.toLowerCase();
       if (taken.has(key)) {
-        const who = roster.find(s => String(s.id).trim().toLowerCase() === key);
+        const who = roster.find(s => taStudentIds(s).some(x => x.toLowerCase() === key));
         return { name: l.name, id: l.id, skip: who ? 'ID already used by ' + who.name : 'ID repeated in this list' };
       }
       taken.add(key);

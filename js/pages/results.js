@@ -86,8 +86,9 @@ function renderHwcResultsList() {
   const norm = x => String(x || '').trim().toLowerCase();
   const answersFor = d => {
     const codes = new Set((d.roundCodes || []).filter(Boolean));
+    const ids = d.studentId ? taSameStudentIds(d.studentId, rosterIdx) : new Set();   // their old IDs too
     return (window.__allResults || []).filter(r => r && codes.has(r.code) &&
-      ((d.studentId && norm(r.studentId) === norm(d.studentId)) || norm(r.name) === norm(d.studentName) || (d.studentId && norm(r.name) === norm(d.studentId))));
+      ((d.studentId && (norm(r.studentId) === norm(d.studentId) || ids.has(norm(r.studentId)))) || norm(r.name) === norm(d.studentName) || (d.studentId && norm(r.name) === norm(d.studentId))));
   };
   const checkedSet = new Set(getCheckedCompletions());
   // rounds a student hasn't done yet have no progress record: their names come from the set itself

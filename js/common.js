@@ -755,7 +755,48 @@ function getPointsRoster() {
 function savePointsRoster(list) {
   try { localStorage.setItem(LS_POINTS_ROSTER, JSON.stringify(list)); } catch (e) { /* ignore */ }
   if (typeof window.grRefreshLists === 'function') window.grRefreshLists();   // the Grammar class lists follow the roster
+  if (typeof window.skRefreshLists === 'function') window.skRefreshLists();   // …and the Skills Course ones
 }
+/* A student's IDs (2026-11-18: the teacher can change an ID with ✎ on the Students page). The roster entry keeps the IDs it
+   had before in `oldIds`, so results, points and links sent with an old ID still belong to the student. Current ID first. */
+function taStudentIds(st) {
+  if (!st) return [];
+  const out = [], seen = new Set();
+  [st.id].concat(Array.isArray(st.oldIds) ? st.oldIds : []).forEach(v => {
+    const s = String(v == null ? '' : v).trim(), k = s.toLowerCase();
+    if (s && !seen.has(k)) { seen.add(k); out.push(s); }
+  });
+  return out;
+}
+/* Is this one of the student's IDs (now or before)? Compared like taRosterIndex: exact (any case), else taIdKey. */
+function taStudentHasId(st, id) {
+  const want = String(id == null ? '' : id).trim().toLowerCase(), key = taIdKey(id);
+  if (!want) return false;
+  return taStudentIds(st).some(x => x.toLowerCase() === want || (key && taIdKey(x) === key));
+}
+/* The roster student who has (or had) this ID, other than `except` — for refusing an ID that is already used. */
+function taRosterIdOwner(id, except, roster) {
+  return (roster || getPointsRoster()).find(s => s && !(except && s.id === except.id) && taStudentHasId(s, id)) || null;
+}
+/* Every ID (lower-case) that means the same student as this one: the roster student's IDs, else just this one. */
+function taSameStudentIds(id, idx) {
+  const st = rosterStudentForId(id, idx);
+  return new Set((st ? taStudentIds(st) : [id]).map(x => String(x == null ? '' : x).trim().toLowerCase()).filter(Boolean));
+}
+/* The class list as it goes online (Grammar and the Skills Course): one entry per ID, so a student can start with an old ID too. */
+function taClassListEntries(students) {
+  const out = [];
+  (students || []).forEach(s => taStudentIds(s).forEach(id => {
+    const e = { id: id, name: s.name };
+    if (s.groupName !== undefined) e.groupName = s.groupName;
+    out.push(e);
+  }));
+  return out;
+}
+window.taStudentIds = taStudentIds;
+window.taStudentHasId = taStudentHasId;
+window.taSameStudentIds = taSameStudentIds;
+window.taClassListEntries = taClassListEntries;
 function rosterNameFor(id) {
   const r = getPointsRoster().find(s => s.id === id);
   return r ? r.name : null;
@@ -779,6 +820,7 @@ function getStudentGroups() {
 function saveStudentGroups(list) {
   try { localStorage.setItem(LS_STUDENT_GROUPS, JSON.stringify(list)); } catch (e) { /* ignore */ }
   if (typeof window.grRefreshLists === 'function') window.grRefreshLists();   // the Grammar class lists follow the roster
+  if (typeof window.skRefreshLists === 'function') window.skRefreshLists();   // …and the Skills Course ones
 }
 function groupNameFor(groupId) {
   const g = getStudentGroups().find(x => x.id === groupId);
@@ -836,7 +878,14 @@ function removePointsStudent(id) {
   showUndoToast('Removed ' + st.name + ' (ID ' + st.id + ').', function () {
     const now = getPointsRoster();
     if (now.some(s => s.id === st.id)) return;
-    now.splice(Math.min(at, now.length), 0, st);
+    // an old ID given to someone else meanwhile is theirs now (else both students' points would add it up)
+    let back = st;
+    if (Array.isArray(st.oldIds)) {
+      const keep = st.oldIds.filter(o => !taRosterIdOwner(o, st, now));
+      back = Object.assign({}, st);
+      if (keep.length) back.oldIds = keep; else delete back.oldIds;
+    }
+    now.splice(Math.min(at, now.length), 0, back);
     savePointsRoster(now);
     refreshRosterViews();
     showToast(st.name + ' is back.', 'ok');
@@ -851,12 +900,19 @@ function removePointsStudent(id) {
 /* taIdKey (how an ID is compared) lives in js/skill-bands.js — the student page uses it too. */
 function taRosterIndex() {
   const byId = {}, byName = {};
-  getPointsRoster().forEach(s => {
+  const roster = getPointsRoster();
+  roster.forEach(s => {
     byId[String(s.id).trim().toLowerCase()] = s;
     const k = taIdKey(s.id);
     if (k && !byId[k]) byId[k] = s;
     byName[String(s.name).trim().toLowerCase().replace(/\s+/g, ' ')] = s;
   });
+  // IDs a student had before (✎ changed it): their old results and points are still theirs — never over another student's current ID
+  roster.forEach(s => (Array.isArray(s.oldIds) ? s.oldIds : []).forEach(o => {
+    const a = String(o == null ? '' : o).trim().toLowerCase(), k = taIdKey(o);
+    if (a && !byId[a]) byId[a] = s;
+    if (k && !byId[k]) byId[k] = s;
+  }));
   return { byId: byId, byName: byName };
 }
 function rosterStudentForId(id, idx) {
@@ -911,12 +967,26 @@ window.rosterStudentForResult = rosterStudentForResult;
 try { assignLooseStudentsToFirstGroup(); } catch (e) { /* ignore */ }
 window.rosterStudentForId = rosterStudentForId;
 
+/* A student's points records: those under their ID now and under every ID they had before (oldIds).
+   New points always go under the current ID; Reset All Points zeroes each ID's records, so the sum is 0 too. */
+let taLedgerIdsMemo = { raw: null, map: null };
+function taPointsIdsFor(id) {
+  let raw = null;
+  try { raw = localStorage.getItem(LS_POINTS_ROSTER); } catch (e) { raw = null; }
+  if (raw !== taLedgerIdsMemo.raw || !taLedgerIdsMemo.map) {
+    const map = {};
+    getPointsRoster().forEach(s => { if (s) map[String(s.id).trim().toLowerCase()] = new Set(taStudentIds(s).map(x => x.toLowerCase())); });
+    taLedgerIdsMemo = { raw: raw, map: map };
+  }
+  const key = String(id == null ? '' : id).trim().toLowerCase();
+  return taLedgerIdsMemo.map[key] || new Set([key]);
+}
+function taPointsEntriesFor(id) {
+  const keys = taPointsIdsFor(id);
+  return (window.__pointsLedger || []).filter(e => e && e.studentId && keys.has(String(e.studentId).trim().toLowerCase()));
+}
 function pointsTotalFor(id) {
-  const entries = window.__pointsLedger || [];
-  let total = 0;
-  const key = String(id).trim().toLowerCase();
-  entries.forEach(e => { if (e && e.studentId && String(e.studentId).trim().toLowerCase() === key) total += (e.points || 0); });
-  return total;
+  return taPointsEntriesFor(id).reduce((a, e) => a + (e.points || 0), 0);
 }
 
 /* ================= TEACHER NAME (for bonus labels) ================= */
@@ -1804,9 +1874,17 @@ function skAiSave(add) {
   skAiMemo = store;
   return true;
 }
+let taStoreRefreshTimer = 0;
 window.taStoreChanged = function (key) {
   if (key === LS_SKILLS_AI) skAiForget();
-  if (/(^|::)(ta_points_roster|ta_student_groups)$/.test(String(key || '')) && typeof window.grRefreshLists === 'function') window.grRefreshLists();   // the Grammar class lists follow the roster
+  if (/(^|::)(ta_points_roster|ta_student_groups)$/.test(String(key || ''))) {   // the class lists (Grammar, Skills Course) follow the roster
+    // a little later, so the rest of a sync merge (ta_skills_links, ta_grammar_links) lands first — one timer
+    clearTimeout(taStoreRefreshTimer);
+    taStoreRefreshTimer = setTimeout(() => {
+      if (typeof window.grRefreshLists === 'function') window.grRefreshLists();
+      if (typeof window.skRefreshLists === 'function') window.skRefreshLists();
+    }, window.__taStoreRefreshMs !== undefined ? window.__taStoreRefreshMs : 3000);
+  }
 };
 window.addEventListener('storage', e => { if (!e.key || /(^|::)ta_skills_ai$/.test(e.key)) skAiForget(); });
 /* the feedback of a writing: its own (old results), else kept by the result's database id, else under the old "<code>|<id>" key */
@@ -3778,7 +3856,7 @@ function taQuickSearchItems() {
   });
   getPointsRoster().forEach(s => {
     const gName = groupNameFor(s.group);
-    items.push({ icon: '🧑‍🎓', label: s.name, mine: true, kind: 'Student · ID ' + s.id + (gName ? ' · ' + gName : ''), extra: String(s.id),
+    items.push({ icon: '🧑‍🎓', label: s.name, mine: true, kind: 'Student · ID ' + s.id + (gName ? ' · ' + gName : ''), extra: taStudentIds(s).join(' '),
       go: () => taRunOnPage('students.html', () => {
         openStudentGroup(getRosterByGroup().some(b => b.id === s.group) ? s.group : '');
         const row = document.querySelector('.roster-row[data-student-id="' + CSS.escape(String(s.id)) + '"]');
