@@ -164,8 +164,11 @@
   var ready = false;     // true once the first cloud check has been merged (or we're offline)
   var syncing = false;   // sync is running on this device (a key) — while it isn't, nothing waits for it
   /* sync is ready: the class lists (Skills Course, Grammar) may follow the Students list now — before, it could be an old copy */
-  function setReady() {
+  function setReady(later) {
     ready = true;
+    if (!later) runRefreshers();
+  }
+  function runRefreshers() {
     try { if (window.skRefreshLists) window.skRefreshLists(); if (window.grRefreshLists) window.grRefreshLists(); } catch (e) { /* ignore */ }
   }
   var dirty = {};
@@ -430,7 +433,7 @@
   async function lightStart() {
     var docs = await lightRead();
     var changed = await merge(docs, true);
-    setReady();
+    setReady(true);   // the class lists follow after the reload decision (a page about to reload publishes nothing)
     await flush();
     var guard = Number(raw.sessionGet('ta_sync_reloaded_at')) || 0;
     if (changed && Date.now() - guard > 30000) {
@@ -438,6 +441,7 @@
       location.reload();
       return;
     }
+    runRefreshers();
     if (changed) refreshScreen();
     if (Object.keys(dirty).length) { if (!failures) flush(); } else if (!failures) setStatus('☁️ Synced', 'ok');
     var firstSig = true;
@@ -467,7 +471,7 @@
       var wasFirst = first; first = false;
       var changed = await merge(docs, wasFirst);
       if (wasFirst) {
-        setReady();
+        setReady(true);
         await flush();
         var guard = Number(raw.sessionGet('ta_sync_reloaded_at')) || 0;
         if (changed && Date.now() - guard > 30000) {
@@ -476,6 +480,7 @@
           location.reload();
           return;
         }
+        runRefreshers();
         if (changed) refreshScreen();
       } else if (changed) {
         refreshScreen();

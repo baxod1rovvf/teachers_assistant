@@ -349,30 +349,35 @@ test('the lists wait until sync has brought the Students list: nothing is publis
   await expect.poll(async () => (await classList(page, 'GRM111')).h.length).toBe(7);
 });
 
-test('putting a list online again changes only the students: a link with no "earlier part" stays without one, a cross-skill one keeps its own', async ({ page, context }) => {
+test('putting a list online again never changes its "earlier part": none stays none, a cross-skill one keeps its own; the group name is the current one', async ({ page, context }) => {
   const cross = '{"skill":"listening","stepNo":2,"codes":["LST102"]}';   // copied 2026-11-12…16: Reading waited for Listening
   const links = { 'g1|listening|b3': { code: 'LST103', sentAt: nowIso() }, 'g1|reading|b2': { code: 'RDG102', sentAt: nowIso() },
     'g1|listening|b2': { code: 'LST102', sentAt: nowIso() } };
-  const docs = data.results(Date.now()).concat([classRec('LST103', { group: 'Old name' }), classRec('RDG102', { prev: cross, group: 'Target' }), classRec('LST102')]);
+  const docs = data.results(Date.now()).concat([classRec('LST103', { group: 'Target' }), classRec('RDG102', { prev: cross, group: 'Target' }), classRec('LST102')]);
   await prepare(context, { docs, storage: { ta_skills_links: JSON.stringify(links) } });
   const errors = watchErrors(page);
   await open(page, 'course.html');
   // put online once (no rosterSig yet), with what was online
   await expect.poll(() => page.evaluate(() => Object.values(JSON.parse(localStorage.getItem('ta_skills_links'))).every(e => e.rosterSig)), { timeout: 10000 }).toBe(true);
-  const check = async n => {
+  const check = async (n, group) => {
     const lst = await classList(page, 'LST103'), rdg = await classList(page, 'RDG102'), l2 = await classList(page, 'LST102');
-    expect(lst.h).toHaveLength(n); expect(lst.prev).toBeUndefined(); expect(lst.group).toBe('Old name');
-    expect(rdg.h).toHaveLength(n); expect(rdg.prev).toBe(cross); expect(rdg.group).toBe('Target');
-    expect(l2.prev).toBeUndefined(); expect(l2.group).toBeUndefined();
+    expect(lst.h).toHaveLength(n); expect(lst.prev).toBeUndefined(); expect(lst.group).toBe(group);
+    expect(rdg.h).toHaveLength(n); expect(rdg.prev).toBe(cross); expect(rdg.group).toBe(group);
+    expect(l2.prev).toBeUndefined(); expect(l2.h).toHaveLength(n);
   };
-  await check(3);
+  await check(3, 'Target');
   expect(await page.evaluate(() => { const l = JSON.parse(localStorage.getItem('ta_skills_links')); return [l['g1|listening|b3'].prevJson, l['g1|reading|b2'].prevJson]; })).toEqual(['', cross]);
-  // a roster change: the same prev and group again
+  // a roster change and the group renamed: the same prev, the group's new name
   const reads = await page.evaluate(() => window.__reads);
-  await page.evaluate(() => { window.__skRefreshMs = 0; savePointsRoster(getPointsRoster().map(s => s.id === '10001' ? Object.assign({}, s, { id: 'A-77', oldIds: ['10001'] }) : s)); });
+  await page.evaluate(() => {
+    window.__skRefreshMs = 0;
+    localStorage.setItem('ta_student_groups', JSON.stringify(getStudentGroups().map(g => g.id === 'g1' ? Object.assign({}, g, { name: 'Target B' }) : g)));
+    savePointsRoster(getPointsRoster().map(s => s.id === '10001' ? Object.assign({}, s, { id: 'A-77', oldIds: ['10001'] }) : s));
+  });
   await expect.poll(async () => (await classList(page, 'RDG102')).h.length).toBe(4);
   await expect.poll(async () => (await classList(page, 'LST103')).h.length).toBe(4);
-  await check(4);
+  await expect.poll(async () => (await classList(page, 'LST102')).h.length).toBe(4);
+  await check(4, 'Target B');
   expect(await page.evaluate(() => window.__reads)).toBe(reads);   // kept on the link: the records aren't read again
   expect(errors).toEqual([]);
 });
