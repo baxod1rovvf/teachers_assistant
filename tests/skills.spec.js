@@ -929,13 +929,13 @@ test.describe('course page', () => {
     expect(await squareStates(cards.nth(2))).toEqual(['on', ...rest]);
     await expect(cards.nth(1).locator('.sk-stepbox').nth(11)).toHaveAttribute('title', 'Step 12 · Future Plans — teach next');
     // ⭐ the students' average band: Target 7 and 4 → 5.5; Apex 4, 8, 6.5 (Gulya has none) → 6; Nexus none yet
-    await expect(cards.locator('.sk-stat').filter({ hasText: '⭐' })).toHaveText([/⭐\s*5\.5/, /⭐\s*6$/, /⭐\s*—/]);
+    await expect(cards.locator('.sk-stat').filter({ hasText: '⭐' })).toHaveText([/⭐\s*5\.5/, /⭐\s*5\.5/, /⭐\s*—/]);   // a sent part not done counts 0 (2026-11-19)
     // 🐢 behind: Target — Bobur (average 4); Apex — Farida (missed 4 parts, average 4) and Gulya (missed 5 parts)
     await expect(cards.locator('.sk-stat').filter({ hasText: /behind/i })).toHaveText([/🐢\s*1\s*behind/, /🐢\s*2\s*behind/, /Nobody behind/]);
     await expect(cards.locator('.sk-teach')).toHaveText(['▶ Teach STEP 1', '▶ Teach STEP 12', '▶ Teach STEP 1']);
     expect(await page.evaluate(() => { const s = skGroupStats(skGroup('g2'), skPathCtx(skGroup('g2'), skSteps().filter(skReady)));
       return s.students.map(x => [x.name, x.avg, x.did, x.missed, x.behind]); }))
-      .toEqual([['Farida Test', 4, 0, 4, true], ['Gulya Test', null, 0, 5, true], ['Dilya Test', 8, 1, 0, false], ['Eldor Test', 6.5, 1, 0, false]]);
+      .toEqual([['Farida Test', 1.5, 0, 4, true], ['Gulya Test', null, 0, 5, true], ['Dilya Test', 8, 1, 0, false], ['Eldor Test', 6.5, 1, 0, false]]);
     // the card (its name) opens the group's Journey; ← All groups comes back
     await cards.nth(2).locator('.sk-gcard-open').click();
     await expect(page.locator('.sk-ghead h3')).toHaveText('Nexus');
@@ -1080,11 +1080,11 @@ test.describe('course page', () => {
     const rows = page.locator('.sk-prow');
     await expect(rows.locator('.sk-prow-text b')).toHaveText(['Farida Test', 'Gulya Test', 'Dilya Test', 'Eldor Test']);
     await expect(rows.nth(0)).toHaveClass(/behind/);
-    await expect(rows.nth(0).locator('.sk-turtle')).toHaveAttribute('title', 'Missed 4 parts · Average 4');
+    await expect(rows.nth(0).locator('.sk-turtle')).toHaveAttribute('title', 'Missed 4 parts · Average 1.5');
     await expect(rows.nth(1).locator('.sk-turtle')).toHaveAttribute('title', 'Missed 5 parts');
     await expect(rows.nth(2).locator('.sk-turtle')).toHaveCount(0);
     await expect(rows.locator('.sk-prow-did')).toHaveText(['0 of 10 steps done', '0 of 10 steps done', '1 of 10 steps done', '1 of 10 steps done']);
-    await expect(rows.locator('.sk-prow-avg')).toHaveText(['⭐ 4', '⭐ —', '⭐ 8', '⭐ 6.5']);
+    await expect(rows.locator('.sk-prow-avg')).toHaveText(['⭐ 1.5', '⭐ —', '⭐ 8', '⭐ 6.5']);   // a sent part not done counts 0 (2026-11-19)
     const st = i => squareStates(rows.nth(i));
     const tail = ['-', '-', '-', '-', '-', '-', '-', '-'];
     expect(await st(0)).toEqual([...Array(10).fill('skipped'), 'b-low', '-', ...tail]);
@@ -1264,7 +1264,8 @@ test.describe('results', () => {
     await expect(table.locator('.sk-rt-chip')).toHaveText([/Listening/, /Reading/, /Writing/]);
     const rows = table.locator('.sk-rt-row');
     await expect(rows).toHaveCount(3);
-    await expect(rows.locator('.sk-rt-name')).toHaveText(['Alice Test', 'Bobur Test', 'Cora Test']);
+    // Bobur hasn't done the Writing that was sent: it counts 0 (teacher, 2026-11-19), so he is third
+    await expect(rows.locator('.sk-rt-name')).toHaveText(['Alice Test', 'Cora Test', 'Bobur Test']);
     await expect(rows.locator('.sk-rt-place')).toHaveText(['🥇', '🥈', '🥉']);
     // Alice: 9 · 9 · 7 → 8.5 C2 (band 8.5 is C2)
     const a = rows.nth(0);
@@ -1274,25 +1275,26 @@ test.describe('results', () => {
     await expect(a.locator('.sk-rt-cell').nth(2)).toContainText('54 words');
     await expect(a.locator('.sk-rt-overall')).toContainText('8.5');
     await expect(a.locator('.sk-rt-overall')).toContainText('C2');
-    // Bobur: best listening try 8/10 → 7.5; no writing
-    const b = rows.nth(1);
+    // Bobur: best listening try 8/10 → 7.5; the Writing that was sent isn't done → 0 · not done; overall (7.5 + 7.5 + 0) / 3 = 5
+    const b = rows.nth(2);
     await expect(b.locator('.sk-rt-cell').nth(0)).toContainText('8 / 10');
     await expect(b.locator('.sk-rt-cell').nth(0)).toContainText('7.5');
-    await expect(b.locator('.sk-rt-cell').nth(2)).toHaveText('—');
-    await expect(b.locator('.sk-rt-overall')).toContainText('7.5');
+    await expect(b.locator('.sk-rt-cell').nth(2)).toContainText('0');
+    await expect(b.locator('.sk-rt-cell').nth(2)).toContainText('not done');
+    await expect(b.locator('.sk-rt-overall')).toContainText('5');
     // Cora: the teacher's 6 replaces the estimate 8 → mid (yellow); overall 7 C1
-    const c = rows.nth(2);
+    const c = rows.nth(1);
     await expect(c.locator('.sk-rt-cell').nth(2)).toHaveClass(/mid/);
     await expect(c.locator('.sk-rt-cell').nth(2)).toContainText('6');
     await expect(c.locator('.sk-rt-overall')).toContainText('C1');
-    await expect(table.locator('.sk-rt-foot')).toContainText('Group average: 7.5');
+    await expect(table.locator('.sk-rt-foot')).toContainText('Group average: 7');
     await expect(table.locator('.sk-rt-foot')).toContainText('3 students');
     // ties share a place
     const tie = await page.evaluate(() => {
       localStorage.setItem('ta_skills_marks', JSON.stringify({ 'WRT001|10003': 7.5 }));
       return skTableRows('e1', 'g1').map(r => [r.name, r.place, r.overall, r.writing && r.writing.band]);
     });
-    expect(tie).toEqual([['Alice Test', 1, 8.5, 7], ['Bobur Test', 2, 7.5, null], ['Cora Test', 2, 7.5, 7.5]]);
+    expect(tie).toEqual([['Alice Test', 1, 8.5, 7], ['Cora Test', 2, 7.5, 7.5], ['Bobur Test', 3, 5, 0]]);
     // the picture
     const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: '⬇️ Download picture' }).click()]);
     expect(download.suggestedFilename()).toBe('step-11-target.png');
@@ -1331,7 +1333,7 @@ test.describe('results', () => {
       name: 'Bobur Test', studentId: '10002', correct: 10, total: 10, score: 100, answers: [], timeSeconds: 300, timeDisplay: '05:00', date: now, builtAt: before }), [before, now]);
     await expect.poll(() => page.evaluate(() => window.__allResults.filter(r => r.code === 'LSN001').length)).toBe(7);
     const r = await page.evaluate(() => ({
-      table: skTableRows('e1', 'g1').filter(x => x.listening).map(x => x.name),
+      table: skTableRows('e1', 'g1').filter(x => x.listening && !x.listening.missing).map(x => x.name),
       results: collectResults('LSN001').visible.map(x => x.name)
     }));
     expect(r.table).toEqual(['Alice Test']);

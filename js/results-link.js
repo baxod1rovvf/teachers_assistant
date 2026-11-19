@@ -46,8 +46,14 @@
   function rowsOut() {
     var rows = data.rows.map(function (r) {
       var wb = bandOf(r.writing);
-      var o = skOverall([r.listening ? r.listening.band : null, r.reading ? r.reading.band : null, wb]);
-      return { r: r, wb: wb, overall: o, cefr: o === null ? '' : skCefr(o) };
+      // a part whose link was sent counts 0 when not done (data.parts, since 2026-11-19; older links: the bands that are there)
+      var sentParts = Array.isArray(data.parts) ? data.parts : [];
+      var res = skStepOverall([
+        { sent: sentParts.indexOf('listening') !== -1, band: r.listening ? r.listening.band : null },
+        { sent: sentParts.indexOf('reading') !== -1, band: r.reading ? r.reading.band : null },
+        { sent: sentParts.indexOf('writing') !== -1, band: wb, pending: pending(r.writing) }]);
+      var o = res.overall;
+      return { r: r, wb: wb, overall: o, overallPending: res.pending, cefr: o === null ? '' : skCefr(o) };
     });
     rows.sort(function (a, b) { return ((b.overall || 0) - (a.overall || 0)) || String(a.r.name).localeCompare(String(b.r.name)); });
     rows.forEach(function (x) { x.place = 1 + rows.filter(function (o) { return (o.overall || 0) > (x.overall || 0); }).length; });
@@ -74,7 +80,7 @@
         '<span class="sk-rt-place' + (x.place <= 3 ? ' medal' : '') + '" aria-label="Place ' + x.place + '">' + (MEDALS[x.place - 1] || x.place) + '</span>' +
         '<span class="res-avatar" style="background:' + colour(x.r.name) + ';">' + esc(initials(x.r.name)) + '</span>' +
         '<span class="sk-rt-name" translate="no">' + esc(x.r.name) + '</span>' + cell(x.r.listening) + cell(x.r.reading) + wc +
-        (x.overall === null ? '<div class="sk-rt-overall none">—</div>' : '<div class="sk-rt-overall ' + skBandColour(x.overall) + '"><b>' + esc(x.overall) + '</b><small>' + x.cefr + '</small></div>') + '</div>';
+        (x.overallPending ? '<div class="sk-rt-overall pending"><b>⏳</b></div>' : x.overall === null ? '<div class="sk-rt-overall none">—</div>' : '<div class="sk-rt-overall ' + skBandColour(x.overall) + '"><b>' + esc(x.overall) + '</b><small>' + x.cefr + '</small></div>') + '</div>';
     }).join('');
     app.innerHTML = (waiting ? '<div class="rl-wait">⏳ Checking…<small>Some writings are still being checked by the AI. Their bands appear by themselves.</small></div>' : '') +
       '<div class="sk-rt">' + head + '<div class="sk-rt-scroll"><div class="sk-rt-grid"><div class="sk-rt-cols"><span>#</span><span></span><span>Student</span><span>🎧 Listening</span><span>📖 Reading</span><span>✍️ Writing</span><span>Overall</span></div>' + body + '</div></div>' +
