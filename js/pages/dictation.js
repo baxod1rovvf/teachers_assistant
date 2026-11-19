@@ -111,10 +111,18 @@ function dcPlay(id) {
   a.addEventListener('error', fail);
   a.addEventListener('ended', () => { if (dcAudio === a) dcStop(); });
   dcAudio = a; dcAudioId = id;
-  a.src = 'audio/dictation/' + encodeURIComponent(d.id) + '.mp3';
+  const sc = document.querySelector('script[src*="pages/dictation.js"]'), vm = sc && /[?&]v=([^&#]+)/.exec(sc.getAttribute('src') || '');
+  a.src = 'audio/dictation/' + encodeURIComponent(d.id) + '.mp3' + (vm ? '?v=' + vm[1] : '');
   dcPlayShow();
   const p = a.play();
   if (p && p.catch) p.catch(e => { if (!e || e.name !== 'AbortError') fail(); });
+}
+/* the teacher's audio stops when they leave the Course page (another section, back/forward, closing the tab) */
+window.addEventListener('pagehide', dcStop);
+window.addEventListener('popstate', dcStop);
+if (typeof window.taNavigate === 'function') {
+  const dcNav = window.taNavigate;
+  window.taNavigate = function () { dcStop(); return dcNav.apply(this, arguments); };
 }
 /* 📄 the full text, big enough to show the class */
 function dcTranscript(id) {
@@ -229,13 +237,15 @@ function dcViewResult(itemId, studentId) {
   const tries = k => k + (k === 1 ? ' try' : ' tries');
   const items = [];
   for (let i = 0; i < n; i++) {
+    const none = !sents[i];
     const s = sents[i] || {}, want = d.sentences[i] || '', t = Math.max(0, grNum(s.tries) || 0);
-    const cls = s.ok ? 'ok' : s.skipped ? 'skipped' : 'wrong';
-    const state = s.ok ? '✅ Right the first time'
+    const cls = none ? 'none' : s.ok ? 'ok' : s.skipped ? 'skipped' : 'wrong';
+    const state = none ? '— no answer' : s.ok ? '✅ Right the first time'
       : s.skipped ? '⏭ Skipped' + (t ? ' after ' + tries(t) : ' without trying')
       : '✏️ Right after ' + tries(Math.max(2, t));
     items.push('<li class="dct-sent ' + cls + '"><div class="dct-sent-head"><span class="dct-sent-no">' + (i + 1) + '</span><span class="dct-sent-state">' + state + '</span></div>' +
-      (s.ok ? '<p class="dct-right" translate="no">' + esc(want) + '</p>'
+      (none ? '<p class="dct-right" translate="no"><small>Right</small>' + esc(want) + '</p>'
+        : s.ok ? '<p class="dct-right" translate="no">' + esc(want) + '</p>'
         : '<p class="dct-first" translate="no"><small>First try</small>' + dcMarkedHtml(want, s.first) + '</p>' +
           '<p class="dct-right" translate="no"><small>Right</small>' + esc(want) + '</p>') + '</li>');
   }
@@ -264,6 +274,11 @@ function dcCopyLink(itemId) {
   if (!code) return;
   const url = taDictationLink(d.id, code);
   const students = grClassStudents(), sig = grRosterSig();
+  const kept = dcLinks()[d.id];
+  if (!students.length && kept && kept.rosterSig) {   // an empty list must never replace a full one online
+    showToast('Your Students list hasn\'t loaded yet — try again in a moment.');
+    return;
+  }
   if (typeof window.taPublishClassList === 'function') {
     window.taPublishClassList(code, students).then(ok => {
       if (!ok) { showToast('⚠️ The class list couldn\'t go online — students can still start without an ID check. Press Copy link again later.'); return; }

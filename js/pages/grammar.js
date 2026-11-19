@@ -341,6 +341,11 @@ function grCopyLink(lessonId) {
   if (!code) return;
   const url = taGrammarLink(l.id, code);
   const students = grClassStudents(), sig = grRosterSig();
+  const kept = grLinks()[l.id];
+  if (!students.length && kept && kept.rosterSig) {   // an empty list must never replace a full one online
+    showToast('Your Students list hasn\'t loaded yet — try again in a moment.');
+    return;
+  }
   if (typeof window.taPublishClassList === 'function') {
     window.taPublishClassList(code, students).then(ok => {
       if (!ok) { showToast('⚠️ The class list couldn\'t go online — students can still start without an ID check. Press Copy link again later.'); return; }

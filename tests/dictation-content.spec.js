@@ -67,3 +67,14 @@ test('dictation audio: a recorded passage has one file per sentence', () => {
     expect(fs.existsSync(path.join(dir, it.id + '-s' + (it.sentences.length + 1) + '.mp3')), it.id + ' has an extra file').toBe(false);
   });
 });
+
+// Controller enables this (DC_ALL_AUDIO=1, or removes the skip) once the recording has finished.
+test('dictation audio: all 100 dictations are recorded — dN.mp3 and one file per sentence', () => {
+  test.skip(!process.env.DC_ALL_AUDIO, 'all 100 dictations are recorded (set DC_ALL_AUDIO=1 once recording ends)');
+  const dir = path.join(ROOT, 'audio', 'dictation');
+  expect(all().length).toBe(100);
+  all().forEach(it => {
+    expect(fs.existsSync(path.join(dir, it.id + '.mp3')), it.id + '.mp3').toBe(true);
+    it.sentences.forEach((_, k) => expect(fs.existsSync(path.join(dir, it.id + '-s' + (k + 1) + '.mp3')), it.id + ' s' + (k + 1)).toBe(true));
+  });
+});

@@ -151,6 +151,7 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
     without losing anything: results, points and links sent with the old ID still count for the student (`oldIds`).
 17. **Reminders and notifications only work while the app is open** (no server to push them).
 22. **Listening voices for Steps 9–20 come from OmniVoice, whose model weights are licensed for non-commercial use only (CC-BY-NC).**
+    The 100 Dictation Journey recordings (`audio/dictation/`) use the same voice, so the same applies to them.
     If the course is sold or used commercially, check the licence — the recordings can be remade with Kokoro (Apache-2.0) instead.
 21. **Writings are checked by the AI helper (since 2026-11-12; the LanguageTool check is gone).** If the helper is down, Google's free
     daily limit is used up, or the Cloudflare setup (KV `loom-writings` + Cron) isn't done, writings **wait** (never lost) and
@@ -811,6 +812,22 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   savePointsRoster/saveStudentGroups, `taStoreChanged`, `storage`; 5 s debounce; retry after 30 s, 3 times). Tests: `tests/grammar-content.spec.js`,
   `grammar-player.spec.js`, `grammar-teacher.spec.js`.
   Raise a lesson's `v` in docs/grammar-journey.json whenever its questions change after links were sent (old drafts then start again). Grammar CSS for the teacher's side is scoped under `#courseWrap` (skill.html also loads css/style.css).
+- **Dictation Journey (teacher, 2026-11-19)**: a sixth part of the Course, under the Grammar Journey (`js/pages/dictation.js`; 5 levels × 20 dictations, d1–d100, 416 sentences).
+  Source `docs/dictation-journey.md` → `node tools/build-dictations.js` → `js/dictation-data.js` (`TA_DICTATION`) — never edit it by hand. Sentences are split the way
+  `tools/make-dictation-audio.py` splits them (keep the two in step; `tests/dictation-content.spec.js` compares them). Audio: `audio/dictation/dN-s<k>.mp3` (one per sentence) +
+  `dN.mp3` (the whole passage, the teacher's ▶ Play), made by `tools/make-dictation-audio.py` with OmniVoice "Energetic Male" (instruct "male, young adult, high pitch", seed 4,
+  speed 0.9, 1.2 s gaps; numbers said in words by `spoken()`; each clip checked with Whisper). The student page is `skill.html?s=dictation&dl=dN&c=<code>` (`js/dictation-player.js`, same ID
+  check + "Bu sizmi"): one sentence at a time plays by itself, ▶ Play again / 🐢 slower, the student types, Check marks mistakes and can try again, or skips; `DC.prime` unlocks the audio on
+  iPhone inside the "Ha" tap; `DC_SHOW_ANSWER` switches showing the right sentence after a wrong try; on phones the marks sit above the keyboard. Checker `js/dictation-check.js`
+  `dcCheck`: words only (case, punctuation, spacing don't matter); numbers either way ("13" = "thirteen"); ordinals and cardinals stay different outside dates; "o'clock" is required when the
+  student writes it; Doctor = Dr, Mister = Mr; joined hyphen words ("well known" = "well-known"). **Only the first run is sent** (`type: 'Dictation course'`, `code, name, studentId, skill 'dictation',
+  dictation, dictationNo, level, title, sentences[{first, tries, skipped, ok}], total, correctFirst, score, skips, timeSeconds, timeDisplay, date, builtAt`); progress is kept on the phone
+  until the save is confirmed, like the other course exercises. Teacher: one permanent link per dictation for every group, `ta_dictation_links = { <dN>: { code, sentAt, rosterSig } }`
+  (synced, in the backup; firebase.js loads its codes); the dictation's page has a group filter, a results table (first run; a row shows what the student wrote, marked), "🚫 Not finished" +
+  "📋 Copy list", "❓ Not on your Students list". The class lists follow the Students list through the Grammar refresher (`jrMakeRefresher` in grammar.js, shared `jr*` helpers); Copy link
+  with an empty Students list never publishes over a list already online (also Grammar's). The teacher's ▶ stops when she leaves the page. **Changing a passage's text after links were sent
+  re-marks old answers against the new text** (results keep no per-item version). Tests: `dictation-content`, `dictation-check`, `dictation-player`, `dictation-teacher` (`.spec.js`);
+  the "all 100 recorded" test runs with `DC_ALL_AUDIO=1`.
 - **Speaking Journey (teacher, 2026-11-09)**: **Speaking** follows the teacher's "Speaking Journey" (20 topics: 1 Daily Routine,
   2 Family, 3 Home & Living, 4 Food & Meals, 5 Free Time, 6 Friends, 7 School & Education, 8 Hobbies & Sports, 9 Shopping, 10 Your City,
   11 Holidays, 12 Future Plans, 13 Jobs & Careers, 14 Clothes & Fashion, 15 Transport, 16 Animals & Pets, 17 Health & Lifestyle,

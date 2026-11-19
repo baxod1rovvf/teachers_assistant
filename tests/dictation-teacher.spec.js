@@ -236,3 +236,42 @@ test('ta_dictation_links is synced and in the backup', async ({ page, context })
   expect(src[0]).toMatch(/'ta_dictation_links'/);
   expect(src[1]).toMatch(/TA_BACKUP_KEYS[^;]*'ta_dictation_links'/);
 });
+
+test('a sentence with no record shows "— no answer", not "Right after 2 tries"', async ({ page, context }) => {
+  const r = res(1, '10001', 'Alice Test', 60, 300);
+  r.sentences = r.sentences.slice(0, 5); r.total = 7;
+  const errors = await openCourse(page, context, { docs: [r], links: LINKS });
+  await openLevel(page);
+  await page.locator('.dct-item[data-item="d1"] .gr-lesson-open').click();
+  await page.locator('.dct-open').first().click();
+  const last = page.locator('.ta-modal .dct-sent').nth(6);
+  await expect(last).toContainText('no answer');
+  await expect(last).not.toContainText('Right after');
+  expect(errors).toEqual([]);
+});
+
+test('Copy link with an empty Students list does not publish over a list that is already online', async ({ page, context }) => {
+  const links = { d1: { code: 'DCT111', sentAt: iso(60), rosterSig: 'x|y|z' } };
+  const errors = await openCourse(page, context, { links, roster: [] });
+  await openLevel(page);
+  await page.evaluate(() => { window.__writes.length = 0; window.__deletes.length = 0; });
+  await page.locator('.dct-item[data-item="d1"]').getByRole('button', { name: '🔗 Copy link' }).click();
+  await expect(page.getByText('Your Students list hasn\'t loaded yet').first()).toBeVisible();
+  await page.waitForTimeout(500);
+  expect(await page.evaluate(() => window.__writes.filter(w => /^class-/.test(w.id)).length)).toBe(0);
+  expect(await page.evaluate(() => window.__deletes.filter(i => /^class-/.test(i)).length)).toBe(0);
+  expect(errors).toEqual([]);
+});
+
+test('the teacher\'s audio carries the page\'s ?v= stamp and stops when the teacher leaves the page', async ({ page, context }) => {
+  const errors = await openCourse(page, context);
+  await openLevel(page);
+  await page.evaluate(() => { window.__srcs = []; const P = HTMLMediaElement.prototype; P.play = function () { window.__srcs.push(this.src); return Promise.resolve(); }; });
+  await page.locator('.dct-item[data-item="d1"]').getByRole('button', { name: '▶ Play' }).click();
+  await expect.poll(() => page.evaluate(() => window.__srcs.length)).toBe(1);
+  expect(await page.evaluate(() => window.__srcs[0])).toMatch(/audio\/dictation\/d1\.mp3\?v=\w+$/);
+  await expect(page.locator('.dct-item[data-item="d1"]').getByRole('button', { name: '⏸ Stop' })).toBeVisible();
+  await page.evaluate(() => { window.taNavigate('index.html'); });
+  await expect(page.locator('[data-dc-play]').first()).toHaveText('▶ Play');
+  expect(errors).toEqual([]);
+});

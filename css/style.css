@@ -3675,6 +3675,7 @@ body.loom-studio.loom-air .login-stage { background: rgba(255,255,255,0.72) !imp
 .ta-modal .dct-sent { padding: 10px 12px; border-radius: 14px; border: 1px solid var(--border); border-left: 4px solid var(--air-moss, var(--c-green)); background: rgba(255,255,255,0.7); }
 .ta-modal .dct-sent.wrong { border-left-color: #D69E2E; }
 .ta-modal .dct-sent.skipped { border-left-color: var(--air-red, var(--c-red)); }
+.ta-modal .dct-sent.none { border-left-color: var(--border); }
 .ta-modal .dct-sent-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-size: .85rem; font-weight: 700; color: var(--ink-soft); }
 .ta-modal .dct-sent-no { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: rgba(20,24,31,0.07); color: var(--ink); font-size: .8rem; }
 .ta-modal .dct-first, .ta-modal .dct-right { margin: 4px 0 0; line-height: 1.6; color: var(--ink); overflow-wrap: anywhere; }
