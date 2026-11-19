@@ -205,9 +205,16 @@ function skGroupStats(g, ctx) {
       if (isNaN(at) || at <= due) sent.push([x.st.id, k]);
     });
   });
+  // per step, the graded parts whose link was sent to this group (a part not done counts 0 in the step's Overall)
+  const sentByStep = {};
+  steps.forEach(x => { if (x.ready) sentByStep[x.st.id] = x.graded.filter(k => skCodesFor(k, x.st.id, g, links).length); });
   students.forEach(s => {
     s.bands = {};
-    Object.keys(s.steps).forEach(id => { s.bands[id] = skOverall(SK_TABLE_SKILLS.map(k => s.steps[id][k])); });
+    Object.keys(s.steps).forEach(id => {
+      const cell = s.steps[id], sentParts = sentByStep[id] || [];
+      s.bands[id] = skStepOverall(SK_TABLE_SKILLS.map(k => ({ sent: sentParts.indexOf(k) !== -1,
+        band: typeof cell[k] === 'number' ? cell[k] : null, pending: k in cell && cell[k] === null }))).overall;
+    });
     const have = Object.keys(s.bands).map(id => s.bands[id]).filter(b => typeof b === 'number');
     s.avg = skOverall(have);
     s.did = counted.filter(x => s.steps[x.st.id] && x.graded.every(k => k in s.steps[x.st.id])).length;
@@ -724,10 +731,18 @@ function skTableRows(step, groupId, resultsMap, links) {
       }
     });
   });
+  // a part whose link was sent and that the student hasn't done counts 0 in Overall (teacher, 2026-11-19) and shows 0 · "not done"
+  const sent = codes.map(c => c.length > 0);
   const rows = Object.keys(students).map(k => {
     const row = students[k];
-    SK_TABLE_SKILLS.forEach(s => { if (row[s]) delete row[s].date; });
-    row.overall = skOverall(SK_TABLE_SKILLS.map(s => row[s] && typeof row[s].band === 'number' ? row[s].band : null));
+    SK_TABLE_SKILLS.forEach((s, i) => {
+      if (row[s]) delete row[s].date;
+      else if (sent[i]) row[s] = { band: 0, raw: 'not done', missing: true };
+    });
+    const o = skStepOverall(SK_TABLE_SKILLS.map((s, i) => ({ sent: sent[i], band: row[s] && typeof row[s].band === 'number' ? row[s].band : null,
+      pending: !!(row[s] && row[s].pending) })));
+    row.overall = o.overall;
+    if (o.pending) row.overallPending = true;
     row.cefr = row.overall === null ? '' : skCefr(row.overall);
     return row;
   });
@@ -767,7 +782,8 @@ function skTableHtml(rows, meta, opts) {
         '<span class="res-avatar" style="background:' + avatarColorForName(r.name) + ';">' + esc(initialsForName(r.name)) + '</span>' +
         '<span class="sk-rt-name" translate="no">' + esc(r.name) + '</span>' +
         SK_TABLE_SKILLS.map(k => k === 'writing' ? wcell(r, i) : cell(r[k], 'sk-rt-cell')).join('') +
-        (r.overall === null ? '<div class="sk-rt-overall none">—</div>'
+        (r.overallPending ? '<div class="sk-rt-overall pending" title="Waiting for the AI to check the writing"><b>⏳</b></div>'
+          : r.overall === null ? '<div class="sk-rt-overall none">—</div>'
           : '<div class="sk-rt-overall ' + skBandColour(r.overall) + '"><b>' + r.overall + '</b><small>' + r.cefr + '</small></div>') +
       '</div>').join('') +
     '</div></div>' +
@@ -792,7 +808,8 @@ function skShareData(step, g) {
   const lv = skStep(step), ctx = skPathCtx(g, [lv]);
   const rows = skTableRows(lv.id, g.id, ctx.map, ctx.links);
   const part = v => v && typeof v.band === 'number' ? { band: v.band, raw: v.raw } : null;
-  return { group: g.name, step: lv.id, stepNo: lv.no, theme: lv.theme, sharedAt: new Date().toISOString(),
+  const parts = SK_TABLE_SKILLS.filter(k => skCodesFor(k, lv.id, g, ctx.links).length);   // sent parts: one not done counts 0 in Overall
+  return { group: g.name, step: lv.id, stepNo: lv.no, theme: lv.theme, sharedAt: new Date().toISOString(), parts: parts,
     rows: rows.map(r => {
       const res = r.writing && r.writing.res, mark = res ? skTeacherMark(res) : null, band = res ? skWritingBandFor(res) : null;
       return { name: r.name, listening: part(r.listening), reading: part(r.reading),
@@ -922,7 +939,7 @@ async function skDrawTablePng(rows, meta) {
     text(initialsForName(r.name), colX.avatar + 19, mid + 1, '700 14px ' + HEAD_F, SK_PNG.line, 'center');
     text(fit(r.name, '700 18px ' + BODY_F, skX[0] - colX.name - 12), colX.name, mid, '700 18px ' + BODY_F, SK_PNG.ink);
     SK_TABLE_SKILLS.forEach((k, j) => drawCell(r[k], skX[j], cellW, r[k] ? r[k].raw : ''));
-    drawCell(r.overall === null ? null : { band: r.overall }, ovX, ovW, r.cefr, true);
+    drawCell(r.overallPending ? { pending: true } : r.overall === null ? null : { band: r.overall }, ovX, ovW, r.cefr, true);
     y += ROW_H;
   });
   // footer

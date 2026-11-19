@@ -26,6 +26,18 @@ function skOverall(bands) {
   return Math.floor(mean * 2 + 0.5) / 2;
 }
 
+/* A step's Overall (teacher, 2026-11-19: "reading 9, listening and writing not done → 9/3 = 3"): every part whose link was sent to
+   the group counts, and a part the student hasn't done counts 0. items: [{ sent, band (number | null), pending }]. A sent writing
+   still waiting for the AI → { overall: null, pending: true } (no number until it is checked). No sent part known (data from
+   before links were kept) → the bands that are there, as before. */
+function skStepOverall(items) {
+  items = items || [];
+  var sent = items.filter(function (p) { return p && p.sent; });
+  if (!sent.length) return { overall: skOverall(items.map(function (p) { return p ? p.band : null; })), pending: false };
+  if (sent.some(function (p) { return p.pending; })) return { overall: null, pending: true };
+  return { overall: skOverall(sent.map(function (p) { return typeof p.band === 'number' ? p.band : 0; })), pending: false };
+}
+
 function skCefr(band) {
   if (band >= 8.5) return 'C2';
   if (band >= 7) return 'C1';
