@@ -24,7 +24,8 @@ const SKILL_INFO = {
   reading: { name: 'Reading', emoji: '📖', type: 'Reading course' },
   writing: { name: 'Writing', emoji: '✍️', type: 'Writing course' },
   speaking: { name: 'Speaking', emoji: '🗣️', type: 'Speaking course' },
-  grammar: { name: 'Grammar', emoji: '📘', type: 'Grammar course' }   // Grammar Journey (2026-11-16): skill.html?s=grammar&gl=<lesson id>&c=<code>
+  grammar: { name: 'Grammar', emoji: '📘', type: 'Grammar course' },   // Grammar Journey (2026-11-16): skill.html?s=grammar&gl=<lesson id>&c=<code>
+  dictation: { name: 'Dictation', emoji: '✍️', type: 'Dictation course' }   // Dictation Journey (2026-11-19): skill.html?s=dictation&dl=<dN>&c=<code>
 };
 const NAME_KEY = 'ta_skill_student';   // the student's name + ID on this device (not one of the app's keys)
 // A writing in progress: { text, startedAt, id } under ta_skill_draft|<code>|<step id> (this page's own key, like NAME_KEY).
@@ -44,6 +45,7 @@ const SK = window.SK = {
   skill: (params.get('s') || '').toLowerCase(),
   step: stepIdFrom(params),
   lesson: String(params.get('gl') || '').trim().toLowerCase(),   // a Grammar Journey lesson (g1…)
+  dictation: String(params.get('dl') || '').trim().toLowerCase(),   // a Dictation Journey dictation (d1…)
   code: (params.get('c') || '').trim(),
   preview: params.get('preview') === '1',
   name: '',
@@ -137,6 +139,10 @@ window.skSendResult = skSendResult;
 function doneSummary(r) {
   if (!r) return '';
   if (r.skill === 'writing' || /^Writing/.test(r.type || '')) return (typeof r.words === 'number' ? r.words + ' words' : '');
+  if (r.skill === 'dictation' || /^Dictation/.test(r.type || '')) {
+    return typeof r.correctFirst === 'number' && typeof r.total === 'number'
+      ? r.correctFirst + ' / ' + r.total + ' right the first time' + (r.skips ? ' · ' + r.skips + ' skipped' : '') : '';
+  }
   return typeof r.correct === 'number' && typeof r.total === 'number' ? r.correct + ' / ' + r.total : '';
 }
 /* Answers that haven't reached the teacher yet (2026-11-13: students had a score to screenshot, but the save had failed or the
@@ -266,6 +272,7 @@ function skPrevWarning(prev) {
 function showAlreadyDone(level, done) {
   const info = SKILL_INFO[SK.skill];
   if (SK.skill === 'grammar' && !done.unsent) { startGrammar(level, { done }); return; }   // "You've done this lesson" + try again / read again
+  if (SK.skill === 'dictation' && !done.unsent) { startDictation(level, { done }); return; }   // "You've done this dictation" + do it again
   const score = done.summary ? `<p class="sk-done-score">Your result: <b>${esc(done.summary)}</b></p>` : '';
   if (!done.unsent) {
     root().innerHTML = `${headerHtml(level)}<section class="sk-card sk-center sk-done-card">
@@ -302,6 +309,7 @@ const root = () => $('#skApp');
 
 function stepData() {
   if (SK.skill === 'grammar') return grammarLesson();
+  if (SK.skill === 'dictation') return dictationItem();
   const steps = (window.TA_SKILLS && TA_SKILLS.steps) || [];
   return SK.step ? steps.find(l => l.id === SK.step) || null : null;
 }
@@ -313,6 +321,24 @@ function grammarLesson() {
     if (l) return { id: l.id, no: l.no, emoji: '📘', theme: l.title, unit: 'Lesson', lesson: l, levelId: lv.id };
   }
   return null;
+}
+/* A Dictation Journey dictation, dressed as a step: { id, no, emoji, theme, unit: 'Dictation', item, levelId }. */
+function dictationItem() {
+  for (const lv of ((window.TA_DICTATION && TA_DICTATION.levels) || [])) {
+    const d = (lv.items || []).find(x => x.id === SK.dictation);
+    if (d) return { id: d.id, no: d.no, emoji: '🎧', theme: d.title, unit: 'Dictation', item: d, levelId: lv.id };
+  }
+  return null;
+}
+/* The dictation itself lives in js/dictation-player.js (window.DC); like Grammar, this page gives it the sending and keeping. */
+function startDictation(level, extra) {
+  const withId = p => { p.__id = p.__id || skResultId(p); return p; };
+  window.DC.start(level.item, root(), Object.assign({
+    preview: SK.preview, code: SK.code, name: SK.name, studentId: SK.studentId, levelId: level.levelId, header: headerHtml(level),
+    keep: p => keepUnsent(withId(p)),
+    send: async p => { const state = await skSendResult(withId(p)); if (state === 'ok') forgetUnsent(p.__id); return state; },
+    notMe: SK.preview ? null : skNotMe
+  }, extra || {}));
 }
 /* The lesson itself lives in js/grammar-player.js (window.GR); this page gives it the sending and the "kept on the phone" parts. */
 function startGrammar(level, extra) {
@@ -336,8 +362,8 @@ function headerHtml(level) {
 }
 
 function showMissing() {
-  const what = SK.skill === 'grammar' ? 'lesson' : 'step';
-  document.title = (SK.skill === 'grammar' ? 'Lesson' : 'Step') + ' not found — Loom';
+  const what = SK.skill === 'grammar' ? 'lesson' : SK.skill === 'dictation' ? 'dictation' : 'step';
+  document.title = what.charAt(0).toUpperCase() + what.slice(1) + ' not found — Loom';
   root().innerHTML = `<div class="sk-card sk-center sk-missing">
     <div class="sk-big-emoji" aria-hidden="true">🧭</div>
     <h1>This ${what} doesn't exist</h1>
@@ -383,7 +409,7 @@ function showStart(level, content) {
         <h2>${esc(content.title || content.topic)}</h2>
         <div class="ta-login-type">${info.name} · ${level.unit || 'Step'} ${level.no}</div>
         <div class="ta-underline"></div>
-        <p>${SK.skill === 'grammar' ? 'Learn the rule, practise it, then take a short test.' : `${esc(level.emoji)} ${esc(level.theme)}.`} Write your ID to begin.</p>
+        <p>${SK.skill === 'grammar' ? 'Learn the rule, practise it, then take a short test.' : SK.skill === 'dictation' ? `${esc(level.emoji)} Listen to each sentence and write it.` : `${esc(level.emoji)} ${esc(level.theme)}.`} Write your ID to begin.</p>
         <label class="sk-label" for="skIdInput">Your ID</label>
         <input type="text" id="skIdInput" autocomplete="off" inputmode="numeric" maxlength="30" placeholder="e.g. 10001" value="${esc(saved.id || '')}">
         <div class="sk-start-err" id="skStartErr" role="alert"></div>
@@ -442,6 +468,7 @@ async function skBeginChecks(level, content, who, id) {
   if (done && done.offline) { back('📶 We couldn\'t check your answers — check the internet and press Start again.'); return; }
   if (done) { showAlreadyDone(level, done); return; }
   if (SK.skill === 'grammar') { startGrammar(level); return; }   // a lesson has no "part before"
+  if (SK.skill === 'dictation') { startDictation(level); return; }   // nor has a dictation
   if (who.prev && (await skPrevDone(who.prev, SK.name, id)) === false) { back(skPrevWarning(who.prev)); return; }
   if (SK.skill === 'writing') showWriting(level); else showExercise(level);
 }
@@ -937,6 +964,11 @@ function boot() {
   if (SK.skill === 'grammar') {
     if (SK.preview) { SK.name = 'Preview'; SK.studentId = ''; startGrammar(level); return; }
     showStart(level, level.lesson);
+    return;
+  }
+  if (SK.skill === 'dictation') {
+    if (SK.preview) { SK.name = 'Preview'; SK.studentId = ''; startDictation(level); return; }
+    showStart(level, level.item);
     return;
   }
   const content = level[SK.skill];
