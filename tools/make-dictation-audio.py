@@ -51,6 +51,42 @@ def passages(md):
         items.append({'no': int(m.group(1)), 'title': m.group(2).strip(), 'text': m.group(3).strip()})
     return items
 
+# ---- how numbers are said (OmniVoice's own number reading needs WeTextProcessing, which won't install here) ----
+ONES = 'zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen'.split()
+TENS = 'zero ten twenty thirty forty fifty sixty seventy eighty ninety'.split()
+ORD = {'one': 'first', 'two': 'second', 'three': 'third', 'five': 'fifth', 'eight': 'eighth', 'nine': 'ninth', 'twelve': 'twelfth'}
+def say_int(n):
+    if n < 20: return ONES[n]
+    if n < 100: return TENS[n // 10] + ('-' + ONES[n % 10] if n % 10 else '')
+    if n < 1000: return ONES[n // 100] + ' hundred' + (' and ' + say_int(n % 100) if n % 100 else '')
+    if n < 1000000: return say_int(n // 1000) + ' thousand' + ((' and ' if n % 1000 < 100 else ' ') + say_int(n % 1000) if n % 1000 else '')
+    return str(n)
+def say_ordinal(n):
+    w = say_int(n); head, sep, last = w.rpartition('-') if '-' in w else ('', '', w)
+    last = ORD.get(last, last[:-1] + 'ieth' if last.endswith('y') else last + 'th')
+    return head + sep + last
+def say_year(n):
+    if 2000 <= n < 2010: return 'two thousand' + (' and ' + ONES[n % 100] if n % 100 else '')
+    hi, lo = divmod(n, 100)
+    return say_int(hi) + (' hundred' if lo == 0 else ' oh ' + ONES[lo] if lo < 10 else ' ' + say_int(lo))
+def say_time(h, m):
+    h, m = int(h), int(m)
+    return say_int(h) + (" o'clock" if m == 0 and h <= 12 else ' hundred' if m == 0 else ' oh ' + ONES[m] if m < 10 else ' ' + say_int(m))
+MONTHS = 'January|February|March|April|May|June|July|August|September|October|November|December'
+def spoken(text):
+    """the sentence the way the voice should say it: numbers, times, dates, years and codes in words"""
+    t = text
+    t = re.sub(r'\b([A-Z]{2}) (\d{3,4})\b', lambda m: ' '.join(m.group(1)) + ' ' + ' '.join(ONES[int(d)] for d in m.group(2)), t)   # AZ 418
+    t = re.sub(r'\b(\d{1,2}):00(?= [ap]\.m\.)', lambda m: say_int(int(m.group(1))), t)   # "1:00 p.m." → "one P M"
+    t = re.sub(r'\b(\d{1,2}):(\d{2})\b', lambda m: say_time(m.group(1), m.group(2)), t)
+    t = re.sub(r'\b(\d{1,2}) and (\d{1,2}) (' + MONTHS + r')\b', lambda m: 'the ' + say_ordinal(int(m.group(1))) + ' and the ' + say_ordinal(int(m.group(2))) + ' of ' + m.group(3), t)
+    t = re.sub(r'\b(\d{1,2}) (' + MONTHS + r')\b', lambda m: 'the ' + say_ordinal(int(m.group(1))) + ' of ' + m.group(2), t)
+    t = re.sub(r'\b(1[5-9]\d\d|20\d\d)\b', lambda m: say_year(int(m.group(1))), t)
+    t = re.sub(r'\b\d+\b', lambda m: say_int(int(m.group(0))), t)
+    t = re.sub(r'([ap])\.m\.$', lambda m: m.group(1).upper() + ' M.', t)   # at the end: keep the full stop
+    t = t.replace('a.m.', 'A M').replace('p.m.', 'P M')
+    return t
+
 if __name__ != '__main__': raise SystemExit
 items = [i for i in passages(open(src, encoding='utf-8').read()) if not ONLY or i['no'] in ONLY]
 if not items: raise SystemExit('no dictation found')
@@ -106,10 +142,10 @@ VKEY = VOICE['instruct'] + '|' + str(VOICE['seed'])
 def sentence(text):
     first = None
     for s in range(1, 9):
-        a = gen(text, PROMPT, seed=s, speed=SPEED, voice=VKEY)
+        a = gen(spoken(text), PROMPT, seed=s, speed=SPEED, voice=VKEY)
         if first is None: first = a
         h = heard(a)
-        if line_ok(text, h): return trim(a), True
+        if line_ok(spoken(text), h) or line_ok(text, h): return trim(a), True
     print('   ⚠️', repr(text), '— heard', repr(h), flush=True)
     return trim(first), False
 
