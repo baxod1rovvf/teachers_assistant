@@ -498,6 +498,11 @@ function taGrammarLink(lessonId, code) {
   const base = window.skAppUrl || (/^https:/.test(TA_APP_URL) ? TA_APP_URL : '');
   return base + 'skill.html?s=grammar&gl=' + encodeURIComponent(lessonId) + (code ? '&c=' + encodeURIComponent(code) : '');
 }
+/* A Dictation Journey dictation's link (2026-11-19): one per dictation, the same for every group. */
+function taDictationLink(itemId, code) {
+  const base = window.skAppUrl || (/^https:/.test(TA_APP_URL) ? TA_APP_URL : '');
+  return base + 'skill.html?s=dictation&dl=' + encodeURIComponent(itemId) + (code ? '&c=' + encodeURIComponent(code) : '');
+}
 function taSkillLinkKey(groupId, skill, step) { return groupId + '|' + skill + '|' + taSkillStepId(step); }
 /* The kept links with every key in the new form (an old numeric key → e<N>; when both exist, the new one wins). */
 function taSkillsLinksFix(v) {
@@ -755,6 +760,7 @@ function getPointsRoster() {
 function savePointsRoster(list) {
   try { localStorage.setItem(LS_POINTS_ROSTER, JSON.stringify(list)); } catch (e) { /* ignore */ }
   if (typeof window.grRefreshLists === 'function') window.grRefreshLists();   // the Grammar class lists follow the roster
+  if (typeof window.dcRefreshLists === 'function') window.dcRefreshLists();   // …the Dictation Journey ones
   if (typeof window.skRefreshLists === 'function') window.skRefreshLists();   // …and the Skills Course ones
 }
 /* A student's IDs (2026-11-18: the teacher can change an ID with ✎ on the Students page). The roster entry keeps the IDs it
@@ -820,6 +826,7 @@ function getStudentGroups() {
 function saveStudentGroups(list) {
   try { localStorage.setItem(LS_STUDENT_GROUPS, JSON.stringify(list)); } catch (e) { /* ignore */ }
   if (typeof window.grRefreshLists === 'function') window.grRefreshLists();   // the Grammar class lists follow the roster
+  if (typeof window.dcRefreshLists === 'function') window.dcRefreshLists();   // …the Dictation Journey ones
   if (typeof window.skRefreshLists === 'function') window.skRefreshLists();   // …and the Skills Course ones
 }
 function groupNameFor(groupId) {
@@ -1878,10 +1885,11 @@ let taStoreRefreshTimer = 0;
 window.taStoreChanged = function (key) {
   if (key === LS_SKILLS_AI) skAiForget();
   if (/(^|::)(ta_points_roster|ta_student_groups)$/.test(String(key || ''))) {   // the class lists (Grammar, Skills Course) follow the roster
-    // a little later, so the rest of a sync merge (ta_skills_links, ta_grammar_links) lands first — one timer
+    // a little later, so the rest of a sync merge (ta_skills_links, ta_grammar_links, ta_dictation_links) lands first — one timer
     clearTimeout(taStoreRefreshTimer);
     taStoreRefreshTimer = setTimeout(() => {
       if (typeof window.grRefreshLists === 'function') window.grRefreshLists();
+      if (typeof window.dcRefreshLists === 'function') window.dcRefreshLists();
       if (typeof window.skRefreshLists === 'function') window.skRefreshLists();
     }, window.__taStoreRefreshMs !== undefined ? window.__taStoreRefreshMs : 3000);
   }
