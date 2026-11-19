@@ -478,6 +478,11 @@ window.startPlainCompletionsSync = function () {
     const gl = JSON.parse(localStorage.getItem('ta_grammar_links') || 'null');
     if (gl && typeof gl === 'object') Object.keys(gl).forEach(k => { const v = gl[k]; if (v && typeof v === 'object' && v.code) codes.push(String(v.code)); });
   } catch (e) { /* ignore */ }
+  // Dictation Journey (2026-11-19): one code per dictation, kept in ta_dictation_links
+  try {
+    const dl = JSON.parse(localStorage.getItem('ta_dictation_links') || 'null');
+    if (dl && typeof dl === 'object') Object.keys(dl).forEach(k => { const v = dl[k]; if (v && typeof v === 'object' && v.code) codes.push(String(v.code)); });
+  } catch (e) { /* ignore */ }
   plainCodes = new Set(codes);
   rsEnsureCodes(codes).then(rsDerivePlain);
 };

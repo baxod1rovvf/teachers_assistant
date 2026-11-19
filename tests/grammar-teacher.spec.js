@@ -255,3 +255,13 @@ test('an empty Students list on this device doesn\'t wipe a class list that was 
   expect(await page.evaluate(() => window.__deletes.filter(i => /^class-/.test(i)).length)).toBe(0);
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toBe(sig);
 });
+
+test('Copy link with an empty Students list does not publish over a list that is already online', async ({ page, context }) => {
+  const errors = await openCourse(page, context, { links: { g1: { code: 'GRM111', sentAt: iso(60), rosterSig: 'x|y|z' } }, roster: [] });
+  await page.evaluate(() => { window.__writes.length = 0; window.__deletes.length = 0; });
+  await page.evaluate(() => window.grCopyLink('g1'));
+  await expect(page.getByText('Your Students list hasn\'t loaded yet').first()).toBeVisible();
+  await page.waitForTimeout(500);
+  expect(await page.evaluate(() => window.__writes.filter(w => /^class-/.test(w.id)).length)).toBe(0);
+  expect(errors).toEqual([]);
+});

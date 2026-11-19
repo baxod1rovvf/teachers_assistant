@@ -3575,34 +3575,34 @@ body.loom-studio.loom-air .login-stage { background: rgba(255,255,255,0.72) !imp
    Under the group cards on the Course page, in the Mountain Air look: one glass card with the 7 levels; a level's lessons as
    glass rows; a lesson's page with group chips, the results table (a card per student on phones) and Not finished.
    On computers it stays in the left column (≤ 820 px) so the teacher's picture shows on the right. */
-#courseWrap .gr-journey { margin: 8px 0 24px; padding: 18px; border-radius: 24px; background: var(--surface); border: 1px solid var(--glass-edge, var(--border));
+#courseWrap :is(.gr-journey, .dct-journey) { margin: 8px 0 24px; padding: 18px; border-radius: 24px; background: var(--surface); border: 1px solid var(--glass-edge, var(--border));
   box-shadow: var(--shadow-md); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
-#courseWrap .gr-journey .sk-results-head { margin-bottom: 4px; }
-#courseWrap .gr-journey > .sk-hint { margin: 0 0 14px; line-height: 1.45; }
+#courseWrap :is(.gr-journey, .dct-journey) .sk-results-head { margin-bottom: 4px; }
+#courseWrap :is(.gr-journey, .dct-journey) > .sk-hint { margin: 0 0 14px; line-height: 1.45; }
 #courseWrap .gr-levels { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); gap: 10px; }
-#courseWrap .gr-level { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 12px 14px; border-radius: 16px;
+#courseWrap :is(.gr-level, .dct-level) { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 12px 14px; border-radius: 16px;
   background: rgba(255,255,255,0.78); border: 1px solid var(--glass-edge, var(--border)); border-left: 4px solid var(--gc, var(--brand)); min-width: 0; }
 #courseWrap .gr-level-name { font-weight: 700; font-size: 1.02rem; color: var(--ink); line-height: 1.25; overflow-wrap: anywhere; }
 #courseWrap .gr-level-open { all: unset; cursor: pointer; font-weight: 700; font-size: 1.02rem; color: var(--ink); line-height: 1.25; }
 #courseWrap .gr-level-open::after { content: ''; position: absolute; inset: 0; border-radius: 16px; }
 #courseWrap .gr-level-open:focus-visible::after { outline: 3px solid var(--brand); outline-offset: 2px; }
-#courseWrap .gr-level:not(.soon):hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+#courseWrap :is(.gr-level, .dct-level):not(.soon):hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
 #courseWrap .gr-level-sub { font-size: .85rem; font-weight: 600; color: var(--ink-soft); }
-#courseWrap .gr-level.soon { opacity: .62; border-left-color: var(--border); }
-#courseWrap .gr-level.soon .sk-soon-tag { align-self: flex-start; }
+#courseWrap :is(.gr-level, .dct-level).soon { opacity: .62; border-left-color: var(--border); }
+#courseWrap :is(.gr-level, .dct-level).soon .sk-soon-tag { align-self: flex-start; }
 #courseWrap .gr-page-head { padding: 16px 18px; margin: 12px 0 14px; border-radius: 20px; background: var(--surface); border: 1px solid var(--glass-edge, var(--border));
   box-shadow: var(--shadow-md); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
 #courseWrap .gr-page-head h3 { margin: 0 0 4px; font-size: 1.3rem; }
 #courseWrap .gr-page-head .sk-hint { margin: 0 0 10px; line-height: 1.45; }
 #courseWrap .gr-lessons { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-#courseWrap .gr-lesson { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 10px 14px; border-radius: 16px; background: var(--surface);
+#courseWrap :is(.gr-lesson, .dct-item) { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 10px 14px; border-radius: 16px; background: var(--surface);
   border: 1px solid var(--glass-edge, var(--border)); box-shadow: var(--shadow-md); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
 #courseWrap .gr-lesson-open { all: unset; cursor: pointer; flex: 1 1 240px; min-width: 0; display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }
 #courseWrap .gr-lesson-open:hover { text-decoration: underline; text-underline-offset: 3px; }
 #courseWrap .gr-lesson-open:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 8px; }
 #courseWrap .gr-lesson-no { flex: 0 0 auto; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; font-size: .85rem;
   background: rgba(20,24,31,0.07); color: var(--ink); }
-#courseWrap .gr-lesson.sent .gr-lesson-no { background: var(--air-moss, var(--c-green)); color: #fff; }
+#courseWrap :is(.gr-lesson, .dct-item).sent .gr-lesson-no { background: var(--air-moss, var(--c-green)); color: #fff; }
 #courseWrap .gr-done { font-size: .85rem; font-weight: 600; color: var(--ink-soft); white-space: nowrap; }
 #courseWrap .gr-lesson-btns { display: flex; flex-wrap: wrap; gap: 6px; }
 #courseWrap .gr-filter { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 4px; }
@@ -3610,7 +3610,7 @@ body.loom-studio.loom-air .login-stage { background: rgba(255,255,255,0.72) !imp
   color: var(--ink); background: rgba(255,255,255,0.82); border: 1px solid var(--glass-edge, var(--border)); box-shadow: var(--shadow-md); }
 #courseWrap .gr-chip.active { background: var(--brand); color: #fff; border-color: var(--brand); }
 #courseWrap .gr-chip:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
-#courseWrap .gr-lesson-page .sk-results { margin-top: 18px; }
+#courseWrap :is(.gr-lesson-page, .dct-page) .sk-results { margin-top: 18px; }
 #courseWrap .gr-table { border-radius: 20px; overflow: hidden; background: var(--surface); border: 1px solid var(--glass-edge, var(--border)); box-shadow: var(--shadow-md);
   -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
 #courseWrap .gr-thead, #courseWrap .gr-trow { display: grid; grid-template-columns: 44px minmax(0, 1fr) 110px 84px 90px 70px; align-items: center; gap: 10px; padding: 10px 16px; }
@@ -3629,10 +3629,10 @@ body.loom-studio.loom-air .login-stage { background: rgba(255,255,255,0.72) !imp
 #courseWrap .gr-score.b-mid b { color: #B7791F; }
 #courseWrap .gr-score.b-low b { color: var(--air-red, var(--c-red)); }
 @media (min-width: 861px) {
-  body.loom-air .gr-journey, body.loom-air .gr-lesson-page, body.loom-air .gr-lessons, body.loom-air #courseWrap > .gr-page-head { max-width: 820px; }
+  body.loom-air :is(.gr-journey, .dct-journey), body.loom-air :is(.gr-lesson-page, .dct-page), body.loom-air .gr-lessons, body.loom-air #courseWrap > .gr-page-head { max-width: 820px; }
 }
 @media (max-width: 640px) {
-  #courseWrap .gr-journey { padding: 14px; }
+  #courseWrap :is(.gr-journey, .dct-journey) { padding: 14px; }
   #courseWrap .gr-levels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   #courseWrap .gr-thead { display: none; }
   #courseWrap .gr-trow { grid-template-columns: 36px minmax(0, 1fr) auto; grid-template-areas: "p n s" "p g t"; row-gap: 2px; padding: 12px 14px; }
@@ -3643,6 +3643,47 @@ body.loom-studio.loom-air .login-stage { background: rgba(255,255,255,0.72) !imp
   #courseWrap .gr-time { grid-area: t; text-align: right; }
   #courseWrap .gr-date { display: none; }
 }
-@media (prefers-reduced-motion: reduce) { #courseWrap .gr-level { transition: none; } #courseWrap .gr-level:not(.soon):hover { transform: none; } }
+@media (prefers-reduced-motion: reduce) { #courseWrap :is(.gr-level, .dct-level) { transition: none; } #courseWrap :is(.gr-level, .dct-level):not(.soon):hover { transform: none; } }
 #courseWrap .gr-tfoot { margin: 0; padding: 10px 16px 12px; font-size: .85rem; font-weight: 600; color: var(--ink-soft); line-height: 1.45; border-top: 1px solid rgba(20,24,31,0.08); }
 #courseWrap .gr-page-head .sk-tile-btns { max-width: 440px; }
+
+/* ================= DICTATION JOURNEY — the teacher's side (2026-11-19, js/pages/dictation.js) =================
+   Under the Grammar Journey, with its look (the rules above take .dct-journey / .dct-level / .dct-item / .dct-page too). Here only what
+   is its own: 4 buttons a row, the results table's Skips column and the clickable name, and the windows (📄 Transcript, what a student
+   wrote — those sit outside #courseWrap, in .ta-modal). */
+#courseWrap .dct-item .gr-lesson-btns .mini-btn { min-width: 0; }
+#courseWrap .dct-table .gr-thead, #courseWrap .dct-table .gr-trow { grid-template-columns: 44px minmax(0, 1fr) 104px 74px 58px 76px 64px; }
+#courseWrap .dct-row { position: relative; }
+#courseWrap .dct-open { all: unset; cursor: pointer; min-width: 0; color: var(--ink); }
+#courseWrap .dct-open::after { content: ''; position: absolute; inset: 0; border-radius: 12px; }
+#courseWrap .dct-open:focus-visible::after { outline: 3px solid var(--brand); outline-offset: -3px; }
+#courseWrap .dct-row:hover { background: rgba(20,24,31,0.035); }
+#courseWrap .dct-row:hover .dct-open b { text-decoration: underline; text-underline-offset: 3px; }
+#courseWrap .dct-skips-cell { display: flex; align-items: center; gap: 4px; font-weight: 700; color: var(--ink-soft); }
+#courseWrap .dct-skips-icon { font-size: .85rem; }
+@media (max-width: 640px) {
+  #courseWrap .dct-table .gr-trow { grid-template-columns: 36px minmax(0, 1fr) auto auto; grid-template-areas: "p n n s" "p g k t"; }
+  #courseWrap .dct-skips-cell { grid-area: k; justify-content: flex-end; }
+  #courseWrap .dct-item .gr-lesson-btns, #courseWrap .dct-btns { width: 100%; max-width: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  #courseWrap .dct-item .gr-lesson-btns .mini-btn, #courseWrap .dct-btns .mini-btn { width: 100%; justify-content: center; margin: 0; }
+}
+.ta-modal .dct-transcript { margin: 4px 0 10px; font-size: 1.25rem; line-height: 1.7; color: var(--ink); overflow-wrap: anywhere; }
+.ta-modal .dct-transcript-note { margin: 0; font-size: .85rem; font-weight: 600; color: var(--ink-soft); }
+.ta-modal .dct-view-sum { margin: 0 0 6px; font-weight: 600; color: var(--ink); }
+.ta-modal .dct-view-key { margin: 0 0 12px; font-size: .85rem; color: var(--ink-soft); }
+.ta-modal .dct-sents { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; max-height: 58vh; overflow-y: auto; }
+.ta-modal .dct-sent { padding: 10px 12px; border-radius: 14px; border: 1px solid var(--border); border-left: 4px solid var(--air-moss, var(--c-green)); background: rgba(255,255,255,0.7); }
+.ta-modal .dct-sent.wrong { border-left-color: #D69E2E; }
+.ta-modal .dct-sent.skipped { border-left-color: var(--air-red, var(--c-red)); }
+.ta-modal .dct-sent.none { border-left-color: var(--border); }
+.ta-modal .dct-sent-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-size: .85rem; font-weight: 700; color: var(--ink-soft); }
+.ta-modal .dct-sent-no { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: rgba(20,24,31,0.07); color: var(--ink); font-size: .8rem; }
+.ta-modal .dct-first, .ta-modal .dct-right { margin: 4px 0 0; line-height: 1.6; color: var(--ink); overflow-wrap: anywhere; }
+.ta-modal .dct-first small, .ta-modal .dct-right small { display: block; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); }
+.ta-modal .dct-right { color: var(--ink-soft); }
+.ta-modal .dct-sent.ok .dct-right { color: var(--ink); }
+.ta-modal .dct-mark.wrong { color: var(--air-red, var(--c-red)); text-decoration: line-through; text-decoration-thickness: 2px; }
+.ta-modal .dct-want { color: var(--air-moss, var(--c-green)); font-weight: 700; }
+.ta-modal .dct-mark.missing { padding: 0 4px; border-radius: 6px; border: 1.5px dashed #D69E2E; color: #8A5A10; font-weight: 600; }
+.ta-modal .dct-mark.extra { color: var(--ink-soft); text-decoration: line-through; }
+.ta-modal .dct-nothing { font-style: italic; color: var(--ink-soft); }

@@ -98,3 +98,72 @@ html body#skBody.sk-air .gr-card .sk-btn:disabled { opacity: .4; cursor: not-all
 html body#skBody.sk-air #grSend { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; padding: 8px 16px; border-radius: 999px;
   background: rgba(255,255,255,0.92) !important; color: #12161D !important; border: 1px solid rgba(20,26,34,0.12) !important; box-shadow: none !important; }
 html body#skBody.sk-air #grSend.bad { border-radius: 18px; }
+/* Dictation Journey (js/dictation-player.js, 2026-11-19): one sentence at a time — ▶ / slower, the box, Check / Skip, the marked words.
+   On a phone the work card stays in the top part of the screen, above the keyboard (--dc-room is set from visualViewport); while marks
+   show, the box is 2 lines so a long sentence's marks still fit. */
+html body#skBody.sk-air .dc-card { display: flex; flex-direction: column; gap: 10px; }
+html body#skBody.sk-air .dc-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; }
+html body#skBody.sk-air .dc-count { margin: 0; font-size: .85rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #3D7434 !important; }
+html body#skBody.sk-air :is(.dc-skips, .dc-practice) { text-transform: none; letter-spacing: 0; color: #4A5260; }
+html body#skBody.sk-air .dc-practice { color: #6B4E00; }
+html body#skBody.sk-air .dc-play { display: flex; flex-wrap: wrap; gap: 8px; }
+html body#skBody.sk-air .dc-play .sk-btn { flex: 0 1 auto; }
+html body#skBody.sk-air :is(.dc-play, .dc-skips) .dc-s { display: none; }
+html body#skBody.sk-air .dc-playbtn.playing { background: #14181F !important; color: #fff !important; border-color: #14181F !important; }
+html body#skBody.sk-air .dc-audio-note { margin: 0; padding: 8px 12px; border-radius: 14px; background: #FFF8E6; border: 1px solid #F1D48A; font-size: .9rem; font-weight: 600; line-height: 1.45; }
+html body#skBody.sk-air .dc-box { display: block; width: 100%; min-height: 64px; max-height: 9.5em; resize: none; overflow-y: auto; padding: 10px 14px;
+  font-size: 1.05rem; line-height: 1.45; overflow-wrap: anywhere; }
+html body#skBody.sk-air .dc-btns { display: flex; gap: 10px; }
+html body#skBody.sk-air .dc-btns .sk-btn { flex: 1 1 0; min-width: 0; min-height: 48px; padding: 8px 14px; }
+html body#skBody.sk-air .dc-feedback { min-height: 1.5em; line-height: 1.5; overflow-wrap: anywhere; }
+html body#skBody.sk-air .dc-feedback p { margin: 0 0 6px; }
+html body#skBody.sk-air .dc-feedback p:last-child { margin-bottom: 0; }
+html body#skBody.sk-air .dc-msg { font-weight: 700; }
+html body#skBody.sk-air .dc-right { color: #2F5A28; }
+html body#skBody.sk-air .dc-no { color: #B3351F; }
+html body#skBody.sk-air .dc-said { color: #12161D; font-weight: 600; }
+html body#skBody.sk-air .dc-last { color: #4A5260; font-size: .95rem; }
+html body#skBody.sk-air .dc-note { font-size: .9rem; color: #6B4E00; }
+html body#skBody.sk-air .dc-marks { padding: 8px 12px; border-radius: 14px; background: #fff; border: 1px solid rgba(20,26,34,0.1); font-size: 1.05rem; line-height: 1.9; }
+html body#skBody.sk-air .dc-word { display: inline; border-radius: 6px; padding: 1px 3px; }
+html body#skBody.sk-air .dc-word.wrong .dc-typed { color: #B3351F; background: rgba(210,65,45,0.1); text-decoration: line-through; text-decoration-color: rgba(179,53,31,0.6); border-radius: 6px; padding: 1px 3px; }
+html body#skBody.sk-air .dc-word.wrong .dc-want { color: #2F5A28; font-weight: 700; }
+html body#skBody.sk-air .dc-word.missing { color: #7A8290; border-bottom: 2px dashed #7A8290; border-radius: 0; padding: 0 2px; }
+html body#skBody.sk-air .dc-word.dc-blank { color: transparent; letter-spacing: .05em; }
+html body#skBody.sk-air .dc-word.extra { color: #B3351F; text-decoration: line-through; opacity: .75; }
+/* the end */
+html body#skBody.sk-air .dc-end h2 { margin: 0; }
+html body#skBody.sk-air .dc-stats, html body#skBody.sk-air .dc-practice-note { margin: 0; color: #4A5260; font-weight: 600; text-align: center; }
+html body#skBody.sk-air .dc-cheer { font-weight: 600; font-size: .95rem; }
+html body#skBody.sk-air .dc-review { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+html body#skBody.sk-air .dc-rev { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 14px; background: rgba(244,246,248,0.85); border: 1px solid rgba(20,26,34,0.07); }
+html body#skBody.sk-air .dc-rev.ok { background: rgba(61,116,52,0.08); }
+html body#skBody.sk-air .dc-rev-t { display: flex; flex-direction: column; gap: 2px; min-width: 0; overflow-wrap: anywhere; }
+html body#skBody.sk-air .dc-rev-s { font-weight: 600; }
+html body#skBody.sk-air :is(.dc-rev-how, .dc-first) { font-size: .85rem; color: #4A5260; }
+html body#skBody.sk-air .dc-again { margin-top: 6px; }
+html body#skBody.sk-air #dcSend { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; padding: 8px 16px; border-radius: 999px;
+  background: rgba(255,255,255,0.92) !important; color: #12161D !important; border: 1px solid rgba(20,26,34,0.12) !important; box-shadow: none !important; }
+html body#skBody.sk-air #dcSend.bad { border-radius: 18px; }
+@media (max-width: 760px) {
+  /* one line of header, the work card right under it; room below so the card can be scrolled to the top of the visible part */
+  html body#skBody.sk-air .sk-app:has(.dc-work) { padding-bottom: 45vh; gap: 10px; }
+  html body#skBody.sk-air .sk-app:has(.dc-work) .sk-head { flex-wrap: nowrap; overflow: hidden; }
+  html body#skBody.sk-air .sk-app:has(.dc-work) .sk-head .sk-brand { display: none; }
+  html body#skBody.sk-air .sk-app:has(.dc-work) .sk-head .sk-chip { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  html body#skBody.sk-air .dc-work { max-height: var(--dc-room, 60vh); overflow-y: auto; padding: 10px 10px 10px !important; gap: 6px; }
+  html body#skBody.sk-air .dc-work .dc-top { flex-wrap: nowrap; gap: 6px; }
+  html body#skBody.sk-air .dc-work .dc-count { font-size: .75rem; letter-spacing: .03em; min-width: 0; }
+  html body#skBody.sk-air .dc-play { flex-wrap: nowrap; gap: 6px; flex: 0 0 auto; }
+  html body#skBody.sk-air .dc-play .sk-btn { min-height: 40px; padding: 4px 12px; font-size: .9rem; }
+  html body#skBody.sk-air :is(.dc-play, .dc-skips) .dc-l { display: none; }
+  html body#skBody.sk-air :is(.dc-play, .dc-skips) .dc-s { display: inline; }
+  html body#skBody.sk-air .dc-box { min-height: 52px; max-height: 6.2em; padding: 7px 12px; font-size: 1rem; line-height: 1.4; }
+  html body#skBody.sk-air .dc-work.dc-marked .dc-box { min-height: 0; max-height: calc(2.8em + 16px); }
+  html body#skBody.sk-air .dc-btns .sk-btn { min-height: 44px; padding: 6px 12px; }
+  html body#skBody.sk-air .dc-feedback p { margin-bottom: 4px; }
+  html body#skBody.sk-air .dc-msg { font-size: .92rem; }
+  html body#skBody.sk-air .dc-marks { padding: 5px 9px; font-size: .95rem; line-height: 1.6; }
+  html body#skBody.sk-air .dc-word { padding: 0 2px; }
+  html body#skBody.sk-air .dc-word.wrong .dc-typed { padding: 0 2px; }
+}
