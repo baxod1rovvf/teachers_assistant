@@ -74,6 +74,7 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
    student's progress. **Old files still do the full read** (`TA_FILE_FIXES` `reads`/`readsone`)
    — the sets students still use must be recreated. Database then: 2 202 records (29 synced,
    32 link, 21 account, 432 points). Never read a whole code/board from an exercise file.
+23. **Class lists are re-published on every roster change** (Grammar and Dictation: 2 writes per sent link — ≈300 writes per roster edit once ~150 links are out; fine under the free 20 K/day).
 2. **Monthly download limit (10 GiB)** from exercise links — heavy for audio/picture
    exercises (dictation audio is now shrunk, ~0.4 MB per minute of audio; sets with many
    pictures are still heavy).
@@ -820,7 +821,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   check + "Bu sizmi"): one sentence at a time plays by itself, ▶ Play again / 🐢 slower, the student types, Check marks mistakes and can try again, or skips; `DC.prime` unlocks the audio on
   iPhone inside the "Ha" tap; `DC_SHOW_ANSWER` switches showing the right sentence after a wrong try; on phones the marks sit above the keyboard. Checker `js/dictation-check.js`
   `dcCheck`: words only (case, punctuation, spacing don't matter); numbers either way ("13" = "thirteen"); ordinals and cardinals stay different outside dates; "o'clock" is required when the
-  student writes it; Doctor = Dr, Mister = Mr; joined hyphen words ("well known" = "well-known"). **Only the first run is sent** (`type: 'Dictation course'`, `code, name, studentId, skill 'dictation',
+  passage writes it; Doctor = Dr, Mister = Mr; joined hyphen words ("wellbeing" = "well-being"; "well known" = "well-known" for the space form). **Only the first run is sent** (`type: 'Dictation course'`, `code, name, studentId, skill 'dictation',
   dictation, dictationNo, level, title, sentences[{first, tries, skipped, ok}], total, correctFirst, score, skips, timeSeconds, timeDisplay, date, builtAt`); progress is kept on the phone
   until the save is confirmed, like the other course exercises. Teacher: one permanent link per dictation for every group, `ta_dictation_links = { <dN>: { code, sentAt, rosterSig } }`
   (synced, in the backup; firebase.js loads its codes); the dictation's page has a group filter, a results table (first run; a row shows what the student wrote, marked), "🚫 Not finished" +
@@ -828,6 +829,9 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   with an empty Students list never publishes over a list already online (also Grammar's). The teacher's ▶ stops when she leaves the page. **Changing a passage's text after links were sent
   re-marks old answers against the new text** (results keep no per-item version). Tests: `dictation-content`, `dictation-check`, `dictation-player`, `dictation-teacher` (`.spec.js`);
   the "all 100 recorded" test runs with `DC_ALL_AUDIO=1`.
+  **"Recording…" guard**: `tools/build-dictations.js` writes `recorded: true|false` per item from `audio/dictation/dN.mp3` existing (the whole passage — the recording tool writes it last).
+  An unrecorded item shows "🎙 Recording…" (muted) instead of ▶ Play / ▶️ Try / 🔗 Copy link, its level card counts only recorded ones ("12 ready · 20 dictations"), and its
+  student link says "🎙 This dictation isn't ready yet — ask your teacher." **After recording more: run the build tool, `npm run stamp`, commit audio + data.**
 - **Speaking Journey (teacher, 2026-11-09)**: **Speaking** follows the teacher's "Speaking Journey" (20 topics: 1 Daily Routine,
   2 Family, 3 Home & Living, 4 Food & Meals, 5 Free Time, 6 Friends, 7 School & Education, 8 Hobbies & Sports, 9 Shopping, 10 Your City,
   11 Holidays, 12 Future Plans, 13 Jobs & Careers, 14 Clothes & Fashion, 15 Transport, 16 Animals & Pets, 17 Health & Lifestyle,

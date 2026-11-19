@@ -59,6 +59,10 @@ test('dictation data: the same split as the audio tool (python)', () => {
   all().forEach(it => expect(it.sentences, it.id).toEqual(fromPy[it.id]));
 });
 
+test('dictation data: `recorded` matches whether dN.mp3 exists', () => {
+  all().forEach(it => expect(it.recorded, it.id).toBe(fs.existsSync(path.join(ROOT, 'audio', 'dictation', it.id + '.mp3'))));
+});
+
 test('dictation audio: a recorded passage has one file per sentence', () => {
   const dir = path.join(ROOT, 'audio', 'dictation');
   all().forEach(it => {

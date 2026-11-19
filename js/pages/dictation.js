@@ -138,10 +138,10 @@ function dcJourneyHtml() {
   const cards = dcLevels().map((lv, i) => {
     const items = lv.items || [];
     const color = ['--c-teal', '--c-blue', '--c-purple', '--c-orange', '--c-pink'][i % 5];
-    const sent = items.filter(d => dcCode(d.id, links)).length;
+    const sent = items.filter(d => dcCode(d.id, links)).length, ready = items.filter(d => d.recorded !== false).length;
     return '<article class="dct-level" data-level="' + escapeForHtml(lv.id) + '" style="--gc:var(' + color + ')">' +
       '<button type="button" class="gr-level-open gr-level-name" onclick="dcOpenLevel(' + jsAttr(lv.id) + ')">' + escapeForHtml(lv.name) + '</button>' +
-      '<span class="gr-level-sub">' + items.length + ' dictations · ' + sent + ' sent</span></article>';
+      '<span class="gr-level-sub">' + (ready < items.length ? ready + ' ready · ' : '') + items.length + ' dictations · ' + sent + ' sent</span></article>';
   }).join('');
   return '<section class="dct-journey" aria-label="Dictation Journey">' +
     '<div class="sk-results-head"><h3>✍️ Dictation Journey</h3></div>' +
@@ -156,6 +156,8 @@ function dcPageHtml() {
   return lv && (lv.items || []).length ? dcLevelHtml(lv) : '';
 }
 function dcItemBtns(d) {
+  if (d.recorded === false) return '<span class="dct-recording" style="opacity:.6">🎙 Recording…</span>' +
+    '<button type="button" class="mini-btn" onclick="dcTranscript(' + jsAttr(d.id) + ')">📄 Transcript</button>';
   return dcPlayBtn(d) +
     '<button type="button" class="mini-btn" onclick="dcTranscript(' + jsAttr(d.id) + ')">📄 Transcript</button>' +
     '<button type="button" class="mini-btn" onclick="dcTry(' + jsAttr(d.id) + ')">▶️ Try</button>' +

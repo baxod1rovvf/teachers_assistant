@@ -18,7 +18,8 @@ window.TA_DICTATION = {
       "I have one brother and one sister.",
       "We are students.",
       "My favourite colour is blue."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d2",
@@ -31,7 +32,8 @@ window.TA_DICTATION = {
       "There are twenty desks and twenty chairs.",
       "The teacher is near the board.",
       "My bag is under my desk, and my books are on the table."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d3",
@@ -44,7 +46,8 @@ window.TA_DICTATION = {
       "I have two sisters.",
       "We usually have dinner together at seven o'clock.",
       "After dinner, we talk or watch television."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d4",
@@ -56,7 +59,8 @@ window.TA_DICTATION = {
       "We need some bread, milk, eggs, and apples.",
       "The bread costs twelve thousand so'm.",
       "The apples are fresh, but the bananas are too expensive today."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d5",
@@ -69,7 +73,8 @@ window.TA_DICTATION = {
       "Then I have breakfast.",
       "I usually eat bread and cheese and drink a cup of tea.",
       "My lessons start at eight o'clock."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d6",
@@ -82,7 +87,8 @@ window.TA_DICTATION = {
       "He is friendly and funny.",
       "He likes football, music, and computer games.",
       "We study English together after school on Tuesdays and Thursdays."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d7",
@@ -94,7 +100,8 @@ window.TA_DICTATION = {
       "The sun is shining, and the sky is clear.",
       "It is warm outside, but there is a little wind.",
       "Some children are playing in the park, and two dogs are running near the trees."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d8",
@@ -107,7 +114,8 @@ window.TA_DICTATION = {
       "A small desk is opposite the bed.",
       "My books are on a shelf, and my clothes are in the wardrobe.",
       "I keep my room tidy."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d9",
@@ -119,7 +127,8 @@ window.TA_DICTATION = {
       "I would like a chicken sandwich and orange juice.",
       "Sara wants a cheese pizza, and Mark is having a bowl of soup.",
       "The café is busy, but the food is delicious."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d10",
@@ -131,7 +140,8 @@ window.TA_DICTATION = {
       "On Saturday, I visit my grandparents.",
       "We have lunch together and sometimes go for a walk.",
       "On Sunday, I do my homework, play games, and prepare for Monday."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d11",
@@ -144,7 +154,8 @@ window.TA_DICTATION = {
       "He has long ears and a short tail.",
       "Every morning, I take him for a walk.",
       "He likes running after a ball and playing in the garden."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d12",
@@ -157,7 +168,8 @@ window.TA_DICTATION = {
       "There are five people at the bus stop.",
       "An old man is reading a newspaper, and a woman is talking on her phone.",
       "The bus is ten minutes late."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d13",
@@ -170,7 +182,8 @@ window.TA_DICTATION = {
       "We do not eat fast food every day.",
       "My mother often cooks vegetables, chicken, and soup for dinner.",
       "We all enjoy her cooking."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d14",
@@ -182,7 +195,8 @@ window.TA_DICTATION = {
       "I cannot find my keys, and my phone is not in my bag.",
       "My brother is looking for his shoes.",
       "We are almost late for school, so we leave the house without watching television."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d15",
@@ -194,7 +208,8 @@ window.TA_DICTATION = {
       "It has a small lake, a playground, and many flowers.",
       "People walk, run, and ride bicycles there.",
       "In the afternoon, families sit on the grass and enjoy the fresh air."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d16",
@@ -207,7 +222,8 @@ window.TA_DICTATION = {
       "Her party starts at five o'clock on Saturday afternoon.",
       "We are going to bring a chocolate cake, some balloons, and a present.",
       "I hope she likes her new camera."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d17",
@@ -220,7 +236,8 @@ window.TA_DICTATION = {
       "Walk past the bank.",
       "The library is opposite the hospital, next to a small supermarket.",
       "You cannot miss it."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d18",
@@ -232,7 +249,8 @@ window.TA_DICTATION = {
       "We are visiting a history museum in the city centre.",
       "The bus leaves at nine fifteen, so everyone must arrive before nine.",
       "Please bring a notebook, a bottle of water, and your lunch."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d19",
@@ -244,7 +262,8 @@ window.TA_DICTATION = {
       "I did not have an umbrella, so I ran to the nearest bus stop.",
       "My jacket got wet, and my shoes were covered in mud.",
       "Luckily, my friend had a spare umbrella."
-     ]
+     ],
+     "recorded": true
     },
     {
      "id": "d20",
@@ -257,7 +276,8 @@ window.TA_DICTATION = {
       "Yesterday, she helped my father carry some heavy boxes.",
       "She also gave us a basket of fresh pears from her garden.",
       "We thanked her for her help."
-     ]
+     ],
+     "recorded": true
     }
    ]
   },
@@ -275,7 +295,8 @@ window.TA_DICTATION = {
       "At first, I felt nervous because I did not know anyone.",
       "However, two students invited me to sit with them at lunch.",
       "Now I have several friends, and I enjoy my classes."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d22",
@@ -287,7 +308,8 @@ window.TA_DICTATION = {
       "It contained some money, a bank card, and an identity card.",
       "He took it to the customer service desk.",
       "An hour later, its owner came back to collect it."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d23",
@@ -299,7 +321,8 @@ window.TA_DICTATION = {
       "We are going to travel by train because it is more comfortable than driving.",
       "We have booked a small hotel near the beach.",
       "If the weather is good, we will go swimming every morning."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d24",
@@ -311,7 +334,8 @@ window.TA_DICTATION = {
       "The doctor asked me a few questions and checked my temperature.",
       "She said I should rest, drink plenty of water, and avoid staying up late.",
       "I felt better two days later."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d25",
@@ -324,7 +348,8 @@ window.TA_DICTATION = {
       "We scored the first goal, but the other team equalised before half-time.",
       "In the final minutes, our captain scored again.",
       "We won two goals to one."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d26",
@@ -339,7 +364,8 @@ window.TA_DICTATION = {
       "Could we meet at half past ten instead?",
       "Please send me a message when you get this.",
       "Thanks!”"
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d27",
@@ -351,7 +377,8 @@ window.TA_DICTATION = {
       "I found my seat beside the window and put my suitcase on the rack.",
       "During the journey, I listened to music and read a short story.",
       "We arrived just after eleven."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d28",
@@ -363,7 +390,8 @@ window.TA_DICTATION = {
       "My first meal was vegetable soup.",
       "I washed and cut the vegetables, added water and salt, and waited for everything to become soft.",
       "It was simple, but everyone enjoyed it."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d29",
@@ -375,7 +403,8 @@ window.TA_DICTATION = {
       "Visitors must speak quietly and turn off their mobile phones.",
       "You can borrow up to four books for two weeks.",
       "Please return them on time."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d30",
@@ -387,7 +416,8 @@ window.TA_DICTATION = {
       "I had sent the message to the wrong person.",
       "Fortunately, it did not contain any private information.",
       "I wrote another email, explained what had happened, and apologised."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d31",
@@ -399,7 +429,8 @@ window.TA_DICTATION = {
       "He has maps from more than twenty countries.",
       "His oldest map is over one hundred years old.",
       "He keeps each one in a special folder and enjoys explaining its history to visitors."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d32",
@@ -411,7 +442,8 @@ window.TA_DICTATION = {
       "At first, everyone was annoyed because we could not watch videos or check social media.",
       "Later, we played board games, cooked lunch, and went for a walk.",
       "It turned out to be a pleasant day."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d33",
@@ -424,7 +456,8 @@ window.TA_DICTATION = {
       "My group demonstrated how a simple water filter works.",
       "We explained each stage to the visitors and answered their questions.",
       "The judges gave us second prize."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d34",
@@ -437,7 +470,8 @@ window.TA_DICTATION = {
       "Breakfast is included in the price.",
       "Check-in begins at 2 p.m., and check-out is before 11 a.m.",
       "We look forward to welcoming you."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d35",
@@ -449,7 +483,8 @@ window.TA_DICTATION = {
       "It was my cousin, who had arrived in town without telling us.",
       "My parents were delighted to see him.",
       "We made tea, prepared some sandwiches, and spent the evening talking about his journey."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d36",
@@ -461,7 +496,8 @@ window.TA_DICTATION = {
       "I compared several courses and spoke to people who worked in different fields.",
       "Finally, I chose information technology because I enjoy solving problems and creating useful things.",
       "The course begins in September."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d37",
@@ -473,7 +509,8 @@ window.TA_DICTATION = {
       "I quickly got dressed, packed my books, and left without breakfast.",
       "When I reached the bus stop, I realised that I had forgotten my student card.",
       "It was not a good start to the day."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d38",
@@ -485,7 +522,8 @@ window.TA_DICTATION = {
       "We can use reusable bags, switch off lights, and avoid wasting water.",
       "Walking or cycling for short journeys can also reduce pollution.",
       "Schools and families should encourage children to develop these habits from an early age."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d39",
@@ -497,7 +535,8 @@ window.TA_DICTATION = {
       "Participants may submit up to three original photographs.",
       "Each photograph must include a title and a short description of no more than fifty words.",
       "The winning entries will be displayed in the town hall next month."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d40",
@@ -509,7 +548,8 @@ window.TA_DICTATION = {
       "I thought we were meeting at a small café, but they had decorated a room at a restaurant.",
       "There were twelve guests, a beautiful cake, and a playlist of my favourite songs.",
       "I will remember that evening for a long time."
-     ]
+     ],
+     "recorded": false
     }
    ]
   },
@@ -527,7 +567,8 @@ window.TA_DICTATION = {
       "The manager introduced me to the team and showed me where everything was.",
       "I was given a desk near the window and a short list of tasks.",
       "Although I made a few small mistakes, my colleagues were patient and helpful."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d42",
@@ -539,7 +580,8 @@ window.TA_DICTATION = {
       "Heavy rain and strong winds were expected throughout Saturday.",
       "Rather than cancel the trip completely, we decided to visit a museum and have lunch in a nearby town.",
       "Everyone agreed that it was a sensible alternative."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d43",
@@ -551,7 +593,8 @@ window.TA_DICTATION = {
       "They grow tomatoes, onions, herbs, and flowers.",
       "Volunteers meet every Saturday morning to water the plants and remove weeds.",
       "The project has improved the neighbourhood and given people a chance to work together."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d44",
@@ -563,7 +606,8 @@ window.TA_DICTATION = {
       "The clinic is on the second floor of the Green Street Medical Centre.",
       "Bring your identification and any relevant documents.",
       "If you need to change the appointment, call reception at least one day in advance."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d45",
@@ -575,7 +619,8 @@ window.TA_DICTATION = {
       "It has been there for nearly forty years, and its owner knows almost every regular customer.",
       "The shelves are crowded with novels, travel guides, and second-hand textbooks.",
       "Although the shop is not modern, it has a warm atmosphere that large stores often lack."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d46",
@@ -587,7 +632,8 @@ window.TA_DICTATION = {
       "When people perform the same action regularly, it gradually becomes easier to remember and complete.",
       "For example, preparing your schoolbag every evening can reduce stress in the morning.",
       "Small, realistic changes are often more successful than dramatic plans."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d47",
@@ -599,7 +645,8 @@ window.TA_DICTATION = {
       "The new estimated departure time is 18:40.",
       "Passengers should remain near Gate 12 and listen for further announcements.",
       "We apologise for the inconvenience and appreciate your patience."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d48",
@@ -611,7 +658,8 @@ window.TA_DICTATION = {
       "Unfortunately, I forgot part of my speech and finished near the bottom of the list.",
       "I felt disappointed, but my teacher encouraged me to treat the experience as useful feedback.",
       "The next time, I practised more carefully and performed much better."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d49",
@@ -623,7 +671,8 @@ window.TA_DICTATION = {
       "Several people remembered when the main road was narrow and most shops closed at sunset.",
       "They described traditional celebrations, family businesses, and the arrival of the first public library.",
       "Their memories helped us understand the town beyond what we could find in books."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d50",
@@ -635,7 +684,8 @@ window.TA_DICTATION = {
       "A more effective approach is to close the book and explain the main ideas in your own words.",
       "You can also use short practice tests to identify what you have forgotten.",
       "Regular review is usually more useful than one long study session."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d51",
@@ -648,7 +698,8 @@ window.TA_DICTATION = {
       "Passengers should use the footbridge to reach the correct platform.",
       "Please keep your tickets ready for inspection and take care when boarding.",
       "This train will make additional stops at Jizzakh and Gulistan."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d52",
@@ -660,7 +711,8 @@ window.TA_DICTATION = {
       "Staff members initially thought it had been moved for cleaning.",
       "However, a review of the gallery records showed that no such request had been made.",
       "The director contacted the police and asked visitors who had noticed anything unusual to come forward."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d53",
@@ -672,7 +724,8 @@ window.TA_DICTATION = {
       "Members need to share information, listen to different opinions, and take responsibility for their contributions.",
       "If a problem appears, it is better to discuss it early than to allow frustration to grow.",
       "A clear plan can help everyone understand what needs to be done."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d54",
@@ -684,7 +737,8 @@ window.TA_DICTATION = {
       "During the summer, visitors came to enjoy the walking routes and cool evenings.",
       "In winter, heavy snow sometimes covered the roads for several days.",
       "Despite the difficult conditions, many families had lived there for generations and were proud of their traditions."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d55",
@@ -696,7 +750,8 @@ window.TA_DICTATION = {
       "Before it became common, washing clothes required considerable time and physical effort.",
       "Modern machines offer different programmes for different materials and levels of dirt.",
       "Although the technology has improved, users still need to choose suitable settings and avoid wasting electricity."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d56",
@@ -708,7 +763,8 @@ window.TA_DICTATION = {
       "The delivery arrived three days late, and the charger was missing from the box.",
       "I have attached a copy of my receipt.",
       "Please let me know whether you can send the missing item or arrange a suitable replacement."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d57",
@@ -719,7 +775,8 @@ window.TA_DICTATION = {
       "On a clear night, the sky can reveal thousands of stars that are difficult to see in a brightly lit city.",
       "Some stars appear brighter because they are closer to Earth or produce more light.",
       "Astronomers use powerful telescopes to study distant objects, but even a simple pair of binoculars can make the night sky more interesting."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d58",
@@ -730,7 +787,8 @@ window.TA_DICTATION = {
       "Travelling gives people an opportunity to experience customs that may be unfamiliar to them.",
       "In some countries, arriving exactly on time is considered essential, while in others, social events may begin later than announced.",
       "Visitors should observe local behaviour and ask polite questions rather than assume that their own habits are universal."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d59",
@@ -742,7 +800,8 @@ window.TA_DICTATION = {
       "Volunteers prepare food, clean the living areas, and help visitors choose a pet responsibly.",
       "The centre also teaches children about animal welfare.",
       "It depends on donations, but time and practical support are equally valuable."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d60",
@@ -754,7 +813,8 @@ window.TA_DICTATION = {
       "Some students follow the advice of their families, while others prefer to explore their own interests.",
       "It is useful to research different professions, speak to experienced people, and consider the skills each job requires.",
       "A thoughtful decision does not have to be made in a single day."
-     ]
+     ],
+     "recorded": false
     }
    ]
   },
@@ -772,7 +832,8 @@ window.TA_DICTATION = {
       "Many offer free internet access, language classes, quiet study areas, and activities for children.",
       "They can be especially important for people who do not have suitable learning spaces at home.",
       "As technology changes, libraries are adapting their services while continuing to make information available to everyone."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d62",
@@ -784,7 +845,8 @@ window.TA_DICTATION = {
       "Several old buildings have been restored, new public transport routes have opened, and more areas have been designed for pedestrians.",
       "These developments have made some journeys easier, although residents still express concerns about traffic and rising housing costs.",
       "Urban planning requires a balance between growth and quality of life."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d63",
@@ -796,7 +858,8 @@ window.TA_DICTATION = {
       "I explained that our school project had fallen behind schedule because two team members were absent.",
       "Instead of blaming anyone, I suggested dividing the remaining work into smaller tasks.",
       "We agreed on clear deadlines and completed the project one day before the presentation."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d64",
@@ -808,7 +871,8 @@ window.TA_DICTATION = {
       "During sleep, the brain processes information and strengthens certain memories.",
       "People who regularly get too little sleep may find it harder to focus or manage their emotions.",
       "A consistent bedtime, a quiet room, and reduced screen use before bed can support healthier sleep habits."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d65",
@@ -820,7 +884,8 @@ window.TA_DICTATION = {
       "Its collection includes tickets, photographs, uniforms, tools, and models of historic trains.",
       "One of the most popular exhibits is a restored steam locomotive built in 1912.",
       "Visitors can follow the development of railway travel and learn how it influenced trade and communication."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d66",
@@ -832,7 +897,8 @@ window.TA_DICTATION = {
       "Eventually, I explained why I had been unhappy with the way our project was organised.",
       "To my surprise, she listened carefully and admitted that she had misunderstood my concerns.",
       "We agreed to communicate more openly in the future."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d67",
@@ -843,7 +909,8 @@ window.TA_DICTATION = {
       "Modern services allow customers to order food, clothes, and household products without leaving home.",
       "This convenience saves time, but it can also encourage unnecessary purchases and create more packaging waste.",
       "Before placing an order, consumers should consider whether they really need the item, how it will be delivered, and whether a more sustainable option is available."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d68",
@@ -856,7 +923,8 @@ window.TA_DICTATION = {
       "We collected responses from 126 participants between the ages of fifteen and nineteen.",
       "Our findings suggest that short online articles are more popular than printed newspapers.",
       "However, many students still prefer paper books when reading longer texts."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d69",
@@ -868,7 +936,8 @@ window.TA_DICTATION = {
       "I followed the instructions on the website and requested a reset link.",
       "The message arrived within two minutes, but it had been sent to my old email address.",
       "I contacted technical support, verified my identity, and updated my account details."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d70",
@@ -880,7 +949,8 @@ window.TA_DICTATION = {
       "However, plastic pollution, construction, and rising sea levels place pressure on these areas.",
       "Local authorities can help by improving waste collection, protecting natural habitats, and educating visitors.",
       "Long-term progress depends on cooperation between residents, businesses, and governments."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d71",
@@ -892,7 +962,8 @@ window.TA_DICTATION = {
       "Then one of my teachers pointed out that the programme was designed for students who wanted to develop their skills.",
       "I completed the application, prepared for the interview, and was eventually offered a place.",
       "The experience taught me not to reject an opportunity before understanding its requirements."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d72",
@@ -905,7 +976,8 @@ window.TA_DICTATION = {
       "On your left, you will see a collection of traditional farming tools.",
       "The display on your right explains how irrigation systems were developed to support agriculture in dry regions.",
       "Please do not touch the objects, as some are extremely fragile."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d73",
@@ -917,7 +989,8 @@ window.TA_DICTATION = {
       "A well-designed advertisement can communicate useful information, but it may also create unrealistic expectations.",
       "Consumers should compare independent reviews, check product details, and think carefully before making expensive decisions.",
       "Understanding persuasive techniques helps people recognise the difference between evidence and emotional appeal."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d74",
@@ -929,7 +1002,8 @@ window.TA_DICTATION = {
       "Participants will work with local teachers to organise reading activities for children.",
       "Accommodation is provided, but volunteers must pay for their own travel and personal expenses.",
       "Applicants should have a good command of English and be willing to adapt to unfamiliar situations."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d75",
@@ -940,7 +1014,8 @@ window.TA_DICTATION = {
       "Questions are an important part of learning because they reveal what a person understands and what remains unclear.",
       "Instead of memorising every explanation, students can ask why a process works or how one idea connects to another.",
       "A thoughtful question may lead to a discussion that is more valuable than a simple list of facts."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d76",
@@ -952,7 +1027,8 @@ window.TA_DICTATION = {
       "Employees may have greater flexibility, but they also need to organise their time and maintain clear boundaries between work and personal life.",
       "Managers must ensure that remote staff receive useful feedback and have equal opportunities to contribute.",
       "Technology makes distance less significant, but it does not remove the need for trust."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d77",
@@ -964,7 +1040,8 @@ window.TA_DICTATION = {
       "They found pieces of pottery, several metal objects, and a section of decorated flooring.",
       "Further analysis will be needed before experts can determine the building's original purpose.",
       "The discovery may provide valuable evidence about the area's early history."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d78",
@@ -976,7 +1053,8 @@ window.TA_DICTATION = {
       "Supporters of the proposal argued that young people need time for hobbies, family activities, and rest.",
       "Opponents believed that regular practice helps learners develop independence.",
       "Several speakers suggested that the quality and purpose of homework matter more than the total number of tasks."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d79",
@@ -988,7 +1066,8 @@ window.TA_DICTATION = {
       "There were no large buildings or busy streets, only distant hills and occasional groups of trees.",
       "Our guide stopped twice to explain how local communities had adapted to limited water supplies.",
       "By sunset, the temperature had fallen, and the landscape had changed colour."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d80",
@@ -1000,7 +1079,8 @@ window.TA_DICTATION = {
       "Speed, however, does not guarantee accuracy.",
       "Before sharing a story, readers should check its original source, publication date, and supporting evidence.",
       "Comparing reports from reliable organisations can help prevent misunderstandings and reduce the spread of false information."
-     ]
+     ],
+     "recorded": false
     }
    ]
   },
@@ -1018,7 +1098,8 @@ window.TA_DICTATION = {
       "A confident speaker may appear knowledgeable, while a quiet person may be wrongly considered uninterested.",
       "These assumptions are not always accurate.",
       "Taking time to observe someone's behaviour across different situations can produce a more balanced understanding."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d82",
@@ -1030,7 +1111,8 @@ window.TA_DICTATION = {
       "Electric buses, protected cycling lanes, and reliable railway networks may reduce dependence on private cars.",
       "Nevertheless, introducing new systems requires careful investment and public support.",
       "A transport policy that works in one city may not be suitable for another."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d83",
@@ -1042,7 +1124,8 @@ window.TA_DICTATION = {
       "Instead, memories are reconstructed when we recall them, and details may change over time.",
       "This helps explain why two people can remember the same event differently.",
       "Memory is influenced by attention, emotion, later information, and the questions people are asked."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d84",
@@ -1054,7 +1137,8 @@ window.TA_DICTATION = {
       "It involves identifying shared interests, understanding the other side's concerns, and exploring possible compromises.",
       "Preparation is important, but flexibility is equally valuable.",
       "When participants feel that their views have been taken seriously, they are more likely to support the final agreement."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d85",
@@ -1065,7 +1149,8 @@ window.TA_DICTATION = {
       "The university has launched a digital archive containing thousands of historical documents, photographs, and recorded interviews.",
       "Researchers can search the collection by date, location, or subject.",
       "Although online access makes the material easier to explore, the archive team must also consider copyright, privacy, and the long-term preservation of digital files."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d86",
@@ -1077,7 +1162,8 @@ window.TA_DICTATION = {
       "Many platforms are designed to encourage users to remain online for as long as possible, often by presenting a continuous stream of personalised content.",
       "This can be convenient, but it may also interrupt concentration.",
       "Developing deliberate habits, such as setting limits and disabling unnecessary notifications, can help people use technology more thoughtfully."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d87",
@@ -1089,7 +1175,8 @@ window.TA_DICTATION = {
       "Protecting a natural habitat may restrict activities that local communities depend on for income, while allowing unrestricted development can cause lasting environmental damage.",
       "Successful programmes therefore require more than scientific knowledge.",
       "They must also involve residents, consider economic realities, and establish goals that can be maintained over time."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d88",
@@ -1101,7 +1188,8 @@ window.TA_DICTATION = {
       "Registration opens at 8:15 a.m., and the opening address begins at 9:00.",
       "Workshops will run in parallel from 11:30 until 1:00 p.m.",
       "Participants who require certificates should complete the online evaluation form before leaving the venue."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d89",
@@ -1113,7 +1201,8 @@ window.TA_DICTATION = {
       "However, they can become obstacles when we treat them as unquestionable facts.",
       "In education, for instance, a learner who performs poorly on one test may still have considerable potential.",
       "Fair evaluation requires attention to context, progress, and evidence from more than one source."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d90",
@@ -1125,7 +1214,8 @@ window.TA_DICTATION = {
       "Their objective was to examine a remote valley that had rarely been studied.",
       "Progress was slower than expected because the ground was uneven and the weather changed repeatedly.",
       "Despite these difficulties, the researchers collected samples that may help explain the region's unusual vegetation."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d91",
@@ -1136,7 +1226,8 @@ window.TA_DICTATION = {
       "Language is more than a system for exchanging information; it is also closely connected to identity, memory, and belonging.",
       "The expressions people use may reflect their region, profession, age, or family background.",
       "When a language becomes less widely spoken, communities can lose access to stories and forms of knowledge that have been passed down for generations."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d92",
@@ -1148,7 +1239,8 @@ window.TA_DICTATION = {
       "Yet systems trained on incomplete or unbalanced data may produce unfair outcomes.",
       "Developers should explain how important decisions are made, test systems carefully, and provide ways for people to challenge errors.",
       "Technical performance alone is not enough to establish that a system is responsible."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d93",
@@ -1160,7 +1252,8 @@ window.TA_DICTATION = {
       "Books could be produced more quickly and in greater numbers than before, allowing ideas to reach audiences beyond small groups of scholars.",
       "The change did not happen immediately, nor did it affect every community equally.",
       "Nevertheless, it contributed to major developments in education, religion, and public debate."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d94",
@@ -1172,7 +1265,8 @@ window.TA_DICTATION = {
       "Participants were divided into two groups, and both groups completed the same assessment before and after the six-week programme.",
       "The results indicated a modest improvement among those who read regularly.",
       "However, the researchers warned that the sample was too small to support broad conclusions."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d95",
@@ -1184,7 +1278,8 @@ window.TA_DICTATION = {
       "In professional settings, this preference can lead to decisions being made too quickly.",
       "A more responsible approach is to identify what is known, distinguish it from what is merely suspected, and explain where uncertainty remains.",
       "Acknowledging limitations does not weaken an argument; it can make the argument more credible."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d96",
@@ -1196,7 +1291,8 @@ window.TA_DICTATION = {
       "Architects examined the original structure, engineers assessed its safety, and conservators worked to protect the remaining decorative features.",
       "The project took eighteen months longer than planned because previously hidden damage was discovered behind the walls.",
       "Although the final cost exceeded the original estimate, the building can now be used by the public again."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d97",
@@ -1207,7 +1303,8 @@ window.TA_DICTATION = {
       "Education should prepare people not only to pass examinations but also to respond thoughtfully to unfamiliar problems.",
       "Facts and technical skills remain important, yet learners also need to evaluate evidence, communicate clearly, and recognise different perspectives.",
       "These abilities develop gradually through practice, discussion, and meaningful feedback rather than through memorisation alone."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d98",
@@ -1219,7 +1316,8 @@ window.TA_DICTATION = {
       "Passengers should use the temporary entrance on Market Street, approximately two hundred metres from the main building.",
       "Step-free access will be available, although some services may take slightly longer than usual.",
       "We apologise for any disruption."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d99",
@@ -1231,7 +1329,8 @@ window.TA_DICTATION = {
       "Researchers therefore compare alternative interpretations, examine the quality of their sources, and consider whether their methods could have influenced the results.",
       "Conclusions may need to be revised when new evidence becomes available.",
       "This is not necessarily a sign of failure; it is a normal part of careful investigation."
-     ]
+     ],
+     "recorded": false
     },
     {
      "id": "d100",
@@ -1243,7 +1342,8 @@ window.TA_DICTATION = {
       "More often, it develops through a series of deliberate actions that appear insignificant when considered separately.",
       "A student improves by practising consistently, a community changes through shared effort, and a research project advances through repeated testing and revision.",
       "Looking at the long-term process helps us recognise progress that immediate results might hide."
-     ]
+     ],
+     "recorded": false
     }
    ]
   }

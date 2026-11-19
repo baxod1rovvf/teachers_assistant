@@ -18,6 +18,10 @@ const dictDocs = page => page.evaluate(code => window.__fakeDocs.filter(d => d.c
 const played = page => page.evaluate(() => (window.__dcPlayed || []).map(p => p.sentence));
 
 async function setup(context, extra) {
+  // the real data says which dictations are recorded so far; these tests treat every one as recorded
+  await context.route('**/js/dictation-data.js*', r => r.fulfill({ contentType: 'application/javascript',
+    body: require('fs').readFileSync(require('path').join(__dirname, '..', 'js', 'dictation-data.js'), 'utf8') +
+      '\nwindow.TA_DICTATION.levels.forEach(l => l.items.forEach(i => { i.recorded = true; }));' }));
   await prepare(context, Object.assign({ docs: [classDoc(CODE)] }, extra || {}));
   await context.addInitScript(() => { window.__dcFast = true; window.__dcNoAudio = true; window.__skSendTimeoutMs = 2000; });
 }
@@ -367,4 +371,34 @@ test('a 40-word sentence wraps on a phone without sideways scrolling', async ({ 
   await page.locator('#dcSkip').click();
   await expect(page.locator('#dcFeedback')).toContainText('watermelon');
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375);
+});
+
+test('a link to an unrecorded dictation says it isn\'t ready — no ID check, nothing starts', async ({ page, context }) => {
+  await setup(context);
+  await context.route('**/js/dictation-data.js*', r => r.fulfill({ contentType: 'application/javascript',
+    body: require('fs').readFileSync(require('path').join(__dirname, '..', 'js', 'dictation-data.js'), 'utf8') +
+      '\nwindow.TA_DICTATION.levels.forEach(l => l.items.forEach(i => { if (i.id === "d1") i.recorded = false; }));' }));
+  await page.goto(URL_D);
+  await expect(page.locator('body')).toContainText("This dictation isn't ready yet — ask your teacher.");
+  await expect(page.locator('#skIdInput')).toHaveCount(0);
+  await expect(page.locator('#dcBox')).toHaveCount(0);
+});
+
+test('one Enter counts one try even when beforeinput can\'t be cancelled', async ({ page, context }) => {
+  test.setTimeout(60000);
+  await setup(context);
+  await start(page);
+  await page.locator('#dcBox').fill('Helo');
+  await page.evaluate(() => {
+    const box = document.getElementById('dcBox');
+    box.dispatchEvent(new InputEvent('beforeinput', { inputType: 'insertLineBreak', cancelable: false, bubbles: true }));
+    box.value = 'Helo\n';
+    box.dispatchEvent(new InputEvent('input', { inputType: 'insertLineBreak', bubbles: true }));
+  });
+  await expect(page.locator('.dc-word.wrong')).toHaveCount(1);
+  await writeRight(page, 1);
+  for (let n = 2; n <= 7; n++) await writeRight(page, n);
+  await expect(page.locator('#dcSend')).toContainText('Saved ✅');
+  const docs = await dictDocs(page);
+  expect(docs[0].sentences[0]).toEqual({ first: 'Helo', tries: 2, skipped: false, ok: false });   // the wrong try + the right one — not 3
 });

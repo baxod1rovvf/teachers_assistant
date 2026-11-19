@@ -242,7 +242,7 @@
     grow();
     // Enter checks — the keyboard's key on a computer, and a phone's Enter/Done (which may send only an input with a line break)
     box.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); check(); } });
-    box.addEventListener('beforeinput', e => { if (e.inputType === 'insertLineBreak' || e.inputType === 'insertParagraph') { e.preventDefault(); check(); } });
+    box.addEventListener('beforeinput', e => { if (e.inputType === 'insertLineBreak' || e.inputType === 'insertParagraph') { if (!e.cancelable) return; e.preventDefault(); check(); } });   // not cancelable → the input handler below checks once
     box.addEventListener('input', () => {
       if (/[\r\n]/.test(box.value)) { box.value = box.value.replace(/[\r\n]+/g, ' ').replace(/\s+$/, ''); grow(); check(); return; }
       grow();

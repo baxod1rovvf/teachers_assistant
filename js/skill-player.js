@@ -972,6 +972,11 @@ function boot() {
     return;
   }
   if (SK.skill === 'dictation') {
+    if (level.item.recorded === false) {   // the audio isn't there yet (still being recorded)
+      root().innerHTML = `${headerHtml(level)}<div class="sk-card sk-center"><div class="sk-big-emoji" aria-hidden="true">🎙</div>
+        <h1>🎙 This dictation isn't ready yet — ask your teacher.</h1></div>`;
+      return;
+    }
     if (SK.preview) { SK.name = 'Preview'; SK.studentId = ''; startDictation(level); return; }
     showStart(level, level.item);
     return;

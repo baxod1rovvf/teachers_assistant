@@ -42,10 +42,11 @@ if (errors.length) { console.error(errors.join('\n')); process.exit(1); }
 
 const levels = LEVELS.map(([id, name], li) => ({
   id, name,
-  items: items.slice(li * 20, li * 20 + 20).map(it => ({ id: 'd' + it.no, no: it.no, title: it.title, text: it.text, sentences: it.sentences }))
+  items: items.slice(li * 20, li * 20 + 20).map(it => ({ id: 'd' + it.no, no: it.no, title: it.title, text: it.text, sentences: it.sentences,
+    recorded: fs.existsSync(path.join(root, 'audio', 'dictation', 'd' + it.no + '.mp3')) }))   // dN.mp3 (the whole passage) is written last by the recording tool
 }));
 const total = items.reduce((n, it) => n + it.sentences.length, 0);
 const out = '// made by tools/build-dictations.js from docs/dictation-journey.md — don\'t edit by hand\n' +
   'window.TA_DICTATION = ' + JSON.stringify({ levels }, null, 1) + ';\n';
 fs.writeFileSync(path.join(root, 'js', 'dictation-data.js'), out);
-console.log('dictation-data.js: ' + items.length + ' passages, ' + total + ' sentences');
+console.log('dictation-data.js: ' + items.length + ' passages, ' + total + ' sentences, ' + levels.reduce((n, l) => n + l.items.filter(i => i.recorded).length, 0) + ' recorded');
