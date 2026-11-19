@@ -196,30 +196,157 @@ test('a missing dictation → "This dictation doesn\'t exist"', async ({ page, c
   await expect(page.locator('body')).toContainText('This dictation doesn\'t exist');
 });
 
-test('a phone with the keyboard open: ▶, the box, Check, Skip and the marked words stay in view; nothing scrolls sideways', async ({ page, context }) => {
-  await setup(context);
+// on a phone with the keyboard open (375×360): ▶, the box, Check, Skip and every marked word are inside the visible part
+async function phoneMarksInView(page, url, skipsBefore, wrongText) {
   await page.setViewportSize({ width: 375, height: 667 });
-  await start(page);
+  await start(page, url);
+  for (let i = 0; i < skipsBefore; i++) {
+    await page.locator('#dcSkip').click();
+    await expect(count(page)).toContainText(`Sentence ${i + 2} /`);
+  }
   await page.locator('#dcBox').focus();
   await page.setViewportSize({ width: 375, height: 360 });   // the keyboard takes the bottom of the screen
-  await page.locator('#dcBox').fill('Hello');
+  await page.locator('#dcBox').fill(wrongText);
   await page.locator('#dcCheck').click();
-  await expect(count(page)).toContainText('Sentence 2 / 7');
-  await page.locator('#dcBox').fill('My nme is');
-  await page.locator('#dcCheck').click();
-  await expect(page.locator('.dc-word.wrong')).toHaveCount(1);
-  await expect(page.locator('.dc-word.missing')).toHaveCount(1);
-  await page.locator('#dcBox').focus();
+  await expect(page.locator('.dc-marks')).toBeVisible();
   await page.waitForTimeout(300);
   const out = await page.evaluate(() => {
     const vv = window.visualViewport, top = vv.offsetTop, bottom = vv.offsetTop + vv.height;
-    return ['#dcPlay', '#dcBox', '#dcCheck', '#dcSkip', '.dc-marks'].map(sel => {
-      const r = document.querySelector(sel).getBoundingClientRect();
-      return { sel, ok: r.top >= top - 1 && r.bottom <= bottom + 1 && r.height > 0 };
-    }).filter(x => !x.ok).map(x => x.sel);
+    const els = ['#dcPlay', '#dcSlow', '#dcBox', '#dcCheck', '#dcSkip'].map(sel => [sel, document.querySelector(sel)])
+      .concat([...document.querySelectorAll('.dc-marks .dc-word')].map((e, i) => ['word ' + i + ' ' + e.textContent, e]));
+    return els.filter(([, e]) => [...e.getClientRects()].some(r => r.top < top - 1 || r.bottom > bottom + 1) || !e.getClientRects().length)
+      .map(([n, e]) => n + ' @' + Math.round(e.getBoundingClientRect().top) + '-' + Math.round(e.getBoundingClientRect().bottom));
   });
   expect(out).toEqual([]);
+  expect(await page.evaluate(() => document.activeElement && document.activeElement.id)).toBe('dcBox');
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375);
+}
+
+test('a phone with the keyboard open: ▶, the box, Check, Skip and the marked words stay in view; nothing scrolls sideways', async ({ page, context }) => {
+  await setup(context);
+  await phoneMarksInView(page, URL_D, 1, 'My nme is');
+  await expect(page.locator('.dc-word.wrong')).toHaveCount(1);
+  await expect(page.locator('.dc-word.missing')).toHaveCount(1);
+});
+
+test('a phone with the keyboard open: a long sentence with 4 mistakes (Dictation 85, sentence 3) still fits', async ({ page, context }) => {
+  await setup(context);
+  await phoneMarksInView(page, '/skill.html?s=dictation&dl=d85&c=' + CODE, 2,
+    'Although online acess makes the materal easier to explore, the archive team must also consider copyrite, privacy, and the long-term preservaton of digital files.');
+  await expect(page.locator('.dc-word.wrong')).toHaveCount(4);
+});
+
+test('a phone with the keyboard open: the longest sentence (Dictation 87, sentence 2) with 4 mistakes still fits', async ({ page, context }) => {
+  await setup(context);
+  await phoneMarksInView(page, '/skill.html?s=dictation&dl=d87&c=' + CODE, 1,
+    'Protectin a natural habitt may restrict activities that local comunities depend on for income, while allowing unrestricted development can cause lasting enviromental damage.');
+  await expect(page.locator('.dc-word.wrong')).toHaveCount(4);
+  // it really is the longest sentence in the data
+  const max = await page.evaluate(() => Math.max(...window.TA_DICTATION.levels.flatMap(l => l.items.flatMap(i => i.sentences.map(s => s.length)))));
+  expect(await page.evaluate(() => window.TA_DICTATION.levels.flatMap(l => l.items).find(i => i.id === 'd87').sentences[1].length)).toBe(max);
+});
+
+test('the first sentence is unlocked inside the tap: DC.prime runs in the Start and Ha taps, before any wait', async ({ page, context }) => {
+  await setup(context);
+  await page.goto(URL_D);
+  await page.evaluate(() => {
+    window.__primeEv = [];
+    const o = window.DC.prime;
+    window.DC.prime = function () { window.__primeEv.push(window.event ? window.event.type : null); return o.apply(this, arguments); };
+  });
+  await page.locator('#skIdInput').fill('10001');
+  await page.getByRole('button', { name: /Start/ }).click();
+  await page.locator('#skYes').click();
+  await expect(count(page)).toContainText('Sentence 1 / 7');
+  expect(await page.evaluate(() => window.__primeEv)).toEqual(['submit', 'click']);
+  expect(await page.evaluate(() => window.__dcPrimed)).toBe(2);
+});
+
+test('the keyboard stays open: the box keeps its focus through Check, Skip and ▶; a phone\'s Enter checks', async ({ page, context }) => {
+  await setup(context);
+  await start(page);
+  const focused = () => page.evaluate(() => document.activeElement && document.activeElement.id);
+  await page.locator('#dcBox').focus();
+  await page.locator('#dcBox').fill('Helo');
+  await page.locator('#dcCheck').click();
+  await expect(page.locator('.dc-word.wrong')).toHaveCount(1);
+  expect(await focused()).toBe('dcBox');
+  await page.locator('#dcPlay').click();
+  await page.locator('#dcSlow').click();
+  expect(await focused()).toBe('dcBox');
+  await page.locator('#dcSkip').click();
+  expect(await page.evaluate(() => document.querySelector('#dcBox').readOnly)).toBe(false);
+  expect(await focused()).toBe('dcBox');
+  await expect(count(page)).toContainText('Sentence 2 / 7');
+  // a phone's Enter: beforeinput insertLineBreak
+  await page.locator('#dcBox').fill('My name is Daniel');
+  await page.evaluate(() => document.querySelector('#dcBox').dispatchEvent(new InputEvent('beforeinput', { inputType: 'insertLineBreak', bubbles: true, cancelable: true })));
+  await expect(count(page)).toContainText('Sentence 3 / 7');
+  // … or only an input with a line break in it
+  await page.evaluate(() => { const b = document.querySelector('#dcBox'); b.value = 'I am thirteen years old\n'; b.dispatchEvent(new Event('input', { bubbles: true })); });
+  await expect(count(page)).toContainText('Sentence 4 / 7');
+  await expect(page.locator('#dcBox')).toHaveValue('');
+});
+
+test('Check on an empty box keeps the marks and says to write first; the next sentence\'s audio is fetched early', async ({ page, context }) => {
+  await setup(context);
+  await start(page);
+  await expect.poll(() => page.evaluate(() => window.__dcPreloaded || [])).toEqual([expect.stringMatching(/d1-s2\.mp3/)]);
+  await write(page, 'Helo');
+  await expect(page.locator('.dc-word.wrong')).toHaveCount(1);
+  await write(page, '');
+  await expect(page.locator('#dcFeedback')).toContainText('Write the sentence first');
+  await expect(page.locator('.dc-word.wrong')).toHaveCount(1);
+  await write(page, '');
+  await expect(page.locator('.dc-empty')).toHaveCount(1);
+});
+
+test('a draft made for other sentences (the teacher changed the text) starts again from sentence 1 but keeps the time', async ({ page, context }) => {
+  await setup(context, { storage: { ['ta_dictation_draft|' + CODE]: JSON.stringify({ dictation: 'd1', h: 'old', studentId: '10001', k: 3,
+    recs: [{ first: 'x', tries: 1, skipped: false, ok: false }], typed: 'zzz', activeMs: 600000 }) } });
+  await start(page);
+  await expect(count(page)).toContainText('Sentence 1 / 7');
+  await expect(page.locator('#dcBox')).toHaveValue('');
+  expect(await page.evaluate(() => window.DC.activeMs())).toBeGreaterThanOrEqual(600000);
+});
+
+test('preview: "Do it again" doesn\'t show "Send my answers"', async ({ page, context }) => {
+  test.setTimeout(60000);
+  await setup(context);
+  await page.goto('/skill.html?s=dictation&dl=d1&preview=1');
+  for (let n = 1; n <= 7; n++) { await expect(count(page)).toContainText(`Sentence ${n} / 7`); await page.locator('#dcSkip').click(); }
+  await expect(page.locator('#dcSend')).toContainText('Preview');
+  await page.locator('#dcAgain').click();
+  for (let n = 1; n <= 7; n++) { await expect(count(page)).toContainText(`Sentence ${n} / 7`); await page.locator('#dcSkip').click(); }
+  await expect(page.locator('.dc-end')).toContainText('not sent');
+  await expect(page.locator('#dcSend')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: /Send my answers/ })).toHaveCount(0);
+});
+
+test('DC_SHOW_ANSWER true (now): a wrong word shows the right one, a missed word shows itself', async ({ page, context }) => {
+  await setup(context);
+  await start(page);
+  await page.locator('#dcSkip').click();
+  await expect(count(page)).toContainText('Sentence 2 / 7');
+  await write(page, 'My nme is');
+  await expect(page.locator('.dc-word.wrong .dc-want')).toHaveText('name');
+  await expect(page.locator('.dc-word.missing')).toHaveText('Daniel');
+});
+
+test('DC_SHOW_ANSWER false: struck words and blanks first; the right words after the 2nd wrong Check', async ({ page, context }) => {
+  await setup(context);
+  await context.addInitScript(() => { window.__dcShowAnswer = false; });
+  await start(page);
+  await page.locator('#dcSkip').click();
+  await expect(count(page)).toContainText('Sentence 2 / 7');
+  await write(page, 'My nme is');
+  await expect(page.locator('.dc-word.wrong')).toHaveCount(1);
+  await expect(page.locator('.dc-want')).toHaveCount(0);
+  await expect(page.locator('.dc-word.missing')).toHaveText('______');
+  expect(await page.locator('.dc-marks').textContent()).not.toMatch(/name|Daniel/);
+  await write(page, 'My nme is');
+  await expect(page.locator('.dc-word.wrong .dc-want')).toHaveText('name');
+  await expect(page.locator('.dc-word.missing')).toHaveText('Daniel');
 });
 
 test('a 40-word sentence wraps on a phone without sideways scrolling', async ({ page, context }) => {

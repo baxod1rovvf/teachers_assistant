@@ -12,6 +12,11 @@
 (function () {
   'use strict';
   const IDLE_MS = 5 * 60 * 1000, SAVE_EVERY_MS = 15000, SLOW = 0.75;
+  /* The teacher is deciding whether a wrong word shows the right one next to it. true: wrong words show the right word, missed words
+     show themselves. false: a wrong word is only struck, a missed word is a blank of its length, and the right words show after the
+     2nd wrong Check of a sentence. (window.__dcShowAnswer overrides it in tests.) */
+  const DC_SHOW_ANSWER = true;
+  const showAnswer = () => (window.__dcShowAnswer != null ? !!window.__dcShowAnswer : DC_SHOW_ANSWER);
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const now = () => { const c = window.__dcClock; return typeof c === 'function' ? c() : typeof c === 'number' ? c : Date.now(); };
   const pause = () => (window.__dcFast ? 40 : 1100);   // ✅ / the skipped sentence shows this long before the next one plays
@@ -69,12 +74,19 @@
     T.savedAt = ms;
     const box = boxEl();
     try {
-      localStorage.setItem(draftKey(), JSON.stringify({ dictation: S.item.id, n: N(), studentId: S.ctx.studentId || '', k: S.k, recs: S.recs,
-        typed: box && !S.busy ? box.value : '', activeMs: ms, at: new Date().toISOString() }));
+      localStorage.setItem(draftKey(), JSON.stringify({ dictation: S.item.id, h: contentHash(S.item), studentId: S.ctx.studentId || '', k: S.k,
+        recs: S.recs, typed: box && !S.busy ? box.value : '', activeMs: ms, at: new Date().toISOString() }));
     } catch (e) { /* private window or full: the dictation goes on */ }
   }
   function readDraft() { try { return JSON.parse(localStorage.getItem(draftKey()) || 'null'); } catch (e) { return null; } }
   function clearDraft() { try { localStorage.removeItem(draftKey()); } catch (e) { /* private window */ } }
+  // the dictation's content version: a draft made for other sentences (the teacher changed the text) starts again from sentence 1
+  function contentHash(item) {
+    let h = 5381;
+    const str = (item.sentences || []).join('\n');
+    for (let i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) >>> 0;
+    return h.toString(36);
+  }
   const sameId = (a, b) => (window.taIdKey ? window.taIdKey(a) === window.taIdKey(b) : String(a || '').trim() === String(b || '').trim());
   let saveSoon = null;
   const saveLater = () => { clearTimeout(saveSoon); saveSoon = setTimeout(save, 400); };
@@ -85,41 +97,73 @@
     const m = s && /[?&]v=([^&#]+)/.exec(s.getAttribute('src') || '');
     return m ? m[1] : '';
   })();
-  const srcFor = k => 'audio/dictation/' + S.item.id + '-s' + (k + 1) + '.mp3' + (STAMP ? '?v=' + STAMP : '');
-  let audio = null, audioSrc = '';
+  const srcFor = (k, item) => 'audio/dictation/' + (item || S.item).id + '-s' + (k + 1) + '.mp3' + (STAMP ? '?v=' + STAMP : '');
+  let audio = null, audioSrc = '', playToken = 0, nextAudio = null;
   function audioNote(kind) {
     const el = S && S.root.querySelector('#dcAudioNote');
     if (!el) return;
     el.hidden = !kind;
-    el.textContent = kind === 'blocked' ? '🔈 Press ▶ Play again to hear the sentence.'
+    el.textContent = kind === 'blocked' ? '🔈 Press ▶ to hear the sentence.'
       : kind ? '📶 The sentence didn\'t play — check the internet and press ▶ Play again. You can still write it and check.' : '';
   }
   function playing(on) {
     const b = S && S.root.querySelector('#dcPlay');
     if (b) b.classList.toggle('playing', !!on);
   }
+  function theAudio() {
+    if (!audio) {
+      audio = new Audio();
+      audio.preload = 'auto';
+      audio.addEventListener('error', () => { if (audio.getAttribute('src') && !audio.muted) { playing(false); audioNote('error'); } });
+      audio.addEventListener('playing', () => { if (!audio.muted) playing(true); });
+      ['pause', 'ended'].forEach(ev => audio.addEventListener(ev, () => playing(false)));
+    }
+    return audio;
+  }
+  /* iPhones play sound only from a tap: after "Ha" the page asks the database first, so the first sentence would be refused.
+     DC.prime(item) runs inside the tap (skill-player.js calls it before any await): a silent start + stop unlocks the audio
+     element, and the later play(1) is allowed. */
+  function prime(item) {
+    if (window.__dcNoAudio || window.__dcAudioFails) { window.__dcPrimed = (window.__dcPrimed || 0) + 1; return; }
+    try {
+      const a = theAudio(), token = playToken, src = srcFor(0, item);
+      if (audioSrc !== src) { audioSrc = src; a.src = src; }
+      a.muted = true;
+      const p = a.play();
+      const done = () => { if (token === playToken) { a.pause(); a.muted = false; } };
+      if (p && p.then) p.then(done, done); else done();
+    } catch (e) { /* the sentence plays later, or ▶ does it */ }
+  }
+  // the next sentence is fetched while this one is worked on, so it starts at once after ✅
+  function preloadNext() {
+    const k = S.k + 1;
+    if (k >= N()) return;
+    const src = srcFor(k);
+    if (window.__dcNoAudio || window.__dcAudioFails) { (window.__dcPreloaded = window.__dcPreloaded || []).push(src); return; }
+    try {
+      if (!nextAudio) { nextAudio = new Audio(); nextAudio.preload = 'auto'; nextAudio.muted = true; }
+      if (nextAudio.getAttribute('src') !== src) nextAudio.src = src;
+    } catch (e) { /* only a speed-up */ }
+  }
   function play(rate) {
     if (!S) return;
     rate = rate || 1;
     const k = S.k, src = srcFor(k);
+    playToken++;
     audioNote('');
     if (window.__dcAudioFails) { audioNote('error'); return; }
-    if (window.__dcNoAudio) { (window.__dcPlayed = window.__dcPlayed || []).push({ sentence: k + 1, rate, src }); return; }
+    if (window.__dcNoAudio) { (window.__dcPlayed = window.__dcPlayed || []).push({ sentence: k + 1, rate, src }); preloadNext(); return; }
     try {
-      if (!audio) {
-        audio = new Audio();
-        audio.preload = 'auto';
-        audio.addEventListener('error', () => { if (audio.getAttribute('src')) { playing(false); audioNote('error'); } });
-        audio.addEventListener('playing', () => playing(true));
-        ['pause', 'ended'].forEach(ev => audio.addEventListener(ev, () => playing(false)));
-      }
-      audio.pause();
-      if (audioSrc !== src) { audioSrc = src; audio.src = src; } else audio.currentTime = 0;
-      audio.defaultPlaybackRate = rate;
-      audio.playbackRate = rate;
-      const p = audio.play();
+      const a = theAudio();
+      a.pause();
+      a.muted = false;
+      if (audioSrc !== src) { audioSrc = src; a.src = src; } else a.currentTime = 0;
+      a.defaultPlaybackRate = rate;
+      a.playbackRate = rate;
+      const p = a.play();
       if (p && p.catch) p.catch(e => { if (e && e.name === 'NotAllowedError') audioNote('blocked'); else if (!e || e.name !== 'AbortError') audioNote('error'); });
     } catch (e) { audioNote('error'); }
+    preloadNext();
   }
   function stopAudio() { try { if (audio) audio.pause(); } catch (e) { /* nothing playing */ } }
 
@@ -132,13 +176,20 @@
     const vv = window.visualViewport, h = vv ? vv.height : window.innerHeight, top = vv ? vv.offsetTop : 0;
     fullH = Math.max(fullH, window.innerHeight || 0, h);
     // the room the card may take: what's visible above the keyboard, and at most 60 % of the whole screen
-    const room = Math.max(260, Math.min(h, fullH * 0.6) - 8);
+    const room = Math.max(260, Math.min(h, fullH * 0.6) - 4);
     document.documentElement.style.setProperty('--dc-room', Math.round(room) + 'px');
     if (window.innerWidth > 760) return;
     const box = boxEl();
     if (!box || document.activeElement !== box) return;
     const r = card.getBoundingClientRect();
-    if (r.top < top - 1 || r.bottom > top + h + 1) window.scrollTo(0, Math.max(0, window.scrollY + r.top - top - 6));
+    if (r.top < top - 1 || r.bottom > top + h + 1) window.scrollTo(0, Math.max(0, window.scrollY + r.top - top - 2));
+  }
+  // after a wrong Check: the card's own content is scrolled so the marked words are in view
+  function marksInView() {
+    const card = S.root.querySelector('.dc-work'), m = S.root.querySelector('.dc-marks');
+    if (!card || !m) return;
+    const c = card.getBoundingClientRect(), r = m.getBoundingClientRect();
+    if (r.bottom > c.bottom) card.scrollTop += Math.min(r.bottom - c.bottom + 4, r.top - c.top - 4);
   }
 
   /* ---------- the sentence screen ---------- */
@@ -148,10 +199,15 @@
     S.root.innerHTML = (S.ctx.header || '') + html;
     window.scrollTo(0, 0);
   }
-  function marksHtml(parts) {
+  function marksHtml(parts, reveal) {
     return parts.map(p => {
-      if (p.state === 'wrong') return `<span class="dc-word wrong"><span class="dc-typed">${esc(p.text)}</span> <span class="dc-want" title="The right word">${esc(p.want)}</span></span>`;
-      if (p.state === 'missing') return `<span class="dc-word missing" title="A word you missed">${esc(p.text)}</span>`;
+      if (p.state === 'wrong') {
+        return `<span class="dc-word wrong"><span class="dc-typed">${esc(p.text)}</span>${reveal ? ` <span class="dc-want" title="The right word">${esc(p.want)}</span>` : ''}</span>`;
+      }
+      if (p.state === 'missing') {
+        return reveal ? `<span class="dc-word missing" title="A word you missed">${esc(p.text)}</span>`
+          : `<span class="dc-word missing dc-blank" title="A word you missed" aria-label="a missing word">${'_'.repeat(Math.max(2, Math.min(14, [...p.text].length)))}</span>`;
+      }
       if (p.state === 'extra') return `<span class="dc-word extra" title="Not in the sentence">${esc(p.text)}</span>`;
       return `<span class="dc-word ok">${esc(p.text)}</span>`;
     }).join(' ');
@@ -159,18 +215,18 @@
   const skips = () => S.recs.filter(r => r && r.skipped).length;
   function countHtml() {
     const s = skips();
-    return `Sentence ${Math.min(S.k + 1, N())} / ${N()}${s ? ` <span class="dc-skips">· ${s} skipped</span>` : ''}`;
+    return `Sentence ${Math.min(S.k + 1, N())} / ${N()}${s ? ` <span class="dc-skips">· <span class="dc-l">${s} skipped</span><span class="dc-s" aria-hidden="true">⏭ ${s}</span></span>` : ''}` +
+      (S.mode === 'again' ? ' <span class="dc-practice">· Practice, not sent</span>' : '');
   }
 
   function showWork(typed, lastHtml) {
     show(`<section class="sk-card dc-card dc-work" data-k="${S.k}">
       <div class="dc-top">
         <p class="dc-count" id="dcCount">${countHtml()}</p>
-        ${S.mode === 'again' ? '<span class="dc-practice">Practice — not sent</span>' : ''}
-      </div>
-      <div class="dc-play">
-        <button type="button" class="sk-btn sk-btn-small dc-playbtn" id="dcPlay">▶ Play again</button>
-        <button type="button" class="sk-btn sk-btn-small" id="dcSlow">🐢 Play slower</button>
+        <div class="dc-play">
+          <button type="button" class="sk-btn sk-btn-small dc-playbtn" id="dcPlay" title="Play the sentence again">▶ <span class="dc-l">Play again</span><span class="dc-s">Play</span></button>
+          <button type="button" class="sk-btn sk-btn-small" id="dcSlow" title="Play the sentence slower">🐢 <span class="dc-l">Play slower</span><span class="dc-s">Slower</span></button>
+        </div>
       </div>
       <p class="dc-audio-note" id="dcAudioNote" role="status" hidden></p>
       <textarea id="dcBox" class="dc-box" rows="2" maxlength="1200" aria-label="Write the sentence you hear" placeholder="Write the sentence you hear"
@@ -184,9 +240,18 @@
     const box = boxEl();
     box.value = typed || '';
     grow();
-    box.addEventListener('input', () => { grow(); if (!S.busy) saveLater(); });
+    // Enter checks — the keyboard's key on a computer, and a phone's Enter/Done (which may send only an input with a line break)
     box.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); check(); } });
+    box.addEventListener('beforeinput', e => { if (e.inputType === 'insertLineBreak' || e.inputType === 'insertParagraph') { e.preventDefault(); check(); } });
+    box.addEventListener('input', () => {
+      if (/[\r\n]/.test(box.value)) { box.value = box.value.replace(/[\r\n]+/g, ' ').replace(/\s+$/, ''); grow(); check(); return; }
+      grow();
+      if (!S.busy) saveLater();
+    });
     box.addEventListener('focus', () => setTimeout(fit, 60));
+    // a tap on a button doesn't take the focus from the box, so a phone's keyboard stays open
+    S.root.querySelectorAll('.dc-work button').forEach(b => ['pointerdown', 'mousedown'].forEach(ev =>
+      b.addEventListener(ev, e => { if (document.activeElement === box) e.preventDefault(); })));
     S.root.querySelector('#dcPlay').addEventListener('click', () => play(1));
     S.root.querySelector('#dcSlow').addEventListener('click', () => play(SLOW));
     S.root.querySelector('#dcCheck').addEventListener('click', check);
@@ -207,7 +272,13 @@
     if (S.busy) return;
     const box = boxEl(), fb = S.root.querySelector('#dcFeedback');
     const typed = box.value.trim();
-    if (!typed) { fb.innerHTML = '<p class="dc-msg">✍️ Write the sentence first, then press Check.</p>'; box.focus(); return; }
+    if (!typed) {   // any marks stay; the line goes above them
+      const old = fb.querySelector('.dc-empty');
+      if (old) old.remove();
+      fb.insertAdjacentHTML('afterbegin', '<p class="dc-msg dc-empty">✍️ Write the sentence first.</p>');
+      box.focus();
+      return;
+    }
     const want = S.item.sentences[S.k];
     const res = window.dcCheck ? window.dcCheck(want, typed) : { ok: typed === want, parts: [{ text: typed, state: typed === want ? 'ok' : 'wrong', want }], note: '' };
     const r = rec();
@@ -220,9 +291,12 @@
         `<p class="dc-last">✅ ${S.k + 1}. ${esc(want)}</p>${note}`);
       return;
     }
-    fb.innerHTML = `<p class="dc-msg dc-no">❌ Fix the marked words and check again.</p><p class="dc-marks">${marksHtml(res.parts)}</p>${note}`;
+    fb.innerHTML = `<p class="dc-msg dc-no">❌ Fix the marked words.</p><p class="dc-marks">${marksHtml(res.parts, showAnswer() || r.tries >= 2)}</p>${note}`;
+    S.root.querySelector('.dc-work').classList.add('dc-marked');   // the box shrinks to 2 lines so the marks fit above a phone's keyboard
+    grow();
     save();
     fit();
+    marksInView();
   }
   function skip() {
     if (S.busy) return;
@@ -237,7 +311,8 @@
     S.busy = true;
     const box = boxEl(), fb = S.root.querySelector('#dcFeedback');
     fb.innerHTML = msg;
-    box.readOnly = true;
+    S.root.querySelector('.dc-work').classList.remove('dc-marked');
+    const checked = box.value;   // the box keeps its focus (no readOnly: that can close a phone's keyboard)
     S.k++;
     save();
     fit();
@@ -245,8 +320,8 @@
       if (!S || boxEl() !== box) return;
       S.busy = false;
       if (S.k >= N()) { finish(); return; }
-      box.readOnly = false;
-      box.value = '';
+      // anything typed during the pause after the checked text is kept
+      box.value = box.value.startsWith(checked) ? box.value.slice(checked.length).replace(/^\s+/, '') : '';
       grow();
       S.root.querySelector('.dc-work').dataset.k = S.k;
       S.root.querySelector('#dcCount').innerHTML = countHtml();
@@ -297,7 +372,7 @@
         dictation: S.item.id, dictationNo: S.item.no, level: S.ctx.levelId || 'beginner', title: title(),
         sentences: S.item.sentences.map((_, i) => { const r = S.recs[i] || {}; return { first: r.first || '', tries: r.tries || 0, skipped: !!r.skipped, ok: !!r.ok }; }),
         total: sm.total, correctFirst: sm.correctFirst, score: sm.score, skips: sm.skips, timeSeconds: secs, timeDisplay: formatTime(secs), date, builtAt: date };
-      if (S.ctx.preview) { setSend('preview'); return; }
+      if (S.ctx.preview) { S.firstSent = true; setSend('preview'); return; }
       if (S.ctx.keep) S.ctx.keep(S.first);   // kept on this phone until the save is confirmed
       sendFirst();
     } else if (S.first && !S.firstSent) setSend(S.sending ? 'sending' : 'failed');
@@ -356,7 +431,7 @@
     const d = !S.ctx.preview && S.ctx.code ? readDraft() : null;
     if (d && d.dictation === item.id && sameId(d.studentId, S.ctx.studentId)) {
       ms = Number(d.activeMs) || 0;   // the time always carries on
-      if (d.n === item.sentences.length && Array.isArray(d.recs)) {   // other sentences (the teacher's text changed) → from sentence 1
+      if (d.h === contentHash(item) && Array.isArray(d.recs)) {   // other sentences (the teacher's text changed) → from sentence 1
         S.k = Math.min(Math.max(0, d.k | 0), item.sentences.length);
         S.recs = d.recs.slice(0, item.sentences.length).map(r => r && typeof r === 'object'
           ? { first: String(r.first || ''), tries: Number(r.tries) || 0, skipped: !!r.skipped, ok: !!r.ok } : null);
@@ -368,5 +443,5 @@
     showWork(typed, '');
   }
 
-  window.DC = { start, activeMs, formatTime, save };
+  window.DC = { start, prime, activeMs, formatTime, save };
 })();

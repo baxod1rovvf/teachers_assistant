@@ -330,6 +330,9 @@ function dictationItem() {
   }
   return null;
 }
+function primeDictation(level) {
+  if (SK.skill === 'dictation' && level && level.item && window.DC && window.DC.prime) window.DC.prime(level.item);
+}
 /* The dictation itself lives in js/dictation-player.js (window.DC); like Grammar, this page gives it the sending and keeping. */
 function startDictation(level, extra) {
   const withId = p => { p.__id = p.__id || skResultId(p); return p; };
@@ -423,6 +426,7 @@ function showStart(level, content) {
     if (!id) { $('#skStartErr').textContent = 'Write your ID to start (your teacher gave it to you).'; $('#skIdInput').focus(); return; }
     const btn = $('#skStartForm .start-btn');
     if (btn.disabled) return;
+    primeDictation(level);   // in the tap, before any await (an iPhone plays sound only from a tap)
     btn.disabled = true;
     const label = btn.textContent;
     btn.innerHTML = '<span class="sk-spin" aria-hidden="true"></span> Checking…';
@@ -452,6 +456,7 @@ function showConfirm(level, content, who, id) {
   $('#skYes').addEventListener('click', () => {
     const yes = $('#skYes');
     if (yes.disabled) return;
+    primeDictation(level);   // in the tap, before the checks' awaits — or the first sentence can't play by itself on an iPhone
     yes.disabled = true; $('#skNo').disabled = true;
     yes.innerHTML = '<span class="sk-spin" aria-hidden="true"></span> Ha';
     SK.name = who.name || ''; SK.studentId = id;
