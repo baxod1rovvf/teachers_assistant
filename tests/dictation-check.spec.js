@@ -77,7 +77,7 @@ test('dictation check: words, spelling, capitals and punctuation', async ({ page
   expect(r.contraction.ok).toBe(false);
   expect(r.contraction2.ok).toBe(false);
   expect(r.hyphen.ok).toBe(true);
-  expect(r.hyphenGone.ok).toBe(false);
+  expect(r.hyphenGone.ok).toBe(true);   // a hyphenated word may be typed joined (review, 2026-11-19)
   expect(r.cafe.ok).toBe(true);
   expect(r.quote.ok).toBe(true);
   expect(r.quote.note).toBe('Check the punctuation.');
@@ -106,7 +106,6 @@ test('dictation check: numbers in digits or in words', async ({ page, context })
       ['The annual education conference will take place at the Riverside Convention Centre on 12 and 13 September.',
         'The annual education conference will take place at the Riverside Convention Centre on 12th and 13th September.'],
       ['We usually have dinner together at seven o\'clock.', 'We usually have dinner together at 7 o\'clock.'],
-      ['We usually have dinner together at seven o\'clock.', 'We usually have dinner together at 7:00.'],
       ['The bread costs twelve thousand so\'m.', 'The bread costs 12,000 so\'m.'],
       ['The bread costs twelve thousand so\'m.', 'The bread costs 12000 so’m.'],
     ];
@@ -129,6 +128,63 @@ test('dictation check: numbers in digits or in words', async ({ page, context })
   expect(firstWrong(wrong[5])).toEqual([{ text: 'a.m.', state: 'wrong', want: 'p.m.' }]);
   expect(await page.evaluate(() => window.dcWordKeys('Check-in at 7:20, from the 14th of August; Flight AZ 418 at 9 a.m.'))).toEqual(
     ['check', 'in', 'at', '7:20', 'from', '14', 'august', 'flight', 'az', '418', 'at', '9', 'am']);
+});
+
+// review round 1 (2026-11-19): the reviewer's own inputs
+test('dictation check: ordinals, o\'clock, Doctor/Mister, thousands, joined words, a.m. commas, long junk', async ({ page, context }) => {
+  await open(page, context);
+  const wrong = [
+    ['At first, I felt nervous because I did not know anyone.', 'At one, I felt nervous because I did not know anyone.'],
+    ['The judges gave us second prize.', 'The judges gave us two prize.'],
+    ['Welcome to the second floor of the museum.', 'Welcome to the two floor of the museum.'],
+    ['The shelves are crowded with novels, travel guides, and second-hand textbooks.', 'The shelves are crowded with novels, travel guides, and two hand textbooks.'],
+    ['My first meal was vegetable soup.', 'My one meal was vegetable soup.'],
+    ['First impressions can influence our opinions long before we have enough information to make a fair judgement.',
+      'One impressions can influence our opinions long before we have enough information to make a fair judgement.'],
+    ['You have booked a double room for three nights, from 14 August to 17 August.', 'You have booked a double room for third nights, from 14 August to 17 August.'],
+    ['I am waiting for the number 12 bus.', 'I am waiting for the number twelfth bus.'],
+    ['Passengers should remain near Gate 12 and listen for further announcements.', 'Passengers should remain near Gate twelfth and listen for further announcements.'],
+    ['We won two goals to one.', 'We won second goals to first.'],
+    ["My lessons start at eight o'clock.", 'My lessons start at eight.'],
+    ["We usually have dinner together at seven o'clock.", 'We usually have dinner together at seven.'],
+    ["We usually have dinner together at seven o'clock.", 'We usually have dinner together at 7:00.'],   // the passage writes o'clock: it's required
+    ["My lessons start at eight o'clock.", 'My lessons start at eight oclock.'],
+  ];
+  const right = [
+    ['At first, I felt nervous.', 'At 1st, I felt nervous.'],
+    ["My lessons start at eight o'clock.", 'My lessons start at 8 o’clock.'],
+    ['Registration opens at 8:15 a.m., and the opening address begins at 9:00.', "Registration opens at 8:15 a.m., and the opening address begins at nine o'clock."],
+    ['Registration opens at 8:15 a.m., and the opening address begins at 9:00.', 'Registration opens at 8:15 a.m., and the opening address begins at 9.'],
+    ['Please remember that your appointment with Dr Harris is scheduled for Thursday, 21 May, at 3:45 p.m.',
+      'Please remember that your appointment with Doctor Harris is scheduled for Thursday, 21 May, at 3:45 p.m.'],
+    ['Dear Mr Wilson, your reservation is confirmed.', 'Dear Mister Wilson, your reservation is confirmed.'],
+    ["The bread costs twelve thousand so'm.", "The bread costs 12 000 so'm."],
+    ["The bread costs twelve thousand so'm.", "The bread costs 12.000 so'm."],
+    ['Sleep plays an essential role in learning, concentration, and general well-being.', 'Sleep plays an essential role in learning, concentration, and general wellbeing.'],
+    ['We scored the first goal, but the other team equalised before half-time.', 'We scored the first goal, but the other team equalised before halftime.'],
+  ];
+  const r = await page.evaluate(([wrong, right]) => {
+    const t0 = performance.now();
+    const junk = window.dcCheck('Hello!', 'x '.repeat(200000));
+    return {
+      wrong: wrong.map(([e, t]) => [t, window.dcCheck(e, t).ok]),
+      right: right.map(([e, t]) => [t, window.dcCheck(e, t)]),
+      ordWrong: window.dcCheck('My first meal was vegetable soup.', 'My one meal was vegetable soup.').parts.filter(p => p.state !== 'ok'),
+      comma: window.dcCheck('Check-in begins at 2 p.m., and check-out is before 11 a.m.', 'Check-in begins at 2 p.m. and check-out is before 11 a.m.'),
+      commaPm: window.dcCheck('Check-in begins at 2 p.m., and check-out is before 11 a.m.', 'Check-in begins at 2pm, and check-out is before 11am.'),
+      mrs: window.dcCheck('Mrs Brown is my teacher.', 'Mrs. Brown is my teacher.'),
+      junk: { ok: junk.ok, ms: performance.now() - t0 },
+    };
+  }, [wrong, right]);
+  r.wrong.forEach(([t, ok]) => expect(ok, t).toBe(false));
+  r.right.forEach(([t, x]) => expect(x.ok, t + ' ' + JSON.stringify(x.parts.filter(p => p.state !== 'ok'))).toBe(true));
+  expect(r.right.map(([, x]) => x.note).filter(Boolean)).toEqual([]);   // Doctor/Mister, 12 000, wellbeing: no note either
+  expect(r.ordWrong).toEqual([{ text: 'one', state: 'wrong', want: 'first' }]);
+  expect(r.comma).toMatchObject({ ok: true, note: 'Check the punctuation.' });
+  expect(r.commaPm).toMatchObject({ ok: true, note: '' });
+  expect(r.mrs).toMatchObject({ ok: true, note: '' });
+  expect(r.junk.ok).toBe(false);
+  expect(r.junk.ms).toBeLessThan(1000);
 });
 
 test('dictation check: every sentence is right typed exactly, in lower case without punctuation, and as the recording says it', async ({ page, context }) => {
