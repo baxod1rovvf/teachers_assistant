@@ -20,8 +20,9 @@ Pre-intermediate 41–60, Intermediate 61–80, Upper-intermediate/Advanced 81�
   (teacher's answer "A").
 - Results: **what they wrote**, **how many skips**, **how many minutes**.
 - **Phones: everything in the top 60 % of the screen** (the keyboard takes the bottom).
-- Audio made with **OmniVoice** (github.com/k2-fsa/OmniVoice). **Only Dictation 1's audio first; the other 99 after the teacher
-  likes it.**
+- Audio made with **OmniVoice** (github.com/k2-fsa/OmniVoice). Dictation 1's audio was approved by the teacher (2026-11-19: "i like
+  it" — Energetic Male, speed 0.9, 1.2 s between sentences); the other 99 are made the same way (`tools/make-dictation-audio.py`;
+  numbers said in words by its `spoken()`). 416 sentences in all.
 
 ## Goals / non-goals / anti-goals
 - Goals: all 100 passages with per-sentence audio; a calm, phone-first sentence screen; fair checking; teacher results per group.
@@ -64,9 +65,11 @@ Pre-intermediate 41–60, Intermediate 61–80, Upper-intermediate/Advanced 81�
 - End: score, minutes, skips; result sent once (first time only, like Grammar); "Do it again" for practice sends nothing.
 
 ### Checking ("right")
-Words compared after: lower case, curly → straight apostrophes, punctuation removed, hyphens = spaces, numbers in digits or words
-(0–100, "half past eight" ≈ "8:30"? — no: times as written or their digit/word forms "7:20" = "seven twenty"), "Mrs"/"Mrs." etc.
-Capitals and punctuation differences are listed as a gentle note.
+Words compared after: lower case, curly → straight apostrophes, punctuation removed, hyphens = spaces, "Mrs"/"Mrs." the same.
+**Numbers count in digits or words** (teacher's "A" + my call): "12" = "twelve", "7:20" = "seven twenty", "1987" = "nineteen
+eighty-seven", "14 August" = "14th August" = "the fourteenth of August" = "fourteenth of August", "9 a.m." = "9am" = "nine a m",
+"AZ 418" = "AZ418"; British/American spellings stay strict (it's a spelling exercise). Contractions must match the passage
+("I'm" ≠ "I am") — they're what the voice says. Capitals and punctuation differences are listed as a gentle note, never blocking.
 
 ### Result
 `type: 'Dictation course'`, `code, name, studentId, skill 'dictation', dictation (dN), dictationNo, level, title, sentences:
