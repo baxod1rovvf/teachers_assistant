@@ -819,7 +819,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   `dN.mp3` (the whole passage, the teacher's ▶ Play), made by `tools/make-dictation-audio.py` with OmniVoice "Energetic Male" (instruct "male, young adult, high pitch", seed 4,
   speed 0.9, 1.2 s gaps; numbers said in words by `spoken()`; each clip checked with Whisper). The student page is `skill.html?s=dictation&dl=dN&c=<code>` (`js/dictation-player.js`, same ID
   check + "Bu sizmi"): one sentence at a time plays by itself, ▶ Play again / 🐢 slower, the student types, Check marks mistakes and can try again, or skips; `DC.prime` unlocks the audio on
-  iPhone inside the "Ha" tap; `DC_SHOW_ANSWER` switches showing the right sentence after a wrong try; on phones the marks sit above the keyboard. Checker `js/dictation-check.js`
+  iPhone inside the "Ha" tap; `DC_SHOW_ANSWER` switches showing the right words in green after a wrong try (on — teacher, 2026-11-20: keep it); on phones the marks sit above the keyboard. Checker `js/dictation-check.js`
   `dcCheck`: words only (case, punctuation, spacing don't matter); numbers either way ("13" = "thirteen"); ordinals and cardinals stay different outside dates; "o'clock" is required when the
   passage writes it; Doctor = Dr, Mister = Mr; joined hyphen words ("wellbeing" = "well-being"; "well known" = "well-known" for the space form). **Only the first run is sent** (`type: 'Dictation course'`, `code, name, studentId, skill 'dictation',
   dictation, dictationNo, level, title, sentences[{first, tries, skipped, ok}], total, correctFirst, score, skips, timeSeconds, timeDisplay, date, builtAt`); progress is kept on the phone

@@ -309,7 +309,7 @@ window.TA_DICTATION = {
       "He took it to the customer service desk.",
       "An hour later, its owner came back to collect it."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d23",
