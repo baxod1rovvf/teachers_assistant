@@ -296,7 +296,7 @@ window.TA_DICTATION = {
       "However, two students invited me to sit with them at lunch.",
       "Now I have several friends, and I enjoy my classes."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d22",
@@ -309,7 +309,7 @@ window.TA_DICTATION = {
       "He took it to the customer service desk.",
       "An hour later, its owner came back to collect it."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d23",
