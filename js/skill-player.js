@@ -196,7 +196,7 @@ async function skAlreadyDone(name, id) {
   if (kept) {
     const state = await skSendResult(kept);
     if (state === 'ok') forgetUnsent(kept.__id);
-    return { at: kept.date, summary: doneSummary(kept), correct: kept.correct, total: kept.total, unsent: state === 'ok' ? undefined : kept };
+    return { at: kept.date, summary: doneSummary(kept), correct: kept.correct, total: kept.total, doc: kept, unsent: state === 'ok' ? undefined : kept };
   }
   try {
     const { fs, db } = await within(loadFirestore(), 8000);
@@ -209,7 +209,7 @@ async function skAlreadyDone(name, id) {
     for (const snap of snaps) {
       const doc = (snap.docs || []).map(d => d.data()).find(r => r && (r.skill === SK.skill || /course$/.test(r.type || '')) &&
         skSameStudent(r, name, id) && !skBlankWriting(r));
-      if (doc) return { at: doc.date, summary: doneSummary(doc), correct: doc.correct, total: doc.total };
+      if (doc) return { at: doc.date, summary: doneSummary(doc), correct: doc.correct, total: doc.total, doc };
     }
     return null;   // nothing from this student: free to do it
   } catch (e) { console.warn('Skills course: could not check for an earlier try', e); return { offline: true }; }
@@ -274,6 +274,21 @@ function showAlreadyDone(level, done) {
   if (SK.skill === 'grammar' && !done.unsent) { startGrammar(level, { done }); return; }   // "You've done this lesson" + try again / read again
   if (SK.skill === 'dictation' && !done.unsent) { startDictation(level, { done }); return; }   // "You've done this dictation" + do it again
   const score = done.summary ? `<p class="sk-done-score">Your result: <b>${esc(done.summary)}</b></p>` : '';
+  const review = (SK.skill === 'listening' || SK.skill === 'reading') && done.doc && Array.isArray(done.doc.answers) && done.doc.answers.length && level[SK.skill];
+  if (!done.unsent && review) {
+    // analysis mode (teacher, 2026-11-20): the page after Submit again, locked — answers, right answers, Analyze; nothing is sent
+    root().innerHTML = `${headerHtml(level)}<section class="sk-card sk-center sk-done-card sk-review-card">
+      <div class="sk-big-emoji" aria-hidden="true">✅</div>
+      <h2 lang="uz">Bu mashqni allaqachon tugatgansiz</h2>
+      <p>You have already done this ${esc(info.name.toLowerCase())}. Your teacher already has your answers — look at them below and press <b>Analyze ></b>.</p>
+      <p class="sk-done-who">👤 <b>${esc(SK.name)}</b> · ID ${esc(SK.studentId)}</p>
+      ${score}
+      <div class="sk-actions"><button type="button" class="sk-btn sk-btn-small" id="skNotMe">Not you? Write your own name and ID</button></div>
+    </section><div id="skReview"></div>`;
+    $('#skNotMe').addEventListener('click', skNotMe);
+    showReview(level, done.doc);
+    return;
+  }
   if (!done.unsent) {
     root().innerHTML = `${headerHtml(level)}<section class="sk-card sk-center sk-done-card">
       <div class="sk-big-emoji" aria-hidden="true">✅</div>
@@ -293,11 +308,12 @@ function showAlreadyDone(level, done) {
     ${score}
     <p>They are saved on this phone. Check the internet and press Send.</p>
     <div class="sk-send" id="skSend" role="status"><button type="button" class="sk-btn sk-btn-main" id="skSendKept">📤 Send my answers</button></div>
-  </section>`;
+  </section>${review ? '<div id="skReview"></div>' : ''}`;
+  if (review) showReview(level, done.doc);
   const sendKept = async () => {
     const box = $('#skSend');
     box.innerHTML = '<span class="sk-send-note">📤 Sending your answers to your teacher…</span>';
-    if ((await skSendResult(done.unsent)) === 'ok') { forgetUnsent(done.unsent.__id); showAlreadyDone(level, { at: done.at, summary: done.summary, correct: done.correct, total: done.total }); return; }
+    if ((await skSendResult(done.unsent)) === 'ok') { forgetUnsent(done.unsent.__id); showAlreadyDone(level, { at: done.at, summary: done.summary, correct: done.correct, total: done.total, doc: done.unsent }); return; }
     box.innerHTML = '<span class="sk-send-bad">Not sent yet — check the internet</span> <button type="button" class="sk-btn sk-btn-small" id="skSendKept">📤 Send my answers</button>';
     $('#skSendKept').addEventListener('click', sendKept);
   };
@@ -582,10 +598,18 @@ function givenFor(li) {
   return on ? on.dataset.val : '';
 }
 
-function submit(level, content, info) {
+/* Marks every question on the page (✅/❌, the right answer) and locks it. `givenList` (analysis mode) fills in the answers the
+   student sent first; without it the answers are read from the page. → [{ q, given, right }] */
+function markQuestions(content, givenList) {
   const items = [...root().querySelectorAll('.sk-q')];
-  const answers = content.questions.map((q, i) => {
+  return content.questions.map((q, i) => {
     const li = items[i];
+    if (givenList) {
+      const g = String(givenList[i] == null ? '' : givenList[i]);
+      const inp = li.querySelector('.sk-gap');
+      if (inp) inp.value = g;
+      else li.querySelectorAll('.sk-opt').forEach(b => { const on = g !== '' && b.dataset.val === g; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    }
     const given = givenFor(li).trim();
     const right = q.type === 'open' ? skOpenRight(given, q.keys) : skMark(given, q.a);
     li.classList.add(right ? 'right' : 'wrong');
@@ -598,6 +622,59 @@ function submit(level, content, info) {
       : `❌ ${given ? 'Not quite.' : 'No answer.'} The answer: <b>${esc(q.a[0])}</b>`;
     return { q: q.q, given, right };
   });
+}
+function scoreHtml(correct, total) {
+  const pct = total ? correct / total : 0;
+  const cheer = pct >= 0.8 ? '🌟 Excellent work!' : pct >= 0.6 ? '👏 Well done!' : pct >= 0.4 ? '💪 Good try — keep going!' : '🌱 Keep practising — you can do it!';
+  return `<div class="sk-score"><span class="sk-score-n">${correct} / ${total}</span><span class="sk-score-t">${cheer}</span></div>`;
+}
+/* What comes under the questions after Submit (and in analysis mode): the useful words or "Check your answers", Analyze, Retelling. */
+function afterHtml(content, isReading) {
+  const words = content.words || [];
+  return (words.length ? `<section class="sk-card sk-words-card"><h2>💡 ${words.length} useful words</h2>
+      <ul class="sk-words">${words.map(w => `<li>${w.emoji ? `<span class="sk-wemoji" aria-hidden="true">${esc(w.emoji)}</span>` : ''}<b>${esc(w.w)}</b>${w.uz ? `<span class="sk-m sk-uz" lang="uz" translate="no">${esc(w.uz)}</span>` : `<span class="sk-m">${esc(w.m)}</span>`}<i>${esc(w.ex)}</i></li>`).join('')}</ul>
+      <div class="sk-actions"><button type="button" class="sk-btn sk-btn-main" id="skAnalyze">Analyze ></button></div>
+    </section>` : `<section class="sk-card sk-words-card"><h2>🔍 Check your answers</h2>
+      <p class="sk-intro">See what the speakers said and where each answer is.</p>
+      <div class="sk-actions"><button type="button" class="sk-btn sk-btn-main" id="skAnalyze">Analyze ></button></div>
+    </section>`) + `
+    <div id="skAnalysis"></div>
+    ${isReading && content.retell ? `<section class="sk-card sk-retell-card"><h2>🗣️ Retelling</h2>
+      <p>${esc(content.retell)}</p><p class="sk-retell-goal"><b>Try to use at least 5 vocabulary items from the text.</b></p></section>` : ''}`;
+}
+
+/* Analysis mode (teacher, 2026-11-20: "some students cannot do analysis after leaving the exercise"): the exercise drawn again from
+   the answers the student sent — locked, no recording, no Submit, nothing sent. Answers sent for questions that have changed since
+   (Listening Steps 8–20 were rewritten 2026-11-13) can't be laid on today's questions: a plain list of them instead. */
+function showReview(level, doc) {
+  const isReading = SK.skill === 'reading';
+  const content = level[SK.skill];
+  const saved = doc.answers || [];
+  const box = $('#skReview');
+  const same = saved.length === content.questions.length && saved.every((a, i) => a && a.q === content.questions[i].q);
+  const correct = typeof doc.correct === 'number' ? doc.correct : saved.filter(a => a && a.right).length;
+  const total = typeof doc.total === 'number' ? doc.total : saved.length;
+  if (!same) {
+    box.innerHTML = `<section class="sk-card sk-old-answers"><h2>✏️ Your answers</h2>
+      <p class="sk-intro">These questions have changed since you did this exercise, so here are the answers you sent.</p>
+      <ol class="sk-qs">${saved.map((a, i) => `<li class="sk-q ${a && a.right ? 'right' : 'wrong'}"><span class="sk-num">${i + 1}</span><div class="sk-qbody">
+        <div class="sk-qtext">${esc(a && a.q || '')}</div><div class="sk-fix">${a && a.right ? '✅' : '❌'} Your answer: <b>${esc(a && a.given || '—')}</b></div></div></li>`).join('')}</ol>
+      <div class="sk-actions"><div class="sk-result">${scoreHtml(correct, total)}</div></div></section>`;
+    return;
+  }
+  const top = isReading
+    ? `<section class="sk-card sk-text-card"><h2>📖 ${esc(content.title)}</h2><div class="sk-text" id="skText">${readingTextHtml(content.text)}</div></section>`
+    : `<section class="sk-card sk-audio-card"><h2>🎧 ${esc(content.title)}</h2>
+        <p class="sk-intro sk-review-note">🔒 The recording doesn't play here — you have already done this listening. Press <b>Analyze ></b> to read what the speakers said.</p></section>`;
+  box.innerHTML = top + `<section class="sk-card sk-questions"><h2>✏️ Your answers</h2>${questionsHtml(content.questions, isReading)}
+      <div class="sk-actions" id="skActions"><div class="sk-result">${scoreHtml(correct, total)}</div></div>
+    </section><div id="skAfter">${afterHtml(content, isReading)}</div>`;
+  markQuestions(content, saved.map(a => a && a.given));
+  $('#skAnalyze').addEventListener('click', () => analyze(content, isReading));
+}
+
+function submit(level, content, info) {
+  const answers = markQuestions(content);
   const correct = answers.filter(a => a.right).length;
   const total = answers.length;
   const secs = Math.max(0, Math.round((Date.now() - startedAt) / 1000));
@@ -610,24 +687,12 @@ function submit(level, content, info) {
   lastPayload.builtAt = lastPayload.date;   // see submitWriting
   lastPayload.__id = skResultId(lastPayload);   // the same record on every try and on "Send again"
   keepUnsent(lastPayload);   // kept on this phone until the save is confirmed (2026-11-13)
-  const pct = correct / total;
-  const cheer = pct >= 0.8 ? '🌟 Excellent work!' : pct >= 0.6 ? '👏 Well done!' : pct >= 0.4 ? '💪 Good try — keep going!' : '🌱 Keep practising — you can do it!';
+  const isReading = SK.skill === 'reading';
   $('#skActions').innerHTML = `<div class="sk-result">
-      <div class="sk-score"><span class="sk-score-n">${correct} / ${total}</span><span class="sk-score-t">${cheer}</span></div>
+      ${scoreHtml(correct, total)}
       <div class="sk-send" id="skSend" role="status"></div>
     </div>`;
-  const words = content.words || [];
-  const isReading = SK.skill === 'reading';
-  $('#skAfter').innerHTML = (words.length ? `<section class="sk-card sk-words-card"><h2>💡 ${words.length} useful words</h2>
-      <ul class="sk-words">${words.map(w => `<li>${w.emoji ? `<span class="sk-wemoji" aria-hidden="true">${esc(w.emoji)}</span>` : ''}<b>${esc(w.w)}</b>${w.uz ? `<span class="sk-m sk-uz" lang="uz" translate="no">${esc(w.uz)}</span>` : `<span class="sk-m">${esc(w.m)}</span>`}<i>${esc(w.ex)}</i></li>`).join('')}</ul>
-      <div class="sk-actions"><button type="button" class="sk-btn sk-btn-main" id="skAnalyze">Analyze ></button></div>
-    </section>` : `<section class="sk-card sk-words-card"><h2>🔍 Check your answers</h2>
-      <p class="sk-intro">See what the speakers said and where each answer is.</p>
-      <div class="sk-actions"><button type="button" class="sk-btn sk-btn-main" id="skAnalyze">Analyze ></button></div>
-    </section>`) + `
-    <div id="skAnalysis"></div>
-    ${isReading && content.retell ? `<section class="sk-card sk-retell-card"><h2>🗣️ Retelling</h2>
-      <p>${esc(content.retell)}</p><p class="sk-retell-goal"><b>Try to use at least 5 vocabulary items from the text.</b></p></section>` : ''}`;
+  $('#skAfter').innerHTML = afterHtml(content, isReading);
   $('#skAnalyze').addEventListener('click', () => analyze(content, isReading));
   sendNow();
 }
