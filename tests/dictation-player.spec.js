@@ -39,13 +39,13 @@ async function write(page, text) {
 }
 // writes sentence n (1-based) right and waits for the next one (or the end)
 async function writeRight(page, n) {
-  await expect(count(page)).toContainText(`Sentence ${n} / 7`);
+  await expect(count(page)).toContainText(`Sentence ${n} of 7`);
   await write(page, D1[n - 1]);
-  if (n < 7) await expect(count(page)).toContainText(`Sentence ${n + 1} / 7`);
+  if (n < 7) await expect(count(page)).toContainText(`Sentence ${n + 1} of 7`);
   else await expect(page.locator('.dc-end')).toBeVisible();
 }
 
-test('Bu sizmi → Ha → "Sentence 1 / 7": the sentence plays by itself; ▶ and Play slower play it again', async ({ page, context }) => {
+test('Bu sizmi → Ha → "Sentence 1 of 7": the sentence plays by itself; ▶ and Play slower play it again', async ({ page, context }) => {
   await setup(context);
   const errors = watchErrors(page);
   await page.goto(URL_D);
@@ -54,7 +54,7 @@ test('Bu sizmi → Ha → "Sentence 1 / 7": the sentence plays by itself; ▶ an
   await page.getByRole('button', { name: /Start/ }).click();
   await expect(page.locator('.sk-confirm')).toContainText('Alice Test — 10001');
   await page.locator('#skYes').click();
-  await expect(count(page)).toContainText('Sentence 1 / 7');
+  await expect(count(page)).toContainText('Sentence 1 of 7');
   await expect(page.locator('.sk-head')).toContainText('Dictation 1');
   await expect.poll(() => played(page)).toEqual([1]);
   await page.locator('#dcPlay').click();
@@ -74,11 +74,11 @@ test('wrong words are marked and the box keeps the text; fixed → ✅ and the n
   await expect(page.locator('.dc-word.wrong')).toHaveCount(1);
   await expect(page.locator('.dc-word.wrong')).toContainText('Hello');
   await expect(page.locator('#dcBox')).toHaveValue('Helo');
-  await expect(count(page)).toContainText('Sentence 1 / 7');
+  await expect(count(page)).toContainText('Sentence 1 of 7');
   await page.locator('#dcBox').fill('Hello');
   await page.locator('#dcCheck').click();
   await expect(page.locator('#dcFeedback')).toContainText('✅');
-  await expect(count(page)).toContainText('Sentence 2 / 7');
+  await expect(count(page)).toContainText('Sentence 2 of 7');
   await expect.poll(() => played(page)).toEqual([1, 2]);
   await expect(page.locator('#dcBox')).toHaveValue('');
   // a missing word and an extra one
@@ -92,7 +92,7 @@ test('Skip shows the right sentence, counts a skip and goes on', async ({ page, 
   await start(page);
   await page.locator('#dcSkip').click();
   await expect(page.locator('#dcFeedback')).toContainText('Hello!');
-  await expect(count(page)).toContainText('Sentence 2 / 7');
+  await expect(count(page)).toContainText('Sentence 2 of 7');
   await expect(count(page)).toContainText('1 skipped');
   await expect.poll(() => played(page)).toEqual([1, 2]);
 });
@@ -109,7 +109,7 @@ test('all 7 sentences → one result with each sentence\'s first try, tries and 
   await writeRight(page, 1);
   await writeRight(page, 2);
   await page.locator('#dcSkip').click();
-  await expect(count(page)).toContainText('Sentence 4 / 7');
+  await expect(count(page)).toContainText('Sentence 4 of 7');
   for (let n = 4; n <= 7; n++) await writeRight(page, n);
   await expect(page.locator('.dc-score')).toContainText('5/7');
   await expect(page.locator('#dcSend')).toContainText('Saved ✅');
@@ -140,7 +140,7 @@ test('a reload continues at the same sentence with the earlier answers; "Do it a
   await page.locator('#dcBox').fill('I am thir');
   await page.waitForTimeout(700);
   await start(page);
-  await expect(count(page)).toContainText('Sentence 3 / 7');
+  await expect(count(page)).toContainText('Sentence 3 of 7');
   await expect(page.locator('#dcBox')).toHaveValue('I am thir');
   for (let n = 3; n <= 7; n++) await writeRight(page, n);
   await expect(page.locator('#dcSend')).toContainText('Saved ✅');
@@ -150,7 +150,7 @@ test('a reload continues at the same sentence with the earlier answers; "Do it a
   expect(docs[0].correctFirst).toBe(6);
   // practice: the same sentences again, nothing sent
   await page.locator('#dcAgain').click();
-  await expect(count(page)).toContainText('Sentence 1 / 7');
+  await expect(count(page)).toContainText('Sentence 1 of 7');
   for (let n = 1; n <= 7; n++) await writeRight(page, n);
   await expect(page.locator('.dc-end')).toContainText('not sent');
   await expect(page.locator('#dcSend')).toHaveCount(0);
@@ -166,9 +166,9 @@ test('opening the link again after the result is saved → "You\'ve done this di
   await expect(page.locator('.dc-done')).toContainText('6 / 7');
   await expect(page.locator('.dc-done')).toContainText('1 skipped');
   await page.locator('#dcAgain').click();
-  await expect(count(page)).toContainText('Sentence 1 / 7');
+  await expect(count(page)).toContainText('Sentence 1 of 7');
   await page.locator('#dcSkip').click();
-  await expect(count(page)).toContainText('Sentence 2 / 7');
+  await expect(count(page)).toContainText('Sentence 2 of 7');
   expect(await page.evaluate(() => window.__writes.length)).toBe(0);
   expect(await page.evaluate(c => localStorage.getItem('ta_dictation_draft|' + c), CODE)).toBeNull();
 });
@@ -180,7 +180,7 @@ test('a sentence that doesn\'t play shows the 📶 note, and Check still works',
   await expect(page.locator('#dcAudioNote')).toBeVisible();
   await expect(page.locator('#dcAudioNote')).toContainText('📶');
   await write(page, 'Hello!');
-  await expect(count(page)).toContainText('Sentence 2 / 7');
+  await expect(count(page)).toContainText('Sentence 2 of 7');
 });
 
 test('preview: no ID card, nothing sent or kept', async ({ page, context }) => {
@@ -206,7 +206,7 @@ async function phoneMarksInView(page, url, skipsBefore, wrongText) {
   await start(page, url);
   for (let i = 0; i < skipsBefore; i++) {
     await page.locator('#dcSkip').click();
-    await expect(count(page)).toContainText(`Sentence ${i + 2} /`);
+    await expect(count(page)).toContainText(`Sentence ${i + 2} of`);
   }
   await page.locator('#dcBox').focus();
   await page.setViewportSize({ width: 375, height: 360 });   // the keyboard takes the bottom of the screen
@@ -261,7 +261,7 @@ test('the first sentence is unlocked inside the tap: DC.prime runs in the Start 
   await page.locator('#skIdInput').fill('10001');
   await page.getByRole('button', { name: /Start/ }).click();
   await page.locator('#skYes').click();
-  await expect(count(page)).toContainText('Sentence 1 / 7');
+  await expect(count(page)).toContainText('Sentence 1 of 7');
   expect(await page.evaluate(() => window.__primeEv)).toEqual(['submit', 'click']);
   expect(await page.evaluate(() => window.__dcPrimed)).toBe(2);
 });
@@ -281,14 +281,14 @@ test('the keyboard stays open: the box keeps its focus through Check, Skip and �
   await page.locator('#dcSkip').click();
   expect(await page.evaluate(() => document.querySelector('#dcBox').readOnly)).toBe(false);
   expect(await focused()).toBe('dcBox');
-  await expect(count(page)).toContainText('Sentence 2 / 7');
+  await expect(count(page)).toContainText('Sentence 2 of 7');
   // a phone's Enter: beforeinput insertLineBreak
   await page.locator('#dcBox').fill('My name is Daniel');
   await page.evaluate(() => document.querySelector('#dcBox').dispatchEvent(new InputEvent('beforeinput', { inputType: 'insertLineBreak', bubbles: true, cancelable: true })));
-  await expect(count(page)).toContainText('Sentence 3 / 7');
+  await expect(count(page)).toContainText('Sentence 3 of 7');
   // … or only an input with a line break in it
   await page.evaluate(() => { const b = document.querySelector('#dcBox'); b.value = 'I am thirteen years old\n'; b.dispatchEvent(new Event('input', { bubbles: true })); });
-  await expect(count(page)).toContainText('Sentence 4 / 7');
+  await expect(count(page)).toContainText('Sentence 4 of 7');
   await expect(page.locator('#dcBox')).toHaveValue('');
 });
 
@@ -309,7 +309,7 @@ test('a draft made for other sentences (the teacher changed the text) starts aga
   await setup(context, { storage: { ['ta_dictation_draft|' + CODE]: JSON.stringify({ dictation: 'd1', h: 'old', studentId: '10001', k: 3,
     recs: [{ first: 'x', tries: 1, skipped: false, ok: false }], typed: 'zzz', activeMs: 600000 }) } });
   await start(page);
-  await expect(count(page)).toContainText('Sentence 1 / 7');
+  await expect(count(page)).toContainText('Sentence 1 of 7');
   await expect(page.locator('#dcBox')).toHaveValue('');
   expect(await page.evaluate(() => window.DC.activeMs())).toBeGreaterThanOrEqual(600000);
 });
@@ -318,10 +318,10 @@ test('preview: "Do it again" doesn\'t show "Send my answers"', async ({ page, co
   test.setTimeout(60000);
   await setup(context);
   await page.goto('/skill.html?s=dictation&dl=d1&preview=1');
-  for (let n = 1; n <= 7; n++) { await expect(count(page)).toContainText(`Sentence ${n} / 7`); await page.locator('#dcSkip').click(); }
+  for (let n = 1; n <= 7; n++) { await expect(count(page)).toContainText(`Sentence ${n} of 7`); await page.locator('#dcSkip').click(); }
   await expect(page.locator('#dcSend')).toContainText('Preview');
   await page.locator('#dcAgain').click();
-  for (let n = 1; n <= 7; n++) { await expect(count(page)).toContainText(`Sentence ${n} / 7`); await page.locator('#dcSkip').click(); }
+  for (let n = 1; n <= 7; n++) { await expect(count(page)).toContainText(`Sentence ${n} of 7`); await page.locator('#dcSkip').click(); }
   await expect(page.locator('.dc-end')).toContainText('not sent');
   await expect(page.locator('#dcSend')).toHaveCount(0);
   await expect(page.getByRole('button', { name: /Send my answers/ })).toHaveCount(0);
@@ -331,7 +331,7 @@ test('DC_SHOW_ANSWER true (now): a wrong word shows the right one, a missed word
   await setup(context);
   await start(page);
   await page.locator('#dcSkip').click();
-  await expect(count(page)).toContainText('Sentence 2 / 7');
+  await expect(count(page)).toContainText('Sentence 2 of 7');
   await write(page, 'My nme is');
   await expect(page.locator('.dc-word.wrong .dc-want')).toHaveText('name');
   await expect(page.locator('.dc-word.missing')).toHaveText('Daniel');
@@ -342,7 +342,7 @@ test('DC_SHOW_ANSWER false: struck words and blanks first; the right words after
   await context.addInitScript(() => { window.__dcShowAnswer = false; });
   await start(page);
   await page.locator('#dcSkip').click();
-  await expect(count(page)).toContainText('Sentence 2 / 7');
+  await expect(count(page)).toContainText('Sentence 2 of 7');
   await write(page, 'My nme is');
   await expect(page.locator('.dc-word.wrong')).toHaveCount(1);
   await expect(page.locator('.dc-want')).toHaveCount(0);
@@ -403,23 +403,24 @@ test('one Enter counts one try even when beforeinput can\'t be cancelled', async
   expect(docs[0].sentences[0]).toEqual({ first: 'Helo', tries: 2, skipped: false, ok: false });   // the wrong try + the right one — not 3
 });
 
-// teacher, 2026-11-20: "if a student gets the sentence right, it should be highlighted greater — now only one small sticker appears"
-test('a right sentence stands out: a big green "✅ Right!" banner and the box turns green, until the next sentence', async ({ page, context }) => {
+// teacher, 2026-11-20: "if a student gets the sentence right, it should be highlighted greater" + a mock-up: "Sentence 1 of 7" with dots,
+// a right sentence on a green banner with only a round ✓ (no "Right!" text)
+test('a right sentence stands out: a green banner with a round ✓ and the sentence; dots show the progress', async ({ page, context }) => {
   await setup(context);
   await context.addInitScript(() => { window.__dcFast = false; });   // the usual pause, so the banner can be seen
   const errors = watchErrors(page);
   await start(page);
+  await expect(page.locator('#dcCount .dc-dot')).toHaveCount(7);
+  await expect(page.locator('#dcCount .dc-dot.on')).toHaveCount(1);
   await write(page, D1[0]);
   const banner = page.locator('.dc-msg.dc-right');
   await expect(banner).toBeVisible();
-  await expect(banner.locator('.dc-right-t')).toHaveText('✅ Right!');
-  await expect(page.locator('.dc-work')).toHaveClass(/dc-good/);
-  const size = await banner.locator('.dc-right-t').evaluate(e => parseFloat(getComputedStyle(e).fontSize));
-  expect(size).toBeGreaterThan(20);
-  await expect.poll(() => page.locator('#dcBox').evaluate(e => getComputedStyle(e).backgroundColor), { timeout: 800 }).toBe('rgb(238, 248, 234)');
-  await page.waitForTimeout(450);
-  await page.screenshot({ path: test.info().outputPath('right.png') });
-  await expect(count(page)).toContainText('Sentence 2 / 7');
-  await expect(page.locator('.dc-work')).not.toHaveClass(/dc-good/);
+  await expect(banner.locator('.dc-tick')).toBeVisible();
+  await expect(banner.getByRole('img', { name: 'Right' })).toBeVisible();
+  await expect(banner).toHaveText('Hello!');   // no "Right!" text
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: test.info().outputPath('right.png'), clip: { x: 280, y: 60, width: 840, height: 340 } });
+  await expect(count(page)).toContainText('Sentence 2 of 7');
+  await expect(page.locator('#dcCount .dc-dot.done')).toHaveCount(1);
   expect(errors).toEqual([]);
 });

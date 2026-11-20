@@ -168,18 +168,36 @@ html body#skBody.sk-air #dcSend.bad { border-radius: 18px; }
   html body#skBody.sk-air .dc-word.wrong .dc-typed { padding: 0 2px; }
 }
 
-/* A right sentence in a dictation stands out (teacher, 2026-11-20): a big green banner, and the box turns green while it shows */
-html body#skBody.sk-air .dc-msg.dc-right { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin: 4px 0; padding: 14px 18px;
-  background: #E2F3DC; border: 2px solid #3D7434; border-radius: 16px; color: #2F5A28; box-shadow: 0 6px 18px rgba(61,116,52,0.22);
-  animation: dcRightPop .45s cubic-bezier(.2,1.4,.4,1) both; }
-html body#skBody.sk-air .dc-right .dc-right-t { font-size: 1.45rem; font-weight: 700; }
-html body#skBody.sk-air .dc-right .dc-said { font-size: 1.1rem; }
-html body#skBody.sk-air .dc-work.dc-good :is(#dcBox, .dc-box), html body#skBody.sk-air .dc-work.dc-good #dcBox:focus { border-color: #3D7434 !important; background: #EEF8EA !important; box-shadow: 0 0 0 4px rgba(61,116,52,0.25) !important;
-  transition: background .2s, box-shadow .2s, border-color .2s; }
-@keyframes dcRightPop { from { transform: scale(.85); opacity: 0; } to { transform: none; opacity: 1; } }
+/* Dictation look (teacher, 2026-11-20 — a mock-up): "Sentence 1 of 7" with an orange number and a dot per sentence, an orange ✓ in
+   Check, and a right sentence on a cream → green banner with a round green ✓ (no "Right!" text) */
+html body#skBody.sk-air .dc-count { display: flex; align-items: center; flex-wrap: wrap; gap: 0 6px; color: #14181F !important; letter-spacing: .05em; }
+html body#skBody.sk-air .dc-count .dc-n { color: #F0650F; text-transform: none; letter-spacing: .02em; }
+html body#skBody.sk-air .dc-count .dc-w { text-transform: uppercase; }
+html body#skBody.sk-air .dc-dots { display: inline-flex; align-items: center; margin-left: 14px; }
+html body#skBody.sk-air .dc-dot { display: block; width: 10px; height: 10px; border-radius: 50%; background: #B9BEC6; position: relative; }
+html body#skBody.sk-air .dc-dot + .dc-dot { margin-left: 8px; }
+html body#skBody.sk-air .dc-dot + .dc-dot::before { content: ''; position: absolute; right: 100%; top: 50%; width: 8px; height: 2px; margin-top: -1px; background: #B9BEC6; }
+html body#skBody.sk-air .dc-dot.done { background: #F0650F; }
+html body#skBody.sk-air .dc-dot.done + .dc-dot::before, html body#skBody.sk-air .dc-dot.done + .dc-dot.on::before { background: #F0650F; }
+html body#skBody.sk-air .dc-dot.on { width: 15px; height: 15px; background: #F0650F; }
+html body#skBody.sk-air #dcCheck { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+html body#skBody.sk-air .dc-ck { width: 24px; height: 24px; flex: none; fill: none; stroke: #F0650F; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+html body#skBody.sk-air .dc-msg.dc-right { display: flex; align-items: center; gap: 14px; margin: 4px 0; padding: 12px 18px;
+  background: linear-gradient(90deg, #FBF6EC 0%, #E7F2DF 60%, #D3E9C9 100%); border: 1px solid #8DB57E; border-radius: 16px; color: #14181F;
+  animation: dcRightPop .35s cubic-bezier(.2,1.3,.4,1) both; }
+html body#skBody.sk-air .dc-tick { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%;
+  background: #3E9B3A; box-shadow: 0 2px 6px rgba(62,155,58,.35); }
+html body#skBody.sk-air .dc-tick svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+html body#skBody.sk-air .dc-right .dc-said { font-size: 1.1rem; font-weight: 600; color: #14181F; }
+@keyframes dcRightPop { from { transform: scale(.94); opacity: 0; } to { transform: none; opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { html body#skBody.sk-air .dc-msg.dc-right { animation: none; } }
 @media (max-width: 760px) {
-  html body#skBody.sk-air .dc-msg.dc-right { padding: 10px 14px; }
-  html body#skBody.sk-air .dc-right .dc-right-t { font-size: 1.25rem; }
+  html body#skBody.sk-air .dc-dots { margin-left: 0; }
+  html body#skBody.sk-air .dc-dot { width: 8px; height: 8px; }
+  html body#skBody.sk-air .dc-dot + .dc-dot { margin-left: 5px; }
+  html body#skBody.sk-air .dc-dot + .dc-dot::before { width: 5px; }
+  html body#skBody.sk-air .dc-dot.on { width: 12px; height: 12px; }
+  html body#skBody.sk-air .dc-msg.dc-right { padding: 9px 12px; gap: 10px; }
+  html body#skBody.sk-air .dc-tick { width: 28px; height: 28px; }
   html body#skBody.sk-air .dc-right .dc-said { font-size: 1rem; }
 }
