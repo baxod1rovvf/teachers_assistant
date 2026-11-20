@@ -402,3 +402,24 @@ test('one Enter counts one try even when beforeinput can\'t be cancelled', async
   const docs = await dictDocs(page);
   expect(docs[0].sentences[0]).toEqual({ first: 'Helo', tries: 2, skipped: false, ok: false });   // the wrong try + the right one — not 3
 });
+
+// teacher, 2026-11-20: "if a student gets the sentence right, it should be highlighted greater — now only one small sticker appears"
+test('a right sentence stands out: a big green "✅ Right!" banner and the box turns green, until the next sentence', async ({ page, context }) => {
+  await setup(context);
+  await context.addInitScript(() => { window.__dcFast = false; });   // the usual pause, so the banner can be seen
+  const errors = watchErrors(page);
+  await start(page);
+  await write(page, D1[0]);
+  const banner = page.locator('.dc-msg.dc-right');
+  await expect(banner).toBeVisible();
+  await expect(banner.locator('.dc-right-t')).toHaveText('✅ Right!');
+  await expect(page.locator('.dc-work')).toHaveClass(/dc-good/);
+  const size = await banner.locator('.dc-right-t').evaluate(e => parseFloat(getComputedStyle(e).fontSize));
+  expect(size).toBeGreaterThan(20);
+  await expect.poll(() => page.locator('#dcBox').evaluate(e => getComputedStyle(e).backgroundColor), { timeout: 800 }).toBe('rgb(238, 248, 234)');
+  await page.waitForTimeout(450);
+  await page.screenshot({ path: test.info().outputPath('right.png') });
+  await expect(count(page)).toContainText('Sentence 2 / 7');
+  await expect(page.locator('.dc-work')).not.toHaveClass(/dc-good/);
+  expect(errors).toEqual([]);
+});

@@ -287,8 +287,9 @@
     if (r.tries === 1 && res.ok) r.ok = true;
     const note = res.note ? `<p class="dc-note">✏️ ${esc(res.note)}</p>` : '';
     if (res.ok) {
-      advance(`<p class="dc-msg dc-right">✅ Right! <span class="dc-said">${esc(want)}</span></p>${note}`,
-        `<p class="dc-last">✅ ${S.k + 1}. ${esc(want)}</p>${note}`);
+      // a right sentence stands out (teacher, 2026-11-20: "only one small sticker appears"): a big green banner + the box turns green
+      advance(`<p class="dc-msg dc-right" role="status"><span class="dc-right-t">✅ Right!</span> <span class="dc-said">${esc(want)}</span></p>${note}`,
+        `<p class="dc-last">✅ ${S.k + 1}. ${esc(want)}</p>${note}`, true);
       return;
     }
     fb.innerHTML = `<p class="dc-msg dc-no">❌ Fix the marked words.</p><p class="dc-marks">${marksHtml(res.parts, showAnswer() || r.tries >= 2)}</p>${note}`;
@@ -307,11 +308,12 @@
     advance(msg, msg);
   }
   // ✅ or the skipped sentence shows for a moment, then the next sentence (the box keeps its focus — the phone's keyboard stays)
-  function advance(msg, last) {
+  function advance(msg, last, good) {
     S.busy = true;
     const box = boxEl(), fb = S.root.querySelector('#dcFeedback');
     fb.innerHTML = msg;
     S.root.querySelector('.dc-work').classList.remove('dc-marked');
+    S.root.querySelector('.dc-work').classList.toggle('dc-good', !!good);
     const checked = box.value;   // the box keeps its focus (no readOnly: that can close a phone's keyboard)
     S.k++;
     save();
@@ -319,6 +321,8 @@
     setTimeout(() => {
       if (!S || boxEl() !== box) return;
       S.busy = false;
+      const work = S.root.querySelector('.dc-work');
+      if (work) work.classList.remove('dc-good');
       if (S.k >= N()) { finish(); return; }
       // anything typed during the pause after the checked text is kept
       box.value = box.value.startsWith(checked) ? box.value.slice(checked.length).replace(/^\s+/, '') : '';

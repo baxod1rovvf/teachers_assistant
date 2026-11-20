@@ -167,3 +167,19 @@ html body#skBody.sk-air #dcSend.bad { border-radius: 18px; }
   html body#skBody.sk-air .dc-word { padding: 0 2px; }
   html body#skBody.sk-air .dc-word.wrong .dc-typed { padding: 0 2px; }
 }
+
+/* A right sentence in a dictation stands out (teacher, 2026-11-20): a big green banner, and the box turns green while it shows */
+html body#skBody.sk-air .dc-msg.dc-right { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin: 4px 0; padding: 14px 18px;
+  background: #E2F3DC; border: 2px solid #3D7434; border-radius: 16px; color: #2F5A28; box-shadow: 0 6px 18px rgba(61,116,52,0.22);
+  animation: dcRightPop .45s cubic-bezier(.2,1.4,.4,1) both; }
+html body#skBody.sk-air .dc-right .dc-right-t { font-size: 1.45rem; font-weight: 700; }
+html body#skBody.sk-air .dc-right .dc-said { font-size: 1.1rem; }
+html body#skBody.sk-air .dc-work.dc-good :is(#dcBox, .dc-box), html body#skBody.sk-air .dc-work.dc-good #dcBox:focus { border-color: #3D7434 !important; background: #EEF8EA !important; box-shadow: 0 0 0 4px rgba(61,116,52,0.25) !important;
+  transition: background .2s, box-shadow .2s, border-color .2s; }
+@keyframes dcRightPop { from { transform: scale(.85); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { html body#skBody.sk-air .dc-msg.dc-right { animation: none; } }
+@media (max-width: 760px) {
+  html body#skBody.sk-air .dc-msg.dc-right { padding: 10px 14px; }
+  html body#skBody.sk-air .dc-right .dc-right-t { font-size: 1.25rem; }
+  html body#skBody.sk-air .dc-right .dc-said { font-size: 1rem; }
+}
