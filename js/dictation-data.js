@@ -177,7 +177,7 @@ window.TA_DICTATION = {
       "Walking or cycling for short journeys can also reduce pollution.",
       "Schools and families should encourage children to develop these habits from an early age."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d39",
@@ -190,7 +190,7 @@ window.TA_DICTATION = {
       "Each photograph must include a title and a short description of no more than fifty words.",
       "The winning entries will be displayed in the town hall next month."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d40",
