@@ -467,7 +467,7 @@ window.TA_DICTATION = {
       "Researchers can search the collection by date, location, or subject.",
       "Although online access makes the material easier to explore, the archive team must also consider copyright, privacy, and the long-term preservation of digital files."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d86",
