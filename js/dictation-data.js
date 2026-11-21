@@ -230,7 +230,7 @@ window.TA_DICTATION = {
       "However, a review of the gallery records showed that no such request had been made.",
       "The director contacted the police and asked visitors who had noticed anything unusual to come forward."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d53",
@@ -243,7 +243,7 @@ window.TA_DICTATION = {
       "If a problem appears, it is better to discuss it early than to allow frustration to grow.",
       "A clear plan can help everyone understand what needs to be done."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d54",
