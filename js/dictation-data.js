@@ -416,7 +416,7 @@ window.TA_DICTATION = {
       "These assumptions are not always accurate.",
       "Taking time to observe someone's behaviour across different situations can produce a more balanced understanding."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d82",
@@ -429,7 +429,7 @@ window.TA_DICTATION = {
       "Nevertheless, introducing new systems requires careful investment and public support.",
       "A transport policy that works in one city may not be suitable for another."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d83",
