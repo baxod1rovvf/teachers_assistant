@@ -640,7 +640,7 @@ window.TA_DICTATION = {
       "Step-free access will be available, although some services may take slightly longer than usual.",
       "We apologise for any disruption."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d99",
@@ -653,7 +653,7 @@ window.TA_DICTATION = {
       "Conclusions may need to be revised when new evidence becomes available.",
       "This is not necessarily a sign of failure; it is a normal part of careful investigation."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d100",
