@@ -855,7 +855,7 @@ window.TA_DICTATION = {
       "It has become one of the most useful places for independent study.",
       "It also showed how a little preparation can make an ordinary situation easier to manage."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d112",
