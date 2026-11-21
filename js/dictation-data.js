@@ -1187,7 +1187,7 @@ window.TA_DICTATION = {
       "It also showed how a little preparation can make an ordinary situation easier to manage.",
       "Although the result was not perfect, everyone understood what could be improved next time."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d130",
