@@ -519,7 +519,7 @@ window.TA_DICTATION = {
       "In education, for instance, a learner who performs poorly on one test may still have considerable potential.",
       "Fair evaluation requires attention to context, progress, and evidence from more than one source."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d90",
