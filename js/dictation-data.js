@@ -151,7 +151,7 @@ window.TA_DICTATION = {
       "Finally, I chose information technology because I enjoy solving problems and creating useful things.",
       "The course begins in September."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d37",
@@ -164,7 +164,7 @@ window.TA_DICTATION = {
       "When I reached the bus stop, I realised that I had forgotten my student card.",
       "It was not a good start to the day."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d38",
