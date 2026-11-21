@@ -1617,7 +1617,7 @@ window.TA_DICTATION = {
       "The most useful lesson was that careful choices often matter more than quick reactions.",
       "Over time, this kind of experience can help people become more confident and independent."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d150",
