@@ -84,7 +84,7 @@ window.TA_DICTATION = {
       "His oldest map is over one hundred years old.",
       "He keeps each one in a special folder and enjoys explaining its history to visitors."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d32",
