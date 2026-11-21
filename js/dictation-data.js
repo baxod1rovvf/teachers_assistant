@@ -666,7 +666,7 @@ window.TA_DICTATION = {
       "A student improves by practising consistently, a community changes through shared effort, and a research project advances through repeated testing and revision.",
       "Looking at the long-term process helps us recognise progress that immediate results might hide."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d101",
