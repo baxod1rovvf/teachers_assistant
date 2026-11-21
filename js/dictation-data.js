@@ -312,7 +312,7 @@ window.TA_DICTATION = {
       "In some countries, arriving exactly on time is considered essential, while in others, social events may begin later than announced.",
       "Visitors should observe local behaviour and ask polite questions rather than assume that their own habits are universal."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d59",
@@ -325,7 +325,7 @@ window.TA_DICTATION = {
       "The centre also teaches children about animal welfare.",
       "It depends on donations, but time and practical support are equally valuable."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d60",
