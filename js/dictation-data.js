@@ -256,7 +256,7 @@ window.TA_DICTATION = {
       "In winter, heavy snow sometimes covered the roads for several days.",
       "Despite the difficult conditions, many families had lived there for generations and were proud of their traditions."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d55",
@@ -269,7 +269,7 @@ window.TA_DICTATION = {
       "Modern machines offer different programmes for different materials and levels of dirt.",
       "Although the technology has improved, users still need to choose suitable settings and avoid wasting electricity."
      ],
-     "recorded": false
+     "recorded": true
     }
    ]
   },
