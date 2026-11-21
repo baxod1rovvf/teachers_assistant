@@ -747,7 +747,7 @@ window.TA_DICTATION = {
       "This routine takes less than five minutes.",
       "It does not prevent every problem, but it makes busy mornings calmer."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d106",
