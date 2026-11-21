@@ -764,7 +764,7 @@ window.TA_DICTATION = {
       "The prices were reasonable, and the staff were polite.",
       "We stayed for nearly an hour, talking about our plans."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d107",
