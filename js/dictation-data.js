@@ -335,7 +335,7 @@ window.TA_DICTATION = {
       "She said I should rest, drink plenty of water, and avoid staying up late.",
       "I felt better two days later."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d25",
