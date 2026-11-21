@@ -532,7 +532,7 @@ window.TA_DICTATION = {
       "Progress was slower than expected because the ground was uneven and the weather changed repeatedly.",
       "Despite these difficulties, the researchers collected samples that may help explain the region's unusual vegetation."
      ],
-     "recorded": false
+     "recorded": true
     }
    ]
   },
@@ -550,7 +550,7 @@ window.TA_DICTATION = {
       "The expressions people use may reflect their region, profession, age, or family background.",
       "When a language becomes less widely spoken, communities can lose access to stories and forms of knowledge that have been passed down for generations."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d92",
