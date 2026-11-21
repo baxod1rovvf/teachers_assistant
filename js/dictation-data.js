@@ -442,7 +442,7 @@ window.TA_DICTATION = {
       "This helps explain why two people can remember the same event differently.",
       "Memory is influenced by attention, emotion, later information, and the questions people are asked."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d84",
@@ -455,7 +455,7 @@ window.TA_DICTATION = {
       "Preparation is important, but flexibility is equally valuable.",
       "When participants feel that their views have been taken seriously, they are more likely to support the final agreement."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d85",
