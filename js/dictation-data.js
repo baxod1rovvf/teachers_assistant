@@ -815,7 +815,7 @@ window.TA_DICTATION = {
       "The organisers thanked the volunteers and promised to arrange another event before the end of the season.",
       "Thinking about what happened afterwards helped everyone recognise what they had learned."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d110",
