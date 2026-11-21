@@ -215,7 +215,10 @@
   const skips = () => S.recs.filter(r => r && r.skipped).length;
   function countHtml() {
     const s = skips();
-    return `Sentence ${Math.min(S.k + 1, N())} / ${N()}${s ? ` <span class="dc-skips">· <span class="dc-l">${s} skipped</span><span class="dc-s" aria-hidden="true">⏭ ${s}</span></span>` : ''}` +
+    // "Sentence 1 of 7" + a dot per sentence (teacher, 2026-11-20 — a mock-up): done ones filled, this one bigger, orange
+    const at = Math.min(S.k, N() - 1);
+    const dots = `<span class="dc-dots" aria-hidden="true">${Array.from({ length: N() }, (_, i) => `<i class="dc-dot${i < at ? ' done' : i === at ? ' on' : ''}"></i>`).join('')}</span>`;
+    return `<span class="dc-w">Sentence</span> <span class="dc-n">${Math.min(S.k + 1, N())} of ${N()}</span>${dots}${s ? ` <span class="dc-skips">· <span class="dc-l">${s} skipped</span><span class="dc-s" aria-hidden="true">⏭ ${s}</span></span>` : ''}` +
       (S.mode === 'again' ? ' <span class="dc-practice">· Practice, not sent</span>' : '');
   }
 
@@ -232,7 +235,7 @@
       <textarea id="dcBox" class="dc-box" rows="2" maxlength="1200" aria-label="Write the sentence you hear" placeholder="Write the sentence you hear"
         autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" enterkeyhint="done"></textarea>
       <div class="dc-btns">
-        <button type="button" class="sk-btn sk-btn-main" id="dcCheck">✔️ Check</button>
+        <button type="button" class="sk-btn sk-btn-main" id="dcCheck"><svg class="dc-ck" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12.5l5 5L19.5 7"/></svg>Check</button>
         <button type="button" class="sk-btn sk-btn-ghost" id="dcSkip" title="Show the right sentence and go on">⏭ Skip</button>
       </div>
       <div class="dc-feedback" id="dcFeedback" role="status" aria-live="polite">${lastHtml || ''}</div>
@@ -287,8 +290,9 @@
     if (r.tries === 1 && res.ok) r.ok = true;
     const note = res.note ? `<p class="dc-note">✏️ ${esc(res.note)}</p>` : '';
     if (res.ok) {
-      advance(`<p class="dc-msg dc-right">✅ Right! <span class="dc-said">${esc(want)}</span></p>${note}`,
-        `<p class="dc-last">✅ ${S.k + 1}. ${esc(want)}</p>${note}`);
+      // a right sentence stands out (teacher, 2026-11-20): a green banner with a round ✓ and the sentence (no "Right!" text — the teacher's mock-up)
+      advance(`<p class="dc-msg dc-right" role="status"><span class="dc-tick" role="img" aria-label="Right"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12.5l4 4L18 8.5"/></svg></span><span class="dc-said">${esc(want)}</span></p>${note}`,
+        `<p class="dc-last">✅ ${S.k + 1}. ${esc(want)}</p>${note}`, true);
       return;
     }
     fb.innerHTML = `<p class="dc-msg dc-no">❌ Fix the marked words.</p><p class="dc-marks">${marksHtml(res.parts, showAnswer() || r.tries >= 2)}</p>${note}`;
@@ -307,11 +311,12 @@
     advance(msg, msg);
   }
   // ✅ or the skipped sentence shows for a moment, then the next sentence (the box keeps its focus — the phone's keyboard stays)
-  function advance(msg, last) {
+  function advance(msg, last, good) {
     S.busy = true;
     const box = boxEl(), fb = S.root.querySelector('#dcFeedback');
     fb.innerHTML = msg;
     S.root.querySelector('.dc-work').classList.remove('dc-marked');
+    S.root.querySelector('.dc-work').classList.toggle('dc-good', !!good);
     const checked = box.value;   // the box keeps its focus (no readOnly: that can close a phone's keyboard)
     S.k++;
     save();
@@ -319,6 +324,8 @@
     setTimeout(() => {
       if (!S || boxEl() !== box) return;
       S.busy = false;
+      const work = S.root.querySelector('.dc-work');
+      if (work) work.classList.remove('dc-good');
       if (S.k >= N()) { finish(); return; }
       // anything typed during the pause after the checked text is kept
       box.value = box.value.startsWith(checked) ? box.value.slice(checked.length).replace(/^\s+/, '') : '';

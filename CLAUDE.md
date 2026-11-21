@@ -752,6 +752,12 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   answers are in the database** (teacher, same day): the phone's "done" note (`ta_skill_done`, `markDone`) is gone; the database can't be
   asked → "📶 We couldn't check your answers — check the internet and press Start again" (teacher's choice — never let in on a guess).
   `tests/course-unsent.spec.js`.
+- **Analysis mode (teacher, 2026-11-20)**: a finished Listening/Reading link (answers in the database, or kept on the phone) shows
+  "Bu mashqni allaqachon tugatgansiz" (`.sk-done-card`, still with "You have already done this …") and the page from after Submit,
+  rebuilt from the result's `answers` (`showReview` in skill-player.js, marking shared with Submit via `markQuestions`): own answers,
+  right answers, score, words, Analyze, Retelling — locked, **no recording player, nothing sent**. Answers whose `q` texts no longer
+  match today's questions (Listening 8–20 rewritten 2026-11-13) → a plain list (`.sk-old-answers`). No `answers` → the old plain card.
+  Leaving before Submit still starts the exercise afresh (typed answers not kept). `tests/course-analysis.spec.js`.
 - **Not finished (teacher, 2026-11-13)**: under a step's results table (`skMissingHtml` in course.js) "🚫 Not finished — <group> (N)": the
   group's students who haven't done every part of the step **whose link was sent** (Listening/Reading/Writing; Speaking sends nothing) — any
   result counts as done (a writing waiting for the AI too), matched like the dots — each with the parts still to do, most missing first
@@ -829,6 +835,8 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   with an empty Students list never publishes over a list already online (also Grammar's). The teacher's ▶ stops when she leaves the page. **Changing a passage's text after links were sent
   re-marks old answers against the new text** (results keep no per-item version). Tests: `dictation-content`, `dictation-check`, `dictation-player`, `dictation-teacher` (`.spec.js`);
   the "all 100 recorded" test runs with `DC_ALL_AUDIO=1`.
+  **Look (teacher, 2026-11-20 — a mock-up)**: "SENTENCE **1 of 7**" (orange) + a dot per sentence (done/now orange), an orange ✓ in Check;
+  a right sentence = a cream → green banner with a round green ✓ and the sentence (`.dc-right`, `.dc-tick`; no "Right!" text). css/skill-air.css.
   **"Recording…" guard**: `tools/build-dictations.js` writes `recorded: true|false` per item from `audio/dictation/dN.mp3` existing (the whole passage — the recording tool writes it last).
   An unrecorded item shows "🎙 Recording…" (muted) instead of ▶ Play / ▶️ Try / 🔗 Copy link, its level card counts only recorded ones ("12 ready · 20 dictations"), and its
   student link says "🎙 This dictation isn't ready yet — ask your teacher." **After recording more: run the build tool, `npm run stamp`, commit audio + data.**
