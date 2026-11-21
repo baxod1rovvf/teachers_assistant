@@ -873,7 +873,7 @@ window.TA_DICTATION = {
       "I hope to cook it independently one day.",
       "Although the result was not perfect, everyone understood what could be improved next time."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d113",
