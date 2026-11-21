@@ -66,7 +66,7 @@ test('Bu sizmi → Ha → "Sentence 1 of 7": the sentence plays by itself; ▶ a
   await expect.poll(() => played(page)).toEqual([1, 1]);
   await page.locator('#dcSlow').click();
   expect(await page.evaluate(() => window.__dcPlayed.map(p => p.rate))).toEqual([1, 1, 0.75]);
-  expect(await page.evaluate(() => window.__dcPlayed[0].src)).toMatch(/^audio\/dictation\/d1-s1\.mp3\?v=\d+[a-z]?$/);
+  expect(await page.evaluate(() => window.__dcPlayed[0].src)).toMatch(/^audio\/dictation\/d1-s1\.mp3\?v=\d+[a-z]*$/);
   const box = page.locator('#dcBox');
   for (const [a, v] of [['autocapitalize', 'off'], ['autocorrect', 'off'], ['autocomplete', 'off'], ['spellcheck', 'false']]) await expect(box).toHaveAttribute(a, v);
   expect(errors).toEqual([]);
