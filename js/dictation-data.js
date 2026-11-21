@@ -997,7 +997,7 @@ window.TA_DICTATION = {
       "People involved in the activity said that the experience gave them something useful to think about.",
       "It also showed how a little preparation can make an ordinary situation easier to manage."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d120",
