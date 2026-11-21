@@ -169,7 +169,7 @@ test('top bar: 6 sections in the middle, the one you\'re in has the coloured cir
   await expect(page.locator('body')).toHaveClass(/loom-studio/);
   // the light "Mountain Air" look (2026-11-15) on top of it: the teacher's mountain picture behind the page, glass cards, a dark pill button, the italic name
   await expect(page.locator('body')).toHaveClass(/loom-air/);
-  expect(await page.evaluate(() => getComputedStyle(document.body, '::before').backgroundImage)).toContain('images/app/background.webp');
+  expect(await page.evaluate(() => getComputedStyle(document.body, '::before').backgroundImage)).toContain('images/app/sky.webp');
   expect(await page.locator('.dash-card').first().evaluate(el => getComputedStyle(el).backgroundColor)).toMatch(/rgba\(255, 255, 255, 0\.\d+\)/);
   expect(await page.locator('#mainGreetingName').evaluate(el => getComputedStyle(el).fontStyle)).toBe('italic');
   expect(await page.locator('meta[name="theme-color"]').getAttribute('content')).toBe('#EEF2F2');
