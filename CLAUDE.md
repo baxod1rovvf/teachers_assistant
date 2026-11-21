@@ -841,8 +841,9 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   "📋 Copy list", "❓ Not on your Students list". The class lists follow the Students list through the Grammar refresher (`jrMakeRefresher` in grammar.js, shared `jr*` helpers); Copy link
   with an empty Students list never publishes over a list already online (also Grammar's). The teacher's ▶ stops when she leaves the page. **Changing a passage's text after links were sent
   re-marks old answers against the new text** (results keep no per-item version). Tests: `dictation-content`, `dictation-check`, `dictation-player`, `dictation-teacher` (`.spec.js`);
-  the "all 100 recorded" test runs with `DC_ALL_AUDIO=1`. Recording all 100 takes ~15 h of an active session (the container is switched off when the chat
-  is idle, which stops `make-dictation-audio.py`; restart it with the ids still missing, e.g. `… audio/dictation 31-40,51-60,76-150` — finished clips are cached).
+  the "all 100 recorded" test runs with `DC_ALL_AUDIO=1`. **All 100 are recorded (2026-11-21, 711 sentences)**; recording them took ~11 h of an active session
+  (the container is switched off when the chat is idle, which stops `make-dictation-audio.py`; restart it with the ids still missing — finished clips are cached;
+  while recording, pause the recorder during tests, or the "`recorded` matches" test races a file that appears half-way).
   **Look (teacher, 2026-11-20 — a mock-up)**: "SENTENCE **1 of 7**" (orange) + a dot per sentence (done/now orange), an orange ✓ in Check;
   a right sentence = a cream → green banner with a round green ✓ and the sentence (`.dc-right`, `.dc-tick`; no "Right!" text). css/skill-air.css.
   **"Recording…" guard**: `tools/build-dictations.js` writes `recorded: true|false` per item from `audio/dictation/dN.mp3` existing (the whole passage — the recording tool writes it last).
