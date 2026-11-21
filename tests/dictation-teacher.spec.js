@@ -26,11 +26,19 @@ function res(n, sid, name, minsAgo, secs, over) {
 const LINKS = { d1: { code: 'DCT111', sentAt: iso(60 * 24), rosterSig: '' } };
 const classSize = code => { const d = window.__fakeDocs.find(x => x.__id === 'class-' + code); return d ? JSON.parse(d.data).length : null; };
 
+// The tests use the old Dictation 1 ("My Name", 7 sentences) as a stand-in first passage (the teacher rebuilt the journey on
+// 2026-11-21 and it isn't in the real data any more), so they don't depend on which passages the journey holds.
+const STAND_IN = '\nwindow.TA_DICTATION.levels[0].items[0] = { id: "d1", no: 1, title: "My Name", recorded: true, ' +
+  'text: "Hello! My name is Daniel. I am thirteen years old. I live in a small house with my family. I have one brother and one sister. We are students. My favourite colour is blue.", ' +
+  'sentences: ["Hello!", "My name is Daniel.", "I am thirteen years old.", "I live in a small house with my family.", "I have one brother and one sister.", "We are students.", "My favourite colour is blue."] };';
 // the real data says which dictations are recorded so far; these tests pin it (all recorded, except the ones listed)
 async function pinRecorded(context, unrecorded) {
   const fs = require('fs'), file = require('path').join(__dirname, '..', 'js', 'dictation-data.js');
   await context.route('**/js/dictation-data.js*', r => r.fulfill({ contentType: 'application/javascript',
-    body: fs.readFileSync(file, 'utf8') + '\nwindow.TA_DICTATION.levels.forEach(l => l.items.forEach(i => { i.recorded = !' + JSON.stringify(unrecorded || []) + '.includes(i.id); }));' }));
+    body: fs.readFileSync(file, 'utf8') + STAND_IN + '\nwindow.TA_DICTATION.levels.forEach(l => l.items.forEach(i => { i.recorded = !' + JSON.stringify(unrecorded || []) + '.includes(i.id); }));' }));
+  // the stand-in d1 has no recording of its own: it borrows d16's whole-passage file
+  await context.route('**/audio/dictation/d1.mp3*', r => r.fulfill({ contentType: 'audio/mpeg',
+    body: fs.readFileSync(require('path').join(__dirname, '..', 'audio', 'dictation', 'd16.mp3')) }));
 }
 async function openCourse(page, context, opts) {
   opts = opts || {};
@@ -72,12 +80,13 @@ test('the Dictation Journey sits after the Grammar Journey: 5 levels of 20 dicta
   await expect(page.locator('.gr-level')).toHaveCount(7);
   await openLevel(page);
   await expect(page.locator('.dct-item')).toHaveCount(20);
-  expect(await page.locator('.dct-item').evaluateAll(els => els.map(e => e.dataset.item))).toEqual(Array.from({ length: 20 }, (_, i) => 'd' + (i + 1)));
+  expect(await page.locator('.dct-item').evaluateAll(els => els.map(e => e.dataset.item))).toEqual(await page.evaluate(() => window.TA_DICTATION.levels[0].items.map(i => i.id)));
+  expect(await page.locator('.dct-item').first().getAttribute('data-item')).toBe('d1');
   await expect(page.locator('.dct-item[data-item="d1"]')).toContainText('My Name');
   await expect(page.locator('.dct-item[data-item="d1"]')).toContainText('0 done');
-  await expect(page.locator('.dct-item[data-item="d2"]')).toContainText('Not sent yet');
+  await expect(page.locator('.dct-item[data-item="d17"]')).toContainText('Not sent yet');
   for (const name of ['▶ Play', '📄 Transcript', '🔗 Copy link', '▶️ Try']) {
-    await expect(page.locator('.dct-item[data-item="d2"]').getByRole('button', { name, exact: true })).toBeVisible();
+    await expect(page.locator('.dct-item[data-item="d17"]').getByRole('button', { name, exact: true })).toBeVisible();
   }
   await page.getByRole('button', { name: '← Course' }).click();
   await expect(page.locator('.dct-journey')).toBeVisible();
@@ -284,14 +293,14 @@ test('the teacher\'s audio carries the page\'s ?v= stamp and stops when the teac
 });
 
 test('an unrecorded dictation shows "Recording…" instead of Play / Try / Copy link, and its level counts only recorded ones', async ({ page, context }) => {
-  const errors = await openCourse(page, context, { unrecorded: ['d2', 'd3'] });
+  const errors = await openCourse(page, context, { unrecorded: ['d17', 'd18'] });
   await expect(page.locator('.dct-level[data-level="beginner"] .gr-level-sub')).toHaveText('18 ready · 20 dictations · 0 sent');
   await expect(page.locator('.dct-level[data-level="advanced"] .gr-level-sub')).toHaveText('20 dictations · 0 sent');
   await openLevel(page);
-  const d2 = page.locator('.dct-item[data-item="d2"]');
+  const d2 = page.locator('.dct-item[data-item="d17"]');
   await expect(d2).toContainText('🎙 Recording…');
   for (const name of ['▶ Play', '🔗 Copy link', '▶️ Try']) await expect(d2.getByRole('button', { name, exact: true })).toHaveCount(0);
-  await expect(page.locator('.dct-item[data-item="d4"]').getByRole('button', { name: '🔗 Copy link' })).toBeVisible();
-  await expect(page.locator('.dct-item[data-item="d4"]')).not.toContainText('Recording');
+  await expect(page.locator('.dct-item[data-item="d19"]').getByRole('button', { name: '🔗 Copy link' })).toBeVisible();
+  await expect(page.locator('.dct-item[data-item="d19"]')).not.toContainText('Recording');
   expect(errors).toEqual([]);
 });

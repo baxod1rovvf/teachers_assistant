@@ -217,7 +217,7 @@
     const s = skips();
     // "Sentence 1 of 7" + a dot per sentence (teacher, 2026-11-20 — a mock-up): done ones filled, this one bigger, orange
     const at = Math.min(S.k, N() - 1);
-    const dots = `<span class="dc-dots" aria-hidden="true">${Array.from({ length: N() }, (_, i) => `<i class="dc-dot${i < at ? ' done' : i === at ? ' on' : ''}"></i>`).join('')}</span>`;
+    const dots = `<span class="dc-dots${N() > 8 ? ' dc-many' : ''}" aria-hidden="true">${Array.from({ length: N() }, (_, i) => `<i class="dc-dot${i < at ? ' done' : i === at ? ' on' : ''}"></i>`).join('')}</span>`;
     return `<span class="dc-w">Sentence</span> <span class="dc-n">${Math.min(S.k + 1, N())} of ${N()}</span>${dots}${s ? ` <span class="dc-skips">· <span class="dc-l">${s} skipped</span><span class="dc-s" aria-hidden="true">⏭ ${s}</span></span>` : ''}` +
       (S.mode === 'again' ? ' <span class="dc-practice">· Practice, not sent</span>' : '');
   }

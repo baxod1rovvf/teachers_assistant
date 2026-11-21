@@ -191,7 +191,7 @@ test('dictation check: every sentence is right typed exactly, in lower case with
   test.setTimeout(120000);
   await open(page, context);
   const list = sentences();
-  expect(list.length).toBe(416);
+  expect(list.length).toBe(711);
   const lowerNoPunct = s => s.toLowerCase().replace(/[.,!?;:“”"()]/g, ' ');
   const spoken = spokenForms(list.map(x => x.s));
   const cases = [];
@@ -204,7 +204,7 @@ test('dictation check: every sentence is right typed exactly, in lower case with
       cases.push({ id: x.id + ' spoken lower: ' + spoken[i], e: x.s, t: lowerNoPunct(spoken[i]) });
     }
   });
-  expect(cases.filter(c => / spoken: /.test(c.id)).length).toBe(20);
+  expect(cases.filter(c => / spoken: /.test(c.id)).length).toBe(9);   // sentences whose recording says a number differently (9 since the 2026-11-21 rebuild)
   const res = await page.evaluate(cs => cs.map(c => {
     const r = window.dcCheck(c.e, c.t);
     return { id: c.id, ok: r.ok, note: r.note, exact: !!c.exact, bad: r.parts.filter(p => p.state !== 'ok') };

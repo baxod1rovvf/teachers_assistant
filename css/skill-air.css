@@ -153,6 +153,8 @@ html body#skBody.sk-air #dcSend.bad { border-radius: 18px; }
   html body#skBody.sk-air .sk-app:has(.dc-work) .sk-head .sk-chip { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
   html body#skBody.sk-air .dc-work { max-height: var(--dc-room, 60vh); overflow-y: auto; padding: 10px 10px 10px !important; gap: 6px; }
   html body#skBody.sk-air .dc-work .dc-top { flex-wrap: nowrap; gap: 6px; }
+  /* the longest sentences (100+ words passages, 2026-11-21) with marks overflow the card: ▶ Play stays pinned at its top */
+  html body#skBody.sk-air .dc-work .dc-top { position: sticky; top: -10px; z-index: 2; margin: -10px -10px 0; padding: 10px 10px 4px; background: #fbfcfb; border-radius: inherit; }
   html body#skBody.sk-air .dc-work .dc-count { font-size: .75rem; letter-spacing: .03em; min-width: 0; }
   html body#skBody.sk-air .dc-play { flex-wrap: nowrap; gap: 6px; flex: 0 0 auto; }
   html body#skBody.sk-air .dc-play .sk-btn { min-height: 40px; padding: 4px 12px; font-size: .9rem; }
@@ -197,6 +199,12 @@ html body#skBody.sk-air .dc-right .dc-said { font-size: 1.1rem; font-weight: 600
   html body#skBody.sk-air .dc-dot + .dc-dot { margin-left: 5px; }
   html body#skBody.sk-air .dc-dot + .dc-dot::before { width: 5px; }
   html body#skBody.sk-air .dc-dot.on { width: 12px; height: 12px; }
+  /* the long passages (up to 14 sentences, 2026-11-21): smaller dots, and never under the Play buttons */
+  html body#skBody.sk-air .dc-dots { max-width: 100%; overflow: hidden; }
+  html body#skBody.sk-air .dc-dots.dc-many .dc-dot { width: 6px; height: 6px; }
+  html body#skBody.sk-air .dc-dots.dc-many .dc-dot + .dc-dot { margin-left: 3px; }
+  html body#skBody.sk-air .dc-dots.dc-many .dc-dot + .dc-dot::before { width: 3px; }
+  html body#skBody.sk-air .dc-dots.dc-many .dc-dot.on { width: 10px; height: 10px; }
   html body#skBody.sk-air .dc-msg.dc-right { padding: 9px 12px; gap: 10px; }
   html body#skBody.sk-air .dc-tick { width: 28px; height: 28px; }
   html body#skBody.sk-air .dc-right .dc-said { font-size: 1rem; }

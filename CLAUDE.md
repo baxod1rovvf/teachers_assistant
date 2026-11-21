@@ -819,8 +819,14 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   savePointsRoster/saveStudentGroups, `taStoreChanged`, `storage`; 5 s debounce; retry after 30 s, 3 times). Tests: `tests/grammar-content.spec.js`,
   `grammar-player.spec.js`, `grammar-teacher.spec.js`.
   Raise a lesson's `v` in docs/grammar-journey.json whenever its questions change after links were sent (old drafts then start again). Grammar CSS for the teacher's side is scoped under `#courseWrap` (skill.html also loads css/style.css).
-- **Dictation Journey (teacher, 2026-11-19)**: a sixth part of the Course, under the Grammar Journey (`js/pages/dictation.js`; 5 levels × 20 dictations, d1–d100, 416 sentences).
-  Source `docs/dictation-journey.md` → `node tools/build-dictations.js` → `js/dictation-data.js` (`TA_DICTATION`) — never edit it by hand. Sentences are split the way
+- **Dictation Journey (teacher, 2026-11-19)**: a sixth part of the Course, under the Grammar Journey (`js/pages/dictation.js`; 5 levels × 20 dictations, 711 sentences).
+  **Rebuilt 2026-11-21 (teacher: "make dictation difficult")**: kept the last 5 Beginner (d16–20), last 10 Elementary (d31–40), last 10 Pre-intermediate
+  (d51–60), last 5 Intermediate (d76–80) and all 20 Upper (d81–100) of the first 100, and added the teacher's "50 Progressive Transcripts" (80 → 200 words)
+  as d101–d150. Levels now: Beginner d16–20, d31–40, d51–55 · Elementary d56–60, d76–80, d81–90 · Pre-intermediate d91–100, d101–110 · Intermediate
+  d111–130 · Upper d131–150. **Ids are fixed** (they name the recordings and links; "## Dictation N" in the md = id dN); the app shows each one's place
+  (`no`, 1–100: "Dictation 1" is d16). The other 50 (and their recordings) were deleted — links already sent for them say "This dictation doesn't exist"
+  and their results no longer show. `tests/dictation-content.spec.js` checks the layout; the player/teacher tests use the old "My Name" as a stand-in d1.
+  Source `docs/dictation-journey.md` (5 "# Level N — Name" headings, 20 passages under each) → `node tools/build-dictations.js` → `js/dictation-data.js` (`TA_DICTATION`) — never edit it by hand. Sentences are split the way
   `tools/make-dictation-audio.py` splits them (keep the two in step; `tests/dictation-content.spec.js` compares them). Audio: `audio/dictation/dN-s<k>.mp3` (one per sentence) +
   `dN.mp3` (the whole passage, the teacher's ▶ Play), made by `tools/make-dictation-audio.py` with OmniVoice "Energetic Male" (instruct "male, young adult, high pitch", seed 4,
   speed 0.9, 1.2 s gaps; numbers said in words by `spoken()`; each clip checked with Whisper). The student page is `skill.html?s=dictation&dl=dN&c=<code>` (`js/dictation-player.js`, same ID
@@ -834,7 +840,8 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   "📋 Copy list", "❓ Not on your Students list". The class lists follow the Students list through the Grammar refresher (`jrMakeRefresher` in grammar.js, shared `jr*` helpers); Copy link
   with an empty Students list never publishes over a list already online (also Grammar's). The teacher's ▶ stops when she leaves the page. **Changing a passage's text after links were sent
   re-marks old answers against the new text** (results keep no per-item version). Tests: `dictation-content`, `dictation-check`, `dictation-player`, `dictation-teacher` (`.spec.js`);
-  the "all 100 recorded" test runs with `DC_ALL_AUDIO=1`.
+  the "all 100 recorded" test runs with `DC_ALL_AUDIO=1`. Recording all 100 takes ~15 h of an active session (the container is switched off when the chat
+  is idle, which stops `make-dictation-audio.py`; restart it with the ids still missing, e.g. `… audio/dictation 31-40,51-60,76-150` — finished clips are cached).
   **Look (teacher, 2026-11-20 — a mock-up)**: "SENTENCE **1 of 7**" (orange) + a dot per sentence (done/now orange), an orange ✓ in Check;
   a right sentence = a cream → green banner with a round green ✓ and the sentence (`.dc-right`, `.dc-tick`; no "Right!" text). css/skill-air.css.
   **"Recording…" guard**: `tools/build-dictations.js` writes `recorded: true|false` per item from `audio/dictation/dN.mp3` existing (the whole passage — the recording tool writes it last).

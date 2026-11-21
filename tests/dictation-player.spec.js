@@ -15,13 +15,18 @@ const classDoc = code => ({ __id: 'class-' + code, v: 1, code: 'TAUSER', type: '
   data: JSON.stringify([{ h: hashFor(code, '10001'), n: 'Alice Test', g: 'Apex' }, { h: hashFor(code, '10002'), n: 'Bobur Test', g: 'Target' }]),
   date: new Date().toISOString() });
 const dictDocs = page => page.evaluate(code => window.__fakeDocs.filter(d => d.code === code && d.type === 'Dictation course'), CODE);
+// The tests use the old Dictation 1 ("My Name", 7 sentences) as a stand-in first passage (the teacher rebuilt the journey on
+// 2026-11-21 and it isn't in the real data any more), so they don't depend on which passages the journey holds.
+const STAND_IN = '\nwindow.TA_DICTATION.levels[0].items[0] = { id: "d1", no: 1, title: "My Name", recorded: true, ' +
+  'text: "Hello! My name is Daniel. I am thirteen years old. I live in a small house with my family. I have one brother and one sister. We are students. My favourite colour is blue.", ' +
+  'sentences: ["Hello!", "My name is Daniel.", "I am thirteen years old.", "I live in a small house with my family.", "I have one brother and one sister.", "We are students.", "My favourite colour is blue."] };';
 const played = page => page.evaluate(() => (window.__dcPlayed || []).map(p => p.sentence));
 
 async function setup(context, extra) {
   // the real data says which dictations are recorded so far; these tests treat every one as recorded
   await context.route('**/js/dictation-data.js*', r => r.fulfill({ contentType: 'application/javascript',
     body: require('fs').readFileSync(require('path').join(__dirname, '..', 'js', 'dictation-data.js'), 'utf8') +
-      '\nwindow.TA_DICTATION.levels.forEach(l => l.items.forEach(i => { i.recorded = true; }));' }));
+      '\nwindow.TA_DICTATION.levels.forEach(l => l.items.forEach(i => { i.recorded = true; }));' + STAND_IN }));
   await prepare(context, Object.assign({ docs: [classDoc(CODE)] }, extra || {}));
   await context.addInitScript(() => { window.__dcFast = true; window.__dcNoAudio = true; window.__skSendTimeoutMs = 2000; });
 }
@@ -240,14 +245,14 @@ test('a phone with the keyboard open: a long sentence with 4 mistakes (Dictation
   await expect(page.locator('.dc-word.wrong')).toHaveCount(4);
 });
 
-test('a phone with the keyboard open: the longest sentence (Dictation 87, sentence 2) with 4 mistakes still fits', async ({ page, context }) => {
+test('a phone with the keyboard open: the longest sentence (Dictation 144, sentence 4) with 4 mistakes still fits', async ({ page, context }) => {
   await setup(context);
-  await phoneMarksInView(page, '/skill.html?s=dictation&dl=d87&c=' + CODE, 1,
-    'Protectin a natural habitt may restrict activities that local comunities depend on for income, while allowing unrestricted development can cause lasting enviromental damage.');
+  await phoneMarksInView(page, '/skill.html?s=dictation&dl=d144&c=' + CODE, 3,
+    'Comunity classes, recordings, books, and digital resorces can support language learning, but these eforts are most effective when people have meaningfull reasons to use the language in everyday life.');
   await expect(page.locator('.dc-word.wrong')).toHaveCount(4);
   // it really is the longest sentence in the data
   const max = await page.evaluate(() => Math.max(...window.TA_DICTATION.levels.flatMap(l => l.items.flatMap(i => i.sentences.map(s => s.length)))));
-  expect(await page.evaluate(() => window.TA_DICTATION.levels.flatMap(l => l.items).find(i => i.id === 'd87').sentences[1].length)).toBe(max);
+  expect(await page.evaluate(() => window.TA_DICTATION.levels.flatMap(l => l.items).find(i => i.id === 'd144').sentences[3].length)).toBe(max);
 });
 
 test('the first sentence is unlocked inside the tap: DC.prime runs in the Start and Ha taps, before any wait', async ({ page, context }) => {
@@ -358,7 +363,7 @@ test('a 40-word sentence wraps on a phone without sideways scrolling', async ({ 
   const long = 'On Saturday morning my older brother and I walked slowly to the busy market near the old railway station because our grandmother wanted fresh tomatoes, green peppers, two kilos of rice and a large watermelon for the family dinner.';
   await page.route('**/js/dictation-data.js*', async route => {
     const res = await route.fetch();
-    route.fulfill({ response: res, body: (await res.text()) + `\nwindow.TA_DICTATION.levels[0].items[0].sentences[0] = ${JSON.stringify(long)};` });
+    route.fulfill({ response: res, body: (await res.text()) + STAND_IN + `\nwindow.TA_DICTATION.levels[0].items[0].sentences[0] = ${JSON.stringify(long)};` });
   });
   await page.setViewportSize({ width: 375, height: 667 });
   await start(page);
@@ -376,7 +381,7 @@ test('a 40-word sentence wraps on a phone without sideways scrolling', async ({ 
 test('a link to an unrecorded dictation says it isn\'t ready — no ID check, nothing starts', async ({ page, context }) => {
   await setup(context);
   await context.route('**/js/dictation-data.js*', r => r.fulfill({ contentType: 'application/javascript',
-    body: require('fs').readFileSync(require('path').join(__dirname, '..', 'js', 'dictation-data.js'), 'utf8') +
+    body: require('fs').readFileSync(require('path').join(__dirname, '..', 'js', 'dictation-data.js'), 'utf8') + STAND_IN +
       '\nwindow.TA_DICTATION.levels.forEach(l => l.items.forEach(i => { if (i.id === "d1") i.recorded = false; }));' }));
   await page.goto(URL_D);
   await expect(page.locator('body')).toContainText("This dictation isn't ready yet — ask your teacher.");

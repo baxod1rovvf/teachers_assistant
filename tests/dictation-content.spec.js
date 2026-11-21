@@ -1,4 +1,4 @@
-// The Dictation Journey's content (teacher, 2026-11-19): 100 passages in 5 levels. Source docs/dictation-journey.md →
+// The Dictation Journey's content (teacher, 2026-11-19; rebuilt 2026-11-21): 100 passages in 5 levels. Source docs/dictation-journey.md →
 // `node tools/build-dictations.js` → js/dictation-data.js (window.TA_DICTATION). Sentence k of dN plays audio/dictation/dN-s<k>.mp3.
 const { test, expect } = require('@playwright/test');
 const fs = require('fs'), path = require('path'), vm = require('vm'), { execFileSync } = require('child_process');
@@ -14,7 +14,7 @@ function load() {
 }
 const all = () => load().levels.flatMap(l => l.items);
 
-test('dictation data: 5 levels, d1…d100 in order, titles from the md, 416 sentences', () => {
+test('dictation data: 5 levels of 20, ids from the md, places 1…100, titles from the md', () => {
   const D = load();
   expect(D.levels.map(l => [l.id, l.name])).toEqual(LEVELS);
   D.levels.forEach(l => expect(l.items.length).toBe(20));
@@ -22,29 +22,40 @@ test('dictation data: 5 levels, d1…d100 in order, titles from the md, 416 sent
   const md = fs.readFileSync(path.join(ROOT, 'docs', 'dictation-journey.md'), 'utf8');
   const titles = [...md.matchAll(/^## Dictation (\d+) — (.+)$/gm)].map(m => [+m[1], m[2].trim()]);
   expect(titles.length).toBe(100);
+  expect(new Set(items.map(it => it.id)).size).toBe(100);
   items.forEach((it, i) => {
-    expect(it.id).toBe('d' + (i + 1));
     expect(it.no).toBe(i + 1);
-    expect([it.no, it.title]).toEqual(titles[i]);
+    expect([it.id, it.title]).toEqual(['d' + titles[i][0], titles[i][1]]);
     expect(it.text.length).toBeGreaterThan(20);
     expect(it.sentences.length).toBeGreaterThan(0);
     expect(it.sentences.join(' ')).toBe(it.text.replace(/\s+/g, ' '));
   });
-  expect(items.reduce((n, it) => n + it.sentences.length, 0)).toBe(416);
+});
+
+// teacher, 2026-11-21: "make dictation difficult" — kept the last 5 Beginner, last 10 Elementary, last 10 Pre-intermediate, last 5
+// Intermediate and all 20 Upper passages (ids kept), added the 50 "Progressive" passages as d101–d150, 20 per level
+test('dictation data: the teacher\'s layout (2026-11-21)', () => {
+  const r = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => 'd' + (a + i));
+  expect(load().levels.map(l => l.items.map(i => i.id))).toEqual([
+    [...r(16, 20), ...r(31, 40), ...r(51, 55)],
+    [...r(56, 60), ...r(76, 80), ...r(81, 90)],
+    [...r(91, 100), ...r(101, 110)],
+    r(111, 130),
+    r(131, 150)]);
+  const words = all().map(it => it.text.split(/\s+/).length);
+  expect(words[99]).toBeGreaterThanOrEqual(190);                        // the last passage is long now (~200 words)
+  expect(words.slice(60).every(w => w >= 100)).toBe(true);               // Intermediate and Upper: 100+ words each
 });
 
 test('dictation data: known sentences', () => {
   const by = id => all().find(it => it.id === id).sentences;
-  const d1 = by('d1');
-  expect(d1.length).toBe(7);
-  expect(d1[0]).toBe('Hello!');
-  expect(d1[1]).toBe('My name is Daniel.');
-  expect(d1[6]).toBe('My favourite colour is blue.');
-  expect(by('d29')[0]).toMatch(/6 p\.m\.$/);
-  expect(by('d29')[1]).toBe('Visitors must speak quietly and turn off their mobile phones.');
+  expect(by('d16')).toEqual(["Today is my cousin's birthday.", 'She is turning fourteen.', "Her party starts at five o'clock on Saturday afternoon.",
+    'We are going to bring a chocolate cake, some balloons, and a present.', 'I hope she likes her new camera.']);
   expect(by('d34')[0]).toBe('Dear Mr Wilson, your reservation is confirmed.');
-  expect(by('d26')[0]).toBe('“Hi, Emma.');
-  expect(by('d26').slice(-1)[0]).toBe('Thanks!”');
+  expect(by('d34')[3]).toBe('Check-in begins at 2 p.m., and check-out is before 11 a.m.');
+  expect(by('d124')[1]).toBe('The owner, Mr Karimov, has worked there for nearly twenty-five years.');
+  expect(by('d101')[0]).toBe('Building a new habit does not require a big promise.');
+  expect(by('d150').slice(-1)[0]).toBe('This perspective encourages thoughtful choices and helps ensure that services remain responsible in the future.');
 });
 
 test('dictation data: the same split as the audio tool (python)', () => {
