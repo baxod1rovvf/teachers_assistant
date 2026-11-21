@@ -364,7 +364,7 @@ window.TA_DICTATION = {
       "Further analysis will be needed before experts can determine the building's original purpose.",
       "The discovery may provide valuable evidence about the area's early history."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d78",
@@ -377,7 +377,7 @@ window.TA_DICTATION = {
       "Opponents believed that regular practice helps learners develop independence.",
       "Several speakers suggested that the quality and purpose of homework matter more than the total number of tasks."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d79",
