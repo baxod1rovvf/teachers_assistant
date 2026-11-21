@@ -1149,7 +1149,7 @@ window.TA_DICTATION = {
       "Thinking about what happened afterwards helped everyone recognise what they had learned.",
       "People involved in the activity said that the experience gave them something useful to think about."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d128",
