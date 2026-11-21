@@ -506,7 +506,7 @@ window.TA_DICTATION = {
       "Workshops will run in parallel from 11:30 until 1:00 p.m.",
       "Participants who require certificates should complete the online evaluation form before leaving the venue."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d89",
