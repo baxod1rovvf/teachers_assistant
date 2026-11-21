@@ -480,7 +480,7 @@ window.TA_DICTATION = {
       "This can be convenient, but it may also interrupt concentration.",
       "Developing deliberate habits, such as setting limits and disabling unnecessary notifications, can help people use technology more thoughtfully."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d87",
@@ -493,7 +493,7 @@ window.TA_DICTATION = {
       "Successful programmes therefore require more than scientific knowledge.",
       "They must also involve residents, consider economic realities, and establish goals that can be maintained over time."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d88",
