@@ -798,7 +798,7 @@ window.TA_DICTATION = {
       "His experience shows that improvement comes from practice and observation.",
       "These small details may seem unimportant at first, but together they can influence the final outcome."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d109",
