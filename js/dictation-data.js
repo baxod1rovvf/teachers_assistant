@@ -203,7 +203,7 @@ window.TA_DICTATION = {
       "There were twelve guests, a beautiful cake, and a playlist of my favourite songs.",
       "I will remember that evening for a long time."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d51",
@@ -217,7 +217,7 @@ window.TA_DICTATION = {
       "Please keep your tickets ready for inspection and take care when boarding.",
       "This train will make additional stops at Jizzakh and Gulistan."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d52",
