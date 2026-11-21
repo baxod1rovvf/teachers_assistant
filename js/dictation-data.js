@@ -390,7 +390,7 @@ window.TA_DICTATION = {
       "Our guide stopped twice to explain how local communities had adapted to limited water supplies.",
       "By sunset, the temperature had fallen, and the landscape had changed colour."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d80",
@@ -403,7 +403,7 @@ window.TA_DICTATION = {
       "Before sharing a story, readers should check its original source, publication date, and supporting evidence.",
       "Comparing reports from reliable organisations can help prevent misunderstandings and reduce the spread of false information."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d81",
