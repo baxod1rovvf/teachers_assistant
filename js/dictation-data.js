@@ -1572,7 +1572,7 @@ window.TA_DICTATION = {
       "Although the result was not perfect, everyone understood what could be improved next time.",
       "Taking time to notice these details can change the way we understand everyday events."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d148",
