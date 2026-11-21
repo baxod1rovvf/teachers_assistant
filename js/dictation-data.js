@@ -698,7 +698,7 @@ window.TA_DICTATION = {
       "Although supermarkets are convenient, the market remains a place where neighbours meet and exchange news.",
       "Every visit offers a different combination of sounds, colours, and conversations."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d103",
