@@ -1111,7 +1111,7 @@ window.TA_DICTATION = {
       "Good results usually depend on clear communication, realistic plans, and regular attention.",
       "These small details may seem unimportant at first, but together they can influence the final outcome."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d126",
