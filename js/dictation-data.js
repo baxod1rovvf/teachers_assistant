@@ -322,7 +322,7 @@ window.TA_DICTATION = {
       "We have booked a small hotel near the beach.",
       "If the weather is good, we will go swimming every morning."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d24",
