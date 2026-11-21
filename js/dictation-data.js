@@ -731,7 +731,7 @@ window.TA_DICTATION = {
       "The presentation went well, and our classmates asked several interesting questions.",
       "We learned that cooperation makes a difficult task easier."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d105",
