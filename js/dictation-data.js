@@ -125,7 +125,7 @@ window.TA_DICTATION = {
       "Check-in begins at 2 p.m., and check-out is before 11 a.m.",
       "We look forward to welcoming you."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d35",
@@ -138,7 +138,7 @@ window.TA_DICTATION = {
       "My parents were delighted to see him.",
       "We made tea, prepared some sandwiches, and spent the evening talking about his journey."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d36",
