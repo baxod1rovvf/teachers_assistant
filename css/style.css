@@ -3354,7 +3354,7 @@ body.loom-studio .ai-robot-anim { position: absolute; left: 50%; top: 50%; trans
 /* =====================================================================================
    LOOM — MOUNTAIN AIR (2026-11-15, the teacher: "change loom's design into like this, but not exactly" + a screenshot
    of a light outdoor-gear site). Light only; the teacher's picture (sunrise, mountains, a red carabiner on a mossy hill)
-   behind every teacher page (images/app/background.webp, background-tall.webp for tall phone screens) under a white veil; frosted-glass cards (no blur on phones — it made
+   behind every teacher page (images/app/sky.webp, background-tall.webp for tall phone screens) under a white veil; frosted-glass cards (no blur on phones — it made
    scrolling lag, 2026-10-27); dark pill buttons with an arrow; one elegant italic serif accent (Instrument Serif,
    OFL — the greeting's name, the "loom" word); thin line icons (css/icons.css, stroke 1.6).
    body.loom-air is added by applyTheme on top of body.loom-studio (which keeps its behaviour: no lotties, bot button…).
@@ -3380,10 +3380,10 @@ body.loom-studio.loom-air, body.loom-studio.loom-air.light-theme {
 body.loom-air::before { content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
   background: linear-gradient(100deg, rgba(246,248,250,0.78) 0%, rgba(246,248,250,0.45) 38%, rgba(246,248,250,0) 62%),
     linear-gradient(180deg, rgba(246,248,250,0.55) 0%, rgba(246,248,250,0) 22%),
-    url('../images/app/background.webp') 60% center / cover no-repeat, #DCE6F0; }
+    url('../images/app/sky.webp') 60% center / cover no-repeat, #DCE6F0; }
 @media (max-aspect-ratio: 4/5) {
   body.loom-air::before { background: linear-gradient(180deg, rgba(246,248,250,0.8) 0%, rgba(246,248,250,0.35) 40%, rgba(246,248,250,0) 70%),
-    url('../images/app/background-tall.webp') center / cover no-repeat, #DCE6F0; }
+    url('../images/app/sky-tall.webp') center / cover no-repeat, #DCE6F0; }
 }
 body.loom-studio.loom-air ::selection { background: rgba(61,116,52,0.22); color: var(--ink); }
 .air-serif, body.loom-air #mainGreetingName, body.loom-air .tb-brand .brand-name b {
@@ -3519,7 +3519,7 @@ body.loom-air .toast { background: var(--brand); color: #fff; border-radius: 999
 }
 @media (prefers-reduced-motion: reduce) { body.loom-air .login-submit::after { transition: none; } }
 /* the sign-in screen shows the landscape too (its splash had a plain page colour) */
-body.loom-air .welcome-splash { background: url('../images/app/background.webp') 60% center / cover no-repeat, #DCE6F0 !important; }
+body.loom-air .welcome-splash { background: url('../images/app/sky.webp') 60% center / cover no-repeat, #DCE6F0 !important; }
 body.loom-studio.loom-air .login-stage { background: rgba(255,255,255,0.72) !important; border: 1px solid var(--glass-edge) !important;
   -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); box-shadow: var(--shadow-lg) !important; }
 

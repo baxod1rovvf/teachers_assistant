@@ -4,8 +4,8 @@
    outweighs the student theme (js/student-theme.js), which is added last to the page. Edit by hand. */
 html body#skBody.sk-air { background: #DCE6F0 !important; color: #12161D !important; font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important; }
 html body#skBody.sk-air::before { content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background: linear-gradient(180deg, rgba(246,248,250,0.55), rgba(246,248,250,0.35)), url('../images/app/background.webp') 60% center / cover no-repeat, #DCE6F0; }
-@media (max-aspect-ratio: 4/5) { html body#skBody.sk-air::before { background: linear-gradient(180deg, rgba(246,248,250,0.6), rgba(246,248,250,0.35)), url('../images/app/background-tall.webp') center / cover no-repeat, #DCE6F0; } }
+  background: linear-gradient(180deg, rgba(246,248,250,0.55), rgba(246,248,250,0.35)), url('../images/app/sky.webp') 60% center / cover no-repeat, #DCE6F0; }
+@media (max-aspect-ratio: 4/5) { html body#skBody.sk-air::before { background: linear-gradient(180deg, rgba(246,248,250,0.6), rgba(246,248,250,0.35)), url('../images/app/sky-tall.webp') center / cover no-repeat, #DCE6F0; } }
 html body#skBody.sk-air *:not(.sk-word-emoji):not(.sk-wemoji):not(.sk-big-emoji) { font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important; }
 html body#skBody.sk-air :is(h1, h2, h3) { color: #12161D !important; letter-spacing: -0.02em; font-weight: 700 !important; }
 html body#skBody.sk-air .sk-brand { color: #12161D !important; }
