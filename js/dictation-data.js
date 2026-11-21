@@ -1273,7 +1273,7 @@ window.TA_DICTATION = {
       "Different people may respond in different ways, so it is important to consider more than one point of view.",
       "Good results usually depend on clear communication, realistic plans, and regular attention."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d134",
