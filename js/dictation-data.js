@@ -288,7 +288,7 @@ window.TA_DICTATION = {
       "I have attached a copy of my receipt.",
       "Please let me know whether you can send the missing item or arrange a suitable replacement."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d57",
@@ -300,7 +300,7 @@ window.TA_DICTATION = {
       "Some stars appear brighter because they are closer to Earth or produce more light.",
       "Astronomers use powerful telescopes to study distant objects, but even a simple pair of binoculars can make the night sky more interesting."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d58",
