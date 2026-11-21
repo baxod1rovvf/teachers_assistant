@@ -602,7 +602,7 @@ window.TA_DICTATION = {
       "A more responsible approach is to identify what is known, distinguish it from what is merely suspected, and explain where uncertainty remains.",
       "Acknowledging limitations does not weaken an argument; it can make the argument more credible."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d96",
