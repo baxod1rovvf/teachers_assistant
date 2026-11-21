@@ -890,7 +890,7 @@ window.TA_DICTATION = {
       "Taking time to notice these details can change the way we understand everyday events.",
       "The most useful lesson was that careful choices often matter more than quick reactions."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d114",
