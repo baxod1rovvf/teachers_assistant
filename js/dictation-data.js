@@ -97,7 +97,7 @@ window.TA_DICTATION = {
       "Later, we played board games, cooked lunch, and went for a walk.",
       "It turned out to be a pleasant day."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d33",
@@ -111,7 +111,7 @@ window.TA_DICTATION = {
       "We explained each stage to the visitors and answered their questions.",
       "The judges gave us second prize."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d34",
