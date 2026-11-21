@@ -714,7 +714,7 @@ window.TA_DICTATION = {
       "The new route took only three minutes longer than my usual journey.",
       "It reminded me that familiar places can still contain details we have not noticed."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d104",
