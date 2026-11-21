@@ -1441,7 +1441,7 @@ window.TA_DICTATION = {
       "Over time, this kind of experience can help people become more confident and independent.",
       "Different people may respond in different ways, so it is important to consider more than one point of view."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d142",
