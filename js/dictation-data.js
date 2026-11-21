@@ -832,7 +832,7 @@ window.TA_DICTATION = {
       "The journey felt comfortable and passed quickly.",
       "People involved in the activity said that the experience gave them something useful to think about."
      ],
-     "recorded": false
+     "recorded": true
     }
    ]
   },
