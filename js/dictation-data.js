@@ -338,7 +338,7 @@ window.TA_DICTATION = {
       "It is useful to research different professions, speak to experienced people, and consider the skills each job requires.",
       "A thoughtful decision does not have to be made in a single day."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d76",
@@ -351,7 +351,7 @@ window.TA_DICTATION = {
       "Managers must ensure that remote staff receive useful feedback and have equal opportunities to contribute.",
       "Technology makes distance less significant, but it does not remove the need for trust."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d77",
