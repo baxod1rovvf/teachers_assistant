@@ -960,7 +960,7 @@ window.TA_DICTATION = {
       "These small details may seem unimportant at first, but together they can influence the final outcome.",
       "Thinking about what happened afterwards helped everyone recognise what they had learned."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d118",
