@@ -563,7 +563,7 @@ window.TA_DICTATION = {
       "Developers should explain how important decisions are made, test systems carefully, and provide ways for people to challenge errors.",
       "Technical performance alone is not enough to establish that a system is responsible."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d93",
