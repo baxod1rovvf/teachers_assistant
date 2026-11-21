@@ -576,7 +576,7 @@ window.TA_DICTATION = {
       "The change did not happen immediately, nor did it affect every community equally.",
       "Nevertheless, it contributed to major developments in education, religion, and public debate."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d94",
@@ -589,7 +589,7 @@ window.TA_DICTATION = {
       "The results indicated a modest improvement among those who read regularly.",
       "However, the researchers warned that the sample was too small to support broad conclusions."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d95",
