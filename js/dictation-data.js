@@ -1638,7 +1638,7 @@ window.TA_DICTATION = {
       "Convenience remains valuable, but it should be balanced with fairness, durability, and long-term thinking.",
       "This perspective encourages thoughtful choices and helps ensure that services remain responsible in the future."
      ],
-     "recorded": false
+     "recorded": true
     }
    ]
   }
