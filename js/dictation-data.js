@@ -781,7 +781,7 @@ window.TA_DICTATION = {
       "Later, the rain stopped and the air felt cooler than it had that morning.",
       "Good results usually depend on clear communication, realistic plans, and regular attention."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d108",
