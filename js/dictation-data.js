@@ -615,7 +615,7 @@ window.TA_DICTATION = {
       "The project took eighteen months longer than planned because previously hidden damage was discovered behind the walls.",
       "Although the final cost exceeded the original estimate, the building can now be used by the public again."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d97",
@@ -627,7 +627,7 @@ window.TA_DICTATION = {
       "Facts and technical skills remain important, yet learners also need to evaluate evidence, communicate clearly, and recognise different perspectives.",
       "These abilities develop gradually through practice, discussion, and meaningful feedback rather than through memorisation alone."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d98",
