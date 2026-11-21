@@ -682,7 +682,7 @@ window.TA_DICTATION = {
       "The important thing is to return to the activity tomorrow.",
       "Small beginnings can grow into routines that last."
      ],
-     "recorded": false
+     "recorded": true
     },
     {
      "id": "d102",
