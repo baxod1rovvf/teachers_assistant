@@ -78,7 +78,7 @@ test('start → Bu sizmi (with the student\'s group) → Ha → the first learn 
 });
 
 // teacher, 2026-11-22: "explain it in a very easy way… life examples" — Lesson 1 starts each part with an Uzbek story
-test('Lesson 1: each learn card starts with an easy Uzbek explanation from everyday life, with the English words in bold', async ({ page, context }) => {
+test('Beginner lessons: each learn card starts with an easy Uzbek explanation from everyday life, with the English words in bold', async ({ page, context }) => {
   await setup(context);
   const errors = watchErrors(page);
   await start(page);
@@ -91,7 +91,9 @@ test('Lesson 1: each learn card starts with an easy Uzbek explanation from every
     return !!(s.compareDocumentPosition(r) & Node.DOCUMENT_POSITION_FOLLOWING); })).toBe(true);   // the story comes before the English rule
   expect(await story.innerHTML()).not.toContain('**');
   expect(await page.evaluate(() => window.TA_GRAMMAR.levels[0].lessons[0].chunks.every(c => (c.learn.story || []).length >= 5))).toBe(true);
-  expect(await page.evaluate(() => window.TA_GRAMMAR.levels[0].lessons[1].chunks.some(c => c.learn.story))).toBe(false);   // other lessons unchanged
+  // Lessons 2–15 got theirs too (teacher, same day: "yes change lesson 2-15"); Elementary and Pre-Intermediate don't have one yet
+  expect(await page.evaluate(() => window.TA_GRAMMAR.levels[0].lessons.every(l => l.chunks.every(c => (c.learn.story || []).length >= 4)))).toBe(true);
+  expect(await page.evaluate(() => window.TA_GRAMMAR.levels.slice(1).some(lv => lv.lessons.some(l => l.chunks.some(c => c.learn.story))))).toBe(false);
   expect(errors).toEqual([]);
 });
 

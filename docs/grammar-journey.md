@@ -174,6 +174,14 @@ Examples:
 
 #### Part 1: I, you, he, she, it, we, they
 
+> 🧒 Sinfingga yangi o‘quvchi keldi. Sen do‘stingga aytasan: «Bu Sardor. **U** juda kulgili.» Har safar «Sardor, Sardor» deb takrorlamaysan — ismning o‘rniga **u** deysan.
+> 🧒 Ingliz tilida ham ismning o‘rniga kichkina so‘z ishlatiladi. Lekin o‘zbekchadagi bitta **u** o‘rniga uchta so‘z bor:
+> 🧒 • o‘g‘il bola yoki erkak haqida → **he**: Tom is my friend. **He** is twelve.
+> 🧒 • qiz bola yoki ayol haqida → **she**: Anna is a nurse. **She** is kind.
+> 🧒 • narsa yoki hayvon haqida → **it**: This is my bag. **It** is new.
+> 🧒 O‘zing va do‘sting birga → **we** (biz). Ko‘p odam yoki ko‘p narsa → **they** (ular).
+> 🧒 Bu so‘zlar gap boshida, **am / is / are** dan oldin turadi.
+
 A subject pronoun takes the place of a name. It comes before the verb (am, is, are). Use he for a man or a boy, she for a woman or a girl, it for a thing or an animal, and they for two or more people or things.
 
 | One | Two or more |
@@ -206,6 +214,15 @@ Examples:
    *Hint: Another person + I = we.*
 
 #### Part 2: my, your, his, her, its, our, their
+
+> 🧒 Tanaffusda kimdir ruchkangni olib qo‘ydi. Sen darrov aytasan: «Bu **mening** ruchkam!» → This is **my** pen!
+> 🧒 O‘zbekchada «kimniki» ekanini so‘z oxiri bildiradi: ruchka**m**, ruchka**ng**, ruchka**si**. Ingliz tilida esa bu alohida so‘z bo‘lib, narsadan **oldin** keladi:
+> 🧒 • men → **my** (mening): **my** pen
+> 🧒 • sen / siz → **your** (sening, sizning): **your** pen
+> 🧒 • u (o‘g‘il) → **his**, u (qiz) → **her**, u (narsa, hayvon) → **its**
+> 🧒 • biz → **our**, ular → **their**
+> 🧒 Qulay tomoni: narsa bitta bo‘lsin, ko‘p bo‘lsin — so‘z o‘zgarmaydi: **my** book, **my** books.
+> 🧒 Diqqat: akang haqida — **his** car, opang haqida — **her** car. O‘zbekchada ikkalasi ham «uning mashinasi».
 
 Possessive adjectives show who something belongs to. They come before a noun: my book, her phone. They are the same for one thing or many things: my book, my books. Be careful: his is for a man or a boy, her is for a woman or a girl.
 
@@ -244,6 +261,14 @@ Examples:
    *Hint: they → their (it belongs to them).*
 
 #### Part 3: he or his? it's or its?
+
+> 🧒 Bu so‘zlar bir-biriga juda o‘xshaydi, lekin vazifasi boshqa: **he** — «u» (kim?), **his** — «uning» (kimning?).
+> 🧒 Oilaviy suratni ko‘rsatyapsan: «**U** — amakim. **Uning** mashinasi qizil.» → **He** is my uncle. **His** car is red.
+> 🧒 Oson yo‘l — keyingi so‘zga qara:
+> 🧒 • keyin **am / is / are** kelsa → I, he, she, we, they
+> 🧒 • keyin narsa (ot) kelsa → my, his, her, our, their
+> 🧒 **it's** va **its** ham shunday: **it's** = it is (u — …). **its** = uning (narsa yoki hayvonniki).
+> 🧒 It's a dog. **Its** name is Max. (Bu it. Uning ismi Maks.) Apostrof (') faqat «is» yashiringan joyda bo‘ladi.
 
 Before am, is, are (a verb), use I, he, she, we, they. Before a noun, use my, his, her, our, their. Be careful with it's and its: it's = it is. its = belonging to it (no apostrophe).
 
@@ -306,6 +331,12 @@ Examples:
 
 #### Part 1: -s and -es
 
+> 🧒 Bozordan bitta olma emas, uchta olma olding. O‘zbekchada «uchta olma» deymiz — sondan keyin «olma» o‘zgarmaydi.
+> 🧒 Ingliz tilida esa bittadan ko‘p bo‘lsa, so‘z oxiriga **-s** qo‘shiladi. Bu o‘zbekchadagi **-lar** ga o‘xshaydi: kitob**lar** → book**s**.
+> 🧒 Farqi shundaki, sondan keyin ham **-s** qo‘yiladi: two book**s**, three apple**s**. («two book» — xato!)
+> 🧒 Agar so‘z **s, ss, sh, ch, x** bilan tugasa, **-es** qo‘shamiz: bus → bus**es**, box → box**es**.
+> 🧒 Ovoz chiqarib ayt: «boxs» — tilingga noqulay, «boxes» — ravon. Shuning uchun **-es**.
+
 Singular means one. Plural means two or more. Most nouns add -s: book → books. Nouns that end in -s, -ss, -sh, -ch or -x add -es: bus → buses, box → boxes. Some nouns that end in -o add -es too: tomato → tomatoes. After a number (two, three, ten…) the noun is plural: two books.
 
 | Ending | Rule | Example |
@@ -340,6 +371,12 @@ Examples:
 
 #### Part 2: -y → -ies and -f → -ves
 
+> 🧒 Ba’zi so‘zlarda -s qo‘shishdan oldin so‘zning oxiri biroz o‘zgaradi.
+> 🧒 • oxiri undosh + **y** bo‘lsa: y → **ies**. baby → bab**ies** (chaqaloqlar), city → cit**ies** (shaharlar).
+> 🧒 • oxiri unli + **y** bo‘lsa (ay, ey, oy): shunchaki **-s**. boy → boy**s**, day → day**s**, key → key**s**.
+> 🧒 • oxiri **f** yoki **fe** bo‘lsa: → **ves**. leaf → lea**ves** (barglar), knife → kni**ves** (pichoqlar).
+> 🧒 Kuzda bog‘da bitta barg emas, minglab barglar yotadi: The lea**ves** are yellow. (Barglar sariq.)
+
 If a noun ends in a consonant + y, change y to i and add -es: baby → babies, city → cities. If it ends in a vowel + y (ay, ey, oy), just add -s: day → days, key → keys, boy → boys. Many nouns that end in -f or -fe change to -ves: leaf → leaves, knife → knives.
 
 | Ending | Rule | Example |
@@ -373,6 +410,13 @@ Examples:
    *Hint: e + y (a vowel + y): just add -s.*
 
 #### Part 3: Special plurals
+
+> 🧒 Ba’zi so‘zlar hech qanday qoidaga bo‘ysunmaydi — xuddi qaysar bolaga o‘xshab. Ularni she’r kabi yodlab olamiz:
+> 🧒 • man → **men** (erkaklar), woman → **women** (ayollar), child → **children** (bolalar)
+> 🧒 • person → **people** (odamlar), foot → **feet** (oyoqlar), tooth → **teeth** (tishlar), mouse → **mice** (sichqonlar)
+> 🧒 Ba’zi so‘zlar umuman o‘zgarmaydi: one sheep → two **sheep** (qo‘ylar), one fish → two **fish** (baliqlar).
+> 🧒 Ertalab tishingni yuvasan — bitta tish emas, ko‘p tish: I brush my **teeth**.
+> 🧒 Hovlida bolalar o‘ynayapti: The **children** are in the garden.
 
 Some nouns have a special plural. Learn them by heart: man → men, woman → women, child → children, person → people, foot → feet, tooth → teeth, mouse → mice. A few nouns are the same in the plural: one sheep → two sheep, one fish → two fish.
 
@@ -440,6 +484,12 @@ Examples:
 
 #### Part 1: this and these (near)
 
+> 🧒 Qo‘lingda telefon bor. Do‘stingga ko‘rsatib aytasan: «**Bu** mening telefonim.» → **This** is my phone.
+> 🧒 **this** = bu (bitta, yaqindagi, qo‘ling yetadigan narsa).
+> 🧒 Endi qo‘lingda ikkita olma bor: «**Bular** mening olmalarim.» → **These** are my apples.
+> 🧒 **these** = bular (ko‘p, yaqindagi narsalar).
+> 🧒 Yodda tut: **this** + bitta narsa (this book), **these** + ko‘p narsa (these book**s**).
+
 Use this for one thing near you (here). Use these for two or more things near you. this + a singular noun: this book. these + a plural noun: these books.
 
 | Near me (here) | Example |
@@ -472,6 +522,12 @@ Examples:
 
 #### Part 2: that and those (far)
 
+> 🧒 Derazadan uzoqdagi binoni ko‘rsatasan: «**Anavi** — bizning maktabimiz.» → **That** is our school.
+> 🧒 **that** = anavi, ana u (bitta, uzoqdagi narsa).
+> 🧒 Ko‘chaning narigi tomonida ota-onang turibdi: «**Anavilar** — ota-onam.» → **Those** are my parents.
+> 🧒 **those** = anavilar (ko‘p, uzoqdagi narsalar).
+> 🧒 O‘yna: yaqin narsaga tegib — **this / these**, uzoqdagisini barmoq bilan ko‘rsatib — **that / those**.
+
 Use that for one thing far from you (there). Use those for two or more things far from you. that + a singular noun: that house. those + a plural noun: those houses.
 
 |  | One | Two or more |
@@ -503,6 +559,12 @@ Examples:
    *Hint: Girls = more than one: those girls.*
 
 #### Part 3: What's this? What are those?
+
+> 🧒 Ukang notanish narsani ko‘rib so‘raydi: «Bu nima?» → **What's this?**
+> 🧒 Sen javob berasan: «Bu — soat.» Javobda yana «this» demaymiz, **it** deymiz: **It's** a clock.
+> 🧒 Ko‘p narsa haqida so‘rasa: «Bular nima?» → **What are these?** Javob — **they**: **They're** keys.
+> 🧒 Ha / yo‘q savoliga qisqa javob: Is that your coat? — Yes, **it is**. / No, **it isn't**.
+> 🧒 Odam haqida so‘rasa — **Who**: Who is that? — **That's** my brother. (Anavi kim? — U mening akam.)
 
 When you ask about this or that, answer with it: What's this? — It's a clock. When you ask about these or those, answer with they: What are these? — They're keys. Short answers: Yes, it is. / No, it isn't. Yes, they are. / No, they aren't.
 
@@ -565,6 +627,13 @@ Examples:
 
 #### Part 1: I have got, she has got
 
+> 🧒 O‘zbekchada «**Mening** velosipedim **bor**» deymiz. Ingliz tilida esa: **I have got** a bike.
+> 🧒 **have got / has got** = «… bor» (kimdadir, kimningdir).
+> 🧒 • I, you, we, they → **have got** (gapirganda: I**'ve got**)
+> 🧒 • he, she, it → **has got** (gapirganda: she**'s got**)
+> 🧒 Oilang haqida ham shunday: «Mening bitta akam bor» → I **have got** a brother.
+> 🧒 Tashqi ko‘rinish ham: «Uning sochi uzun» → She **has got** long hair. (Unda uzun soch «bor».)
+
 Use have got / has got to say what someone owns, and to talk about family and how someone looks. Use have got with I, you, we, they. Use has got with he, she, it. Short forms: I've got, you've got, he's got, she's got.
 
 | Person | Full form | Short form |
@@ -596,6 +665,12 @@ Examples:
    *Hint: She + has got + a new phone.*
 
 #### Part 2: Negatives and questions
+
+> 🧒 Do‘sting so‘raydi: «Uy hayvoning bormi?» Sening esa yo‘q.
+> 🧒 «Yo‘q» uchun **not** qo‘shamiz: I **haven't got** a pet. (have + not → haven't)
+> 🧒 he, she, it bilan: She **hasn't got** a car. (has + not → hasn't)
+> 🧒 Savolda **have / has** gapning boshiga chiqadi: **Have** you got a pen? (Ruchkang bormi?)
+> 🧒 Qisqa javobda **got** aytilmaydi: Yes, I **have**. / No, I **haven't**. Yes, she **has**. / No, she **hasn't**.
 
 Negative: haven't got / hasn't got. Question: put have or has first: Have you got a pen? Has she got a car? Short answers: Yes, I have. / No, I haven't. Yes, she has. / No, she hasn't. Don't say got in a short answer.
 
@@ -630,6 +705,12 @@ Examples:
    *Hint: With they, the question starts with Have.*
 
 #### Part 3: 's = has or is?
+
+> 🧒 **'s** — kichkina, lekin ikki xil ma’noli: **is** yoki **has**.
+> 🧒 Qanday bilamiz? Keyingi so‘zga qara:
+> 🧒 • keyin **got** kelsa → has: She**'s got** a cat. (Uning mushugi bor.)
+> 🧒 • got kelmasa → is: She**'s** tall. (U baland bo‘yli.)
+> 🧒 Masalan: He**'s** a doctor. (U shifokor.) Lekin: He**'s got** a cold. (U shamollagan — unda shamollash «bor».)
 
 's can mean is or has. If got comes after it, 's means has: She's got a cat (She has got a cat). If there is no got, 's means is: She's tall (She is tall).
 
@@ -691,6 +772,14 @@ Examples:
 
 #### Part 1: There is, there are
 
+> 🧒 Mehmonga kelgan do‘stingga uyingni ko‘rsatyapsan: «Oshxonada katta stol **bor**.»
+> 🧒 Biror joyda nimadir **bor** ekanini aytish uchun **there is / there are** ishlatamiz.
+> 🧒 • bitta narsa → **there is**: **There is** a cat in the garden. (Bog‘da mushuk bor.)
+> 🧒 • ko‘p narsa → **there are**: **There are** three rooms in our flat. (Kvartiramizda uchta xona bor.)
+> 🧒 O‘zbekchada joy gap boshida keladi («Bog‘da…»), ingliz tilida esa gap **there is** bilan boshlanadi, joy oxirida.
+> 🧒 Farqi: **have got** — kimdadir bor; **there is** — qayerdadir bor.
+> 🧒 Gapirganda qisqartiramiz: there is → **there's**.
+
 Use there is / there are to say that something is in a place. Use there is with one thing (a singular noun). Use there are with two or more things (a plural noun). Short form: there's.
 
 |  | Example |
@@ -723,6 +812,12 @@ Examples:
 
 #### Part 2: Negatives and questions
 
+> 🧒 Onang so‘raydi: «Yaqin atrofda park **bormi**?» → **Is there** a park near here?
+> 🧒 Savolda **is / are** oldinga chiqadi: **Is there** …? **Are there** …?
+> 🧒 Yo‘q bo‘lsa — **not**: **There isn't** a TV in my room. (Xonamda televizor yo‘q.)
+> 🧒 Ko‘p narsa yo‘q bo‘lsa: **There aren't** many students. (O‘quvchilar ko‘p emas.)
+> 🧒 Sonini so‘rash: «Sinfingizda nechta o‘quvchi bor?» → **How many** students **are there** in your class?
+
 Negative: there isn't / there aren't. Question: Is there…? Are there…? Short answers: Yes, there is. / No, there isn't. Yes, there are. / No, there aren't. To ask about a number, use How many … are there?
 
 | Negative | Question | Short answer |
@@ -754,6 +849,12 @@ Examples:
    *Hint: How many + students + are there?*
 
 #### Part 3: There's a dog. It's big.
+
+> 🧒 Hikoya aytayotganingni tasavvur qil: «Bog‘da bir it bor. **U** juda katta.»
+> 🧒 Birinchi marta aytganda — **there is**: **There's** a dog in the garden.
+> 🧒 Keyin o‘sha it haqida davom etsang — **it**: **It's** very big.
+> 🧒 Ko‘p narsa bo‘lsa — **they**: There are two cats. **They're** hungry.
+> 🧒 Odam bo‘lsa — **he** yoki **she**: There's a new girl in our class. **She's** from Spain.
 
 Use there is / there are to say something is there for the first time. Then use it (one thing) or they (two or more) to say more about it: There's a dog in the garden. It's very big.
 
@@ -809,6 +910,13 @@ Examples:
 
 #### Part 1: a / an or the?
 
+> 🧒 Do‘stingga aytasan: «Ko‘chada **bir** mushukni ko‘rdim.» Do‘sting u mushukni bilmaydi — bu qandaydir bitta mushuk → **a** cat.
+> 🧒 Keyin davom etasan: «**O‘sha** mushuk qora edi.» Endi ikkalangiz qaysi mushuk ekanini bilasiz → **the** cat.
+> 🧒 **a / an** = bir, qandaydir bitta (birinchi marta aytilganda).
+> 🧒 **the** = o‘sha, bu (ikkalamiz biladigan aniq narsa).
+> 🧒 I've got **a** cat and **a** dog. **The** cat is black and **the** dog is white.
+> 🧒 Uyda «Eshikni yop» desang, qaysi eshikligi aniq: Close **the** door.
+
 Use a / an when you talk about one thing for the first time, or about any one of many: There's a cat in the garden. Use the when you and the listener know which thing you mean, for example because you talked about it before: The cat is black.
 
 | First time (any one) | We know which one |
@@ -841,6 +949,11 @@ Examples:
    *Hint: First time: a dog. After that: the dog.*
 
 #### Part 2: the: only one, and places we know
+
+> 🧒 Dunyoda faqat bitta bo‘lgan narsalar bor: quyosh, oy, osmon, dengiz. Ular haqida gapirganda hamma qaysi biri ekanini biladi.
+> 🧒 Shuning uchun ularning oldiga doim **the**: **the** sun (quyosh), **the** moon (oy), **the** sky (osmon).
+> 🧒 Mahallangdagi joylar ham shunday. «Onam do‘konda» — har kuni boradigan do‘koningiz → My mum is at **the** shop.
+> 🧒 **the** park, **the** station, **the** bank — siz biladigan, yaqindagi joylar.
 
 Use the with things there is only one of: the sun, the moon, the sky, the sea. Use the with places in a town when we know which one we mean: the park, the station, the shop.
 
@@ -875,6 +988,12 @@ Examples:
    *Hint: There is only one moon: the moon.*
 
 #### Part 3: No article
+
+> 🧒 Ba’zan hech qanday so‘z kerak emas:
+> 🧒 • ism, shahar, davlat oldidan: Tom, London, Spain. («the Tom» — xato!)
+> 🧒 • bu iboralarda: **at home** (uyda), **at school** (maktabda), **at work** (ishda).
+> 🧒 • hamma itlar, hamma mushuklar haqida umuman gapirganda: **Dogs** are friendly animals. (Itlar do‘stona hayvonlar.)
+> 🧒 Yodda tut: **a** = bitta, shuning uchun ko‘plik bilan hech qachon: «a cats» — xato, **cats** — to‘g‘ri.
 
 Don't use a, an or the before names of people, cities and countries: Tom, London, Spain. Don't use them in these phrases: at home, at school, at work. Never use a / an with plural nouns: cats (not a cats).
 
@@ -937,6 +1056,13 @@ Examples:
 
 #### Part 1: Can you count it?
 
+> 🧒 Dasturxonda olmalar bor — ularni sanash mumkin: bitta olma, ikkita olma → one apple, two apple**s**.
+> 🧒 Endi suvni sanab ko‘r: «bitta suv, ikkita suv»? Bo‘lmaydi! Suvni, sutni, guruchni, shakarni sanab bo‘lmaydi.
+> 🧒 • sanaladigan narsalar **-s** va **a / an** oladi: **an** apple, three egg**s**.
+> 🧒 • sanalmaydiganlar na **-s**, na **a / an** oladi: water, milk, rice, bread, sugar, money, music.
+> 🧒 Sanalmaydiganlar bilan **is** ishlatiladi: The milk **is** in the fridge. (Sut muzlatkichda.)
+> 🧒 Pul ham sanalmaydi: so‘mni sanaysan, lekin «money» so‘zining o‘zi sanalmaydi — «two moneys» demaymiz.
+
 Countable nouns are things you can count: one apple, two apples. They have a plural, and you can use a / an with one. Uncountable nouns are things you can't count, like water, milk, rice, bread, money, sugar and music. They have no plural and no a / an, and they go with is: The water is cold.
 
 | Countable | Uncountable |
@@ -971,6 +1097,12 @@ Examples:
    *Hint: Rice is uncountable, so use is.*
 
 #### Part 2: a bottle of, a cup of, a piece of
+
+> 🧒 Choyxonada «bitta choy» deysan — aslida bu «bir piyola choy» degani.
+> 🧒 Ingliz tilida sanalmaydigan narsani idish yoki bo‘lak bilan sanaymiz:
+> 🧒 a **cup of** tea (bir piyola choy), a **bottle of** water (bir shisha suv), a **piece of** cake (bir bo‘lak tort), a **kilo of** rice (bir kilo guruch).
+> 🧒 Ko‘p bo‘lsa, **-s** idishga qo‘shiladi, choyga emas: two **cups** of tea (ikki piyola choy).
+> 🧒 «two cup of teas» — xato!
 
 To count uncountable things, use a word for a container or an amount: a bottle of water, a cup of tea, a piece of cake, a kilo of rice. For more than one, put -s on the container word: two cups of tea (not two cup of teas).
 
@@ -1007,6 +1139,12 @@ Examples:
    *Hint: The -es goes on glass, never on milk.*
 
 #### Part 3: How many? How much?
+
+> 🧒 Bozorda sotuvchi so‘raydi: «Nechta olma?» yoki «Qancha guruch?»
+> 🧒 • sanaladigan narsa uchun — **How many**: **How many** apples? (Nechta olma?)
+> 🧒 • sanalmaydigan narsa uchun — **How much**: **How much** rice? (Qancha guruch?)
+> 🧒 «Ko‘p» desang — ikkalasi bilan ham **a lot of**: **a lot of** books, **a lot of** milk.
+> 🧒 Pul haqida: **How much** money have you got? (Qancha puling bor?)
 
 Ask How many + a plural noun (countable): How many apples? Ask How much + an uncountable noun: How much water? A lot of works with both: a lot of books, a lot of milk.
 
@@ -1069,6 +1207,12 @@ Examples:
 
 #### Part 1: some in positive sentences
 
+> 🧒 Onang so‘raydi: «Muzlatkichda nima bor?» Sen qarab aytasan: «Biroz sut va bir nechta tuxum bor.»
+> 🧒 «biroz», «bir nechta» — ingliz tilida **some**.
+> 🧒 There is **some** milk. (Biroz sut bor.) There are **some** eggs. (Bir nechta tuxum bor.)
+> 🧒 **some** aniq sonni aytmaydi — nechtaligi muhim emas, shunchaki «bor».
+> 🧒 Oddiy gaplarda (savol va inkor bo‘lmagan gaplarda) ishlatiladi.
+
 Use some in positive sentences with plural nouns and uncountable nouns. It means a few or a little — we don't say exactly how many or how much: There are some eggs. There is some milk.
 
 |  | Plural (countable) | Uncountable |
@@ -1099,6 +1243,11 @@ Examples:
    *Hint: There is + some + bread.*
 
 #### Part 2: any in negatives and questions
+
+> 🧒 Endi muzlatkich bo‘m-bo‘sh: «Umuman tuxum yo‘q.» → There aren't **any** eggs.
+> 🧒 Savol berganda ham **any**: «Sut bormi?» → Is there **any** milk?
+> 🧒 Qoidasi oddiy: **some** — oddiy gapda, **any** — inkor (not) va savolda.
+> 🧒 Have you got **any** brothers? (Akalaring bormi?) — No, I haven't got **any** brothers.
 
 Use any in negative sentences and in questions, with plural nouns and uncountable nouns: There aren't any eggs. Is there any milk? Have you got any brothers?
 
@@ -1131,6 +1280,11 @@ Examples:
    *Hint: Negative: any. Tea is uncountable, so isn't.*
 
 #### Part 3: some when you offer or ask for something
+
+> 🧒 Mehmon keldi. Sen choy taklif qilasan: «Choy ichasizmi?» → Would you like **some** tea?
+> 🧒 Bu savol, lekin **some** ishlatamiz! Chunki taklif qilyapsan va «ha» javobini kutyapsan.
+> 🧒 Biror narsa so‘raganda ham shunday: «Menga biroz suv bera olasizmi?» → Can I have **some** water, please?
+> 🧒 Esda tut: taklif va iltimosda — **some**.
 
 When you offer something or ask for something, use some in the question: Would you like some tea? Can I have some water, please?
 
@@ -1190,6 +1344,13 @@ Examples:
 
 #### Part 1: in, on, under
 
+> 🧒 Onang telefonini qidiryapti. Sen aytasan: «Telefon stol **ustida**.» → The phone is **on** the table.
+> 🧒 O‘zbekchada joyni so‘z oxiri yoki keyingi so‘z bildiradi: stol**da**, quti **ichida**. Ingliz tilida esa kichkina so‘z narsadan **oldin** keladi.
+> 🧒 • **in** = ichida: The milk is **in** the fridge. (Sut muzlatkich ichida.)
+> 🧒 • **on** = ustida, yuzasida: The picture is **on** the wall. (Rasm devorda.)
+> 🧒 • **under** = ostida: The shoes are **under** the bed. (Poyabzal karavot ostida.)
+> 🧒 O‘yin: qalamni qutining ichiga, ustiga, ostiga qo‘yib, ovoz chiqarib ayt: **in** the box, **on** the box, **under** the box.
+
 Prepositions of place tell us where something is. in = inside something: in the box. on = on top of something, touching it: on the table, on the wall. under = below something: under the bed.
 
 | Preposition | Meaning | Example |
@@ -1222,6 +1383,14 @@ Examples:
    *Hint: in + my bag: the preposition comes before the place.*
 
 #### Part 2: next to, between, behind, in front of, opposite, near
+
+> 🧒 Sinf suratini ko‘rsatyapsan: «Men Sardorning **yonida** turibman.» → I am **next to** Sardor.
+> 🧒 • **next to** = yonida
+> 🧒 • **between** = orasida (ikki narsaning o‘rtasida): B is **between** A and C.
+> 🧒 • **in front of** = oldida: There's a tree **in front of** my window.
+> 🧒 • **behind** = orqasida: The ball is **behind** the sofa.
+> 🧒 • **opposite** = qarshisida (yuzma-yuz): The pharmacy is **opposite** the bank.
+> 🧒 • **near** = yaqinida: Is there a bus stop **near** here?
 
 next to = at the side of. between = in the middle of two things. in front of = before something, at its front. behind = at the back of something. opposite = on the other side, facing it. near = not far from.
 
@@ -1259,6 +1428,12 @@ Examples:
    *Hint: At the front of something: in front of.*
 
 #### Part 3: at, in, on for places
+
+> 🧒 O‘zbekchadagi bitta **-da** qo‘shimchasi o‘rniga ingliz tilida uch xil so‘z bor:
+> 🧒 • **at** — nuqta yoki biror ish qiladigan joy: **at** home (uyda), **at** school (maktabda), **at** the bus stop (bekatda).
+> 🧒 • **in** — shahar, davlat, xona ichida: **in** Tashkent, **in** Uzbekistan, **in** the kitchen.
+> 🧒 • **on** — qavat va transport: **on** the third floor (uchinchi qavatda), **on** the bus (avtobusda).
+> 🧒 Bobong qishloqda, sen esa avtobusdasan: My grandpa is **in** the village. I am **on** the bus.
 
 Use at for a point or a place where you do something: at the door, at the bus stop, at home, at school, at work. Use in for cities, countries and rooms: in Paris, in Spain, in the bedroom. Use on for floors and for buses and trains: on the second floor, on the bus.
 
@@ -1320,6 +1495,11 @@ Examples:
 
 #### Part 1: I work, they play
 
+> 🧒 Har kuni ertalab nima qilasan? «Men soat yettida turaman. Maktabga avtobusda boraman.»
+> 🧒 Har kuni, doim bo‘ladigan ishlar haqida **Present Simple** ishlatamiz: I **get up** at seven. We **go** to school by bus.
+> 🧒 O‘zbekchada fe’l har kim uchun o‘zgaradi: bor**aman**, bor**asan**, bor**amiz**. Ingliz tilida I, you, we, they bilan fe’l o‘zgarmaydi: I **go**, you **go**, we **go**, they **go**.
+> 🧒 Hamma biladigan haqiqatlar ham shunday: Cows **eat** grass. (Sigirlar o‘t yeydi.)
+
 Use the present simple for habits and routines (things you do every day, every week…) and for facts (things that are always true). With I, you, we and they, use the verb as it is: I play, they work.
 
 | Person | Verb | Example |
@@ -1354,6 +1534,12 @@ Examples:
 
 #### Part 2: he works, she plays
 
+> 🧒 Endi opang haqida gapir: «U bankda ishlaydi.» → She **works** in a bank.
+> 🧒 Faqat **he, she, it** bilan (yoki bitta odam yoki narsa: Tom, opam, mushugim) fe’lga **-s** qo‘shiladi.
+> 🧒 I work → She work**s**. They play → Tom play**s**.
+> 🧒 Bu kichkina **-s** — eng ko‘p unutiladigan narsa! Uni o‘zbekchadagi **-di** bilan birga esla: u ishlay**di** → she work**s**.
+> 🧒 Mushuging ham: My cat sleep**s** a lot. (Mushugim ko‘p uxlaydi.)
+
 With he, she and it (and one person or thing, like Tom or my cat), add -s to the verb: she works, he plays, it rains. Don't forget the -s!
 
 | I / you / we / they | he / she / it |
@@ -1387,6 +1573,12 @@ Examples:
    *Hint: With he, add -s: likes.*
 
 #### Part 3: goes, watches, studies, has
+
+> 🧒 Ba’zi fe’llarga oddiy -s emas, **-es** qo‘shiladi — aytish oson bo‘lishi uchun.
+> 🧒 • **s, sh, ch, x, o** bilan tugasa → **-es**: watch → watch**es**, go → go**es**, wash → wash**es**.
+> 🧒 • undosh + **y** → **ies**: study → stud**ies**. (unli + y → shunchaki -s: play → play**s**)
+> 🧒 • **have** — alohida: he **has**.
+> 🧒 Dadang haqida: My dad wash**es** the car on Sundays. (Dadam yakshanba kunlari mashinani yuvadi.)
 
 Verbs that end in -s, -sh, -ch, -x or -o add -es: watch → watches, go → goes, do → does. If a verb ends in a consonant + y, change y to i and add -es: study → studies. If it ends in a vowel + y, just add -s: play → plays. have → has.
 
@@ -1449,6 +1641,13 @@ Examples:
 
 #### Part 1: don't and doesn't
 
+> 🧒 Do‘sting kofe taklif qildi, lekin sen kofe ichmaysan: «Men kofe ichmayman.» → I **don't** drink coffee.
+> 🧒 O‘zbekchada fe’lga **-ma** qo‘shamiz: ich**ma**yman. Ingliz tilida esa fe’ldan oldin **don't** qo‘yamiz.
+> 🧒 • I, you, we, they → **don't** (do not)
+> 🧒 • he, she, it → **doesn't** (does not)
+> 🧒 Diqqat: **doesn't** da «-s» allaqachon bor, shuning uchun fe’lga yana -s qo‘shilmaydi: My brother **doesn't like** fish. («doesn't likes» — xato!)
+> 🧒 -s faqat bir joyda bo‘ladi: yo doesn't da, yo fe’lda — ikkalasida emas.
+
 To make a negative, use don't (do not) with I, you, we, they, and doesn't (does not) with he, she, it. Then use the verb as it is. After doesn't, the verb has no -s: She doesn't like fish (not She doesn't likes).
 
 | Person | Negative | Example |
@@ -1480,6 +1679,13 @@ Examples:
    *Hint: Tom = he: doesn't + watch (no -s).*
 
 #### Part 2: Do you…? Does she…?
+
+> 🧒 O‘zbekchada savol uchun so‘z oxiriga **-mi** qo‘shamiz: Shaxmat o‘ynaysan**mi**?
+> 🧒 Ingliz tilida esa gap boshiga yordamchi **Do** yoki **Does** qo‘yiladi: **Do** you play chess?
+> 🧒 • I, you, we, they → **Do**: **Do** they go to school by bus?
+> 🧒 • he, she, it → **Does**: **Does** your sister work?
+> 🧒 **Does** dan keyin ham fe’lga -s qo‘shilmaydi: Does he **speak** French?
+> 🧒 Qisqa javob: Yes, I **do**. / No, I **don't**. Yes, she **does**. / No, she **doesn't**.
 
 To ask a question, use Do with I, you, we, they and Does with he, she, it, then the person, then the verb: Do you like music? Does he speak French? After Does, the verb has no -s. Short answers: Yes, I do. / No, I don't. Yes, she does. / No, she doesn't.
 
@@ -1513,6 +1719,12 @@ Examples:
    *Hint: Does he…? — No, he doesn't.*
 
 #### Part 3: Where do you…? What time does it…?
+
+> 🧒 Yangi tanishingdan so‘raysan: «Qayerda yashaysan?» → **Where** do you live?
+> 🧒 Tartibi: **savol so‘zi** + do / does + kim + fe’l.
+> 🧒 **Where** (qayerda), **When** (qachon), **What time** (soat nechada), **What** (nima), **How** (qanday).
+> 🧒 «Kino soat nechada boshlanadi?» → **What time does** the film **start**?
+> 🧒 «Maktabga qanday borasan?» → **How do** you go to school? — By bus. (Avtobusda.)
 
 Question words come first: What, Where, When, What time, Who, How. Then do or does, then the person, then the verb: Where do you live? What time does the film start?
 
@@ -1575,6 +1787,12 @@ Examples:
 
 #### Part 1: always, usually, often, sometimes, rarely, never
 
+> 🧒 Tishingni qanchalik tez-tez yuvasan? Har kuni — **doim**. Kofe ichasanmi? — **Hech qachon**.
+> 🧒 Bu so‘zlar ish qanchalik tez-tez bo‘lishini aytadi:
+> 🧒 **always** (doim) → **usually** (odatda) → **often** (tez-tez) → **sometimes** (ba’zan) → **rarely** (kamdan-kam) → **never** (hech qachon).
+> 🧒 I **always** brush my teeth. (Men doim tishimni yuvaman.)
+> 🧒 Anna **never** drinks coffee. (Anna hech qachon kofe ichmaydi.)
+
 Adverbs of frequency say how often something happens. always = every time. never = not at any time. The others are in between: usually, often, sometimes, rarely.
 
 | Word | How often |
@@ -1612,6 +1830,12 @@ Examples:
 
 #### Part 2: Where does it go?
 
+> 🧒 Bu so‘zlarning gapdagi joyi muhim:
+> 🧒 • oddiy fe’ldan **oldin**: I **often** play tennis. (Men tez-tez tennis o‘ynayman.)
+> 🧒 • lekin **am / is / are** dan **keyin**: She is **always** happy. (U doim xursand.)
+> 🧒 • inkorda don't / doesn't dan keyin: I don't **usually** eat meat. (Men odatda go‘sht yemayman.)
+> 🧒 Oson yo‘l: «always» fe’lning oldida turadi, faqat **is** ning orqasiga yashirinadi.
+
 The adverb goes before the main verb: I often play tennis. But it goes after am, is, are: She is always happy. In a negative, it goes after don't / doesn't: I don't usually eat meat.
 
 |  | Where | Example |
@@ -1644,6 +1868,13 @@ Examples:
    *Hint: never goes before the verb, and Anna = she, so drinks.*
 
 #### Part 3: How often? Once a week, twice a week
+
+> 🧒 Do‘sting so‘raydi: «Sportzalga qanchalik tez-tez borasan?» → **How often** do you go to the gym?
+> 🧒 Javob: «Haftada uch marta» → **Three times a week**.
+> 🧒 • bir marta → **once**, ikki marta → **twice**, uch marta → **three times**
+> 🧒 • kunida → **a day**, haftada → **a week**, oyida → **a month**; har kuni → **every day**
+> 🧒 Bular gapning **oxirida** keladi: We have English **twice a week**.
+> 🧒 Diqqat: **never** o‘zi «yo‘q» ma’nosini beradi. O‘zbekchada «hech qachon ichmayman» deymiz, ingliz tilida esa bitta inkor yetarli: I **never** drink cola. («I don't never» — xato!)
 
 Ask How often…? to find out how many times. Answer with an adverb, or with every day, once a week (one time), twice a week (two times), three times a month. These go at the end of the sentence. Never is already negative, so don't use it with don't: I never eat meat (not I don't never eat meat).
 
@@ -1706,6 +1937,13 @@ Examples:
 
 #### Part 1: me, him, her, us, them
 
+> 🧒 Og‘ir sumka ko‘tarib kelyapsan va do‘stingga aytasan: «**Menga** yordam ber!» → Help **me**!
+> 🧒 Gap boshida «men» → **I**. Fe’ldan keyin «meni / menga» → **me**.
+> 🧒 • I → **me**, he → **him**, she → **her**, we → **us**, they → **them** (you va it o‘zgarmaydi)
+> 🧒 «Men u bilan futbol o‘ynayman» → I play football with **him**. («with he» — xato!)
+> 🧒 «Men ularni har hafta ko‘rgani boraman» → I visit **them** every week.
+> 🧒 Oson yo‘l: fe’ldan yoki with, for, to kabi so‘zdan keyin — **me, him, her, us, them**.
+
 Object pronouns come after a verb (help, like, see…) or after a preposition (with, for, to, at). I → me, you → you, he → him, she → her, it → it, we → us, they → them.
 
 | Subject (before the verb) | Object (after the verb) |
@@ -1744,6 +1982,13 @@ Examples:
 
 #### Part 2: mine, yours, his, hers, ours, theirs
 
+> 🧒 Sinfda kimdir telefonni o‘ziniki deb o‘ylayapti. Sen aytasan: «Bu telefon **meniki**!» → This phone is **mine**!
+> 🧒 **mine** = meniki. Undan keyin narsaning nomi kelmaydi — u allaqachon aytilgan.
+> 🧒 • my → **mine** (meniki), your → **yours** (seniki)
+> 🧒 • his → **his** (uniki), her → **hers** (uniki)
+> 🧒 • our → **ours** (bizniki), their → **theirs** (ularniki)
+> 🧒 Bu so‘zlarda apostrof (') yo‘q: yours, hers — «your's» deb yozma!
+
 Possessive pronouns stand alone — no noun comes after them: This book is mine (= my book). Compare: my bag → It's mine. her pen → It's hers. There is no apostrophe in yours, hers, ours or theirs.
 
 | Before a noun | Alone |
@@ -1780,6 +2025,11 @@ Examples:
    *Hint: theirs has no apostrophe.*
 
 #### Part 3: Whose is it? — It's Tom's.
+
+> 🧒 Sinfda egasiz sumka qoldi. O‘qituvchi so‘raydi: «Bu **kimning** sumkasi?» → **Whose** bag is this?
+> 🧒 Javob: «Tomniki» → It's **Tom's**. Ismga **'s** qo‘shamiz — bu o‘zbekchadagi **-ning** yoki **-niki**.
+> 🧒 Tom**'s** room — Tom**ning** xonasi; my sister**'s** room — opam**ning** xonasi.
+> 🧒 Ko‘plikdagi so‘z -s bilan tugasa, faqat apostrof qo‘yiladi: my parents**'** car (ota-onamning mashinasi).
 
 Ask Whose…? to find out who something belongs to. Answer with a name + 's (Tom's) or with mine, yours, his, hers, ours, theirs. When the noun is plural and ends in -s, add only an apostrophe: my parents' car (= the car of my parents).
 
@@ -1841,6 +2091,12 @@ Examples:
 
 #### Part 1: Open the door. Don't run.
 
+> 🧒 Dars boshlandi. O‘qituvchi aytadi: «Kitoblaringizni oching!» → **Open** your books!
+> 🧒 Buyruq gapda «sen / siz» aytilmaydi — gap darhol fe’l bilan boshlanadi: **Sit down.** (O‘tiring.) **Listen.** (Tinglang.)
+> 🧒 «Qilma!» deyish uchun — **Don't** + fe’l: **Don't run!** (Yugurmang!)
+> 🧒 Xushmuomala bo‘lish uchun **please** (iltimos) qo‘sh: **Please** sit down. / Sit down, **please**.
+> 🧒 Pol ho‘l bo‘lsa: **Be careful!** (Ehtiyot bo‘ling!)
+
 Use the imperative to give instructions, orders or advice. Start with the verb as it is — don't say you: Open your books. Sit down. For a negative, use Don't + verb: Don't run. Add please to be polite: Please sit down. / Sit down, please.
 
 | Positive | Negative |
@@ -1875,6 +2131,13 @@ Examples:
 
 #### Part 2: Subject + verb + object
 
+> 🧒 O‘zbekchada fe’l gapning **oxirida** keladi: Men olmani yaxshi **ko‘raman**.
+> 🧒 Ingliz tilida esa fe’l **egadan keyin darhol** keladi: I **like** apples.
+> 🧒 Tartibi: **kim?** + **nima qiladi?** + **nimani / kimni?**
+> 🧒 Men + yaxshi ko‘raman + olmani → I + **like** + apples.
+> 🧒 Tom + yeydi + olmani → Tom + **eats** + an apple.
+> 🧒 «I apples like» — xato! Fe’l hech qachon gap oxiriga qochmaydi.
+
 An English sentence usually goes like this: subject (who?) + verb (does what?) + object (what? / who?). I like apples. The verb comes right after the subject, not at the end of the sentence.
 
 | Subject (who?) | Verb (does what?) | Object (what?) |
@@ -1907,6 +2170,12 @@ Examples:
    *Hint: Mrs Green (subject) + teaches (verb) + English (object).*
 
 #### Part 3: Where and when go at the end
+
+> 🧒 Gapga «qayerda?» va «qachon?» qo‘shsak, ular gapning **oxiriga** boradi.
+> 🧒 Tartibi: kim + nima qiladi + nimani + **qayerda** + **qachon**.
+> 🧒 I play football + **in the park** (qayerda?) + **on Saturdays** (qachon?).
+> 🧒 O‘zbekchada esa vaqt ko‘pincha boshida keladi: «Shanba kunlari parkda futbol o‘ynayman.»
+> 🧒 Yodla: avval **joy**, keyin **vaqt**.
 
 After the object, say where (the place), then when (the time): I play football (what) in the park (where) on Saturdays (when). Words like every day, on Sundays and after school don't go between the subject and the verb.
 
