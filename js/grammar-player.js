@@ -163,6 +163,10 @@
       <tbody>${L.table.slice(1).map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>` : '';
     show(`<section class="sk-card gr-card gr-learn" data-chunk="${S.chunk}">${partLine('Learn')}
       <h2>${esc(L.title)}</h2>
+      ${L.story && L.story.length ? `<div class="gr-story" lang="uz" translate="no"><p class="gr-story-h">🧒 Oddiy qilib aytganda</p>${L.story.map(x => {
+        const item = /^•\s*/.test(x), t = esc(x.replace(/^•\s*/, '')).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+        return `<p${item ? ' class="gr-story-li"' : ''}>${t}</p>`;
+      }).join('')}</div>` : ''}
       <p class="gr-rule">${esc(L.rule)}</p>
       ${table}
       <h3 class="sk-sub">Examples</h3>

@@ -1,14 +1,27 @@
 {
   "beginner": [
     {
-      "no": 1, "title": "To Be (am/is/are) + A/An", "v": 1,
+      "no": 1, "title": "To Be (am/is/are) + A/An", "v": 2,
       "chunks": [
         {
           "title": "I am, you are, she is",
-          "rule": "Use am, is or are to say who someone is, what something is, how someone feels or where someone is. Use am with I. Use is with he, she, it and one person or thing. Use are with you, we, they and two or more people or things. In speaking we often use short forms: I'm, she's, they're.",
-          "table": [["Person","be","Short form"],["I","am","I'm"],["you","are","you're"],["he / she / it","is","he's / she's / it's"],["we","are","we're"],["they","are","they're"]],
-          "examples": ["I am a student.","You are my friend.","Tom is ten years old.","It is cold today.","We're in the classroom.","Anna and Sam are at home."],
-          "uz": "I bilan am, he / she / it bilan is, you / we / they bilan are ishlatiladi.",
+          "story": [
+            "Tasavvur qil: ko‘chada ketyapsan va kimgadir «Men bolaman» deb aytding.",
+            "O‘zbekchada so‘zning oxiriga **-man** qo‘shamiz: bola**man**. Ingliz tilida esa so‘z oxiriga bunday narsa qo‘shilmaydi.",
+            "Shuning uchun **-man** so‘zdan ajralib, o‘rtaga chiqib oladi va alohida so‘z bo‘ladi: **am**.",
+            "Men bola**man** → **I am** a boy.",
+            "Bu kichkina so‘z kim haqida gapirayotganingga qarab o‘zgaradi:",
+            "• O‘zing haqingda: **I am** (men …man).",
+            "• Bitta boshqa odam yoki narsa haqida: **he is** (u — o‘g‘il bola yoki erkak), **she is** (u — qiz yoki ayol), **it is** (u — narsa yoki hayvon).",
+            "• Ro‘parangdagi odamga yoki ko‘pchilik haqida: **you are** (sen / siz), **we are** (biz), **they are** (ular).",
+            "Do‘stingni onangga tanishtiryapsan: «Bu Ali. U mening do‘stim.» → **He is** my friend.",
+            "Diqqat! O‘zbekchada «U bola» deymiz — oxirida hech narsa yo‘q. Ingliz tilida esa bu so‘z hech qachon tushib qolmaydi: **He is** a boy. «He boy» deyish — xato!",
+            "Gapirganda qisqartiramiz: I am → **I'm**, he is → **he's**, they are → **they're**."
+          ],
+          "rule": "Am, is and are are one word in three forms. I → am. He, she, it (one person or thing) → is. You, we, they (two or more people) → are. This word is always in the sentence: He is a boy (not: He boy).",
+          "table": [["Who","be","Example"],["I","am","I am a boy."],["you","are","You are my friend."],["he","is","He is my brother."],["she","is","She is my sister."],["it","is","It is a cat."],["we","are","We are students."],["they","are","They are at home."]],
+          "examples": ["I am a boy.","I am a girl.","You are my friend.","He is my brother.","It is a dog.","We are at school."],
+          "uz": "Men … → I am · U … → he / she / it is · Sen, Siz, Biz, Ular … → you / we / they are",
           "practise": [
             ["choose","I ___ a student.",["am","is","are"],"am","With I, always use am."],
             ["choose","She ___ my sister.",["am","is","are"],"is","With he, she and it, use is."],
@@ -19,10 +32,20 @@
         },
         {
           "title": "Negatives and questions",
-          "rule": "To make a negative, put not after am, is or are: I am not, she is not. Short forms: I'm not, isn't, aren't. To ask a question, put am, is or are before the person: Are you OK? Is he at home? Answer with a short answer: Yes, I am. / No, I'm not.",
+          "story": [
+            "Do‘sting so‘radi: «Charchadingmi?» Sen esa charchamagansan. O‘zbekchada «emas» deymiz: «Men charchagan emasman».",
+            "Ingliz tilida **am / is / are** dan keyin **not** qo‘yamiz. **not** = «emas», «yo‘q».",
+            "I am **not** tired. → Men charchagan emasman.",
+            "He is **not** at home. → U uyda emas.",
+            "Qisqasi: is not → **isn't**, are not → **aren't**, I am not → **I'm not**.",
+            "Endi savol. O‘zbekchada so‘z oxiriga **-mi** qo‘shamiz: «Sen tayyormisan?»",
+            "Ingliz tilida esa **am / is / are** gapning boshiga yuguradi: You are ready. → **Are** you ready?",
+            "Javob qisqa bo‘ladi: Yes, I am. (Ha.) / No, I'm not. (Yo‘q.)"
+          ],
+          "rule": "To say no, put not after am, is or are: I am not, he is not (isn't), they are not (aren't). To ask, put am, is or are first: Are you ready? Is he at home? Short answers: Yes, I am. / No, I'm not.",
           "table": [["Negative","Question","Short answer"],["I am not (I'm not) tired.","Am I late?","Yes, you are. / No, you aren't."],["He is not (He isn't) here.","Is he at home?","Yes, he is. / No, he isn't."],["They are not (They aren't) ready.","Are they at school?","Yes, they are. / No, they aren't."]],
-          "examples": ["I am not tired.","Sam isn't at school today.","We aren't hungry.","Are you a teacher? — Yes, I am.","Is it hot today? — No, it isn't.","Where are your books?"],
-          "uz": "Inkorda am / is / are dan keyin not keladi (I am not tired — Men charchaganim yo‘q), so‘roqda ular gap boshiga chiqadi.",
+          "examples": ["I am not tired.","He isn't at home.","We aren't hungry.","Are you ready? — Yes, I am.","Is it a cat? — No, it isn't."],
+          "uz": "not = emas, yo‘q (am / is / are dan keyin keladi). Savolda am / is / are gapning boshiga chiqadi.",
           "practise": [
             ["choose","He ___ a doctor. He is a teacher.",["isn't","aren't","am not"],"isn't","With he, use is. The negative is isn't (is not)."],
             ["gap","I ___ not hungry.",["am"],"With I, use am: I am not."],
@@ -33,10 +56,19 @@
         },
         {
           "title": "a or an?",
-          "rule": "Use a or an before one person or thing. Use an before a vowel sound (a, e, i, o, u): an apple, an egg. Use a before other sounds: a cat, a book. Look at the next word: an old car, but a new car. Use a or an with jobs too: She is a doctor.",
+          "story": [
+            "Bozorda sotuvchiga «Menga bitta olma bering» deysan. Ingliz tilida «bitta» — bu **a** yoki **an**.",
+            "Bitta narsa yoki bitta odam haqida gapirganda, uning oldiga doim **a** yoki **an** qo‘yiladi: **a** pen (bitta ruchka).",
+            "Qaysi birini tanlash keyingi so‘zning **birinchi tovushiga** bog‘liq:",
+            "• a, e, i, o, u tovushi bilan boshlansa → **an**: **an** apple (olma), **an** egg (tuxum).",
+            "• Boshqa tovush bilan boshlansa → **a**: **a** dog (it), **a** book (kitob).",
+            "Nega? «a apple» deb aytib ko‘r — tiling tutilib qoladi. «an apple» esa ravon chiqadi.",
+            "Kasb oldida ham qo‘yamiz. O‘zbekchada «Onam shifokor» deymiz, ingliz tilida esa: My mum is **a** doctor."
+          ],
+          "rule": "Use a or an before one thing or one person. Use an before a, e, i, o, u sounds: an apple, an egg. Use a before other sounds: a dog, a book. Look at the next word: an old car, but a new car. Jobs too: She is a doctor.",
           "table": [["a + other sounds","an + a, e, i, o, u sounds"],["a dog","an apple"],["a pen","an egg"],["a big house","an old house"],["a nurse","an engineer"]],
-          "examples": ["It is a dog.","This is an orange.","My mum is a nurse.","He is an actor.","It is an old car.","It is a new car."],
-          "uz": "Unli tovush (a, e, i, o, u) oldidan an, boshqa so‘zlar oldidan a qo‘yiladi: an apple, a dog.",
+          "examples": ["It is a dog.","This is an apple.","My mum is a doctor.","He is an actor.","It is an old car.","It is a new car."],
+          "uz": "Bitta narsa oldidan a yoki an: a, e, i, o, u tovushi oldidan an (an apple), boshqalari oldidan a (a dog).",
           "practise": [
             ["choose","This is ___ apple.",["a","an"],"an","Apple starts with a vowel sound (a), so use an."],
             ["choose","It is ___ dog.",["a","an"],"a","Dog starts with d, not a vowel, so use a."],

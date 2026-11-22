@@ -77,6 +77,24 @@ test('start → Bu sizmi (with the student\'s group) → Ha → the first learn 
   expect(errors).toEqual([]);
 });
 
+// teacher, 2026-11-22: "explain it in a very easy way… life examples" — Lesson 1 starts each part with an Uzbek story
+test('Lesson 1: each learn card starts with an easy Uzbek explanation from everyday life, with the English words in bold', async ({ page, context }) => {
+  await setup(context);
+  const errors = watchErrors(page);
+  await start(page);
+  const story = page.locator('.gr-learn .gr-story');
+  await expect(story).toBeVisible();
+  await expect(story).toContainText('Men bolaman');
+  await expect(story.locator('b', { hasText: 'I am' }).first()).toBeVisible();
+  await expect(story.locator('.gr-story-li')).toHaveCount(3);
+  expect(await page.evaluate(() => { const s = document.querySelector('.gr-story'), r = document.querySelector('.gr-rule');
+    return !!(s.compareDocumentPosition(r) & Node.DOCUMENT_POSITION_FOLLOWING); })).toBe(true);   // the story comes before the English rule
+  expect(await story.innerHTML()).not.toContain('**');
+  expect(await page.evaluate(() => window.TA_GRAMMAR.levels[0].lessons[0].chunks.every(c => (c.learn.story || []).length >= 5))).toBe(true);
+  expect(await page.evaluate(() => window.TA_GRAMMAR.levels[0].lessons[1].chunks.some(c => c.learn.story))).toBe(false);   // other lessons unchanged
+  expect(errors).toEqual([]);
+});
+
 test('a wrong practise answer shows the rule again and blocks Next', async ({ page, context }) => {
   await setup(context);
   await start(page);

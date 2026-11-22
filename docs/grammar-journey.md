@@ -12,26 +12,40 @@ marked *(from Lesson N)*. When a gap accepts more than one answer, all of them a
 
 #### Part 1: I am, you are, she is
 
-Use am, is or are to say who someone is, what something is, how someone feels or where someone is. Use am with I. Use is with he, she, it and one person or thing. Use are with you, we, they and two or more people or things. In speaking we often use short forms: I'm, she's, they're.
+> 🧒 Tasavvur qil: ko‘chada ketyapsan va kimgadir «Men bolaman» deb aytding.
+> 🧒 O‘zbekchada so‘zning oxiriga **-man** qo‘shamiz: bola**man**. Ingliz tilida esa so‘z oxiriga bunday narsa qo‘shilmaydi.
+> 🧒 Shuning uchun **-man** so‘zdan ajralib, o‘rtaga chiqib oladi va alohida so‘z bo‘ladi: **am**.
+> 🧒 Men bola**man** → **I am** a boy.
+> 🧒 Bu kichkina so‘z kim haqida gapirayotganingga qarab o‘zgaradi:
+> 🧒 • O‘zing haqingda: **I am** (men …man).
+> 🧒 • Bitta boshqa odam yoki narsa haqida: **he is** (u — o‘g‘il bola yoki erkak), **she is** (u — qiz yoki ayol), **it is** (u — narsa yoki hayvon).
+> 🧒 • Ro‘parangdagi odamga yoki ko‘pchilik haqida: **you are** (sen / siz), **we are** (biz), **they are** (ular).
+> 🧒 Do‘stingni onangga tanishtiryapsan: «Bu Ali. U mening do‘stim.» → **He is** my friend.
+> 🧒 Diqqat! O‘zbekchada «U bola» deymiz — oxirida hech narsa yo‘q. Ingliz tilida esa bu so‘z hech qachon tushib qolmaydi: **He is** a boy. «He boy» deyish — xato!
+> 🧒 Gapirganda qisqartiramiz: I am → **I'm**, he is → **he's**, they are → **they're**.
 
-| Person | be | Short form |
+Am, is and are are one word in three forms. I → am. He, she, it (one person or thing) → is. You, we, they (two or more people) → are. This word is always in the sentence: He is a boy (not: He boy).
+
+| Who | be | Example |
 |---|---|---|
-| I | am | I'm |
-| you | are | you're |
-| he / she / it | is | he's / she's / it's |
-| we | are | we're |
-| they | are | they're |
+| I | am | I am a boy. |
+| you | are | You are my friend. |
+| he | is | He is my brother. |
+| she | is | She is my sister. |
+| it | is | It is a cat. |
+| we | are | We are students. |
+| they | are | They are at home. |
 
 Examples:
 
-- I am a student.
+- I am a boy.
+- I am a girl.
 - You are my friend.
-- Tom is ten years old.
-- It is cold today.
-- We're in the classroom.
-- Anna and Sam are at home.
+- He is my brother.
+- It is a dog.
+- We are at school.
 
-🇺🇿 I bilan am, he / she / it bilan is, you / we / they bilan are ishlatiladi.
+🇺🇿 Men … → I am · U … → he / she / it is · Sen, Siz, Biz, Ular … → you / we / they are
 
 **Practise**
 
@@ -48,7 +62,16 @@ Examples:
 
 #### Part 2: Negatives and questions
 
-To make a negative, put not after am, is or are: I am not, she is not. Short forms: I'm not, isn't, aren't. To ask a question, put am, is or are before the person: Are you OK? Is he at home? Answer with a short answer: Yes, I am. / No, I'm not.
+> 🧒 Do‘sting so‘radi: «Charchadingmi?» Sen esa charchamagansan. O‘zbekchada «emas» deymiz: «Men charchagan emasman».
+> 🧒 Ingliz tilida **am / is / are** dan keyin **not** qo‘yamiz. **not** = «emas», «yo‘q».
+> 🧒 I am **not** tired. → Men charchagan emasman.
+> 🧒 He is **not** at home. → U uyda emas.
+> 🧒 Qisqasi: is not → **isn't**, are not → **aren't**, I am not → **I'm not**.
+> 🧒 Endi savol. O‘zbekchada so‘z oxiriga **-mi** qo‘shamiz: «Sen tayyormisan?»
+> 🧒 Ingliz tilida esa **am / is / are** gapning boshiga yuguradi: You are ready. → **Are** you ready?
+> 🧒 Javob qisqa bo‘ladi: Yes, I am. (Ha.) / No, I'm not. (Yo‘q.)
+
+To say no, put not after am, is or are: I am not, he is not (isn't), they are not (aren't). To ask, put am, is or are first: Are you ready? Is he at home? Short answers: Yes, I am. / No, I'm not.
 
 | Negative | Question | Short answer |
 |---|---|---|
@@ -59,13 +82,12 @@ To make a negative, put not after am, is or are: I am not, she is not. Short for
 Examples:
 
 - I am not tired.
-- Sam isn't at school today.
+- He isn't at home.
 - We aren't hungry.
-- Are you a teacher? — Yes, I am.
-- Is it hot today? — No, it isn't.
-- Where are your books?
+- Are you ready? — Yes, I am.
+- Is it a cat? — No, it isn't.
 
-🇺🇿 Inkorda am / is / are dan keyin not keladi (I am not tired — Men charchaganim yo‘q), so‘roqda ular gap boshiga chiqadi.
+🇺🇿 not = emas, yo‘q (am / is / are dan keyin keladi). Savolda am / is / are gapning boshiga chiqadi.
 
 **Practise**
 
@@ -82,7 +104,15 @@ Examples:
 
 #### Part 3: a or an?
 
-Use a or an before one person or thing. Use an before a vowel sound (a, e, i, o, u): an apple, an egg. Use a before other sounds: a cat, a book. Look at the next word: an old car, but a new car. Use a or an with jobs too: She is a doctor.
+> 🧒 Bozorda sotuvchiga «Menga bitta olma bering» deysan. Ingliz tilida «bitta» — bu **a** yoki **an**.
+> 🧒 Bitta narsa yoki bitta odam haqida gapirganda, uning oldiga doim **a** yoki **an** qo‘yiladi: **a** pen (bitta ruchka).
+> 🧒 Qaysi birini tanlash keyingi so‘zning **birinchi tovushiga** bog‘liq:
+> 🧒 • a, e, i, o, u tovushi bilan boshlansa → **an**: **an** apple (olma), **an** egg (tuxum).
+> 🧒 • Boshqa tovush bilan boshlansa → **a**: **a** dog (it), **a** book (kitob).
+> 🧒 Nega? «a apple» deb aytib ko‘r — tiling tutilib qoladi. «an apple» esa ravon chiqadi.
+> 🧒 Kasb oldida ham qo‘yamiz. O‘zbekchada «Onam shifokor» deymiz, ingliz tilida esa: My mum is **a** doctor.
+
+Use a or an before one thing or one person. Use an before a, e, i, o, u sounds: an apple, an egg. Use a before other sounds: a dog, a book. Look at the next word: an old car, but a new car. Jobs too: She is a doctor.
 
 | a + other sounds | an + a, e, i, o, u sounds |
 |---|---|
@@ -94,13 +124,13 @@ Use a or an before one person or thing. Use an before a vowel sound (a, e, i, o,
 Examples:
 
 - It is a dog.
-- This is an orange.
-- My mum is a nurse.
+- This is an apple.
+- My mum is a doctor.
 - He is an actor.
 - It is an old car.
 - It is a new car.
 
-🇺🇿 Unli tovush (a, e, i, o, u) oldidan an, boshqa so‘zlar oldidan a qo‘yiladi: an apple, a dog.
+🇺🇿 Bitta narsa oldidan a yoki an: a, e, i, o, u tovushi oldidan an (an apple), boshqalari oldidan a (a dog).
 
 **Practise**
 
