@@ -88,7 +88,7 @@ test('the list can\'t be read → a spinner, then "check the internet", and no e
   await expect(page.locator('.sk-confirm')).toHaveCount(0);
 });
 
-test('Ha when already done → "already done"; Ha when the part before isn\'t done → "Oldingi"', async ({ page, context }) => {
+test('Ha when already done → "already done"; Ha on the next step opens it, the step before not needed (2026-11-23)', async ({ page, context }) => {
   const done = { __id: 'sk_LSN777_10001_1', v: 1, code: 'LSN777', type: 'Listening course', skill: 'listening', step: 'b5', name: 'Alice Test',
     studentId: '10001', correct: 8, total: 12, date: new Date().toISOString() };
   await prepare(context, { docs: [classDoc('LSN777'), done, classDoc('LSN778', { prev: JSON.stringify({ skill: 'listening', stepNo: 5, codes: ['LSN999'] }) })] });
@@ -97,7 +97,8 @@ test('Ha when already done → "already done"; Ha when the part before isn\'t do
   await expect(page.locator('.sk-done-card')).toContainText('You have already done this listening');
   await start(page, '/skill.html?s=listening&st=b6&c=LSN778');
   await page.getByRole('button', { name: 'Ha', exact: true }).click();
-  await expect(page.locator('#skStartErr')).toContainText('Oldingi');
+  await expect(page.locator('#skSubmit')).toBeVisible();
+  await expect(page.locator('body')).not.toContainText('Oldingi');
 });
 
 test('Copy link puts the group\'s name on the list', async ({ page, context }) => {

@@ -96,6 +96,7 @@ function loadFirestore() {
   }
   return fsReady;
 }
+window.skLoadDb = () => loadFirestore().then(() => true);   // the tests wait for the (stand-in) database with it
 const wait = ms => new Promise(r => setTimeout(r, ms));
 // Offline, Firestore doesn't refuse a write — it waits (and sends it later). Each step gives up after a while.
 const sendTimeout = () => window.__skSendTimeoutMs || 12000;
@@ -243,32 +244,10 @@ async function skCheckStudent(id) {
   if (!h) return { open: true };   // this browser can't scramble the ID (very old)
   const st = list.find(x => x && x.h === h);
   if (!st) return { refuse: 'This ID is not on your teacher\'s list. Check your ID and try again.', field: 'id' };
-  let prev = null;
-  try { prev = d.prev ? JSON.parse(d.prev) : null; } catch (e) { prev = null; }
-  // only the same skill in an earlier step waits (2026-11-16); lists put online before then may name another skill — that is ignored
-  if (prev && prev.skill && SK.skill && prev.skill !== SK.skill) prev = null;
-  return { name: st.n, group: (typeof st.g === 'string' && st.g) ? st.g : (typeof d.group === 'string' ? d.group : ''), prev: prev && Array.isArray(prev.codes) && prev.codes.length ? prev : null };
+  // a list's `prev` ("do the step before first") is ignored since 2026-11-23 — any step, any order
+  return { name: st.n, group: (typeof st.g === 'string' && st.g) ? st.g : (typeof d.group === 'string' ? d.group : '') };
 }
 window.skCheckStudent = skCheckStudent;
-/* One after another (teacher, 2026-11-12): the part the group does before this one (the class list's `prev`) must be done —
-   a result of one of its codes from this student (by ID, else the listed name). true = done, false = not done, null = couldn't
-   check (no internet …) → let in. */
-async function skPrevDone(prev, name, id) {
-  if (!prev || !Array.isArray(prev.codes) || !prev.codes.length) return true;
-  try {
-    const { fs, db } = await within(loadFirestore(), 8000);
-    const snap = await within(fs.getDocsFromServer(fs.query(fs.collection(db, 'results'), fs.where('code', 'in', prev.codes.slice(0, 10)))), 8000);
-    const want = taIdKey(id), nm = String(name || '').trim().toLowerCase();
-    return (snap.docs || []).map(d => d.data()).some(r => r && (/ course$/.test(r.type || '')) &&
-      ((r.studentId && taIdKey(r.studentId) === want) || (nm && String(r.name || '').trim().toLowerCase() === nm)));
-  } catch (e) { console.warn('Skills course: could not check the part before', e); return null; }
-}
-window.skPrevDone = skPrevDone;
-const SK_SKILL_UZ = { listening: 'Listening', reading: 'Reading', writing: 'Writing' };
-function skPrevWarning(prev) {
-  const k = SK_SKILL_UZ[prev.skill] || 'oldingi';
-  return '⚠️ Oldingi ' + k + ' mashq tugatilmagan. Avval Step ' + prev.stepNo + ' · ' + k + ' mashqini tugating.';
-}
 function showAlreadyDone(level, done) {
   const info = SKILL_INFO[SK.skill];
   if (SK.skill === 'grammar' && !done.unsent) { startGrammar(level, { done }); return; }   // "You've done this lesson" + try again / read again
@@ -488,9 +467,8 @@ async function skBeginChecks(level, content, who, id) {
   const done = await skAlreadyDone(SK.name, id);
   if (done && done.offline) { back('📶 We couldn\'t check your answers — check the internet and press Start again.'); return; }
   if (done) { showAlreadyDone(level, done); return; }
-  if (SK.skill === 'grammar') { startGrammar(level); return; }   // a lesson has no "part before"
-  if (SK.skill === 'dictation') { startDictation(level); return; }   // nor has a dictation
-  if (who.prev && (await skPrevDone(who.prev, SK.name, id)) === false) { back(skPrevWarning(who.prev)); return; }
+  if (SK.skill === 'grammar') { startGrammar(level); return; }
+  if (SK.skill === 'dictation') { startDictation(level); return; }
   if (SK.skill === 'writing') showWriting(level); else showExercise(level);
 }
 

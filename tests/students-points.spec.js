@@ -278,7 +278,7 @@ test('points: the total adds the old ID\'s records and the new ID\'s; new points
   await expect(row.locator('.sp-pts')).toHaveText('🪙 0');
 });
 
-test('the class lists follow an ID change by themselves: Grammar and a Skills Course link copied before, both IDs, same prev and group', async ({ page, context }) => {
+test('the class lists follow an ID change by themselves: Grammar and a Skills Course link copied before, both IDs and group, an old "part before" dropped (2026-11-23)', async ({ page, context }) => {
   const links = { 'g1|listening|b1': { code: 'LST101', sentAt: nowIso() }, 'g1|listening|b2': { code: 'LST102', sentAt: nowIso() } };
   // Step 2's list is online already (Copy link made it, with the part before); Step 1's never went online
   const docs = data.results(Date.now()).concat([classRec('LST102', { prev: '{"skill":"listening","stepNo":1,"codes":["LST101"]}', group: 'Target' })]);
@@ -290,7 +290,7 @@ test('the class lists follow an ID change by themselves: Grammar and a Skills Co
   // links copied before have no rosterSig: they go online once by themselves
   await expect.poll(() => page.evaluate(() => Object.values(JSON.parse(localStorage.getItem('ta_skills_links'))).every(e => e.rosterSig)), { timeout: 10000 }).toBe(true);
   const before = await list('LST102');
-  expect(before.prev).toEqual({ skill: 'listening', stepNo: 1, codes: ['LST101'] });
+  expect(before.prev).toBeNull();   // put online again without its "part before" (removed 2026-11-23)
   expect(before.group).toBe('Target');
   expect(before.h).toHaveLength(3);
   await expect.poll(() => page.evaluate(() => !!JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toBe(true);
@@ -309,7 +309,7 @@ test('the class lists follow an ID change by themselves: Grammar and a Skills Co
     expect(now.n.filter(n => n === 'Alice Test')).toHaveLength(2);
     expect(now.group).toBe('Target');
   }
-  expect((await list('LST102')).prev).toEqual(before.prev);
+  expect((await list('LST102')).prev).toBeNull();
   expect((await list('LST101')).prev).toBeNull();
   await expect.poll(async () => { const d = await list('GRM111'); return d ? d.h.length : 0; }, { timeout: 8000 }).toBe(7);   // 6 students, Alice twice
   const gr = await list('GRM111');
@@ -349,7 +349,7 @@ test('the lists wait until sync has brought the Students list: nothing is publis
   await expect.poll(async () => (await classList(page, 'GRM111')).h.length).toBe(7);
 });
 
-test('putting a list online again never changes its "earlier part": none stays none, a cross-skill one keeps its own; the group name is the current one', async ({ page, context }) => {
+test('putting a list online again drops any old "earlier part" (2026-11-23); the group name is the current one', async ({ page, context }) => {
   const cross = '{"skill":"listening","stepNo":2,"codes":["LST102"]}';   // copied 2026-11-12…16: Reading waited for Listening
   const links = { 'g1|listening|b3': { code: 'LST103', sentAt: nowIso() }, 'g1|reading|b2': { code: 'RDG102', sentAt: nowIso() },
     'g1|listening|b2': { code: 'LST102', sentAt: nowIso() } };
@@ -362,12 +362,11 @@ test('putting a list online again never changes its "earlier part": none stays n
   const check = async (n, group) => {
     const lst = await classList(page, 'LST103'), rdg = await classList(page, 'RDG102'), l2 = await classList(page, 'LST102');
     expect(lst.h).toHaveLength(n); expect(lst.prev).toBeUndefined(); expect(lst.group).toBe(group);
-    expect(rdg.h).toHaveLength(n); expect(rdg.prev).toBe(cross); expect(rdg.group).toBe(group);
+    expect(rdg.h).toHaveLength(n); expect(rdg.prev).toBeUndefined(); expect(rdg.group).toBe(group);
     expect(l2.prev).toBeUndefined(); expect(l2.h).toHaveLength(n);
   };
   await check(3, 'Target');
-  expect(await page.evaluate(() => { const l = JSON.parse(localStorage.getItem('ta_skills_links')); return [l['g1|listening|b3'].prevJson, l['g1|reading|b2'].prevJson]; })).toEqual(['', cross]);
-  // a roster change and the group renamed: the same prev, the group's new name
+  // a roster change and the group renamed: still no "earlier part", the group's new name
   const reads = await page.evaluate(() => window.__reads);
   await page.evaluate(() => {
     window.__skRefreshMs = 0;
@@ -378,7 +377,7 @@ test('putting a list online again never changes its "earlier part": none stays n
   await expect.poll(async () => (await classList(page, 'LST103')).h.length).toBe(4);
   await expect.poll(async () => (await classList(page, 'LST102')).h.length).toBe(4);
   await check(4, 'Target B');
-  expect(await page.evaluate(() => window.__reads)).toBe(reads);   // kept on the link: the records aren't read again
+  expect(await page.evaluate(() => window.__reads)).toBe(reads);   // the records aren't read
   expect(errors).toEqual([]);
 });
 

@@ -689,15 +689,11 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   the "only English" test skips the listenings. The old listenings (beg-/elem- mp3s, `elementary-scripts.json`) were removed;
   where notes below mention them, read `listening-journey-scripts.json` / `listen-step-<N>.mp3`. `tests/listening-journey.spec.js`.
 - **Course fixes (teacher, 2026-11-12)**: (1) the "✅ N students finished exercises" note (`getUncheckedCompletions`) leaves out
-  results of type "… course". (2) **One after another**: Copy link also writes `prev` = JSON `{ skill, stepNo, codes }` on the link's
-  `class-<code>` record (`skPrevPart` in course.js). **Since 2026-11-16 (teacher: "they can do writing before reading — the warning
-  works only for steps") only the same skill in the nearest earlier step whose link was copied** (Step 6 Writing waits for Step 5
-  Writing; inside a step any order; `skSameSkillSeq`); the next step's same part, already sent, is put online again so it learns this one.
-  Lists put online before then may name another skill — `skCheckStudent` ignores a `prev` whose skill isn't the page's own. On Start
-  (after the class list and "already done" checks), `skPrevDone` (skill-player.js) reads that part's results and looks for this
-  student (by `taIdKey`, else the listed name); none → `#skStartErr` "⚠️ Oldingi Listening mashq tugatilmagan. Avval Step 5 ·
-  Listening mashqini tugating." (Uzbek, the teacher's words); no internet → let in. Links copied before 2026-11-12 have no `prev`
-  until Copy link is pressed again. (3) **Replaced 2026-11-12 (the free check, `skBasicGrammar` and `skMergeMatches` are deleted; `aiError` is now shown from the queue):** Writing: Loom's own grammar rules `skBasicGrammar` (skill-bands.js) — "I/he/she/we/they +
+  results of type "… course". (2) **One after another — removed 2026-11-23** (teacher: "delete the whole function that student can't do step 8 until they finish
+  step 7"): any step and any part, in any order. Copy link and the refresher (`skRefreshLists`) put lists online with no `prev`
+  (`taPublishClassList`'s third argument is ignored); lists already online with a `prev` are put online again without it on the next
+  refresh; the student page never reads `prev` (`skPrevDone`, `skPrevPart`, `skNextPart`, `taReadClassList`, the "Oldingi … tugatilmagan"
+  warning are gone). `window.skLoadDb()` waits for the database in tests. (3) **Replaced 2026-11-12 (the free check, `skBasicGrammar` and `skMergeMatches` are deleted; `aiError` is now shown from the queue):** Writing: Loom's own grammar rules `skBasicGrammar` (skill-bands.js) — "I/he/she/we/they +
   -ing" without am/is/are, "I/you/we/they + goes/has…", "he/she/it + go/play…" (not after does/can/will/to…) — added to the free
   check's list at Submit (`skMergeMatches`) and to older writings when shown (`skWritingMistakes`); a missing-space mistake is shown
   with its word ("Yusuf.I → Yusuf. I", `skMistakeShown`); `aiError` = why the AI check didn't run, shown in the teacher's window.
@@ -777,7 +773,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   kept answers match **the same ID, or the same name only when the result has no ID** (`skSameStudent` — a "Mubina" with another ID is
   someone else; with a class list the names are the listed ones anyway); **"already done" shows whose answers** (name · ID) with
   "Not you? Write your own name and ID" (`skNotMe` forgets the phone's remembered name + ID — on a shared phone the next student could
-  start as the first). The "part before" check (`skPrevDone`) still accepts ID or name (it lets in rather than stops).
+  start as the first). (The "part before" check, `skPrevDone`, was removed 2026-11-23.)
   `tests/course-done-check.spec.js`.
 - **Listening Steps 8–20 rewritten (teacher, 2026-11-13: "listening is a little weird" — up to 15 spelled words, 5 named people,
   questions jumping back and forth, six temperatures in a row)**: the teacher's rules — **1–2 spelled words** (the first is Question 1,

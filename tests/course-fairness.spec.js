@@ -61,7 +61,7 @@ test('one try per course exercise: a student who already has a result sees it in
   const kept = [];   // answers saved earlier (the stand-in database starts afresh on every page load; the real one keeps them)
   const begin = async (name, id) => {
     await page.goto('/skill.html?s=reading&st=b1&c=RDG123');
-    await page.evaluate(async docs => { await window.skPrevDone({ codes: ['XXXXXX'] }, 'x', 'x'); docs.forEach(d => window.__fakeDocs.push(d)); }, kept);
+    await page.evaluate(async docs => { await window.skLoadDb(); docs.forEach(d => window.__fakeDocs.push(d)); }, kept);
     await page.locator('#skIdInput').fill(id);
     await page.getByRole('button', { name: /Start/ }).click();
     await passIdCheck(page);

@@ -507,64 +507,29 @@ function skMarkSpeakingSent(step, g) {
 /* One after another (teacher, 2026-11-12: a student who opens an exercise before finishing the one before it is warned "Oldingi
    Listening mashq tugatilmagan"): the group's parts in order — from the group's start, step by step, Listening → Reading → Writing
    (Speaking sends nothing). The part before one = the nearest earlier part whose link was copied for this group. */
-const SK_ORDER = ['listening', 'reading', 'writing'];
-function skPartsInOrder(g) {
-  const start = skStartNo(g), seq = [];
-  skSteps().forEach(st => { if (st.no >= start) SK_ORDER.forEach(k => { if (st[k]) seq.push({ skill: k, step: st }); }); });
-  return seq;
-}
-/* Only steps come one after another (teacher, 2026-11-16: "they can do writing before reading — the warning works only for steps"):
-   a part waits for the same skill in the group's nearest earlier step whose link was sent (Step 6 Writing → Step 5 Writing);
-   inside a step the parts can be done in any order. */
-function skSameSkillSeq(skill, g) { return skPartsInOrder(g).filter(x => x.skill === skill); }
-function skPrevPart(skill, stepId, g, links) {
-  const seq = skSameSkillSeq(skill, g), st = skStep(stepId);
-  const i = st ? seq.findIndex(x => x.step.id === st.id) : -1;
-  for (let j = i - 1; j >= 0; j--) {
-    const codes = skCodesFor(seq[j].skill, seq[j].step.id, g, links);
-    if (codes.length) return { skill: seq[j].skill, stepNo: seq[j].step.no, codes: codes };
-  }
-  return null;
-}
-function skNextPart(skill, stepId, g, links) {
-  const seq = skSameSkillSeq(skill, g), st = skStep(stepId);
-  const i = st ? seq.findIndex(x => x.step.id === st.id) : -1;
-  if (i < 0) return null;
-  for (let j = i + 1; j < seq.length; j++) {
-    const e = skLinkEntry(seq[j].skill, seq[j].step.id, g, links);
-    if (e && e.code) return { skill: seq[j].skill, step: seq[j].step.id, code: e.code };
-  }
-  return null;
-}
 /* The group's list goes online for this link's code, IDs scrambled (taPublishClassList in firebase.js), so the student page
-   lets in only the group's students — with the part before it (`prev`), so a student who hasn't done that one is stopped.
-   On every Copy link — a student added later is let in after the next copy. The part after it (already sent) is put online
-   again too, so it knows this one comes before it. */
+   lets in only the group's students. Any step, any part, any order (teacher, 2026-11-23: "delete the whole function that student
+   can't do step 8 until they finish step 7") — lists carry no "part before" any more. */
 function skPutClassOnline(url, g, skill, step) {
   let code = '';
   try { code = new URL(url, location.href).searchParams.get('c') || ''; } catch (e) { code = ''; }
   const students = taClassListEntries(skGroupRoster(g));   // one entry per ID — a student's old IDs too (2026-11-18)
   if (!code || typeof window.taPublishClassList !== 'function') return;
-  const links = taSkillsLinks(), sig = skRosterSig(g);
-  const prevJson = p => (typeof window.taClassPrevJson === 'function' ? window.taClassPrevJson(p) : '');
-  skPublishList(skLinkKey(skill, step, g), code, students, prevJson(skPrevPart(skill, step, g, links)), g.name, sig).then(ok => {
+  skPublishList(skLinkKey(skill, step, g), code, students, g.name, skRosterSig(g)).then(ok => {
     if (!ok) showToast('⚠️ The class list couldn\'t go online — students can still start without an ID check. Press Copy link again later.');
   });
-  const next = skNextPart(skill, step, g, links);
-  if (next) skPublishList(skLinkKey(next.skill, next.step, g), next.code, students, prevJson(skPrevPart(next.skill, next.step, g, links)), g.name, sig);
 }
-/* One class list goes online with `prev` as a JSON string ('' = none) and the group's name. On success what was put online is kept on
-   the link — the roster it was made from (rosterSig) and `prevJson` — so skRefreshLists knows it is up to date and can put it
-   online again unchanged apart from the students. A second publish of the same code waits for the first (the rules refuse a change). */
+/* One class list goes online with the group's name. On success the roster it was made from (rosterSig) is kept on the link, so
+   skRefreshLists knows it is up to date. A second publish of the same code waits for the first (the rules refuse a change). */
 const skPublishing = new Map();   // code → the publish under way
-function skPublishList(key, code, students, prevJson, groupName, sig) {
+function skPublishList(key, code, students, groupName, sig) {
   const before = skPublishing.get(code) || Promise.resolve();
-  const run = before.catch(() => {}).then(() => window.taPublishClassList(code, students, prevJson || '', groupName)).catch(() => false).then(ok => {
+  const run = before.catch(() => {}).then(() => window.taPublishClassList(code, students, null, groupName)).catch(() => false).then(ok => {
     if (ok) {
       const links = taSkillsLinks();   // read again: sync may have changed it while we waited
       const e = links[key];
       if (e && typeof e === 'object' && e.code === code) {
-        e.rosterSig = sig; e.prevJson = prevJson || '';
+        e.rosterSig = sig; delete e.prevJson;
         taSaveSkillsLinks(links);
       }
     }
@@ -583,9 +548,7 @@ function skSyncNotReady() { return !!(window.taSync && typeof window.taSync.read
 
 /* ---- the Skills Course class lists follow the Students list (2026-11-18, like grRefreshLists): a student added, renamed, moved, or
    whose ID was changed after Copy link can start without the teacher pressing Copy link again. Only the links of groups whose list
-   changed are put online again (2 writes each). **The `prev` doesn't change**: the link's "do the earlier part first" is put back
-   exactly as it is online — kept on the link by Copy link (prevJson); a link without it (copied before) has its record read once
-   (taReadClassList; can't read → tried later). The group's name is its current one (a renamed group). Links copied before have no rosterSig: they
+   changed are put online again (2 writes each), without any "part before" (removed 2026-11-23). The group's name is its current one. Links copied before have no rosterSig: they
    are put online once. Waits until sync has brought the Students list (taSync.ready). At most one run per 5 s (window.__skRefreshMs in
    tests), never two at once; a failed publish keeps the old rosterSig and is tried again after 30 s (3 times at most). An empty group
    is never published here (that would open the link to anyone — or wipe a list on a device whose Students list hasn't synced). ---- */
@@ -593,7 +556,7 @@ let skRefreshBusy = false, skRefreshAgain = false, skRefreshLast = 0, skRefreshT
 function skRefreshLists() {
   if (skSigBusy) return;
   if (skSyncNotReady()) return;   // sync calls us again once it is ready
-  if (typeof window.taPublishClassList !== 'function' || typeof window.taReadClassList !== 'function') return;   // Firebase is still loading — the next draw tries again
+  if (typeof window.taPublishClassList !== 'function') return;   // Firebase is still loading — the next draw tries again
   if (skRefreshBusy) { skRefreshAgain = true; return; }
   const wait = (window.__skRefreshMs !== undefined ? window.__skRefreshMs : 5000) - (Date.now() - skRefreshLast);
   if (wait > 0) { if (!skRefreshTimer) skRefreshTimer = setTimeout(() => { skRefreshTimer = 0; skRefreshLists(); }, wait); return; }
@@ -619,14 +582,7 @@ function skRefreshLists() {
       // read the link again: a Copy link (or sync) may have put it online meanwhile — don't undo that
       const e = taSkillsLinks()[j.key];
       if (!e || typeof e !== 'object' || e.code !== j.code || e.rosterSig === j.sig) continue;
-      let prevJson = typeof e.prevJson === 'string' ? e.prevJson : null;
-      if (prevJson === null) {   // copied before prevJson was kept: the prev that is online now, as it is
-        const now = await window.taReadClassList(j.code);
-        if (!now) { failed = true; continue; }
-        prevJson = now.prev;
-      }
-      // the group's name as it is now (a renamed group shows its new name); the prev stays as it was
-      const ok = await skPublishList(j.key, j.code, j.students, prevJson, j.g.name, j.sig);
+      const ok = await skPublishList(j.key, j.code, j.students, j.g.name, j.sig);   // the group's name as it is now
       if (!ok) failed = true;
     }
   })().catch(() => { failed = true; }).then(() => {

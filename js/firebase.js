@@ -107,9 +107,9 @@ window.taUnpublishPlay = async function (uid, parts) {
 // on every Copy link (a new student, a new ID); the rules allow create + delete, not change, so the old one goes first.
 // Like the exercise links it has the sync shape (code 'TAUSER', type 'TA_SYNC:CLASS') and no submittedAt, so it never
 // shows up among results. Resolves true when saved.
-// `prev` (2026-11-12): the part the group does before this one — { skill, stepNo, codes } — kept as JSON in `prev`; the student
-// page lets a student start only after a result for one of those codes (skPrevDone in skill-player.js).
-window.taPublishClassList = async function (code, students, prev, group) {
+// The third argument used to be `prev` ("do the step before first", 2026-11-12) — removed 2026-11-23 (teacher: students may do
+// any step at any time); it is ignored, so lists never carry `prev` again.
+window.taPublishClassList = async function (code, students, _unused, group) {
   if (!db || !code || !Array.isArray(students) || typeof skClassHash !== 'function') return false;
   try {
     const list = [];
@@ -124,26 +124,9 @@ window.taPublishClassList = async function (code, students, prev, group) {
     const rec = { v: 1, code: 'TAUSER', builtAt: '', type: 'TA_SYNC:CLASS', title: code, name: '', data: JSON.stringify(list),
       score: list.length, warnings: 0, timeSeconds: 0, timeDisplay: '00:00', date: new Date().toISOString() };
     if (group) rec.group = String(group).slice(0, 80);   // shown on the student's "Bu sizmi?" screen (2026-11-15)
-    if (typeof prev === 'string') { if (prev) rec.prev = prev; }   // a list put online again keeps its `prev` exactly as it was (skRefreshLists)
-    else if (prev && Array.isArray(prev.codes) && prev.codes.length) rec.prev = taClassPrevJson(prev);
     await setDoc(ref, rec);
     return true;
   } catch (e) { taReportDbError(e); console.error('Putting the class list online failed:', e); return false; }
-};
-// `prev` as it is written on the record ('' = none) — Copy link keeps it on the link, so a list put online again keeps it unchanged
-function taClassPrevJson(prev) {
-  return prev && Array.isArray(prev.codes) && prev.codes.length ? JSON.stringify({ skill: prev.skill, stepNo: prev.stepNo, codes: prev.codes.slice(0, 10) }) : '';
-}
-window.taClassPrevJson = taClassPrevJson;
-// What a link's class list online says now: { exists, prev: '' or the JSON as stored, group: '' or the name }; null = couldn't ask.
-window.taReadClassList = async function (code) {
-  if (!db || !code) return null;
-  try {
-    const snap = await getDocFromServer(doc(db, 'results', 'class-' + code));
-    if (!snap.exists()) return { exists: false, prev: '', group: '' };
-    const v = snap.data() || {};
-    return { exists: true, prev: typeof v.prev === 'string' ? v.prev : '', group: typeof v.group === 'string' ? v.group : '' };
-  } catch (e) { taReportDbError(e); return null; }
 };
 // A step's results as a link (teacher, 2026-11-12): record `share-<token>` = the step's table for one group (names, bands, the
 // writings with their text) — results-link.html?r=<token> reads it, so students see the table and tap a writing band for its AI
