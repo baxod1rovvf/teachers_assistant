@@ -97,18 +97,21 @@ test('the day\'s message: new results with bands, and who still has to finish (o
   expect(await w.tgBuildMessage(env, { group: 'Target', parts: [plan.parts[3]] }, 0, now)).toEqual({ empty: true });
 });
 
-test('the timer posts once a day at the group\'s hour, only into a connected chat; /connect needs Telegram\'s secret', async () => {
+test('the timer: who hasn\'t finished at 17:00, the results at 19:00, once a day each, on the chosen days, only into a connected chat; /connect needs Telegram\'s secret', async () => {
   const w = await load();
   const hash = await w.tgPlanHash('abcd2345');
   // 2026-11-23 is a Monday (1): it posts on Mondays and Wednesdays only
-  const docs = { ['tg-' + hash]: { type: 'TA_SYNC:TG', title: hash, data: JSON.stringify({ v: 1, group: 'Target', hour: 19, on: true, days: [1, 3],
-    parts: [{ label: 'Step 5 · Reading', codes: ['RDG555'], sentAt: '2026-11-22T09:00:00Z' }] }) },
-    'class-RDG555': { type: 'TA_SYNC:CLASS', data: JSON.stringify([{ h: await w.tgClassHash('RDG555', '10003'), n: 'Cora Test' }]) } };
+  const docs = { ['tg-' + hash]: { type: 'TA_SYNC:TG', title: hash, data: JSON.stringify({ v: 1, group: 'Target', remindHour: 17, resultsHour: 19, on: true, days: [1, 3],
+    parts: [{ label: 'Step 5 · Reading', codes: ['RDG555'], sentAt: '2026-11-22T09:00:00Z' }],
+    links: [{ label: 'Step 5', url: 'https://baxod1rovvf.github.io/teachers_assistant/results-link.html?r=0123456789abcdef', sentAt: '2026-11-22T09:00:00Z' }] }) },
+    'class-RDG555': { type: 'TA_SYNC:CLASS', data: JSON.stringify([{ h: await w.tgClassHash('RDG555', '10003'), n: 'Cora Test' },
+      { h: await w.tgClassHash('RDG555', '10001'), n: 'Alice Test' }]) },
+    r1: { code: 'RDG555', type: 'Reading course', studentId: '10001', name: 'Alice Test', correct: 9, total: 10, submittedAt: '2026-11-23T08:00:00Z' } };
   stubNet(docs);
   const env = { LOOM_KV: fakeKv(), TELEGRAM_BOT_TOKEN: '123:abc' };
   const at = (hhmm) => Date.parse('2026-11-23T' + hhmm + ':00Z') - 5 * 3600000;   // Tashkent time → UTC
   // not connected yet → nothing
-  expect((await w.runTelegram(env, at('19:02'))).sent).toBe(0);
+  expect((await w.runTelegram(env, at('17:02'))).sent).toBe(0);
   // /connect from the class chat, with and without Telegram's secret header
   const upd = (secret) => new Request('https://loom-ai.x.workers.dev/tg/update', { method: 'POST',
     headers: Object.assign({ 'Content-Type': 'application/json' }, secret ? { 'X-Telegram-Bot-Api-Secret-Token': secret } : {}),
@@ -120,21 +123,69 @@ test('the timer posts once a day at the group\'s hour, only into a connected cha
   expect((await w.tgUpdate(upd(secret), env)).status).toBe(200);
   expect(await env.LOOM_KV.get('tgchat:' + hash, 'json')).toMatchObject({ chatId: -1001, title: 'Target 2026' });
   sent.length = 0;
-  // another hour, or after the first quarter of the hour → nothing; 19:03 → one post; 19:08 the same day → no second post
-  expect((await w.runTelegram(env, at('18:02'))).sent).toBe(0);
-  expect((await w.runTelegram(env, at('19:20'))).sent).toBe(0);
+  const posts = () => sent.filter(x => x.method === 'sendMessage');
+  // 16:00, or 17:20 (after the first quarter) → nothing; 17:03 → the "not finished" list only; 17:08 → no second one
+  expect((await w.runTelegram(env, at('16:02'))).sent).toBe(0);
+  expect((await w.runTelegram(env, at('17:20'))).sent).toBe(0);
+  expect((await w.runTelegram(env, at('17:03'))).sent).toBe(1);
+  expect((await w.runTelegram(env, at('17:08'))).sent).toBe(0);
+  expect(posts()).toHaveLength(1);
+  expect(posts()[0].body.chat_id).toBe(-1001);
+  expect(posts()[0].body.text).toContain('⏰ <b>Not finished yet</b>\n1. Cora Test — Step 5 · Reading');
+  expect(posts()[0].body.text).not.toContain('New results');
+  expect(posts()[0].body.text).not.toContain('results-link');
+  // 19:03 → the results: Alice's band and the step's results link, no "not finished" list
   expect((await w.runTelegram(env, at('19:03'))).sent).toBe(1);
-  expect((await w.runTelegram(env, at('19:08'))).sent).toBe(0);
-  const posts = sent.filter(s => s.method === 'sendMessage');
-  expect(posts).toHaveLength(1);
-  expect(posts[0].body.chat_id).toBe(-1001);
-  expect(posts[0].body.text).toContain('1. Cora Test — Step 5 · Reading');
-  // Tuesday isn't a chosen day; Wednesday is
-  expect((await w.runTelegram(env, at('19:03') + 86400000)).sent).toBe(0);
-  expect((await w.runTelegram(env, at('19:03') + 2 * 86400000)).sent).toBe(1);
+  expect((await w.runTelegram(env, at('19:09'))).sent).toBe(0);
+  expect(posts()).toHaveLength(2);
+  expect(posts()[1].body.text).toContain('Alice Test — Step 5 · Reading: <b>8</b>');
+  expect(posts()[1].body.text).toContain('Step 5: https://baxod1rovvf.github.io/teachers_assistant/results-link.html?r=0123456789abcdef');
+  expect(posts()[1].body.text).not.toContain('Not finished');
+  // Wednesday 19:03: no new results since Monday's post → no results post; the 17:00 list is still sent
+  expect((await w.runTelegram(env, at('19:03') + 2 * 86400000)).sent).toBe(0);
+  expect((await w.runTelegram(env, at('17:03') + 2 * 86400000)).sent).toBe(1);
+  // Tuesday isn't a chosen day
+  expect((await w.runTelegram(env, at('17:03') + 86400000)).sent).toBe(0);
   // switched off in Loom → nothing the next Monday
   docs['tg-' + hash].data = JSON.stringify(Object.assign(JSON.parse(docs['tg-' + hash].data), { on: false }));
-  expect((await w.runTelegram(env, at('19:03') + 7 * 86400000)).sent).toBe(0);
+  expect((await w.runTelegram(env, at('17:03') + 7 * 86400000)).sent).toBe(0);
+});
+
+test('a plan put online before the two posts (one `hour`) sends both at that hour', async () => {
+  const w = await load();
+  const hash = await w.tgPlanHash('OLDPLAN1');
+  stubNet({ ['tg-' + hash]: { type: 'TA_SYNC:TG', title: hash, data: JSON.stringify({ v: 1, group: 'Target', hour: 18, on: true,
+    parts: [{ label: 'Step 5 · Reading', codes: ['RDG555'], sentAt: '2026-11-22T09:00:00Z' }] }) },
+    'class-RDG555': { type: 'TA_SYNC:CLASS', data: JSON.stringify([{ h: 'x', n: 'Cora Test' }]) },
+    r1: { code: 'RDG555', type: 'Reading course', studentId: '10009', name: 'Bob', correct: 5, total: 10, submittedAt: '2026-11-23T08:00:00Z' } });
+  const env = { LOOM_KV: fakeKv(), TELEGRAM_BOT_TOKEN: '123:abc' };
+  await env.LOOM_KV.put('tgchat:' + hash, JSON.stringify({ chatId: -9 }));
+  expect((await w.runTelegram(env, Date.parse('2026-11-23T18:01:00Z') - 5 * 3600000)).sent).toBe(2);
+});
+
+test('a channel (2026-11-23): /connect from a channel post works, the post is deleted, another chat can\'t take the code; setup asks for channel posts', async () => {
+  const w = await load();
+  stubNet({});
+  const env = { LOOM_KV: fakeKv(), TELEGRAM_BOT_TOKEN: '123:abc' };
+  const secret = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode('loom-tg-hook|123:abc'))))
+    .map(x => x.toString(16).padStart(2, '0')).join('').slice(0, 32);
+  const post = (update) => w.tgUpdate(new Request('https://loom-ai.x.workers.dev/tg/update', { method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Telegram-Bot-Api-Secret-Token': secret }, body: JSON.stringify(update) }), env);
+  await post({ channel_post: { message_id: 55, text: '/connect QWER7788', chat: { id: -100777, type: 'channel', title: 'Apex news' } } });
+  const hash = await w.tgPlanHash('QWER7788');
+  expect(await env.LOOM_KV.get('tgchat:' + hash, 'json')).toMatchObject({ chatId: -100777, title: 'Apex news' });
+  expect(sent.find(x => x.method === 'deleteMessage').body).toEqual({ chat_id: -100777, message_id: 55 });
+  // somebody who saw the code tries it in their own chat → refused, the class stays connected to the channel
+  sent.length = 0;
+  await post({ message: { message_id: 9, text: '/connect QWER7788', chat: { id: -555, type: 'group', title: 'Not the class' } } });
+  expect(await env.LOOM_KV.get('tgchat:' + hash, 'json')).toMatchObject({ chatId: -100777 });
+  expect(sent.find(x => x.method === 'sendMessage').body.text).toContain('already used by another chat');
+  // 🔌 Connect the bot asks Telegram for channel posts too
+  sent.length = 0;
+  const res = await w.default.fetch(new Request('https://loom-ai.x.workers.dev/', { method: 'POST',
+    headers: { 'Content-Type': 'application/json', Origin: 'https://baxod1rovvf.github.io' }, body: JSON.stringify({ job: 'tg-setup' }) }), env);
+  expect(res.status).toBe(200);
+  expect(sent.find(x => x.method === 'setWebhook').body.allowed_updates).toEqual(['message', 'channel_post']);
 });
 
 test('teacher: Set up Telegram makes a connect code and puts the group\'s plan online — the code itself never goes online', async ({ page, context }) => {
@@ -165,7 +216,7 @@ test('teacher: Set up Telegram makes a connect code and puts the group\'s plan o
   await expect.poll(plan).not.toBeNull();
   const p = await plan();
   expect(p.type).toBe('TA_SYNC:TG');
-  expect(p.data).toMatchObject({ group: 'Target', hour: 19, on: true, days: [1, 2, 3, 4, 5, 6] });   // Monday–Saturday to start with
+  expect(p.data).toMatchObject({ group: 'Target', remindHour: 17, resultsHour: 19, on: true, days: [1, 2, 3, 4, 5, 6] });   // Mon–Sat, 17:00 and 19:00 to start with
   // only this group's parts sent in the last 21 days, in step order
   expect(p.data.parts.map(x => [x.label, x.codes])).toEqual([['Step 5 · Listening', ['LSN555']], ['Step 5 · Reading', ['RDG555']]]);
   // Step 5's results link, and its results page put online for it (the same token as "🔗 Share results link")
@@ -182,8 +233,10 @@ test('teacher: Set up Telegram makes a connect code and puts the group\'s plan o
   await expect.poll(async () => (await plan()).data.days).toEqual([0, 1, 2, 3, 4, 5]);
   await expect(page.locator('.tg-box .tg-day.on')).toHaveText(['Mo', 'Tu', 'We', 'Th', 'Fr', 'Su']);
   // a new hour and Off → the plan goes online again
-  await box.locator('.tg-hour').selectOption('17');
-  await expect.poll(async () => (await plan()).data.hour).toBe(17);
+  await box.locator('.tg-hour[data-kind="remind"]').selectOption('16');
+  await expect.poll(async () => (await plan()).data.remindHour).toBe(16);
+  await page.locator('.tg-box .tg-hour[data-kind="results"]').selectOption('20');
+  await expect.poll(async () => (await plan()).data.resultsHour).toBe(20);
   await box.getByLabel('On').uncheck();
   await expect.poll(async () => (await plan()).data.on).toBe(false);
   // Copy puts the /connect line on the clipboard; Connect the bot asks the helper to set itself up
@@ -192,5 +245,5 @@ test('teacher: Set up Telegram makes a connect code and puts the group\'s plan o
   await box.getByRole('button', { name: /Connect the bot/ }).click();
   await expect.poll(() => asked.some(b => b.job === 'tg-setup')).toBe(true);
   // the code is kept (synced) for the group
-  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_telegram')).g1)).toMatchObject({ code, hour: 17, on: false, days: [0, 1, 2, 3, 4, 5] });
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_telegram')).g1)).toMatchObject({ code, remindHour: 16, resultsHour: 20, on: false, days: [0, 1, 2, 3, 4, 5] });
 });

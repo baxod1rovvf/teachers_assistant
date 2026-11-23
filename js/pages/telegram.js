@@ -3,12 +3,16 @@
    Each group can have the class bot post into its Telegram chat every day (the teacher chose: into the group chat, automatically
    every day): the new results since the last post, and who hasn't finished the Course parts sent in the last 7 days.
    The bot lives in the Cloudflare helper (tools/ai-worker.js — runTelegram, tgUpdate, tgJob). Loom keeps, per group,
-   ta_telegram[groupId] = { code, hour, on, sig } (synced, in the backup) and puts the group's plan online as `tg-<hash>`
+   ta_telegram[groupId] = { code, remindHour, resultsHour, days, on, sig, shares } (synced, in the backup) and puts the group's plan online as `tg-<hash>`
    (window.taPublishTgPlan in firebase.js) whenever it changes (sig = the plan as published). The connect code never goes online:
    only sha256("loom-tg|<code>") does, so nobody can connect another chat to the class.
    The box sits on a group's Course page (skTgBoxHtml, called from skGroupPageHtml in course.js). */
 const LS_TELEGRAM = 'ta_telegram';
-const TG_HOURS = [15, 16, 17, 18, 19, 20, 21];
+const TG_HOURS = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
+// two posts a day (teacher, 2026-11-23: "a list of students who don't finish exercise at 17:00 and results at 19:00"); an entry from
+// before had one `hour` — it stays the results hour
+const tgRemindHour = e => Number.isInteger(e.remindHour) ? e.remindHour : 17;
+const tgResultsHour = e => Number.isInteger(e.resultsHour) ? e.resultsHour : (Number.isInteger(e.hour) ? e.hour : 19);
 const TG_PLAN_DAYS = 21;   // parts sent in the last 21 days go into the plan; the bot itself reminds about the last 7
 // the weekdays (JS: 0 = Sunday), shown Monday first; an entry without `days` posts every day (2026-11-23: "make be able to choose days")
 const TG_DAYS = [[1, 'Mo'], [2, 'Tu'], [3, 'We'], [4, 'Th'], [5, 'Fr'], [6, 'Sa'], [0, 'Su']];
@@ -47,7 +51,7 @@ function tgPlanFor(g, e) {
     const st = skSteps().find(y => y.no === x.no);
     return st ? { label: 'Step ' + x.no, step: st.id, url: base + 'results-link.html?r=' + skShareToken(g, st.id), sentAt: x.sentAt } : null;
   }).filter(Boolean) : [];
-  return { v: 1, group: g.name, hour: e.hour, days: tgDaysOf(e).slice().sort(), on: e.on !== false,
+  return { v: 1, group: g.name, remindHour: tgRemindHour(e), resultsHour: tgResultsHour(e), days: tgDaysOf(e).slice().sort(), on: e.on !== false,
     parts: parts.map(p => ({ label: p.label, codes: p.codes, sentAt: p.sentAt })),
     links: results.map(l => ({ label: l.label, url: l.url, sentAt: l.sentAt })), _steps: results.map(l => l.step) };
 }
@@ -103,19 +107,20 @@ function skTgBoxHtml(g) {
       '<span class="tg-sub">Every day the class bot posts new results and who hasn\'t finished yet into <span translate="no">' + escapeForHtml(g.name) + '</span>\'s Telegram chat.</span></div>' +
       '<button type="button" class="mini-btn solid" onclick="tgTurnOn(' + jsAttr(g.id) + ')">Set up Telegram</button></section>';
   }
-  const hours = TG_HOURS.map(h => '<option value="' + h + '"' + (h === e.hour ? ' selected' : '') + '>' + h + ':00</option>').join('');
+  const hours = sel => TG_HOURS.map(h => '<option value="' + h + '"' + (h === sel ? ' selected' : '') + '>' + h + ':00</option>').join('');
   return '<section class="tg-box on" data-group="' + escapeForHtml(g.id) + '">' +
     '<div class="tg-head"><b>📨 Telegram</b><span class="tg-status" id="tgStatus" aria-live="polite">Checking…</span></div>' +
     '<ol class="tg-steps">' +
     '<li><span>Once for all groups: connect the bot.</span> <button type="button" class="mini-btn" onclick="tgSetup()">🔌 Connect the bot</button> <span class="tg-bot" id="tgBot"></span></li>' +
-    '<li><span>Add the bot to <span translate="no">' + escapeForHtml(g.name) + '</span>\'s Telegram chat and send there:</span> ' +
+    '<li><span>Add the bot to <span translate="no">' + escapeForHtml(g.name) + '</span>\'s Telegram group or channel (in a channel: as an admin that can post and delete messages) and send there:</span> ' +
       '<code class="tg-code">/connect ' + escapeForHtml(e.code) + '</code> <button type="button" class="mini-btn" onclick="tgCopyConnect(' + jsAttr(g.id) + ')">📋 Copy</button></li>' +
     '<li><span>Post on</span> <span class="tg-days" role="group" aria-label="Days">' + TG_DAYS.map(([d, n]) =>
       '<button type="button" class="tg-day' + (tgDaysOf(e).includes(d) ? ' on' : '') + '" aria-pressed="' + tgDaysOf(e).includes(d) + '" onclick="tgToggleDay(' + jsAttr(g.id) + ', ' + d + ')">' + n + '</button>').join('') + '</span> ' +
-      '<label>at <select class="tg-hour" onchange="tgSetHour(' + jsAttr(g.id) + ', this.value)">' + hours + '</select></label> ' +
-      '<label class="tg-on"><input type="checkbox"' + (e.on !== false ? ' checked' : '') + ' onchange="tgSetOn(' + jsAttr(g.id) + ', this.checked)"> On</label></li>' +
+      '<label class="tg-on"><input type="checkbox"' + (e.on !== false ? ' checked' : '') + ' onchange="tgSetOn(' + jsAttr(g.id) + ', this.checked)"> On</label>' +
+      '<div class="tg-times"><label>⏰ Who hasn\'t finished at <select class="tg-hour" data-kind="remind" onchange="tgSetHour(' + jsAttr(g.id) + ', \'remind\', this.value)">' + hours(tgRemindHour(e)) + '</select></label>' +
+      '<label>🏆 Results at <select class="tg-hour" data-kind="results" onchange="tgSetHour(' + jsAttr(g.id) + ', \'results\', this.value)">' + hours(tgResultsHour(e)) + '</select></label></div></li>' +
     '</ol>' +
-    '<div class="tg-actions"><button type="button" class="mini-btn" onclick="tgTest(' + jsAttr(g.id) + ')">📨 Send today\'s message now</button>' +
+    '<div class="tg-actions"><button type="button" class="mini-btn" onclick="tgTest(' + jsAttr(g.id) + ')">📨 Send both messages now</button>' +
     '<button type="button" class="mini-btn danger" onclick="tgTurnOff(' + jsAttr(g.id) + ')">Stop Telegram</button></div>' +
     '<p class="sk-hint tg-hint">It lists the Listening, Reading and Writing parts you sent this group in the last 7 days, with each step\'s results link. Each group gets its own message — two groups can share one chat. Everyone in the chat sees the names.</p>' +
     '</section>';
@@ -132,14 +137,14 @@ function tgRefreshStatus(groupId) {
     if (bot && r.bot) bot.textContent = '@' + r.bot;
     if (el2) {
       const days = tgDaysOf(e), when = days.length === 7 ? 'every day' : days.length ? TG_DAYS.filter(([d]) => days.includes(d)).map(([, n]) => n).join(' ') : 'no days chosen';
-      el2.textContent = r.connected ? '🟢 Connected to “' + (r.title || 'the chat') + '” · ' + when + ' at ' + e.hour + ':00' + (e.on === false ? ' (off)' : '') : '⚪ Not connected yet';
+      el2.textContent = r.connected ? '🟢 Connected to “' + (r.title || 'the chat') + '” · ' + when + ', ' + tgRemindHour(e) + ':00 and ' + tgResultsHour(e) + ':00' + (e.on === false ? ' (off)' : '') : '⚪ Not connected yet';
       el2.classList.toggle('ok', !!r.connected);
     }
   }).catch(err => { const el2 = document.getElementById('tgStatus'); if (el2) el2.textContent = '⚠️ ' + err.message; });
 }
 function tgTurnOn(groupId) {
   const s = tgStore();
-  s[groupId] = { code: tgNewCode(), hour: 19, on: true, days: [1, 2, 3, 4, 5, 6] };   // Monday–Saturday to start with
+  s[groupId] = { code: tgNewCode(), remindHour: 17, resultsHour: 19, on: true, days: [1, 2, 3, 4, 5, 6] };   // Monday–Saturday to start with
   tgSave(s);
   skTgSyncSoon();
   renderCourse();
@@ -157,10 +162,15 @@ function tgTurnOff(groupId) {
   tgSave(s);
   renderCourse();
 }
-function tgSetHour(groupId, h) {
-  const s = tgStore();
-  if (!s[groupId]) return;
-  s[groupId].hour = Math.max(0, Math.min(23, parseInt(h, 10) || 19));
+function tgSetHour(groupId, kind, h) {
+  const s = tgStore(), e = s[groupId];
+  if (!e) return;
+  const n = Math.max(0, Math.min(23, parseInt(h, 10)));
+  if (!Number.isInteger(n)) return;
+  if (kind === 'remind') e.remindHour = n; else e.resultsHour = n;
+  if (!Number.isInteger(e.remindHour)) e.remindHour = tgRemindHour(e);
+  if (!Number.isInteger(e.resultsHour)) e.resultsHour = tgResultsHour(e);
+  delete e.hour;
   tgSave(s); skTgSyncSoon(); tgRefreshStatus(groupId);
 }
 function tgSetOn(groupId, on) {

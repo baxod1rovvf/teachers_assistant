@@ -24,7 +24,7 @@
 // Free plan: Google may use what is sent to improve its products — no students' private details.
 
 const ALLOWED_ORIGINS = ['https://baxod1rovvf.github.io'];
-const VERSION = '2026-11-23b';
+const VERSION = '2026-11-23d';
 const DEFAULT_MODEL = 'gemini-flash-lite-latest';   // Google's fastest model on the free plan (answers in a few seconds)
 const PER_MODEL_SECONDS = 18, TOTAL_SECONDS = 40;   // Loom waits 60 s, so the helper always answers before that
 const PER_MINUTE = { chat: 8, writing: 40, queue: 30, feedback: 60, check: 10, 'tg-setup': 5, 'tg-status': 30, 'tg-test': 5 };          // per visitor (IP) per minute, kept in this worker's memory
@@ -388,11 +388,18 @@ function tgPlanFrom(rec) {
   // the steps' results links (Loom's "🔗 Share results link" pages), only https links to the teacher's site
   const links = (Array.isArray(p.links) ? p.links : []).slice(0, 10).map(x => ({ label: clip(x && x.label, 60), url: String((x && x.url) || ''), sentAt: String((x && x.sentAt) || '') }))
     .filter(x => x.label && /^https:\/\/baxod1rovvf\.github\.io\/teachers_assistant\/results-link\.html\?r=[0-9a-f]{16}$/.test(x.url));
-  return { hash: String(rec.title || ''), group: clip(p.group, 80), hour: Math.max(0, Math.min(23, Math.floor(Number(p.hour)))), on: p.on !== false, days, links, parts };
+  // two posts a day (teacher, 2026-11-23: "a list of students who don't finish exercise at 17:00 and results at 19:00"); a plan from before
+  // has one `hour` for both
+  const hr = (v, d) => { const n = Math.floor(Number(v)); return n >= 0 && n <= 23 ? n : d; };
+  const old = hr(p.hour, -1);
+  return { hash: String(rec.title || ''), group: clip(p.group, 80), remindHour: hr(p.remindHour, old >= 0 ? old : 17),
+    resultsHour: hr(p.resultsHour, old >= 0 ? old : 19), on: p.on !== false, days, links, parts };
 }
 
-// The day's message for one plan: { text } or { empty: true } (nothing sent in the last 7 days). `since` = the last post's time.
-async function tgBuildMessage(env, plan, since, nowMs) {
+// A post for one plan: { text } or { empty: true }. kind 'remind' = who hasn't finished the parts sent in the last 7 days (empty when
+// nothing was sent); 'results' = the new results since `since` (the last results post) and the steps' results links (empty when there
+// are no new results); no kind = both in one (kept for the tests).
+async function tgBuildMessage(env, plan, since, nowMs, kind) {
   const now = nowMs || Date.now();
   const parts = plan.parts.filter(x => { const t = Date.parse(x.sentAt); return !(t < now - TG_DAYS * 86400000); });
   if (!parts.length) return { empty: true };
@@ -438,20 +445,24 @@ async function tgBuildMessage(env, plan, since, nowMs) {
       if (name) fresh.push({ name, label: part.label, band, at });
     }
   }
+  const wantRemind = kind !== 'results', wantResults = kind !== 'remind';
+  if (kind === 'results' && !fresh.length) return { empty: true };
   const lines = ['📚 <b>' + tgEsc(plan.group) + '</b>'];
-  if (fresh.length) {
+  if (wantResults && fresh.length) {
     lines.push('', '🏆 <b>New results</b>');
     fresh.sort((a, b) => a.at - b.at).slice(0, 40).forEach(f => lines.push('• ' + tgEsc(f.name) + ' — ' + tgEsc(f.label) + ': <b>' + tgEsc(f.band) + '</b>'));
   }
   const missing = [...students.entries()].filter(([, v]) => v.missing.length).sort((a, b) => b[1].missing.length - a[1].missing.length || a[0].localeCompare(b[0]));
-  lines.push('');
-  if (missing.length) {
-    lines.push('⏰ <b>Not finished yet</b>');
-    missing.slice(0, 60).forEach(([name, v], i) => lines.push((i + 1) + '. ' + tgEsc(name) + ' — ' + tgEsc(v.missing.join(', '))));
-    lines.push('', 'Please finish today! 💪');
-  } else if (students.size) lines.push('🎉 Everyone has finished everything that was sent. Well done!');
+  if (wantRemind) {
+    lines.push('');
+    if (missing.length) {
+      lines.push('⏰ <b>Not finished yet</b>');
+      missing.slice(0, 60).forEach(([name, v], i) => lines.push((i + 1) + '. ' + tgEsc(name) + ' — ' + tgEsc(v.missing.join(', '))));
+      lines.push('', 'Please finish today! 💪');
+    } else if (students.size) lines.push('🎉 Everyone has finished everything that was sent. Well done!');
+  }
   const links = (plan.links || []).filter(x => { const t = Date.parse(x.sentAt); return !(t < now - TG_DAYS * 86400000); });
-  if (links.length) {
+  if (wantResults && links.length) {
     lines.push('', '📊 <b>Results</b>');
     links.forEach(x => lines.push(tgEsc(x.label) + ': ' + tgEsc(x.url)));
   }
@@ -461,7 +472,8 @@ async function tgBuildMessage(env, plan, since, nowMs) {
 }
 
 // The timer (every 5 minutes): only in the first 15 minutes of each hour from 06:00 does it read the plans (cheap on the database's
-// daily reads); a plan whose hour it is, that is on, connected and not yet sent today gets its message. Sent once a day (tgsent:).
+// daily reads). On a plan's days, at its remindHour it posts who hasn't finished, at its resultsHour the new results — each once a day
+// (tgsent:<hash>:<date>:<kind>); only a results post moves tglast (the next results post starts from there).
 async function runTelegram(env, nowMs) {
   const out = { sent: 0, skipped: 0, failed: 0 };
   if (!env.TELEGRAM_BOT_TOKEN || !env.LOOM_KV) return out;
@@ -471,19 +483,23 @@ async function runTelegram(env, nowMs) {
   try { recs = await fsRunQuery(fsEq('type', 'TA_SYNC:TG'), 200); } catch (e) { out.failed++; return out; }
   for (const rec of recs) {
     const plan = tgPlanFrom(rec);
-    if (!plan || !plan.on || plan.hour !== t.hour || !plan.days.includes(t.day) || !/^[0-9a-f]{24}$/.test(plan.hash)) continue;
-    if (await env.LOOM_KV.get('tgsent:' + plan.hash + ':' + t.date)) continue;
-    const chat = await env.LOOM_KV.get('tgchat:' + plan.hash, 'json');
-    if (!chat || !chat.chatId) { out.skipped++; continue; }
-    const since = Date.parse((await env.LOOM_KV.get('tglast:' + plan.hash)) || '') || (now - 86400000);
-    let msg;
-    try { msg = await tgBuildMessage(env, plan, since, now); } catch (e) { out.failed++; continue; }
-    if (msg.empty) { await env.LOOM_KV.put('tgsent:' + plan.hash + ':' + t.date, '-', { expirationTtl: 3 * 86400 }); out.skipped++; continue; }
-    const r = await tgApi(env, 'sendMessage', { chat_id: chat.chatId, text: msg.text, parse_mode: 'HTML', disable_web_page_preview: true });
-    if (!r.ok) { out.failed++; continue; }
-    await env.LOOM_KV.put('tgsent:' + plan.hash + ':' + t.date, '1', { expirationTtl: 3 * 86400 });
-    await env.LOOM_KV.put('tglast:' + plan.hash, new Date(now).toISOString());
-    out.sent++;
+    if (!plan || !plan.on || !plan.days.includes(t.day) || !/^[0-9a-f]{24}$/.test(plan.hash)) continue;
+    const kinds = [plan.remindHour === t.hour ? 'remind' : '', plan.resultsHour === t.hour ? 'results' : ''].filter(Boolean);
+    for (const kind of kinds) {
+      const sentKey = 'tgsent:' + plan.hash + ':' + t.date + ':' + kind;
+      if (await env.LOOM_KV.get(sentKey)) continue;
+      const chat = await env.LOOM_KV.get('tgchat:' + plan.hash, 'json');
+      if (!chat || !chat.chatId) { out.skipped++; continue; }
+      const since = Date.parse((await env.LOOM_KV.get('tglast:' + plan.hash)) || '') || (now - 86400000);
+      let msg;
+      try { msg = await tgBuildMessage(env, plan, since, now, kind); } catch (e) { out.failed++; continue; }
+      if (msg.empty) { await env.LOOM_KV.put(sentKey, '-', { expirationTtl: 3 * 86400 }); out.skipped++; continue; }
+      const r = await tgApi(env, 'sendMessage', { chat_id: chat.chatId, text: msg.text, parse_mode: 'HTML', disable_web_page_preview: true });
+      if (!r.ok) { out.failed++; continue; }
+      await env.LOOM_KV.put(sentKey, '1', { expirationTtl: 3 * 86400 });
+      if (kind === 'results') await env.LOOM_KV.put('tglast:' + plan.hash, new Date(now).toISOString());
+      out.sent++;
+    }
   }
   return out;
 }
@@ -504,8 +520,16 @@ async function tgUpdate(request, env) {
       return new Response('ok');
     }
     const hash = await tgPlanHash(cmd[1]);
+    // the /connect post goes at once (needs the bot to be an admin that may delete): the students shouldn't see the code
+    await tgApi(env, 'deleteMessage', { chat_id: m.chat.id, message_id: m.message_id });
+    // one code, one chat: another chat can't take over a class that is already connected (Stop Telegram in Loom makes a new code)
+    const had = await env.LOOM_KV.get('tgchat:' + hash, 'json');
+    if (had && had.chatId && had.chatId !== m.chat.id) {
+      await tgApi(env, 'sendMessage', { chat_id: m.chat.id, text: '⚠️ This code is already used by another chat. In Loom press Stop Telegram, then Set up Telegram for a new code.' });
+      return new Response('ok');
+    }
     await env.LOOM_KV.put('tgchat:' + hash, JSON.stringify({ chatId: m.chat.id, title: clip(m.chat.title, 80), at: new Date().toISOString() }));
-    await tgApi(env, 'sendMessage', { chat_id: m.chat.id, text: '✅ Connected to Loom. Every day I will post new results and who still has to finish their exercises.' });
+    await tgApi(env, 'sendMessage', { chat_id: m.chat.id, text: '✅ Connected to Loom. On the days your teacher chose I will post new results and who still has to finish their exercises.' });
   } else if (/^\/start\b/.test(text) && m.chat.type === 'private') {
     await tgApi(env, 'sendMessage', { chat_id: m.chat.id, text: 'Hi! I am Loom\'s class bot. Your teacher adds me to the class group chat.' });
   }
@@ -518,7 +542,7 @@ async function tgJob(job, q, env, origin, selfOrigin) {
   if (job === 'tg-setup') {
     const me = await tgApi(env, 'getMe');
     if (!me.ok) return reply({ error: 'Telegram refused the token: ' + me.error }, 502, origin);
-    const hook = await tgApi(env, 'setWebhook', { url: selfOrigin + '/tg/update', secret_token: await tgWebhookSecret(env), allowed_updates: ['message'] });
+    const hook = await tgApi(env, 'setWebhook', { url: selfOrigin + '/tg/update', secret_token: await tgWebhookSecret(env), allowed_updates: ['message', 'channel_post'] });
     if (!hook.ok) return reply({ error: 'Telegram: ' + hook.error }, 502, origin);
     await env.LOOM_KV.put('tgbot', me.result.username || '');
     return reply({ ok: true, bot: me.result.username || '' }, 200, origin);
@@ -535,9 +559,14 @@ async function tgJob(job, q, env, origin, selfOrigin) {
   const recs = await fsRunQuery(fsEq('title', hash), 5).catch(() => []);
   const plan = tgPlanFrom(recs.find(r => r.type === 'TA_SYNC:TG') || {});
   if (!plan) return reply({ error: 'Loom hasn\'t put this group\'s plan online yet — open the Course page once' }, 409, origin);
-  const msg = await tgBuildMessage(env, plan, Date.now() - 86400000);
-  const r = await tgApi(env, 'sendMessage', { chat_id: chat.chatId, parse_mode: 'HTML', disable_web_page_preview: true,
-    text: msg.empty ? '📚 <b>' + tgEsc(plan.group) + '</b>\n\nNothing was sent in the last 7 days — no reminders today.' : msg.text });
+  // both posts now (the "not finished" list, then the last day's results); a part with nothing to say gets a short line
+  const head = '📚 <b>' + tgEsc(plan.group) + '</b>\n\n';
+  const remind = await tgBuildMessage(env, plan, Date.now() - 86400000, Date.now(), 'remind');
+  const results = await tgBuildMessage(env, plan, Date.now() - 86400000, Date.now(), 'results');
+  let r = await tgApi(env, 'sendMessage', { chat_id: chat.chatId, parse_mode: 'HTML', disable_web_page_preview: true,
+    text: remind.empty ? head + 'Nothing was sent in the last 7 days — no reminders today.' : remind.text });
+  if (r.ok) r = await tgApi(env, 'sendMessage', { chat_id: chat.chatId, parse_mode: 'HTML', disable_web_page_preview: true,
+    text: results.empty ? head + 'No new results in the last 24 hours.' : results.text });
   await env.LOOM_KV.put('tgtest:' + hash, '1', { expirationTtl: 120 });
   return r.ok ? reply({ ok: true }, 200, origin) : reply({ error: 'Telegram: ' + r.error }, 502, origin);
 }
