@@ -54,7 +54,7 @@ test('the helper scrambles IDs and works out bands exactly like the app (js/skil
   for (const [c, t] of [[0, 10], [5, 10], [8, 12], [16, 20], [20, 20]]) expect(w.tgBand(c, t)).toBe(ctx.skBand(c, t));
 });
 
-test('the day\'s message: new results with bands, and who still has to finish (old IDs counted once)', async () => {
+test('the posts are about the step the group is on (its link copied last): who hasn\'t finished it, and its results with a "Step 5 — results" link', async () => {
   const w = await load();
   const h = (code, id) => w.tgClassHash(code, id);
   const now = Date.parse('2026-11-23T14:00:00Z');
@@ -64,37 +64,48 @@ test('the day\'s message: new results with bands, and who still has to finish (o
     'class-LSN555': { type: 'TA_SYNC:CLASS', data: await list('LSN555') },
     'class-RDG555': { type: 'TA_SYNC:CLASS', data: await list('RDG555') },
     'class-WRT555': { type: 'TA_SYNC:CLASS', data: await list('WRT555') },
+    'class-RDG444': { type: 'TA_SYNC:CLASS', data: await list('RDG444') },
     r1: { code: 'LSN555', type: 'Listening course', studentId: '9', name: 'alice', correct: 16, total: 20, submittedAt: '2026-11-23T10:00:00Z' },
     r2: { code: 'RDG555', type: 'Reading course', studentId: '10002', name: 'Bobur Test', correct: 8, total: 10, submittedAt: '2026-11-21T10:00:00Z' },
-    r3: { code: 'WRT555', type: 'Writing course', studentId: '10001', name: 'Alice Test', text: 'I wake up.', words: 90, minWords: 80, submittedAt: '2026-11-23T11:00:00Z' }
+    r3: { code: 'WRT555', type: 'Writing course', studentId: '10001', name: 'Alice Test', text: 'I wake up.', words: 90, minWords: 80, submittedAt: '2026-11-23T11:00:00Z' },
+    r4: { code: 'RDG444', type: 'Reading course', studentId: '10003', name: 'Cora Test', correct: 9, total: 10, submittedAt: '2026-11-23T09:00:00Z' }
   };
   stubNet(docs);
   const env = { LOOM_KV: fakeKv() };
   await env.LOOM_KV.put('f:r3', JSON.stringify({ scores: { grammar: 2.5, vocabulary: 2, structure: 1.5, task: 1.5 } }));
-  const sentAt = '2026-11-20T09:00:00Z';
+  const s5 = '2026-11-20T09:00:00Z', s4 = '2026-11-15T09:00:00Z';
+  const url5 = 'https://baxod1rovvf.github.io/teachers_assistant/results-link.html?r=0123456789abcdef';
   const plan = { group: 'Target', parts: [
-    { label: 'Step 5 · Listening', codes: ['LSN555'], sentAt }, { label: 'Step 5 · Reading', codes: ['RDG555'], sentAt },
-    { label: 'Step 5 · Writing', codes: ['WRT555'], sentAt }, { label: 'Step 1 · Reading', codes: ['RDG111'], sentAt: '2026-10-01T09:00:00Z' } ],
-    links: [{ label: 'Step 5', url: 'https://baxod1rovvf.github.io/teachers_assistant/results-link.html?r=0123456789abcdef', sentAt },
-      { label: 'Step 1', url: 'https://baxod1rovvf.github.io/teachers_assistant/results-link.html?r=fedcba9876543210', sentAt: '2026-10-01T09:00:00Z' }] };
-  const m = await w.tgBuildMessage(env, plan, Date.parse('2026-11-22T14:00:00Z'), now);
-  expect(m.text).toContain('<b>Target</b>');
-  // new since yesterday: Alice's Listening (under her old ID, shown with her listed name) and her writing (the AI's band); Bobur's
-  // Reading is older than the last post
-  expect(m.text).toContain('Alice Test — Step 5 · Listening: <b>7.5</b>');
-  expect(m.text).toContain('Alice Test — Step 5 · Writing: <b>7.5</b>');
-  expect(m.text).not.toContain('Bobur Test — Step 5 · Reading:');
-  // not finished: most missing first; a part sent long ago isn't reminded about; Alice is listed once despite two IDs
-  expect(m.text).toContain('1. Cora Test — Step 5 · Listening, Step 5 · Reading, Step 5 · Writing');
-  expect(m.text).toMatch(/\d\. Bobur Test — Step 5 · Listening, Step 5 · Writing/);
-  expect(m.text).toMatch(/\d\. Alice Test — Step 5 · Reading/);
-  expect(m.text.match(/Alice Test — Step 5 · Reading/g)).toHaveLength(1);
-  expect(m.text).not.toContain('Step 1 · Reading');
-  // the results link of each step sent in the last 7 days
-  expect(m.text).toContain('📊 <b>Results</b>\nStep 5: https://baxod1rovvf.github.io/teachers_assistant/results-link.html?r=0123456789abcdef');
-  expect(m.text).not.toContain('fedcba9876543210');
-  // nothing sent in the last 7 days → no message
-  expect(await w.tgBuildMessage(env, { group: 'Target', parts: [plan.parts[3]] }, 0, now)).toEqual({ empty: true });
+    { label: 'Step 4 · Reading', codes: ['RDG444'], sentAt: s4 },
+    { label: 'Step 5 · Listening', codes: ['LSN555'], sentAt: s5 }, { label: 'Step 5 · Reading', codes: ['RDG555'], sentAt: s5 },
+    { label: 'Step 5 · Writing', codes: ['WRT555'], sentAt: '2026-11-20T09:05:00Z' } ],
+    links: [{ label: 'Step 5', url: url5, sentAt: s5 }, { label: 'Step 4', url: url5.replace('0123', '4444'), sentAt: s4 }] };
+  expect(w.tgCurrentStep(plan, now)).toMatchObject({ no: 5, label: 'Step 5' });
+  // 17:00: only Step 5 — Cora did Step 4, but not Step 5; Alice (two IDs) is listed once
+  const remind = (await w.tgBuildMessage(env, plan, 0, now, 'remind')).text;
+  expect(remind).toContain('📚 <b>Target</b> · <b>Step 5</b>');
+  expect(remind).toContain('1. Cora Test — Listening, Reading, Writing');
+  expect(remind).toMatch(/\d\. Bobur Test — Listening, Writing/);
+  expect(remind).toMatch(/\d\. Alice Test — Reading/);
+  expect(remind.match(/Alice Test/g)).toHaveLength(1);
+  expect(remind).not.toContain('Step 4');
+  expect(remind).not.toContain('Results');
+  // 19:00: Step 5's bands for everyone who did something, and the link as words
+  const results = (await w.tgBuildMessage(env, plan, Date.parse('2026-11-22T14:00:00Z'), now, 'results')).text;
+  expect(results).toContain('• Alice Test — 🎧 Listening <b>7.5</b> · ✍️ Writing <b>7.5</b>');
+  expect(results).toContain('• Bobur Test — 📖 Reading <b>7.5</b>');
+  expect(results).not.toContain('Cora Test');
+  expect(results).toContain('👉 <a href="' + url5 + '">Step 5 — results</a>');
+  expect(results).not.toContain('Not finished');
+  expect(results).not.toContain('4444');
+  // nothing new since the last results post → no results post
+  expect(await w.tgBuildMessage(env, plan, Date.parse('2026-11-23T12:00:00Z'), now, 'results')).toEqual({ empty: true });
+  // everyone done → "everyone has finished"; nothing sent in 21 days → no post
+  docs['class-RDG333'] = { type: 'TA_SYNC:CLASS', data: JSON.stringify([{ h: await h('RDG333', '10003'), n: 'Cora Test' }]) };
+  docs.r5 = { code: 'RDG333', type: 'Reading course', studentId: '10003', name: 'Cora Test', correct: 7, total: 10, submittedAt: '2026-11-16T09:00:00Z' };
+  expect((await w.tgBuildMessage(env, { group: 'Target', parts: [{ label: 'Step 3 · Reading', codes: ['RDG333'], sentAt: s4 }], links: [] }, 0, Date.parse('2026-11-16T14:00:00Z'), 'remind')).text)
+    .toContain('🎉 Everyone has finished Step 3');
+  expect(await w.tgBuildMessage(env, plan, 0, Date.parse('2026-12-31T14:00:00Z'), 'remind')).toEqual({ empty: true });
 });
 
 test('the timer: who hasn\'t finished at 17:00, the results at 19:00, once a day each, on the chosen days, only into a connected chat; /connect needs Telegram\'s secret', async () => {
@@ -131,15 +142,16 @@ test('the timer: who hasn\'t finished at 17:00, the results at 19:00, once a day
   expect((await w.runTelegram(env, at('17:08'))).sent).toBe(0);
   expect(posts()).toHaveLength(1);
   expect(posts()[0].body.chat_id).toBe(-1001);
-  expect(posts()[0].body.text).toContain('⏰ <b>Not finished yet</b>\n1. Cora Test — Step 5 · Reading');
-  expect(posts()[0].body.text).not.toContain('New results');
+  expect(posts()[0].body.text).toContain('<b>Target</b> · <b>Step 5</b>');
+  expect(posts()[0].body.text).toContain('⏰ <b>Not finished yet</b>\n1. Cora Test — Reading');
+  expect(posts()[0].body.text).not.toContain('Results');
   expect(posts()[0].body.text).not.toContain('results-link');
   // 19:03 → the results: Alice's band and the step's results link, no "not finished" list
   expect((await w.runTelegram(env, at('19:03'))).sent).toBe(1);
   expect((await w.runTelegram(env, at('19:09'))).sent).toBe(0);
   expect(posts()).toHaveLength(2);
-  expect(posts()[1].body.text).toContain('Alice Test — Step 5 · Reading: <b>8</b>');
-  expect(posts()[1].body.text).toContain('Step 5: https://baxod1rovvf.github.io/teachers_assistant/results-link.html?r=0123456789abcdef');
+  expect(posts()[1].body.text).toContain('• Alice Test — 📖 Reading <b>8</b>');
+  expect(posts()[1].body.text).toContain('<a href="https://baxod1rovvf.github.io/teachers_assistant/results-link.html?r=0123456789abcdef">Step 5 — results</a>');
   expect(posts()[1].body.text).not.toContain('Not finished');
   // Wednesday 19:03: no new results since Monday's post → no results post; the 17:00 list is still sent
   expect((await w.runTelegram(env, at('19:03') + 2 * 86400000)).sent).toBe(0);

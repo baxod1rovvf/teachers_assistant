@@ -24,7 +24,7 @@
 // Free plan: Google may use what is sent to improve its products — no students' private details.
 
 const ALLOWED_ORIGINS = ['https://baxod1rovvf.github.io'];
-const VERSION = '2026-11-23d';
+const VERSION = '2026-11-23e';
 const DEFAULT_MODEL = 'gemini-flash-lite-latest';   // Google's fastest model on the free plan (answers in a few seconds)
 const PER_MODEL_SECONDS = 18, TOTAL_SECONDS = 40;   // Loom waits 60 s, so the helper always answers before that
 const PER_MINUTE = { chat: 8, writing: 40, queue: 30, feedback: 60, check: 10, 'tg-setup': 5, 'tg-status': 30, 'tg-test': 5 };          // per visitor (IP) per minute, kept in this worker's memory
@@ -308,9 +308,9 @@ async function waitingCount(kv) {
 
 // ---------- the Telegram bot (teacher, 2026-11-23: "connect telegram bot with loom … warn students who don't finish exercise yet
 // and results too") ----------
-// On the days and at the hour the teacher chose (Tashkent time; 2026-11-23: "it should not send messages every day"), the bot posts
-// into each connected group's Telegram chat — one message per group, also when two groups share a chat: the new results since the last
-// post, who hasn't finished the Course parts sent to the group in the last 7 days, and the links to those steps' results pages.
+// On the days the teacher chose (Tashkent time), the bot posts into each connected group's Telegram chat — one message per group, also
+// when two groups share a chat — about the step the group is on (the one whose link was copied last): at remindHour who hasn't finished
+// it, at resultsHour everyone's bands in it and a "Step 8 — results" link (only when something new arrived).
 // Loom (course.js, the group page's "📨 Telegram" box) keeps a plan per group in the database: record `tg-<hash>` (type
 // 'TA_SYNC:TG', title = the hash, data = JSON { v, group, hour, days, on, parts: [{ label, codes, sentAt }], links: [{ label, url, sentAt }] }). The hash is
 // sha256("loom-tg|<connect code>") — the connect code itself is never in the database (anyone can read it), so nobody else can
@@ -321,7 +321,6 @@ async function waitingCount(kv) {
 // Set up (once): Telegram → @BotFather → /newbot → copy the token → Cloudflare: this worker → Settings → Variables and Secrets →
 // Add → Secret TELEGRAM_BOT_TOKEN. Then in Loom press "Connect the bot" once (job tg-setup sets the webhook).
 const TG_TZ_HOURS = 5;   // Tashkent, no summer time
-const TG_DAYS = 7;       // parts sent in the last 7 days are reminded about
 const FS_RUN = 'https://firestore.googleapis.com/v1/projects/teachers-assistant-app-ccd1a/databases/(default)/documents:runQuery?key=' + FS_KEY;
 // must stay the same as js/skill-bands.js (tests/telegram.spec.js compares them)
 const TG_ID_LOOKALIKE = { 'а': 'a', 'в': 'b', 'е': 'e', 'к': 'k', 'м': 'm', 'н': 'h', 'о': 'o', 'р': 'p', 'с': 'c', 'т': 't', 'у': 'y', 'х': 'x', 'і': 'i' };
@@ -396,77 +395,89 @@ function tgPlanFrom(rec) {
     resultsHour: hr(p.resultsHour, old >= 0 ? old : 19), on: p.on !== false, days, links, parts };
 }
 
-// A post for one plan: { text } or { empty: true }. kind 'remind' = who hasn't finished the parts sent in the last 7 days (empty when
-// nothing was sent); 'results' = the new results since `since` (the last results post) and the steps' results links (empty when there
-// are no new results); no kind = both in one (kept for the tests).
+// The step a group is on now = the step whose Listening/Reading/Writing link was copied most recently (in the last 21 days)
+// (teacher, 2026-11-23: "only send the list of students who don't finish the step that should have been done … and the result of
+// step 8"). → { no, label 'Step 8', parts: [that step's parts], link } or null.
+function tgCurrentStep(plan, now) {
+  const stepOf = x => { const m = /^Step (\d+)/.exec(x.label); return m ? Number(m[1]) : null; };
+  let best = null;
+  for (const x of plan.parts) {
+    const no = stepOf(x), t = Date.parse(x.sentAt);
+    if (no === null || !(t > now - 21 * 86400000)) continue;
+    if (!best || t > best.t || (t === best.t && no > best.no)) best = { no, t };
+  }
+  if (!best) return null;
+  const parts = plan.parts.filter(x => stepOf(x) === best.no);
+  const link = (plan.links || []).find(x => x.label === 'Step ' + best.no) || null;
+  return { no: best.no, label: 'Step ' + best.no, parts, link };
+}
+const TG_SKILL_EMOJI = { Listening: '🎧', Reading: '📖', Writing: '✍️' };
+// A post for one plan, about the step the group is on: { text } or { empty: true }. kind 'remind' = who hasn't finished every
+// sent part of it (or "everyone has finished"); 'results' = everyone's bands in it + a "Step 8 — results" link, only when a result
+// came after `since` (the last results post) — else empty, so the same table isn't posted every day.
 async function tgBuildMessage(env, plan, since, nowMs, kind) {
   const now = nowMs || Date.now();
-  const parts = plan.parts.filter(x => { const t = Date.parse(x.sentAt); return !(t < now - TG_DAYS * 86400000); });
-  if (!parts.length) return { empty: true };
-  const students = new Map();   // listed name → { missing: [labels] } (a student with old IDs is on a list once per ID, same name)
-  const fresh = [];
-  for (const part of parts) {
+  const cur = tgCurrentStep(plan, now);
+  if (!cur) return { empty: true };
+  const missing = new Map(), bands = new Map();   // listed name → [skills not done] / { skill: band }
+  let freshCount = 0, listed = 0;
+  for (const part of cur.parts) {
+    const skill = String(part.label.split('·')[1] || part.label).trim();
     const code = part.codes[0];
     const cls = await fsDoc('class-' + code);
     let list = [];
     try { list = cls ? JSON.parse(cls.data || '[]') : []; } catch (e) { list = []; }
+    if (!Array.isArray(list)) list = [];
     const results = (await fsRunQuery(fsIn('code', part.codes), 500)).filter(r => / course$/.test(String(r.type || '')));
-    const doneHashes = new Set(), doneNames = new Set();
+    // each result's student = the name on the teacher's list (by the scrambled ID), else the name it carries
+    const byHash = new Map(list.filter(e => e && e.h && e.n).map(e => [e.h, String(e.n).trim()]));
+    const done = new Set();
     for (const r of results) {
-      if (r.studentId) for (const c of part.codes) doneHashes.add(await tgClassHash(c, r.studentId));
-      if (r.name) doneNames.add(String(r.name).trim().toLowerCase());
-    }
-    const byName = new Map();
-    for (const e of (Array.isArray(list) ? list : [])) {
-      if (!e || !e.n) continue;
-      const k = String(e.n).trim();
-      byName.set(k, byName.get(k) || doneHashes.has(e.h) || doneNames.has(k.toLowerCase()));
-    }
-    for (const [name, done] of byName) {
-      const st = students.get(name) || { missing: [] };
-      if (!done) st.missing.push(part.label);
-      students.set(name, st);
-    }
-    for (const r of results) {
-      const at = Date.parse(r.submittedAt || r.date || '');
-      if (!(at > since)) continue;
-      let band = null;
+      let name = '';
+      if (r.studentId) for (const c of part.codes) { const n = byHash.get(await tgClassHash(c, r.studentId)); if (n) { name = n; break; } }
+      if (!name) name = String(r.name || '').trim();
+      if (!name) continue;
+      done.add(name.toLowerCase());
+      let band;
       if (r.type === 'Writing course') {
         const f = env.LOOM_KV ? await env.LOOM_KV.get('f:' + r.__id, 'json') : null;
         band = f && f.scores ? aiBand(f.scores, Number(r.words) || 0, Number(r.minWords) || 0) : (String(r.text || '').trim() ? '⏳' : 1);
       } else band = tgBand(Number(r.correct) || 0, Number(r.total) || 0);
-      // the name on the teacher's list (by the scrambled ID), else the name the result carries
-      let name = String(r.name || '').trim();
-      if (r.studentId) {
-        const hs = new Set(); for (const c of part.codes) hs.add(await tgClassHash(c, r.studentId));
-        const e = (Array.isArray(list) ? list : []).find(x => x && hs.has(x.h));
-        if (e && e.n) name = String(e.n).trim();
-      }
-      if (name) fresh.push({ name, label: part.label, band, at });
+      const b = bands.get(name) || {};
+      if (!(skill in b) || (typeof band === 'number' && !(typeof b[skill] === 'number' && b[skill] >= band))) b[skill] = band;   // best try
+      bands.set(name, b);
+      if (Date.parse(r.submittedAt || r.date || '') > since) freshCount++;
+    }
+    const names = [...new Set(list.filter(e => e && e.n).map(e => String(e.n).trim()))];   // a student with old IDs is listed once per ID
+    listed = Math.max(listed, names.length);
+    for (const n of names) {
+      if (!missing.has(n)) missing.set(n, []);
+      if (!done.has(n.toLowerCase())) missing.get(n).push(skill);
     }
   }
-  const wantRemind = kind !== 'results', wantResults = kind !== 'remind';
-  if (kind === 'results' && !fresh.length) return { empty: true };
-  const lines = ['📚 <b>' + tgEsc(plan.group) + '</b>'];
-  if (wantResults && fresh.length) {
-    lines.push('', '🏆 <b>New results</b>');
-    fresh.sort((a, b) => a.at - b.at).slice(0, 40).forEach(f => lines.push('• ' + tgEsc(f.name) + ' — ' + tgEsc(f.label) + ': <b>' + tgEsc(f.band) + '</b>'));
+  const head = '📚 <b>' + tgEsc(plan.group) + '</b> · <b>' + tgEsc(cur.label) + '</b>';
+  const linkLine = cur.link ? '👉 <a href="' + tgEsc(cur.link.url) + '">' + tgEsc(cur.label) + ' — results</a>' : '';
+  const lines = [head, ''];
+  if (kind === 'results' || !kind) {
+    if (kind === 'results' && !freshCount) return { empty: true };
+    lines.push('🏆 <b>Results</b>');
+    const rows = [...bands.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+    rows.slice(0, 60).forEach(([name, b]) => lines.push('• ' + tgEsc(name) + ' — ' +
+      Object.keys(b).map(k => (TG_SKILL_EMOJI[k] || '') + ' ' + tgEsc(k) + ' <b>' + tgEsc(b[k]) + '</b>').join(' · ')));
+    if (!rows.length) lines.push('No results yet.');
+    if (linkLine) lines.push('', linkLine);
+    if (!kind) lines.push('');
   }
-  const missing = [...students.entries()].filter(([, v]) => v.missing.length).sort((a, b) => b[1].missing.length - a[1].missing.length || a[0].localeCompare(b[0]));
-  if (wantRemind) {
-    lines.push('');
-    if (missing.length) {
+  if (kind === 'remind' || !kind) {
+    const late = [...missing.entries()].filter(([, v]) => v.length).sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+    if (late.length) {
       lines.push('⏰ <b>Not finished yet</b>');
-      missing.slice(0, 60).forEach(([name, v], i) => lines.push((i + 1) + '. ' + tgEsc(name) + ' — ' + tgEsc(v.missing.join(', '))));
+      late.slice(0, 60).forEach(([name, v], i) => lines.push((i + 1) + '. ' + tgEsc(name) + ' — ' + tgEsc(v.join(', '))));
       lines.push('', 'Please finish today! 💪');
-    } else if (students.size) lines.push('🎉 Everyone has finished everything that was sent. Well done!');
+    } else if (missing.size) lines.push('🎉 Everyone has finished ' + tgEsc(cur.label) + '. Well done!');
+    else return { empty: true };   // no class list online for this step
   }
-  const links = (plan.links || []).filter(x => { const t = Date.parse(x.sentAt); return !(t < now - TG_DAYS * 86400000); });
-  if (wantResults && links.length) {
-    lines.push('', '📊 <b>Results</b>');
-    links.forEach(x => lines.push(tgEsc(x.label) + ': ' + tgEsc(x.url)));
-  }
-  let text = lines.join('\n');
+  let text = lines.join('\n').replace(/\n{3,}/g, '\n\n').trim();
   if (text.length > 4000) text = text.slice(0, 3990) + '…';
   return { text };
 }
@@ -562,17 +573,17 @@ async function tgJob(job, q, env, origin, selfOrigin) {
   // both posts now (the "not finished" list, then the last day's results); a part with nothing to say gets a short line
   const head = '📚 <b>' + tgEsc(plan.group) + '</b>\n\n';
   const remind = await tgBuildMessage(env, plan, Date.now() - 86400000, Date.now(), 'remind');
-  const results = await tgBuildMessage(env, plan, Date.now() - 86400000, Date.now(), 'results');
+  const results = await tgBuildMessage(env, plan, 0, Date.now(), 'results');   // the test shows the whole table
   let r = await tgApi(env, 'sendMessage', { chat_id: chat.chatId, parse_mode: 'HTML', disable_web_page_preview: true,
-    text: remind.empty ? head + 'Nothing was sent in the last 7 days — no reminders today.' : remind.text });
+    text: remind.empty ? head + 'No Listening, Reading or Writing link was sent in the last 21 days — nothing to remind about.' : remind.text });
   if (r.ok) r = await tgApi(env, 'sendMessage', { chat_id: chat.chatId, parse_mode: 'HTML', disable_web_page_preview: true,
-    text: results.empty ? head + 'No new results in the last 24 hours.' : results.text });
+    text: results.empty ? head + 'No results yet.' : results.text });
   await env.LOOM_KV.put('tgtest:' + hash, '1', { expirationTtl: 120 });
   return r.ok ? reply({ ok: true }, 200, origin) : reply({ error: 'Telegram: ' + r.error }, 502, origin);
 }
 
 const JOBS = ['chat', 'writing', 'queue', 'feedback', 'check', 'tg-setup', 'tg-status', 'tg-test'];
-export { aiBand, checkWriting, runQueue, runTelegram, tgBuildMessage, tgUpdate, tgIdKey, tgClassHash, tgPlanHash, tgBand, tgNow };
+export { aiBand, checkWriting, runQueue, runTelegram, tgBuildMessage, tgCurrentStep, tgUpdate, tgIdKey, tgClassHash, tgPlanHash, tgBand, tgNow };
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';

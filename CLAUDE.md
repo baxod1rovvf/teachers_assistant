@@ -105,7 +105,7 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
    still queue offline and arrive later — that's intended. `tests/data-safety.spec.js`.
 
 24. **The Telegram bot posts students' names and results into the class chat** (the teacher's choice) — everyone in the chat sees them,
-   and anyone added to the chat later too. It needs the Cloudflare helper pasted again (version `2026-11-23d`) and the secret
+   and anyone added to the chat later too. It needs the Cloudflare helper pasted again (version `2026-11-23e`) and the secret
    `TELEGRAM_BOT_TOKEN`; without them nothing is posted (no error for students). If the bot token leaks, anyone can post as the bot —
    make a new one with @BotFather (/revoke) and save it again.
 
@@ -740,7 +740,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   is hidden, for an hour at most — `__rlPollForMs`), tap a writing band → its AI feedback (the helper's, else `w.ai` = the feedback Loom had when the
   link was shared, `skShareData`); the helper doesn't know it and there's none → "No AI feedback for this writing yet." with the text and band. **Anyone with the link can read the writings on it** (teacher's choice).
   **Cloudflare, done once by the teacher**: create a KV namespace `loom-writings` and bind it to the worker as `LOOM_KV`; add a Cron Trigger
-  `*/5 * * * *`; paste `tools/ai-worker.js` and Deploy; `/status` must show version `2026-11-23d` (was `2026-11-13b` before the Telegram bot) and `kv: true` (also `running`, `keySaved`, `waiting`, `jobs`).
+  `*/5 * * * *`; paste `tools/ai-worker.js` and Deploy; `/status` must show version `2026-11-23e` (was `2026-11-13b` before the Telegram bot) and `kv: true` (also `running`, `keySaved`, `waiting`, `jobs`).
   Limits per IP per minute: queue 30, feedback 60, check 10, chat 8, writing 40. **KV free plan: about 1 000 writes and 1 000 lists a day** (the timer
   uses 288 lists); busy days can run out → writings just wait. `tests/ai-queue.spec.js`, `tests/results-link.spec.js`.
 - **Answers that didn't arrive (teacher, 2026-11-13: "students send me screenshots that they completed listening, but the system
@@ -852,7 +852,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   student link says "🎙 This dictation isn't ready yet — ask your teacher." **After recording more: run the build tool, `npm run stamp`, commit audio + data.**
 - **Telegram bot (teacher, 2026-11-23: "connect telegram bot with loom … warn students who don't finish exercise yet and results
   too"; chose: into each group's Telegram chat, automatically every day)** — the bot lives in the Cloudflare helper (`tools/ai-worker.js`,
-  version `2026-11-23d`: `runTelegram` in `scheduled`, the webhook `POST /tg/update`, jobs `tg-setup` / `tg-status` / `tg-test`). Loom: a
+  version `2026-11-23e`: `runTelegram` in `scheduled`, the webhook `POST /tg/update`, jobs `tg-setup` / `tg-status` / `tg-test`). Loom: a
   "📨 Telegram" box on a group's Course page (`js/pages/telegram.js`, `skTgBoxHtml` called from `skGroupPageHtml`): Set up Telegram makes an
   8-letter connect code, kept in `ta_telegram[groupId] = { code, hour, on, sig }` (synced, in the backup); 🔌 Connect the bot (once, sets the
   webhook), "/connect CODE" to send in the class chat (📋 Copy), **the days** (Mo … Su buttons, `days` = JS weekdays, 0 = Sunday; new
@@ -870,7 +870,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   `f:<id>` like skWritingAiBand, else ⏳) and "⏰ Not finished yet" for parts sent in the last 7 days (most missing first; a student with old IDs
   once), or "🎉 Everyone has finished", then "📊 Results" with the links of the steps sent in the last 7 days. `tgIdKey`/`tgClassHash`/`tgBand` are copies of skill-bands.js (`tests/telegram.spec.js` compares them).
   **Setup by the teacher (once)**: @BotFather → /newbot → token → Cloudflare: the worker's secret `TELEGRAM_BOT_TOKEN`; paste the new
-  `tools/ai-worker.js` and Deploy (`/status` shows `telegram: true`, version `2026-11-23d`); in Loom press 🔌 Connect the bot; per group: add the
+  `tools/ai-worker.js` and Deploy (`/status` shows `telegram: true`, version `2026-11-23e`); in Loom press 🔌 Connect the bot; per group: add the
   bot to the chat and send the /connect line. Grammar and Dictation links aren't in the messages (they aren't sent per group).
   **Two posts a day (teacher, 2026-11-23: "a list of students who don't finish exercise at 17:00 and results at 19:00")**: the plan has
   `remindHour` (default 17 — "⏰ Not finished yet", or "🎉 Everyone has finished") and `resultsHour` (default 19 — "🏆 New results" since the
@@ -878,6 +878,13 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   (KV `tgsent:<hash>:<date>:remind|results`), only the results post moves `tglast`. Loom: two pickers 8:00–22:00 (`tgSetHour(id, kind, h)`,
   `tgRemindHour`/`tgResultsHour`); an entry or plan from before with one `hour` keeps it for the results (and, in the helper, for both).
   "📨 Send both messages now" (job `tg-test`) sends both at once.
+  **Only the step the group is on (teacher, 2026-11-23: "only send the list of students who don't finish the step that should have been
+  done … and the result of step 8"; "results … as 'Step 8 - results'")**: the helper picks the step whose Listening/Reading/Writing link was
+  copied last (`tgCurrentStep`: newest `sentAt` among the plan's parts, last 21 days) — the plan from Loom is unchanged. 17:00 = "⏰ Not
+  finished yet" for that step only ("1. Ali — Reading, Writing"; everyone done → "🎉 Everyone has finished Step 8"); 19:00 = "🏆 Results":
+  every student who did something in it with their best band per part ("• Ali — 🎧 Listening 7 · 📖 Reading 6.5 · ✍️ Writing ⏳") and
+  `👉 <a href=…>Step 8 — results</a>` (a tappable link, not the address) — **only when a result of it arrived after the last results post**.
+  "📨 Send both messages now" shows the whole table. The old "last 7 days of every step" lists are gone.
   **Channels work too (teacher's class is a channel, 2026-11-23)**: the webhook asks for `channel_post` as well (after a new helper, press 🔌
   Connect the bot again so Telegram is told); in a channel the bot must be an **admin that can post and delete messages**. The bot deletes
   every `/connect` post at once (students shouldn't see the code), and a code already connected to one chat is refused from another

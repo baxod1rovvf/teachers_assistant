@@ -122,7 +122,7 @@ function skTgBoxHtml(g) {
     '</ol>' +
     '<div class="tg-actions"><button type="button" class="mini-btn" onclick="tgTest(' + jsAttr(g.id) + ')">📨 Send both messages now</button>' +
     '<button type="button" class="mini-btn danger" onclick="tgTurnOff(' + jsAttr(g.id) + ')">Stop Telegram</button></div>' +
-    '<p class="sk-hint tg-hint">It lists the Listening, Reading and Writing parts you sent this group in the last 7 days, with each step\'s results link. Each group gets its own message — two groups can share one chat. Everyone in the chat sees the names.</p>' +
+    '<p class="sk-hint tg-hint">The messages are about the step whose link you copied last (now: the newest step you sent this group) — who hasn\'t finished it, and its results with a \"Step N — results\" link. Each group gets its own message — two groups can share one chat. Everyone in the chat sees the names.</p>' +
     '</section>';
 }
 /* the status line, asked from the helper after the page is drawn */
