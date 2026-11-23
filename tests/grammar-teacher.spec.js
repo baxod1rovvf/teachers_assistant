@@ -24,7 +24,7 @@ async function openCourse(page, context, opts) {
   const docs = opts.docs || [];
   await prepare(context, { docs, storage });
   const errors = watchErrors(page);
-  await page.goto('/course.html');
+  await page.goto('/grammarjourney.html');
   if (docs.length) await page.waitForFunction(n => (window.__allResults || []).length >= n, docs.filter(d => d.code === 'GRM111').length, { timeout: 10000 });
   await hideNotices(page);
   await page.addStyleTag({ content: '#taNoticeStack { display: none !important; }' });
@@ -36,23 +36,25 @@ async function openLesson(page) {
   await expect(page.locator('.gr-lesson-page')).toBeVisible();
 }
 
-test('Grammar Journey sits under the group cards: 7 levels, 4 coming soon; Beginner lists 15 lessons', async ({ page, context }) => {
+test('Grammar Journey has its own page (grammarjourney.html): 7 levels, 4 coming soon; Beginner lists 15 lessons; ← Course goes back', async ({ page, context }) => {
   const errors = await openCourse(page, context);
-  const order = await page.evaluate(() => {
-    const cards = document.querySelector('#courseWrap .sk-cards'), gj = document.querySelector('#courseWrap .gr-journey');
-    return !!cards && !!gj && !!(cards.compareDocumentPosition(gj) & Node.DOCUMENT_POSITION_FOLLOWING);
-  });
-  expect(order).toBe(true);
-  await expect(page.locator('.gr-journey h3').first()).toContainText('Grammar Journey');
+  await expect(page.locator('#panel-grammarjourney .card-head h2')).toHaveText('📚 Grammar Journey');
+  await expect(page.locator('#grammarWrap .gr-journey')).toBeVisible();
+  await expect(page.locator('.sk-cards')).toHaveCount(0);   // the IELTS Journey's groups are on their own page
   await expect(page.locator('.gr-level')).toHaveCount(7);
   await expect(page.locator('.gr-level.soon')).toHaveCount(4);
   await expect(page.locator('.gr-level.soon').first()).toContainText('Coming soon');
   await expect(page.locator('.gr-level[data-level="beginner"]')).toContainText('15 lessons');
   await page.locator('.gr-level[data-level="beginner"] .gr-level-open').click();
   await expect(page.locator('.gr-lesson')).toHaveCount(15);
-  await expect(page.getByRole('button', { name: '← Course' })).toBeVisible();
+  await page.getByRole('button', { name: '← Grammar Journey' }).click();
+  await expect(page.locator('.gr-level')).toHaveCount(7);
+  // ← Course opens the three journeys' cards, and the Grammar card comes back here
   await page.getByRole('button', { name: '← Course' }).click();
-  await expect(page.locator('.sk-cards')).toBeVisible();
+  await expect(page.locator('.cr-card')).toHaveCount(3);
+  await expect(page.locator('.cr-card[data-journey="grammarjourney"] .cr-line')).toHaveText('0 lessons sent');
+  await page.locator('.cr-card[data-journey="grammarjourney"]').click();
+  await expect(page.locator('#grammarWrap .gr-level')).toHaveCount(7);
   expect(errors).toEqual([]);
 });
 
@@ -148,8 +150,8 @@ test('the lesson\'s results: first try only, ranked by score then time, filter b
   await page.locator('.gr-missing').getByRole('button', { name: '📋 Copy list' }).click();
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(
     'Lesson 1 · To Be (am/is/are) + A/An — Apex\nNot finished yet:\n1. Bobur Test');
-  // ← Grammar Journey goes back to the lessons
-  await page.getByRole('button', { name: '← Grammar Journey' }).click();
+  // ← Beginner goes back to the level's lessons
+  await page.getByRole('button', { name: '← Beginner' }).click();
   await expect(page.locator('.gr-lesson')).toHaveCount(15);
   expect(errors).toEqual([]);
 });
@@ -224,7 +226,7 @@ test('with a lesson page open, a student added to the roster still gets the list
     window.__grRefreshMs = 0;
     const r = JSON.parse(localStorage.getItem('ta_points_roster')); r.push({ name: 'Gulnora Test', id: '10006', group: 'gt' });
     localStorage.setItem('ta_points_roster', JSON.stringify(r));
-    window.renderCourse();
+    window.renderGrammarJourney();
   });
   await expect.poll(() => page.evaluate(() => { const d = window.__fakeDocs.find(x => x.__id === 'class-GRM111'); return d ? JSON.parse(d.data).length : null; })).toBe(4);
 });

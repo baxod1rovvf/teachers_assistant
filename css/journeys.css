@@ -1,0 +1,116 @@
+/* ================= THE COURSE JOURNEYS — what they share (2026-11-23) =================
+   Split out of css/style.css when each journey got its own page (teacher: "separate every journey"): loaded by ieltsjourney.html,
+   grammarjourney.html and dictationjourney.html before their own file. Rules keep their order from style.css; a font-family on a bold word was dropped where
+   "body.loom-studio *" (as strong, and later in style.css) always won over it. */
+.sk-stepbox.done, .sk-stepbox.b-good { background: var(--c-green); border-color: var(--line); }
+.sk-stepbox.b-mid { background: var(--c-yellow); border-color: var(--line); }
+.sk-stepbox.b-low { background: var(--c-red); border-color: var(--line); }
+.sk-results { margin-top: 30px; margin-bottom: 26px; }
+.sk-results-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.sk-results-head h3 { font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.25rem; margin: 0; }
+.sk-results-note { margin: 10px 0 0; }
+.sk-unlisted small { color: var(--text-muted, inherit); font-weight: 600; }
+.sk-missing-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.sk-missing-list li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 14px; padding: 10px 14px;
+  border-radius: 14px; border: 1px solid var(--border); background: var(--surface); }
+.sk-missing-list b { font-weight: 700; overflow-wrap: anywhere; }
+.sk-results-empty { display: flex; align-items: center; gap: 14px; padding: 18px 20px; border-radius: 20px; border: 2.5px dashed var(--border);
+  background: var(--surface); }
+.sk-results-empty-emoji { font-size: 2rem; line-height: 1; }
+.sk-results-empty div { display: flex; flex-direction: column; gap: 2px; }
+.sk-results-empty b { font-weight: 700; font-size: 1.1rem; }
+.sk-results-empty span { color: var(--ink-soft); font-weight: 600; line-height: 1.45; }
+.sk-part .sk-tile-btns { margin-top: auto; }
+.sk-tile-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.sk-tile-btns .mini-btn { flex: 1 1 auto; justify-content: center; }
+.sk-soon-tag { align-self: flex-start; font-size: .82rem; font-weight: 700; padding: 2px 10px; border-radius: 999px; color: var(--ink-soft);
+  border: 2px dashed var(--border); }
+/* ================= GRAMMAR JOURNEY — the teacher's side (2026-11-16, js/pages/grammar.js) =================
+   Under the group cards on the Course page, in the Mountain Air look: one glass card with the 7 levels; a level's lessons as
+   glass rows; a lesson's page with group chips, the results table (a card per student on phones) and Not finished.
+   On computers it stays in the left column (≤ 820 px) so the teacher's picture shows on the right. */
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) :is(.gr-journey, .dct-journey) { margin: 8px 0 24px; padding: 18px; border-radius: 24px; background: var(--surface); border: 1px solid var(--glass-edge, var(--border));
+  box-shadow: var(--shadow-md); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) :is(.gr-journey, .dct-journey) .sk-results-head { margin-bottom: 4px; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) :is(.gr-journey, .dct-journey) > .sk-hint { margin: 0 0 14px; line-height: 1.45; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-levels { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); gap: 10px; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) :is(.gr-level, .dct-level) { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 12px 14px; border-radius: 16px;
+  background: rgba(255,255,255,0.78); border: 1px solid var(--glass-edge, var(--border)); border-left: 4px solid var(--gc, var(--brand)); min-width: 0; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-level-name { font-weight: 700; font-size: 1.02rem; color: var(--ink); line-height: 1.25; overflow-wrap: anywhere; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-level-open { all: unset; cursor: pointer; font-weight: 700; font-size: 1.02rem; color: var(--ink); line-height: 1.25; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-level-open::after { content: ''; position: absolute; inset: 0; border-radius: 16px; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-level-open:focus-visible::after { outline: 3px solid var(--brand); outline-offset: 2px; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) :is(.gr-level, .dct-level):not(.soon):hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-level-sub { font-size: .85rem; font-weight: 600; color: var(--ink-soft); }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) :is(.gr-level, .dct-level).soon { opacity: .62; border-left-color: var(--border); }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) :is(.gr-level, .dct-level).soon .sk-soon-tag { align-self: flex-start; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-page-head { padding: 16px 18px; margin: 12px 0 14px; border-radius: 20px; background: var(--surface); border: 1px solid var(--glass-edge, var(--border));
+  box-shadow: var(--shadow-md); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-page-head h3 { margin: 0 0 4px; font-size: 1.3rem; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-page-head .sk-hint { margin: 0 0 10px; line-height: 1.45; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-lessons { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) :is(.gr-lesson, .dct-item) { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 10px 14px; border-radius: 16px; background: var(--surface);
+  border: 1px solid var(--glass-edge, var(--border)); box-shadow: var(--shadow-md); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-lesson-open { all: unset; cursor: pointer; flex: 1 1 240px; min-width: 0; display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--ink); overflow-wrap: anywhere; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-lesson-open:hover { text-decoration: underline; text-underline-offset: 3px; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-lesson-open:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 8px; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-lesson-no { flex: 0 0 auto; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; font-size: .85rem;
+  background: rgba(20,24,31,0.07); color: var(--ink); }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) :is(.gr-lesson, .dct-item).sent .gr-lesson-no { background: var(--air-moss, var(--c-green)); color: #fff; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-done { font-size: .85rem; font-weight: 600; color: var(--ink-soft); white-space: nowrap; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-lesson-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-filter { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 4px; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-chip { min-height: 36px; padding: 6px 16px; border-radius: 999px; font: inherit; font-weight: 700; font-size: .9rem; cursor: pointer;
+  color: var(--ink); background: rgba(255,255,255,0.82); border: 1px solid var(--glass-edge, var(--border)); box-shadow: var(--shadow-md); }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-chip.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-chip:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) :is(.gr-lesson-page, .dct-page) .sk-results { margin-top: 18px; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-table { border-radius: 20px; overflow: hidden; background: var(--surface); border: 1px solid var(--glass-edge, var(--border)); box-shadow: var(--shadow-md);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-thead, :is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-trow { display: grid; grid-template-columns: 44px minmax(0, 1fr) 110px 84px 90px 70px; align-items: center; gap: 10px; padding: 10px 16px; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-thead { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); border-bottom: 1px solid rgba(20,24,31,0.08); }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-trow + .gr-trow { border-top: 1px solid rgba(20,24,31,0.06); }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-place { font-weight: 700; text-align: center; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-place.medal { font-size: 1.3rem; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-name { display: flex; align-items: center; gap: 10px; min-width: 0; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-name b { overflow-wrap: anywhere; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-name .res-avatar { width: 34px; height: 34px; flex: 0 0 auto; color: #2B2140; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-group, :is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-time, :is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-date { font-weight: 600; color: var(--ink-soft); font-size: .9rem; overflow-wrap: anywhere; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-score { display: flex; flex-direction: column; line-height: 1.15; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-score b { font-size: 1.05rem; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-score small { font-weight: 600; color: var(--ink-soft); }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-score.b-good b { color: var(--air-moss, var(--c-green)); }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-score.b-mid b { color: #B7791F; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-score.b-low b { color: var(--air-red, var(--c-red)); }
+@media (min-width: 861px) {
+  body.loom-air :is(.gr-journey, .dct-journey), body.loom-air :is(.gr-lesson-page, .dct-page), body.loom-air .gr-lessons, body.loom-air :is(#ieltsWrap, #grammarWrap, #dictationWrap) > .gr-page-head { max-width: 820px; }
+}
+@media (max-width: 640px) {
+  :is(#ieltsWrap, #grammarWrap, #dictationWrap) :is(.gr-journey, .dct-journey) { padding: 14px; }
+  :is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-levels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  :is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-thead { display: none; }
+  :is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-trow { grid-template-columns: 36px minmax(0, 1fr) auto; grid-template-areas: "p n s" "p g t"; row-gap: 2px; padding: 12px 14px; }
+  :is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-place { grid-area: p; }
+  :is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-name { grid-area: n; }
+  :is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-score { grid-area: s; align-items: flex-end; }
+  :is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-group { grid-area: g; padding-left: 44px; }
+  :is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-time { grid-area: t; text-align: right; }
+  :is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-date { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(#ieltsWrap, #grammarWrap, #dictationWrap) :is(.gr-level, .dct-level) { transition: none; }
+  :is(#ieltsWrap, #grammarWrap, #dictationWrap) :is(.gr-level, .dct-level):not(.soon):hover { transform: none; }
+}
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-tfoot { margin: 0; padding: 10px 16px 12px; font-size: .85rem; font-weight: 600; color: var(--ink-soft); line-height: 1.45; border-top: 1px solid rgba(20,24,31,0.08); }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .gr-page-head .sk-tile-btns { max-width: 440px; }
+/* ================= DICTATION JOURNEY — the teacher's side (2026-11-19, js/pages/dictation.js) =================
+   Under the Grammar Journey, with its look (the rules above take .dct-journey / .dct-level / .dct-item / .dct-page too). Here only what
+   is its own: 4 buttons a row, the results table's Skips column and the clickable name, and the windows (📄 Transcript, what a student
+   wrote — those sit outside #courseWrap, in .ta-modal). */
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .dct-item .gr-lesson-btns .mini-btn { min-width: 0; }
+:is(#ieltsWrap, #grammarWrap, #dictationWrap) .dct-table .gr-thead, :is(#ieltsWrap, #grammarWrap, #dictationWrap) .dct-table .gr-trow { grid-template-columns: 44px minmax(0, 1fr) 104px 74px 58px 76px 64px; }
+@media (max-width: 640px) {
+  :is(#ieltsWrap, #grammarWrap, #dictationWrap) .dct-table .gr-trow { grid-template-columns: 36px minmax(0, 1fr) auto auto; grid-template-areas: "p n n s" "p g k t"; }
+  :is(#ieltsWrap, #grammarWrap, #dictationWrap) .dct-item .gr-lesson-btns, :is(#ieltsWrap, #grammarWrap, #dictationWrap) .dct-btns { width: 100%; max-width: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  :is(#ieltsWrap, #grammarWrap, #dictationWrap) .dct-item .gr-lesson-btns .mini-btn, :is(#ieltsWrap, #grammarWrap, #dictationWrap) .dct-btns .mini-btn { width: 100%; justify-content: center; margin: 0; }
+}

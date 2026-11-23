@@ -38,7 +38,7 @@ test('Share results link puts the step\'s table online and copies a link that st
   await prepare(context, { docs: [W('sk_WRT555_10001_1', '10001', 'Alice Test')], storage: { ta_recent_exercises: JSON.stringify([item]),
     ta_skills_links: JSON.stringify({ 'g1|writing|b1': { code: 'WRT555' } }), ta_course_group: 'g1' } });
   const errors = watchErrors(page);
-  await page.goto('/course.html');
+  await page.goto('/ieltsjourney.html');
   await page.waitForFunction(() => (window.__allResults || []).length >= 1, null, { timeout: 10000 });
   await hideNotices(page);
   await page.addStyleTag({ content: '#taNoticeStack { display: none !important; }' });
@@ -203,7 +203,7 @@ test('Share results link carries a checked writing\'s feedback (so the link can 
     date: new Date(Date.now() - 60000).toISOString(), submittedAt: new Date(Date.now() - 60000).toISOString() };
   await prepare(context, { docs: [W], storage: { ta_skills_links: JSON.stringify({ 'g1|writing|b1': { code: 'WRT555' } }), ta_course_group: 'g1',
     ta_skills_ai: JSON.stringify({ sk_WRT555_10001_1: RESULT }) } });
-  await page.goto('/course.html');
+  await page.goto('/ieltsjourney.html');
   await page.waitForFunction(() => (window.__allResults || []).length >= 1, null, { timeout: 10000 });
   const d = await page.evaluate(() => skShareData('b1', { id: 'g1', name: 'Target' }));
   const row = d.rows.find(r => r.name === 'Alice Test');

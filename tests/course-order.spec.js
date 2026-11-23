@@ -25,7 +25,7 @@ test('teacher: Copy link puts the class list online with no "part before", even 
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   const links = { 'g1|reading|b5': { code: 'RDG005', sentAt: new Date().toISOString() } };
   await prepare(context, { storage: { ta_skills_links: JSON.stringify(links), ta_course_group: 'g1' } });
-  await page.goto('/course.html');
+  await page.goto('/ieltsjourney.html');
   await hideNotices(page);
   await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();
   await page.locator('.sk-node[data-step="b6"]').click();

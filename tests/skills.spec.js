@@ -641,7 +641,7 @@ test.describe('course page', () => {
     await prepare(context, opts);
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
     const errors = watchErrors(page);
-    await page.goto('/course.html');
+    await page.goto('/ieltsjourney.html');
     await page.waitForTimeout(1000);
     await hideNotices(page);
     await page.addStyleTag({ content: '#taNoticeStack { display: none !important; }' });   // notes that come later (old files…)
@@ -819,7 +819,7 @@ test.describe('course page', () => {
         const realRender = window.renderCourse, realRead = window.getStoredResults;
         window.renderCourse = function () { draws++; return realRender.apply(this, arguments); };
         window.getStoredResults = function () { reads++; return realRead.apply(this, arguments); };
-        const wrap = document.getElementById('courseWrap');
+        const wrap = document.getElementById('ieltsWrap');
         wrap.style.display = 'none';
         window.taCourseResultsChanged();
         const hidden = draws;
@@ -841,7 +841,7 @@ test.describe('course page', () => {
     const errors = await open(page, context, { storage: { ta_student_groups: '[]' } }, null);
     await page.setViewportSize({ width: 390, height: 800 });
     await expect(page.locator('.sk-gcard')).toHaveCount(0);
-    await expect(page.locator('#courseWrap')).toContainText('Add a group on the Students page');
+    await expect(page.locator('#ieltsWrap')).toContainText('Add a group on the Students page');
     await expect(page.getByRole('button', { name: /Copy link for/ })).toHaveCount(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
     await page.getByRole('button', { name: '🧑‍🎓 Open Students' }).click();
@@ -1005,7 +1005,7 @@ test.describe('course page', () => {
       correct: 8, total: 10, score: 80, answers: [], date: t, submittedAt: t, timeSeconds: 300, timeDisplay: '05:00' });
     await prepare(context, seed);
     const errors = watchErrors(page);
-    await page.goto('/course.html');
+    await page.goto('/ieltsjourney.html');
     await page.waitForFunction(() => (window.__allResults || []).some(r => r.code === 'LSOLD1'), null, { timeout: 10000 });
     expect(await page.evaluate(() => { const e = Object.assign({}, taSkillsLinks()['g2|listening|e1']); delete e.rosterSig; delete e.prevJson; delete e.groupOnline; return e; })).toEqual({ code: 'LSE001', alsoCodes: ['LSOLD1'] });
     const r = await page.evaluate(() => {
@@ -1029,7 +1029,7 @@ test.describe('course page', () => {
     const g = await page.evaluate(() => { saveGroup('g1', 'Target', {}, 'Elementary'); return getStudentGroups()[0]; });
     expect(g).toMatchObject({ id: 'g1', name: 'Target', level: 'Elementary' });
     expect(await page.evaluate(() => getWeeklySchedule().length)).toBe(0);
-    await page.goto('/course.html');
+    await page.goto('/ieltsjourney.html');
     await page.waitForTimeout(800);
     await expect(page.locator('.sk-gcard .sk-level-chip')).toHaveText('Elementary');
     await expect(page.locator('.sk-gcard .sk-teach')).toHaveText('▶ Teach STEP 11');
@@ -1164,7 +1164,7 @@ test.describe('results', () => {
     await page.waitForTimeout(500);
     await hideNotices(page);
     await page.addStyleTag({ content: '#taNoticeStack { display: none !important; }' });
-    if (/course\.html/.test(url)) await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();   // Target's page
+    if (/ieltsjourney\.html/.test(url)) await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();   // Target's page
     return errors;
   };
 
@@ -1199,7 +1199,7 @@ test.describe('results', () => {
   });
 
   test('the path: a dot is done when half of the group has done it; Speaking when its link was sent; a step with all four shows ✓ (old level-1 keys and results = Step 11)', async ({ page, context }) => {
-    const errors = await open(page, context, '/course.html');
+    const errors = await open(page, context, '/ieltsjourney.html');
     const row1 = page.locator('.sk-row').nth(10);
     const dot = k => row1.locator('.sk-dot[data-skill="' + k + '"]');
     // Target has 3 students: Listening and Reading 3 of 3, Writing 2 of 3 (Alice, Cora) — half or more → done
@@ -1227,7 +1227,7 @@ test.describe('results', () => {
     const docsLess = docs().filter(d => !(d.code === 'WRT001' && d.studentId === '10003'));   // Writing: only Alice → 1 of 3
     await prepare(context, { docs: docsLess, storage: { ta_recent_exercises: JSON.stringify(items()), ta_skills_links: links(), ta_course_group: 'g1' } });
     const errors = watchErrors(page);
-    await page.goto('/course.html');
+    await page.goto('/ieltsjourney.html');
     await page.waitForFunction(() => (window.__allResults || []).length >= 9, null, { timeout: 10000 });
     await page.evaluate(() => skOpenGroup('g1'));
     const dot = k => page.locator('.sk-row').nth(10).locator('.sk-dot[data-skill="' + k + '"]');
@@ -1241,7 +1241,7 @@ test.describe('results', () => {
   });
 
   test('results table: ranking with ties, missing skills, colours, picture', async ({ page, context }) => {
-    const errors = await open(page, context, '/course.html', { ta_skills_marks: JSON.stringify({ 'WRT001|10003': 6 }) });
+    const errors = await open(page, context, '/ieltsjourney.html', { ta_skills_marks: JSON.stringify({ 'WRT001|10003': 6 }) });
     // Step 12 has no results: a friendly empty state, no picture button
     await page.locator('.sk-node[data-step="e2"]').click();
     await expect(page.locator('.sk-results-empty')).toContainText('No results yet');
@@ -1323,7 +1323,7 @@ test.describe('results', () => {
   });
 
   test('"Delete all results": Results and the results table agree — a page opened before the reset and sent after it shows in both', async ({ page, context }) => {
-    const errors = await open(page, context, '/course.html', { ta_code_resets: '{}' });
+    const errors = await open(page, context, '/ieltsjourney.html', { ta_code_resets: '{}' });
     const cut = await page.evaluate(() => { const iso = new Date(Date.now() - 30 * 60000).toISOString(); setLocalReset('LSN001', iso); return iso; });
     const before = new Date(Date.parse(cut) - 10 * 60000).toISOString(), now = new Date().toISOString();
     await page.evaluate(([now]) => window.__studentSubmits({ v: 1, code: 'LSN001', type: 'Listening course', skill: 'listening', level: 1, title: 'Level 1',
@@ -1342,7 +1342,7 @@ test.describe('results', () => {
   });
 
   test('a fake result can\'t set any band: Listening/Reading bands come from correct / total, writing bands stay 1–9', async ({ page, context }) => {
-    const errors = await open(page, context, '/course.html', { ta_skills_marks: JSON.stringify({ 'WRT001|10003': 42 }) });
+    const errors = await open(page, context, '/ieltsjourney.html', { ta_skills_marks: JSON.stringify({ 'WRT001|10003': 42 }) });
     await page.evaluate(() => {
       const base = { v: 1, level: 1, title: 'Level 1', answers: [], timeSeconds: 60, timeDisplay: '01:00', date: new Date().toISOString() };
       window.__studentSubmits(Object.assign({}, base, { code: 'LSN001', type: 'Listening course', skill: 'listening', name: 'Alice Test', studentId: '10001', correct: 2, total: 10, score: 20, band: 99 }));
@@ -1395,7 +1395,7 @@ test.describe('results', () => {
   });
 
   test('the Course page loads a step\'s results by itself, even when its My Exercises item was deleted', async ({ page, context }) => {
-    const errors = await open(page, context, '/course.html', { ta_recent_exercises: JSON.stringify(items().filter(i => i.skill !== 'reading')) });
+    const errors = await open(page, context, '/ieltsjourney.html', { ta_recent_exercises: JSON.stringify(items().filter(i => i.skill !== 'reading')) });
     expect(await page.evaluate(() => window.__allResults.filter(r => r.code === 'RDG001').length)).toBe(3);
     await page.locator('.sk-node[data-step="e1"]').click();
     await expect(page.locator('.sk-rt-row').first().locator('.sk-rt-cell').nth(1)).toContainText('15 / 15');
@@ -1403,7 +1403,7 @@ test.describe('results', () => {
   });
 
   test('the results table fits a phone: it scrolls inside its own box', async ({ page, context }) => {
-    const errors = await open(page, context, '/course.html');
+    const errors = await open(page, context, '/ieltsjourney.html');
     await page.setViewportSize({ width: 390, height: 800 });
     await expect(page.locator('.sk-row')).toHaveCount(20);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);

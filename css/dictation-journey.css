@@ -1,0 +1,33 @@
+/* ================= DICTATION JOURNEY — the teacher's side (dictationjourney.html, js/pages/dictation.js) =================
+   Split out of css/style.css on 2026-11-23 (rules keep their order). Shared with the other journeys: css/journeys.css. */
+#dictationWrap .dct-row { position: relative; }
+#dictationWrap .dct-open { all: unset; cursor: pointer; min-width: 0; color: var(--ink); }
+#dictationWrap .dct-open::after { content: ''; position: absolute; inset: 0; border-radius: 12px; }
+#dictationWrap .dct-open:focus-visible::after { outline: 3px solid var(--brand); outline-offset: -3px; }
+#dictationWrap .dct-row:hover { background: rgba(20,24,31,0.035); }
+#dictationWrap .dct-row:hover .dct-open b { text-decoration: underline; text-underline-offset: 3px; }
+#dictationWrap .dct-skips-cell { display: flex; align-items: center; gap: 4px; font-weight: 700; color: var(--ink-soft); }
+#dictationWrap .dct-skips-icon { font-size: .85rem; }
+@media (max-width: 640px) {
+  #dictationWrap .dct-skips-cell { grid-area: k; justify-content: flex-end; }
+}
+.ta-modal .dct-transcript { margin: 4px 0 10px; font-size: 1.25rem; line-height: 1.7; color: var(--ink); overflow-wrap: anywhere; }
+.ta-modal .dct-transcript-note { margin: 0; font-size: .85rem; font-weight: 600; color: var(--ink-soft); }
+.ta-modal .dct-view-sum { margin: 0 0 6px; font-weight: 600; color: var(--ink); }
+.ta-modal .dct-view-key { margin: 0 0 12px; font-size: .85rem; color: var(--ink-soft); }
+.ta-modal .dct-sents { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; max-height: 58vh; overflow-y: auto; }
+.ta-modal .dct-sent { padding: 10px 12px; border-radius: 14px; border: 1px solid var(--border); border-left: 4px solid var(--air-moss, var(--c-green)); background: rgba(255,255,255,0.7); }
+.ta-modal .dct-sent.wrong { border-left-color: #D69E2E; }
+.ta-modal .dct-sent.skipped { border-left-color: var(--air-red, var(--c-red)); }
+.ta-modal .dct-sent.none { border-left-color: var(--border); }
+.ta-modal .dct-sent-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-size: .85rem; font-weight: 700; color: var(--ink-soft); }
+.ta-modal .dct-sent-no { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: rgba(20,24,31,0.07); color: var(--ink); font-size: .8rem; }
+.ta-modal .dct-first, .ta-modal .dct-right { margin: 4px 0 0; line-height: 1.6; color: var(--ink); overflow-wrap: anywhere; }
+.ta-modal .dct-first small, .ta-modal .dct-right small { display: block; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); }
+.ta-modal .dct-right { color: var(--ink-soft); }
+.ta-modal .dct-sent.ok .dct-right { color: var(--ink); }
+.ta-modal .dct-mark.wrong { color: var(--air-red, var(--c-red)); text-decoration: line-through; text-decoration-thickness: 2px; }
+.ta-modal .dct-want { color: var(--air-moss, var(--c-green)); font-weight: 700; }
+.ta-modal .dct-mark.missing { padding: 0 4px; border-radius: 6px; border: 1.5px dashed #D69E2E; color: #8A5A10; font-weight: 600; }
+.ta-modal .dct-mark.extra { color: var(--ink-soft); text-decoration: line-through; }
+.ta-modal .dct-nothing { font-style: italic; color: var(--ink-soft); }

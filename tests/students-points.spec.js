@@ -10,6 +10,11 @@ async function open(page, file) {
   await hideNotices(page);
   await page.addStyleTag({ content: '#taNoticeStack { display: none !important; }' }); // notes that come later
 }
+// the IELTS Journey's page with the Grammar Journey's scripts added (as the app does in the background) — 2026-11-23
+async function openJourneys(page) {
+  await open(page, 'ieltsjourney.html');
+  await page.evaluate(() => taLoadPage('grammarjourney.html'));
+}
 const schedule = page => page.evaluate(() => getWeeklySchedule());
 
 test('the menu has one "Students & Points" section; the old Points address lands there', async ({ page, context }) => {
@@ -236,7 +241,7 @@ test('a result sent with an old ID stays with the student: Results (not in Didn\
   const row = page.locator('.results-table tbody tr', { hasText: 'Cora Test' });
   await expect(row.locator('.res-id-tag')).toContainText('ID 10003');
   await expect(page.locator('.missing-student', { hasText: 'Cora Test' })).toHaveCount(0);
-  await page.goto('/course.html');
+  await openJourneys(page);
   await page.waitForFunction(() => (window.__allResults || []).some(r => r.code === 'GRM111'), null, { timeout: 10000 });
   expect(await page.evaluate(() => skTableRows('b1', 'g1').map(r => [r.name, !!r.listening]))).toEqual([['Cora Test', true]]);
   const course = await page.evaluate(() => {
@@ -284,7 +289,7 @@ test('the class lists follow an ID change by themselves: Grammar and a Skills Co
   const docs = data.results(Date.now()).concat([classRec('LST102', { prev: '{"skill":"listening","stepNo":1,"codes":["LST101"]}', group: 'Target' })]);
   await prepare(context, { docs, storage: { ta_skills_links: JSON.stringify(links), ta_grammar_links: JSON.stringify({ g1: { code: 'GRM111', sentAt: nowIso() } }) } });
   const errors = watchErrors(page);
-  await open(page, 'course.html');
+  await openJourneys(page);
   const list = code => page.evaluate(c => { const d = window.__fakeDocs.find(x => x.__id === 'class-' + c); return d ? { h: JSON.parse(d.data).map(e => e.h), n: JSON.parse(d.data).map(e => e.n), prev: d.prev ? JSON.parse(d.prev) : null, group: d.group || '' } : null; }, code);
   const hash = (code, id) => page.evaluate(([c, i]) => skClassHash(c, i), [code, id]);
   // links copied before have no rosterSig: they go online once by themselves
@@ -327,7 +332,7 @@ test('the class lists follow an ID change by themselves: Grammar and a Skills Co
 test('the lists wait until sync has brought the Students list: nothing is published before, it is once sync is ready', async ({ page, context }) => {
   const links = { 'g1|listening|b1': { code: 'LST101', sentAt: nowIso() } };
   await prepare(context, { storage: { ta_skills_links: JSON.stringify(links), ta_grammar_links: JSON.stringify({ g1: { code: 'GRM111', sentAt: nowIso() } }) } });
-  await open(page, 'course.html');
+  await openJourneys(page);
   await expect.poll(() => page.evaluate(() => !!JSON.parse(localStorage.getItem('ta_skills_links'))['g1|listening|b1'].rosterSig), { timeout: 10000 }).toBe(true);
   await expect.poll(() => page.evaluate(() => !!JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toBe(true);
   const classWrites = () => page.evaluate(() => window.__writes.filter(w => /^class-/.test(w.id)).length);
@@ -356,7 +361,7 @@ test('putting a list online again drops any old "earlier part" (2026-11-23); the
   const docs = data.results(Date.now()).concat([classRec('LST103', { group: 'Target' }), classRec('RDG102', { prev: cross, group: 'Target' }), classRec('LST102')]);
   await prepare(context, { docs, storage: { ta_skills_links: JSON.stringify(links) } });
   const errors = watchErrors(page);
-  await open(page, 'course.html');
+  await openJourneys(page);
   // put online once (no rosterSig yet), with what was online
   await expect.poll(() => page.evaluate(() => Object.values(JSON.parse(localStorage.getItem('ta_skills_links'))).every(e => e.rosterSig)), { timeout: 10000 }).toBe(true);
   const check = async (n, group) => {

@@ -15,7 +15,7 @@ async function openStep(page, context, docs, links) {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await prepare(context, { docs, storage: { ta_skills_links: JSON.stringify(links), ta_course_group: 'g1' } });
   const errors = watchErrors(page);
-  await page.goto('/course.html');
+  await page.goto('/ieltsjourney.html');
   await page.waitForFunction(n => (window.__allResults || []).length >= n, docs.length, { timeout: 10000 });
   await hideNotices(page);
   await page.addStyleTag({ content: '#taNoticeStack { display: none !important; }' });

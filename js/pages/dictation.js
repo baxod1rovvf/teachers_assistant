@@ -11,10 +11,12 @@
      over a full one).
    - Results (type 'Dictation course', js/dictation-player.js): only a student's first run counts (the earliest by date); the
      group is the student's group on the Students list now.
-   The view lives in skView.dictation ({ level, item }) — course.js's renderCourse draws it instead of the cards.
+   The view lives in dcView ({ level, item } or null = the levels) — renderDictationJourney draws it. Its own page since 2026-11-23:
+   dictationjourney.html (#dictationWrap).
    Shares jrFirstTries / jrMissing / jrUnlisted / jrDoneCount / jrFilterHtml / jrMissingHtml / jrUnlistedHtml / jrCopyText with
-   js/pages/grammar.js (loaded first). Loaded after course.js (course.html): when the Course page already shows, it draws it again. */
+   the Grammar Journey — in js/pages/journey-shared.js (loaded first). */
 const DC_LINKS_KEY = 'ta_dictation_links';
+let dcView = null;   // the open level / dictation (not remembered)
 let dcFilter = 'all';   // the dictation page's group filter: 'all' or a group id (not remembered)
 
 function dcLevels() { return (window.TA_DICTATION && TA_DICTATION.levels) || []; }
@@ -143,13 +145,11 @@ function dcJourneyHtml() {
       '<button type="button" class="gr-level-open gr-level-name" onclick="dcOpenLevel(' + jsAttr(lv.id) + ')">' + escapeForHtml(lv.name) + '</button>' +
       '<span class="gr-level-sub">' + (ready < items.length ? ready + ' ready · ' : '') + items.length + ' dictations · ' + sent + ' sent</span></article>';
   }).join('');
-  return '<section class="dct-journey" aria-label="Dictation Journey">' +
-    '<div class="sk-results-head"><h3>✍️ Dictation Journey</h3></div>' +
-    '<p class="sk-hint">One link per dictation — send the same link to every group. Students hear one sentence at a time, write it and fix their mistakes.</p>' +
+  return jrBackToCourseHtml() + '<section class="dct-journey" aria-label="Dictation Journey">' +
     '<div class="gr-levels">' + cards + '</div></section>';
 }
 function dcPageHtml() {
-  const v = skView.dictation || {};
+  const v = dcView || {};
   const d = v.item ? dcItem(v.item) : null;
   if (d) return dcItemHtml(d);
   const lv = dcLevel(v.level);
@@ -165,7 +165,7 @@ function dcItemBtns(d) {
 }
 function dcLevelHtml(lv) {
   const links = dcLinks(), map = skResultsMap(lv.items.map(d => dcCode(d.id, links)));   // one reading for every row
-  return '<button type="button" class="back-to-picker-btn" onclick="dcOpenLevel(\'\')">← Course</button>' +
+  return '<button type="button" class="back-to-picker-btn" onclick="dcOpenLevel(\'\')">← Dictation Journey</button>' +
     '<div class="gr-page-head"><h3>✍️ Dictation Journey · ' + escapeForHtml(lv.name) + '</h3>' +
     '<p class="sk-hint">Press a dictation to see its results. ▶ Play and 📄 Transcript are for the class; 🔗 Copy link gives one link that works for every group.</p></div>' +
     '<ol class="gr-lessons dct-items">' + lv.items.map(d => {
@@ -259,7 +259,7 @@ function dcViewResult(itemId, studentId) {
 
 /* ---- buttons ---- */
 function dcCopyMissing(groupId) {
-  const d = dcItem((skView.dictation || {}).item), g = getStudentGroups().find(x => x.id === groupId);
+  const d = dcItem((dcView || {}).item), g = getStudentGroups().find(x => x.id === groupId);
   if (!d || !g) return;
   jrCopyMissing(dcTitle(d), g, dcMissingRows(d.id, g.id));
 }
@@ -289,27 +289,40 @@ function dcCopyLink(itemId) {
     });
   }
   jrCopyText(url, '🔗 Link copied — send it to every group. It always works.', '🔗 The link for ' + dcTitle(d));
-  renderCourse();
+  renderDictationJourney();
 }
 function dcOpenLevel(id) {
-  skView = { group: '', tab: 'journey', step: '', grammar: null, dictation: id && dcLevel(id) ? { level: id, item: '' } : null };
-  renderCourse();
+  dcView = id && dcLevel(id) ? { level: id, item: '' } : null;
+  renderDictationJourney();
   if (id) window.scrollTo({ top: 0, behavior: 'smooth' });
   else setTimeout(() => skCourseShownScroll('.dct-journey'), 60);   // back where the teacher was
 }
 function dcOpenItem(id) {
-  const cur = skView.dictation || {}, d = id ? dcItem(id) : null;
+  const cur = dcView || {}, d = id ? dcItem(id) : null;
   const lv = d ? dcLevelOf(d.id) : dcLevel(cur.level);
-  skView = { group: '', tab: 'journey', step: '', grammar: null, dictation: lv ? { level: lv.id, item: d ? d.id : '' } : null };
-  renderCourse();
+  dcView = lv ? { level: lv.id, item: d ? d.id : '' } : null;
+  renderDictationJourney();
   if (!d && cur.item) setTimeout(() => skCourseShownScroll('.dct-item[data-item="' + cur.item + '"]'), 60);
   else window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function dcSetFilter(id) {
   dcFilter = id && id !== 'all' && getStudentGroups().some(g => g.id === id) ? id : 'all';
-  renderCourse();
+  renderDictationJourney();
 }
 Object.assign(window, { dcLinks, dcSaveLinks, dcCopyLink, dcRefreshLists, dcTableRows, dcMissingRows, dcUnlistedRows, dcCopyMissing,
   dcTry, dcPlay, dcStop, dcTranscript, dcViewResult, dcOpenLevel, dcOpenItem, dcSetFilter, dcJourneyHtml, dcPageHtml, dcEnsureCode });
-// loaded after course.js: the Course page may already be drawn without this section
-if (typeof renderCourse === 'function' && typeof skCourseShown === 'function' && skCourseShown()) renderCourse();
+/* ---- the page (dictationjourney.html) ---- */
+function renderDictationJourney() {
+  const wrap = document.getElementById('dictationWrap');
+  if (!wrap) return;
+  dcRefreshLists();   // the class lists follow the Students list
+  const page = dcView ? dcPageHtml() : '';
+  if (!page) dcView = null;
+  wrap.innerHTML = page || dcJourneyHtml();
+}
+jrOnResultsChanged(() => { if (jrShown('dictationWrap')) renderDictationJourney(); });
+window.addEventListener('storage', e => { if (e.key && /ta_dictation_links|ta_student_groups|ta_points_roster/.test(e.key) && jrShown('dictationWrap')) renderDictationJourney(); });
+window.renderDictationJourney = renderDictationJourney;
+dcRefreshLists();   // loaded on any page (opened, or in the background): stale class lists go online again
+taOnTab('dictationjourney', renderDictationJourney);
+taStartPage('dictationjourney');

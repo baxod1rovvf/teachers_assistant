@@ -57,6 +57,10 @@ const TA_PAGES = {
   createpicker: 'create.html',
   dashboard: 'statistics.html',
   course: 'course.html',
+  // the Course's three journeys (2026-11-23: one page each; the top bar's 🗺️ Course stays lit on them)
+  ieltsjourney: 'ieltsjourney.html',
+  grammarjourney: 'grammarjourney.html',
+  dictationjourney: 'dictationjourney.html',
   myexercises: 'my-exercises.html',
   students: 'students.html',
   results: 'results.html',
@@ -82,6 +86,9 @@ const MASTHEAD_COPY = {
   createpicker: { eyebrow: "➕ Create", title: "Pick an exercise type", sub: "Ready to use, in process, or merge a few together — everything starts here." },
   hwcbuilder: { eyebrow: "📚 Homework & Class", title: "Build your set", sub: "Pick exercises from My Exercises, put them in order, then generate one combined file." },
   main: { eyebrow: "🎓 Loom", title: "Welcome back", sub: "Everything you need to build, share, and track classroom exercises." },
+  ieltsjourney: { eyebrow: "🎯 IELTS Journey", title: "IELTS Journey", sub: "Your groups on the 20 steps." },
+  grammarjourney: { eyebrow: "📚 Grammar Journey", title: "Grammar Journey", sub: "One link per lesson for every group." },
+  dictationjourney: { eyebrow: "✍️ Dictation Journey", title: "Dictation Journey", sub: "One link per dictation for every group." },
   course: { eyebrow: "🗺️ Course", title: "Skills course", sub: "Your groups on the 20 steps. Open a group to teach its next step, send each part's link and see how every student is doing." },
   dashboard: { eyebrow: "📊 Statistics", title: "Your classroom at a glance", sub: "Each exercise type's last 7 days, and today compared with yesterday." },
   myexercises: { eyebrow: "📁 My Exercises", title: "Everything you've built", sub: "Every exercise you've created — reopen it to make a new version, jump to its results, or turn off its points." },
@@ -195,6 +202,7 @@ function taConfettiBurst(x, y, count) {
 }
 
 let currentActiveTab = 'main';
+const TA_JOURNEY_TABS = ['ieltsjourney', 'grammarjourney', 'dictationjourney'];
 // Phones and small tablets (860px and narrower): the top bar's sections become a tab bar at the bottom.
 const TA_PHONE_MQ = window.matchMedia ? window.matchMedia('(max-width: 860px)') : { matches: false };
 function taIsPhone() { return TA_PHONE_MQ.matches; }
@@ -234,6 +242,7 @@ function switchTo(tab) {
     document.querySelectorAll('[data-tab="createpicker"]').forEach(b => b.classList.add('active'));
   }
   if (tab === 'results') document.querySelectorAll('.tb-tab[data-tab="myexercises"]').forEach(b => b.classList.add('active'));
+  if (TA_JOURNEY_TABS.includes(tab)) document.querySelectorAll('.tb-tab[data-tab="course"]').forEach(b => b.classList.add('active'));
   taMoveTabBlob(taStarted);
 
   if (TA_TAB_HOOKS[tab]) TA_TAB_HOOKS[tab]();
@@ -329,6 +338,18 @@ async function taLoadPageNow(file) {
   Array.from(doc.body.children).forEach(el => {
     if (el.id && el.tagName !== 'SCRIPT' && !document.getElementById(el.id)) document.body.appendChild(document.importNode(el, true));
   });
+  // the section's own stylesheets (the Course's journeys have one each, 2026-11-23) — before its panels show
+  const haveCss = new Set(Array.from(document.querySelectorAll('link[rel="stylesheet"]')).map(l => l.href));
+  await Promise.all(Array.from(doc.querySelectorAll('head link[rel="stylesheet"][href]')).map(l => {
+    const href = new URL(l.getAttribute('href'), location.href).href;
+    if (haveCss.has(href)) return null;
+    return new Promise(resolve => {
+      const el = document.createElement('link');
+      el.rel = 'stylesheet'; el.href = href;
+      el.onload = el.onerror = resolve;
+      document.head.appendChild(el);
+    });
+  }));
   const have = new Set(Array.from(document.scripts).map(sc => sc.src));
   for (const sc of doc.querySelectorAll('script[src]:not([type="module"])')) {
     const src = new URL(sc.getAttribute('src'), location.href).href;
@@ -3833,7 +3854,8 @@ document.addEventListener('keydown', e => {
 const TA_TAB_LABELS = {
   main: ['🎓', 'Dashboard'], createpicker: ['➕', 'Create'], dashboard: ['📊', 'Statistics'],
   myexercises: ['📁', 'My Exercises'], students: ['👥', 'Students & Points'], results: ['📋', 'Results'],
-  settings: ['⚙️', 'Settings'], course: ['🗺️', 'Course'],
+  settings: ['⚙️', 'Settings'], course: ['🗺️', 'Course'], ieltsjourney: ['🎯', 'IELTS Journey'], grammarjourney: ['📚', 'Grammar Journey'],
+  dictationjourney: ['✍️', 'Dictation Journey'],
   flashcard: ['🎴', 'Flashcard'], wordorder: ['🧩', 'Word Order'], makeaword: ['🧱', 'Make a Word'],
   spelling: ['🔤', 'Spelling'], canknock: ['🥫', 'Can Knockdown'], cargame: ['🚗', 'Car Game'], sentences: ['✍️', 'Sentences'], bilingual: ['📖', 'Bidirectional Language'],
   engcontent: ['🎬', 'English Content'], dictation: ['🎧', 'Dictation'], jungle: ['🌴', 'Jungle'], bamboozle: ['🎯', 'Bamboozle'], presentation: ['🖥️', 'Presentation'],

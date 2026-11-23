@@ -49,7 +49,7 @@ async function openCourse(page, context, opts) {
   const docs = opts.docs || [];
   await prepare(context, { docs, storage });
   const errors = watchErrors(page);
-  await page.goto('/course.html');
+  await page.goto('/dictationjourney.html');
   if (docs.length) await page.waitForFunction(n => (window.__allResults || []).length >= n, docs.filter(d => d.code === 'DCT111').length, { timeout: 10000 });
   await hideNotices(page);
   await page.addStyleTag({ content: '#taNoticeStack { display: none !important; }' });
@@ -65,19 +65,14 @@ async function openD1(page) {
   await expect(page.locator('.dct-page')).toBeVisible();
 }
 
-test('the Dictation Journey sits after the Grammar Journey: 5 levels of 20 dictations', async ({ page, context }) => {
+test('the Dictation Journey has its own page (dictationjourney.html): 5 levels of 20 dictations', async ({ page, context }) => {
   const errors = await openCourse(page, context, { links: LINKS });
-  const order = await page.evaluate(() => {
-    const gj = document.querySelector('#courseWrap .gr-journey'), dj = document.querySelector('#courseWrap .dct-journey');
-    return !!gj && !!dj && !!(gj.compareDocumentPosition(dj) & Node.DOCUMENT_POSITION_FOLLOWING);
-  });
-  expect(order).toBe(true);
-  await expect(page.locator('.dct-journey h3').first()).toHaveText('✍️ Dictation Journey');
+  await expect(page.locator('#panel-dictationjourney .card-head h2')).toHaveText('✍️ Dictation Journey');
+  await expect(page.locator('#dictationWrap .dct-journey')).toBeVisible();
+  await expect(page.locator('.gr-journey')).toHaveCount(0);   // the Grammar Journey is on its own page
   await expect(page.locator('.dct-level')).toHaveCount(5);
   await expect(page.locator('.dct-level[data-level="beginner"] .gr-level-sub')).toHaveText('20 dictations · 1 sent');
   await expect(page.locator('.dct-level[data-level="advanced"] .gr-level-sub')).toHaveText('20 dictations · 0 sent');
-  // the Grammar Journey's own counts are untouched
-  await expect(page.locator('.gr-level')).toHaveCount(7);
   await openLevel(page);
   await expect(page.locator('.dct-item')).toHaveCount(20);
   expect(await page.locator('.dct-item').evaluateAll(els => els.map(e => e.dataset.item))).toEqual(await page.evaluate(() => window.TA_DICTATION.levels[0].items.map(i => i.id)));
@@ -88,7 +83,7 @@ test('the Dictation Journey sits after the Grammar Journey: 5 levels of 20 dicta
   for (const name of ['▶ Play', '📄 Transcript', '🔗 Copy link', '▶️ Try']) {
     await expect(page.locator('.dct-item[data-item="d17"]').getByRole('button', { name, exact: true })).toBeVisible();
   }
-  await page.getByRole('button', { name: '← Course' }).click();
+  await page.getByRole('button', { name: '← Dictation Journey' }).click();
   await expect(page.locator('.dct-journey')).toBeVisible();
   expect(errors).toEqual([]);
 });

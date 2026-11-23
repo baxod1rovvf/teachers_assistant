@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Journey — Loom</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#101116">
+<link rel="icon" href="images/app/favicon-ta-64.png" type="image/png">
+<link rel="apple-touch-icon" href="images/app/icon-ta-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Loom">
+<!-- Shared by every page: accounts must load first (it scopes this browser's storage to the signed-in teacher). -->
+<script src="js/accounts.js?v=20261123h"></script>
+<script src="js/i18n.js?v=20261123h"></script>
+<script src="js/sync.js?v=20261123h"></script>
+<script src="js/lottie.min.js?v=20261123h"></script>
+<link rel="stylesheet" href="css/style.css?v=20261123h">
+<link rel="stylesheet" href="css/icons.css?v=20261123h">
+<link rel="stylesheet" href="css/journeys.css?v=20261123h">
+<link rel="stylesheet" href="css/ielts-journey.css?v=20261123h">
+</head>
+<body>
+
+<div class="welcome-splash" id="welcomeSplashOverlay">
+  <div class="welcome-splash-anim" id="welcomeSplashAnim">👋</div>
+  <div class="login-center">
+    <div class="login-stage">
+      <div class="login-stage-visual">
+        <div class="login-stage-anim" id="loginStageAnim">🔐</div>
+      </div>
+      <div class="login-stage-form">
+        <form class="login-card" id="taLoginForm" onsubmit="taSubmitLogin(event)" novalidate>
+          <div class="login-brand" translate="no"><span class="brand-tile"><img src="images/app/logo-mark.png" alt=""></span><span class="brand-name"><b>loom</b></span></div>
+          <h2>Sign in</h2>
+          <p class="login-sub">Your students, results and exercises stay in your own account.</p>
+          <label class="login-field"><span>Login</span>
+            <input type="text" id="taLoginUser" autocomplete="username" autocapitalize="characters" spellcheck="false" required>
+          </label>
+          <label class="login-field"><span>Password</span>
+            <input type="password" id="taLoginPass" autocomplete="current-password" required>
+          </label>
+          <label class="login-remember"><input type="checkbox" id="taLoginRemember"> Keep me signed in on this device</label>
+          <div class="login-error" id="taLoginError" role="alert"></div>
+          <button class="login-submit" type="submit" id="taLoginBtn">Sign in</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="app-shell">
+  <div class="main-content">
+<div class="wrap">
+  <div class="masthead">
+    <div class="masthead-text">
+      <h1 id="mastheadTitle">Build exercises in minutes</h1>
+      <p id="mastheadSubtitle">Type your content, hit create, and a ready-to-use interactive exercise downloads straight to your computer — no coding required.</p>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-ieltsjourney">
+    <div class="card-head">
+      <h2>🎯 IELTS Journey</h2>
+      <p>Your groups on the 20 steps — Listening, Reading, Writing and Speaking: open a group to teach its next step, send links and see each student's progress.</p>
+    </div>
+    <div id="ieltsWrap"><div class="empty-results">Loading…</div></div>
+  </div>
+
+</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="ai-robot-widget" id="aiRobotWidget" title="Ask the assistant">
+  <button type="button" class="ai-robot-anim" id="aiRobotAnim" aria-label="Ask Loom AI" title="Ask Loom AI"><i class="lc lc-bot" aria-hidden="true"></i></button>
+  <div class="ai-robot-bubble" id="aiRobotBubble">
+    <div class="ai-robot-bubble-tail"></div>
+    <div class="ai-robot-bubble-head">
+      <div class="ai-robot-bubble-title"><i class="lc lc-bot" aria-hidden="true"></i> Ask me something</div>
+      <button type="button" class="ai-robot-bubble-close" onclick="closeAiRobotBubble()" aria-label="Close" title="Close"><i class="lc lc-x" aria-hidden="true"></i></button>
+    </div>
+    <div class="ai-robot-bubble-body" id="aiRobotBubbleBody"></div>
+  </div>
+</div>
+
+<div class="wheel-winner-modal" id="sentenceViewModal">
+  <div class="wheel-winner-card" style="max-width:560px; width:92vw; text-align:left;">
+    <div id="sentenceViewTitle" style="font-family:'Space Grotesk',sans-serif; font-weight: 700; font-size:1.1rem; margin-bottom:14px;"></div>
+    <div id="sentenceViewBody" style="max-height:56vh; overflow-y:auto; display:flex; flex-direction:column; gap:10px;"></div>
+    <div style="display:flex; justify-content:flex-end; margin-top:14px;">
+      <button class="mini-btn" type="button" onclick="closeSentenceViewModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="points-modal-backdrop" id="settingsModalBackdrop" onclick="if(event.target===this) closeSettingsModal();">
+  <div class="points-modal">
+    <button class="points-modal-close" type="button" onclick="closeSettingsModal()">✕</button>
+    <div class="points-modal-title">⚙️ Additional Settings</div>
+    <div id="settingsModalBody"></div>
+  </div>
+</div>
+
+<div class="points-modal-backdrop" id="lessonPlanModalBackdrop" onclick="if(event.target===this) closeLessonPlanModal();">
+  <div class="points-modal" style="max-width:560px;">
+    <button class="points-modal-close" type="button" onclick="closeLessonPlanModal()">✕</button>
+    <div class="points-modal-title" id="lessonPlanModalTitle">📝 Lesson Plan</div>
+    <div id="lessonPlanModalBody"></div>
+  </div>
+</div>
+
+<script src="js/animations.js?v=20261123h"></script>
+<script src="js/skill-bands.js?v=20261123h"></script>
+<script src="js/common.js?v=20261123h"></script>
+<script src="js/skills-data.js?v=20261123h"></script>
+<script src="js/pages/journey-shared.js?v=20261123h"></script>
+<script src="js/pages/ielts-journey.js?v=20261123h"></script>
+<script src="js/pages/telegram.js?v=20261123h"></script>
+<script type="module" src="js/firebase.js?v=20261123h"></script>
+</body>
+</html>

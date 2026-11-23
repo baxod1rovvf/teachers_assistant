@@ -2,7 +2,7 @@
 const { test, expect } = require('@playwright/test');
 const { prepare, watchErrors, hideNotices } = require('./support/app');
 
-const PAGES = ['index.html', 'create.html', 'course.html', 'statistics.html', 'my-exercises.html', 'students.html', 'results.html', 'settings.html'];
+const PAGES = ['index.html', 'create.html', 'course.html', 'ieltsjourney.html', 'grammarjourney.html', 'dictationjourney.html', 'statistics.html', 'my-exercises.html', 'students.html', 'results.html', 'settings.html'];
 
 for (const file of PAGES) {
   test(`${file} opens without errors`, async ({ page, context }) => {
@@ -25,6 +25,35 @@ test('the top bar opens each section without reloading', async ({ page, context 
     await page.evaluate(t => switchTo(t), tab);
     await expect(page.locator(panel)).toHaveClass(/active/, { timeout: 5000 });
   }
+  expect(errors).toEqual([]);
+});
+
+// The Course is three cards since 2026-11-23 (teacher: "separate every journey"): each opens its journey's own page in place
+// (no reload), with its own stylesheet, and the top bar's 🗺️ Course stays lit.
+test('Course: three cards open the IELTS, Grammar and Dictation journeys in place, each with its own styles', async ({ page, context }) => {
+  await prepare(context);
+  const errors = watchErrors(page);
+  await page.goto('/index.html');
+  await page.waitForTimeout(1200);
+  await hideNotices(page);
+  await page.evaluate(() => { window.__noReload = true; });
+  await page.locator('.tb-tab[data-tab="course"]').click();
+  await expect(page.locator('#panel-course')).toHaveClass(/active/);
+  await expect(page.locator('.cr-card .cr-name')).toHaveText(['IELTS Journey', 'Grammar Journey', 'Dictation Journey']);
+  await expect(page.locator('.cr-card[data-journey="ieltsjourney"] .cr-line')).toHaveText(/^\d+ groups?$/);
+  for (const [tab, wrap, css, check] of [['ieltsjourney', '#ieltsWrap', 'ielts-journey.css', '.sk-cards'], ['grammarjourney', '#grammarWrap', 'grammar-journey.css', '.gr-level'],
+    ['dictationjourney', '#dictationWrap', 'dictation-journey.css', '.dct-level']]) {
+    await page.evaluate(() => taNavigate('course.html'));
+    await page.locator('.cr-card[data-journey="' + tab + '"]').click();
+    await expect(page.locator('#panel-' + tab)).toHaveClass(/active/);
+    await expect(page.locator(wrap + ' ' + check).first()).toBeVisible();
+    await expect(page.locator('.tb-tab[data-tab="course"]')).toHaveClass(/active/);
+    expect(await page.evaluate(c => [...document.querySelectorAll('link[rel="stylesheet"]')].some(l => l.href.includes('/css/' + c)), css)).toBe(true);
+    // the journey's own look is there (journeys.css + its file)
+    if (tab !== 'ieltsjourney') expect(await page.locator(wrap + ' .gr-levels').evaluate(e => getComputedStyle(e).display)).toBe('grid');
+    else expect(await page.locator('.sk-gcard').first().evaluate(e => getComputedStyle(e).borderTopLeftRadius)).not.toBe('0px');
+  }
+  expect(await page.evaluate(() => window.__noReload)).toBe(true);   // never a full page load
   expect(errors).toEqual([]);
 });
 

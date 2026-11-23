@@ -214,7 +214,7 @@ test('teacher: Set up Telegram makes a connect code and puts the group\'s plan o
     return route.fulfill({ status: 200, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify(b.job === 'tg-status' ? { connected: false, bot: 'loom_class_bot' } : { ok: true, bot: 'loom_class_bot' }) });
   });
-  await page.goto('/course.html');
+  await page.goto('/ieltsjourney.html');
   await hideNotices(page);
   await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();
   const box = page.locator('.tg-box');
@@ -311,7 +311,7 @@ test('teacher: ➕ Add puts a repeating message and a course link into the group
     return route.fulfill({ status: 200, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify(b.job === 'tg-status' ? { connected: true, title: 'Target chat', bot: 'loom_class_bot' } : { ok: true }) });
   });
-  await page.goto('/course.html');
+  await page.goto('/ieltsjourney.html');
   await hideNotices(page);
   await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();
   const box = page.locator('.tg-box');

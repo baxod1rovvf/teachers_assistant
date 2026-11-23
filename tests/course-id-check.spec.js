@@ -104,7 +104,7 @@ test('Ha when already done → "already done"; Ha on the next step opens it, the
 test('Copy link puts the group\'s name on the list', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await prepare(context, { storage: { ta_course_group: 'g1' } });
-  await page.goto('/course.html');
+  await page.goto('/ieltsjourney.html');
   await hideNotices(page);
   await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();
   await page.locator('.sk-node[data-step="b1"]').click();
@@ -124,7 +124,7 @@ test('a list whose entries carry their own group → Bu sizmi shows that student
 
 test('taPublishClassList stores each student\'s group as g', async ({ page, context }) => {
   await prepare(context);
-  await page.goto('/course.html');
+  await page.goto('/ieltsjourney.html');
   await page.waitForFunction(() => typeof window.taPublishClassList === 'function');
   const ok = await page.evaluate(() => window.taPublishClassList('LSN778', [{ id: '10001', name: 'Alice', groupName: 'Apex' }, { id: '10002', name: 'Bobur' }]));
   expect(ok).toBe(true);

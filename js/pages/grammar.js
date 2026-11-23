@@ -1,5 +1,5 @@
 /* ================= GRAMMAR JOURNEY — the teacher's side (2026-11-16) =================
-   A section on the Course page, under the group cards: 7 levels (TA_GRAMMAR, js/grammar-data.js — Beginner, Elementary and
+   Its own page since 2026-11-23: grammarjourney.html (#grammarWrap; shared helpers in js/pages/journey-shared.js): 7 levels (TA_GRAMMAR, js/grammar-data.js — Beginner, Elementary and
    Pre-Intermediate have lessons now, the others say "Coming soon"). A level opens its lessons; a lesson opens its page: ▶️ Try, 🔗 Copy link, a group
    filter (All · each group), the results table and "🚫 Not finished".
    - One link per lesson for every group: skill.html?s=grammar&gl=<lesson id>&c=<code> (taGrammarLink in common.js).
@@ -9,8 +9,9 @@
    - Results (type 'Grammar course'): only a student's first try counts (the earliest by date). A result's group is the
      student's group on the Students list now (matched by ID — taIdKey); a result from an ID that isn't on the list is shown
      under "❓ Not on your Students list".
-   The view lives in skView.grammar ({ level, lesson }) — course.js's renderCourse draws it instead of the cards. */
+   The view lives in grView ({ level, lesson } or null = the levels) — renderGrammarJourney draws it. */
 const GR_LINKS_KEY = 'ta_grammar_links';
+let grView = null;   // the open level / lesson (not remembered)
 let grFilter = 'all';   // the lesson page's group filter: 'all' or a group id (not remembered)
 
 function grLevels() { return (window.TA_GRAMMAR && TA_GRAMMAR.levels) || []; }
@@ -30,17 +31,6 @@ function grSaveLinks(v) {
   try { localStorage.setItem(GR_LINKS_KEY, JSON.stringify(v || {})); return true; } catch (e) { return false; }
 }
 function grCode(lessonId, links) { const e = (links || grLinks())[lessonId]; return e && typeof e === 'object' && e.code ? String(e.code) : ''; }
-/* every code this teacher already uses — a new lesson code is never one of them (skills links, lessons, My Exercises) */
-function grUsedCodes() {
-  const used = new Set();
-  const add = v => { if (v && typeof v === 'object') [v.code].concat(Array.isArray(v.alsoCodes) ? v.alsoCodes : []).forEach(c => { if (c) used.add(String(c)); }); };
-  try { Object.values(taSkillsLinks()).forEach(add); } catch (e) { /* ignore */ }
-  try { Object.values(JSON.parse(localStorage.getItem('ta_skills_links') || '{}') || {}).forEach(add); } catch (e) { /* ignore */ }
-  Object.values(grLinks()).forEach(add);
-  try { Object.values(JSON.parse(localStorage.getItem('ta_dictation_links') || '{}') || {}).forEach(add); } catch (e) { /* ignore */ }
-  try { (getRecentExercises() || []).forEach(add); } catch (e) { /* ignore */ }
-  return used;
-}
 /* The lesson's code: made at the first Copy link, the same one after that (a sent link must keep working). */
 function grEnsureCode(lessonId) {
   const l = grLesson(lessonId);
@@ -57,64 +47,7 @@ function grEnsureCode(lessonId) {
   return code;
 }
 
-/* ---- the class list: every student who is in a group, with the group's name ---- */
-function grClassStudents() {
-  const names = {};
-  getStudentGroups().forEach(g => { names[g.id] = g.name; });
-  // one entry per ID: a student whose ID was changed (✎ on the Students page) can start with the old one too
-  return taClassListEntries(getPointsRoster().filter(s => s && names[s.group] !== undefined)
-    .map(s => ({ id: s.id, oldIds: s.oldIds, name: s.name, groupName: names[s.group] })));
-}
-/* the Students list as it goes online (IDs, names, groups) — when it changes, the lists must be put online again */
-function grRosterSig() {
-  return grClassStudents().map(s => taIdKey(s.id) + '|' + String(s.name || '').trim() + '|' + s.groupName).sort().join('\n');
-}
 
-/* ---- the class lists follow the Students list (2026-11-16): a student added (or renamed, or moved) after Copy link can start
-   without pressing Copy link again. Runs when the Course page draws and when sync/another tab changes the roster or groups.
-   At most one run per 5 s (window[o.msVar] in tests), never two at once; a failed publish keeps the old rosterSig, so the next run retries.
-   jrMakeRefresher is shared with the Dictation Journey (js/pages/dictation.js): o = { links(), save(v), msVar, retryVar } —
-   links() = { <id>: { code, rosterSig } }, every list holds every student with a group (grClassStudents). ---- */
-function jrMakeRefresher(o) {
-  let busy = false, again = false, last = 0, timer = 0, retryTimer = 0, failStreak = 0, sigBusy = false;
-  const code = id => { const e = o.links()[id]; return e && typeof e === 'object' && e.code ? String(e.code) : ''; };
-  return function refresh() {
-    if (sigBusy) return;
-    if (window.taSync && typeof window.taSync.ready === 'function' && !window.taSync.ready()) return;   // sync hasn't brought the Students list yet — it calls us once ready
-    if (typeof window.taPublishClassList !== 'function') return;   // Firebase is still loading — the next draw tries again
-    if (busy) { again = true; return; }
-    const wait = (window[o.msVar] !== undefined ? window[o.msVar] : 5000) - (Date.now() - last);
-    if (wait > 0) { if (!timer) timer = setTimeout(() => { timer = 0; refresh(); }, wait); return; }
-    sigBusy = true;   // getStudentGroups can save (and so call us again) while we work out the signature
-    let sig, students;
-    try { students = grClassStudents(); sig = grRosterSig(); } finally { sigBusy = false; }
-    const links = o.links();
-    const stale = Object.keys(links).filter(id => { const e = links[id]; return e && typeof e === 'object' && e.code && e.rosterSig !== sig; });
-    if (!stale.length) return;
-    /* an empty roster while a list was published before = most likely a device whose Students list hasn't synced yet:
-       an empty list would delete the class list and let any ID in — wait instead */
-    if (!students.length && stale.some(id => links[id].rosterSig)) return;
-    busy = true; last = Date.now();
-    let failed = false;
-    (async () => {
-      for (const id of stale) {
-        const c = code(id);
-        let ok = false;
-        try { ok = await window.taPublishClassList(c, students); } catch (e) { ok = false; }
-        if (!ok) { failed = true; continue; }
-        const now = o.links();   // read again: sync may have changed it while we waited
-        if (now[id] && now[id].code === c) { now[id].rosterSig = sig; o.save(now); }
-      }
-    })().catch(() => {}).then(() => {
-      busy = false;
-      if (!failed) failStreak = 0;
-      else if (++failStreak <= 3 && !retryTimer) {   // one delayed retry per failure, 3 attempts at most
-        retryTimer = setTimeout(() => { retryTimer = 0; refresh(); }, window[o.retryVar] !== undefined ? window[o.retryVar] : 30000);
-      }
-      if (again) { again = false; refresh(); }
-    });
-  };
-}
 const grRefresher = jrMakeRefresher({ links: grLinks, save: grSaveLinks, msVar: '__grRefreshMs', retryVar: '__grRetryMs' });
 function grRefreshLists() { grRefresher(); }
 window.addEventListener('storage', e => { if (e.key && /ta_points_roster|ta_student_groups/.test(e.key)) grRefreshLists(); });
@@ -123,93 +56,6 @@ window.addEventListener('storage', e => { if (e.key && /ta_points_roster|ta_stud
 function grResults(lessonId, links, map) {
   const code = grCode(lessonId, links);
   return code ? ((map || skResultsMap([code]))[code] || []) : [];
-}
-function grStudentKey(st) { return String(st.id).trim().toLowerCase(); }
-function grNum(v) { const n = Number(v); return isFinite(n) ? n : null; }
-/* ---- shared with the Dictation Journey: a list of results → each roster student's first try, who hasn't done it, who isn't listed ---- */
-/* each roster student's first try (the earliest date) — [{ st, r }], only students of groupId ('all' / '' → everyone) */
-function jrFirstTries(list, groupId) {
-  const idx = taRosterIndex(), first = {};
-  (list || []).forEach(r => {
-    const st = rosterStudentForResult(r, idx);
-    if (!st) return;
-    if (groupId && groupId !== 'all' && st.group !== groupId) return;
-    const key = grStudentKey(st), cur = first[key];
-    if (!cur || String(r.date || '') < String(cur.r.date || '')) first[key] = { st: st, r: r };
-  });
-  return Object.values(first);
-}
-/* the group's students (Students list) with no result in the list; 'all' → everyone in a group */
-function jrMissing(list, groupId) {
-  const idx = taRosterIndex(), done = new Set();
-  (list || []).forEach(r => { const st = rosterStudentForResult(r, idx); if (st) done.add(grStudentKey(st)); });
-  const names = {};
-  getStudentGroups().forEach(g => { names[g.id] = g.name; });
-  return getPointsRoster().filter(s => s && names[s.group] !== undefined && (!groupId || groupId === 'all' || s.group === groupId) && !done.has(grStudentKey(s)))
-    .map(s => ({ name: s.name, id: s.id, group: names[s.group], groupId: s.group }))
-    .sort((a, b) => a.name.localeCompare(b.name));
-}
-/* answers from an ID that isn't on the Students list — one row per typed ID (else name) */
-function jrUnlisted(list) {
-  const idx = taRosterIndex(), by = {}, fixed = new Set();
-  list = list || [];
-  list.forEach(r => { if (r && r.correctedFrom) fixed.add(r.correctedFrom); });
-  list.forEach(r => {
-    if (rosterStudentForResult(r, idx) || fixed.has(r.__id)) return;
-    const key = taIdKey(r.studentId) || 'name:' + String(r.name || '').trim().toLowerCase();
-    if (key === 'name:' || by[key]) return;
-    by[key] = { name: String(r.name || '').trim(), id: String(r.studentId || '').trim() };
-  });
-  return Object.values(by).sort((a, b) => a.name.localeCompare(b.name));
-}
-/* how many students have done it (anyone with a result, on the list or not) */
-function jrDoneCount(list) {
-  const seen = new Set(), idx = taRosterIndex();
-  (list || []).forEach(r => {
-    const st = rosterStudentForResult(r, idx);   // one student, whichever of their IDs (now or before) they typed
-    const k = st ? 'roster:' + grStudentKey(st) : (taIdKey(r.studentId) || String(r.name || '').trim().toLowerCase());
-    if (k) seen.add(k);
-  });
-  return seen.size;
-}
-/* places: 1 + how many rows are better (equal ones share a place) */
-function jrPlaces(rows, better) { rows.forEach(row => { row.place = 1 + rows.filter(o => better(o, row)).length; }); return rows; }
-/* copies text; when the browser won't, shows it in a window to copy by hand */
-function jrCopyText(text, msg, title, rows) {
-  const show = () => taModal(title, rows ? '<textarea class="ta-input" readonly rows="' + rows + '" aria-label="The list">' + escapeForHtml(text) + '</textarea>'
-    : '<input type="text" class="ta-input" readonly value="' + escapeForHtml(text) + '" aria-label="The link">');
-  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(() => showToast(msg, 'ok'), show);
-  else show();
-}
-/* the group filter chips (All · each group); onPick = the global function's name */
-function jrFilterHtml(active, onPick) {
-  const chip = (id, label) => '<button type="button" class="gr-chip' + (active === id ? ' active' : '') + '" aria-pressed="' + (active === id) + '" onclick="' + onPick + '(' + jsAttr(id) + ')"' + (id === 'all' ? '' : ' translate="no"') + '>' + escapeForHtml(label) + '</button>';
-  return '<div class="gr-filter" role="group" aria-label="Show a group">' + chip('all', 'All') + getStudentGroups().map(x => chip(x.id, x.name)).join('') + '</div>';
-}
-/* "🚫 Not finished — <group>" with 📋 Copy list (onCopy = the global function's name, given the group id) */
-function jrMissingHtml(rows, g, onCopy, doneText) {
-  const gName = '<span translate="no">' + escapeForHtml(g.name) + '</span>';
-  return '<section class="sk-missing gr-missing" data-group="' + escapeForHtml(g.id) + '" aria-label="Not finished — ' + escapeForHtml(g.name) + '">' +
-    '<div class="sk-results-head"><h3>🚫 Not finished — ' + gName + ' (' + rows.length + ')</h3>' +
-    (rows.length ? '<button type="button" class="mini-btn solid" onclick="' + onCopy + '(' + jsAttr(g.id) + ')">📋 Copy list</button>' : '') + '</div>' +
-    (rows.length ? '<ol class="sk-missing-list">' + rows.map(r => '<li><b translate="no">' + escapeForHtml(r.name) + '</b></li>').join('') + '</ol>'
-      : '<div class="sk-results-empty"><span class="sk-results-empty-emoji">🎉</span><div><b>Everyone has finished</b><span>Every student in ' + gName + ' ' + doneText + '</span></div></div>') +
-    '</section>';
-}
-function jrUnlistedHtml(odd) {
-  if (!odd.length) return '';
-  return '<section class="sk-unlisted gr-unlisted" aria-label="Not on your Students list">' +
-    '<div class="sk-results-head"><h3>❓ Not on your Students list (' + odd.length + ')</h3></div>' +
-    '<ol class="sk-missing-list">' + odd.map(r => '<li><b translate="no">' + escapeForHtml(r.name || '—') + '</b> <small>ID ' + escapeForHtml(r.id || '—') + '</small></li>').join('') + '</ol>' +
-    '<p class="sk-hint sk-results-note">These answers came with an ID that isn\'t on the Students list, so they count for nobody. A new student: add them to their group with this ID. ' +
-    'A wrong ID: change the student\'s ID on the Students page, or tell them their right ID.</p></section>';
-}
-/* "📋 Copy list" text: "<title> — Apex / Not finished yet: / 1. Name" */
-function jrCopyMissing(title, g, rows) {
-  if (!rows.length) { showToast('🎉 Everyone has finished — nothing to copy.'); return; }
-  const text = [title + ' — ' + g.name, 'Not finished yet:'].concat(rows.map((r, i) => (i + 1) + '. ' + r.name)).join('\n');
-  jrCopyText(text, '📋 Copied — ' + rows.length + (rows.length === 1 ? ' student' : ' students') + '. Paste it into ' + g.name + '\'s chat.',
-    '📋 Not finished — ' + g.name, Math.min(14, rows.length + 3));
 }
 
 /* the table: each student's first try (earliest date), with their group now; ranked by correct, then the shorter time */
@@ -229,12 +75,6 @@ function grTableRows(lessonId, groupId) {
 function grMissingRows(lessonId, groupId) { return jrMissing(grResults(lessonId), groupId); }
 function grUnlistedRows(lessonId) { return jrUnlisted(grResults(lessonId)); }
 function grDoneCount(lessonId, links, map) { return jrDoneCount(grResults(lessonId, links, map)); }
-function grTimeText(seconds) {
-  const s = Number(seconds);
-  if (!(s > 0)) return '—';
-  const m = Math.max(1, Math.round(s / 60));
-  return m >= 60 ? Math.floor(m / 60) + ' h ' + String(m % 60).padStart(2, '0') + ' min' : m + ' min';
-}
 
 /* ---- the section under the group cards ---- */
 function grJourneyHtml() {
@@ -251,13 +91,11 @@ function grJourneyHtml() {
       '<button type="button" class="gr-level-open gr-level-name" onclick="grOpenLevel(' + jsAttr(lv.id) + ')">' + escapeForHtml(lv.name) + '</button>' +
       '<span class="gr-level-sub">' + lessons.length + ' lessons · ' + sent + ' sent</span></article>';
   }).join('');
-  return '<section class="gr-journey" aria-label="Grammar Journey">' +
-    '<div class="sk-results-head"><h3>📚 Grammar Journey</h3></div>' +
-    '<p class="sk-hint">One link per lesson — send the same link to every group. Students learn, practise, then take a 20-question test.</p>' +
+  return jrBackToCourseHtml() + '<section class="gr-journey" aria-label="Grammar Journey">' +
     '<div class="gr-levels">' + cards + '</div></section>';
 }
 function grPageHtml() {
-  const v = skView.grammar || {};
+  const v = grView || {};
   const l = v.lesson ? grLesson(v.lesson) : null;
   if (l) return grLessonHtml(l);
   const lv = grLevel(v.level);
@@ -269,7 +107,7 @@ function grLessonBtns(l) {
 }
 function grLevelHtml(lv) {
   const links = grLinks(), map = skResultsMap(lv.lessons.map(l => grCode(l.id, links)));   // one reading for every row
-  return '<button type="button" class="back-to-picker-btn" onclick="grOpenLevel(\'\')">← Course</button>' +
+  return '<button type="button" class="back-to-picker-btn" onclick="grOpenLevel(\'\')">← Grammar Journey</button>' +
     '<div class="gr-page-head"><h3>📚 Grammar Journey · ' + escapeForHtml(lv.name) + '</h3>' +
     '<p class="sk-hint">Press a lesson to see its results. 🔗 Copy link gives one link that works for every group.</p></div>' +
     '<ol class="gr-lessons">' + lv.lessons.map(l => {
@@ -283,7 +121,7 @@ function grLevelHtml(lv) {
 function grLessonHtml(l) {
   const lv = grLevelOf(l.id), links = grLinks(), sent = !!grCode(l.id, links), groups = getStudentGroups();
   if (grFilter !== 'all' && !groups.some(g => g.id === grFilter)) grFilter = 'all';
-  const head = '<button type="button" class="back-to-picker-btn" onclick="grOpenLesson(\'\')">← Grammar Journey</button>' +
+  const head = '<button type="button" class="back-to-picker-btn" onclick="grOpenLesson(\'\')">← ' + escapeForHtml(lv ? lv.name : 'Grammar Journey') + '</button>' +
     '<div class="gr-page-head"><h3>' + escapeForHtml(grTitle(l)) + '</h3>' +
     '<p class="sk-hint">' + escapeForHtml(lv ? lv.name : '') + ' · ' + (l.chunks || []).length + ' rules to learn, then a 20-question test. Only the first test counts here.</p>' +
     '<div class="sk-tile-btns">' + grLessonBtns(l) + '</div></div>';
@@ -324,7 +162,7 @@ function grUnlistedHtml(l) { return jrUnlistedHtml(grUnlistedRows(l.id)); }
 /* ---- buttons ---- */
 /* 📋 Copy list: "Lesson 1 · To Be … — Apex / Not finished yet: / 1. Name" */
 function grCopyMissing(groupId) {
-  const l = grLesson((skView.grammar || {}).lesson), g = getStudentGroups().find(x => x.id === groupId);
+  const l = grLesson((grView || {}).lesson), g = getStudentGroups().find(x => x.id === groupId);
   if (!l || !g) return;
   jrCopyMissing(grTitle(l), g, grMissingRows(l.id, g.id));
 }
@@ -354,25 +192,40 @@ function grCopyLink(lessonId) {
     });
   }
   jrCopyText(url, '🔗 Link copied — send it to every group. It always works.', '🔗 The link for ' + grTitle(l));
-  renderCourse();
+  renderGrammarJourney();
 }
 function grOpenLevel(id) {
-  skView = { group: '', tab: 'journey', step: '', grammar: id && grLevel(id) ? { level: id, lesson: '' } : null };
-  renderCourse();
+  grView = id && grLevel(id) ? { level: id, lesson: '' } : null;
+  renderGrammarJourney();
   if (id) window.scrollTo({ top: 0, behavior: 'smooth' });
   else setTimeout(() => skCourseShownScroll('.gr-journey'), 60);   // back where the teacher was
 }
 function grOpenLesson(id) {
-  const cur = skView.grammar || {}, l = id ? grLesson(id) : null;
+  const cur = grView || {}, l = id ? grLesson(id) : null;
   const lv = l ? grLevelOf(l.id) : grLevel(cur.level);
-  skView = { group: '', tab: 'journey', step: '', grammar: lv ? { level: lv.id, lesson: l ? l.id : '' } : null };
-  renderCourse();
+  grView = lv ? { level: lv.id, lesson: l ? l.id : '' } : null;
+  renderGrammarJourney();
   if (!l && cur.lesson) setTimeout(() => skCourseShownScroll('.gr-lesson[data-lesson="' + cur.lesson + '"]'), 60);
   else window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function grSetFilter(id) {
   grFilter = id && id !== 'all' && getStudentGroups().some(g => g.id === id) ? id : 'all';
-  renderCourse();
+  renderGrammarJourney();
 }
-Object.assign(window, { grLinks, grSaveLinks, grRosterSig, grClassStudents, grCopyLink, grOpenLevel, grOpenLesson, grSetFilter,
+/* ---- the page (grammarjourney.html) ---- */
+function renderGrammarJourney() {
+  const wrap = document.getElementById('grammarWrap');
+  if (!wrap) return;
+  grRefreshLists();   // the class lists follow the Students list
+  const page = grView ? grPageHtml() : '';
+  if (!page) grView = null;
+  wrap.innerHTML = page || grJourneyHtml();
+}
+jrOnResultsChanged(() => { if (jrShown('grammarWrap')) renderGrammarJourney(); });
+window.addEventListener('storage', e => { if (e.key && /ta_grammar_links|ta_student_groups|ta_points_roster/.test(e.key) && jrShown('grammarWrap')) renderGrammarJourney(); });
+grRefreshLists();   // loaded on any page (opened, or in the background): stale class lists go online again
+taOnTab('grammarjourney', renderGrammarJourney);
+taStartPage('grammarjourney');
+
+Object.assign(window, { renderGrammarJourney, grLinks, grSaveLinks, grRosterSig, grClassStudents, grCopyLink, grOpenLevel, grOpenLesson, grSetFilter,
   grTableRows, grMissingRows, grUnlistedRows, grCopyMissing, grTry, grJourneyHtml, grEnsureCode, grRefreshLists });
