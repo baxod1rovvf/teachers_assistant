@@ -572,6 +572,21 @@ real students' names or results into the repository (it is public).
   there. My Exercises' buttons use `MYEX_EMOJI`; emojis that sit inside buttons are drawn from `data-emo` (`::before`) so the
   button's text stays its words. The old pictures are still in `images/icons/` (unused). Exercise files (student side) are
   unchanged. `tests/pages.spec.js` ("top bar: …"), `tests/my-exercises.spec.js`.
+- **The Course is four pages (teacher, 2026-11-23: "Course is a html file including three journeys. It is too big so separate every
+  journey")**: `course.html` = three cards only (`js/pages/course.js` — new, `renderCourseHub`, `.cr-card`, `css/course.css`): 🎯 IELTS
+  Journey → `ieltsjourney.html` (`#ieltsWrap`, tab `ieltsjourney`, **`js/pages/ielts-journey.js` = the former js/pages/course.js** — wherever
+  the notes below say course.js / renderCourse / #courseWrap for the skills course, read ielts-journey.js / renderCourse / #ieltsWrap; +
+  telegram.js, `css/ielts-journey.css`), 📚 Grammar Journey → `grammarjourney.html` (`#grammarWrap`, `renderGrammarJourney`, view in `grView`,
+  `css/grammar-journey.css` — empty for now: everything Grammar draws is shared with Dictation), ✍️ Dictation Journey → `dictationjourney.html`
+  (`#dictationWrap`, `renderDictationJourney`, view in `dcView`, `css/dictation-journey.css`). Shared: `js/pages/journey-shared.js`
+  (`skResultsMap`, `skPlaceText`, `skShortDate`, `skCourseShownScroll`, `grUsedCodes`, `grClassStudents`, `grRosterSig`, `jrMakeRefresher`,
+  the `jr*` lists, `jrShown`, `jrBackToCourseHtml`; `taCourseResultsChanged` calls every page's redraw added with `jrOnResultsChanged`) and
+  `css/journeys.css`. Each journey's first view has "← Course"; Grammar/Dictation levels "← Grammar/Dictation Journey", a lesson/dictation
+  "← <level name>". The top bar's 🗺️ Course stays lit on the three (`TA_JOURNEY_TABS`); quick search lists them. **`taLoadPageNow` now also
+  adds a section's own stylesheets** (waits for them) when it opens in place. grammar.js / dictation.js refresh their class lists as soon as
+  they load (any page). The CSS was moved out of css/style.css by a script (rules whose classes only the journeys use, in their order); after
+  it every computed style in every view matched the old one, except four bold words' `font-family: 'Fredoka'`, dropped because
+  `body.loom-studio *` (same weight, later) always beat it. `tests/pages.spec.js` ("Course: three cards …").
 - **Skills Course (2026-11-04, teacher: replace the old Course with four skills)**: the old lesson Course (Block 1 lessons, slide
   editor, Teach mode, handouts, exam marks, `audio/course/`, `js/course-data.js`, `js/course-slides.js`, `ta_course_*`) is deleted.
   `course.html` + `js/pages/course.js`, tab `course` 🗺️. **Since 2026-11-05 (teacher) it opens on group cards** (`skCardsHtml`, one per
