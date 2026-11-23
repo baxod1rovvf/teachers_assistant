@@ -74,7 +74,9 @@ test('the day\'s message: new results with bands, and who still has to finish (o
   const sentAt = '2026-11-20T09:00:00Z';
   const plan = { group: 'Target', parts: [
     { label: 'Step 5 · Listening', codes: ['LSN555'], sentAt }, { label: 'Step 5 · Reading', codes: ['RDG555'], sentAt },
-    { label: 'Step 5 · Writing', codes: ['WRT555'], sentAt }, { label: 'Step 1 · Reading', codes: ['RDG111'], sentAt: '2026-10-01T09:00:00Z' } ] };
+    { label: 'Step 5 · Writing', codes: ['WRT555'], sentAt }, { label: 'Step 1 · Reading', codes: ['RDG111'], sentAt: '2026-10-01T09:00:00Z' } ],
+    links: [{ label: 'Step 5', url: 'https://baxod1rovvf.github.io/teachers_assistant/results-link.html?r=0123456789abcdef', sentAt },
+      { label: 'Step 1', url: 'https://baxod1rovvf.github.io/teachers_assistant/results-link.html?r=fedcba9876543210', sentAt: '2026-10-01T09:00:00Z' }] };
   const m = await w.tgBuildMessage(env, plan, Date.parse('2026-11-22T14:00:00Z'), now);
   expect(m.text).toContain('<b>Target</b>');
   // new since yesterday: Alice's Listening (under her old ID, shown with her listed name) and her writing (the AI's band); Bobur's
@@ -88,6 +90,9 @@ test('the day\'s message: new results with bands, and who still has to finish (o
   expect(m.text).toMatch(/\d\. Alice Test — Step 5 · Reading/);
   expect(m.text.match(/Alice Test — Step 5 · Reading/g)).toHaveLength(1);
   expect(m.text).not.toContain('Step 1 · Reading');
+  // the results link of each step sent in the last 7 days
+  expect(m.text).toContain('📊 <b>Results</b>\nStep 5: https://baxod1rovvf.github.io/teachers_assistant/results-link.html?r=0123456789abcdef');
+  expect(m.text).not.toContain('fedcba9876543210');
   // nothing sent in the last 7 days → no message
   expect(await w.tgBuildMessage(env, { group: 'Target', parts: [plan.parts[3]] }, 0, now)).toEqual({ empty: true });
 });
@@ -95,7 +100,8 @@ test('the day\'s message: new results with bands, and who still has to finish (o
 test('the timer posts once a day at the group\'s hour, only into a connected chat; /connect needs Telegram\'s secret', async () => {
   const w = await load();
   const hash = await w.tgPlanHash('abcd2345');
-  const docs = { ['tg-' + hash]: { type: 'TA_SYNC:TG', title: hash, data: JSON.stringify({ v: 1, group: 'Target', hour: 19, on: true,
+  // 2026-11-23 is a Monday (1): it posts on Mondays and Wednesdays only
+  const docs = { ['tg-' + hash]: { type: 'TA_SYNC:TG', title: hash, data: JSON.stringify({ v: 1, group: 'Target', hour: 19, on: true, days: [1, 3],
     parts: [{ label: 'Step 5 · Reading', codes: ['RDG555'], sentAt: '2026-11-22T09:00:00Z' }] }) },
     'class-RDG555': { type: 'TA_SYNC:CLASS', data: JSON.stringify([{ h: await w.tgClassHash('RDG555', '10003'), n: 'Cora Test' }]) } };
   stubNet(docs);
@@ -123,9 +129,12 @@ test('the timer posts once a day at the group\'s hour, only into a connected cha
   expect(posts).toHaveLength(1);
   expect(posts[0].body.chat_id).toBe(-1001);
   expect(posts[0].body.text).toContain('1. Cora Test — Step 5 · Reading');
-  // switched off in Loom → nothing the next day
-  docs['tg-' + hash].data = JSON.stringify(Object.assign(JSON.parse(docs['tg-' + hash].data), { on: false }));
+  // Tuesday isn't a chosen day; Wednesday is
   expect((await w.runTelegram(env, at('19:03') + 86400000)).sent).toBe(0);
+  expect((await w.runTelegram(env, at('19:03') + 2 * 86400000)).sent).toBe(1);
+  // switched off in Loom → nothing the next Monday
+  docs['tg-' + hash].data = JSON.stringify(Object.assign(JSON.parse(docs['tg-' + hash].data), { on: false }));
+  expect((await w.runTelegram(env, at('19:03') + 7 * 86400000)).sent).toBe(0);
 });
 
 test('teacher: Set up Telegram makes a connect code and puts the group\'s plan online — the code itself never goes online', async ({ page, context }) => {
@@ -134,7 +143,7 @@ test('teacher: Set up Telegram makes a connect code and puts the group\'s plan o
   const links = { 'g1|reading|b5': { code: 'RDG555', sentAt: iso(2) }, 'g1|listening|b5': { code: 'LSN555', sentAt: iso(3) },
     'g1|writing|b1': { code: 'WRT111', sentAt: iso(40) }, 'g2|reading|b5': { code: 'RDG556', sentAt: iso(1) } };
   await prepare(context, { storage: { ta_skills_links: JSON.stringify(links), ta_course_group: 'g1' } });
-  await context.addInitScript(() => { window.__tgSyncMs = 0; localStorage.setItem('ta_ai_url', 'https://loom-ai.test/'); });
+  await context.addInitScript(() => { window.__tgSyncMs = 0; window.skAppUrl = 'https://baxod1rovvf.github.io/teachers_assistant/'; localStorage.setItem('ta_ai_url', 'https://loom-ai.test/'); });
   const asked = [];
   await context.route('https://loom-ai.test/**', async route => {
     if (route.request().method() === 'OPTIONS') return route.fulfill({ status: 204, headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*' } });
@@ -156,10 +165,22 @@ test('teacher: Set up Telegram makes a connect code and puts the group\'s plan o
   await expect.poll(plan).not.toBeNull();
   const p = await plan();
   expect(p.type).toBe('TA_SYNC:TG');
-  expect(p.data).toMatchObject({ group: 'Target', hour: 19, on: true });
+  expect(p.data).toMatchObject({ group: 'Target', hour: 19, on: true, days: [1, 2, 3, 4, 5, 6] });   // Monday–Saturday to start with
   // only this group's parts sent in the last 21 days, in step order
   expect(p.data.parts.map(x => [x.label, x.codes])).toEqual([['Step 5 · Listening', ['LSN555']], ['Step 5 · Reading', ['RDG555']]]);
+  // Step 5's results link, and its results page put online for it (the same token as "🔗 Share results link")
+  expect(p.data.links).toHaveLength(1);
+  expect(p.data.links[0]).toMatchObject({ label: 'Step 5' });
+  const token = p.data.links[0].url.split('?r=')[1];
+  expect(p.data.links[0].url).toBe('https://baxod1rovvf.github.io/teachers_assistant/results-link.html?r=' + token);
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skills_shares'))['g1|b5'])).toBe(token);
+  await expect.poll(() => page.evaluate(t => !!window.__fakeDocs.find(x => x.__id === 'share-' + t), token)).toBe(true);
   expect(JSON.stringify(await page.evaluate(() => window.__fakeDocs))).not.toContain(code);
+  // days: Saturday off, Sunday on
+  await box.getByRole('button', { name: 'Sa', exact: true }).click();
+  await page.locator('.tg-box').getByRole('button', { name: 'Su', exact: true }).click();
+  await expect.poll(async () => (await plan()).data.days).toEqual([0, 1, 2, 3, 4, 5]);
+  await expect(page.locator('.tg-box .tg-day.on')).toHaveText(['Mo', 'Tu', 'We', 'Th', 'Fr', 'Su']);
   // a new hour and Off → the plan goes online again
   await box.locator('.tg-hour').selectOption('17');
   await expect.poll(async () => (await plan()).data.hour).toBe(17);
@@ -171,5 +192,5 @@ test('teacher: Set up Telegram makes a connect code and puts the group\'s plan o
   await box.getByRole('button', { name: /Connect the bot/ }).click();
   await expect.poll(() => asked.some(b => b.job === 'tg-setup')).toBe(true);
   // the code is kept (synced) for the group
-  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_telegram')).g1)).toMatchObject({ code, hour: 17, on: false });
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_telegram')).g1)).toMatchObject({ code, hour: 17, on: false, days: [0, 1, 2, 3, 4, 5] });
 });

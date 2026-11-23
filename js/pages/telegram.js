@@ -10,6 +10,9 @@
 const LS_TELEGRAM = 'ta_telegram';
 const TG_HOURS = [15, 16, 17, 18, 19, 20, 21];
 const TG_PLAN_DAYS = 21;   // parts sent in the last 21 days go into the plan; the bot itself reminds about the last 7
+// the weekdays (JS: 0 = Sunday), shown Monday first; an entry without `days` posts every day (2026-11-23: "make be able to choose days")
+const TG_DAYS = [[1, 'Mo'], [2, 'Tu'], [3, 'We'], [4, 'Th'], [5, 'Fr'], [6, 'Sa'], [0, 'Su']];
+const tgDaysOf = e => (e && Array.isArray(e.days)) ? e.days : [0, 1, 2, 3, 4, 5, 6];
 
 function tgStore() { try { const v = JSON.parse(localStorage.getItem(LS_TELEGRAM) || '{}'); return v && typeof v === 'object' ? v : {}; } catch (e) { return {}; } }
 function tgSave(v) { try { localStorage.setItem(LS_TELEGRAM, JSON.stringify(v)); } catch (e) { /* ignore */ } if (typeof taStoreChanged === 'function') taStoreChanged(LS_TELEGRAM); }
@@ -36,7 +39,17 @@ function tgPlanFor(g, e) {
     parts.push({ label: 'Step ' + st.no + ' · ' + skill, codes: (typeof taSkillsEntryCodes === 'function' ? taSkillsEntryCodes(v) : [v.code]).slice(0, 5), sentAt: v.sentAt, n: st.no * 10 + ['listening', 'reading', 'writing'].indexOf(m[2]) });
   });
   parts.sort((a, b) => a.n - b.n);
-  return { v: 1, group: g.name, hour: e.hour, on: e.on !== false, parts: parts.map(p => ({ label: p.label, codes: p.codes, sentAt: p.sentAt })) };
+  // each step's results page (the same link as "🔗 Share results link"), with the step's newest sentAt
+  const base = window.skAppUrl || (/^https:/.test(TA_APP_URL) ? TA_APP_URL : '');
+  const steps = new Map();
+  parts.forEach(p => { const no = Math.floor(p.n / 10), x = steps.get(no); if (!x || p.sentAt > x.sentAt) steps.set(no, { no, sentAt: p.sentAt }); });
+  const results = base && typeof skShareToken === 'function' ? [...steps.values()].map(x => {
+    const st = skSteps().find(y => y.no === x.no);
+    return st ? { label: 'Step ' + x.no, step: st.id, url: base + 'results-link.html?r=' + skShareToken(g, st.id), sentAt: x.sentAt } : null;
+  }).filter(Boolean) : [];
+  return { v: 1, group: g.name, hour: e.hour, days: tgDaysOf(e).slice().sort(), on: e.on !== false,
+    parts: parts.map(p => ({ label: p.label, codes: p.codes, sentAt: p.sentAt })),
+    links: results.map(l => ({ label: l.label, url: l.url, sentAt: l.sentAt })), _steps: results.map(l => l.step) };
 }
 /* every group with Telegram on gets its plan online again when it changed (after sync has brought the data; 2 s debounce) */
 let tgSyncTimer = 0, tgSyncBusy = false;
@@ -53,11 +66,23 @@ async function tgSyncNow() {
     for (const g of getStudentGroups()) {
       const e = store[g.id];
       if (!e || !e.code) continue;
-      const plan = tgPlanFor(g, e), sig = JSON.stringify(plan);
-      if (e.sig === sig) continue;
-      if (await window.taPublishTgPlan(await tgHash(e.code), plan)) {
+      const plan = tgPlanFor(g, e), steps = plan._steps;
+      delete plan._steps;
+      const sig = JSON.stringify(plan);
+      if (e.sig !== sig && await window.taPublishTgPlan(await tgHash(e.code), plan)) {
         const now = tgStore();
         if (now[g.id] && now[g.id].code === e.code) { now[g.id].sig = sig; tgSave(now); }
+      }
+      // the results pages the message links to follow the results while Loom is open (only when a table changed: 2 writes)
+      if (e.on === false || typeof window.taPublishShare !== 'function' || typeof skShareData !== 'function') continue;
+      for (const step of steps) {
+        const data = skShareData(step, g), shareSig = JSON.stringify(Object.assign({}, data, { sharedAt: '' }));
+        const cur = tgStore()[g.id];
+        if (!cur || (cur.shares || {})[step] === shareSig) continue;
+        if (await window.taPublishShare(skShareToken(g, step), data)) {
+          const now = tgStore();
+          if (now[g.id] && now[g.id].code === e.code) { now[g.id].shares = Object.assign({}, now[g.id].shares, { [step]: shareSig }); tgSave(now); }
+        }
       }
     }
   } finally { tgSyncBusy = false; }
@@ -85,12 +110,14 @@ function skTgBoxHtml(g) {
     '<li><span>Once for all groups: connect the bot.</span> <button type="button" class="mini-btn" onclick="tgSetup()">🔌 Connect the bot</button> <span class="tg-bot" id="tgBot"></span></li>' +
     '<li><span>Add the bot to <span translate="no">' + escapeForHtml(g.name) + '</span>\'s Telegram chat and send there:</span> ' +
       '<code class="tg-code">/connect ' + escapeForHtml(e.code) + '</code> <button type="button" class="mini-btn" onclick="tgCopyConnect(' + jsAttr(g.id) + ')">📋 Copy</button></li>' +
-    '<li><label>Post every day at <select class="tg-hour" onchange="tgSetHour(' + jsAttr(g.id) + ', this.value)">' + hours + '</select></label> ' +
+    '<li><span>Post on</span> <span class="tg-days" role="group" aria-label="Days">' + TG_DAYS.map(([d, n]) =>
+      '<button type="button" class="tg-day' + (tgDaysOf(e).includes(d) ? ' on' : '') + '" aria-pressed="' + tgDaysOf(e).includes(d) + '" onclick="tgToggleDay(' + jsAttr(g.id) + ', ' + d + ')">' + n + '</button>').join('') + '</span> ' +
+      '<label>at <select class="tg-hour" onchange="tgSetHour(' + jsAttr(g.id) + ', this.value)">' + hours + '</select></label> ' +
       '<label class="tg-on"><input type="checkbox"' + (e.on !== false ? ' checked' : '') + ' onchange="tgSetOn(' + jsAttr(g.id) + ', this.checked)"> On</label></li>' +
     '</ol>' +
     '<div class="tg-actions"><button type="button" class="mini-btn" onclick="tgTest(' + jsAttr(g.id) + ')">📨 Send today\'s message now</button>' +
     '<button type="button" class="mini-btn danger" onclick="tgTurnOff(' + jsAttr(g.id) + ')">Stop Telegram</button></div>' +
-    '<p class="sk-hint tg-hint">It lists the Listening, Reading and Writing parts you sent this group in the last 7 days. Everyone in the chat sees the names.</p>' +
+    '<p class="sk-hint tg-hint">It lists the Listening, Reading and Writing parts you sent this group in the last 7 days, with each step\'s results link. Each group gets its own message — two groups can share one chat. Everyone in the chat sees the names.</p>' +
     '</section>';
 }
 /* the status line, asked from the helper after the page is drawn */
@@ -104,14 +131,15 @@ function tgRefreshStatus(groupId) {
     const el2 = document.getElementById('tgStatus'), bot = document.getElementById('tgBot');
     if (bot && r.bot) bot.textContent = '@' + r.bot;
     if (el2) {
-      el2.textContent = r.connected ? '🟢 Connected to “' + (r.title || 'the chat') + '” · daily at ' + e.hour + ':00' + (e.on === false ? ' (off)' : '') : '⚪ Not connected yet';
+      const days = tgDaysOf(e), when = days.length === 7 ? 'every day' : days.length ? TG_DAYS.filter(([d]) => days.includes(d)).map(([, n]) => n).join(' ') : 'no days chosen';
+      el2.textContent = r.connected ? '🟢 Connected to “' + (r.title || 'the chat') + '” · ' + when + ' at ' + e.hour + ':00' + (e.on === false ? ' (off)' : '') : '⚪ Not connected yet';
       el2.classList.toggle('ok', !!r.connected);
     }
   }).catch(err => { const el2 = document.getElementById('tgStatus'); if (el2) el2.textContent = '⚠️ ' + err.message; });
 }
 function tgTurnOn(groupId) {
   const s = tgStore();
-  s[groupId] = { code: tgNewCode(), hour: 19, on: true };
+  s[groupId] = { code: tgNewCode(), hour: 19, on: true, days: [1, 2, 3, 4, 5, 6] };   // Monday–Saturday to start with
   tgSave(s);
   skTgSyncSoon();
   renderCourse();
@@ -141,6 +169,15 @@ function tgSetOn(groupId, on) {
   s[groupId].on = !!on;
   tgSave(s); skTgSyncSoon(); tgRefreshStatus(groupId);
 }
+function tgToggleDay(groupId, d) {
+  const s = tgStore(), e = s[groupId];
+  if (!e) return;
+  const days = new Set(tgDaysOf(e));
+  if (days.has(d)) days.delete(d); else days.add(d);
+  e.days = [...days].sort();
+  tgSave(s); skTgSyncSoon();
+  renderCourse();
+}
 function tgCopyConnect(groupId) {
   const e = tgEntry(groupId);
   if (!e) return;
@@ -168,4 +205,4 @@ function tgTest(groupId) {
 window.skTgBoxHtml = skTgBoxHtml;
 window.skTgSyncSoon = skTgSyncSoon;
 window.tgRefreshStatus = tgRefreshStatus;
-Object.assign(window, { tgTurnOn, tgTurnOff, tgSetHour, tgSetOn, tgCopyConnect, tgSetup, tgTest, tgHash, tgPlanFor, tgSyncNow });
+Object.assign(window, { tgToggleDay, tgTurnOn, tgTurnOff, tgSetHour, tgSetOn, tgCopyConnect, tgSetup, tgTest, tgHash, tgPlanFor, tgSyncNow });

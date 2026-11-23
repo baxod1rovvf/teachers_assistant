@@ -2305,11 +2305,11 @@ html, body { overflow-x: clip; }
 .done-warn-ex { padding: 4px 10px; }
 .done-warn-check { padding: 7px 11px; }
 :where(.tb-brand, .tb-avatar, .lesson-warn-close, .myex-more, .myex-rename, .old-file-icon, .sp-icon-btn,
-  .myex-type-chip, .done-warn-check, .done-warn-all, .done-warn-results, .dash-manage-link, .mini-btn, .top-group-tab, button.sk-dot) {
+  .myex-type-chip, .done-warn-check, .done-warn-all, .done-warn-results, .dash-manage-link, .mini-btn, .top-group-tab, button.sk-dot, .tg-day) {
   position: relative;
 }
 :where(.tb-brand, .tb-avatar, .lesson-warn-close, .myex-more, .myex-rename, .old-file-icon, .sp-icon-btn,
-  .myex-type-chip, .done-warn-check, .done-warn-all, .done-warn-results, .dash-manage-link, .mini-btn, .top-group-tab, button.sk-dot)::before {
+  .myex-type-chip, .done-warn-check, .done-warn-all, .done-warn-results, .dash-manage-link, .mini-btn, .top-group-tab, button.sk-dot, .tg-day)::before {
   content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
   width: max(100%, 44px); height: max(100%, 44px);
 }
@@ -3705,3 +3705,7 @@ body.loom-air .tg-box { background: rgba(255,255,255,0.78); border-color: rgba(2
 .tg-box .tg-hour { margin-left: 6px; width: auto !important; min-width: 96px; display: inline-block; padding: 6px 12px; }
 .tg-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .tg-hint { margin: 0; font-size: .85rem; }
+.tg-days { display: inline-flex; flex-wrap: wrap; gap: 4px; vertical-align: middle; margin-right: 6px; }
+.tg-day { min-width: 40px; height: 36px; padding: 0 8px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.7);
+  color: var(--ink-soft); font: inherit; font-weight: 600; font-size: .85rem; cursor: pointer; }
+.tg-day.on { background: var(--brand, #14181F); border-color: var(--brand, #14181F); color: #fff; }

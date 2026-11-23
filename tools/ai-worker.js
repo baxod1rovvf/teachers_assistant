@@ -24,7 +24,7 @@
 // Free plan: Google may use what is sent to improve its products — no students' private details.
 
 const ALLOWED_ORIGINS = ['https://baxod1rovvf.github.io'];
-const VERSION = '2026-11-23a';
+const VERSION = '2026-11-23b';
 const DEFAULT_MODEL = 'gemini-flash-lite-latest';   // Google's fastest model on the free plan (answers in a few seconds)
 const PER_MODEL_SECONDS = 18, TOTAL_SECONDS = 40;   // Loom waits 60 s, so the helper always answers before that
 const PER_MINUTE = { chat: 8, writing: 40, queue: 30, feedback: 60, check: 10, 'tg-setup': 5, 'tg-status': 30, 'tg-test': 5 };          // per visitor (IP) per minute, kept in this worker's memory
@@ -308,10 +308,11 @@ async function waitingCount(kv) {
 
 // ---------- the Telegram bot (teacher, 2026-11-23: "connect telegram bot with loom … warn students who don't finish exercise yet
 // and results too") ----------
-// Every day at the hour the teacher chose (Tashkent time), the bot posts into each connected group's Telegram chat: the new
-// results since the last post, and who hasn't finished the Course parts sent to the group in the last 7 days.
+// On the days and at the hour the teacher chose (Tashkent time; 2026-11-23: "it should not send messages every day"), the bot posts
+// into each connected group's Telegram chat — one message per group, also when two groups share a chat: the new results since the last
+// post, who hasn't finished the Course parts sent to the group in the last 7 days, and the links to those steps' results pages.
 // Loom (course.js, the group page's "📨 Telegram" box) keeps a plan per group in the database: record `tg-<hash>` (type
-// 'TA_SYNC:TG', title = the hash, data = JSON { v, group, hour, on, parts: [{ label, codes, sentAt }] }). The hash is
+// 'TA_SYNC:TG', title = the hash, data = JSON { v, group, hour, days, on, parts: [{ label, codes, sentAt }], links: [{ label, url, sentAt }] }). The hash is
 // sha256("loom-tg|<connect code>") — the connect code itself is never in the database (anyone can read it), so nobody else can
 // connect their own chat to a class. The teacher adds the bot to the class chat and sends "/connect <code>" there; Telegram tells
 // this worker (webhook /tg/update, checked with a secret header), and KV keeps tgchat:<hash> = { chatId, title }.
@@ -347,7 +348,7 @@ function tgBand(correct, total) {
 }
 const tgEsc = v => String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 // Tashkent's date ("2026-11-23") and hour now
-function tgNow(ms) { const d = new Date((ms || Date.now()) + TG_TZ_HOURS * 3600000); return { date: d.toISOString().slice(0, 10), hour: d.getUTCHours() }; }
+function tgNow(ms) { const d = new Date((ms || Date.now()) + TG_TZ_HOURS * 3600000); return { date: d.toISOString().slice(0, 10), hour: d.getUTCHours(), day: d.getUTCDay() }; }
 
 async function fsRunQuery(where, limit) {
   const body = { structuredQuery: { from: [{ collectionId: 'results' }], where, limit: limit || 500 } };
@@ -382,7 +383,12 @@ function tgPlanFrom(rec) {
   const parts = (Array.isArray(p.parts) ? p.parts : []).slice(0, 40).map(x => ({ label: clip(x && x.label, 60),
     codes: (Array.isArray(x && x.codes) ? x.codes : []).filter(c => /^[A-Za-z0-9]{6}$/.test(String(c))).slice(0, 5), sentAt: String((x && x.sentAt) || '') }))
     .filter(x => x.label && x.codes.length);
-  return { hash: String(rec.title || ''), group: clip(p.group, 80), hour: Math.max(0, Math.min(23, Math.floor(Number(p.hour)))), on: p.on !== false, parts };
+  // days: the weekdays it posts on (0 = Sunday … 6 = Saturday, Tashkent); a plan without them posts every day
+  const days = Array.isArray(p.days) ? p.days.map(Number).filter(d => d >= 0 && d <= 6) : [0, 1, 2, 3, 4, 5, 6];
+  // the steps' results links (Loom's "🔗 Share results link" pages), only https links to the teacher's site
+  const links = (Array.isArray(p.links) ? p.links : []).slice(0, 10).map(x => ({ label: clip(x && x.label, 60), url: String((x && x.url) || ''), sentAt: String((x && x.sentAt) || '') }))
+    .filter(x => x.label && /^https:\/\/baxod1rovvf\.github\.io\/teachers_assistant\/results-link\.html\?r=[0-9a-f]{16}$/.test(x.url));
+  return { hash: String(rec.title || ''), group: clip(p.group, 80), hour: Math.max(0, Math.min(23, Math.floor(Number(p.hour)))), on: p.on !== false, days, links, parts };
 }
 
 // The day's message for one plan: { text } or { empty: true } (nothing sent in the last 7 days). `since` = the last post's time.
@@ -444,6 +450,11 @@ async function tgBuildMessage(env, plan, since, nowMs) {
     missing.slice(0, 60).forEach(([name, v], i) => lines.push((i + 1) + '. ' + tgEsc(name) + ' — ' + tgEsc(v.missing.join(', '))));
     lines.push('', 'Please finish today! 💪');
   } else if (students.size) lines.push('🎉 Everyone has finished everything that was sent. Well done!');
+  const links = (plan.links || []).filter(x => { const t = Date.parse(x.sentAt); return !(t < now - TG_DAYS * 86400000); });
+  if (links.length) {
+    lines.push('', '📊 <b>Results</b>');
+    links.forEach(x => lines.push(tgEsc(x.label) + ': ' + tgEsc(x.url)));
+  }
   let text = lines.join('\n');
   if (text.length > 4000) text = text.slice(0, 3990) + '…';
   return { text };
@@ -460,7 +471,7 @@ async function runTelegram(env, nowMs) {
   try { recs = await fsRunQuery(fsEq('type', 'TA_SYNC:TG'), 200); } catch (e) { out.failed++; return out; }
   for (const rec of recs) {
     const plan = tgPlanFrom(rec);
-    if (!plan || !plan.on || plan.hour !== t.hour || !/^[0-9a-f]{24}$/.test(plan.hash)) continue;
+    if (!plan || !plan.on || plan.hour !== t.hour || !plan.days.includes(t.day) || !/^[0-9a-f]{24}$/.test(plan.hash)) continue;
     if (await env.LOOM_KV.get('tgsent:' + plan.hash + ':' + t.date)) continue;
     const chat = await env.LOOM_KV.get('tgchat:' + plan.hash, 'json');
     if (!chat || !chat.chatId) { out.skipped++; continue; }
