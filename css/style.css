@@ -3687,3 +3687,21 @@ body.loom-studio.loom-air .login-stage { background: rgba(255,255,255,0.72) !imp
 .ta-modal .dct-mark.missing { padding: 0 4px; border-radius: 6px; border: 1.5px dashed #D69E2E; color: #8A5A10; font-weight: 600; }
 .ta-modal .dct-mark.extra { color: var(--ink-soft); text-decoration: line-through; }
 .ta-modal .dct-nothing { font-style: italic; color: var(--ink-soft); }
+
+/* ---- the Telegram box on a group's Course page (js/pages/telegram.js, 2026-11-23) ---- */
+.tg-box { margin: 0 0 18px; padding: 16px 18px; border-radius: 20px; background: var(--surface); border: 1px solid var(--border);
+  box-shadow: var(--shadow-md); display: flex; flex-direction: column; gap: 10px; max-width: 820px; }
+body.loom-air .tg-box { background: rgba(255,255,255,0.78); border-color: rgba(255,255,255,0.9); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
+.tg-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
+.tg-head b { font-size: 1.05rem; }
+.tg-sub, .tg-status { color: var(--ink-soft); font-size: .92rem; }
+.tg-status.ok { color: var(--air-moss, #2f7a3a); font-weight: 600; }
+.tg-box:not(.on) { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+.tg-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 8px; line-height: 1.5; }
+.tg-steps li { padding-left: 2px; }
+.tg-code { font: 600 .95rem ui-monospace, SFMono-Regular, Menlo, monospace; padding: 3px 8px; border-radius: 8px; background: rgba(20,24,31,0.06); user-select: all; }
+.tg-bot { font-weight: 600; }
+.tg-on { margin-left: 10px; display: inline-flex; align-items: center; gap: 6px; }
+.tg-box .tg-hour { margin-left: 6px; width: auto !important; min-width: 96px; display: inline-block; padding: 6px 12px; }
+.tg-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.tg-hint { margin: 0; font-size: .85rem; }

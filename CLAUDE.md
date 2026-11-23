@@ -104,6 +104,11 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
    the internet, runs once at a time and sets every total — below zero too — to 0. Other teacher writes (bonus +/−)
    still queue offline and arrive later — that's intended. `tests/data-safety.spec.js`.
 
+24. **The Telegram bot posts students' names and results into the class chat** (the teacher's choice) — everyone in the chat sees them,
+   and anyone added to the chat later too. It needs the Cloudflare helper pasted again (version `2026-11-23a`) and the secret
+   `TELEGRAM_BOT_TOKEN`; without them nothing is posted (no error for students). If the bot token leaks, anyone can post as the bot —
+   make a new one with @BotFather (/revoke) and save it again.
+
 **Less likely (< 20 %) but serious**
 18. **"Delete all results"** — its marker is allowed since the lock (2026-09-30). A deletion made on one device reaches the others' kept copy only at their weekly full re-read.
 6. **The database lock is on (rules published 2026-09-30; CP showed "🟢 The database is
@@ -735,7 +740,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   is hidden, for an hour at most — `__rlPollForMs`), tap a writing band → its AI feedback (the helper's, else `w.ai` = the feedback Loom had when the
   link was shared, `skShareData`); the helper doesn't know it and there's none → "No AI feedback for this writing yet." with the text and band. **Anyone with the link can read the writings on it** (teacher's choice).
   **Cloudflare, done once by the teacher**: create a KV namespace `loom-writings` and bind it to the worker as `LOOM_KV`; add a Cron Trigger
-  `*/5 * * * *`; paste `tools/ai-worker.js` and Deploy; `/status` must show version `2026-11-13b` and `kv: true` (also `running`, `keySaved`, `waiting`, `jobs`).
+  `*/5 * * * *`; paste `tools/ai-worker.js` and Deploy; `/status` must show version `2026-11-23a` (was `2026-11-13b` before the Telegram bot) and `kv: true` (also `running`, `keySaved`, `waiting`, `jobs`).
   Limits per IP per minute: queue 30, feedback 60, check 10, chat 8, writing 40. **KV free plan: about 1 000 writes and 1 000 lists a day** (the timer
   uses 288 lists); busy days can run out → writings just wait. `tests/ai-queue.spec.js`, `tests/results-link.spec.js`.
 - **Answers that didn't arrive (teacher, 2026-11-13: "students send me screenshots that they completed listening, but the system
@@ -845,6 +850,23 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   **"Recording…" guard**: `tools/build-dictations.js` writes `recorded: true|false` per item from `audio/dictation/dN.mp3` existing (the whole passage — the recording tool writes it last).
   An unrecorded item shows "🎙 Recording…" (muted) instead of ▶ Play / ▶️ Try / 🔗 Copy link, its level card counts only recorded ones ("12 ready · 20 dictations"), and its
   student link says "🎙 This dictation isn't ready yet — ask your teacher." **After recording more: run the build tool, `npm run stamp`, commit audio + data.**
+- **Telegram bot (teacher, 2026-11-23: "connect telegram bot with loom … warn students who don't finish exercise yet and results
+  too"; chose: into each group's Telegram chat, automatically every day)** — the bot lives in the Cloudflare helper (`tools/ai-worker.js`,
+  version `2026-11-23a`: `runTelegram` in `scheduled`, the webhook `POST /tg/update`, jobs `tg-setup` / `tg-status` / `tg-test`). Loom: a
+  "📨 Telegram" box on a group's Course page (`js/pages/telegram.js`, `skTgBoxHtml` called from `skGroupPageHtml`): Set up Telegram makes an
+  8-letter connect code, kept in `ta_telegram[groupId] = { code, hour, on, sig }` (synced, in the backup); 🔌 Connect the bot (once, sets the
+  webhook), "/connect CODE" to send in the class chat (📋 Copy), the daily hour (15–21, Tashkent) + On, 📨 Send today's message now, Stop
+  Telegram. Loom puts the group's plan online as `tg-<hash>` (`taPublishTgPlan` in firebase.js, `TA_SYNC:TG`, data `{ v, group, hour, on,
+  parts: [{ label 'Step 5 · Reading', codes, sentAt }] }` = its Listening/Reading/Writing links sent in the last 21 days) whenever it changes
+  (`skTgSyncSoon` from renderCourse — Copy link redraws; waits for sync). hash = sha256("loom-tg|CODE") first 24 hex — **the code never goes
+  online**, so nobody can connect another chat. The helper, in the first 15 minutes of each hour from 06:00 (≈50 database reads a day per
+  group), reads the plans; at a plan's hour (on, connected, not sent today — KV `tgsent:<hash>:<date>`) it posts one message: "🏆 New results"
+  since the last post (KV `tglast:<hash>`; names from the class list by scrambled ID, Listening/Reading bands like skBand, writings from KV
+  `f:<id>` like skWritingAiBand, else ⏳) and "⏰ Not finished yet" for parts sent in the last 7 days (most missing first; a student with old IDs
+  once), or "🎉 Everyone has finished". `tgIdKey`/`tgClassHash`/`tgBand` are copies of skill-bands.js (`tests/telegram.spec.js` compares them).
+  **Setup by the teacher (once)**: @BotFather → /newbot → token → Cloudflare: the worker's secret `TELEGRAM_BOT_TOKEN`; paste the new
+  `tools/ai-worker.js` and Deploy (`/status` shows `telegram: true`, version `2026-11-23a`); in Loom press 🔌 Connect the bot; per group: add the
+  bot to the chat and send the /connect line. Grammar and Dictation links aren't in the messages (they aren't sent per group).
 - **Speaking Journey (teacher, 2026-11-09)**: **Speaking** follows the teacher's "Speaking Journey" (20 topics: 1 Daily Routine,
   2 Family, 3 Home & Living, 4 Food & Meals, 5 Free Time, 6 Friends, 7 School & Education, 8 Hobbies & Sports, 9 Shopping, 10 Your City,
   11 Holidays, 12 Future Plans, 13 Jobs & Careers, 14 Clothes & Fashion, 15 Transport, 16 Animals & Pets, 17 Health & Lifestyle,

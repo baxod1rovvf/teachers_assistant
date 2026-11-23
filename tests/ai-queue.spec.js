@@ -211,7 +211,7 @@ test('/status shows version, kv, waiting count and the jobs', async () => {
   kv.m.set('q:sk_A_1', { value: '{}', metadata: { at: 'x' } });
   kv.m.set('f:sk_B_1', { value: '{}', metadata: null });
   const res = await w.default.fetch(new Request('https://x.workers.dev/status'), { LOOM_KV: kv, GEMINI_API_KEY: 'k' });
-  expect(await res.json()).toEqual({ running: true, version: '2026-11-13b', keySaved: true, kv: true, waiting: 1, jobs: ['chat', 'writing', 'queue', 'feedback', 'check'] });
+  expect(await res.json()).toEqual({ running: true, version: '2026-11-23a', keySaved: true, kv: true, telegram: false, waiting: 1, jobs: ['chat', 'writing', 'queue', 'feedback', 'check', 'tg-setup', 'tg-status', 'tg-test'] });
 });
 
 /* ---------- final review fixes (2026-11-13) ---------- */

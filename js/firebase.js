@@ -128,6 +128,19 @@ window.taPublishClassList = async function (code, students, _unused, group) {
     return true;
   } catch (e) { taReportDbError(e); console.error('Putting the class list online failed:', e); return false; }
 };
+// The Telegram bot's daily plan for one group (teacher, 2026-11-23): record `tg-<hash>` (hash = sha256("loom-tg|<connect code>"),
+// first 24 hex — the code itself never goes online), type 'TA_SYNC:TG', data = JSON { v, group, hour, on, parts }. The Cloudflare
+// helper (tools/ai-worker.js runTelegram) reads it every day. Delete then create (the rules refuse a change). Resolves true when saved.
+window.taPublishTgPlan = async function (hash, plan) {
+  if (!db || !/^[0-9a-f]{24}$/.test(String(hash || '')) || !plan) return false;
+  try {
+    const ref = doc(db, 'results', 'tg-' + hash);
+    await deleteDoc(ref).catch(() => {});
+    await setDoc(ref, { v: 1, code: 'TAUSER', builtAt: '', type: 'TA_SYNC:TG', title: hash, name: '', data: JSON.stringify(plan),
+      score: (plan.parts || []).length, warnings: 0, timeSeconds: 0, timeDisplay: '00:00', date: new Date().toISOString() });
+    return true;
+  } catch (e) { taReportDbError(e); console.error('Putting the Telegram plan online failed:', e); return false; }
+};
 // A step's results as a link (teacher, 2026-11-12): record `share-<token>` = the step's table for one group (names, bands, the
 // writings with their text) — results-link.html?r=<token> reads it, so students see the table and tap a writing band for its AI
 // feedback. Sync shape (code 'TAUSER', type 'TA_SYNC:SHARE'); the rules allow create + delete, not change, so the old one goes

@@ -242,6 +242,7 @@ function renderCourse() {
   if (typeof grRefreshLists === 'function') grRefreshLists();   // the class lists follow the Students list (whatever page is open)
   if (typeof dcRefreshLists === 'function') dcRefreshLists();
   skRefreshLists();
+  if (typeof skTgSyncSoon === 'function') skTgSyncSoon();   // the Telegram bot's plans follow the sent links (js/pages/telegram.js)
   const groups = getStudentGroups();
   if (skView.group && !groups.some(g => g.id === skView.group)) skView = { group: '', tab: 'journey', step: '' };
   if (!skView.group) {
@@ -262,6 +263,7 @@ function renderCourse() {
   if (skView.step) { wrap.innerHTML = skStepPageHtml(st, g); return; }
   const stats = skGroupStats(g, skPathCtx(g, skSteps().filter(skReady)));
   wrap.innerHTML = skGroupPageHtml(stats);
+  if (typeof tgRefreshStatus === 'function') tgRefreshStatus(g.id);   // the Telegram box's status line (js/pages/telegram.js)
 }
 /* ---- the group cards ---- */
 function skStatsHtml(s) {
@@ -303,6 +305,7 @@ function skGroupPageHtml(s) {
   return '<button type="button" class="back-to-picker-btn" onclick="skOpenGroup(\'\')">← All groups</button>' +
     '<div class="sk-ghead"><div class="sk-ghead-name"><h3 translate="no">' + escapeForHtml(g.name) + '</h3><span class="sk-level-chip">' + escapeForHtml(s.level || '—') + '</span>' + skStartPickHtml(g) + '</div>' +
     '<div class="sk-gcard-stats">' + skStatsHtml(s) + '</div></div>' +
+    (typeof skTgBoxHtml === 'function' ? skTgBoxHtml(g) : '') +
     '<div class="sk-tabs" role="tablist" aria-label="' + escapeForHtml(g.name) + '">' + tabBtn('journey', '🧭 Journey') + tabBtn('progress', '📈 Progress') + '</div>' +
     '<div class="sk-tabpanel" role="tabpanel">' + (tab === 'progress' ? skProgressHtml(s) : skPathHtml(s)) + '</div>';
 }
@@ -603,7 +606,7 @@ function skCopyLink(skill, step) {
   const url = skLinkFor(skill, step, g);
   if (!url) return;
   if (skill === 'speaking') skMarkSpeakingSent(step, g);
-  else skPutClassOnline(url, g, skill, (skStep(step) || {}).id || step);   // only the group's students, and in order (2026-11-09, 11-12)
+  else skPutClassOnline(url, g, skill, (skStep(step) || {}).id || step);   // only the group's students (2026-11-09)
   const msg = '🔗 Link copied — send it to ' + g.name + '. It always works.';
   // taModal sets the title as text: the group's name goes in as typed
   const show = () => taModal('🔗 The link for ' + g.name, '<input type="text" class="ta-input" readonly value="' + escapeForHtml(url) + '" aria-label="The link">');

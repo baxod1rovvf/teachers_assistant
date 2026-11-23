@@ -24,10 +24,10 @@
 // Free plan: Google may use what is sent to improve its products — no students' private details.
 
 const ALLOWED_ORIGINS = ['https://baxod1rovvf.github.io'];
-const VERSION = '2026-11-13b';
+const VERSION = '2026-11-23a';
 const DEFAULT_MODEL = 'gemini-flash-lite-latest';   // Google's fastest model on the free plan (answers in a few seconds)
 const PER_MODEL_SECONDS = 18, TOTAL_SECONDS = 40;   // Loom waits 60 s, so the helper always answers before that
-const PER_MINUTE = { chat: 8, writing: 40, queue: 30, feedback: 60, check: 10 };          // per visitor (IP) per minute, kept in this worker's memory
+const PER_MINUTE = { chat: 8, writing: 40, queue: 30, feedback: 60, check: 10, 'tg-setup': 5, 'tg-status': 30, 'tg-test': 5 };          // per visitor (IP) per minute, kept in this worker's memory
 const seen = new Map();
 
 function cors(origin) {
@@ -305,17 +305,245 @@ async function waitingCount(kv) {
   return waiting;
 }
 
-const JOBS = ['chat', 'writing', 'queue', 'feedback', 'check'];
-export { aiBand, checkWriting, runQueue };
+
+// ---------- the Telegram bot (teacher, 2026-11-23: "connect telegram bot with loom … warn students who don't finish exercise yet
+// and results too") ----------
+// Every day at the hour the teacher chose (Tashkent time), the bot posts into each connected group's Telegram chat: the new
+// results since the last post, and who hasn't finished the Course parts sent to the group in the last 7 days.
+// Loom (course.js, the group page's "📨 Telegram" box) keeps a plan per group in the database: record `tg-<hash>` (type
+// 'TA_SYNC:TG', title = the hash, data = JSON { v, group, hour, on, parts: [{ label, codes, sentAt }] }). The hash is
+// sha256("loom-tg|<connect code>") — the connect code itself is never in the database (anyone can read it), so nobody else can
+// connect their own chat to a class. The teacher adds the bot to the class chat and sends "/connect <code>" there; Telegram tells
+// this worker (webhook /tg/update, checked with a secret header), and KV keeps tgchat:<hash> = { chatId, title }.
+// Who has done what: each part's class list (`class-<code>`, the IDs scrambled exactly like js/skill-bands.js skClassHash) and its
+// results (by studentId, scrambled the same way, or by the listed name). Bands like js/skill-bands.js (skBand, skWritingAiBand).
+// Set up (once): Telegram → @BotFather → /newbot → copy the token → Cloudflare: this worker → Settings → Variables and Secrets →
+// Add → Secret TELEGRAM_BOT_TOKEN. Then in Loom press "Connect the bot" once (job tg-setup sets the webhook).
+const TG_TZ_HOURS = 5;   // Tashkent, no summer time
+const TG_DAYS = 7;       // parts sent in the last 7 days are reminded about
+const FS_RUN = 'https://firestore.googleapis.com/v1/projects/teachers-assistant-app-ccd1a/databases/(default)/documents:runQuery?key=' + FS_KEY;
+// must stay the same as js/skill-bands.js (tests/telegram.spec.js compares them)
+const TG_ID_LOOKALIKE = { 'а': 'a', 'в': 'b', 'е': 'e', 'к': 'k', 'м': 'm', 'н': 'h', 'о': 'o', 'р': 'p', 'с': 'c', 'т': 't', 'у': 'y', 'х': 'x', 'і': 'i' };
+function tgIdKey(v) {
+  let s = String(v == null ? '' : v);
+  try { s = s.normalize('NFKC'); } catch (e) { /* ignore */ }
+  s = s.trim().toLowerCase().replace(/[авекмнорстухі]/g, c => TG_ID_LOOKALIKE[c] || c);
+  s = s.replace(/^(?:id|№|#|no\.?)(?:\s*[:.#-]\s*|\s+|(?=\d))(?=\S)/, '').replace(/[\s._\-#'"`]/g, '');
+  if (/^\d+$/.test(s)) s = s.replace(/^0+(?=\d)/, '');
+  return s;
+}
+async function sha256Hex(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map(x => x.toString(16).padStart(2, '0')).join('');
+}
+async function tgClassHash(code, id) { const k = tgIdKey(id); return k ? (await sha256Hex(String(code) + '|' + k)).slice(0, 24) : ''; }
+const tgPlanHash = async connectCode => (await sha256Hex('loom-tg|' + String(connectCode || '').trim().toUpperCase())).slice(0, 24);
+const TG_BAND_TABLE = [[39, 9], [37, 8.5], [35, 8], [32, 7.5], [30, 7], [26, 6.5], [23, 6], [18, 5.5], [16, 5], [13, 4.5], [10, 4], [8, 3.5], [6, 3], [4, 2.5], [1, 2]];
+function tgBand(correct, total) {
+  if (!total || total <= 0 || !(correct > 0)) return 0;
+  const n = Math.round(Math.min(correct, total) / total * 40);
+  for (const [lo, b] of TG_BAND_TABLE) if (n >= lo) return b;
+  return 0;
+}
+const tgEsc = v => String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+// Tashkent's date ("2026-11-23") and hour now
+function tgNow(ms) { const d = new Date((ms || Date.now()) + TG_TZ_HOURS * 3600000); return { date: d.toISOString().slice(0, 10), hour: d.getUTCHours() }; }
+
+async function fsRunQuery(where, limit) {
+  const body = { structuredQuery: { from: [{ collectionId: 'results' }], where, limit: limit || 500 } };
+  const res = await fetch(FS_RUN, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  if (!res.ok) throw new Error('The database answered ' + res.status);
+  const rows = await res.json();
+  return (Array.isArray(rows) ? rows : []).filter(r => r && r.document).map(r => Object.assign(
+    fsPlain({ mapValue: { fields: r.document.fields || {} } }), { __id: String(r.document.name || '').split('/').pop() }));
+}
+const fsEq = (field, value) => ({ fieldFilter: { field: { fieldPath: field }, op: 'EQUAL', value: { stringValue: value } } });
+const fsIn = (field, values) => ({ fieldFilter: { field: { fieldPath: field }, op: 'IN', value: { arrayValue: { values: values.map(v => ({ stringValue: v })) } } } });
+async function fsDoc(id) {
+  const res = await fetch(FS_DOC + encodeURIComponent(id) + '?key=' + FS_KEY);
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error('The database answered ' + res.status);
+  const doc = await res.json();
+  return fsPlain({ mapValue: { fields: (doc && doc.fields) || {} } });
+}
+async function tgApi(env, method, body) {
+  const res = await fetch('https://api.telegram.org/bot' + env.TELEGRAM_BOT_TOKEN + '/' + method,
+    { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}) });
+  let out = {};
+  try { out = await res.json(); } catch (e) { out = {}; }
+  return out && out.ok ? { ok: true, result: out.result } : { ok: false, error: (out && out.description) || ('Telegram answered ' + res.status) };
+}
+const tgWebhookSecret = async env => (await sha256Hex('loom-tg-hook|' + env.TELEGRAM_BOT_TOKEN)).slice(0, 32);
+
+function tgPlanFrom(rec) {
+  let p = null;
+  try { p = JSON.parse(rec.data || 'null'); } catch (e) { p = null; }
+  if (!p || typeof p !== 'object') return null;
+  const parts = (Array.isArray(p.parts) ? p.parts : []).slice(0, 40).map(x => ({ label: clip(x && x.label, 60),
+    codes: (Array.isArray(x && x.codes) ? x.codes : []).filter(c => /^[A-Za-z0-9]{6}$/.test(String(c))).slice(0, 5), sentAt: String((x && x.sentAt) || '') }))
+    .filter(x => x.label && x.codes.length);
+  return { hash: String(rec.title || ''), group: clip(p.group, 80), hour: Math.max(0, Math.min(23, Math.floor(Number(p.hour)))), on: p.on !== false, parts };
+}
+
+// The day's message for one plan: { text } or { empty: true } (nothing sent in the last 7 days). `since` = the last post's time.
+async function tgBuildMessage(env, plan, since, nowMs) {
+  const now = nowMs || Date.now();
+  const parts = plan.parts.filter(x => { const t = Date.parse(x.sentAt); return !(t < now - TG_DAYS * 86400000); });
+  if (!parts.length) return { empty: true };
+  const students = new Map();   // listed name → { missing: [labels] } (a student with old IDs is on a list once per ID, same name)
+  const fresh = [];
+  for (const part of parts) {
+    const code = part.codes[0];
+    const cls = await fsDoc('class-' + code);
+    let list = [];
+    try { list = cls ? JSON.parse(cls.data || '[]') : []; } catch (e) { list = []; }
+    const results = (await fsRunQuery(fsIn('code', part.codes), 500)).filter(r => / course$/.test(String(r.type || '')));
+    const doneHashes = new Set(), doneNames = new Set();
+    for (const r of results) {
+      if (r.studentId) for (const c of part.codes) doneHashes.add(await tgClassHash(c, r.studentId));
+      if (r.name) doneNames.add(String(r.name).trim().toLowerCase());
+    }
+    const byName = new Map();
+    for (const e of (Array.isArray(list) ? list : [])) {
+      if (!e || !e.n) continue;
+      const k = String(e.n).trim();
+      byName.set(k, byName.get(k) || doneHashes.has(e.h) || doneNames.has(k.toLowerCase()));
+    }
+    for (const [name, done] of byName) {
+      const st = students.get(name) || { missing: [] };
+      if (!done) st.missing.push(part.label);
+      students.set(name, st);
+    }
+    for (const r of results) {
+      const at = Date.parse(r.submittedAt || r.date || '');
+      if (!(at > since)) continue;
+      let band = null;
+      if (r.type === 'Writing course') {
+        const f = env.LOOM_KV ? await env.LOOM_KV.get('f:' + r.__id, 'json') : null;
+        band = f && f.scores ? aiBand(f.scores, Number(r.words) || 0, Number(r.minWords) || 0) : (String(r.text || '').trim() ? '⏳' : 1);
+      } else band = tgBand(Number(r.correct) || 0, Number(r.total) || 0);
+      // the name on the teacher's list (by the scrambled ID), else the name the result carries
+      let name = String(r.name || '').trim();
+      if (r.studentId) {
+        const hs = new Set(); for (const c of part.codes) hs.add(await tgClassHash(c, r.studentId));
+        const e = (Array.isArray(list) ? list : []).find(x => x && hs.has(x.h));
+        if (e && e.n) name = String(e.n).trim();
+      }
+      if (name) fresh.push({ name, label: part.label, band, at });
+    }
+  }
+  const lines = ['📚 <b>' + tgEsc(plan.group) + '</b>'];
+  if (fresh.length) {
+    lines.push('', '🏆 <b>New results</b>');
+    fresh.sort((a, b) => a.at - b.at).slice(0, 40).forEach(f => lines.push('• ' + tgEsc(f.name) + ' — ' + tgEsc(f.label) + ': <b>' + tgEsc(f.band) + '</b>'));
+  }
+  const missing = [...students.entries()].filter(([, v]) => v.missing.length).sort((a, b) => b[1].missing.length - a[1].missing.length || a[0].localeCompare(b[0]));
+  lines.push('');
+  if (missing.length) {
+    lines.push('⏰ <b>Not finished yet</b>');
+    missing.slice(0, 60).forEach(([name, v], i) => lines.push((i + 1) + '. ' + tgEsc(name) + ' — ' + tgEsc(v.missing.join(', '))));
+    lines.push('', 'Please finish today! 💪');
+  } else if (students.size) lines.push('🎉 Everyone has finished everything that was sent. Well done!');
+  let text = lines.join('\n');
+  if (text.length > 4000) text = text.slice(0, 3990) + '…';
+  return { text };
+}
+
+// The timer (every 5 minutes): only in the first 15 minutes of each hour from 06:00 does it read the plans (cheap on the database's
+// daily reads); a plan whose hour it is, that is on, connected and not yet sent today gets its message. Sent once a day (tgsent:).
+async function runTelegram(env, nowMs) {
+  const out = { sent: 0, skipped: 0, failed: 0 };
+  if (!env.TELEGRAM_BOT_TOKEN || !env.LOOM_KV) return out;
+  const now = nowMs || Date.now(), t = tgNow(now);
+  if (new Date(now).getUTCMinutes() >= 15 || t.hour < 6) return out;
+  let recs;
+  try { recs = await fsRunQuery(fsEq('type', 'TA_SYNC:TG'), 200); } catch (e) { out.failed++; return out; }
+  for (const rec of recs) {
+    const plan = tgPlanFrom(rec);
+    if (!plan || !plan.on || plan.hour !== t.hour || !/^[0-9a-f]{24}$/.test(plan.hash)) continue;
+    if (await env.LOOM_KV.get('tgsent:' + plan.hash + ':' + t.date)) continue;
+    const chat = await env.LOOM_KV.get('tgchat:' + plan.hash, 'json');
+    if (!chat || !chat.chatId) { out.skipped++; continue; }
+    const since = Date.parse((await env.LOOM_KV.get('tglast:' + plan.hash)) || '') || (now - 86400000);
+    let msg;
+    try { msg = await tgBuildMessage(env, plan, since, now); } catch (e) { out.failed++; continue; }
+    if (msg.empty) { await env.LOOM_KV.put('tgsent:' + plan.hash + ':' + t.date, '-', { expirationTtl: 3 * 86400 }); out.skipped++; continue; }
+    const r = await tgApi(env, 'sendMessage', { chat_id: chat.chatId, text: msg.text, parse_mode: 'HTML', disable_web_page_preview: true });
+    if (!r.ok) { out.failed++; continue; }
+    await env.LOOM_KV.put('tgsent:' + plan.hash + ':' + t.date, '1', { expirationTtl: 3 * 86400 });
+    await env.LOOM_KV.put('tglast:' + plan.hash, new Date(now).toISOString());
+    out.sent++;
+  }
+  return out;
+}
+
+// Telegram calls this when someone writes to the bot. Only "/connect <code>" in a group matters.
+async function tgUpdate(request, env) {
+  if (!env.TELEGRAM_BOT_TOKEN || !env.LOOM_KV) return new Response('off', { status: 503 });
+  if (request.headers.get('X-Telegram-Bot-Api-Secret-Token') !== await tgWebhookSecret(env)) return new Response('no', { status: 403 });
+  let u;
+  try { u = await request.json(); } catch (e) { return new Response('ok'); }
+  const m = u && (u.message || u.channel_post);
+  const text = String((m && m.text) || '').trim();
+  const cmd = /^\/connect(?:@\w+)?\s+([A-Za-z0-9-]{4,20})\s*$/.exec(text);
+  if (!m || !m.chat) return new Response('ok');
+  if (cmd) {
+    if (m.chat.type === 'private') {
+      await tgApi(env, 'sendMessage', { chat_id: m.chat.id, text: 'Add me to your class group chat and send /connect there.' });
+      return new Response('ok');
+    }
+    const hash = await tgPlanHash(cmd[1]);
+    await env.LOOM_KV.put('tgchat:' + hash, JSON.stringify({ chatId: m.chat.id, title: clip(m.chat.title, 80), at: new Date().toISOString() }));
+    await tgApi(env, 'sendMessage', { chat_id: m.chat.id, text: '✅ Connected to Loom. Every day I will post new results and who still has to finish their exercises.' });
+  } else if (/^\/start\b/.test(text) && m.chat.type === 'private') {
+    await tgApi(env, 'sendMessage', { chat_id: m.chat.id, text: 'Hi! I am Loom\'s class bot. Your teacher adds me to the class group chat.' });
+  }
+  return new Response('ok');
+}
+// Loom's buttons: set the webhook once; is a group connected; send the message now (a test)
+async function tgJob(job, q, env, origin, selfOrigin) {
+  if (!env.TELEGRAM_BOT_TOKEN) return reply({ error: 'The helper has no TELEGRAM_BOT_TOKEN secret yet' }, 500, origin);
+  if (!env.LOOM_KV) return reply({ error: 'The helper has no LOOM_KV storage yet' }, 500, origin);
+  if (job === 'tg-setup') {
+    const me = await tgApi(env, 'getMe');
+    if (!me.ok) return reply({ error: 'Telegram refused the token: ' + me.error }, 502, origin);
+    const hook = await tgApi(env, 'setWebhook', { url: selfOrigin + '/tg/update', secret_token: await tgWebhookSecret(env), allowed_updates: ['message'] });
+    if (!hook.ok) return reply({ error: 'Telegram: ' + hook.error }, 502, origin);
+    await env.LOOM_KV.put('tgbot', me.result.username || '');
+    return reply({ ok: true, bot: me.result.username || '' }, 200, origin);
+  }
+  const code = String(q.code || '').trim();
+  if (!/^[A-Za-z0-9-]{4,20}$/.test(code)) return reply({ error: 'Bad code' }, 400, origin);
+  const hash = await tgPlanHash(code);
+  const chat = await env.LOOM_KV.get('tgchat:' + hash, 'json');
+  const bot = (await env.LOOM_KV.get('tgbot')) || '';
+  if (job === 'tg-status') return reply({ connected: !!(chat && chat.chatId), title: chat ? chat.title : '', bot }, 200, origin);
+  // tg-test: today's message now, at most once every 2 minutes per group (doesn't count as the day's post)
+  if (!chat || !chat.chatId) return reply({ error: 'Not connected yet — send /connect in the class chat first' }, 409, origin);
+  if (await env.LOOM_KV.get('tgtest:' + hash)) return reply({ error: 'Wait two minutes before the next test' }, 429, origin);
+  const recs = await fsRunQuery(fsEq('title', hash), 5).catch(() => []);
+  const plan = tgPlanFrom(recs.find(r => r.type === 'TA_SYNC:TG') || {});
+  if (!plan) return reply({ error: 'Loom hasn\'t put this group\'s plan online yet — open the Course page once' }, 409, origin);
+  const msg = await tgBuildMessage(env, plan, Date.now() - 86400000);
+  const r = await tgApi(env, 'sendMessage', { chat_id: chat.chatId, parse_mode: 'HTML', disable_web_page_preview: true,
+    text: msg.empty ? '📚 <b>' + tgEsc(plan.group) + '</b>\n\nNothing was sent in the last 7 days — no reminders today.' : msg.text });
+  await env.LOOM_KV.put('tgtest:' + hash, '1', { expirationTtl: 120 });
+  return r.ok ? reply({ ok: true }, 200, origin) : reply({ error: 'Telegram: ' + r.error }, 502, origin);
+}
+
+const JOBS = ['chat', 'writing', 'queue', 'feedback', 'check', 'tg-setup', 'tg-status', 'tg-test'];
+export { aiBand, checkWriting, runQueue, runTelegram, tgBuildMessage, tgUpdate, tgIdKey, tgClassHash, tgPlanHash, tgBand, tgNow };
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';
     // a check page anyone can open: https://loom-ai.<name>.workers.dev/status (says whether the key is saved, never the key)
     if (request.method === 'GET' && new URL(request.url).pathname === '/status') {
-      const info = { running: true, version: VERSION, keySaved: !!env.GEMINI_API_KEY, kv: !!env.LOOM_KV, jobs: JOBS };
+      const info = { running: true, version: VERSION, keySaved: !!env.GEMINI_API_KEY, kv: !!env.LOOM_KV, telegram: !!env.TELEGRAM_BOT_TOKEN, jobs: JOBS };
       if (env.LOOM_KV) info.waiting = await waitingCount(env.LOOM_KV);
       return new Response(JSON.stringify(info), { headers: { 'Content-Type': 'application/json' } });
     }
+    // Telegram's own calls (no Origin) — checked with the webhook's secret header
+    if (request.method === 'POST' && new URL(request.url).pathname === '/tg/update') return tgUpdate(request, env);
     if (!ALLOWED_ORIGINS.includes(origin)) return new Response('Not allowed', { status: 403 });
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors(origin) });
     if (request.method !== 'POST') return reply({ error: 'POST only' }, 405, origin);
@@ -323,6 +551,7 @@ export default {
     try { q = await request.json(); } catch (e) { return reply({ error: 'Bad request' }, 400, origin); }
     const job = q && JOBS.includes(q.job) ? q.job : 'chat';
     if (tooMany(request.headers.get('CF-Connecting-IP') || 'x', job)) return reply({ error: 'Too many requests — wait a minute.' }, 429, origin);
+    if (job.startsWith('tg-')) return tgJob(job, q, env, origin, new URL(request.url).origin);
     if (job === 'queue' || job === 'feedback' || job === 'check') {
       if (!env.LOOM_KV) return reply({ error: 'The helper has no LOOM_KV storage yet' }, 500, origin);
       if (job === 'feedback') return feedbackJob(q, env, origin);
@@ -333,5 +562,5 @@ export default {
     return job === 'writing' ? writing(q, env, origin) : chat(q, env, origin);
   },
   // Cloudflare Cron Trigger (*/5 * * * *)
-  async scheduled(event, env, ctx) { ctx.waitUntil(runQueue(env)); }
+  async scheduled(event, env, ctx) { ctx.waitUntil(Promise.all([runQueue(env), runTelegram(env).catch(() => null)])); }
 };
