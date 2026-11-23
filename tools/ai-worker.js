@@ -24,10 +24,10 @@
 // Free plan: Google may use what is sent to improve its products — no students' private details.
 
 const ALLOWED_ORIGINS = ['https://baxod1rovvf.github.io'];
-const VERSION = '2026-11-23e';
+const VERSION = '2026-11-23f';
 const DEFAULT_MODEL = 'gemini-flash-lite-latest';   // Google's fastest model on the free plan (answers in a few seconds)
 const PER_MODEL_SECONDS = 18, TOTAL_SECONDS = 40;   // Loom waits 60 s, so the helper always answers before that
-const PER_MINUTE = { chat: 8, writing: 40, queue: 30, feedback: 60, check: 10, 'tg-setup': 5, 'tg-status': 30, 'tg-test': 5 };          // per visitor (IP) per minute, kept in this worker's memory
+const PER_MINUTE = { chat: 8, writing: 40, queue: 30, feedback: 60, check: 10, 'tg-setup': 5, 'tg-status': 30, 'tg-test': 5, 'tg-extra': 10 };          // per visitor (IP) per minute, kept in this worker's memory
 const seen = new Map();
 
 function cors(origin) {
@@ -391,8 +391,22 @@ function tgPlanFrom(rec) {
   // has one `hour` for both
   const hr = (v, d) => { const n = Math.floor(Number(v)); return n >= 0 && n <= 23 ? n : d; };
   const old = hr(p.hour, -1);
+  // the teacher's own extra posts (2026-11-23: "➕ Add"): a repeating message, or a course exercise's link — each on its own days at its
+  // own hour (a link with no days goes only with "📨 Send now"); only links to the teacher's student page
+  const extras = (Array.isArray(p.extras) ? p.extras : []).slice(0, 10).map(x => {
+    x = x && typeof x === 'object' ? x : {};
+    const kind = x.kind === 'link' ? 'link' : 'text';
+    return { id: String(x.id || ''), kind, text: clip(String(x.text || '').trim(), kind === 'link' ? 300 : 1000), label: clip(x.label, 60), url: String(x.url || ''),
+      days: Array.isArray(x.days) ? x.days.map(Number).filter(d => d >= 0 && d <= 6) : [], hour: hr(x.hour, -1) };
+  }).filter(x => /^[a-z0-9]{4,12}$/.test(x.id) && (x.kind === 'text' ? !!x.text : !!x.label && TG_LINK_RE.test(x.url)));
   return { hash: String(rec.title || ''), group: clip(p.group, 80), remindHour: hr(p.remindHour, old >= 0 ? old : 17),
-    resultsHour: hr(p.resultsHour, old >= 0 ? old : 19), on: p.on !== false, days, links, parts };
+    resultsHour: hr(p.resultsHour, old >= 0 ? old : 19), on: p.on !== false, days, links, parts, extras };
+}
+const TG_LINK_RE = /^https:\/\/baxod1rovvf\.github\.io\/teachers_assistant\/skill\.html\?s=(listening|reading|writing|speaking)&st=[a-z0-9]{1,6}(&c=[A-Za-z0-9]{6})?$/;
+// an extra post's text (HTML for Telegram): the teacher's words as typed; a link → "📚 Step 9 · Listening", the note, "👉 Open the exercise"
+function tgExtraText(x) {
+  if (x.kind === 'text') return tgEsc(x.text);
+  return '📚 <b>' + tgEsc(x.label) + '</b>' + (x.text ? '\n' + tgEsc(x.text) : '') + '\n👉 <a href="' + tgEsc(x.url) + '">Open the exercise</a>';
 }
 
 // The step a group is on now = the step whose Listening/Reading/Writing link was copied most recently (in the last 21 days)
@@ -494,12 +508,27 @@ async function runTelegram(env, nowMs) {
   try { recs = await fsRunQuery(fsEq('type', 'TA_SYNC:TG'), 200); } catch (e) { out.failed++; return out; }
   for (const rec of recs) {
     const plan = tgPlanFrom(rec);
-    if (!plan || !plan.on || !plan.days.includes(t.day) || !/^[0-9a-f]{24}$/.test(plan.hash)) continue;
-    const kinds = [plan.remindHour === t.hour ? 'remind' : '', plan.resultsHour === t.hour ? 'results' : ''].filter(Boolean);
+    if (!plan || !plan.on || !/^[0-9a-f]{24}$/.test(plan.hash)) continue;
+    const kinds = !plan.days.includes(t.day) ? [] : [plan.remindHour === t.hour ? 'remind' : '', plan.resultsHour === t.hour ? 'results' : ''].filter(Boolean);
+    const extras = plan.extras.filter(x => x.hour === t.hour && x.days.includes(t.day));
+    if (!kinds.length && !extras.length) continue;
+    let chat;
+    const chatOf = async () => (chat === undefined ? (chat = await env.LOOM_KV.get('tgchat:' + plan.hash, 'json')) : chat);
+    // the teacher's own posts first (a reminder before the lesson), each once a day
+    for (const x of extras) {
+      const sentKey = 'tgsent:' + plan.hash + ':' + t.date + ':x' + x.id;
+      if (await env.LOOM_KV.get(sentKey)) continue;
+      const c = await chatOf();
+      if (!c || !c.chatId) { out.skipped++; continue; }
+      const r = await tgApi(env, 'sendMessage', { chat_id: c.chatId, text: tgExtraText(x), parse_mode: 'HTML', disable_web_page_preview: x.kind !== 'link' });
+      if (!r.ok) { out.failed++; continue; }
+      await env.LOOM_KV.put(sentKey, '1', { expirationTtl: 3 * 86400 });
+      out.sent++;
+    }
     for (const kind of kinds) {
       const sentKey = 'tgsent:' + plan.hash + ':' + t.date + ':' + kind;
       if (await env.LOOM_KV.get(sentKey)) continue;
-      const chat = await env.LOOM_KV.get('tgchat:' + plan.hash, 'json');
+      const chat = await chatOf();
       if (!chat || !chat.chatId) { out.skipped++; continue; }
       const since = Date.parse((await env.LOOM_KV.get('tglast:' + plan.hash)) || '') || (now - 86400000);
       let msg;
@@ -564,8 +593,22 @@ async function tgJob(job, q, env, origin, selfOrigin) {
   const chat = await env.LOOM_KV.get('tgchat:' + hash, 'json');
   const bot = (await env.LOOM_KV.get('tgbot')) || '';
   if (job === 'tg-status') return reply({ connected: !!(chat && chat.chatId), title: chat ? chat.title : '', bot }, 200, origin);
-  // tg-test: today's message now, at most once every 2 minutes per group (doesn't count as the day's post)
   if (!chat || !chat.chatId) return reply({ error: 'Not connected yet — send /connect in the class chat first' }, 409, origin);
+  // tg-extra: one of the teacher's own posts now ("📨 Send now"), read from the plan online (never text from the request); once a minute each
+  if (job === 'tg-extra') {
+    const id = String(q.id || '');
+    if (!/^[a-z0-9]{4,12}$/.test(id)) return reply({ error: 'Bad message id' }, 400, origin);
+    const recs = await fsRunQuery(fsEq('title', hash), 5).catch(() => []);
+    const plan = tgPlanFrom(recs.find(r => r.type === 'TA_SYNC:TG') || {});
+    const x = plan && plan.extras.find(e => e.id === id);
+    if (!x) return reply({ error: 'This message isn\'t online yet — wait a minute and press Send now again' }, 409, origin);
+    if (await env.LOOM_KV.get('tgxnow:' + hash + ':' + id)) return reply({ error: 'It was just sent — wait a minute before sending it again' }, 429, origin);
+    const r = await tgApi(env, 'sendMessage', { chat_id: chat.chatId, text: tgExtraText(x), parse_mode: 'HTML', disable_web_page_preview: x.kind !== 'link' });
+    if (!r.ok) return reply({ error: 'Telegram: ' + r.error }, 502, origin);
+    await env.LOOM_KV.put('tgxnow:' + hash + ':' + id, '1', { expirationTtl: 60 });
+    return reply({ ok: true }, 200, origin);
+  }
+  // tg-test: today's message now, at most once every 2 minutes per group (doesn't count as the day's post)
   if (await env.LOOM_KV.get('tgtest:' + hash)) return reply({ error: 'Wait two minutes before the next test' }, 429, origin);
   const recs = await fsRunQuery(fsEq('title', hash), 5).catch(() => []);
   const plan = tgPlanFrom(recs.find(r => r.type === 'TA_SYNC:TG') || {});
@@ -582,8 +625,8 @@ async function tgJob(job, q, env, origin, selfOrigin) {
   return r.ok ? reply({ ok: true }, 200, origin) : reply({ error: 'Telegram: ' + r.error }, 502, origin);
 }
 
-const JOBS = ['chat', 'writing', 'queue', 'feedback', 'check', 'tg-setup', 'tg-status', 'tg-test'];
-export { aiBand, checkWriting, runQueue, runTelegram, tgBuildMessage, tgCurrentStep, tgUpdate, tgIdKey, tgClassHash, tgPlanHash, tgBand, tgNow };
+const JOBS = ['chat', 'writing', 'queue', 'feedback', 'check', 'tg-setup', 'tg-status', 'tg-test', 'tg-extra'];
+export { aiBand, checkWriting, runQueue, runTelegram, tgBuildMessage, tgCurrentStep, tgExtraText, tgPlanFrom, tgUpdate, tgIdKey, tgClassHash, tgPlanHash, tgBand, tgNow };
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';

@@ -3689,20 +3689,44 @@ body.loom-studio.loom-air .login-stage { background: rgba(255,255,255,0.72) !imp
 .ta-modal .dct-nothing { font-style: italic; color: var(--ink-soft); }
 
 /* ---- the Telegram box on a group's Course page (js/pages/telegram.js, 2026-11-23) ---- */
-.tg-box { margin: 0 0 18px; padding: 16px 18px; border-radius: 20px; background: var(--surface); border: 1px solid var(--border);
-  box-shadow: var(--shadow-md); display: flex; flex-direction: column; gap: 10px; max-width: 820px; }
+.tg-box { margin: 0 0 18px; padding: 12px 18px; border-radius: 20px; background: var(--surface); border: 1px solid var(--border);
+  box-shadow: var(--shadow-md); max-width: 820px; }
+/* folded to one line (2026-11-23): the summary is "📨 Telegram" + the status; tap opens .tg-body */
+.tg-box > summary { list-style: none; cursor: pointer; align-items: center; min-height: 32px; }
+.tg-box > summary::-webkit-details-marker { display: none; }
+.tg-chev { margin-left: auto; width: 10px; height: 10px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); opacity: .55; transition: transform .2s ease; }
+.tg-box[open] .tg-chev { transform: translateY(3px) rotate(225deg); }
+.tg-body { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+.tg-body > p { margin: 0; }
+.tg-extras { display: flex; flex-direction: column; gap: 8px; padding-top: 10px; border-top: 1px solid var(--border); }
+.tg-extras-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.tg-extra { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 14px; background: rgba(20,24,31,0.04); }
+.tg-x-ic { font-size: 1.1rem; }
+.tg-x-main { flex: 1; min-width: 0; }
+.tg-x-text { overflow-wrap: anywhere; white-space: pre-line; }
+.tg-x-when, .tg-x-none { color: var(--ink-soft); font-size: .85rem; margin: 0; }
+.tg-add { display: flex; flex-direction: column; gap: 12px; }
+.tg-kinds { display: flex; flex-wrap: wrap; gap: 6px; }
+.tg-kind { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,0.7); font: inherit; font-weight: 600; cursor: pointer; color: var(--ink-soft); }
+.tg-kind.on { background: var(--brand, #14181F); border-color: var(--brand, #14181F); color: #fff; }
+.tg-field { display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: .92rem; }
+.tg-field.tg-inline { flex-direction: row; align-items: center; }
+.tg-field textarea { resize: vertical; font-weight: 400; }
+.tg-row2 { display: flex; flex-wrap: wrap; gap: 10px; }
+.tg-row2 .tg-field { flex: 1 1 180px; }
+.tg-x-tip:empty { display: none; }
+.tg-x-tip { margin: 0; }
 body.loom-air .tg-box { background: rgba(255,255,255,0.78); border-color: rgba(255,255,255,0.9); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
 .tg-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
 .tg-head b { font-size: 1.05rem; }
 .tg-sub, .tg-status { color: var(--ink-soft); font-size: .92rem; }
 .tg-status.ok { color: var(--air-moss, #2f7a3a); font-weight: 600; }
-.tg-box:not(.on) { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between; }
 .tg-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 8px; line-height: 1.5; }
 .tg-steps li { padding-left: 2px; }
 .tg-code { font: 600 .95rem ui-monospace, SFMono-Regular, Menlo, monospace; padding: 3px 8px; border-radius: 8px; background: rgba(20,24,31,0.06); user-select: all; }
 .tg-bot { font-weight: 600; }
 .tg-on { margin-left: 10px; display: inline-flex; align-items: center; gap: 6px; }
-.tg-box .tg-hour { margin-left: 6px; width: auto !important; min-width: 96px; display: inline-block; padding: 6px 12px; }
+.tg-box .tg-hour, .tg-add .tg-hour { margin-left: 6px; width: auto !important; min-width: 96px; display: inline-block; padding: 6px 12px; }
 .tg-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .tg-hint { margin: 0; font-size: .85rem; }
 .tg-days { display: inline-flex; flex-wrap: wrap; gap: 4px; vertical-align: middle; margin-right: 6px; }

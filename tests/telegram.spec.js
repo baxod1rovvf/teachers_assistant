@@ -218,6 +218,9 @@ test('teacher: Set up Telegram makes a connect code and puts the group\'s plan o
   await hideNotices(page);
   await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();
   const box = page.locator('.tg-box');
+  // folded to one line until tapped (2026-11-23: "hide the telegram box")
+  await expect(box.getByRole('button', { name: 'Set up Telegram' })).toBeHidden();
+  await box.locator('summary').click();
   await box.getByRole('button', { name: 'Set up Telegram' }).click();
   await expect(box.locator('.tg-code')).toHaveText(/^\/connect [A-Z2-9]{8}$/);
   await expect(box.locator('#tgStatus')).toHaveText('⚪ Not connected yet');
@@ -258,4 +261,105 @@ test('teacher: Set up Telegram makes a connect code and puts the group\'s plan o
   await expect.poll(() => asked.some(b => b.job === 'tg-setup')).toBe(true);
   // the code is kept (synced) for the group
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_telegram')).g1)).toMatchObject({ code, remindHour: 16, resultsHour: 20, on: false, days: [0, 1, 2, 3, 4, 5] });
+});
+
+test('your own messages (2026-11-23 "➕ Add"): a repeating message on its days at its hour, a course link with Send now only; text from the request is never posted', async () => {
+  const w = await load();
+  const hash = await w.tgPlanHash('EXTRA234');
+  const url = 'https://baxod1rovvf.github.io/teachers_assistant/skill.html?s=listening&st=e9&c=LSN999';
+  const docs = { ['tg-' + hash]: { type: 'TA_SYNC:TG', title: hash, data: JSON.stringify({ v: 1, group: 'Target', remindHour: 17, resultsHour: 19, on: true, days: [3], parts: [], links: [],
+    extras: [{ id: 'aa11bb22', kind: 'text', text: 'Lesson at 15:00 <today> & bring books', days: [1, 3], hour: 9 },
+      { id: 'cc33dd44', kind: 'link', label: 'Step 9 · Listening', url, text: 'Before Friday', days: [], hour: 9 },
+      { id: 'ee55ff66', kind: 'link', label: 'Evil', url: 'https://evil.example/x', days: [1], hour: 9 }] }) } };
+  stubNet(docs);
+  const env = { LOOM_KV: fakeKv(), TELEGRAM_BOT_TOKEN: '123:abc' };
+  await env.LOOM_KV.put('tgchat:' + hash, JSON.stringify({ chatId: -5 }));
+  const at = (hhmm, plus) => Date.parse('2026-11-23T' + hhmm + ':00Z') - 5 * 3600000 + (plus || 0) * 86400000;   // Monday
+  const posts = () => sent.filter(x => x.method === 'sendMessage');
+  // Monday 09:00 (the group's own posts aren't on Mondays): the repeating message once; the link has no days; the foreign link is dropped
+  expect((await w.runTelegram(env, at('09:02'))).sent).toBe(1);
+  expect((await w.runTelegram(env, at('09:07'))).sent).toBe(0);
+  expect(posts()).toHaveLength(1);
+  expect(posts()[0].body).toMatchObject({ chat_id: -5, parse_mode: 'HTML', text: 'Lesson at 15:00 &lt;today&gt; &amp; bring books' });
+  expect((await w.runTelegram(env, at('10:02'))).sent).toBe(0);
+  expect((await w.runTelegram(env, at('09:02', 1))).sent).toBe(0);   // Tuesday
+  expect((await w.runTelegram(env, at('09:02', 2))).sent).toBe(1);   // Wednesday
+  // Send now: the link, read from the plan online; an id that isn't there → refused
+  const job = b => w.default.fetch(new Request('https://loom-ai.x.workers.dev/', { method: 'POST',
+    headers: { 'Content-Type': 'application/json', Origin: 'https://baxod1rovvf.github.io' }, body: JSON.stringify(b) }), env);
+  sent.length = 0;
+  expect((await job({ job: 'tg-extra', code: 'EXTRA234', id: 'cc33dd44', text: 'ignored' })).status).toBe(200);
+  expect(posts()[0].body.text).toBe('📚 <b>Step 9 · Listening</b>\nBefore Friday\n👉 <a href="' + url.replace(/&/g, '&amp;') + '">Open the exercise</a>');
+  expect((await job({ job: 'tg-extra', code: 'EXTRA234', id: 'cc33dd44' })).status).toBe(429);   // once a minute
+  expect((await job({ job: 'tg-extra', code: 'EXTRA234', id: 'ee55ff66' })).status).toBe(409);
+  expect((await job({ job: 'tg-extra', code: 'EXTRA234', id: 'zz99zz99' })).status).toBe(409);
+  expect(posts()).toHaveLength(1);
+  // Off in Loom stops them too
+  docs['tg-' + hash].data = JSON.stringify(Object.assign(JSON.parse(docs['tg-' + hash].data), { on: false }));
+  expect((await w.runTelegram(env, at('09:02', 7))).sent).toBe(0);
+});
+
+test('teacher: ➕ Add puts a repeating message and a course link into the group\'s plan; Send now asks the helper; 🗑 deletes', async ({ page, context }) => {
+  const now = Date.now();
+  await prepare(context, { storage: { ta_course_group: 'g1',
+    ta_telegram: JSON.stringify({ g1: { code: 'ABCD2345', remindHour: 17, resultsHour: 19, on: true, days: [1, 2, 3] } }) } });
+  await context.addInitScript(() => { window.__tgSyncMs = 0; window.skAppUrl = 'https://baxod1rovvf.github.io/teachers_assistant/'; localStorage.setItem('ta_ai_url', 'https://loom-ai.test/'); });
+  const asked = [];
+  await context.route('https://loom-ai.test/**', async route => {
+    if (route.request().method() === 'OPTIONS') return route.fulfill({ status: 204, headers: { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': '*' } });
+    const b = JSON.parse(route.request().postData() || '{}'); asked.push(b);
+    return route.fulfill({ status: 200, contentType: 'application/json', headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify(b.job === 'tg-status' ? { connected: true, title: 'Target chat', bot: 'loom_class_bot' } : { ok: true }) });
+  });
+  await page.goto('/course.html');
+  await hideNotices(page);
+  await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();
+  const box = page.locator('.tg-box');
+  // folded: only the line with the status shows
+  await expect(box.locator('#tgStatus')).toHaveText(/Connected to “Target chat”/);
+  await expect(box.getByRole('button', { name: '➕ Add' })).toBeHidden();
+  await box.locator('summary').click();
+  await expect(box.locator('.tg-x-none')).toBeVisible();
+  // a repeating message: the group's days to start with, 9:00 → Monday + Friday at 8:00
+  await box.getByRole('button', { name: '➕ Add' }).click();
+  const dlg = page.locator('.ta-modal');
+  await expect(dlg.locator('#tgxDays .tg-day.on')).toHaveText(['Mo', 'Tu', 'We']);
+  await dlg.locator('#tgxText').fill('Lesson today at 15:00');
+  await dlg.getByRole('button', { name: 'Tu', exact: true }).click();
+  await dlg.getByRole('button', { name: 'We', exact: true }).click();
+  await dlg.getByRole('button', { name: 'Fr', exact: true }).click();
+  await dlg.locator('#tgxHour').selectOption('8');
+  await dlg.getByRole('button', { name: 'Save', exact: true }).click();
+  await expect(dlg).toHaveCount(0);
+  // the box stays open after the redraw, with the message listed
+  await expect(box.locator('.tg-extra')).toHaveCount(1);
+  await expect(box.locator('.tg-extra .tg-x-when')).toHaveText('Mo Fr · 8:00');
+  const hash = await page.evaluate(() => tgHash('ABCD2345'));
+  const plan = () => page.evaluate(h => { const d = window.__fakeDocs.find(x => x.__id === 'tg-' + h); return d ? JSON.parse(d.data) : null; }, hash);
+  await expect.poll(async () => ((await plan()) || {}).extras).toEqual([expect.objectContaining({ kind: 'text', text: 'Lesson today at 15:00', days: [1, 5], hour: 8 })]);
+  // a course link: Step 2 · Reading, no day → Save and send now
+  await box.getByRole('button', { name: '➕ Add' }).click();
+  await dlg.getByRole('radio', { name: '🔗 Course link' }).click();
+  await expect(dlg.locator('#tgxDays .tg-day.on')).toHaveCount(0);
+  await expect(dlg.locator('#tgxTip')).toHaveText(/only when you press Send now/);
+  await dlg.locator('#tgxStep').selectOption('b2');
+  await dlg.locator('#tgxSkill').selectOption('reading');
+  await dlg.locator('#tgxNote').fill('Before Friday');
+  await dlg.getByRole('button', { name: '📨 Save and send now' }).click();
+  await expect.poll(() => asked.filter(b => b.job === 'tg-extra').length).toBe(1);
+  const link = (await plan()).extras.find(x => x.kind === 'link');
+  expect(link).toMatchObject({ label: 'Step 2 · Reading', text: 'Before Friday', days: [] });
+  expect(link.url).toMatch(/^https:\/\/baxod1rovvf\.github\.io\/teachers_assistant\/skill\.html\?s=reading&st=b2&c=[A-Z0-9]{6}$/);
+  expect(asked.find(b => b.job === 'tg-extra')).toEqual({ job: 'tg-extra', code: 'ABCD2345', id: link.id });
+  // the same as Copy link: the code is kept for the group and its class list goes online
+  const code = link.url.split('c=')[1];
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('ta_skills_links'))['g1|reading|b2'].code)).toBe(code);
+  await expect.poll(() => page.evaluate(c => !!window.__fakeDocs.find(x => x.__id === 'class-' + c), code)).toBe(true);
+  await expect(box.locator('.tg-extra')).toHaveCount(2);
+  await expect(box.locator('.tg-extra').nth(1).locator('.tg-x-when')).toHaveText('Only when you press Send now');
+  // 🗑 deletes it
+  page.once('dialog', d => d.accept());
+  await box.locator('.tg-extra').first().getByRole('button', { name: 'Delete this message' }).click();
+  await expect(box.locator('.tg-extra')).toHaveCount(1);
+  await expect.poll(async () => (await plan()).extras.map(x => x.kind)).toEqual(['link']);
 });

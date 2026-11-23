@@ -105,7 +105,7 @@ few months of normal use (1 teacher account in heavy use, ~20 more accounts, ~10
    still queue offline and arrive later — that's intended. `tests/data-safety.spec.js`.
 
 24. **The Telegram bot posts students' names and results into the class chat** (the teacher's choice) — everyone in the chat sees them,
-   and anyone added to the chat later too. It needs the Cloudflare helper pasted again (version `2026-11-23e`) and the secret
+   and anyone added to the chat later too. It needs the Cloudflare helper pasted again (version `2026-11-23f`) and the secret
    `TELEGRAM_BOT_TOKEN`; without them nothing is posted (no error for students). If the bot token leaks, anyone can post as the bot —
    make a new one with @BotFather (/revoke) and save it again.
 
@@ -740,7 +740,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   is hidden, for an hour at most — `__rlPollForMs`), tap a writing band → its AI feedback (the helper's, else `w.ai` = the feedback Loom had when the
   link was shared, `skShareData`); the helper doesn't know it and there's none → "No AI feedback for this writing yet." with the text and band. **Anyone with the link can read the writings on it** (teacher's choice).
   **Cloudflare, done once by the teacher**: create a KV namespace `loom-writings` and bind it to the worker as `LOOM_KV`; add a Cron Trigger
-  `*/5 * * * *`; paste `tools/ai-worker.js` and Deploy; `/status` must show version `2026-11-23e` (was `2026-11-13b` before the Telegram bot) and `kv: true` (also `running`, `keySaved`, `waiting`, `jobs`).
+  `*/5 * * * *`; paste `tools/ai-worker.js` and Deploy; `/status` must show version `2026-11-23f` (was `2026-11-13b` before the Telegram bot) and `kv: true` (also `running`, `keySaved`, `waiting`, `jobs`).
   Limits per IP per minute: queue 30, feedback 60, check 10, chat 8, writing 40. **KV free plan: about 1 000 writes and 1 000 lists a day** (the timer
   uses 288 lists); busy days can run out → writings just wait. `tests/ai-queue.spec.js`, `tests/results-link.spec.js`.
 - **Answers that didn't arrive (teacher, 2026-11-13: "students send me screenshots that they completed listening, but the system
@@ -852,7 +852,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   student link says "🎙 This dictation isn't ready yet — ask your teacher." **After recording more: run the build tool, `npm run stamp`, commit audio + data.**
 - **Telegram bot (teacher, 2026-11-23: "connect telegram bot with loom … warn students who don't finish exercise yet and results
   too"; chose: into each group's Telegram chat, automatically every day)** — the bot lives in the Cloudflare helper (`tools/ai-worker.js`,
-  version `2026-11-23e`: `runTelegram` in `scheduled`, the webhook `POST /tg/update`, jobs `tg-setup` / `tg-status` / `tg-test`). Loom: a
+  version `2026-11-23f`: `runTelegram` in `scheduled`, the webhook `POST /tg/update`, jobs `tg-setup` / `tg-status` / `tg-test`). Loom: a
   "📨 Telegram" box on a group's Course page (`js/pages/telegram.js`, `skTgBoxHtml` called from `skGroupPageHtml`): Set up Telegram makes an
   8-letter connect code, kept in `ta_telegram[groupId] = { code, hour, on, sig }` (synced, in the backup); 🔌 Connect the bot (once, sets the
   webhook), "/connect CODE" to send in the class chat (📋 Copy), **the days** (Mo … Su buttons, `days` = JS weekdays, 0 = Sunday; new
@@ -870,7 +870,7 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   `f:<id>` like skWritingAiBand, else ⏳) and "⏰ Not finished yet" for parts sent in the last 7 days (most missing first; a student with old IDs
   once), or "🎉 Everyone has finished", then "📊 Results" with the links of the steps sent in the last 7 days. `tgIdKey`/`tgClassHash`/`tgBand` are copies of skill-bands.js (`tests/telegram.spec.js` compares them).
   **Setup by the teacher (once)**: @BotFather → /newbot → token → Cloudflare: the worker's secret `TELEGRAM_BOT_TOKEN`; paste the new
-  `tools/ai-worker.js` and Deploy (`/status` shows `telegram: true`, version `2026-11-23e`); in Loom press 🔌 Connect the bot; per group: add the
+  `tools/ai-worker.js` and Deploy (`/status` shows `telegram: true`, version `2026-11-23f`); in Loom press 🔌 Connect the bot; per group: add the
   bot to the chat and send the /connect line. Grammar and Dictation links aren't in the messages (they aren't sent per group).
   **Two posts a day (teacher, 2026-11-23: "a list of students who don't finish exercise at 17:00 and results at 19:00")**: the plan has
   `remindHour` (default 17 — "⏰ Not finished yet", or "🎉 Everyone has finished") and `resultsHour` (default 19 — "🏆 New results" since the
@@ -889,6 +889,15 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   Connect the bot again so Telegram is told); in a channel the bot must be an **admin that can post and delete messages**. The bot deletes
   every `/connect` post at once (students shouldn't see the code), and a code already connected to one chat is refused from another
   ("already used by another chat" — Stop Telegram + Set up Telegram makes a new code).
+  **Folded + your own messages (teacher, same day: "hide the telegram box … if i want bot to send something else too add an 'add'
+  button"; chose a repeating message and a course link)**: the box is a `<details>` — one line "📨 Telegram" + the status, a tap opens it
+  (`tgOpenBoxes`, kept while the page is open). "Your own messages" + **➕ Add** (`tgAddExtra`, a taModal): 🔁 a repeating message (text ≤ 1000,
+  days — the group's to start with — and an hour) or 🔗 a course link (step + part + optional note; days optional, none = only with 📨 Send now;
+  saving does what Copy link does — code, sentAt, class list — so it also becomes the step the bot reports on if it's the newest). Kept as
+  `extras` on the entry (≤ 10, `{id, kind, text, step, skill, label, url, days, hour}`) and in the plan; the helper posts each on its days at its
+  hour (`tgsent:<hash>:<date>:x<id>`), the link as "📚 Step 9 · Listening / note / 👉 Open the exercise" (only `skill.html` links to the
+  teacher's site, `TG_LINK_RE`); 📨 Send now = job `tg-extra` {code, id} — the helper reads the text from the plan online, never from the request
+  (once a minute each). Off stops them too. `tgSyncNow` runs one at a time (`tgSyncChain`) so Send now waits for the plan to be online.
 - **Speaking Journey (teacher, 2026-11-09)**: **Speaking** follows the teacher's "Speaking Journey" (20 topics: 1 Daily Routine,
   2 Family, 3 Home & Living, 4 Food & Meals, 5 Free Time, 6 Friends, 7 School & Education, 8 Hobbies & Sports, 9 Shopping, 10 Your City,
   11 Holidays, 12 Future Plans, 13 Jobs & Careers, 14 Clothes & Fashion, 15 Transport, 16 Animals & Pets, 17 Health & Lifestyle,
