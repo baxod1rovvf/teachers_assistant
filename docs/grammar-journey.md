@@ -2239,6 +2239,10 @@ Examples:
 
 #### Part 1: I am working, she is reading
 
+> 🧒 Tasavvur qiling: onangiz qo‘ng‘iroq qilib so‘radi: «Nima qilyapsan?» Siz: «Kitob o‘qiyapman.» → I **am reading** a book.
+> 🧒 Aynan hozir bo‘layotgan ish: **am / is / are** + fe’l**-ing**.
+> 🧒 O‘zbekchadagi **-yap** — inglizchada **-ing**: o‘qi**yap**man → I am read**ing**.
+
 Use the present continuous for an action that is happening now, at the moment of speaking. Make it with am / is / are + verb-ing: I am reading. She is cooking. They are playing. Time words: now, right now, at the moment, and Look! / Listen! at the start.
 
 | Person | be | Example |
@@ -2272,6 +2276,10 @@ Examples:
    *Hint: He + is + watching + TV.*
 
 #### Part 2: I'm not working. Are you working?
+
+> 🧒 Tasavvur qiling: do‘stingiz qo‘ng‘iroq qildi: «Uxlayapsanmi?» → **Are** you sleeping?
+> 🧒 Savolda **am / is / are** oldinga chiqadi. Inkorda ulardan keyin **not**: I'm **not** sleeping.
+> 🧒 Qisqa javob: Yes, I **am**. / No, I'm **not**.
 
 Negative: put not after am / is / are: I'm not sleeping. She isn't (is not) working. They aren't (are not) listening. Question: put am / is / are before the person: Are you listening? Is he sleeping? Short answers: Yes, I am. / No, I'm not. Yes, she is. / No, she isn't. With a question word: What are you doing?
 
@@ -2307,6 +2315,10 @@ Examples:
    *Hint: Question: Are + you + verb-ing (watching).*
 
 #### Part 3: making, swimming, lying
+
+> 🧒 Tasavvur qiling: do‘stingizga yozyapsiz: «Suzyapman!» → I'm swi**mm**ing!
+> 🧒 Ko‘p fe’lga shunchaki **-ing**: read → read**ing**. Oxiri **-e** bo‘lsa, e tushadi: make → mak**ing**.
+> 🧒 Qisqa fe’l unli + undosh bilan tugasa, oxirgi harf ikki marta: sit → si**tt**ing, run → ru**nn**ing.
 
 Most verbs just add -ing: read → reading, play → playing. If a verb ends in -e, drop the e: make → making, write → writing. If a short verb ends in one vowel + one consonant, double the last letter: sit → sitting, run → running, swim → swimming (but not w, x or y: play → playing). ie → y: lie → lying.
 
@@ -2369,6 +2381,10 @@ Examples:
 
 #### Part 1: Every day or now?
 
+> 🧒 Tasavvur qiling: siz har kuni maktabga piyoda borasiz, lekin bugun avtobusdasiz.
+> 🧒 Har kuni, odatda → I **walk** to school every day. (Present Simple)
+> 🧒 Aynan hozir → I'**m taking** the bus now. (Present Continuous)
+
 Present simple = habits, routines and facts. Time words: every day, usually, often, never, on Mondays. I walk to school every day. Present continuous = an action happening now. Time words: now, right now, at the moment, Look!, Listen! I'm walking to school now. Look at the time words to choose.
 
 |  | Present simple | Present continuous |
@@ -2403,6 +2419,10 @@ Examples:
 
 #### Part 2: do / does or am / is / are?
 
+> 🧒 Tasavvur qiling: do‘stingizdan so‘rayapsiz: «Shaxmat o‘ynaysanmi?» va «Hozir shaxmat o‘ynayapsanmi?»
+> 🧒 Odat haqida — **do / does**: **Do** you play chess? Hozir haqida — **am / is / are**: **Are** you playing chess now?
+> 🧒 Aralashtirmang: «Do you playing», «Are you play» — xato.
+
 Present simple negatives and questions use do / does: Do you play chess? He doesn't work here. Present continuous uses am / is / are: Are you playing chess now? He isn't working today. Don't mix them: not Do you playing, not Are you play.
 
 |  | Present simple | Present continuous |
@@ -2436,6 +2456,10 @@ Examples:
    *Hint: now → Are + you + listening.*
 
 #### Part 3: want, like, know — no -ing
+
+> 🧒 Tasavvur qiling: chanqadingiz: «Suv xohlayapman.» Inglizchada: I **want** water. («I'm wanting» — xato!)
+> 🧒 His-tuyg‘u va fikr fe’llari **-ing** olmaydi, hatto «hozir» bo‘lsa ham: **like, love, want, need, know, understand, remember**.
+> 🧒 I **know** the answer. (Javobni bilaman.)
 
 Some verbs are about feelings, thoughts and having, not actions: like, love, hate, want, need, know, understand, remember, have (= own). We use them in the present simple, even with now: I want a drink now (not I'm wanting). I know the answer (not I'm knowing). But have lunch, have a shower are actions, so they can take -ing: I'm having lunch now.
 
@@ -2499,6 +2523,10 @@ Examples:
 
 #### Part 1: I can swim
 
+> 🧒 Tasavvur qiling: yangi do‘stingiz so‘radi: «Suza olasanmi?» Siz: «Ha!» → I **can** swim.
+> 🧒 **can** = qila olaman. U hech qachon o‘zgarmaydi: she **can** («she cans» — xato).
+> 🧒 **can** dan keyin fe’l oddiy holda: He can **speak** French.
+
 Use can + verb to say that someone is able to do something. Can is the same for every person — it never takes -s: I can swim. She can swim (not she cans). After can, use the verb as it is, with no to and no -s: He can speak French (not can to speak, not can speaks).
 
 | Person | can + verb | Example |
@@ -2531,6 +2559,10 @@ Examples:
    *Hint: She + can + ride + a horse.*
 
 #### Part 2: can't — Can you…?
+
+> 🧒 Tasavvur qiling: mushuk uchmoqchi, lekin ucha olmaydi → Cats **can't** fly.
+> 🧒 Inkor: **can't** + fe’l. Savolda **can** oldinga chiqadi: **Can** you cook? (Ovqat pishira olasizmi?)
+> 🧒 Qisqa javob: Yes, I **can**. / No, I **can't**.
 
 Negative: cannot or can't (short form) + verb: I can't swim. Cats can't fly. Question: put can before the person: Can you swim? Can she cook? Short answers: Yes, I can. / No, I can't. With a question word: What can you cook? How many languages can you speak?
 
@@ -2565,6 +2597,10 @@ Examples:
    *Hint: Can + she + drive (no do / does, no -s).*
 
 #### Part 3: could, couldn't — in the past
+
+> 🧒 Tasavvur qiling: bobongiz aytadi: «Olti yoshimda o‘qiy olardim.» → When I was six, I **could** read.
+> 🧒 O‘tgan zamonda **can** → **could**, **can't** → **couldn't**.
+> 🧒 Last year I **couldn't** swim, but now I **can**.
 
 For ability in the past, use could / couldn't + verb as it is: When I was six, I could read. Last year I couldn't swim, but now I can. Question: Could you swim when you were five? Short answers: Yes, I could. / No, I couldn't.
 
@@ -2626,6 +2662,10 @@ Examples:
 
 #### Part 1: Can I…? — asking if it's OK
 
+> 🧒 Tasavvur qiling: sinf issiq. O‘qituvchidan so‘raysiz: «Derazani ochsam maylimi?» → **Can I** open the window?
+> 🧒 Ruxsat so‘rash: **Can I** + fe’l?
+> 🧒 Javoblar: Yes, you can. / Sure. / Sorry, you can't.
+
 Use Can I…? to ask if it is OK to do something (to ask for permission): Can I open the window? Can I use your pen? Answers: Yes, you can. / Yes, of course. / Sure. / Sorry, you can't. / No, you can't.
 
 | Ask | Yes | No |
@@ -2659,6 +2699,10 @@ Examples:
 
 #### Part 2: Can you…? Could you…? — asking for help
 
+> 🧒 Tasavvur qiling: qo‘lingiz band. Akangizga aytasiz: «Eshikni ochib yuborasanmi?» → **Can you** open the door?
+> 🧒 Birovdan yordam so‘rash: **Can you** + fe’l?
+> 🧒 O‘qituvchi, katta yoshli yoki notanish odamga odobliroq: **Could you** help me, please?
+
 Use Can you…? to ask someone to do something for you: Can you help me? Could you…? is more polite — use it with teachers, older people and people you don't know: Could you open the door, please? Answers: Sure. / Of course. / Yes, no problem. / Sorry, I can't.
 
 | Request | How polite? | Answer |
@@ -2691,6 +2735,10 @@ Examples:
    *Hint: Could you + verb as it is (no to, no -ing).*
 
 #### Part 3: Can I…? or Can you…? And May I…?
+
+> 🧒 Tasavvur qiling: o‘qituvchining xonasi oldidasiz: «Kirsam maylimi?» → **May I** come in?
+> 🧒 Kim qiladi? **Can I…?** — men qilaman. **Can you…?** — siz qilasiz.
+> 🧒 **May I…?** = Can I…?, lekin juda odobli: o‘qituvchi bilan, do‘konda.
 
 Be careful who does it. Can I…? = I want to do it: Can I use your phone? Can you…? = I want you to do it: Can you call me? May I…? means the same as Can I…?, but it is very polite — use it with teachers and in shops: May I come in? Also remember: borrow = take something for a short time (Can I borrow…?), lend = give something for a short time (Can you lend me…?).
 
@@ -2751,6 +2799,10 @@ Examples:
 
 #### Part 1: I like swimming
 
+> 🧒 Tasavvur qiling: yangi tanishingiz so‘radi: «Nima qilishni yoqtirasan?» Siz: «Suzishni.» → I like swi**mming**.
+> 🧒 **like, love, enjoy, hate** dan keyin fe’l **-ing** bilan: She loves danc**ing**.
+> 🧒 O‘zbekchadagi **-ish** — inglizchada **-ing**: suz**ish** → swimm**ing**.
+
 After like, love, enjoy, don't like and hate, use verb + -ing: I like swimming. She loves dancing. We hate getting up early. The -ing spelling is the same as in the present continuous: dance → dancing, swim → swimming. After like, love and hate you can also use to + verb (I like to swim) — both are right. After enjoy, only -ing: I enjoy reading.
 
 | Verb | + verb-ing | Example |
@@ -2787,6 +2839,10 @@ Examples:
 
 #### Part 2: Do you like…? I don't like…
 
+> 🧒 Tasavvur qiling: onangiz so‘raydi: «Yugurishni yoqtirasanmi?» → **Do** you like runn**ing**?
+> 🧒 Savol va inkor **do / does** bilan: I **don't** like running. She **doesn't** enjoy cooking.
+> 🧒 -ing li fe’l o‘zgarmaydi.
+
 Negatives and questions are made like the present simple, with do / does: I don't like running. She doesn't enjoy cooking. Do you like dancing? Does he love singing? The -ing verb stays the same.
 
 |  | Example |
@@ -2820,6 +2876,10 @@ Examples:
    *Hint: What + do + you + like + verb-ing.*
 
 #### Part 3: Swimming is fun. Good at drawing.
+
+> 🧒 Tasavvur qiling: sevimli mashg‘ulotingizni aytasiz: «Kitob o‘qish — hobbim.» → **Reading** is my hobby.
+> 🧒 -ing li fe’l gap boshida ot kabi turadi: **Swimming** is fun.
+> 🧒 **good at, bad at, interested in** dan keyin ham **-ing**: She is good at draw**ing**.
 
 A verb + -ing can be the subject of a sentence, like a noun: Swimming is good for you. Reading is my hobby. After good at, bad at and interested in, use verb + -ing too: She is good at drawing. I'm bad at singing. He's interested in cooking.
 
@@ -2882,6 +2942,10 @@ Examples:
 
 #### Part 1: I want to go
 
+> 🧒 Tasavvur qiling: darsdan charchadingiz: «Uyga ketgim keladi.» → I want **to go** home.
+> 🧒 **want, need, would like, hope, learn** dan keyin **to** + fe’l.
+> 🧒 **to** dan keyin fe’l oddiy holda: He wants **to play** («to plays» — xato).
+
 After want, need, would like, hope and learn, use to + verb: I want to go home. She needs to study. We would like to visit Rome. The verb after to stays as it is — no -s, no -ing: He wants to play (not to plays, not to playing).
 
 | Verb | + to + verb | Example |
@@ -2918,6 +2982,10 @@ Examples:
 
 #### Part 2: don't want to, Would you like to…?
 
+> 🧒 Tasavvur qiling: do‘stingizni tug‘ilgan kuningizga chaqirasiz: «Kelasanmi?» → **Would you like to** come to my party?
+> 🧒 Javob: Yes, **I'd love to**. (Jon deb!) / Sorry, I can't.
+> 🧒 Inkor: I **don't want to** go. He **doesn't need to** wear a uniform.
+
 Negative: don't / doesn't + want / need + to + verb: I don't want to go. He doesn't need to wear a uniform. Question: Do you want to…? Does she need to…? Would you like to…? is a polite invitation: Would you like to come to my party? — Yes, I'd love to. / Sorry, I can't.
 
 |  | Example |
@@ -2950,6 +3018,10 @@ Examples:
    *Hint: Do + you + want + to + play.*
 
 #### Part 3: Why? — to + verb
+
+> 🧒 Tasavvur qiling: do‘stingiz so‘radi: «Nega sportzalga borasan?» Siz: «Baquvvat bo‘lish uchun.»
+> 🧒 Sabab uchun **to** + fe’l: I go to the gym **to get** fit.
+> 🧒 «uchun» deb **for** qo‘ymang: «for get fit» — xato!
 
 Use to + verb to say why someone does something (the reason): I go to the gym to get fit. She is saving money to buy a bike. Don't use for + verb for a reason: I go to the gym to get fit (not for get fit).
 
@@ -3012,6 +3084,10 @@ Examples:
 
 #### Part 1: at seven o'clock, at night
 
+> 🧒 Tasavvur qiling: do‘stingiz bilan kelishyapsiz: «Soat yettida ko‘rishamiz.» → See you **at** 7 o'clock.
+> 🧒 Soat bilan — **at**: **at** 6:30, **at** half past three.
+> 🧒 Yana: **at** night (kechasi), **at** lunchtime (tushlikda).
+
 Use at with clock times: at 7 o'clock, at half past three, at 6:30. Also with meal times and some special times: at breakfast, at lunchtime, at night, at noon, at midnight.
 
 | at | Examples |
@@ -3046,6 +3122,10 @@ Examples:
 
 #### Part 2: on Monday, on 5 May
 
+> 🧒 Tasavvur qiling: tug‘ilgan kuningiz dushanba kuni → My birthday is **on** Monday.
+> 🧒 Kun va sana bilan — **on**: **on** Friday, **on** 5 May, **on** my birthday.
+> 🧒 Kun + kun qismi: **on** Monday morning.
+
 Use on with days and dates: on Monday, on Fridays, on 5 May, on my birthday, on New Year's Day. Also with a day + part of the day: on Monday morning, on Saturday night.
 
 | on | Examples |
@@ -3079,6 +3159,10 @@ Examples:
    *Hint: Day + part of the day → on.*
 
 #### Part 3: in May, in 2020, in the morning
+
+> 🧒 Tasavvur qiling: yozgi ta’tilni rejalashtiryapsiz: «Iyulda dengizga boramiz.» → We go to the sea **in** July.
+> 🧒 Uzunroq vaqt — **in**: **in** May, **in** 2026, **in** summer, **in** the morning (lekin **at** night).
+> 🧒 **every, next, last, this, today, tomorrow, yesterday** oldidan hech narsa qo‘yilmaydi: See you tomorrow.
 
 Use in with longer times: months (in May), years (in 2026), seasons (in summer) and parts of the day (in the morning, in the afternoon, in the evening — but at night). Don't use in, on or at before every, next, last, this, today, tomorrow and yesterday: See you tomorrow (not on tomorrow). I go there every Friday.
 
@@ -3142,6 +3226,10 @@ Examples:
 
 #### Part 1: Tom's bike
 
+> 🧒 Tasavvur qiling: partada kalit qoldi. Kimniki? Tomniki → It's **Tom's** key.
+> 🧒 Ism + **'s** = o‘zbekchadagi **-ning**: **Tom's** bike — Tom**ning** velosipedi.
+> 🧒 Tartib o‘zbekchadagidek: avval egasi, keyin narsa: **Anna's** bag.
+
 Use a name or a noun + 's to say who something belongs to: Tom's bike = the bike of Tom. my sister's room, the teacher's desk, the cat's food. The thing comes after 's: Anna's bag (not the bag Anna's).
 
 | Person | + 's | Example |
@@ -3176,6 +3264,10 @@ Examples:
 
 #### Part 2: my parents' house, the children's toys
 
+> 🧒 Tasavvur qiling: ota-onangizning uyi haqida gapiryapsiz → my **parents'** house.
+> 🧒 Ko‘plik **-s** bilan tugasa — faqat **'**: the girls**'** room. Tugamasa — **'s**: the **children's** toys.
+> 🧒 Diqqat: Tom**'s** tall = Tom **is** tall.
+
 Plural nouns that end in -s add only an apostrophe ('): my parents' house, the girls' room, the students' books. Plurals that don't end in -s add 's: the children's toys, the men's shoes, people's names. Be careful: 's can also mean is: Tom's tall = Tom is tall.
 
 | Noun | Possessive | Example |
@@ -3209,6 +3301,10 @@ Examples:
    *Hint: Tom's tired = Tom is tired.*
 
 #### Part 3: Whose…?
+
+> 🧒 Tasavvur qiling: sinfda egasiz sumka turibdi. O‘qituvchi so‘raydi: «Bu kimning sumkasi?» → **Whose** bag is this?
+> 🧒 Javob: It's **Anna's**. / It's **mine**.
+> 🧒 Adashtirmang: **who's** = who is.
 
 Ask Whose…? to find out who something belongs to: Whose bag is this? — It's Anna's. Whose shoes are these? — They're my brother's. You can answer with 's or with mine, yours, his, hers, ours, theirs. Don't mix up whose and who's: who's = who is.
 
@@ -3270,6 +3366,10 @@ Examples:
 
 #### Part 1: many books, much water
 
+> 🧒 Tasavvur qiling: do‘stingizdan so‘rayapsiz: «Nechta kitobing bor?» va «Qancha vaqting bor?»
+> 🧒 Sanaladigan — **many**: **many** books. Sanalmaydigan — **much**: **much** time.
+> 🧒 Ular ko‘proq savol va inkorda keladi: I haven't got **much** time.
+
 Use many with plural countable nouns (things you can count: books, friends, apples). Use much with uncountable nouns (things you can't count: water, money, time, milk). We use much and many mostly in questions and negatives: How many friends have you got? I haven't got much time.
 
 |  | Countable (books) | Uncountable (water) |
@@ -3303,6 +3403,10 @@ Examples:
 
 #### Part 2: a lot of, lots of
 
+> 🧒 Tasavvur qiling: o‘qituvchi ko‘p vazifa berdi: «Uy vazifam ko‘p.» → I have **a lot of** homework.
+> 🧒 **a lot of** ikkalasi bilan ham ishlatiladi: **a lot of** books, **a lot of** water.
+> 🧒 Oddiy gapda «much homework» emas, **a lot of** homework deymiz.
+
 Use a lot of (or lots of) with both countable and uncountable nouns: a lot of books, a lot of water. In positive sentences, a lot of is more natural than much or many: I have a lot of homework (not I have much homework). You can use a lot of in questions and negatives too.
 
 |  | Countable (books) | Uncountable (water) |
@@ -3335,6 +3439,10 @@ Examples:
    *Hint: Don't forget of: a lot of books.*
 
 #### Part 3: How much? How many? A lot.
+
+> 🧒 Tasavvur qiling: bozorda narx so‘raysiz: «Bu qancha?» → **How much** is it?
+> 🧒 **How many** + sanaladigan (nechta?), **How much** + sanalmaydigan (qancha?).
+> 🧒 Gap oxirida otsiz: I like it **a lot**. (Menga juda yoqadi.)
 
 How many + plural noun asks about a number: How many pens have you got? How much + uncountable noun asks about an amount: How much juice is there? How much is it? / How much are they? asks about a price. At the end of a sentence, with no noun after it, say a lot (not a lot of): I like it a lot. He reads a lot.
 
@@ -3397,6 +3505,10 @@ Examples:
 
 #### Part 1: a few apples, a little milk
 
+> 🧒 Tasavvur qiling: mehmon choyga «ozgina sut» so‘radi → **a little** milk, please.
+> 🧒 **a few** = bir nechta (sanaladigan): **a few** apples. **a little** = ozgina (sanalmaydigan): **a little** time.
+> 🧒 Ikkalasi ham yaxshi ma’noda: ko‘p emas, lekin yetarli.
+
 a few = some, a small number. Use it with plural countable nouns: a few friends, a few apples. a little = some, a small amount. Use it with uncountable nouns: a little milk, a little time. Both are positive: not many / not much, but enough.
 
 |  | Countable (apples) | Uncountable (milk) |
@@ -3429,6 +3541,10 @@ Examples:
 
 #### Part 2: few and little — almost none
 
+> 🧒 Tasavvur qiling: yangi shaharga ko‘chdingiz, hali deyarli do‘stingiz yo‘q → I have **few** friends.
+> 🧒 **a** siz **few / little** = deyarli yo‘q, yetarli emas.
+> 🧒 **a few** friends — bir nechta do‘st (yaxshi). **few** friends — do‘st deyarli yo‘q (achinarli).
+
 Without a, few and little sound negative: almost none, not enough. few friends = almost no friends (sad). little time = almost no time (a problem). Compare: I have a few friends (good — I have some). I have few friends (sad — almost none). We often say very few / very little.
 
 |  | Some, enough (positive) | Almost none (negative) |
@@ -3460,6 +3576,10 @@ Examples:
    *Hint: milk can't be counted → There is little milk.*
 
 #### Part 3: Short answers: a lot, a few, not much, none
+
+> 🧒 Tasavvur qiling: do‘stingiz so‘radi: «Nechta amakivachchang bor?» Siz qisqa javob berasiz: «Ko‘p!» → **A lot.**
+> 🧒 Qisqa javoblar: **A lot.** / **A few.** / **Not many.** / **None.** (hech qancha)
+> 🧒 Sanalmaydiganga: **A little.** / **Not much.**
 
 To answer How many…? or How much…?, you can use these words alone: How many cousins have you got? — A lot. / A few. / Not many. / None. How much tea do you want? — A little, please. / Not much. Remember: few / many for things you can count, little / much for things you can't count.
 
@@ -3522,6 +3642,10 @@ Examples:
 
 #### Part 1: taller, bigger, easier
 
+> 🧒 Tasavvur qiling: akangiz bilan bo‘y o‘lchayapsiz: «Akam mendan baland.» → My brother is tall**er than** me.
+> 🧒 O‘zbekchada **-roq** va **-dan**, inglizchada **-er** va **than**: baland**roq** → tall**er**, men**dan** → **than** me.
+> 🧒 Imlo: nice → nice**r**, big → bi**gg**er, easy → eas**ier**.
+
 Use a comparative + than to compare two people or things: Tom is taller than Sam. Short adjectives (one syllable) add -er: tall → taller, old → older. Ending in -e: add -r: nice → nicer. One vowel + one consonant: double the last letter: big → bigger, hot → hotter. Ending in consonant + y: y → ier: easy → easier, happy → happier.
 
 | Adjective | Rule | Comparative |
@@ -3557,6 +3681,10 @@ Examples:
 
 #### Part 2: more expensive, more interesting
 
+> 🧒 Tasavvur qiling: do‘konda ikki telefonni solishtiryapsiz: «Bu qimmatroq.» → This phone is **more expensive**.
+> 🧒 Uzun sifat **-er** olmaydi, oldiga **more** qo‘yiladi: **more** interesting.
+> 🧒 Ikkalasi birga emas: «more bigger» — xato!
+
 Long adjectives (two or more syllables, not ending in -y) use more + adjective + than: expensive → more expensive, interesting → more interesting, beautiful → more beautiful. Don't use more and -er together: bigger (not more bigger).
 
 | Adjective | Comparative |
@@ -3591,6 +3719,10 @@ Examples:
    *Hint: comfortable is long → more comfortable (no -er).*
 
 #### Part 3: better, worse, further; than me
+
+> 🧒 Tasavvur qiling: imtihondan keyin aytasiz: «Bugungi bahom kechagisidan yaxshiroq.» → My mark is **better** today.
+> 🧒 Qoidasizlar: good → **better**, bad → **worse**, far → **further**.
+> 🧒 **than** dan keyin **me, him, her**: She is older than **me**.
 
 Some adjectives are irregular: good → better, bad → worse, far → further (or farther). After than, use me, him, her, us, them, or a name or a noun: She is older than me. To ask, use Which…? for things and Who…? for people: Which is bigger, the sun or the moon? Who is taller, you or your brother?
 
@@ -3652,6 +3784,10 @@ Examples:
 
 #### Part 1: the tallest, the biggest, the happiest
 
+> 🧒 Tasavvur qiling: sinfingizdagi eng baland bola Tom → Tom is **the tallest** boy in our class.
+> 🧒 O‘zbekchadagi **eng** = **the …est**: **eng** katta → **the** bigg**est**.
+> 🧒 Imlo -er dagidek: nice → the nice**st**, happy → the happ**iest**.
+
 Use the superlative to compare one person or thing with all the others in a group: Tom is the tallest boy in our class. Short adjectives: the + adjective + -est: tall → the tallest. The spelling rules are the same as for -er: nice → the nicest, big → the biggest, happy → the happiest. Use in with places and groups: the tallest in the class, the biggest city in the world.
 
 | Adjective | Comparative | Superlative |
@@ -3685,6 +3821,10 @@ Examples:
    *Hint: the + -est + in the class.*
 
 #### Part 2: the most beautiful, the best, the worst
+
+> 🧒 Tasavvur qiling: shahardagi eng chiroyli bog‘ haqida gapiryapsiz → It's **the most beautiful** park.
+> 🧒 Uzun sifat — **the most** + sifat: **the most** expensive.
+> 🧒 Qoidasizlar: good → **the best** (eng yaxshi), bad → **the worst** (eng yomon).
 
 Long adjectives use the most + adjective: the most beautiful, the most expensive, the most interesting. Irregular: good → better → the best, bad → worse → the worst, far → further → the furthest.
 
@@ -3720,6 +3860,10 @@ Examples:
    *Hint: dangerous is long → the most dangerous.*
 
 #### Part 3: Two things or the whole group?
+
+> 🧒 Tasavvur qiling: avval ikkita sumkani, keyin butun sinfdagi sumkalarni solishtiryapsiz.
+> 🧒 Ikki narsa → **-er than**: My bag is bigg**er than** yours. Butun guruh → **the -est**: It's **the** bigg**est** in the class.
+> 🧒 **the** ni unutmang va «the biggest than» demang.
 
 Two things → comparative + than: My bag is bigger than yours. Three or more (the whole group) → the + superlative: My bag is the biggest in the class. Don't use than after a superlative, and don't forget the before it.
 
@@ -3780,6 +3924,10 @@ Examples:
 
 #### Part 1: A red car — the adjective comes first
 
+> 🧒 Tasavvur qiling: ko‘chada qizil mashina ko‘rdingiz → a **red** car.
+> 🧒 Sifat narsadan **oldin** keladi — o‘zbekchadagidek: **qizil** mashina → a **red** car.
+> 🧒 Sifat **-s** olmaydi: two **red** cars («reds cars» — xato).
+
 In English, an adjective goes before the noun: a red car (not a car red). Adjectives never take -s: two red cars (not reds cars). After be, the adjective comes alone: The car is red.
 
 | Right | Wrong |
@@ -3814,6 +3962,10 @@ Examples:
 
 #### Part 2: Opinion first: a beautiful old house
 
+> 🧒 Tasavvur qiling: buvingizning uyini tasvirlayapsiz: «chiroyli eski uy» → a **beautiful old** house.
+> 🧒 Avval **fikr** (sizningcha qanday: beautiful, nice, boring), keyin **fakt** (katta, eski, qizil).
+> 🧒 a **nice big** garden, a **lovely red** dress.
+
 When there are two adjectives, the opinion (what you think: nice, beautiful, lovely, boring, ugly, funny) comes first. Then the fact (size, age, colour…): a beautiful old house, a nice big garden, a lovely red dress.
 
 | Opinion | Fact | Noun |
@@ -3847,6 +3999,9 @@ Examples:
    *Hint: Opinion (ugly) before fact (old).*
 
 #### Part 3: Size, age, colour, material
+
+> 🧒 Tasavvur qiling: yangi stolni tasvirlayapsiz: «katta, eski, jigarrang, yog‘och stol» → a **big old brown wooden** table.
+> 🧒 Tartib: **o‘lcham** → **yosh** → **rang** → **qayerdan** → **nimadan** → narsa.
 
 Fact adjectives usually go in this order: size (big, small) → age (old, new, young) → colour (red, black) → where it is from (Italian, Chinese) → what it is made of (wooden, plastic, cotton) → the noun. The whole order: opinion – size – age – colour – origin – material. We rarely use more than three adjectives together.
 
@@ -3911,6 +4066,10 @@ Examples:
 
 #### Part 1: I was, you were
 
+> 🧒 Tasavvur qiling: o‘qituvchi so‘radi: «Kecha qayerda eding?» Siz: «Kasal edim.» → I **was** ill.
+> 🧒 **was / were** = am, is, are ning o‘tgan zamoni (**edi**). I, he, she, it → **was**; you, we, they → **were**.
+> 🧒 Kalit so‘zlar: **yesterday**, **last week**, **two days ago**.
+
 Was and were are the past of am, is and are. Use was with I, he, she, it (and one person or thing). Use were with you, we, they (and two or more). Past time words: yesterday, last night, last week, in 2020, two days ago.
 
 | Present | Past | Example |
@@ -3943,6 +4102,10 @@ Examples:
    *Hint: last night = the past; with we, use were.*
 
 #### Part 2: wasn't, weren't — Were you…?
+
+> 🧒 Tasavvur qiling: do‘stingiz so‘raydi: «Kecha uyda edingmi?» → **Were** you at home yesterday?
+> 🧒 Savolda **was / were** oldinga chiqadi. Inkor: **wasn't, weren't**: I **wasn't** at school.
+> 🧒 Qisqa javob: Yes, I **was**. / No, I **wasn't**.
 
 Negative: wasn't (was not), weren't (were not): I wasn't at school. They weren't hungry. Question: put was / were before the person: Were you at home? Was it expensive? Short answers: Yes, I was. / No, I wasn't. Yes, they were. / No, they weren't.
 
@@ -3977,6 +4140,10 @@ Examples:
    *Hint: Where + were + you + yesterday?*
 
 #### Part 3: There was, there were; I was born
+
+> 🧒 Tasavvur qiling: to‘ydan keyin aytasiz: «U yerda odam ko‘p edi.» → **There were** a lot of people.
+> 🧒 O‘tgan zamonda: **there was** (bitta), **there were** (ko‘p).
+> 🧒 Tug‘ilganingiz haqida: I **was born** in 2014. (2014-yilda tug‘ilganman.)
 
 Use there was with one thing or an uncountable noun, and there were with plural nouns: There was a cat in the garden. There were a lot of people. Negative: there wasn't / there weren't. To say when or where someone was born, use was / were born: I was born in 2010. Where were you born?
 
@@ -4039,6 +4206,10 @@ Examples:
 
 #### Part 1: worked, played — regular verbs
 
+> 🧒 Tasavvur qiling: onangiz so‘raydi: «Kecha nima qilding?» Siz: «Futbol o‘ynadim.» → I play**ed** football.
+> 🧒 Tugagan o‘tgan ish — fe’lga **-ed**. O‘zbekchadagi **-di** ga o‘xshaydi: o‘yna**di**m → play**ed**.
+> 🧒 Hamma uchun bir xil: I worked, she worked, they worked.
+
 Use the past simple for finished actions in the past: yesterday, last week, in 2019, two days ago. Regular verbs add -ed: work → worked, play → played. The past simple is the same for every person: I worked, she worked, they worked.
 
 | Present | Past |
@@ -4073,6 +4244,10 @@ Examples:
 
 #### Part 2: lived, stopped, studied — spelling
 
+> 🧒 Tasavvur qiling: kundaligingizga yozyapsiz: «Kecha ingliz tilini o‘rgandim.» → I stud**ied** English.
+> 🧒 Oxiri **-e** — faqat **-d**: live → live**d**. Qisqa fe’l: stop → sto**pp**ed.
+> 🧒 Undosh + **y** → **ied**: study → stud**ied**; unli + y → **-ed**: play → play**ed**.
+
 Verbs ending in -e add only -d: live → lived, like → liked. A short verb with one vowel + one consonant doubles the last letter: stop → stopped, plan → planned. Consonant + y: y → ied: study → studied, cry → cried. Vowel + y: just add -ed: play → played, stay → stayed.
 
 | Verb ends in | Rule | Examples |
@@ -4106,6 +4281,10 @@ Examples:
    *Hint: cry: consonant + y → ied: cried.*
 
 #### Part 3: went, had, saw — irregular verbs
+
+> 🧒 Tasavvur qiling: dam olish kuningizni aytib beryapsiz: «Bozorga bordim, olma oldim.» → I **went** to the market and **bought** apples.
+> 🧒 Ko‘p ishlatiladigan fe’llar **-ed** olmaydi — ularni yodlaymiz:
+> 🧒 go → **went**, have → **had**, see → **saw**, eat → **ate**, buy → **bought**, do → **did**.
 
 Many common verbs are irregular — they don't add -ed. You need to learn them: go → went, have → had, see → saw, eat → ate, buy → bought, get → got, make → made, take → took, come → came, do → did.
 
@@ -4170,6 +4349,10 @@ Examples:
 
 #### Part 1: didn't + verb
 
+> 🧒 Tasavvur qiling: o‘qituvchi so‘radi: «Uy vazifasini qildingmi?» Siz: «Yo‘q, qilmadim.» → I **didn't do** it.
+> 🧒 Inkor: **didn't** + fe’l oddiy holda: She **didn't watch** TV.
+> 🧒 **didn't** o‘tgan zamonni o‘zi ko‘rsatadi: «didn't saw» — xato, **didn't see** — to‘g‘ri.
+
 Negative: didn't (did not) + the verb as it is. It's the same for every person and for regular and irregular verbs: I didn't go. She didn't watch TV. After didn't, never use the past form: He didn't see me (not didn't saw).
 
 | Positive | Negative |
@@ -4204,6 +4387,10 @@ Examples:
 
 #### Part 2: Did you…? — Yes, I did.
 
+> 🧒 Tasavvur qiling: do‘stingiz ta’tildan qaytdi. So‘raysiz: «Yoqdimi?» → **Did** you like it?
+> 🧒 Savol: **Did** + kim + fe’l. Qisqa javob: Yes, I **did**. / No, I **didn't**.
+> 🧒 **be** bilan **did** emas: **Were** you tired? («Did you be» — xato).
+
 Question: Did + person + verb as it is: Did you go? Did she like it? Short answers: Yes, I did. / No, I didn't. Be careful with be: Were you tired? (not Did you be tired?).
 
 | Question | Short answer |
@@ -4236,6 +4423,10 @@ Examples:
    *Hint: Did + you + have + breakfast?*
 
 #### Part 3: What did you do? Where did you go?
+
+> 🧒 Tasavvur qiling: ukangiz kech keldi. So‘raysiz: «Qayerga bording?» → Where **did** you **go**?
+> 🧒 Tartib: savol so‘zi + **did** + kim + fe’l: What **did** you **do**?
+> 🧒 Fe’l o‘zgarmaydi: «Where did you went?» — xato!
 
 With a question word: question word + did + person + verb as it is: What did you do? Where did she go? When did they arrive? What time did you get up? did already shows the past, so the verb doesn't change: Where did you go? (not Where did you went?).
 
@@ -4298,6 +4489,10 @@ Examples:
 
 #### Part 1: I'll help you — will
 
+> 🧒 Tasavvur qiling: xona sovuq bo‘lib ketdi va siz shu zahoti aytasiz: «Derazani yopaman.» → I**'ll** close the window.
+> 🧒 Shu ondagi qaror, taklif va va’da — **will** + fe’l: I**'ll** help you.
+> 🧒 Taxmin ham: I think it **will** rain. (Menimcha, yomg‘ir yog‘adi.)
+
 Use will + verb (short form 'll) for a decision you make at the moment of speaking: It's cold. I'll close the window. Use it for offers and promises: I'll help you. I'll call you tonight. And for predictions (what you think will happen): I think it will rain tomorrow. Negative: won't (will not).
 
 | Use | Example |
@@ -4333,6 +4528,10 @@ Examples:
 
 #### Part 2: I'm going to visit my aunt — going to
 
+> 🧒 Tasavvur qiling: xolangiznikiga borishni bir hafta oldin rejalashtirgansiz → I**'m going to** visit my aunt.
+> 🧒 Oldindan qilingan reja — **am / is / are + going to** + fe’l.
+> 🧒 Ko‘rinib turgan narsa: Look at the clouds! It**'s going to** rain.
+
 Use am / is / are + going to + verb for plans — things you decided before now: I'm going to visit my aunt next week. We're going to buy a new car. Also use it when you can see that something is going to happen soon: Look at those clouds! It's going to rain.
 
 | Person | be + going to + verb | Example |
@@ -4366,6 +4565,10 @@ Examples:
    *Hint: I'm + going to + play + football.*
 
 #### Part 3: will or going to?
+
+> 🧒 Tasavvur qiling: do‘stingiz «Ruchkamni unutibman!» dedi. Siz darhol: «Meniki bilan yoz.» → I**'ll** lend you mine.
+> 🧒 O‘zingizdan so‘rang: qachon qaror qildim?
+> 🧒 Oldin (reja) → **going to**. Hozir, shu zahoti → **will**.
 
 Ask yourself: when did I decide? A plan made before now → going to: I'm going to see the dentist tomorrow (I have an appointment). A decision at the moment of speaking, an offer or a promise → will: Oh no, I forgot my pen! — Don't worry, I'll lend you mine.
 

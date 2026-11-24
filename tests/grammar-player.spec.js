@@ -91,9 +91,12 @@ test('Beginner lessons: each learn card starts with an easy Uzbek explanation fr
     return !!(s.compareDocumentPosition(r) & Node.DOCUMENT_POSITION_FOLLOWING); })).toBe(true);   // the story comes before the English rule
   expect(await story.innerHTML()).not.toContain('**');
   expect(await page.evaluate(() => window.TA_GRAMMAR.levels[0].lessons[0].chunks.every(c => (c.learn.story || []).length >= 5))).toBe(true);
-  // Lessons 2–15 got theirs too (teacher, same day: "yes change lesson 2-15"); Elementary and Pre-Intermediate don't have one yet
+  // Lessons 2–15 got theirs too (teacher, same day: "yes change lesson 2-15")
   expect(await page.evaluate(() => window.TA_GRAMMAR.levels[0].lessons.every(l => l.chunks.every(c => (c.learn.story || []).length >= 4)))).toBe(true);
-  expect(await page.evaluate(() => window.TA_GRAMMAR.levels.slice(1).some(lv => lv.lessons.some(l => l.chunks.some(c => c.learn.story))))).toBe(false);
+  // Elementary (teacher, 2026-11-24: "do not add too much text… Imagine section too — tasavvur qiling"): short, each starts "Tasavvur qiling:"
+  expect(await page.evaluate(() => window.TA_GRAMMAR.levels[1].lessons.every(l => l.chunks.every(c => {
+    const s = c.learn.story || []; return s.length >= 2 && s.length <= 4 && /^Tasavvur qiling: /.test(s[0]); })))).toBe(true);
+  expect(await page.evaluate(() => window.TA_GRAMMAR.levels.slice(2).some(lv => lv.lessons.some(l => l.chunks.some(c => c.learn.story))))).toBe(false);
   expect(errors).toEqual([]);
 });
 

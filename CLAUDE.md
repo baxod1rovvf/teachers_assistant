@@ -851,7 +851,8 @@ writing's band goes in "Other result". Results for writing: `viewSkillWriting` (
   **Easy Uzbek explanations (teacher, 2026-11-22: "explain it in a very easy way… life examples"; Lesson 1, then "yes change lesson 2-15")**: every
   Beginner part has `story` — Uzbek lines from a child's day that compare with Uzbek (-man → am, u → he/she/it, -lar → -s, -ma → don't, -mi → Do…?),
   shown first on the learn card as "🧒 Oddiy qilib aytganda" (`.gr-story`; `**word**` bold, "• " list lines); Uzbek is allowed only in `uz` and `story`.
-  Lesson 1's rules and examples were made simpler too (v 2). Elementary and Pre-Intermediate have no story yet.
+  Lesson 1's rules and examples were made simpler too (v 2). **Elementary (teacher, 2026-11-24: "do not add too much text… Imagine section too —
+  tasavvur qiling")**: shorter stories, 2–4 lines, the first always "Tasavvur qiling: …" (polite *siz*). Pre-Intermediate has no story yet.
   Raise a lesson's `v` in docs/grammar-journey.json whenever its questions change after links were sent (old drafts then start again). Grammar CSS for the teacher's side is scoped under `#courseWrap` (skill.html also loads css/style.css).
 - **Dictation Journey (teacher, 2026-11-19)**: a sixth part of the Course, under the Grammar Journey (`js/pages/dictation.js`; 5 levels × 20 dictations, 711 sentences).
   **Rebuilt 2026-11-21 (teacher: "make dictation difficult")**: kept the last 5 Beginner (d16–20), last 10 Elementary (d31–40), last 10 Pre-intermediate
