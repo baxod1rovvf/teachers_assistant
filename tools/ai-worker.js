@@ -24,7 +24,7 @@
 // Free plan: Google may use what is sent to improve its products — no students' private details.
 
 const ALLOWED_ORIGINS = ['https://baxod1rovvf.github.io'];
-const VERSION = '2026-11-23f';
+const VERSION = '2026-11-24a';
 const DEFAULT_MODEL = 'gemini-flash-lite-latest';   // Google's fastest model on the free plan (answers in a few seconds)
 const PER_MODEL_SECONDS = 18, TOTAL_SECONDS = 40;   // Loom waits 60 s, so the helper always answers before that
 const PER_MINUTE = { chat: 8, writing: 40, queue: 30, feedback: 60, check: 10, 'tg-setup': 5, 'tg-status': 30, 'tg-test': 5, 'tg-extra': 10 };          // per visitor (IP) per minute, kept in this worker's memory
@@ -426,6 +426,7 @@ function tgCurrentStep(plan, now) {
   return { no: best.no, label: 'Step ' + best.no, parts, link };
 }
 const TG_SKILL_EMOJI = { Listening: '🎧', Reading: '📖', Writing: '✍️' };
+const TG_SKILL_ORDER = ['Listening', 'Reading', 'Writing'];
 // A post for one plan, about the step the group is on: { text } or { empty: true }. kind 'remind' = who hasn't finished every
 // sent part of it (or "everyone has finished"); 'results' = everyone's bands in it + a "Step 8 — results" link, only when a result
 // came after `since` (the last results post) — else empty, so the same table isn't posted every day.
@@ -475,9 +476,18 @@ async function tgBuildMessage(env, plan, since, nowMs, kind) {
   if (kind === 'results' || !kind) {
     if (kind === 'results' && !freshCount) return { empty: true };
     lines.push('🏆 <b>Results</b>');
-    const rows = [...bands.entries()].sort((a, b) => a[0].localeCompare(b[0]));
-    rows.slice(0, 60).forEach(([name, b]) => lines.push('• ' + tgEsc(name) + ' — ' +
-      Object.keys(b).map(k => (TG_SKILL_EMOJI[k] || '') + ' ' + tgEsc(k) + ' <b>' + tgEsc(b[k]) + '</b>').join(' · ')));
+    // only the top 3 (teacher, 2026-11-24: "this results should only show top 3 students, other students can see themselves via link"),
+    // ranked like the results page's Overall: every part sent counts, a part not done = 0; a writing still waiting (⏳) is left out
+    const skills = [...new Set(cur.parts.map(x => String(x.label.split('·')[1] || x.label).trim()))];
+    const overall = b => {
+      let sum = 0, n = 0;
+      for (const k of skills) { const v = b[k]; if (v === '⏳') continue; n++; sum += typeof v === 'number' ? v : 0; }
+      return n ? sum / n : 0;
+    };
+    const rows = [...bands.entries()].map(([name, b]) => ({ name, b, o: overall(b) }))
+      .sort((x, y) => y.o - x.o || x.name.localeCompare(y.name)).slice(0, 3);
+    rows.forEach(({ name, b }) => lines.push('• ' + tgEsc(name) + ' — ' +
+      TG_SKILL_ORDER.filter(k => k in b).map(k => TG_SKILL_EMOJI[k] + ' ' + k[0] + ' - ' + tgEsc(b[k])).join(' · ')));
     if (!rows.length) lines.push('No results yet.');
     if (linkLine) lines.push('', linkLine);
     if (!kind) lines.push('');

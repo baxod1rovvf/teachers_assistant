@@ -90,10 +90,9 @@ test('the posts are about the step the group is on (its link copied last): who h
   expect(remind.match(/Alice Test/g)).toHaveLength(1);
   expect(remind).not.toContain('Step 4');
   expect(remind).not.toContain('Results');
-  // 19:00: Step 5's bands for everyone who did something, and the link as words
+  // 19:00: Step 5's top 3 (here only 2 did something), short "L - 7.5", and the link as words
   const results = (await w.tgBuildMessage(env, plan, Date.parse('2026-11-22T14:00:00Z'), now, 'results')).text;
-  expect(results).toContain('• Alice Test — 🎧 Listening <b>7.5</b> · ✍️ Writing <b>7.5</b>');
-  expect(results).toContain('• Bobur Test — 📖 Reading <b>7.5</b>');
+  expect(results).toContain('🏆 <b>Results</b>\n• Alice Test — 🎧 L - 7.5 · ✍️ W - 7.5\n• Bobur Test — 📖 R - 7.5\n');
   expect(results).not.toContain('Cora Test');
   expect(results).toContain('👉 <a href="' + url5 + '">Step 5 — results</a>');
   expect(results).not.toContain('Not finished');
@@ -150,7 +149,7 @@ test('the timer: who hasn\'t finished at 17:00, the results at 19:00, once a day
   expect((await w.runTelegram(env, at('19:03'))).sent).toBe(1);
   expect((await w.runTelegram(env, at('19:09'))).sent).toBe(0);
   expect(posts()).toHaveLength(2);
-  expect(posts()[1].body.text).toContain('• Alice Test — 📖 Reading <b>8</b>');
+  expect(posts()[1].body.text).toContain('• Alice Test — 📖 R - 8');
   expect(posts()[1].body.text).toContain('<a href="https://baxod1rovvf.github.io/teachers_assistant/results-link.html?r=0123456789abcdef">Step 5 — results</a>');
   expect(posts()[1].body.text).not.toContain('Not finished');
   // Wednesday 19:03: no new results since Monday's post → no results post; the 17:00 list is still sent
@@ -161,6 +160,30 @@ test('the timer: who hasn\'t finished at 17:00, the results at 19:00, once a day
   // switched off in Loom → nothing the next Monday
   docs['tg-' + hash].data = JSON.stringify(Object.assign(JSON.parse(docs['tg-' + hash].data), { on: false }));
   expect((await w.runTelegram(env, at('17:03') + 7 * 86400000)).sent).toBe(0);
+});
+
+test('results: only the top 3 (2026-11-24), ranked like Overall — a sent part not done counts 0, a writing waiting (⏳) is left out', async () => {
+  const w = await load();
+  const now = Date.parse('2026-11-23T14:00:00Z'), at = '2026-11-23T10:00:00Z';
+  const kids = [['1', 'Ann'], ['2', 'Ben'], ['3', 'Cat'], ['4', 'Dan'], ['5', 'Eve']];
+  const docs = {};
+  for (const code of ['LSN777', 'RDG777', 'WRT777']) docs['class-' + code] = { type: 'TA_SYNC:CLASS', data: JSON.stringify(await Promise.all(kids.map(async ([id, n]) => ({ h: await w.tgClassHash(code, id), n })))) };
+  const L = (id, c) => ({ code: 'LSN777', type: 'Listening course', studentId: id, correct: c, total: 10, submittedAt: at });
+  const R = (id, c) => ({ code: 'RDG777', type: 'Reading course', studentId: id, correct: c, total: 10, submittedAt: at });
+  // Dan: L 9 R 9 W blank (band 1) → 6.3 · Ben: L 5.5 R 5.5 W waiting → 5.5 (⏳ left out) · Ann: L 8 R 8, no writing (0) → 5.3 · Cat: R 9 → 3 · Eve: L 3.5 → 1.2
+  Object.assign(docs, { a1: L('1', 9), a2: R('1', 9), b1: L('2', 5), b2: R('2', 5), b3: { code: 'WRT777', type: 'Writing course', studentId: '2', text: 'Hi there.', words: 2, submittedAt: at },
+    c1: R('3', 10), d1: L('4', 10), d2: R('4', 10), d3: { code: 'WRT777', type: 'Writing course', studentId: '4', text: '', words: 0, submittedAt: at }, e1: L('5', 3) });
+  stubNet(docs);
+  const plan = { group: 'Apex', parts: ['Listening', 'Reading', 'Writing'].map(k => ({ label: 'Step 8 · ' + k, codes: [k.slice(0, 3).toUpperCase().replace('LIS', 'LSN').replace('REA', 'RDG').replace('WRI', 'WRT') + '777'], sentAt: '2026-11-22T09:00:00Z' })),
+    links: [{ label: 'Step 8', url: 'https://baxod1rovvf.github.io/teachers_assistant/results-link.html?r=0123456789abcdef', sentAt: '2026-11-22T09:00:00Z' }] };
+  const text = (await w.tgBuildMessage({ LOOM_KV: fakeKv() }, plan, 0, now, 'results')).text;
+  const rows = text.split('\n').filter(l => l.startsWith('• '));
+  expect(rows.map(r => r.split(' — ')[0])).toEqual(['• Dan', '• Ben', '• Ann']);
+  expect(rows[1]).toBe('• Ben — 🎧 L - 5.5 · 📖 R - 5.5 · ✍️ W - ⏳');
+  expect(rows[2]).toBe('• Ann — 🎧 L - 8 · 📖 R - 8');
+  expect(text).toContain('👉 <a href="https://baxod1rovvf.github.io/teachers_assistant/results-link.html?r=0123456789abcdef">Step 8 — results</a>');
+  expect(text).not.toContain('Cat');
+  expect(text).not.toContain('Eve');
 });
 
 test('a plan put online before the two posts (one `hour`) sends both at that hour', async () => {
