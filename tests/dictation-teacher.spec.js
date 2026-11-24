@@ -56,7 +56,7 @@ async function openCourse(page, context, opts) {
   return errors;
 }
 async function openLevel(page, level) {
-  await page.locator('.dct-level[data-level="' + (level || 'beginner') + '"] .gr-level-open').click();
+  await page.evaluate(l => dcOpenLevel(l), level || 'beginner');
   await expect(page.locator('.dct-item').first()).toBeVisible();
 }
 async function openD1(page) {
@@ -65,14 +65,12 @@ async function openD1(page) {
   await expect(page.locator('.dct-page')).toBeVisible();
 }
 
-test('the Dictation Journey has its own page (dictationjourney.html): 5 levels of 20 dictations', async ({ page, context }) => {
+test('the Dictation Journey has its own page (dictationjourney.html), opening straight on a level of 20 dictations', async ({ page, context }) => {
   const errors = await openCourse(page, context, { links: LINKS });
-  await expect(page.locator('#panel-dictationjourney .card-head h2')).toHaveText('✍️ Dictation Journey');
-  await expect(page.locator('#dictationWrap .dct-journey')).toBeVisible();
-  await expect(page.locator('.gr-journey')).toHaveCount(0);   // the Grammar Journey is on its own page
-  await expect(page.locator('.dct-level')).toHaveCount(5);
-  await expect(page.locator('.dct-level[data-level="beginner"] .gr-level-sub')).toHaveText('20 dictations · 1 sent');
-  await expect(page.locator('.dct-level[data-level="advanced"] .gr-level-sub')).toHaveText('20 dictations · 0 sent');
+  await expect(page.locator('#panel-dictationjourney .card-head h2')).toHaveText('Dictation Journey');
+  await expect(page.locator('#panel-dictationjourney .card-head h2 .lc-pen-line')).toHaveCount(1);
+  await expect(page.locator('.gr-journey, .dct-journey')).toHaveCount(0);   // no "all levels" view (2026-11-24) — the Course page lists them
+  await expect(page.locator('.dct-item')).toHaveCount(20);   // no level asked → Beginner
   await openLevel(page);
   await expect(page.locator('.dct-item')).toHaveCount(20);
   expect(await page.locator('.dct-item').evaluateAll(els => els.map(e => e.dataset.item))).toEqual(await page.evaluate(() => window.TA_DICTATION.levels[0].items.map(i => i.id)));
@@ -83,8 +81,13 @@ test('the Dictation Journey has its own page (dictationjourney.html): 5 levels o
   for (const name of ['▶ Play', '📄 Transcript', '🔗 Copy link', '▶️ Try']) {
     await expect(page.locator('.dct-item[data-item="d17"]').getByRole('button', { name, exact: true })).toBeVisible();
   }
-  await page.getByRole('button', { name: '← Dictation Journey' }).click();
-  await expect(page.locator('.dct-journey')).toBeVisible();
+  // ← Course: the Dictation card lists the 5 levels and opens one
+  await page.getByRole('button', { name: '← Course' }).click();
+  const levels = page.locator('.cr-card[data-journey="dictationjourney"] .cr-item');
+  await expect(levels.locator('.cr-item-name')).toHaveText(['Beginner', 'Elementary', 'Pre-intermediate', 'Intermediate', 'Upper-intermediate & Advanced']);
+  await levels.filter({ hasText: 'Intermediate' }).filter({ hasNotText: 'Pre' }).filter({ hasNotText: 'Upper' }).click();
+  await expect(page.locator('#panel-dictationjourney')).toHaveClass(/active/);
+  await expect(page.locator('.gr-page-head h3')).toContainText('Intermediate');
   expect(errors).toEqual([]);
 });
 
@@ -287,10 +290,8 @@ test('the teacher\'s audio carries the page\'s ?v= stamp and stops when the teac
   expect(errors).toEqual([]);
 });
 
-test('an unrecorded dictation shows "Recording…" instead of Play / Try / Copy link, and its level counts only recorded ones', async ({ page, context }) => {
+test('an unrecorded dictation shows "Recording…" instead of Play / Try / Copy link', async ({ page, context }) => {
   const errors = await openCourse(page, context, { unrecorded: ['d17', 'd18'] });
-  await expect(page.locator('.dct-level[data-level="beginner"] .gr-level-sub')).toHaveText('18 ready · 20 dictations · 0 sent');
-  await expect(page.locator('.dct-level[data-level="advanced"] .gr-level-sub')).toHaveText('20 dictations · 0 sent');
   await openLevel(page);
   const d2 = page.locator('.dct-item[data-item="d17"]');
   await expect(d2).toContainText('🎙 Recording…');

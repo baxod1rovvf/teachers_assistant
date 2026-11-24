@@ -19,7 +19,7 @@ async function openStep(page, context, docs, links) {
   await page.waitForFunction(n => (window.__allResults || []).length >= n, docs.length, { timeout: 10000 });
   await hideNotices(page);
   await page.addStyleTag({ content: '#taNoticeStack { display: none !important; }' });
-  await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();
+  await page.evaluate(() => skOpenGroup('g1'));
   await page.locator('.sk-node[data-step="b1"]').click();
   return errors;
 }

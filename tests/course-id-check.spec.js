@@ -106,7 +106,7 @@ test('Copy link puts the group\'s name on the list', async ({ page, context }) =
   await prepare(context, { storage: { ta_course_group: 'g1' } });
   await page.goto('/ieltsjourney.html');
   await hideNotices(page);
-  await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();
+  await page.evaluate(() => skOpenGroup('g1'));
   await page.locator('.sk-node[data-step="b1"]').click();
   await page.locator('.sk-part').first().getByRole('button', { name: /Copy link/ }).click();
   await expect.poll(() => page.evaluate(() => (window.__fakeDocs.find(d => d.type === 'TA_SYNC:CLASS') || {}).group)).toBe('Target');

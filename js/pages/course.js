@@ -1,37 +1,50 @@
-/* ================= COURSE — the three journeys (2026-11-23) =================
-   The teacher: "Course is a html file including three journeys. It is too big so separate every journey." course.html is now only
+/* ================= COURSE — the three journeys (2026-11-23; lists inside the cards 2026-11-24) =================
+   The teacher: "Course is a html file including three journeys. It is too big so separate every journey." course.html is only
    three cards; each journey is its own page with its own script and stylesheet:
-   - 🎯 IELTS Journey      ieltsjourney.html      js/pages/ielts-journey.js (+ telegram.js)   css/ielts-journey.css
-   - 📚 Grammar Journey    grammarjourney.html    js/pages/grammar.js                         css/grammar-journey.css
-   - ✍️ Dictation Journey  dictationjourney.html  js/pages/dictation.js                       css/dictation-journey.css
-   What the journeys share: js/pages/journey-shared.js and css/journeys.css. The card's line counts what is kept on this device. */
-const TA_JOURNEYS = [
-  { tab: 'ieltsjourney', href: 'ieltsjourney.html', emoji: '🎯', name: 'IELTS Journey', color: '--c-blue',
-    about: 'Listening, Reading, Writing and Speaking in 20 steps — each group on its own path.' },
-  { tab: 'grammarjourney', href: 'grammarjourney.html', emoji: '📚', name: 'Grammar Journey', color: '--c-green',
-    about: 'Grammar lessons: learn, practise, then a 20-question test. One link for every group.' },
-  { tab: 'dictationjourney', href: 'dictationjourney.html', emoji: '✍️', name: 'Dictation Journey', color: '--c-orange',
-    about: 'Students hear one sentence at a time, write it and fix their mistakes. One link for every group.' }
-];
-function crSentCount(key) {
-  try { const v = JSON.parse(localStorage.getItem(key) || '{}'); return v && typeof v === 'object' ? Object.values(v).filter(e => e && e.code).length : 0; } catch (e) { return 0; }
+   - IELTS Journey      ieltsjourney.html      js/pages/ielts-journey.js (+ telegram.js)   css/ielts-journey.css
+   - Grammar Journey    grammarjourney.html    js/pages/grammar.js                         css/grammar-journey.css
+   - Dictation Journey  dictationjourney.html  js/pages/dictation.js                       css/dictation-journey.css
+   What the journeys share: js/pages/journey-shared.js and css/journeys.css.
+   2026-11-24 (teacher: "delete the texts below titles, use icons not emojis; IELTS journey should include the groups below the
+   title, if I click one Loom brings me to this group's journey … Grammar and dictation the same, with levels"): each card is an
+   icon + title + a list — IELTS: the Students page's groups → ieltsjourney.html?group=<id>; Grammar / Dictation: their levels →
+   grammarjourney.html?level=<id> / dictationjourney.html?level=<id>. The journeys' own "all groups" / "all levels" views are gone.
+   The level lists are written here (the journeys' data files are 150–400 KB — too heavy for this page); tests/pages.spec.js checks
+   they match TA_GRAMMAR / TA_DICTATION. A Grammar level with no lessons yet shows "Soon" and doesn't open. */
+const CR_GRAMMAR_LEVELS = [['beginner', 'Beginner', true], ['elementary', 'Elementary', true], ['preintermediate', 'Pre-Intermediate', true],
+  ['intermediate', 'Intermediate', false], ['upperintermediate', 'Upper-Intermediate', false], ['advanced', 'Advanced', false], ['intensive', 'Intensive', false]];
+const CR_DICTATION_LEVELS = [['beginner', 'Beginner'], ['elementary', 'Elementary'], ['preintermediate', 'Pre-intermediate'],
+  ['intermediate', 'Intermediate'], ['advanced', 'Upper-intermediate & Advanced']];
+function crItem(href, label, soon) {
+  if (soon) return '<li><span class="cr-item soon" aria-disabled="true"><span class="cr-item-name">' + escapeForHtml(label) + '</span><span class="cr-soon">Soon</span></span></li>';
+  return '<li><a class="cr-item" href="' + escapeForHtml(href) + '" onclick="return crGo(event, this)"><span class="cr-item-name" translate="no">' + escapeForHtml(label) + '</span>' +
+    '<i class="lc lc-arrow-right" aria-hidden="true"></i></a></li>';
 }
-function crCardLine(tab) {
-  if (tab === 'ieltsjourney') { const n = getStudentGroups().length; return n + (n === 1 ? ' group' : ' groups'); }
-  if (tab === 'grammarjourney') { const n = crSentCount('ta_grammar_links'); return n + (n === 1 ? ' lesson sent' : ' lessons sent'); }
-  const n = crSentCount('ta_dictation_links'); return n + (n === 1 ? ' dictation sent' : ' dictations sent');
+/* a list item opens its journey in place (Ctrl/⌘-click still opens a new tab) */
+function crGo(e, a) {
+  if (e.ctrlKey || e.metaKey || e.shiftKey || e.button > 0) return true;
+  e.preventDefault();
+  taNavigate(a.getAttribute('href'));
+  return false;
+}
+function crCard(key, icon, color, name, items) {
+  return '<section class="cr-card" data-journey="' + key + '" style="--gc:var(' + color + ')">' +
+    '<div class="cr-head"><span class="cr-icon" aria-hidden="true"><i class="lc lc-' + icon + '"></i></span><h3 class="cr-name">' + name + '</h3></div>' +
+    '<ul class="cr-list">' + items + '</ul></section>';
 }
 function renderCourseHub() {
   const wrap = document.getElementById('courseHub');
   if (!wrap) return;
-  wrap.innerHTML = '<div class="cr-cards">' + TA_JOURNEYS.map(j =>
-    '<a class="cr-card" href="' + j.href + '" data-journey="' + j.tab + '" style="--gc:var(' + j.color + ')" onclick="if(!event.ctrlKey&&!event.metaKey&&!event.shiftKey){event.preventDefault();taNavigate(\'' + j.href + '\');}">' +
-      '<span class="cr-emoji" aria-hidden="true">' + j.emoji + '</span>' +
-      '<b class="cr-name">' + j.name + '</b>' +
-      '<span class="cr-about">' + j.about + '</span>' +
-      '<span class="cr-foot"><span class="cr-line">' + crCardLine(j.tab) + '</span><span class="cr-open">Open →</span></span>' +
-    '</a>').join('') + '</div>';
+  const groups = getStudentGroups();
+  const ielts = groups.length ? groups.map(g => crItem('ieltsjourney.html?group=' + encodeURIComponent(g.id), g.name)).join('')
+    : '<li><a class="cr-item cr-empty" href="students.html" onclick="return crGo(event, this)"><span class="cr-item-name">Add a group on the Students page</span><i class="lc lc-arrow-right" aria-hidden="true"></i></a></li>';
+  wrap.innerHTML = '<div class="cr-cards">' +
+    crCard('ieltsjourney', 'target', '--c-blue', 'IELTS Journey', ielts) +
+    crCard('grammarjourney', 'book-open', '--c-green', 'Grammar Journey', CR_GRAMMAR_LEVELS.map(([id, n, ready]) => crItem('grammarjourney.html?level=' + id, n, !ready)).join('')) +
+    crCard('dictationjourney', 'pen-line', '--c-orange', 'Dictation Journey', CR_DICTATION_LEVELS.map(([id, n]) => crItem('dictationjourney.html?level=' + id, n)).join('')) +
+  '</div>';
 }
-window.renderCourseHub = renderCourseHub;
+window.addEventListener('storage', e => { if (e.key && /ta_student_groups/.test(e.key) && document.getElementById('courseHub') && document.getElementById('courseHub').getClientRects().length) renderCourseHub(); });
+Object.assign(window, { renderCourseHub, crGo, CR_GRAMMAR_LEVELS, CR_DICTATION_LEVELS });
 taOnTab('course', renderCourseHub);
 taStartPage('course');

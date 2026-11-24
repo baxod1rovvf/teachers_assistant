@@ -134,20 +134,6 @@ function dcTranscript(id) {
     '<p class="dct-transcript-note">' + d.sentences.length + ' sentences · students hear them one at a time.</p>', { wide: true });
 }
 
-/* ---- the section under the Grammar Journey ---- */
-function dcJourneyHtml() {
-  const links = dcLinks();
-  const cards = dcLevels().map((lv, i) => {
-    const items = lv.items || [];
-    const color = ['--c-teal', '--c-blue', '--c-purple', '--c-orange', '--c-pink'][i % 5];
-    const sent = items.filter(d => dcCode(d.id, links)).length, ready = items.filter(d => d.recorded !== false).length;
-    return '<article class="dct-level" data-level="' + escapeForHtml(lv.id) + '" style="--gc:var(' + color + ')">' +
-      '<button type="button" class="gr-level-open gr-level-name" onclick="dcOpenLevel(' + jsAttr(lv.id) + ')">' + escapeForHtml(lv.name) + '</button>' +
-      '<span class="gr-level-sub">' + (ready < items.length ? ready + ' ready · ' : '') + items.length + ' dictations · ' + sent + ' sent</span></article>';
-  }).join('');
-  return jrBackToCourseHtml() + '<section class="dct-journey" aria-label="Dictation Journey">' +
-    '<div class="gr-levels">' + cards + '</div></section>';
-}
 function dcPageHtml() {
   const v = dcView || {};
   const d = v.item ? dcItem(v.item) : null;
@@ -165,7 +151,7 @@ function dcItemBtns(d) {
 }
 function dcLevelHtml(lv) {
   const links = dcLinks(), map = skResultsMap(lv.items.map(d => dcCode(d.id, links)));   // one reading for every row
-  return '<button type="button" class="back-to-picker-btn" onclick="dcOpenLevel(\'\')">← Dictation Journey</button>' +
+  return '<button type="button" class="back-to-picker-btn" onclick="taNavigate(\'course.html\')">← Course</button>' +
     '<div class="gr-page-head"><h3>✍️ Dictation Journey · ' + escapeForHtml(lv.name) + '</h3>' +
     '<p class="sk-hint">Press a dictation to see its results. ▶ Play and 📄 Transcript are for the class; 🔗 Copy link gives one link that works for every group.</p></div>' +
     '<ol class="gr-lessons dct-items">' + lv.items.map(d => {
@@ -292,10 +278,10 @@ function dcCopyLink(itemId) {
   renderDictationJourney();
 }
 function dcOpenLevel(id) {
-  dcView = id && dcLevel(id) ? { level: id, item: '' } : null;
+  if (!id || !dcLevel(id)) { taNavigate('course.html'); return; }
+  dcView = { level: id, item: '' };
   renderDictationJourney();
-  if (id) window.scrollTo({ top: 0, behavior: 'smooth' });
-  else setTimeout(() => skCourseShownScroll('.dct-journey'), 60);   // back where the teacher was
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function dcOpenItem(id) {
   const cur = dcView || {}, d = id ? dcItem(id) : null;
@@ -310,19 +296,25 @@ function dcSetFilter(id) {
   renderDictationJourney();
 }
 Object.assign(window, { dcLinks, dcSaveLinks, dcCopyLink, dcRefreshLists, dcTableRows, dcMissingRows, dcUnlistedRows, dcCopyMissing,
-  dcTry, dcPlay, dcStop, dcTranscript, dcViewResult, dcOpenLevel, dcOpenItem, dcSetFilter, dcJourneyHtml, dcPageHtml, dcEnsureCode });
+  dcTry, dcPlay, dcStop, dcTranscript, dcViewResult, dcOpenLevel, dcOpenItem, dcSetFilter, dcPageHtml, dcEnsureCode });
 /* ---- the page (dictationjourney.html) ---- */
 function renderDictationJourney() {
   const wrap = document.getElementById('dictationWrap');
   if (!wrap) return;
   dcRefreshLists();   // the class lists follow the Students list
-  const page = dcView ? dcPageHtml() : '';
-  if (!page) dcView = null;
-  wrap.innerHTML = page || dcJourneyHtml();
+  if (!dcView || !dcLevel(dcView.level)) { const lv = dcLevels()[0]; dcView = lv ? { level: lv.id, item: '' } : null; }
+  wrap.innerHTML = dcPageHtml();
+}
+/* the Course page's Dictation card opens dictationjourney.html?level=<id> (2026-11-24 — this page has no "all levels" view any more) */
+function dcShowPage() {
+  let want = '';
+  try { want = new URLSearchParams(location.search).get('level') || ''; } catch (e) { want = ''; }
+  if (want && dcLevel(want)) dcView = { level: want, item: '' };
+  renderDictationJourney();
 }
 jrOnResultsChanged(() => { if (jrShown('dictationWrap')) renderDictationJourney(); });
 window.addEventListener('storage', e => { if (e.key && /ta_dictation_links|ta_student_groups|ta_points_roster/.test(e.key) && jrShown('dictationWrap')) renderDictationJourney(); });
 window.renderDictationJourney = renderDictationJourney;
 dcRefreshLists();   // loaded on any page (opened, or in the background): stale class lists go online again
-taOnTab('dictationjourney', renderDictationJourney);
+taOnTab('dictationjourney', dcShowPage);
 taStartPage('dictationjourney');

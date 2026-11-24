@@ -9,7 +9,8 @@
    - Results (type 'Grammar course'): only a student's first try counts (the earliest by date). A result's group is the
      student's group on the Students list now (matched by ID — taIdKey); a result from an ID that isn't on the list is shown
      under "❓ Not on your Students list".
-   The view lives in grView ({ level, lesson } or null = the levels) — renderGrammarJourney draws it. */
+   The view lives in grView ({ level, lesson }) — renderGrammarJourney draws it. Since 2026-11-24 the Course page lists the levels
+   (grammarjourney.html?level=<id>) and this page has no "all levels" view: no level asked → the last one opened here, else Beginner. */
 const GR_LINKS_KEY = 'ta_grammar_links';
 let grView = null;   // the open level / lesson (not remembered)
 let grFilter = 'all';   // the lesson page's group filter: 'all' or a group id (not remembered)
@@ -76,24 +77,6 @@ function grMissingRows(lessonId, groupId) { return jrMissing(grResults(lessonId)
 function grUnlistedRows(lessonId) { return jrUnlisted(grResults(lessonId)); }
 function grDoneCount(lessonId, links, map) { return jrDoneCount(grResults(lessonId, links, map)); }
 
-/* ---- the section under the group cards ---- */
-function grJourneyHtml() {
-  const links = grLinks();
-  const cards = grLevels().map((lv, i) => {
-    const lessons = lv.lessons || [];
-    const color = ['--c-blue', '--c-green', '--c-orange', '--c-purple', '--c-pink', '--c-teal', '--c-red'][i % 7];
-    if (!lessons.length) {
-      return '<article class="gr-level soon" data-level="' + escapeForHtml(lv.id) + '" style="--gc:var(' + color + ')">' +
-        '<b class="gr-level-name">' + escapeForHtml(lv.name) + '</b><span class="sk-soon-tag">🛠️ Coming soon</span></article>';
-    }
-    const sent = lessons.filter(l => grCode(l.id, links)).length;
-    return '<article class="gr-level" data-level="' + escapeForHtml(lv.id) + '" style="--gc:var(' + color + ')">' +
-      '<button type="button" class="gr-level-open gr-level-name" onclick="grOpenLevel(' + jsAttr(lv.id) + ')">' + escapeForHtml(lv.name) + '</button>' +
-      '<span class="gr-level-sub">' + lessons.length + ' lessons · ' + sent + ' sent</span></article>';
-  }).join('');
-  return jrBackToCourseHtml() + '<section class="gr-journey" aria-label="Grammar Journey">' +
-    '<div class="gr-levels">' + cards + '</div></section>';
-}
 function grPageHtml() {
   const v = grView || {};
   const l = v.lesson ? grLesson(v.lesson) : null;
@@ -107,7 +90,7 @@ function grLessonBtns(l) {
 }
 function grLevelHtml(lv) {
   const links = grLinks(), map = skResultsMap(lv.lessons.map(l => grCode(l.id, links)));   // one reading for every row
-  return '<button type="button" class="back-to-picker-btn" onclick="grOpenLevel(\'\')">← Grammar Journey</button>' +
+  return '<button type="button" class="back-to-picker-btn" onclick="taNavigate(\'course.html\')">← Course</button>' +
     '<div class="gr-page-head"><h3>📚 Grammar Journey · ' + escapeForHtml(lv.name) + '</h3>' +
     '<p class="sk-hint">Press a lesson to see its results. 🔗 Copy link gives one link that works for every group.</p></div>' +
     '<ol class="gr-lessons">' + lv.lessons.map(l => {
@@ -195,10 +178,10 @@ function grCopyLink(lessonId) {
   renderGrammarJourney();
 }
 function grOpenLevel(id) {
-  grView = id && grLevel(id) ? { level: id, lesson: '' } : null;
+  if (!id || !grLevel(id)) { taNavigate('course.html'); return; }
+  grView = { level: id, lesson: '' };
   renderGrammarJourney();
-  if (id) window.scrollTo({ top: 0, behavior: 'smooth' });
-  else setTimeout(() => skCourseShownScroll('.gr-journey'), 60);   // back where the teacher was
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function grOpenLesson(id) {
   const cur = grView || {}, l = id ? grLesson(id) : null;
@@ -217,15 +200,23 @@ function renderGrammarJourney() {
   const wrap = document.getElementById('grammarWrap');
   if (!wrap) return;
   grRefreshLists();   // the class lists follow the Students list
-  const page = grView ? grPageHtml() : '';
-  if (!page) grView = null;
-  wrap.innerHTML = page || grJourneyHtml();
+  if (!grView || !grLevel(grView.level)) grView = { level: grDefaultLevel(), lesson: '' };
+  wrap.innerHTML = grPageHtml() || (jrBackToCourseHtml() + '<div class="sk-results-empty"><span class="sk-results-empty-emoji">🛠️</span><div><b>Coming soon</b><span>This level has no lessons yet.</span></div></div>');
+}
+/* the first level with lessons (no level asked for and none opened yet) */
+function grDefaultLevel() { const lv = grLevels().find(l => (l.lessons || []).length); return lv ? lv.id : ''; }
+/* the Course page's Grammar card opens grammarjourney.html?level=<id> */
+function grShowPage() {
+  let want = '';
+  try { want = new URLSearchParams(location.search).get('level') || ''; } catch (e) { want = ''; }
+  if (want && grLevel(want)) grView = { level: want, lesson: '' };
+  renderGrammarJourney();
 }
 jrOnResultsChanged(() => { if (jrShown('grammarWrap')) renderGrammarJourney(); });
 window.addEventListener('storage', e => { if (e.key && /ta_grammar_links|ta_student_groups|ta_points_roster/.test(e.key) && jrShown('grammarWrap')) renderGrammarJourney(); });
 grRefreshLists();   // loaded on any page (opened, or in the background): stale class lists go online again
-taOnTab('grammarjourney', renderGrammarJourney);
+taOnTab('grammarjourney', grShowPage);
 taStartPage('grammarjourney');
 
 Object.assign(window, { renderGrammarJourney, grLinks, grSaveLinks, grRosterSig, grClassStudents, grCopyLink, grOpenLevel, grOpenLesson, grSetFilter,
-  grTableRows, grMissingRows, grUnlistedRows, grCopyMissing, grTry, grJourneyHtml, grEnsureCode, grRefreshLists });
+  grTableRows, grMissingRows, grUnlistedRows, grCopyMissing, grTry, grEnsureCode, grRefreshLists });

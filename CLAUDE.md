@@ -586,7 +586,20 @@ real students' names or results into the repository (it is public).
   adds a section's own stylesheets** (waits for them) when it opens in place. grammar.js / dictation.js refresh their class lists as soon as
   they load (any page). The CSS was moved out of css/style.css by a script (rules whose classes only the journeys use, in their order); after
   it every computed style in every view matched the old one, except four bold words' `font-family: 'Fredoka'`, dropped because
-  `body.loom-studio *` (same weight, later) always beat it. `tests/pages.spec.js` ("Course: three cards …").
+  `body.loom-studio *` (same weight, later) always beat it. **Mistake found 2026-11-24 (teacher: "why did you change this welcome board in
+  dashboard"):** that first split also moved 8 app-wide rules whose `:is(…)`/`:where(…)` lists named one journey class among others (the
+  Dashboard's `.hero-card`, the main buttons, the 44 px tap areas) — so the greeting got a card and buttons changed on every other page for a
+  day. The split was redone: a rule moves only when every class in such a list is a journey's; then the computed styles of Dashboard,
+  Create, My Exercises, Students, Statistics, Settings, Results and the sign-in screen (computer + phone) matched the version before the split.
+  **When moving CSS between files, compare every page, not only the ones being changed.**
+  **2026-11-24 (teacher): the Course page's cards have a Lucide icon (target / book-open / pen-line; the page title `lc-map`) and no texts under
+  the titles; each lists its groups (IELTS, from the Students page) or levels (Grammar, Dictation — `CR_GRAMMAR_LEVELS` / `CR_DICTATION_LEVELS`
+  in course.js, written out because the data files are 150–400 KB; a test compares them with the data; Grammar levels without lessons say
+  "Soon"). A row opens `ieltsjourney.html?group=<id>` (that group's Journey, scrolled to the step to teach — `skShowPage`),
+  `grammarjourney.html?level=<id>` (`grShowPage`) or `dictationjourney.html?level=<id>` (`dcShowPage`). The journeys' own "all groups" (the
+  group cards with squares and ▶ Teach STEP — `skCardsHtml`, `skTeach`, `skTeachLabel` are gone) and "all levels" views (`grJourneyHtml`,
+  `dcJourneyHtml`) are removed: with no group/level asked a page opens the last group (`ta_course_group`) / Beginner; the back buttons say
+  "← Course". The journey pages' headings are an icon + title too. `tests/pages.spec.js` ("Course: icon cards …").
 - **Skills Course (2026-11-04, teacher: replace the old Course with four skills)**: the old lesson Course (Block 1 lessons, slide
   editor, Teach mode, handouts, exam marks, `audio/course/`, `js/course-data.js`, `js/course-slides.js`, `ta_course_*`) is deleted.
   `course.html` + `js/pages/course.js`, tab `course` 🗺️. **Since 2026-11-05 (teacher) it opens on group cards** (`skCardsHtml`, one per

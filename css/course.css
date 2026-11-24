@@ -1,17 +1,28 @@
-/* ================= COURSE — the three journeys' cards (course.html, js/pages/course.js, 2026-11-23) =================
-   Glass cards in the Mountain Air look, on the left on computers (≤ 820 px) so the teacher's picture shows on the right;
-   one under another on phones. */
-.cr-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 14px; max-width: 820px; }
-.cr-card { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 18px 18px 16px; border-radius: 24px; text-decoration: none; color: var(--ink);
+/* ================= COURSE — the three journeys' cards (course.html, js/pages/course.js; 2026-11-23, lists 2026-11-24) =================
+   Glass cards in the Mountain Air look: an icon (Lucide, css/icons.css) + the title, then the groups (IELTS) or levels (Grammar,
+   Dictation) as rows that open that journey. On the left on computers (≤ 820 px) so the teacher's picture shows; stacked on phones. */
+#panel-course .card-head h2 { display: flex; align-items: center; gap: 12px; }
+#panel-course .card-head h2 .lc { width: 34px; height: 34px; }
+.cr-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 14px; max-width: 820px; align-items: start; }
+.cr-card { display: flex; flex-direction: column; gap: 14px; padding: 18px; border-radius: 24px; color: var(--ink); min-width: 0;
   background: var(--surface); border: 1px solid var(--glass-edge, var(--border)); border-top: 4px solid var(--gc, var(--brand)); box-shadow: var(--shadow-md);
-  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); transition: transform .18s ease, box-shadow .18s ease; min-width: 0; }
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); }
 body.loom-air .cr-card { background: rgba(255,255,255,0.78); }
-.cr-card:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(20,24,31,0.14); }
-.cr-card:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
-.cr-emoji { font-size: 2rem; line-height: 1; }
-.cr-name { font-size: 1.2rem; font-weight: 700; }
-.cr-about { color: var(--ink-soft); font-size: .92rem; line-height: 1.45; flex: 1; }
-.cr-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 6px; }
-.cr-line { font-size: .85rem; font-weight: 600; color: var(--ink-soft); }
-.cr-open { padding: 8px 16px; border-radius: 999px; background: var(--brand, #14181F); color: #fff; font-weight: 700; font-size: .9rem; white-space: nowrap; }
-@media (prefers-reduced-motion: reduce) { .cr-card { transition: none; } .cr-card:hover { transform: none; } }
+.cr-head { display: flex; align-items: center; gap: 12px; }
+.cr-icon { flex: 0 0 auto; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; color: var(--gc, var(--brand));
+  background: color-mix(in srgb, var(--gc, var(--brand)) 14%, #fff); }
+.cr-icon .lc { width: 24px; height: 24px; }
+.cr-name { margin: 0; font-size: 1.2rem; font-weight: 700; line-height: 1.2; }
+.cr-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.cr-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 44px; padding: 8px 14px; border-radius: 14px;
+  text-decoration: none; color: var(--ink); font-weight: 600; background: rgba(255,255,255,0.7); border: 1px solid var(--glass-edge, var(--border));
+  transition: background .15s ease, transform .15s ease; }
+.cr-item-name { min-width: 0; overflow-wrap: anywhere; }
+.cr-item .lc { flex: 0 0 auto; width: 18px; height: 18px; opacity: .55; }
+a.cr-item:hover { background: #fff; transform: translateX(2px); }
+a.cr-item:hover .lc { opacity: 1; }
+a.cr-item:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+.cr-item.soon { color: var(--ink-soft); background: transparent; border-style: dashed; cursor: default; }
+.cr-soon { font-size: .8rem; font-weight: 700; color: var(--ink-soft); }
+.cr-item.cr-empty { color: var(--ink-soft); }
+@media (prefers-reduced-motion: reduce) { .cr-item { transition: none; } a.cr-item:hover { transform: none; } }

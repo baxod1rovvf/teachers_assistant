@@ -237,10 +237,8 @@ function renderCourse() {
   if (typeof skTgSyncSoon === 'function') skTgSyncSoon();   // the Telegram bot's plans follow the sent links (js/pages/telegram.js)
   const groups = getStudentGroups();
   if (skView.group && !groups.some(g => g.id === skView.group)) skView = { group: '', tab: 'journey', step: '' };
-  if (!skView.group) {
-    wrap.innerHTML = jrBackToCourseHtml() + skCardsHtml(groups);
-    return;
-  }
+  if (!skView.group) skView = { group: skGroupId(), tab: 'journey', step: '' };   // the group last opened, else the first
+  if (!skView.group) { wrap.innerHTML = jrBackToCourseHtml() + skNoGroupsHtml(); return; }
   const g = skGroup(skView.group);
   const st = skView.step ? skStep(skView.step) : null;
   if (skView.step && !skReady(st)) skView.step = '';
@@ -255,38 +253,17 @@ function skStatsHtml(s) {
     '<span class="sk-stat' + (s.behind ? ' sk-stat-behind' : '') + '" title="' + (s.behind ? 'Missed 2 or more parts sent 2+ days ago, or an average band below 5' : 'Nobody is behind') + '">' +
     (s.behind ? '🐢 <b>' + s.behind + '</b> behind' : '🙂 Nobody behind') + '</span>';
 }
-function skGroupSquaresHtml(s) {
-  return '<div class="sk-squares" aria-label="Steps">' + s.steps.map(x => {
-    const on = s.on === x, cls = x.done ? 'done' : on ? 'on' : x.skipped ? 'skipped' : x.ready ? '' : 'soon';
-    const what = x.done ? 'done' : on ? 'teach next' : x.skipped ? 'skipped' : x.ready ? 'not yet' : 'coming soon';
-    return '<span class="sk-stepbox' + (cls ? ' ' + cls : '') + '" data-step="' + x.st.id + '" title="Step ' + x.st.no + ' · ' + escapeForHtml(x.st.theme) + ' — ' + what + '"></span>';
-  }).join('') + '</div>';
-}
-function skTeachLabel(s) { return s.on ? '▶ Teach STEP ' + s.on.st.no : s.allDone ? '🎉 All steps done' : '🎉 All ready steps done'; }
-function skCardsHtml(groups) {
-  if (!groups.length) {
-    return '<div class="sk-results-empty sk-nogroups"><span class="sk-results-empty-emoji">👥</span><div><b>Add a group on the Students page</b>' +
-      '<span>Each group gets its own links and its own place on the 20 steps.</span>' +
-      '<button type="button" class="mini-btn solid" onclick="taNavigate(\'students.html\')">🧑‍🎓 Open Students</button></div></div>';
-  }
-  const steps = skSteps().filter(skReady), idx = taRosterIndex(), links = taSkillsLinks();
-  const map = skResultsMap([].concat(...groups.map(g => skGroupCodes(g, steps, links))));   // one reading for every card
-  return '<div class="sk-cards">' + groups.map((g, i) => {
-    const s = skGroupStats(g, skPathCtx(g, steps, map, idx, links));
-    return '<article class="sk-gcard" data-group="' + escapeForHtml(g.id) + '" style="--gc:var(' + ['--c-blue', '--c-pink', '--c-green', '--c-orange', '--c-purple', '--c-teal'][i % 6] + ')">' +
-      '<div class="sk-gcard-top"><button type="button" class="sk-gcard-open" onclick="skOpenGroup(' + jsAttr(g.id) + ')" translate="no">' + escapeForHtml(g.name) + '</button>' +
-      '<span class="sk-level-chip">' + escapeForHtml(s.level || '—') + '</span></div>' +
-      skGroupSquaresHtml(s) +
-      '<div class="sk-gcard-stats">' + skStatsHtml(s) + '</div>' +
-      '<button type="button" class="sk-teach" onclick="skTeach(' + jsAttr(g.id) + ')">' + skTeachLabel(s) + '</button>' +
-    '</article>';
-  }).join('') + '</div>';
+/* no groups yet: the only thing the page shows (the group cards were removed 2026-11-24 — the Course page lists the groups) */
+function skNoGroupsHtml() {
+  return '<div class="sk-results-empty sk-nogroups"><span class="sk-results-empty-emoji">👥</span><div><b>Add a group on the Students page</b>' +
+    '<span>Each group gets its own links and its own place on the 20 steps.</span>' +
+    '<button type="button" class="mini-btn solid" onclick="taNavigate(\'students.html\')">🧑‍🎓 Open Students</button></div></div>';
 }
 /* ---- a group's page ---- */
 function skGroupPageHtml(s) {
   const g = s.g, tab = skView.tab === 'progress' ? 'progress' : 'journey';
   const tabBtn = (k, label) => '<button type="button" role="tab" class="sk-tab' + (tab === k ? ' active' : '') + '" aria-selected="' + (tab === k) + '" data-tab="' + k + '" onclick="skShowTab(' + jsAttr(k) + ')">' + label + '</button>';
-  return '<button type="button" class="back-to-picker-btn" onclick="skOpenGroup(\'\')">← All groups</button>' +
+  return jrBackToCourseHtml() +
     '<div class="sk-ghead"><div class="sk-ghead-name"><h3 translate="no">' + escapeForHtml(g.name) + '</h3><span class="sk-level-chip">' + escapeForHtml(s.level || '—') + '</span>' + skStartPickHtml(g) + '</div>' +
     '<div class="sk-gcard-stats">' + skStatsHtml(s) + '</div></div>' +
     (typeof skTgBoxHtml === 'function' ? skTgBoxHtml(g) : '') +
@@ -463,11 +440,6 @@ function skOpenGroup(id) {
   if (id) { try { localStorage.setItem(LS_COURSE_GROUP, id); } catch (e) { /* ignore */ } }
   renderCourse();
   window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-/* ▶ Teach STEP N: the Journey, scrolled to the step the group is on (singled out) */
-function skTeach(id) {
-  skOpenGroup(id);
-  setTimeout(() => skCourseShownScroll('.sk-row.focus'), 60);
 }
 function skShowTab(tab) {
   skView.tab = tab === 'progress' ? 'progress' : 'journey';
@@ -882,5 +854,17 @@ jrOnResultsChanged(() => { if (skCourseShown()) renderCourse(); });
 
 /* ================= PAGE START ================= */
 window.addEventListener('storage', e => { if (e.key && /ta_skills_links|ta_student_groups|ta_points_roster|ta_recent_exercises/.test(e.key) && skCourseShown()) renderCourse(); });
-taOnTab('ieltsjourney', renderCourse);
+/* the Course page's IELTS card opens ieltsjourney.html?group=<id> (2026-11-24): that group's Journey */
+function skShowPage() {
+  let want = '';
+  try { want = new URLSearchParams(location.search).get('group') || ''; } catch (e) { want = ''; }
+  const opened = want && getStudentGroups().some(g => g.id === want);
+  if (opened) {
+    skView = { group: want, tab: 'journey', step: '' };
+    try { localStorage.setItem(LS_COURSE_GROUP, want); } catch (e) { /* ignore */ }
+  }
+  renderCourse();
+  if (opened) setTimeout(() => skCourseShownScroll('.sk-row.focus'), 60);   // like the old "Teach STEP N": the step to teach
+}
+taOnTab('ieltsjourney', skShowPage);
 taStartPage('ieltsjourney');

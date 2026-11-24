@@ -645,7 +645,7 @@ test.describe('course page', () => {
     await page.waitForTimeout(1000);
     await hideNotices(page);
     await page.addStyleTag({ content: '#taNoticeStack { display: none !important; }' });   // notes that come later (old files…)
-    if (group) await page.locator('.sk-gcard[data-group="' + group + '"] .sk-gcard-open').click();   // the page opens on group cards
+    if (group) await page.evaluate(g => skOpenGroup(g), group);   // the page opens on group cards
     return errors;
   };
 
@@ -755,7 +755,7 @@ test.describe('course page', () => {
     await page.reload();
     await page.waitForTimeout(800);
     await page.evaluate(PRETEND_HTTPS);
-    await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();
+    await page.evaluate(() => skOpenGroup('g1'));
     await page.locator('.sk-node[data-step="e1"]').click();
     await page.evaluate(() => navigator.clipboard.writeText(''));
     await page.locator('.sk-part[data-skill="listening"]').getByRole('button', { name: /Copy link for/ }).click();
@@ -912,37 +912,30 @@ test.describe('course page', () => {
   };
   const squareStates = card => card.locator('.sk-squares .sk-stepbox').evaluateAll(sq => sq.map(x => (x.className.replace('sk-stepbox', '').trim() || '-')));
 
-  test('the Course page opens on group cards: name, level, a square per step, ⭐ average, 🐢 behind, Teach STEP N', async ({ page, context }) => {
+  test('the Course page lists the groups in its IELTS card; a group opens its own Journey (no group cards any more, 2026-11-24); ⭐ and 🐢 on its page', async ({ page, context }) => {
     const errors = await openCards(page, context);
-    const cards = page.locator('.sk-gcard');
-    await expect(cards).toHaveCount(3);
-    await expect(cards.locator('.sk-gcard-open')).toHaveText(['Target', 'Apex', 'Nexus']);
-    await expect(cards.locator('.sk-level-chip')).toHaveText(['Beginner', 'Elementary', '—']);
-    await expect(page.locator('.sk-row, .sk-tabs')).toHaveCount(0);
-    const rest = Array(19).fill('-');   // Steps 19–20 have their Reading (2026-11-09), so they aren't "coming soon" any more
-    // Target (Beginner): Step 1's Writing (2 of 3) and Speaking (sent) are done, its Listening and Reading not yet → on Step 1
-    expect(await squareStates(cards.nth(0))).toEqual(['on', ...rest]);
-    expect(await cards.nth(0).locator('.sk-stepbox').first().getAttribute('title')).toMatch(/^Step 1 · Daily Routine/);
-    // Apex (Elementary) starts at Step 11: Steps 1–10 skipped (grey), Step 11 done, on Step 12
-    expect(await squareStates(cards.nth(1))).toEqual([...Array(10).fill('skipped'), 'done', 'on', '-', '-', '-', '-', '-', '-', '-', '-']);
-    // Nexus (no level = Beginner): on Step 1
-    expect(await squareStates(cards.nth(2))).toEqual(['on', ...rest]);
-    await expect(cards.nth(1).locator('.sk-stepbox').nth(11)).toHaveAttribute('title', 'Step 12 · Future Plans — teach next');
-    // ⭐ the students' average band: Target 7 and 4 → 5.5; Apex 4, 8, 6.5 (Gulya has none) → 6; Nexus none yet
-    await expect(cards.locator('.sk-stat').filter({ hasText: '⭐' })).toHaveText([/⭐\s*5\.5/, /⭐\s*5\.5/, /⭐\s*—/]);   // a sent part not done counts 0 (2026-11-19)
-    // 🐢 behind: Target — Bobur (average 4); Apex — Farida (missed 4 parts, average 4) and Gulya (missed 5 parts)
-    await expect(cards.locator('.sk-stat').filter({ hasText: /behind/i })).toHaveText([/🐢\s*1\s*behind/, /🐢\s*2\s*behind/, /Nobody behind/]);
-    await expect(cards.locator('.sk-teach')).toHaveText(['▶ Teach STEP 1', '▶ Teach STEP 12', '▶ Teach STEP 1']);
+    await page.evaluate(() => taNavigate('course.html'));
+    const items = page.locator('.cr-card[data-journey="ieltsjourney"] .cr-item');
+    await expect(items.locator('.cr-item-name')).toHaveText(['Target', 'Apex', 'Nexus']);
+    await expect(page.locator('.sk-gcard')).toHaveCount(0);
+    // ⭐ the students' average band, 🐢 behind — worked out per group
+    expect(await page.evaluate(() => ['g1', 'g2', 'g3'].map(id => { const s = skGroupStats(skGroup(id), skPathCtx(skGroup(id), skSteps().filter(skReady))); return [s.level, s.avg, s.behind, s.on && s.on.st.no]; })))
+      .toEqual([['Beginner', 5.5, 1, 1], ['Elementary', 5.5, 2, 12], ['', null, 0, 1]]);   // a sent part not done counts 0 (2026-11-19)
     expect(await page.evaluate(() => { const s = skGroupStats(skGroup('g2'), skPathCtx(skGroup('g2'), skSteps().filter(skReady)));
       return s.students.map(x => [x.name, x.avg, x.did, x.missed, x.behind]); }))
       .toEqual([['Farida Test', 1.5, 0, 4, true], ['Gulya Test', null, 0, 5, true], ['Dilya Test', 8, 1, 0, false], ['Eldor Test', 6.5, 1, 0, false]]);
-    // the card (its name) opens the group's Journey; ← All groups comes back
-    await cards.nth(2).locator('.sk-gcard-open').click();
+    // a group opens its Journey (ieltsjourney.html?group=…), remembered; ← Course comes back
+    await items.nth(2).click();
+    await expect(page.locator('#panel-ieltsjourney')).toHaveClass(/active/);
     await expect(page.locator('.sk-ghead h3')).toHaveText('Nexus');
     await expect(page.locator('.sk-row')).toHaveCount(20);
     expect(await page.evaluate(() => localStorage.getItem('ta_course_group'))).toBe('g3');
-    await page.getByRole('button', { name: '← All groups' }).click();
-    await expect(page.locator('.sk-gcard')).toHaveCount(3);
+    await page.evaluate(() => taNavigate('course.html'));
+    await items.nth(1).click();
+    await expect(page.locator('.sk-ghead h3')).toHaveText('Apex');
+    await expect(page.locator('.sk-ghead .sk-stat').filter({ hasText: /behind/i })).toHaveText(/🐢\s*2\s*behind/);
+    await page.getByRole('button', { name: '← Course' }).click();
+    await expect(page.locator('#panel-course')).toHaveClass(/active/);
     expect(errors).toEqual([]);
   });
 
@@ -970,7 +963,7 @@ test.describe('course page', () => {
     expect(errors).toEqual([]);
   });
 
-  test('a drawing reads the kept links once (not once per dot); the squares and ⭐/🐢 show their tooltips above the card\'s click area', async ({ page, context }) => {
+  test('a drawing reads the kept links once (not once per dot)', async ({ page, context }) => {
     const errors = await openCards(page, context);
     const reads = async fn => page.evaluate(fn => {
       let n = 0;
@@ -979,19 +972,10 @@ test.describe('course page', () => {
       try { (0, eval)(fn)(); } finally { window.taSkillsLinks = real; }
       return n;
     }, fn);
-    expect(await reads('() => renderCourse()')).toBeLessThanOrEqual(1);   // every card
+    expect(await reads('() => renderCourse()')).toBeLessThanOrEqual(1);   // a group's Journey
     expect(await reads('() => skOpenGroup("g2")')).toBeLessThanOrEqual(1);   // the Journey
     expect(await reads('() => skShowTab("progress")')).toBeLessThanOrEqual(1);
     expect(await reads('() => skOpenStep("e1")')).toBeLessThanOrEqual(1);   // a step page with its table
-    await page.evaluate(() => skOpenGroup(''));
-    const card = page.locator('.sk-gcard').nth(1);
-    const onTop = loc => loc.evaluate(el => { const r = el.getBoundingClientRect(); return el.contains(document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)); });
-    expect(await onTop(card.locator('.sk-stepbox').nth(11))).toBe(true);
-    expect(await onTop(card.locator('.sk-stat').first())).toBe(true);
-    expect(await onTop(card.locator('.sk-stat').nth(1))).toBe(true);
-    // the card still opens from its name
-    await card.locator('.sk-gcard-open').click();
-    await expect(page.locator('.sk-ghead h3')).toHaveText('Apex');
     expect(errors).toEqual([]);
   });
 
@@ -1022,7 +1006,7 @@ test.describe('course page', () => {
     expect(errors).toEqual([]);
   });
 
-  test('a group\'s level is kept on the group too: with no lesson days it still starts at Step 11; "All ready steps done" while 19–20 are coming', async ({ page, context }) => {
+  test('a group\'s level is kept on the group too: with no lesson days it still starts at Step 11', async ({ page, context }) => {
     await prepare(context, { storage: { ta_student_groups: JSON.stringify([{ id: 'g1', name: 'Target' }]), ta_weekly_schedule: '[]' } });
     await page.goto('/students.html');
     await page.waitForTimeout(500);
@@ -1031,29 +1015,25 @@ test.describe('course page', () => {
     expect(await page.evaluate(() => getWeeklySchedule().length)).toBe(0);
     await page.goto('/ieltsjourney.html');
     await page.waitForTimeout(800);
-    await expect(page.locator('.sk-gcard .sk-level-chip')).toHaveText('Elementary');
-    await expect(page.locator('.sk-gcard .sk-teach')).toHaveText('▶ Teach STEP 11');
+    await expect(page.locator('.sk-ghead .sk-level-chip')).toHaveText('Elementary');
+    await expect(page.locator('.sk-row.focus')).toHaveAttribute('data-step', 'e1');   // Step 11
     expect(await page.evaluate(() => skStartNo(skGroup('g1')))).toBe(11);
     // the teacher picks where the group starts on its page ("Starts at Step 4")
-    await page.locator('.sk-gcard .sk-gcard-name, .sk-gcard button').first().click();
     await page.locator('.sk-start-pick select').selectOption('4');
     expect(await page.evaluate(() => skStartNo(skGroup('g1')))).toBe(4);
-    await page.evaluate(() => skOpenGroup(''));
-    await expect(page.locator('.sk-gcard .sk-teach')).toHaveText('▶ Teach STEP 4');
+    await expect(page.locator('.sk-row.focus')).toHaveAttribute('data-step', 'b4');
     await page.evaluate(() => { const l = getStudentGroups(); delete l[0].courseStart; saveStudentGroups(l); });
     // the editor shows the group's own level
     await page.goto('/students.html');
     await page.waitForTimeout(500);
     await page.evaluate(() => openGroupEditor('g1'));
     await expect(page.locator('.gsched-level')).toHaveValue('Elementary');
-    // the Teach button when no ready step is left
-    expect(await page.evaluate(() => [skTeachLabel({ on: null, allDone: false }), skTeachLabel({ on: null, allDone: true })]))
-      .toEqual(['🎉 All ready steps done', '🎉 All steps done']);
   });
 
-  test('Teach STEP N opens the Journey at that step, singled out; skipped steps are grey but open; the tabs switch to Progress', async ({ page, context }) => {
+  test('a group opened from the Course page shows its Journey at the step to teach, singled out; skipped steps are grey but open; the tabs switch to Progress', async ({ page, context }) => {
     const errors = await openCards(page, context);
-    await page.locator('.sk-gcard[data-group="g2"]').getByRole('button', { name: '▶ Teach STEP 12' }).click();
+    await page.evaluate(() => taNavigate('course.html'));
+    await page.locator('.cr-card[data-journey="ieltsjourney"] .cr-item', { hasText: 'Apex' }).click();
     await expect(page.locator('.sk-ghead h3')).toHaveText('Apex');
     await expect(page.locator('.sk-ghead .sk-level-chip')).toHaveText('Elementary');
     await expect(page.getByRole('tab', { name: '🧭 Journey' })).toHaveAttribute('aria-selected', 'true');
@@ -1103,16 +1083,17 @@ test.describe('course page', () => {
     expect(errors).toEqual([]);
   });
 
-  test('on a phone the group cards, the Journey and Progress fit without sideways scrolling', async ({ page, context }) => {
+  test('on a phone the Course page, the Journey and Progress fit without sideways scrolling', async ({ page, context }) => {
     await page.setViewportSize({ width: 390, height: 800 });
     const errors = await openCards(page, context);
     const fits = async () => expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
-    await expect(page.locator('.sk-gcard')).toHaveCount(3);
+    await page.evaluate(() => taNavigate('course.html'));
+    await expect(page.locator('.cr-card')).toHaveCount(3);
     await fits();
-    // the cards stack
-    const xs = await page.locator('.sk-gcard').evaluateAll(c => c.map(x => Math.round(x.getBoundingClientRect().left)));
+    // the Course page's cards stack
+    const xs = await page.locator('.cr-card').evaluateAll(c => c.map(x => Math.round(x.getBoundingClientRect().left)));
     expect(new Set(xs).size).toBe(1);
-    await page.locator('.sk-gcard[data-group="g2"] .sk-teach').click();
+    await page.locator('.cr-card[data-journey="ieltsjourney"] .cr-item', { hasText: 'Apex' }).click();
     await expect(page.locator('.sk-row.focus')).toBeInViewport();
     await fits();
     await page.getByRole('tab', { name: '📈 Progress' }).click();
@@ -1164,7 +1145,7 @@ test.describe('results', () => {
     await page.waitForTimeout(500);
     await hideNotices(page);
     await page.addStyleTag({ content: '#taNoticeStack { display: none !important; }' });
-    if (/ieltsjourney\.html/.test(url)) await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();   // Target's page
+    if (/ieltsjourney\.html/.test(url)) await page.evaluate(() => skOpenGroup('g1'));   // Target's page
     return errors;
   };
 
@@ -1210,11 +1191,9 @@ test.describe('results', () => {
     await expect(dot('speaking')).not.toHaveClass(/done/);
     await expect(row1.locator('.sk-node')).not.toHaveClass(/done/);
     // Dilya (Apex) did Step 11 Listening for Target's code: she doesn't count for Target, and Apex has no links yet
-    await page.getByRole('button', { name: '← All groups' }).click();
-    await page.locator('.sk-gcard', { hasText: 'Apex' }).locator('.sk-gcard-open').click();
+    await page.evaluate(() => skOpenGroup(getStudentGroups().find(g => g.name === 'Apex').id));
     await expect(page.locator('.sk-row').nth(10).locator('.sk-dot.done')).toHaveCount(0);
-    await page.getByRole('button', { name: '← All groups' }).click();
-    await page.locator('.sk-gcard', { hasText: 'Target' }).locator('.sk-gcard-open').click();
+    await page.evaluate(() => skOpenGroup(getStudentGroups().find(g => g.name === 'Target').id));
     // the Speaking link sent (an old-style key) → Step 11 is all done (✓)
     await page.evaluate(() => { const l = JSON.parse(localStorage.getItem('ta_skills_links')); l['g1|speaking|1'] = { sentAt: new Date().toISOString() }; localStorage.setItem('ta_skills_links', JSON.stringify(l)); renderCourse(); });
     await expect(row1.locator('.sk-dot.done')).toHaveCount(4);

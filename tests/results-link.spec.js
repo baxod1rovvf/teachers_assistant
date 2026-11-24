@@ -42,7 +42,7 @@ test('Share results link puts the step\'s table online and copies a link that st
   await page.waitForFunction(() => (window.__allResults || []).length >= 1, null, { timeout: 10000 });
   await hideNotices(page);
   await page.addStyleTag({ content: '#taNoticeStack { display: none !important; }' });
-  await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();
+  await page.evaluate(() => skOpenGroup('g1'));
   await page.locator('.sk-node[data-step="b1"]').click();
   await page.getByRole('button', { name: '🔗 Share results link' }).click();
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(/^https:\/\/example\.github\.io\/teachers_assistant\/results-link\.html\?r=[0-9a-f]{16}$/);

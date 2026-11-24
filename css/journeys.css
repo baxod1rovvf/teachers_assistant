@@ -114,3 +114,7 @@
   :is(#ieltsWrap, #grammarWrap, #dictationWrap) .dct-item .gr-lesson-btns, :is(#ieltsWrap, #grammarWrap, #dictationWrap) .dct-btns { width: 100%; max-width: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
   :is(#ieltsWrap, #grammarWrap, #dictationWrap) .dct-item .gr-lesson-btns .mini-btn, :is(#ieltsWrap, #grammarWrap, #dictationWrap) .dct-btns .mini-btn { width: 100%; justify-content: center; margin: 0; }
 }
+
+/* the journey pages' heading: a Lucide icon before the title (2026-11-24: "use icons not emojis") */
+:is(#panel-ieltsjourney, #panel-grammarjourney, #panel-dictationjourney) .card-head h2 { display: flex; align-items: center; gap: 12px; }
+:is(#panel-ieltsjourney, #panel-grammarjourney, #panel-dictationjourney) .card-head h2 .lc { width: 34px; height: 34px; }

@@ -27,7 +27,7 @@ test('teacher: Copy link puts the class list online with no "part before", even 
   await prepare(context, { storage: { ta_skills_links: JSON.stringify(links), ta_course_group: 'g1' } });
   await page.goto('/ieltsjourney.html');
   await hideNotices(page);
-  await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();
+  await page.evaluate(() => skOpenGroup('g1'));
   await page.locator('.sk-node[data-step="b6"]').click();
   await page.locator('.sk-part[data-skill="reading"]').getByRole('button', { name: /Copy link for/ }).click();
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(/s=reading&st=b6&c=/);

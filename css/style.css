@@ -2300,6 +2300,15 @@ html, body { overflow-x: clip; }
 .myex-type-chip, .top-group-tab { min-height: 36px; }
 .done-warn-ex { padding: 4px 10px; }
 .done-warn-check { padding: 7px 11px; }
+:where(.tb-brand, .tb-avatar, .lesson-warn-close, .myex-more, .myex-rename, .old-file-icon, .sp-icon-btn,
+  .myex-type-chip, .done-warn-check, .done-warn-all, .done-warn-results, .dash-manage-link, .mini-btn, .top-group-tab, button.sk-dot, .tg-day) {
+  position: relative;
+}
+:where(.tb-brand, .tb-avatar, .lesson-warn-close, .myex-more, .myex-rename, .old-file-icon, .sp-icon-btn,
+  .myex-type-chip, .done-warn-check, .done-warn-all, .done-warn-results, .dash-manage-link, .mini-btn, .top-group-tab, button.sk-dot, .tg-day)::before {
+  content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: max(100%, 44px); height: max(100%, 44px);
+}
 
 /* ================= THE ROBOT'S CORNER (2026-10-28) =================
    It stays in the bottom-right corner (common.js, TA_ROBOT_WANDERS) and is a little
@@ -2940,6 +2949,12 @@ body.loom-studio :is(h1, h2, h3, .dash-card-title, .picker-section-title, .card-
 }
 body.loom-studio ::selection { background: rgba(99,102,241,0.45); color: #fff; }
 
+/* cards: flat navy, a thin border, a soft shadow — no stickers, no tilting */
+body.loom-studio :is(.card, .dash-card, .hero-card, .results-stat-card, .picker-card, .recent-exercise-row, .group-block, .student-group,
+.points-modal, .chart-wrap.stats-chart, .stats-card, .login-card, .sync-unlock-card, .tb-profile-menu, .myex-menu, .ai-robot-bubble,
+.qs-box, .wheel-winner-card, .hwc-student-row, .set-round-row, .myex-card, .masthead, .sk-gcard, .sk-part) {
+  background: var(--surface) !important; border: 1px solid var(--border) !important; box-shadow: var(--shadow-md) !important;
+}
 body.loom-studio :is(.card, .dash-card, .results-stat-card, .myex-card, .masthead, .picker-card) { border-radius: var(--radius-xl) !important; }
 body.loom-studio :is(.picker-card, .quick-action-btn, .results-stat-card, .myex-card, .group-block):hover {
   transform: translateY(-2px); box-shadow: 0 14px 30px -16px rgba(0,0,0,0.8) !important; border-color: rgba(255,255,255,0.14) !important;
@@ -2979,6 +2994,12 @@ body.loom-studio .dash-card-title { font-weight: 700; color: #fff; display: flex
 body.loom-studio .dash-card-emoji.lc { color: #A5B4FC; font-size: 1.1em; }
 body.loom-studio .main-block-top-students .dash-card-emoji.lc { color: #FBBF24; }
 
+/* buttons */
+body.loom-studio :is(.create-btn, .login-submit, .lesson-plan-btn, .sync-unlock-btns .sync-unlock-ok, .masthead-btn.primary, .sk-teach) {
+  background: var(--brand) !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.08) !important; border-radius: 12px;
+  box-shadow: var(--shadow-brand) !important; text-shadow: none; font-weight: 600;
+}
+body.loom-studio :is(.create-btn, .login-submit, .lesson-plan-btn, .sk-teach):hover { background: #7376F5 !important; transform: translateY(-1px); filter: none; }
 body.loom-studio .create-btn::before { content: ''; display: inline-block; width: 1.1em; height: 1.1em; margin-right: 8px; vertical-align: -0.18em;
   background: currentColor; -webkit-mask: var(--ic-plus) center/contain no-repeat; mask: var(--ic-plus) center/contain no-repeat; }
 body.loom-studio :is(.mini-btn, .reset-btn, .ta-btn, .ta-modal-btns button, .sync-unlock-btns button, .res-view-btn, .results-upload-btn, .compose-enter-btn, .dash-manage-link, .quick-action-btn, .back-to-picker-btn) {
@@ -3177,6 +3198,13 @@ body.loom-studio.loom-air ::selection { background: rgba(61,116,52,0.22); color:
   font-family: 'Instrument Serif', 'Iowan Old Style', Georgia, 'Times New Roman', serif !important; font-style: italic; font-weight: 400 !important; letter-spacing: 0;
 }
 
+/* glass cards */
+body.loom-studio.loom-air :is(.card, .dash-card, .hero-card, .results-stat-card, .picker-card, .recent-exercise-row, .group-block, .student-group,
+.points-modal, .chart-wrap.stats-chart, .stats-card, .login-card, .sync-unlock-card, .tb-profile-menu, .myex-menu, .ai-robot-bubble,
+.qs-box, .wheel-winner-card, .hwc-student-row, .set-round-row, .myex-card, .masthead, .sk-gcard, .sk-part, .notice-stack > *) {
+  background: var(--surface) !important; border: 1px solid var(--glass-edge) !important; box-shadow: var(--shadow-md) !important;
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); color: var(--ink);
+}
 /* menus and windows: nearly solid, so text behind never shows through */
 body.loom-studio.loom-air.loom-air :is(.tb-profile-menu, .myex-menu, .ai-robot-bubble, .points-modal, .qs-box, .sync-unlock-card, .notice-stack > *, .lesson-warn) { background: #FBFCFB !important; }
 body.loom-studio.loom-air :is(.picker-card, .quick-action-btn, .results-stat-card, .myex-card, .group-block):hover {
@@ -3216,6 +3244,12 @@ body.loom-studio.loom-air .results-stats-grid > .results-stat-card .results-stat
 body.loom-studio.loom-air .results-stats-grid > .results-stat-card .results-stat-icon.si-amber { background: rgba(183,121,31,0.12) !important; color: #9A6417; }
 body.loom-studio.loom-air .results-stats-grid > .results-stat-card .results-stat-icon:not([class*="si-"]) { background: var(--brand-soft) !important; color: var(--ink); }
 
+/* main buttons: dark pills, an arrow after the words */
+body.loom-studio.loom-air :is(.create-btn, .login-submit, .lesson-plan-btn, .sync-unlock-btns .sync-unlock-ok, .masthead-btn.primary, .sk-teach, .mini-btn.solid) {
+  background: var(--brand) !important; color: #fff !important; border: 1px solid var(--brand) !important; border-radius: 999px !important;
+  box-shadow: var(--shadow-brand) !important; font-weight: 600;
+}
+body.loom-studio.loom-air :is(.create-btn, .login-submit, .lesson-plan-btn, .sk-teach, .mini-btn.solid):hover { background: #2A303B !important; transform: translateY(-1px); }
 body.loom-studio.loom-air .login-submit::after { content: ''; display: inline-block; width: 1.05em; height: 1.05em; margin-left: 10px; vertical-align: -0.17em;
   background: currentColor; -webkit-mask: var(--ic-arrow-right) center/contain no-repeat; mask: var(--ic-arrow-right) center/contain no-repeat; transition: transform .2s ease; }
 body.loom-studio.loom-air .login-submit:hover::after { transform: translateX(3px); }

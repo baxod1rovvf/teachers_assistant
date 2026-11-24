@@ -31,38 +31,33 @@ async function openCourse(page, context, opts) {
   return errors;
 }
 async function openLesson(page) {
-  if (!await page.locator('.gr-lesson').count()) await page.locator('.gr-level[data-level="beginner"] .gr-level-open').click();
+  if (!await page.locator('.gr-lesson').count()) await page.evaluate(() => grOpenLevel('beginner'));
   await page.locator('.gr-lesson[data-lesson="g1"] .gr-lesson-open').click();
   await expect(page.locator('.gr-lesson-page')).toBeVisible();
 }
 
-test('Grammar Journey has its own page (grammarjourney.html): 7 levels, 4 coming soon; Beginner lists 15 lessons; ← Course goes back', async ({ page, context }) => {
+test('Grammar Journey has its own page (grammarjourney.html), opening straight on a level: Beginner lists 15 lessons; ← Course goes back', async ({ page, context }) => {
   const errors = await openCourse(page, context);
-  await expect(page.locator('#panel-grammarjourney .card-head h2')).toHaveText('📚 Grammar Journey');
-  await expect(page.locator('#grammarWrap .gr-journey')).toBeVisible();
-  await expect(page.locator('.sk-cards')).toHaveCount(0);   // the IELTS Journey's groups are on their own page
-  await expect(page.locator('.gr-level')).toHaveCount(7);
-  await expect(page.locator('.gr-level.soon')).toHaveCount(4);
-  await expect(page.locator('.gr-level.soon').first()).toContainText('Coming soon');
-  await expect(page.locator('.gr-level[data-level="beginner"]')).toContainText('15 lessons');
-  await page.locator('.gr-level[data-level="beginner"] .gr-level-open').click();
-  await expect(page.locator('.gr-lesson')).toHaveCount(15);
-  await page.getByRole('button', { name: '← Grammar Journey' }).click();
-  await expect(page.locator('.gr-level')).toHaveCount(7);
-  // ← Course opens the three journeys' cards, and the Grammar card comes back here
+  await expect(page.locator('#panel-grammarjourney .card-head h2')).toHaveText('Grammar Journey');
+  await expect(page.locator('#panel-grammarjourney .card-head h2 .lc-book-open')).toHaveCount(1);
+  await expect(page.locator('#panel-grammarjourney .card-head p')).toHaveCount(0);
+  await expect(page.locator('.sk-cards, .gr-journey')).toHaveCount(0);   // no "all levels" view (2026-11-24) — the Course page lists them
+  await expect(page.locator('.gr-lesson')).toHaveCount(15);   // no level asked → Beginner
+  // ← Course opens the three cards; the Grammar card lists the 7 levels (4 not ready yet) and opens one
   await page.getByRole('button', { name: '← Course' }).click();
-  await expect(page.locator('.cr-card')).toHaveCount(3);
-  await expect(page.locator('.cr-card[data-journey="grammarjourney"] .cr-line')).toHaveText('0 lessons sent');
-  await page.locator('.cr-card[data-journey="grammarjourney"]').click();
-  await expect(page.locator('#grammarWrap .gr-level')).toHaveCount(7);
+  const levels = page.locator('.cr-card[data-journey="grammarjourney"] .cr-item');
+  await expect(levels.locator('.cr-item-name')).toHaveText(['Beginner', 'Elementary', 'Pre-Intermediate', 'Intermediate', 'Upper-Intermediate', 'Advanced', 'Intensive']);
+  await expect(page.locator('.cr-card[data-journey="grammarjourney"] .cr-item.soon')).toHaveCount(4);
+  await levels.filter({ hasText: 'Elementary' }).click();
+  await expect(page.locator('#panel-grammarjourney')).toHaveClass(/active/);
+  await expect(page.locator('.gr-lesson')).toHaveCount(17);
+  await expect(page.locator('.gr-page-head h3')).toContainText('Elementary');
   expect(errors).toEqual([]);
 });
 
 test('Elementary is open: 17 lessons (16–32), and Copy link on Lesson 16 gives its own link', async ({ page, context }) => {
   const errors = await openCourse(page, context);
-  await expect(page.locator('.gr-level[data-level="elementary"]')).not.toHaveClass(/soon/);
-  await expect(page.locator('.gr-level[data-level="elementary"] .gr-level-sub')).toHaveText('17 lessons · 0 sent');
-  await page.locator('.gr-level[data-level="elementary"] .gr-level-open').click();
+  await page.evaluate(() => grOpenLevel('elementary'));
   await expect(page.locator('.gr-lesson')).toHaveCount(17);
   expect(await page.locator('.gr-lesson').evaluateAll(els => els.map(e => e.dataset.lesson)))
     .toEqual(Array.from({ length: 17 }, (_, i) => 'g' + (i + 16)));
@@ -77,9 +72,7 @@ test('Elementary is open: 17 lessons (16–32), and Copy link on Lesson 16 gives
 
 test('Pre-Intermediate is open: 18 lessons (33–50)', async ({ page, context }) => {
   const errors = await openCourse(page, context);
-  await expect(page.locator('.gr-level[data-level="preintermediate"]')).not.toHaveClass(/soon/);
-  await expect(page.locator('.gr-level[data-level="preintermediate"] .gr-level-sub')).toHaveText('18 lessons · 0 sent');
-  await page.locator('.gr-level[data-level="preintermediate"] .gr-level-open').click();
+  await page.evaluate(() => grOpenLevel('preintermediate'));
   await expect(page.locator('.gr-lesson')).toHaveCount(18);
   expect(await page.locator('.gr-lesson').evaluateAll(els => els.map(e => e.dataset.lesson)))
     .toEqual(Array.from({ length: 18 }, (_, i) => 'g' + (i + 33)));
@@ -90,7 +83,7 @@ test('Pre-Intermediate is open: 18 lessons (33–50)', async ({ page, context })
 
 test('🔗 Copy link: one link for every group, the class list holds every student with their own group', async ({ page, context }) => {
   const errors = await openCourse(page, context);
-  await page.locator('.gr-level[data-level="beginner"] .gr-level-open').click();
+  await page.evaluate(() => grOpenLevel('beginner'));
   await page.locator('.gr-lesson[data-lesson="g1"]').getByRole('button', { name: '🔗 Copy link' }).click();
   await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toMatch(/skill\.html\?s=grammar&gl=g1&c=[0-9A-Za-z]{6}$/);
   const url = await page.evaluate(() => navigator.clipboard.readText());
@@ -118,8 +111,7 @@ test('the lesson\'s results: first try only, ranked by score then time, filter b
     res(1, '99999', 'Stranger Kid', 18, 15 * 60, 60)   // not on the Students list
   ];
   const errors = await openCourse(page, context, { docs, links: LINKS });
-  await expect(page.locator('.gr-level[data-level="beginner"]')).toContainText('1 sent');
-  await page.locator('.gr-level[data-level="beginner"] .gr-level-open').click();
+  await page.evaluate(() => grOpenLevel('beginner'));
   await expect(page.locator('.gr-lesson[data-lesson="g1"]')).toContainText('3 done');
   await openLesson(page);
   const rows = page.locator('.gr-table .gr-trow');
@@ -219,7 +211,7 @@ test('a roster change from sync (a storage event) refreshes the list; a failed p
 test('with a lesson page open, a student added to the roster still gets the list refreshed', async ({ page, context }) => {
   await openCourse(page, context, { links: LINKS });
   await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('ta_grammar_links')).g1.rosterSig)).toContain('10003|');
-  await page.locator('.gr-level[data-level="beginner"] .gr-level-open').click();
+  await page.evaluate(() => grOpenLevel('beginner'));
   await page.locator('.gr-lesson[data-lesson="g1"] .gr-lesson-open').click();
   await expect(page.locator('.gr-lesson-page')).toBeVisible();
   await page.evaluate(() => {

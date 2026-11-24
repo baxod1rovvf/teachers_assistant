@@ -28,9 +28,10 @@ test('the top bar opens each section without reloading', async ({ page, context 
   expect(errors).toEqual([]);
 });
 
-// The Course is three cards since 2026-11-23 (teacher: "separate every journey"): each opens its journey's own page in place
-// (no reload), with its own stylesheet, and the top bar's 🗺️ Course stays lit.
-test('Course: three cards open the IELTS, Grammar and Dictation journeys in place, each with its own styles', async ({ page, context }) => {
+// The Course is three cards since 2026-11-23 (teacher: "separate every journey"); since 2026-11-24 each card is an icon + title + its
+// groups (IELTS) or levels (Grammar, Dictation), and a row opens that group's / level's page in place (no reload), with its own
+// stylesheet; the top bar's Course stays lit. The cards' level lists must match the journeys' data.
+test('Course: icon cards list the groups and levels; a row opens that journey page in place, with its own styles', async ({ page, context }) => {
   await prepare(context);
   const errors = watchErrors(page);
   await page.goto('/index.html');
@@ -39,20 +40,28 @@ test('Course: three cards open the IELTS, Grammar and Dictation journeys in plac
   await page.evaluate(() => { window.__noReload = true; });
   await page.locator('.tb-tab[data-tab="course"]').click();
   await expect(page.locator('#panel-course')).toHaveClass(/active/);
+  await expect(page.locator('#panel-course .card-head h2')).toHaveText('Course');
+  await expect(page.locator('#panel-course .card-head p, .cr-about')).toHaveCount(0);
   await expect(page.locator('.cr-card .cr-name')).toHaveText(['IELTS Journey', 'Grammar Journey', 'Dictation Journey']);
-  await expect(page.locator('.cr-card[data-journey="ieltsjourney"] .cr-line')).toHaveText(/^\d+ groups?$/);
-  for (const [tab, wrap, css, check] of [['ieltsjourney', '#ieltsWrap', 'ielts-journey.css', '.sk-cards'], ['grammarjourney', '#grammarWrap', 'grammar-journey.css', '.gr-level'],
-    ['dictationjourney', '#dictationWrap', 'dictation-journey.css', '.dct-level']]) {
+  await expect(page.locator('.cr-card .cr-icon .lc')).toHaveCount(3);
+  await expect(page.locator('.cr-card[data-journey="ieltsjourney"] .cr-item-name')).toHaveText(await page.evaluate(() => getStudentGroups().map(g => g.name)));
+  for (const [tab, row, wrap, css, check] of [['ieltsjourney', 1, '#ieltsWrap', 'ielts-journey.css', '.sk-ghead'], ['grammarjourney', 1, '#grammarWrap', 'grammar-journey.css', '.gr-lesson'],
+    ['dictationjourney', 3, '#dictationWrap', 'dictation-journey.css', '.dct-item']]) {
     await page.evaluate(() => taNavigate('course.html'));
-    await page.locator('.cr-card[data-journey="' + tab + '"]').click();
+    const item = page.locator('.cr-card[data-journey="' + tab + '"] .cr-item').nth(row);
+    const name = await item.locator('.cr-item-name').textContent();
+    await item.click();
     await expect(page.locator('#panel-' + tab)).toHaveClass(/active/);
     await expect(page.locator(wrap + ' ' + check).first()).toBeVisible();
+    await expect(page.locator(wrap + ' :is(.sk-ghead h3, .gr-page-head h3)')).toContainText(name);   // that group / level
     await expect(page.locator('.tb-tab[data-tab="course"]')).toHaveClass(/active/);
     expect(await page.evaluate(c => [...document.querySelectorAll('link[rel="stylesheet"]')].some(l => l.href.includes('/css/' + c)), css)).toBe(true);
-    // the journey's own look is there (journeys.css + its file)
-    if (tab !== 'ieltsjourney') expect(await page.locator(wrap + ' .gr-levels').evaluate(e => getComputedStyle(e).display)).toBe('grid');
-    else expect(await page.locator('.sk-gcard').first().evaluate(e => getComputedStyle(e).borderTopLeftRadius)).not.toBe('0px');
+    if (tab !== 'ieltsjourney') expect(await page.locator(wrap + ' .gr-lessons').evaluate(e => getComputedStyle(e).display)).toBe('flex');
+    else expect(await page.locator('.sk-node').first().evaluate(e => getComputedStyle(e).borderTopLeftRadius)).not.toBe('0px');
   }
+  // the cards' level lists are the journeys' levels (Grammar: the ones without lessons say "Soon")
+  expect(await page.evaluate(() => CR_GRAMMAR_LEVELS)).toEqual(await page.evaluate(() => TA_GRAMMAR.levels.map(l => [l.id, l.name, (l.lessons || []).length > 0])));
+  expect(await page.evaluate(() => CR_DICTATION_LEVELS)).toEqual(await page.evaluate(() => TA_DICTATION.levels.map(l => [l.id, l.name])));
   expect(await page.evaluate(() => window.__noReload)).toBe(true);   // never a full page load
   expect(errors).toEqual([]);
 });

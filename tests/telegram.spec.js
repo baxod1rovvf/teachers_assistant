@@ -216,7 +216,7 @@ test('teacher: Set up Telegram makes a connect code and puts the group\'s plan o
   });
   await page.goto('/ieltsjourney.html');
   await hideNotices(page);
-  await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();
+  await page.evaluate(() => skOpenGroup('g1'));
   const box = page.locator('.tg-box');
   // folded to one line until tapped (2026-11-23: "hide the telegram box")
   await expect(box.getByRole('button', { name: 'Set up Telegram' })).toBeHidden();
@@ -313,7 +313,7 @@ test('teacher: ➕ Add puts a repeating message and a course link into the group
   });
   await page.goto('/ieltsjourney.html');
   await hideNotices(page);
-  await page.locator('.sk-gcard[data-group="g1"] .sk-gcard-open').click();
+  await page.evaluate(() => skOpenGroup('g1'));
   const box = page.locator('.tg-box');
   // folded: only the line with the status shows
   await expect(box.locator('#tgStatus')).toHaveText(/Connected to “Target chat”/);

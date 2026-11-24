@@ -1,14 +1,5 @@
 /* ================= IELTS JOURNEY — the teacher's side (ieltsjourney.html, js/pages/ielts-journey.js + telegram.js) =================
    Split out of css/style.css on 2026-11-23 (rules keep their order). Shared with the other journeys: css/journeys.css. */
-:where(.tb-brand, .tb-avatar, .lesson-warn-close, .myex-more, .myex-rename, .old-file-icon, .sp-icon-btn,
-  .myex-type-chip, .done-warn-check, .done-warn-all, .done-warn-results, .dash-manage-link, .mini-btn, .top-group-tab, button.sk-dot, .tg-day) {
-  position: relative;
-}
-:where(.tb-brand, .tb-avatar, .lesson-warn-close, .myex-more, .myex-rename, .old-file-icon, .sp-icon-btn,
-  .myex-type-chip, .done-warn-check, .done-warn-all, .done-warn-results, .dash-manage-link, .mini-btn, .top-group-tab, button.sk-dot, .tg-day)::before {
-  content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  width: max(100%, 44px); height: max(100%, 44px);
-}
 .sk-path { --sk-row-h: 104px; --sk-row-gap: 30px; --sk-turn: 44px; --sk-off: color-mix(in srgb, var(--ink-soft) 38%, transparent);
   display: flex; flex-direction: column; gap: var(--sk-row-gap); padding: 6px var(--sk-turn) 12px; }
 .sk-row { position: relative; display: flex; align-items: center; height: var(--sk-row-h); min-width: 0; }
@@ -182,34 +173,9 @@ button.sk-dot:hover { transform: scale(1.12); }
 /* Course: "Starts at Step N" on a group's page (2026-11-07) */
 .sk-start-pick { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 0.95rem; }
 .sk-start-pick select { font: inherit; padding: 4px 8px; border-radius: 10px; border: 2px solid var(--line); background: var(--surface-1, #fff); color: inherit; }
-/* cards: flat navy, a thin border, a soft shadow — no stickers, no tilting */
-body.loom-studio :is(.card, .dash-card, .hero-card, .results-stat-card, .picker-card, .recent-exercise-row, .group-block, .student-group,
-.points-modal, .chart-wrap.stats-chart, .stats-card, .login-card, .sync-unlock-card, .tb-profile-menu, .myex-menu, .ai-robot-bubble,
-.qs-box, .wheel-winner-card, .hwc-student-row, .set-round-row, .myex-card, .masthead, .sk-gcard, .sk-part) {
-  background: var(--surface) !important; border: 1px solid var(--border) !important; box-shadow: var(--shadow-md) !important;
-}
-/* buttons */
-body.loom-studio :is(.create-btn, .login-submit, .lesson-plan-btn, .sync-unlock-btns .sync-unlock-ok, .masthead-btn.primary, .sk-teach) {
-  background: var(--brand) !important; color: #fff !important; border: 1px solid rgba(255,255,255,0.08) !important; border-radius: 12px;
-  box-shadow: var(--shadow-brand) !important; text-shadow: none; font-weight: 600;
-}
-body.loom-studio :is(.create-btn, .login-submit, .lesson-plan-btn, .sk-teach):hover { background: #7376F5 !important; transform: translateY(-1px); filter: none; }
 /* calm: course step boxes don't jump or tilt on hover (it also kept them moving under the mouse) */
 body.loom-studio button.sk-node:hover { transform: none; box-shadow: 0 0 0 1px rgba(129,140,248,0.5); }
 body.loom-studio button.sk-node:hover .sk-node-emoji { animation: none; }
-/* glass cards */
-body.loom-studio.loom-air :is(.card, .dash-card, .hero-card, .results-stat-card, .picker-card, .recent-exercise-row, .group-block, .student-group,
-.points-modal, .chart-wrap.stats-chart, .stats-card, .login-card, .sync-unlock-card, .tb-profile-menu, .myex-menu, .ai-robot-bubble,
-.qs-box, .wheel-winner-card, .hwc-student-row, .set-round-row, .myex-card, .masthead, .sk-gcard, .sk-part, .notice-stack > *) {
-  background: var(--surface) !important; border: 1px solid var(--glass-edge) !important; box-shadow: var(--shadow-md) !important;
-  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); color: var(--ink);
-}
-/* main buttons: dark pills, an arrow after the words */
-body.loom-studio.loom-air :is(.create-btn, .login-submit, .lesson-plan-btn, .sync-unlock-btns .sync-unlock-ok, .masthead-btn.primary, .sk-teach, .mini-btn.solid) {
-  background: var(--brand) !important; color: #fff !important; border: 1px solid var(--brand) !important; border-radius: 999px !important;
-  box-shadow: var(--shadow-brand) !important; font-weight: 600;
-}
-body.loom-studio.loom-air :is(.create-btn, .login-submit, .lesson-plan-btn, .sk-teach, .mini-btn.solid):hover { background: #2A303B !important; transform: translateY(-1px); }
 body.loom-studio.loom-air button.sk-node:hover { box-shadow: 0 0 0 1px rgba(20,26,34,0.25); }
 @media (min-width: 761px) {
   body.loom-air .sk-path { --air-mark: 40px; --air-gap: 18px; max-width: 600px; padding: 6px 0 12px; gap: var(--air-gap); }
