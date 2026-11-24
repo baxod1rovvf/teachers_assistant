@@ -53,6 +53,14 @@ html body#skBody.sk-air .rl-hint { display: table; margin: 14px auto 0; padding:
 html body#skBody.sk-air .gr-card .sk-actions { flex-wrap: wrap; gap: 10px; }
 html body#skBody.sk-air .gr-step { margin: 0 0 6px; font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #3D7434 !important; }
 html body#skBody.sk-air .gr-rule { line-height: 1.6; margin: 0 0 14px; }
+/* Lesson 1's easy explanation in Uzbek with everyday examples (teacher, 2026-11-22): first on the learn card */
+html body#skBody.sk-air .gr-story { margin: 0 0 16px; padding: 14px 16px; border-radius: 18px; background: #FFF7E8; border: 1px solid rgba(240,101,15,0.25); color: #2A2118 !important; }
+html body#skBody.sk-air .gr-story p { margin: 0 0 8px; line-height: 1.6; }
+html body#skBody.sk-air .gr-story p:last-child { margin-bottom: 0; }
+html body#skBody.sk-air .gr-story .gr-story-h { font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #C4520B !important; }
+html body#skBody.sk-air .gr-story .gr-story-li { padding-left: 1.1em; text-indent: -1.1em; }
+html body#skBody.sk-air .gr-story .gr-story-li::before { content: '•'; display: inline-block; width: 1.1em; text-indent: 0; color: #F0650F; }
+html body#skBody.sk-air .gr-story b { color: #C4520B; }
 html body#skBody.sk-air .gr-table-wrap { overflow-x: auto; margin: 0 0 14px; border-radius: 16px; border: 1px solid rgba(20,26,34,0.1); background: #fff; }
 html body#skBody.sk-air .gr-table { width: 100%; border-collapse: collapse; font-size: .95rem; }
 html body#skBody.sk-air .gr-table :is(th, td) { padding: 8px 12px; text-align: left; border-bottom: 1px solid rgba(20,26,34,0.07); vertical-align: top; }

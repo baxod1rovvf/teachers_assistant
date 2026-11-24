@@ -5,7 +5,9 @@
 //
 // The JSON: { "<level id>": [lesson, …] } — "beginner" (Lessons 1–15), "elementary" (16–32) and "preintermediate" (33–50) have lessons for now. A lesson:
 //   { no, title, v (content version: raise it when questions change, so old drafts on students' phones start again),
-//     chunks: [{ title, rule, table? [[header…], [row…]…], examples [4–6], uz (one Uzbek line), practise [5 questions] }] (2–4),
+//     chunks: [{ title, story? [Uzbek lines], rule, table? [[header…], [row…]…], examples [4–6], uz (one Uzbek line), practise [5 questions] }] (2–4),
+//     story (teacher, 2026-11-22: "explain it in a very easy way… life examples"): an easy explanation in Uzbek from everyday life, shown first
+//     on the learn card; **word** is shown in bold; a line starting "• " is a list item.
 //     test: [20 questions] — from Lesson 2 on, exactly 4 of them are { "from": "g<N>", "q": question } (an earlier lesson) }
 // A question is a short list:
 //   ["choose", question, [options], right option, hint?]
@@ -15,7 +17,7 @@
 // Every practise question has a hint (it points back to the rule); test questions have none.
 //
 // Out: TA_GRAMMAR = { v: 1, levels: [{ id, name, lessons: [{ id: 'g<no>', no, title, v,
-//        chunks: [{ learn: { title, rule, table?, examples, uz }, practise: [Q] }], test: [Q] }] }] }
+//        chunks: [{ learn: { title, story?, rule, table?, examples, uz }, practise: [Q] }], test: [Q] }] }] }
 //      Q = { type, q, options? (choose/fix), words? (order), a: [accepted], hint?, from? }
 const fs = require('fs'), path = require('path');
 const root = path.join(__dirname, '..');
@@ -72,7 +74,11 @@ function build(source) {
         if (!c.examples || c.examples.length < 4 || c.examples.length > 6) errors.push(w + ': needs 4–6 examples');
         if (c.table && c.table.some(r => r.length !== c.table[0].length)) errors.push(w + ': every table row needs ' + c.table[0].length + ' cells');
         if (!c.practise || c.practise.length !== 5) errors.push(w + ': needs 5 practise questions');
-        const learn = { title: c.title, rule: c.rule };
+        if (c.story && (!Array.isArray(c.story) || !c.story.length || c.story.length > 14 || c.story.some(x => typeof x !== 'string' || !x.trim())))
+          errors.push(w + ': story must be a list of 1–14 lines');
+        const learn = { title: c.title };
+        if (c.story) learn.story = c.story;
+        learn.rule = c.rule;
         if (c.table) learn.table = c.table;
         learn.examples = c.examples;
         learn.uz = c.uz;
@@ -101,11 +107,11 @@ function build(source) {
     return { id, name, lessons };
   });
   const data = { v: 1, levels };
-  // English only: Uzbek only in `uz`, no Cyrillic anywhere
+  // English only: Uzbek only in `uz` and `story`, no Cyrillic anywhere
   (function walk(v, key, where) {
     if (typeof v === 'string') {
       if (CYRILLIC.test(v)) errors.push(where + ': Cyrillic in "' + v + '"');
-      if (key !== 'uz' && UZBEK.test(v)) errors.push(where + ': not English "' + v + '"');
+      if (key !== 'uz' && key !== 'story' && UZBEK.test(v)) errors.push(where + ': not English "' + v + '"');
     } else if (v && typeof v === 'object') Object.entries(v).forEach(([k, x]) => walk(x, Array.isArray(v) ? key : k, where + '.' + k));
   })(data, '', 'TA_GRAMMAR');
   return { errors, data, js: toJs(data), md: toMd(data) };
@@ -155,7 +161,9 @@ function toMd(data) {
       out.push('### Lesson ' + L.no + ' — ' + L.title, '');
       L.chunks.forEach((c, ci) => {
         const k = c.learn;
-        out.push('#### Part ' + (ci + 1) + ': ' + k.title, '', k.rule, '');
+        out.push('#### Part ' + (ci + 1) + ': ' + k.title, '');
+        if (k.story) out.push(...k.story.map(x => '> 🧒 ' + x), '');
+        out.push(k.rule, '');
         if (k.table) {
           out.push('| ' + k.table[0].map(cell).join(' | ') + ' |', '|' + k.table[0].map(() => '---').join('|') + '|');
           k.table.slice(1).forEach(r => out.push('| ' + r.map(cell).join(' | ') + ' |'));

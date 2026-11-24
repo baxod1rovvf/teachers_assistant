@@ -103,13 +103,13 @@ test('the Grammar Journey: 7 levels, 15 Beginner + 17 Elementary + 18 Pre-Interm
   }
 });
 
-test('the Grammar Journey is English only — Uzbek only in the one line under each rule (uz), and no Cyrillic', async () => {
+test('the Grammar Journey is English only — Uzbek only in the line under each rule (uz) and the easy explanation (story, Lesson 1 since 2026-11-22), and no Cyrillic', async () => {
   const G = loadGrammar();
   const bad = [];
   (function walk(v, key, where) {
     if (typeof v === 'string') {
       if (CYRILLIC.test(v)) bad.push(where + ': Cyrillic in "' + v + '"');
-      if (key !== 'uz' && UZBEK.test(v)) bad.push(where + ': not English "' + v + '"');
+      if (key !== 'uz' && key !== 'story' && UZBEK.test(v)) bad.push(where + ': not English "' + v + '"');
     } else if (v && typeof v === 'object') Object.entries(v).forEach(([k, x]) => walk(x, Array.isArray(v) ? key : k, where + '.' + k));
   })(G, '', 'TA_GRAMMAR');
   expect(bad).toEqual([]);
